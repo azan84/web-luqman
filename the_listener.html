@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE LISTENER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cutive+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --flash-x: 50vw;
+  --flash-y: 50vh;
+  --flash-r: 200px;
+  --vignette: 0.9;
+  --ca: 0px;
+  --tremor: 0px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  height: 100%;
+  background: #000;
+  color: #eae4d6;
+  font-family: 'Special Elite', 'Cutive Mono', Courier, monospace;
+  overflow: hidden;
+  cursor: none;
+}
+body { user-select: none; -webkit-user-select: none; }
+
+/* scene art canvas */
+#scene-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  background: #000;
+  z-index: 1;
+}
+
+/* flashlight — a fullscreen black mask with a soft transparent hole that follows the cursor/arrow focus.
+   Radius shrinks with proximity; edges darken. */
+#flashlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    circle var(--flash-r) at var(--flash-x) var(--flash-y),
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0) 55%,
+    rgba(0,0,0,0.75) 85%,
+    rgba(0,0,0,1) 100%);
+  transition: background 0.25s ease;
+}
+/* vignette intensifies with proximity (opacity tied to --vignette) */
+#vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.85) 100%);
+  opacity: var(--vignette);
+  transition: opacity 0.3s ease;
+}
+/* chromatic aberration at high proximity: two duplicated colored shadows */
+#chroma {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: transparent;
+  box-shadow:
+    var(--ca) 0 0 rgba(255, 0, 0, 0.04) inset,
+    calc(var(--ca) * -1) 0 0 rgba(0, 200, 255, 0.04) inset;
+}
+
+/* glimpse overlay: a single wrong thing for ~120ms, then gone */
+#glimpse {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0;
+}
+#glimpse.show {
+  animation: glimpse-flash 0.22s ease-in forwards;
+}
+@keyframes glimpse-flash {
+  0%   { opacity: 0; }
+  30%  { opacity: 1; }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* text overlay for scene whispers/prompts */
+#text-overlay {
+  position: fixed;
+  bottom: 10vh;
+  left: 0; right: 0;
+  z-index: 5;
+  text-align: center;
+  padding: 0 10vw;
+  font-family: 'Special Elite', serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: #dcd6c2;
+  text-shadow: 0 0 8px rgba(0,0,0,0.9);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  min-height: 30px;
+  filter: drop-shadow(0 0 4px #000);
+}
+#text-overlay.show {
+  opacity: 1;
+  animation: tremble 3s ease-in-out infinite;
+}
+#text-overlay.glitch .g { animation: letter-jitter 0.35s ease-in-out infinite; display: inline-block; }
+@keyframes tremble {
+  0%, 100% { transform: translate(0,0); }
+  25% { transform: translate(var(--tremor), 0); }
+  50% { transform: translate(0, var(--tremor)); }
+  75% { transform: translate(calc(var(--tremor) * -1), 0); }
+}
+@keyframes letter-jitter {
+  0%, 100% { transform: translate(0,0) rotate(0); }
+  25% { transform: translate(1px, -0.5px) rotate(-1deg); }
+  75% { transform: translate(-1px, 0.5px) rotate(1deg); }
+}
+
+/* breath meter: visible only while space is held */
+#breath-meter {
+  position: fixed;
+  left: 50%;
+  bottom: 8vh;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 2px;
+  background: rgba(234, 228, 214, 0.15);
+  z-index: 5;
+  display: none;
+}
+#breath-meter.active { display: block; }
+#breath-meter .fill {
+  height: 100%;
+  background: rgba(234, 228, 214, 0.85);
+  width: 100%;
+  transition: width 0.1s linear;
+}
+
+/* mute button (barely visible, bottom-left) */
+#mute-btn {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  z-index: 20;
+  background: none;
+  border: 1px solid rgba(234, 228, 214, 0.15);
+  color: rgba(234, 228, 214, 0.3);
+  font-family: 'Cutive Mono', monospace;
+  font-size: 10px;
+  padding: 6px 10px;
+  letter-spacing: 3px;
+  cursor: pointer;
+}
+#mute-btn:hover { color: rgba(234, 228, 214, 0.7); border-color: rgba(234, 228, 214, 0.4); }
+
+/* custom cursor dot shown at flashlight center */
+#cursor {
+  position: fixed;
+  width: 4px; height: 4px;
+  background: rgba(234, 228, 214, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 7;
+  transform: translate(-50%, -50%);
+  top: var(--flash-y);
+  left: var(--flash-x);
+  transition: top 0.15s ease-out, left 0.15s ease-out;
+}
+
+/* full-screen overlays (intro, mic, death, escape, pause) */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 8vw;
+  text-align: center;
+}
+.overlay.hidden { display: none; }
+.overlay h1 {
+  font-family: 'Special Elite', serif;
+  font-size: clamp(40px, 6vw, 82px);
+  letter-spacing: 12px;
+  margin-bottom: 8px;
+  color: #eae4d6;
+  font-weight: 400;
+}
+.overlay .sub {
+  font-family: 'Cutive Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 6px;
+  color: rgba(234, 228, 214, 0.55);
+  margin-bottom: 60px;
+}
+.overlay button.primary {
+  background: transparent;
+  border: 1px solid rgba(234, 228, 214, 0.4);
+  color: #eae4d6;
+  padding: 14px 36px;
+  font-family: 'Cutive Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 6px;
+  cursor: pointer;
+  margin: 8px;
+  transition: all 0.3s ease;
+}
+.overlay button.primary:hover {
+  background: rgba(234, 228, 214, 0.08);
+  letter-spacing: 8px;
+}
+.overlay .note {
+  position: absolute;
+  bottom: 30px;
+  font-family: 'Cutive Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(234, 228, 214, 0.35);
+  max-width: 600px;
+  line-height: 1.7;
+}
+.overlay .note strong { color: rgba(234, 228, 214, 0.6); font-weight: 400; }
+
+/* mic screen specific */
+#mic-screen h2 {
+  font-family: 'Special Elite', serif;
+  font-size: 24px;
+  color: #eae4d6;
+  margin-bottom: 16px;
+  font-weight: 400;
+  letter-spacing: 3px;
+}
+#mic-screen p {
+  font-family: 'Cutive Mono', monospace;
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(234, 228, 214, 0.7);
+  max-width: 560px;
+  margin-bottom: 30px;
+}
+
+/* radio monologue */
+#radio-screen {
+  flex-direction: column;
+}
+#radio-lines {
+  max-width: 680px;
+  text-align: left;
+  font-family: 'Special Elite', serif;
+  font-size: 20px;
+  line-height: 1.65;
+  color: #eae4d6;
+  min-height: 50vh;
+  padding: 40px 0;
+}
+#radio-lines .line {
+  opacity: 0;
+  margin-bottom: 14px;
+  animation: line-appear 0.6s ease-out forwards;
+}
+@keyframes line-appear {
+  to { opacity: 1; }
+}
+#radio-lines .speaker {
+  font-family: 'Cutive Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(234, 228, 214, 0.4);
+  margin-top: 18px;
+  margin-bottom: 6px;
+}
+#radio-lines .pattern-demo {
+  font-family: 'Cutive Mono', monospace;
+  color: rgba(234, 228, 214, 0.5);
+  letter-spacing: 8px;
+  font-size: 24px;
+  padding: 10px 0;
+}
+#radio-continue {
+  opacity: 0;
+  transition: opacity 1s;
+  margin-top: 30px;
+  font-family: 'Cutive Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: rgba(234, 228, 214, 0.4);
+}
+#radio-continue.show { opacity: 1; }
+
+/* death screen (smash cut, stark) */
+#death-screen {
+  background: #000;
+}
+#death-screen .line {
+  font-family: 'Special Elite', serif;
+  font-size: 28px;
+  color: #eae4d6;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  max-width: 680px;
+}
+
+/* escape screen — brief white flash, then text */
+#escape-screen {
+  background: #fafafa;
+  color: #111;
+}
+#escape-screen .line {
+  font-family: 'Special Elite', serif;
+  font-size: 26px;
+  color: #111;
+  max-width: 680px;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+}
+#escape-screen .credits {
+  font-family: 'Cutive Mono', monospace;
+  font-size: 12px;
+  color: rgba(0,0,0,0.5);
+  letter-spacing: 3px;
+  line-height: 2;
+}
+#escape-screen button.primary {
+  color: #111;
+  border-color: rgba(0,0,0,0.4);
+}
+#escape-screen button.primary:hover { background: rgba(0,0,0,0.05); }
+
+/* pause */
+#pause-screen h2 {
+  font-family: 'Special Elite', serif;
+  font-size: 32px;
+  color: #eae4d6;
+  letter-spacing: 6px;
+  margin-bottom: 30px;
+}
+
+/* knock puzzle overlay */
+#knock-pad {
+  position: fixed;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(234,228,214,0.04), transparent 70%);
+  border: 1px solid rgba(234, 228, 214, 0.12);
+  z-index: 8;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  user-select: none;
+}
+#knock-pad.active { display: flex; cursor: pointer; }
+#knock-pad .prompt {
+  font-family: 'Special Elite', serif;
+  font-size: 18px;
+  color: rgba(234, 228, 214, 0.7);
+  text-align: center;
+  letter-spacing: 2px;
+}
+#knock-pad .progress {
+  position: absolute;
+  bottom: -40px;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: 'Cutive Mono', monospace;
+  color: rgba(234, 228, 214, 0.5);
+  font-size: 18px;
+  letter-spacing: 12px;
+}
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- scene layers -->
+<canvas id="scene-canvas"></canvas>
+<div id="flashlight"></div>
+<div id="vignette"></div>
+<div id="chroma"></div>
+<div id="glimpse"></div>
+<div id="text-overlay"></div>
+<div id="breath-meter"><div class="fill"></div></div>
+<div id="cursor"></div>
+<div id="knock-pad"><div class="prompt">tap the counter.<br><br>knock the rhythm.</div><div class="progress" id="knock-progress">. . .</div></div>
+
+<button id="mute-btn">MUTE</button>
+
+<!-- OVERLAYS -->
+
+<div class="overlay" id="title-screen">
+  <h1>THE LISTENER</h1>
+  <div class="sub">a short horror</div>
+  <button class="primary" id="btn-begin">BEGIN</button>
+  <div class="note">
+    <strong>headphones recommended.</strong> silence is required.<br>
+    the game will ask for your microphone. it does not record. it does not transmit. it only measures how quiet you are.
+  </div>
+</div>
+
+<div class="overlay hidden" id="mic-screen">
+  <h2>PERMIT THE LISTENER TO HEAR YOU</h2>
+  <p>
+    your microphone is used only to measure the loudness in your room, in real time.<br><br>
+    <strong style="color: rgba(234, 228, 214, 0.9)">nothing is recorded. nothing is sent anywhere.</strong><br><br>
+    if you deny, the game will fall back to listening for your keyboard instead.
+  </p>
+  <div>
+    <button class="primary" id="btn-mic-allow">ALLOW</button>
+    <button class="primary" id="btn-mic-deny">DENY</button>
+  </div>
+</div>
+
+<div class="overlay hidden" id="radio-screen">
+  <div id="radio-lines"></div>
+  <div id="radio-continue">press any key to wake.</div>
+</div>
+
+<div class="overlay hidden" id="death-screen">
+  <div class="line" id="death-line">It was never going to let you leave.</div>
+  <div>
+    <button class="primary" id="btn-retry">RESTART SCENE</button>
+    <button class="primary" id="btn-quit-death">QUIT</button>
+  </div>
+</div>
+
+<div class="overlay hidden" id="escape-screen">
+  <div class="line">The morning was louder than you remembered.</div>
+  <div class="credits">
+    THE LISTENER<br>
+    a short horror<br><br>
+    written &nbsp; directed &nbsp; performed<br>
+    by whoever was quiet enough
+  </div>
+  <div style="margin-top: 40px;"><button class="primary" id="btn-escape-menu">BEGIN AGAIN</button></div>
+</div>
+
+<div class="overlay hidden" id="pause-screen">
+  <h2>PAUSED</h2>
+  <button class="primary" id="btn-resume">RESUME</button>
+  <button class="primary" id="btn-restart-scene">RESTART SCENE</button>
+  <button class="primary" id="btn-quit-pause">QUIT TO TITLE</button>
+</div>
+
+<script>
+/* =============================================================
+ * THE LISTENER
+ * A short, mostly-audio horror game. The microphone is not the
+ * hook; it is the game.
+ *
+ * Classes:
+ *   AudioEngine         — every sound is synthesised live (no assets).
+ *   MicMonitor          — getUserMedia + AnalyserNode RMS; falls back to
+ *                         keyboard-stillness detection on denial.
+ *   ProximityController — the only state machine that matters. Ticks the
+ *                         Proximity value from noise, movement, stillness.
+ *   Renderer            — canvas-based first-person vignettes, flashlight
+ *                         radius, vignette, chromatic aberration, glimpses.
+ *   SceneManager        — the 5 scenes and the transitions.
+ *   Game                — glue / top-level controller.
+ * ============================================================= */
+
+/* ---------- DATA ---------- */
+
+// The knocking pattern, taught in the radio monologue, tested in Scene 3.
+// 'S' = short (press < 250ms), 'L' = long (press >= 400ms)
+const KNOCK_PATTERN = ['S', 'S', 'L'];
+
+// Monologue lines. Tone: calm, almost bored. Sparse. Never apologising.
+const MONOLOGUE = [
+  { speaker: 'RADIO', text: 'Good evening. I hope you slept.' },
+  { speaker: 'RADIO', text: 'You are in the house now. I cannot stop you being in the house.' },
+  { speaker: 'RADIO', text: 'The thing that lives here is blind. It hears very well.' },
+  { speaker: 'RADIO', text: 'Every sound you make is a map to your throat.' },
+  { speaker: 'RADIO', text: 'There are four rooms between you and the front door. You cannot run.' },
+  { speaker: 'RADIO', text: 'When you reach the kitchen, you will need to knock this rhythm on the counter. Listen.' },
+  { speaker: '',      text: '', pattern: true },
+  { speaker: 'RADIO', text: 'Short. Short. Long. Get it wrong and the house finds you instead of the empty room.' },
+  { speaker: 'RADIO', text: 'Hold your breath when it is close. Press space. Five seconds. No longer.' },
+  { speaker: 'RADIO', text: 'I have already finished my coffee. Good luck.' },
+];
+
+// Scene data. Each scene is a first-person static vignette painted to canvas.
+// Interactables are positioned in viewport coordinates (scaled at runtime).
+// The player navigates a "flashlight aim" with arrow keys in discrete steps.
+const SCENES = {
+  bedroom: {
+    id: 'bedroom',
+    title: 'I · THE BEDROOM',
+    draw: drawBedroom,
+    flashStart: { x: 0.5, y: 0.7 },
+    interactables: [
+      { id: 'bed',    x: 0.22, y: 0.70, r: 120,
+        text: 'The sheets are cold. You did not sleep here long.' },
+      { id: 'window', x: 0.14, y: 0.32, r: 90,
+        text: 'Outside, there is no streetlight. There never was one.' },
+      { id: 'dresser',x: 0.80, y: 0.60, r: 110,
+        text: 'A drawer, half open. Your hand finds a key. Cold.', gives: 'bedroom_key' },
+      { id: 'shoe',   x: 0.55, y: 0.80, r: 60,
+        text: "A child's shoe. Still warm." },
+      { id: 'door',   x: 0.50, y: 0.45, r: 100,
+        text: 'The door is locked.',
+        altText: 'The key fits. The door opens on breath.',
+        requires: 'bedroom_key', goto: 'hallway' },
+    ],
+  },
+  hallway: {
+    id: 'hallway',
+    title: 'II · THE HALLWAY',
+    draw: drawHallway,
+    flashStart: { x: 0.5, y: 0.75 },
+    proximityOffset: 18,   // starts tense
+    interactables: [
+      { id: 'photo',  x: 0.18, y: 0.45, r: 80,
+        text: 'A photograph, face to the wall. You leave it there.' },
+      { id: 'stain',  x: 0.82, y: 0.55, r: 80,
+        text: "Something was dragged here. Recently. You don't look at where it ends." },
+      { id: 'puddle', x: 0.50, y: 0.72, r: 80,
+        text: 'A puddle of water, or not water. Step around.' },
+      { id: 'door',   x: 0.50, y: 0.40, r: 100,
+        text: 'The hallway door. It is open, a crack.',
+        altText: 'The crack widens. You go through.',
+        goto: 'kitchen' },
+    ],
+  },
+  kitchen: {
+    id: 'kitchen',
+    title: 'III · THE KITCHEN',
+    draw: drawKitchen,
+    flashStart: { x: 0.5, y: 0.75 },
+    proximityOffset: 30,
+    interactables: [
+      { id: 'fridge',  x: 0.18, y: 0.45, r: 100,
+        text: 'The fridge is warm. The light inside is out.' },
+      { id: 'sink',    x: 0.78, y: 0.55, r: 90,
+        text: 'The tap drips. You count the drips. You stop counting at nine.' },
+      { id: 'counter', x: 0.50, y: 0.58, r: 100,
+        text: 'The counter. A clean, flat place to knock.',
+        altText: 'You place your knuckles flat on the wood.',
+        opensKnock: true },
+      { id: 'door',    x: 0.50, y: 0.35, r: 90,
+        text: 'The door to the foyer. It will not open yet — the creature is still in the next room.',
+        altText: 'The creature has gone to the other room. You go through.',
+        requires: 'knock_passed', goto: 'foyer' },
+    ],
+  },
+  foyer: {
+    id: 'foyer',
+    title: 'IV · THE FOYER',
+    draw: drawFoyer,
+    flashStart: { x: 0.5, y: 0.8 },
+    proximityOffset: 45,
+    interactables: [
+      { id: 'coat',   x: 0.22, y: 0.55, r: 90,
+        text: 'A coat on a hook. Your size. You do not own a coat.' },
+      { id: 'mirror', x: 0.78, y: 0.45, r: 90,
+        text: 'A mirror. Do not look too long.' },
+      { id: 'front',  x: 0.50, y: 0.48, r: 130,
+        text: 'The front door. It is locked from the inside. Your side.',
+        altText: 'The lock turns.',
+        goto: '__escape' },
+    ],
+  },
+};
+
+/* ---------- SCENE ART ----------
+ * Hand-drawn-ish, jagged white lines on pure black. Each scene draws once
+ * per entry (with a tiny seeded jitter so the room has a trembling life
+ * without redrawing every frame). */
+function jaggedLine(ctx, x1, y1, x2, y2, roughness = 1.5, segments = 18) {
+  ctx.beginPath();
+  for (let i = 0; i <= segments; i++) {
+    const t = i / segments;
+    const x = x1 + (x2 - x1) * t + (Math.random() - 0.5) * roughness;
+    const y = y1 + (y2 - y1) * t + (Math.random() - 0.5) * roughness;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+}
+function jaggedRect(ctx, x, y, w, h, r = 1.5) {
+  jaggedLine(ctx, x, y, x + w, y, r);
+  jaggedLine(ctx, x + w, y, x + w, y + h, r);
+  jaggedLine(ctx, x + w, y + h, x, y + h, r);
+  jaggedLine(ctx, x, y + h, x, y, r);
+}
+function crosshatch(ctx, x, y, w, h, spacing = 8) {
+  ctx.save();
+  ctx.globalAlpha = 0.5;
+  for (let i = 0; i < w + h; i += spacing) {
+    const x1 = Math.max(x, x + i - h);
+    const y1 = Math.min(y + h, y + i);
+    const x2 = Math.min(x + w, x + i);
+    const y2 = Math.max(y, y + i - w);
+    jaggedLine(ctx, x1, y1, x2, y2, 1, 4);
+  }
+  ctx.restore();
+}
+
+function drawBedroom(ctx, W, H) {
+  ctx.strokeStyle = '#eae4d6';
+  ctx.lineWidth = 1.2;
+  // back wall, floor, ceiling (vanishing-ish)
+  jaggedLine(ctx, 0, H * 0.25, W, H * 0.25, 2);       // ceiling line
+  jaggedLine(ctx, 0, H * 0.95, W, H * 0.95, 2);       // floor line
+  // bed — lower-left
+  const bx = W * 0.12, by = H * 0.62, bw = W * 0.28, bh = H * 0.22;
+  jaggedRect(ctx, bx, by, bw, bh, 2);
+  // bed headboard ridges
+  jaggedLine(ctx, bx, by, bx, by - 40, 1);
+  jaggedLine(ctx, bx + bw, by, bx + bw, by - 50, 1);
+  jaggedLine(ctx, bx, by - 40, bx + bw, by - 50, 2);
+  // rumpled sheet lines
+  for (let i = 0; i < 6; i++) {
+    const sy = by + 30 + i * 10;
+    jaggedLine(ctx, bx + 20, sy, bx + bw - 20, sy + 5, 3, 10);
+  }
+  // window — upper-left
+  const wx = W * 0.08, wy = H * 0.25, ww = W * 0.14, wh = H * 0.18;
+  jaggedRect(ctx, wx, wy, ww, wh, 2);
+  jaggedLine(ctx, wx + ww / 2, wy, wx + ww / 2, wy + wh, 1);
+  jaggedLine(ctx, wx, wy + wh / 2, wx + ww, wy + wh / 2, 1);
+  // dresser — right
+  const dx = W * 0.74, dy = H * 0.50, dw = W * 0.14, dh = H * 0.30;
+  jaggedRect(ctx, dx, dy, dw, dh, 2);
+  jaggedLine(ctx, dx, dy + dh * 0.33, dx + dw, dy + dh * 0.33, 1);
+  jaggedLine(ctx, dx, dy + dh * 0.66, dx + dw, dy + dh * 0.66, 1);
+  // drawer knobs
+  ctx.beginPath(); ctx.arc(dx + dw * 0.5, dy + dh * 0.17, 3, 0, 6.28); ctx.stroke();
+  ctx.beginPath(); ctx.arc(dx + dw * 0.5, dy + dh * 0.50, 3, 0, 6.28); ctx.stroke();
+  ctx.beginPath(); ctx.arc(dx + dw * 0.5, dy + dh * 0.82, 3, 0, 6.28); ctx.stroke();
+  // door — center-back
+  const ox = W * 0.44, oy = H * 0.28, ow = W * 0.12, oh = H * 0.32;
+  jaggedRect(ctx, ox, oy, ow, oh, 1.5);
+  ctx.beginPath(); ctx.arc(ox + ow - 8, oy + oh * 0.55, 2, 0, 6.28); ctx.stroke();
+  // a small shoe in the middle of the floor
+  const shx = W * 0.51, shy = H * 0.78;
+  jaggedLine(ctx, shx, shy, shx + 28, shy - 8, 1);
+  jaggedLine(ctx, shx + 28, shy - 8, shx + 34, shy - 4, 1);
+  jaggedLine(ctx, shx + 34, shy - 4, shx + 28, shy + 8, 1);
+  jaggedLine(ctx, shx + 28, shy + 8, shx, shy + 10, 1);
+  jaggedLine(ctx, shx, shy + 10, shx, shy, 1);
+}
+
+function drawHallway(ctx, W, H) {
+  ctx.strokeStyle = '#eae4d6';
+  ctx.lineWidth = 1.2;
+  // vanishing-point hallway
+  const cx = W * 0.5, cy = H * 0.5;
+  // perspective lines
+  jaggedLine(ctx, 0, 0, cx, cy, 2, 30);
+  jaggedLine(ctx, W, 0, cx, cy, 2, 30);
+  jaggedLine(ctx, 0, H, cx, cy, 2, 30);
+  jaggedLine(ctx, W, H, cx, cy, 2, 30);
+  // wall panels
+  for (let k = 1; k <= 4; k++) {
+    const r = k / 5;
+    const left  = cx - (cx) * (1 - r);
+    const right = cx + (W - cx) * (1 - r);
+    const top   = cy - (cy) * (1 - r);
+    const bot   = cy + (H - cy) * (1 - r);
+    jaggedLine(ctx, left, top, left, bot, 1, 14);
+    jaggedLine(ctx, right, top, right, bot, 1, 14);
+  }
+  // photograph, wall-left
+  const px = W * 0.13, py = H * 0.38, pw = 70, ph = 100;
+  jaggedRect(ctx, px, py, pw, ph, 1);
+  // stain, wall-right
+  ctx.globalAlpha = 0.7;
+  for (let i = 0; i < 6; i++) jaggedLine(ctx, W * 0.82 - 20 + i*6, H * 0.50, W * 0.82 - 25 + i*5, H * 0.70, 3, 8);
+  ctx.globalAlpha = 1;
+  // puddle
+  ctx.beginPath();
+  const ex = W * 0.5, ey = H * 0.72;
+  for (let a = 0; a < Math.PI * 2; a += 0.15) {
+    const rr = 40 + Math.random() * 6;
+    const x = ex + Math.cos(a) * rr;
+    const y = ey + Math.sin(a) * rr * 0.4;
+    if (a === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath(); ctx.stroke();
+  // far door
+  const dx = cx - 40, dy = cy - 80, dw = 80, dh = 160;
+  jaggedRect(ctx, dx, dy, dw, dh, 1);
+  ctx.beginPath(); ctx.arc(dx + dw - 10, dy + dh * 0.55, 2, 0, 6.28); ctx.stroke();
+}
+
+function drawKitchen(ctx, W, H) {
+  ctx.strokeStyle = '#eae4d6';
+  ctx.lineWidth = 1.2;
+  // back wall, floor
+  jaggedLine(ctx, 0, H * 0.32, W, H * 0.32, 2);
+  jaggedLine(ctx, 0, H * 0.95, W, H * 0.95, 2);
+  // fridge (left)
+  const fx = W * 0.10, fy = H * 0.20, fw = W * 0.16, fh = H * 0.55;
+  jaggedRect(ctx, fx, fy, fw, fh, 1.5);
+  jaggedLine(ctx, fx, fy + fh * 0.35, fx + fw, fy + fh * 0.35, 1);
+  ctx.beginPath(); ctx.arc(fx + fw - 12, fy + fh * 0.5, 2, 0, 6.28); ctx.stroke();
+  // sink (right)
+  const sx = W * 0.68, sy = H * 0.48, sw = W * 0.22, sh = H * 0.10;
+  jaggedRect(ctx, sx, sy, sw, sh, 1.5);
+  jaggedLine(ctx, sx + sw * 0.5, sy, sx + sw * 0.5, sy - 36, 1);
+  // counter (center-bottom)
+  const cx1 = W * 0.30, cy1 = H * 0.55, cw = W * 0.40, ch = H * 0.08;
+  jaggedRect(ctx, cx1, cy1, cw, ch, 1.5);
+  // rough plank lines on the counter
+  for (let i = 1; i < 5; i++) jaggedLine(ctx, cx1 + cw * (i/5), cy1 + 2, cx1 + cw * (i/5), cy1 + ch - 2, 1, 6);
+  // door (back)
+  const dx = W * 0.44, dy = H * 0.22, dw = W * 0.12, dh = H * 0.26;
+  jaggedRect(ctx, dx, dy, dw, dh, 1.5);
+  ctx.beginPath(); ctx.arc(dx + dw - 8, dy + dh * 0.55, 2, 0, 6.28); ctx.stroke();
+}
+
+function drawFoyer(ctx, W, H) {
+  ctx.strokeStyle = '#eae4d6';
+  ctx.lineWidth = 1.2;
+  jaggedLine(ctx, 0, H * 0.30, W, H * 0.30, 2);
+  jaggedLine(ctx, 0, H * 0.95, W, H * 0.95, 2);
+  // front door — large, center
+  const dx = W * 0.38, dy = H * 0.28, dw = W * 0.24, dh = H * 0.55;
+  jaggedRect(ctx, dx, dy, dw, dh, 2);
+  jaggedRect(ctx, dx + 12, dy + 18, dw - 24, dh * 0.4, 1);
+  jaggedRect(ctx, dx + 12, dy + dh * 0.55, dw - 24, dh * 0.35, 1);
+  // doorknob
+  ctx.beginPath(); ctx.arc(dx + dw - 24, dy + dh * 0.55, 4, 0, 6.28); ctx.stroke();
+  // coat hook (left)
+  const hx = W * 0.18, hy = H * 0.40;
+  jaggedLine(ctx, hx, hy, hx, hy - 20, 1);
+  jaggedLine(ctx, hx - 10, hy - 20, hx + 10, hy - 20, 1);
+  // coat hanging
+  jaggedLine(ctx, hx - 20, hy, hx + 20, hy, 2);
+  jaggedLine(ctx, hx - 25, hy, hx - 30, hy + 80, 2);
+  jaggedLine(ctx, hx + 25, hy, hx + 30, hy + 80, 2);
+  jaggedLine(ctx, hx - 30, hy + 80, hx + 30, hy + 80, 2);
+  // mirror (right)
+  const mx = W * 0.72, my = H * 0.33, mw = W * 0.14, mh = H * 0.22;
+  jaggedRect(ctx, mx, my, mw, mh, 1.5);
+  // faint crosshatch inside mirror
+  crosshatch(ctx, mx + 4, my + 4, mw - 8, mh - 8, 12);
+}
+
+/* ---------- GLIMPSE ART ----------
+ * Drawn sparingly at high proximity. A face, a hand, an open mouth — each
+ * as a tiny jagged SVG sliver positioned off-center. Max 3 total per run. */
+const GLIMPSES = [
+  // face in a window
+  (W, H) => `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <g stroke="#eae4d6" stroke-width="1.2" fill="none">
+      <ellipse cx="${W*0.15}" cy="${H*0.32}" rx="32" ry="44"/>
+      <circle cx="${W*0.15-10}" cy="${H*0.30}" r="3"/>
+      <circle cx="${W*0.15+10}" cy="${H*0.30}" r="3"/>
+      <path d="M ${W*0.15-10} ${H*0.40} Q ${W*0.15} ${H*0.44} ${W*0.15+10} ${H*0.40}"/>
+    </g></svg>`,
+  // a hand from the edge
+  (W, H) => `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <g stroke="#eae4d6" stroke-width="1.2" fill="none">
+      <path d="M ${W} ${H*0.6}
+               L ${W*0.88} ${H*0.55}
+               L ${W*0.82} ${H*0.57}
+               L ${W*0.80} ${H*0.62}
+               L ${W*0.83} ${H*0.66}
+               L ${W*0.87} ${H*0.64}
+               L ${W*0.92} ${H*0.66}"/>
+      <path d="M ${W*0.88} ${H*0.55} L ${W*0.85} ${H*0.48}"/>
+      <path d="M ${W*0.86} ${H*0.56} L ${W*0.82} ${H*0.50}"/>
+      <path d="M ${W*0.84} ${H*0.58} L ${W*0.80} ${H*0.53}"/>
+    </g></svg>`,
+  // an open mouth, larger than it should be
+  (W, H) => `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <g stroke="#eae4d6" stroke-width="1.2" fill="none">
+      <ellipse cx="${W*0.5}" cy="${H*0.42}" rx="46" ry="24"/>
+      <path d="M ${W*0.5-38} ${H*0.42} L ${W*0.5-34} ${H*0.40} M ${W*0.5-28} ${H*0.42} L ${W*0.5-26} ${H*0.40}
+               M ${W*0.5-18} ${H*0.42} L ${W*0.5-16} ${H*0.40} M ${W*0.5-8} ${H*0.42} L ${W*0.5-6} ${H*0.40}
+               M ${W*0.5+2} ${H*0.42} L ${W*0.5+4} ${H*0.40} M ${W*0.5+12} ${H*0.42} L ${W*0.5+14} ${H*0.40}
+               M ${W*0.5+22} ${H*0.42} L ${W*0.5+24} ${H*0.40} M ${W*0.5+32} ${H*0.42} L ${W*0.5+34} ${H*0.40}"/>
+    </g></svg>`,
+];
+
+/* ============================================================
+ * AudioEngine — generates every sound live via Web Audio API.
+ * No samples, no files. A handful of short helper methods spawn
+ * one-shots; long tones (drone) have persistent nodes kept on `this`.
+ * ============================================================ */
+class AudioEngine {
+  constructor() {
+    this.ctx = null;
+    this.master = null;
+    this.muted = false;
+    this.nodes = {};
+  }
+
+  init() {
+    if (this.ctx) return;
+    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    this.master = this.ctx.createGain();
+    this.master.gain.value = 0.9;
+    this.master.connect(this.ctx.destination);
+    this._initDrone();
+  }
+
+  _noise(duration) {
+    const n = Math.floor(this.ctx.sampleRate * duration);
+    const b = this.ctx.createBuffer(1, n, this.ctx.sampleRate);
+    const d = b.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+    return b;
+  }
+
+  _initDrone() {
+    // Two detuned sines w/ a slow LFO on one of them. Starts silent; intensity
+    // is ramped from outside via setDroneIntensity(proximity).
+    const ctx = this.ctx;
+    const o1 = ctx.createOscillator(); o1.type = 'sine'; o1.frequency.value = 55;
+    const o2 = ctx.createOscillator(); o2.type = 'sine'; o2.frequency.value = 82.5;
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.23;
+    const lfoGain = ctx.createGain(); lfoGain.gain.value = 8;
+    lfo.connect(lfoGain); lfoGain.connect(o2.detune);
+    const g = ctx.createGain(); g.gain.value = 0.0;
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass'; filter.frequency.value = 400;
+    o1.connect(g); o2.connect(g);
+    g.connect(filter); filter.connect(this.master);
+    o1.start(); o2.start(); lfo.start();
+    this.nodes.drone = { g };
+  }
+
+  setDroneIntensity(p) {
+    if (!this.nodes.drone) return;
+    // 0.02 at p=0, up to 0.22 at p=100. Ramped so it doesn't click.
+    const target = 0.02 + (p / 100) * 0.22;
+    this.nodes.drone.g.gain.linearRampToValueAtTime(target, this.ctx.currentTime + 0.4);
+  }
+
+  // One breath-like noise burst, panned stereo.
+  breath() {
+    const ctx = this.ctx;
+    const src = ctx.createBufferSource(); src.buffer = this._noise(1.8);
+    const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 450; f.Q.value = 2.5;
+    const g = ctx.createGain();
+    const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+    const now = ctx.currentTime;
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.08, now + 0.35);
+    g.gain.linearRampToValueAtTime(0.14, now + 0.85);
+    g.gain.linearRampToValueAtTime(0, now + 1.7);
+    src.connect(f).connect(g);
+    if (pan) { pan.pan.value = (Math.random() - 0.5) * 1.7; g.connect(pan).connect(this.master); }
+    else g.connect(this.master);
+    src.start(now); src.stop(now + 1.9);
+  }
+
+  // Two-pulse heartbeat. BPM is whatever you schedule it at; the audio
+  // itself is just the thump-thump.
+  heartbeat() {
+    const ctx = this.ctx;
+    for (const offset of [0, 0.16]) {
+      const osc = ctx.createOscillator(); osc.type = 'sine';
+      const now = ctx.currentTime + offset;
+      osc.frequency.setValueAtTime(90, now);
+      osc.frequency.exponentialRampToValueAtTime(38, now + 0.18);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(0.22, now + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.connect(g).connect(this.master);
+      osc.start(now); osc.stop(now + 0.28);
+    }
+  }
+
+  // A soft footfall. Short low thud + a scrap of high-filtered noise.
+  footstep() {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator(); osc.type = 'triangle';
+    osc.frequency.setValueAtTime(130, now);
+    osc.frequency.exponentialRampToValueAtTime(50, now + 0.08);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.05, now + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+    osc.connect(g).connect(this.master);
+    osc.start(now); osc.stop(now + 0.15);
+    // tiny scuff
+    const ns = ctx.createBufferSource(); ns.buffer = this._noise(0.12);
+    const nf = ctx.createBiquadFilter(); nf.type = 'highpass'; nf.frequency.value = 2200;
+    const ng = ctx.createGain();
+    ng.gain.setValueAtTime(0.025, now); ng.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+    ns.connect(nf).connect(ng).connect(this.master);
+    ns.start(now); ns.stop(now + 0.15);
+  }
+
+  // Sudden loud gasp — when breath runs out.
+  gasp() {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const ns = ctx.createBufferSource(); ns.buffer = this._noise(0.5);
+    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 700; f.Q.value = 0.6;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.38, now + 0.04);
+    g.gain.linearRampToValueAtTime(0, now + 0.42);
+    ns.connect(f).connect(g).connect(this.master);
+    ns.start(now); ns.stop(now + 0.5);
+  }
+
+  // A "wet footstep" — a thud with a water-ish noise tail. Used at high proximity.
+  wetstep() {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator(); osc.type = 'sine';
+    osc.frequency.setValueAtTime(70, now);
+    osc.frequency.exponentialRampToValueAtTime(30, now + 0.15);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.15, now + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+    osc.connect(g).connect(this.master);
+    osc.start(now); osc.stop(now + 0.35);
+    // wet noise
+    const ns = ctx.createBufferSource(); ns.buffer = this._noise(0.3);
+    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 900; f.Q.value = 3;
+    const ng = ctx.createGain();
+    ng.gain.setValueAtTime(0, now);
+    ng.gain.linearRampToValueAtTime(0.08, now + 0.05);
+    ng.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+    const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+    ns.connect(f).connect(ng);
+    if (pan) { pan.pan.value = (Math.random() - 0.5) * 1.9; ng.connect(pan).connect(this.master); }
+    else ng.connect(this.master);
+    ns.start(now); ns.stop(now + 0.35);
+  }
+
+  // Vaguely vocal whisper burst. Formant-ish via bandpass filter on saw.
+  whisper() {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator(); osc.type = 'sawtooth';
+    osc.frequency.value = 120 + Math.random() * 80;
+    const f1 = ctx.createBiquadFilter(); f1.type = 'bandpass'; f1.frequency.value = 1200 + Math.random() * 500; f1.Q.value = 6;
+    const f2 = ctx.createBiquadFilter(); f2.type = 'bandpass'; f2.frequency.value = 2400 + Math.random() * 400; f2.Q.value = 10;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.035, now + 0.12);
+    g.gain.linearRampToValueAtTime(0, now + 0.55);
+    const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+    osc.connect(f1).connect(f2).connect(g);
+    if (pan) { pan.pan.value = (Math.random() - 0.5) * 2; g.connect(pan).connect(this.master); }
+    else g.connect(this.master);
+    osc.start(now); osc.stop(now + 0.6);
+  }
+
+  // Radio-static bed during the monologue.
+  radioStatic(duration = 2) {
+    const ctx = this.ctx;
+    const ns = ctx.createBufferSource(); ns.buffer = this._noise(duration); ns.loop = true;
+    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 1300; f.Q.value = 0.4;
+    const g = ctx.createGain(); g.gain.value = 0.05;
+    ns.connect(f).connect(g).connect(this.master);
+    ns.start();
+    this.nodes.radio = { ns, g };
+  }
+  stopRadio() {
+    if (!this.nodes.radio) return;
+    this.nodes.radio.g.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.4);
+    setTimeout(() => { try { this.nodes.radio.ns.stop(); } catch(e) {} this.nodes.radio = null; }, 500);
+  }
+
+  // Knock: a hollow wooden thud. Short or long duration.
+  knock(long = false) {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator(); osc.type = 'sine';
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.exponentialRampToValueAtTime(60, now + (long ? 0.35 : 0.12));
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.22, now + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, now + (long ? 0.4 : 0.15));
+    const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 1200;
+    osc.connect(f).connect(g).connect(this.master);
+    osc.start(now); osc.stop(now + (long ? 0.45 : 0.18));
+  }
+
+  // Door-open: a low creak.
+  doorOpen() {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const ns = ctx.createBufferSource(); ns.buffer = this._noise(1.4);
+    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 400; f.Q.value = 6;
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 3;
+    const lfoGain = ctx.createGain(); lfoGain.gain.value = 150;
+    lfo.connect(lfoGain); lfoGain.connect(f.frequency);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.1, now + 0.2);
+    g.gain.linearRampToValueAtTime(0, now + 1.3);
+    ns.connect(f).connect(g).connect(this.master);
+    ns.start(now); ns.stop(now + 1.4);
+    lfo.start(now); lfo.stop(now + 1.4);
+  }
+
+  // Creature-close bed: a slow filtered-noise swell. Returns a stop handle.
+  creatureSwell() {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const ns = ctx.createBufferSource(); ns.buffer = this._noise(2); ns.loop = true;
+    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 300; f.Q.value = 4;
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.5 + Math.random() * 0.6;
+    const lfoGain = ctx.createGain(); lfoGain.gain.value = 180;
+    lfo.connect(lfoGain); lfoGain.connect(f.frequency);
+    const g = ctx.createGain(); g.gain.value = 0;
+    g.gain.linearRampToValueAtTime(0.15, now + 0.8);
+    ns.connect(f).connect(g).connect(this.master);
+    ns.start(now); lfo.start(now);
+    this.nodes.creature = { ns, lfo, g };
+  }
+  stopCreature() {
+    if (!this.nodes.creature) return;
+    const c = this.nodes.creature;
+    c.g.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.6);
+    setTimeout(() => { try { c.ns.stop(); c.lfo.stop(); } catch(e) {} }, 700);
+    this.nodes.creature = null;
+  }
+
+  setMute(m) {
+    this.muted = m;
+    if (this.master) this.master.gain.linearRampToValueAtTime(m ? 0 : 0.9, this.ctx.currentTime + 0.25);
+  }
+
+  suspend() { if (this.ctx && this.ctx.state === 'running') this.ctx.suspend(); }
+  resume()  { if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); }
+}
+
+/* ============================================================
+ * MicMonitor — reads RMS level from the mic in real time.
+ *
+ * How it works:
+ *   - getUserMedia({audio:true}) -> MediaStreamSource -> AnalyserNode
+ *   - Each tick, grab 512 time-domain samples (getByteTimeDomainData),
+ *     convert each to [-1, 1], square, average, sqrt  =>  RMS in 0..~1.
+ *   - Typical "quiet room" RMS is ~0.002. Breathing around 0.01-0.03.
+ *     Talking is 0.05+. Thresholds in ProximityController are tuned to these.
+ *
+ * Fallback (permission denied or mic unavailable):
+ *   - We count keypresses in a rolling 2-second window and compute a
+ *     pseudo-RMS from the rate. Rapid mashing gives a high value; slow,
+ *     deliberate movement stays quiet. Same threshold comparison applies.
+ * ============================================================ */
+class MicMonitor {
+  constructor() {
+    this.analyser = null;
+    this.data = null;
+    this.enabled = false;
+    this.denied = false;
+    this.stream = null;
+    this.rms = 0;
+    // fallback
+    this.keyTimes = [];
+    this.fallbackActive = false;
+  }
+
+  async init(audioCtx) {
+    try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('no mic api');
+      this.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+      const src = audioCtx.createMediaStreamSource(this.stream);
+      this.analyser = audioCtx.createAnalyser();
+      this.analyser.fftSize = 512;
+      src.connect(this.analyser);
+      this.data = new Uint8Array(this.analyser.fftSize);
+      this.enabled = true;
+      return true;
+    } catch (err) {
+      console.warn('[MicMonitor] mic denied or unavailable:', err && err.name);
+      this.denied = true;
+      this.fallbackActive = true;
+      return false;
+    }
+  }
+
+  denyFallback() {
+    this.denied = true;
+    this.fallbackActive = true;
+  }
+
+  update() {
+    if (this.enabled && this.analyser) {
+      this.analyser.getByteTimeDomainData(this.data);
+      let sum = 0;
+      for (let i = 0; i < this.data.length; i++) {
+        const v = (this.data[i] - 128) / 128;
+        sum += v * v;
+      }
+      this.rms = Math.sqrt(sum / this.data.length);
+      return this.rms;
+    }
+    if (this.fallbackActive) return this._fallbackLevel();
+    return 0;
+  }
+
+  noteKey() {
+    if (!this.fallbackActive) return;
+    const t = performance.now();
+    this.keyTimes.push(t);
+    while (this.keyTimes.length && t - this.keyTimes[0] > 2000) this.keyTimes.shift();
+  }
+
+  _fallbackLevel() {
+    const t = performance.now();
+    while (this.keyTimes.length && t - this.keyTimes[0] > 2000) this.keyTimes.shift();
+    // 0..1 pseudo-RMS. 6 keys in 2s ≈ 0.08 (above threshold).
+    return Math.min(1, this.keyTimes.length / 14);
+  }
+
+  close() {
+    if (this.stream) this.stream.getTracks().forEach(t => t.stop());
+    this.stream = null;
+    this.enabled = false;
+  }
+}
+
+/* ============================================================
+ * ProximityController
+ *
+ * The central state machine. One value: `proximity` in [0, 100].
+ *
+ * Ticks every 100ms:
+ *   rms = mic.update()  (or fallback)
+ *   if breath is held:  effRms = rms * 0.3     (mic sensitivity reduced)
+ *   if effRms > THRESHOLD:
+ *       proximity += (effRms - THRESHOLD) * NOISE_GAIN
+ *       mark "noisy just now"
+ *   else if been quiet AND not moving for >= STILLNESS_MS:
+ *       proximity -= DECAY_PER_TICK
+ *
+ * Plus discrete events:
+ *   step() -> proximity += STEP_COST
+ *   breathOutTimeout -> gasp + proximity += GASP_COST
+ *
+ * Audio triggers (thresholds):
+ *   >= BREATH_P       ambient breathing (stereo-panned)
+ *   >= HEARTBEAT_P    heartbeat at BPM scaled with proximity
+ *   >= CREATURE_P     creature-swell sound bed
+ *   >= WHISPER_P      whispers
+ *   >= DEATH_P        death
+ *
+ * All tuning constants are grouped at the top of the class for easy
+ * difficulty adjustment.
+ * ============================================================ */
+class ProximityController {
+  constructor(mic, audio) {
+    // ---- tuning ----
+    this.THRESHOLD         = 0.045;  // RMS above which noise is counted
+    this.NOISE_GAIN        = 90;     // how hard noise pushes proximity up
+    this.DECAY_PER_TICK    = 0.9;    // per 100ms tick when quiet
+    this.STILLNESS_MS      = 3000;   // how long quiet+still before decay begins
+    this.STEP_COST         = 2.2;    // proximity added per movement step
+    this.GASP_COST         = 22;     // added when breath-hold expires
+    this.BREATH_P          = 50;
+    this.HEARTBEAT_P       = 75;
+    this.CREATURE_P        = 72;
+    this.WHISPER_P         = 90;
+    this.DEATH_P           = 100;
+    // ----
+
+    this.mic = mic;
+    this.audio = audio;
+    this.proximity = 0;
+    this.breathHold = false;
+    this.breathEndsAt = 0;
+    this.breathHoldStart = 0;
+    this.breathMax = 5000; // 5 seconds
+    this.lastNoiseTime = 0;
+    this.lastStepTime = 0;
+    this.tickHandle = null;
+    this.onDeath = null;
+    this.onRmsChange = null;
+    this.onBreathUpdate = null;
+    this._lastBreath = 0;
+    this._lastHeart  = 0;
+    this._lastWhisper= 0;
+    this._creatureOn = false;
+    this._paused = false;
+  }
+
+  start() {
+    this.lastNoiseTime = performance.now();
+    this.lastStepTime = performance.now();
+    this.tickHandle = setInterval(() => this._tick(), 100);
+  }
+  stop() { if (this.tickHandle) clearInterval(this.tickHandle); this.tickHandle = null; if (this._creatureOn) { this.audio.stopCreature(); this._creatureOn = false; } }
+  pause() { this._paused = true; if (this._creatureOn) { this.audio.stopCreature(); this._creatureOn = false; } }
+  resume() { this._paused = false; this.lastNoiseTime = performance.now(); this.lastStepTime = performance.now(); }
+  reset(offset = 0) {
+    this.proximity = offset;
+    this.breathHold = false;
+    this.lastNoiseTime = performance.now();
+    this.lastStepTime = performance.now();
+    if (this._creatureOn) { this.audio.stopCreature(); this._creatureOn = false; }
+  }
+
+  step() {
+    this.proximity = Math.min(100, this.proximity + this.STEP_COST);
+    this.lastStepTime = performance.now();
+    this.audio.footstep();
+  }
+
+  startBreathHold() {
+    if (this.breathHold) return;
+    this.breathHold = true;
+    this.breathHoldStart = performance.now();
+    this.breathEndsAt = this.breathHoldStart + this.breathMax;
+  }
+  endBreathHold() {
+    this.breathHold = false;
+  }
+
+  _tick() {
+    if (this._paused) return;
+    const now = performance.now();
+    const rms = this.mic.update();
+    if (this.onRmsChange) this.onRmsChange(rms);
+
+    // Breath hold timeout -> forced gasp.
+    if (this.breathHold) {
+      if (now >= this.breathEndsAt) {
+        this.breathHold = false;
+        this.audio.gasp();
+        this.proximity = Math.min(100, this.proximity + this.GASP_COST);
+      }
+      if (this.onBreathUpdate) {
+        const remain = Math.max(0, this.breathEndsAt - now) / this.breathMax;
+        this.onBreathUpdate(remain);
+      }
+    } else if (this.onBreathUpdate) this.onBreathUpdate(null);
+
+    const effective = this.breathHold ? rms * 0.3 : rms;
+    if (effective > this.THRESHOLD) {
+      const over = effective - this.THRESHOLD;
+      this.proximity = Math.min(100, this.proximity + over * this.NOISE_GAIN * 0.1); // *0.1 because this runs 10Hz
+      this.lastNoiseTime = now;
+    } else {
+      if (now - this.lastNoiseTime > this.STILLNESS_MS && now - this.lastStepTime > this.STILLNESS_MS) {
+        this.proximity = Math.max(0, this.proximity - this.DECAY_PER_TICK);
+      }
+    }
+
+    this.audio.setDroneIntensity(this.proximity);
+    this._scheduleReactiveAudio(now);
+
+    if (this.proximity >= this.DEATH_P && this.onDeath) {
+      this.onDeath();
+    }
+  }
+
+  _scheduleReactiveAudio(now) {
+    // breathing
+    if (this.proximity >= this.BREATH_P) {
+      const interval = Math.max(1500, 4500 - this.proximity * 25);
+      if (now - this._lastBreath > interval) { this.audio.breath(); this._lastBreath = now; }
+    }
+    // creature swell: persistent bed at CREATURE_P+
+    if (this.proximity >= this.CREATURE_P && !this._creatureOn) {
+      this.audio.creatureSwell(); this._creatureOn = true;
+    } else if (this.proximity < this.CREATURE_P - 8 && this._creatureOn) {
+      this.audio.stopCreature(); this._creatureOn = false;
+    }
+    // heartbeat
+    if (this.proximity >= this.HEARTBEAT_P) {
+      const bpm = 60 + (this.proximity - 75) * 4;   // 60 → 160
+      const period = 60000 / bpm;
+      if (now - this._lastHeart > period) { this.audio.heartbeat(); this._lastHeart = now; }
+      // one wet-step occasionally
+      if (Math.random() < 0.02) this.audio.wetstep();
+    }
+    // whispers
+    if (this.proximity >= this.WHISPER_P) {
+      if (now - this._lastWhisper > 500 + Math.random() * 800) {
+        this.audio.whisper(); this._lastWhisper = now;
+      }
+    }
+  }
+}
+
+/* ============================================================
+ * Renderer — canvas + DOM layer management.
+ * ============================================================ */
+class Renderer {
+  constructor() {
+    this.canvas = document.getElementById('scene-canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.W = 0; this.H = 0;
+    this._resize();
+    window.addEventListener('resize', () => { this._resize(); if (this.currentScene) this.drawScene(this.currentScene); });
+    this.currentScene = null;
+  }
+  _resize() {
+    const dpr = Math.min(devicePixelRatio, 2);
+    this.W = innerWidth; this.H = innerHeight;
+    this.canvas.width = this.W * dpr; this.canvas.height = this.H * dpr;
+    this.canvas.style.width = this.W + 'px'; this.canvas.style.height = this.H + 'px';
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  drawScene(scene) {
+    this.currentScene = scene;
+    const ctx = this.ctx;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, this.W, this.H);
+    scene.draw(ctx, this.W, this.H);
+  }
+  setFlashlight(x, y, radius) {
+    document.documentElement.style.setProperty('--flash-x', x + 'px');
+    document.documentElement.style.setProperty('--flash-y', y + 'px');
+    document.documentElement.style.setProperty('--flash-r', radius + 'px');
+  }
+  setVignette(proximity) {
+    // from 0.9 base to 0.98 at high proximity (screen tightens)
+    const v = 0.9 + (proximity / 100) * 0.08;
+    document.documentElement.style.setProperty('--vignette', v.toFixed(3));
+    // chromatic aberration ramps in above 70
+    const ca = Math.max(0, (proximity - 70) / 6);
+    const chr = document.getElementById('chroma');
+    chr.style.opacity = Math.min(1, (proximity - 70) / 30).toFixed(3);
+    document.documentElement.style.setProperty('--ca', ca + 'px');
+    // tremor (subtle text wobble)
+    document.documentElement.style.setProperty('--tremor', (proximity / 100 * 3).toFixed(2) + 'px');
+  }
+  flashGlimpse() {
+    const W = this.W, H = this.H;
+    const chooser = GLIMPSES[Math.floor(Math.random() * GLIMPSES.length)];
+    const el = document.getElementById('glimpse');
+    el.innerHTML = chooser(W, H);
+    el.classList.remove('show');
+    void el.offsetWidth; // restart animation
+    el.classList.add('show');
+  }
+  showText(text, ms = 3500, glitch = false) {
+    const el = document.getElementById('text-overlay');
+    el.textContent = '';
+    if (glitch) {
+      el.classList.add('glitch');
+      for (const ch of text) {
+        const span = document.createElement('span');
+        span.className = 'g';
+        span.textContent = ch;
+        span.style.animationDelay = (Math.random() * 0.3) + 's';
+        el.appendChild(span);
+      }
+    } else {
+      el.classList.remove('glitch');
+      el.textContent = text;
+    }
+    el.classList.add('show');
+    clearTimeout(this._textTimer);
+    this._textTimer = setTimeout(() => el.classList.remove('show'), ms);
+  }
+  setBreathMeter(value) {
+    const el = document.getElementById('breath-meter');
+    if (value == null) { el.classList.remove('active'); return; }
+    el.classList.add('active');
+    el.querySelector('.fill').style.width = (value * 100) + '%';
+  }
+}
+
+/* ============================================================
+ * Game — controller / state machine.
+ * ============================================================ */
+class Game {
+  constructor() {
+    this.audio = new AudioEngine();
+    this.mic = new MicMonitor();
+    this.prox = new ProximityController(this.mic, this.audio);
+    this.renderer = new Renderer();
+    this.mode = 'title';  // title, mic, radio, playing, paused, death, escape
+    this.sceneId = null;
+    this.scene = null;
+    this.flash = { x: 0, y: 0, r: 200 };
+    this.baseFlashR = 200;
+    this.inventory = new Set();
+    this.glimpsesShown = 0;
+    this.GLIMPSE_CAP = 3;
+    this._knockSession = null;
+    this.prox.onDeath = () => this._onDeath();
+    this.prox.onBreathUpdate = (v) => this.renderer.setBreathMeter(v);
+    this._bindEvents();
+  }
+
+  _bindEvents() {
+    document.getElementById('btn-begin').onclick = () => this._showMicScreen();
+    document.getElementById('btn-mic-allow').onclick = () => this._requestMic();
+    document.getElementById('btn-mic-deny').onclick = () => this._micDenied();
+    document.getElementById('btn-retry').onclick = () => this._restartScene();
+    document.getElementById('btn-quit-death').onclick = () => this._quitToTitle();
+    document.getElementById('btn-escape-menu').onclick = () => this._quitToTitle();
+    document.getElementById('btn-resume').onclick = () => this._resume();
+    document.getElementById('btn-restart-scene').onclick = () => { this._restartScene(); this._resume(); };
+    document.getElementById('btn-quit-pause').onclick = () => this._quitToTitle();
+    document.getElementById('mute-btn').onclick = () => {
+      const muted = !this.audio.muted;
+      this.audio.setMute(muted);
+      document.getElementById('mute-btn').textContent = muted ? 'UNMUTE' : 'MUTE';
+    };
+    document.addEventListener('keydown', (e) => this._onKey(e));
+    document.addEventListener('keyup',   (e) => this._onKeyUp(e));
+    // knock input: handled on knock-pad via mousedown/up
+    const pad = document.getElementById('knock-pad');
+    pad.addEventListener('mousedown', () => this._knockDown());
+    pad.addEventListener('mouseup',   () => this._knockUp());
+  }
+
+  /* ---- boot / intro flow ---- */
+  _showMicScreen() {
+    try { this.audio.init(); } catch(e) {}
+    this.mode = 'mic';
+    document.getElementById('title-screen').classList.add('hidden');
+    document.getElementById('mic-screen').classList.remove('hidden');
+  }
+  async _requestMic() {
+    await this.mic.init(this.audio.ctx);
+    this._startMonologue();
+  }
+  _micDenied() {
+    this.mic.denyFallback();
+    this._startMonologue();
+  }
+  _startMonologue() {
+    this.mode = 'radio';
+    this._monologueDone = false;
+    document.getElementById('mic-screen').classList.add('hidden');
+    document.getElementById('radio-screen').classList.remove('hidden');
+    this.audio.radioStatic();
+    const container = document.getElementById('radio-lines');
+    container.innerHTML = '';
+    let delay = 0;
+    const cont = document.getElementById('radio-continue');
+    cont.classList.remove('show');
+    MONOLOGUE.forEach((entry, i) => {
+      setTimeout(() => {
+        if (entry.pattern) {
+          // play the knocking pattern in real time and display dots/dashes
+          const div = document.createElement('div');
+          div.className = 'line pattern-demo';
+          div.textContent = '';
+          container.appendChild(div);
+          KNOCK_PATTERN.forEach((k, j) => {
+            setTimeout(() => {
+              this.audio.knock(k === 'L');
+              div.textContent = div.textContent + (k === 'L' ? ' \u2014 ' : ' . ');
+            }, j * 700);
+          });
+        } else {
+          const div = document.createElement('div');
+          div.className = 'line';
+          if (entry.speaker) {
+            const sp = document.createElement('div');
+            sp.className = 'speaker';
+            sp.textContent = entry.speaker;
+            div.appendChild(sp);
+          }
+          const body = document.createElement('div');
+          body.textContent = entry.text;
+          div.appendChild(body);
+          container.appendChild(div);
+        }
+      }, delay);
+      delay += entry.pattern ? 3400 : 2100;
+    });
+    setTimeout(() => {
+      cont.classList.add('show');
+      this._monologueDone = true;
+    }, delay + 400);
+  }
+  _wakeUp() {
+    if (!this._monologueDone) return;
+    this.audio.stopRadio();
+    document.getElementById('radio-screen').classList.add('hidden');
+    this.mode = 'playing';
+    this.prox.start();
+    this._gotoScene('bedroom');
+  }
+
+  /* ---- scene flow ---- */
+  _gotoScene(id) {
+    this.sceneId = id;
+    this.scene = SCENES[id];
+    if (!this.scene) return;
+    this.flash.x = innerWidth * this.scene.flashStart.x;
+    this.flash.y = innerHeight * this.scene.flashStart.y;
+    this.prox.reset(this.scene.proximityOffset || 0);
+    this.renderer.drawScene(this.scene);
+    this._updateFlashlight();
+    this.renderer.showText(this.scene.title, 2800);
+    // clear any scene-specific inventory gate (knock_passed etc.) on restart
+  }
+
+  _restartScene() {
+    this._hideAllOverlays();
+    this.mode = 'playing';
+    this.prox.resume();
+    if (this.sceneId) this._gotoScene(this.sceneId);
+    if (this.prox.tickHandle == null) this.prox.start();
+  }
+
+  _hideAllOverlays() {
+    for (const id of ['title-screen','mic-screen','radio-screen','death-screen','escape-screen','pause-screen']) {
+      document.getElementById(id).classList.add('hidden');
+    }
+    document.getElementById('knock-pad').classList.remove('active');
+  }
+
+  _quitToTitle() {
+    this.prox.stop();
+    this.audio.stopCreature();
+    this.audio.stopRadio();
+    this._hideAllOverlays();
+    document.getElementById('title-screen').classList.remove('hidden');
+    this.mode = 'title';
+    this.inventory.clear();
+    this.glimpsesShown = 0;
+    // clear scene
+    this.renderer.ctx.clearRect(0, 0, this.renderer.W, this.renderer.H);
+  }
+
+  /* ---- input ---- */
+  _onKey(e) {
+    if (this.mode === 'title' || this.mode === 'mic') return;
+    if (this.mode === 'radio') {
+      if (this._monologueDone) this._wakeUp();
+      return;
+    }
+    if (this.mode === 'death' || this.mode === 'escape') return;
+    if (e.key === 'Escape') {
+      this._togglePause();
+      return;
+    }
+    if (this.mode === 'paused') return;
+    if (this.mode !== 'playing') return;
+
+    // if knock pad active, ignore movement keys
+    if (this._knockSession && this._knockSession.active) {
+      // allow Escape only (handled above)
+      return;
+    }
+
+    this.mic.noteKey(); // count all keys in fallback mode
+
+    const k = e.key.toLowerCase();
+    if (k === ' ') {
+      e.preventDefault();
+      this.prox.startBreathHold();
+      return;
+    }
+    if (k === 'e') { this._tryInteract(); return; }
+    let dx = 0, dy = 0;
+    if (k === 'arrowup' || k === 'w')    dy = -1;
+    else if (k === 'arrowdown' || k === 's')  dy =  1;
+    else if (k === 'arrowleft' || k === 'a')  dx = -1;
+    else if (k === 'arrowright'|| k === 'd')  dx =  1;
+    if (dx || dy) this._move(dx, dy);
+  }
+  _onKeyUp(e) {
+    if (e.key === ' ' && this.mode === 'playing') {
+      this.prox.endBreathHold();
+    }
+  }
+
+  /* ---- movement / flashlight ---- */
+  _move(dx, dy) {
+    const STEP = 70;
+    this.flash.x = Math.max(40, Math.min(innerWidth - 40, this.flash.x + dx * STEP));
+    this.flash.y = Math.max(40, Math.min(innerHeight - 40, this.flash.y + dy * STEP));
+    this.prox.step();
+    this._updateFlashlight();
+    // chance of a glimpse at high proximity (max 3 per run)
+    if (this.prox.proximity > 85 && this.glimpsesShown < this.GLIMPSE_CAP && Math.random() < 0.18) {
+      this.renderer.flashGlimpse();
+      this.glimpsesShown++;
+    }
+  }
+  _updateFlashlight() {
+    // shrink radius with proximity: 200 at p=0, 95 at p=100
+    this.flash.r = this.baseFlashR - (this.prox.proximity / 100) * (this.baseFlashR - 95);
+    this.renderer.setFlashlight(this.flash.x, this.flash.y, this.flash.r);
+    this.renderer.setVignette(this.prox.proximity);
+  }
+
+  /* ---- interactions ---- */
+  _tryInteract() {
+    // find interactable within the flashlight's radius
+    const fx = this.flash.x, fy = this.flash.y;
+    const W = innerWidth, H = innerHeight;
+    for (const obj of this.scene.interactables) {
+      const ox = obj.x * W, oy = obj.y * H;
+      const d = Math.hypot(ox - fx, oy - fy);
+      if (d < (obj.r || 60)) { this._interact(obj); return; }
+    }
+  }
+  _interact(obj) {
+    if (obj.opensKnock) {
+      this._openKnockPad();
+      return;
+    }
+    if (obj.requires && !this.inventory.has(obj.requires)) {
+      this.renderer.showText(obj.text, 3500);
+      return;
+    }
+    if (obj.gives) {
+      this.inventory.add(obj.gives);
+      this.renderer.showText(obj.text, 3500);
+      return;
+    }
+    if (obj.goto) {
+      this.renderer.showText(obj.altText || obj.text, 2000);
+      this.audio.doorOpen();
+      setTimeout(() => {
+        if (obj.goto === '__escape') this._onEscape();
+        else this._gotoScene(obj.goto);
+      }, 1400);
+      return;
+    }
+    this.renderer.showText(obj.text, 3500);
+  }
+
+  /* ---- knock puzzle ---- */
+  _openKnockPad() {
+    this._knockSession = { active: true, attempts: [], pressStart: 0 };
+    document.getElementById('knock-pad').classList.add('active');
+    document.getElementById('knock-progress').textContent = '. . .';
+    this.renderer.showText('knock the rhythm. click-hold for long.', 2500);
+  }
+  _knockDown() {
+    if (!this._knockSession || !this._knockSession.active) return;
+    this._knockSession.pressStart = performance.now();
+  }
+  _knockUp() {
+    if (!this._knockSession || !this._knockSession.active) return;
+    const dur = performance.now() - this._knockSession.pressStart;
+    const type = dur >= 400 ? 'L' : 'S';
+    this.audio.knock(type === 'L');
+    this._knockSession.attempts.push(type);
+    // update progress display
+    const prog = document.getElementById('knock-progress');
+    prog.textContent = this._knockSession.attempts.map(t => t === 'L' ? '\u2014' : '.').concat(
+      new Array(Math.max(0, KNOCK_PATTERN.length - this._knockSession.attempts.length)).fill('\u00b7')
+    ).join(' ');
+    if (this._knockSession.attempts.length >= KNOCK_PATTERN.length) {
+      const ok = this._knockSession.attempts.every((t, i) => t === KNOCK_PATTERN[i]);
+      this._knockSession.active = false;
+      setTimeout(() => {
+        document.getElementById('knock-pad').classList.remove('active');
+        if (ok) {
+          this.inventory.add('knock_passed');
+          this.renderer.showText('Something in the next room turns. Quietly. Elsewhere.', 4500);
+          // reward: proximity drops
+          this.prox.proximity = Math.max(0, this.prox.proximity - 25);
+        } else {
+          this.renderer.showText('The knocks are wrong. It has heard the wrong room.', 2200, true);
+          // punish: proximity spikes to near death
+          this.prox.proximity = 95;
+          setTimeout(() => { this.prox.proximity = 100; }, 600);
+        }
+      }, 600);
+    }
+  }
+
+  /* ---- death / escape ---- */
+  _onDeath() {
+    if (this.mode !== 'playing') return;
+    this.mode = 'death';
+    this.prox.stop();
+    this.audio.stopCreature();
+    // brief creature swell sting + fade
+    this.audio.creatureSwell();
+    setTimeout(() => this.audio.stopCreature(), 800);
+    document.body.style.background = '#000';
+    this.renderer.ctx.fillStyle = '#000';
+    this.renderer.ctx.fillRect(0, 0, this.renderer.W, this.renderer.H);
+    setTimeout(() => {
+      document.getElementById('death-screen').classList.remove('hidden');
+    }, 300);
+  }
+  _onEscape() {
+    this.mode = 'escape';
+    this.prox.stop();
+    this.audio.stopCreature();
+    // fade to white via body background
+    document.body.style.background = '#fafafa';
+    this.renderer.ctx.fillStyle = '#fafafa';
+    this.renderer.ctx.fillRect(0, 0, this.renderer.W, this.renderer.H);
+    setTimeout(() => {
+      document.getElementById('escape-screen').classList.remove('hidden');
+      document.body.style.background = '#000';
+    }, 700);
+  }
+
+  /* ---- pause ---- */
+  _togglePause() {
+    if (this.mode === 'playing') {
+      this.mode = 'paused';
+      this.prox.pause();
+      this.audio.suspend();
+      document.getElementById('pause-screen').classList.remove('hidden');
+    } else if (this.mode === 'paused') {
+      this._resume();
+    }
+  }
+  _resume() {
+    this.mode = 'playing';
+    document.getElementById('pause-screen').classList.add('hidden');
+    this.audio.resume();
+    this.prox.resume();
+  }
+}
+
+/* ---------- BOOT ---------- */
+window.addEventListener('DOMContentLoaded', () => {
+  window._game = new Game();
+});
+</script>
+</body>
+</html>

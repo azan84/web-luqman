@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECHOES OF THE FORGOTTEN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --indigo-deep: #1a1830;
+  --indigo:      #2a2745;
+  --indigo-soft: #3d3963;
+  --rose:        #c49aa0;
+  --rose-dim:    #8a6b72;
+  --gold:        #e6c780;
+  --gold-dim:    #8f7a4a;
+  --charcoal:    #1a1a22;
+  --parchment:   #e9dfc7;
+  --parchment-dim:#a89f8a;
+  --ink:         #2a2438;
+  --joy:    #ffcc88;
+  --grief:  #7a9cc6;
+  --wonder: #c8a6ff;
+  --anger:  #e27a6a;
+  --shame:  #9d9db0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background:
+    radial-gradient(ellipse at center, var(--indigo) 0%, var(--indigo-deep) 60%, #0d0c1a 100%);
+  background-attachment: fixed;
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* CRT scanlines + vignette overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.06) 2px,
+    rgba(0,0,0,0.06) 3px
+  );
+  z-index: 999;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.65) 100%);
+  z-index: 998;
+}
+
+/* -------- screen transitions -------- */
+#flash {
+  position: fixed; inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+#flash.white { background: #fff7df; }
+#flash.black { background: #05040a; }
+#flash.visible { opacity: 1; }
+
+/* -------- main menu -------- */
+#menu {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 10;
+  text-align: center;
+  padding: 40px;
+  background: radial-gradient(ellipse at center, #241f3a, #0e0c1a);
+}
+#menu.hidden { display: none; }
+#menu h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(36px, 6vw, 72px);
+  letter-spacing: 8px;
+  color: var(--parchment);
+  margin-bottom: 6px;
+  text-shadow: 0 0 24px rgba(230, 199, 128, 0.3);
+}
+#menu .tagline {
+  font-style: italic;
+  color: var(--rose);
+  font-size: 18px;
+  letter-spacing: 3px;
+  margin-bottom: 50px;
+  opacity: 0.8;
+}
+#menu .menu-btn {
+  display: block;
+  margin: 12px auto;
+  background: transparent;
+  color: var(--parchment);
+  border: 1px solid var(--gold-dim);
+  padding: 14px 48px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 280px;
+}
+#menu .menu-btn:hover:not(:disabled) {
+  background: rgba(230, 199, 128, 0.1);
+  border-color: var(--gold);
+  color: var(--gold);
+  letter-spacing: 6px;
+}
+#menu .menu-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+#menu .hint {
+  margin-top: 40px;
+  color: var(--parchment-dim);
+  font-style: italic;
+  font-size: 14px;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+/* -------- game layout -------- */
+#game {
+  display: none;
+  height: 100vh;
+  flex-direction: column;
+}
+#game.active { display: flex; }
+
+/* top bar */
+#topbar {
+  padding: 10px 20px;
+  background: rgba(10, 8, 20, 0.7);
+  border-bottom: 1px solid var(--indigo-soft);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 58px;
+}
+.memory-strip { display: flex; gap: 16px; flex: 0 1 auto; }
+.mem-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  min-width: 62px;
+  transition: all 0.4s ease;
+}
+.mem-item .glyph {
+  font-size: 18px;
+  animation: drift 4s ease-in-out infinite;
+}
+.mem-item[data-type="joy"]    .glyph { color: var(--joy); }
+.mem-item[data-type="grief"]  .glyph { color: var(--grief); }
+.mem-item[data-type="wonder"] .glyph { color: var(--wonder); }
+.mem-item[data-type="anger"]  .glyph { color: var(--anger); }
+.mem-item[data-type="shame"]  .glyph { color: var(--shame); }
+.mem-item.flash-gain { box-shadow: 0 0 12px var(--gold); border-color: var(--gold); }
+.mem-item.flash-spend { box-shadow: 0 0 12px var(--anger); border-color: var(--anger); }
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+.location {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--parchment-dim);
+  text-align: right;
+}
+.location .act { color: var(--gold); display: block; font-size: 10px; margin-bottom: 2px; }
+#gear-btn {
+  background: transparent;
+  border: 1px solid var(--indigo-soft);
+  color: var(--parchment);
+  padding: 6px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+#gear-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* main layout */
+#main-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 0;
+  min-height: 0;
+}
+
+/* viewport */
+#viewport {
+  position: relative;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at top, rgba(61, 57, 99, 0.3), transparent 70%);
+}
+
+/* tile map */
+.tilemap {
+  display: grid;
+  gap: 2px;
+  padding: 12px;
+  background: rgba(10, 8, 20, 0.5);
+  border: 1px solid var(--indigo-soft);
+  border-radius: 6px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(230, 199, 128, 0.04);
+}
+.tile {
+  width: 36px; height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.3s ease;
+  background: rgba(255,255,255,0.015);
+}
+.tile.walkable:hover { background: rgba(230, 199, 128, 0.08); }
+.tile.grass { background: rgba(70, 90, 70, 0.15); }
+.tile.path  { background: rgba(100, 85, 60, 0.18); }
+.tile.stone { background: rgba(80, 80, 100, 0.15); }
+.tile.shrine-floor { background: rgba(200, 166, 255, 0.08); }
+.tile.has-entity { animation: tile-breathe 3s ease-in-out infinite; }
+@keyframes tile-breathe {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.04); filter: brightness(1.15); }
+}
+.tile.player {
+  background: rgba(230, 199, 128, 0.2);
+  box-shadow: 0 0 12px rgba(230, 199, 128, 0.5);
+  animation: player-glow 2s ease-in-out infinite;
+  z-index: 2;
+}
+@keyframes player-glow {
+  0%, 100% { box-shadow: 0 0 12px rgba(230, 199, 128, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(230, 199, 128, 0.7); }
+}
+.tile.echo-tile {
+  background: rgba(200, 166, 255, 0.12);
+  box-shadow: 0 0 10px rgba(200, 166, 255, 0.4);
+  animation: echo-drift 4s ease-in-out infinite;
+}
+@keyframes echo-drift {
+  0%, 100% { opacity: 0.7; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* panels (dialogue / combat / narration) */
+.panel {
+  width: 100%;
+  max-width: 680px;
+  padding: 28px 34px;
+  background: rgba(14, 12, 24, 0.8);
+  border: 1px solid var(--indigo-soft);
+  border-radius: 8px;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5), inset 0 0 30px rgba(230, 199, 128, 0.03);
+  backdrop-filter: blur(4px);
+}
+.panel h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+  font-size: 24px;
+}
+.panel .speaker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--rose);
+  margin-bottom: 8px;
+}
+.panel .body {
+  font-size: 19px;
+  line-height: 1.65;
+  color: var(--parchment);
+  margin-bottom: 24px;
+  font-style: italic;
+  min-height: 80px;
+}
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid var(--indigo-soft);
+  color: var(--parchment);
+  padding: 12px 18px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+.choice:hover:not(:disabled) {
+  background: rgba(230, 199, 128, 0.08);
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateX(4px);
+}
+.choice:disabled { opacity: 0.4; cursor: not-allowed; font-style: italic; }
+.choice .cost-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--parchment-dim);
+  margin-left: 6px;
+  letter-spacing: 1px;
+}
+.choice .cost-tag.affordable { color: var(--gold); }
+.choice .cost-tag.unaffordable { color: var(--anger); }
+
+/* combat */
+.combat-enemy {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.combat-enemy .art {
+  font-size: 88px;
+  margin-bottom: 12px;
+  animation: tile-breathe 3s ease-in-out infinite;
+  display: inline-block;
+}
+.combat-enemy .name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 26px;
+  color: var(--rose);
+  letter-spacing: 2px;
+}
+.combat-enemy .hp-bar {
+  margin: 12px auto;
+  width: 70%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.combat-enemy .hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose-dim), var(--anger));
+  transition: width 0.5s ease;
+}
+.combat-enemy .flavor {
+  font-style: italic;
+  color: var(--parchment-dim);
+  font-size: 14px;
+  margin-top: 6px;
+}
+.combat-shake { animation: shake 0.3s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* journal sidebar */
+#journal {
+  background: rgba(14, 12, 24, 0.85);
+  border-left: 1px solid var(--indigo-soft);
+  padding: 16px 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#journal h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--indigo-soft);
+}
+.echo-entry {
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 8px 10px;
+  background: rgba(200, 166, 255, 0.05);
+  border-left: 2px solid var(--wonder);
+  border-radius: 0 4px 4px 0;
+  font-style: italic;
+  color: var(--parchment);
+  animation: log-fade 0.5s ease-out;
+}
+.echo-entry .when {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--parchment-dim);
+  display: block;
+  margin-bottom: 3px;
+  font-style: normal;
+}
+.echo-entry.resolved { opacity: 0.5; text-decoration: line-through; }
+#journal .empty {
+  font-style: italic;
+  color: var(--parchment-dim);
+  font-size: 13px;
+}
+
+/* narration log */
+#log {
+  min-height: 90px;
+  max-height: 140px;
+  padding: 12px 24px;
+  background: rgba(10, 8, 20, 0.8);
+  border-top: 1px solid var(--indigo-soft);
+  overflow-y: auto;
+  font-size: 16px;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--parchment);
+}
+.log-line {
+  margin-bottom: 4px;
+  animation: log-fade 0.6s ease-out;
+}
+@keyframes log-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.log-line.memory { color: var(--gold); }
+.log-line.echo { color: var(--wonder); font-weight: 500; }
+.log-line.combat { color: var(--rose); }
+
+/* modal (settings, ending) */
+.modal {
+  position: fixed; inset: 0;
+  background: rgba(5, 4, 12, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+.modal.show { display: flex; }
+.modal-inner {
+  max-width: 760px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(135deg, rgba(26, 24, 48, 0.95), rgba(14, 12, 28, 0.95));
+  border: 1px solid var(--gold-dim);
+  padding: 40px 50px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.7), 0 0 60px rgba(230, 199, 128, 0.15);
+}
+.modal h2 {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--gold);
+  letter-spacing: 6px;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+.modal .sub {
+  font-style: italic;
+  color: var(--rose);
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+.modal p {
+  text-align: left;
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  font-style: italic;
+  color: var(--parchment);
+}
+.modal .modal-btns { margin-top: 28px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.modal .modal-btns button {
+  background: transparent;
+  border: 1px solid var(--gold-dim);
+  color: var(--parchment);
+  padding: 10px 26px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.modal .modal-btns button:hover {
+  background: rgba(230, 199, 128, 0.1);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* memory tally in ending screen */
+.mem-tally {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+.mem-tally .t {
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--indigo-soft);
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+
+/* responsive */
+@media (max-width: 1100px) {
+  #main-layout { grid-template-columns: 1fr 240px; }
+}
+@media (max-width: 900px) {
+  #main-layout { grid-template-columns: 1fr; }
+  #journal { display: none; }
+  .tile { width: 30px; height: 30px; font-size: 18px; }
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="flash"></div>
+
+<!-- MAIN MENU -->
+<div id="menu">
+  <h1>ECHOES</h1>
+  <div class="tagline">— of the forgotten —</div>
+  <button class="menu-btn" id="btn-new">BEGIN</button>
+  <button class="menu-btn" id="btn-continue">CONTINUE</button>
+  <button class="menu-btn" id="btn-about">ABOUT</button>
+  <div class="hint">
+    You wake without a name. The only thing you have left is what you remember —<br>
+    and even that, you will have to spend.
+  </div>
+</div>
+
+<!-- GAME -->
+<div id="game">
+  <header id="topbar">
+    <div class="memory-strip" id="mem-strip"></div>
+    <button id="gear-btn" title="Settings">&#9881;</button>
+    <div class="location">
+      <span class="act" id="act-label">ACT I</span>
+      <span id="scene-label">—</span>
+    </div>
+  </header>
+
+  <div id="main-layout">
+    <div id="viewport"></div>
+    <aside id="journal">
+      <h3>ECHO JOURNAL</h3>
+      <div id="journal-body"></div>
+    </aside>
+  </div>
+
+  <footer id="log"></footer>
+</div>
+
+<!-- MODALS -->
+<div class="modal" id="settings-modal">
+  <div class="modal-inner">
+    <h2>SETTINGS</h2>
+    <div class="sub">adjust the weight of remembering</div>
+    <div class="modal-btns">
+      <button id="btn-save">SAVE GAME</button>
+      <button id="btn-load">LOAD GAME</button>
+      <button id="btn-sound">SOUND: ON</button>
+      <button id="btn-quit">QUIT TO MENU</button>
+      <button id="btn-close-settings">CLOSE</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="about-modal">
+  <div class="modal-inner">
+    <h2>ABOUT</h2>
+    <div class="sub">a small tale of forgetting</div>
+    <p>This is a short journey of maybe twenty minutes. You have no hit points. You have only memories, and each of them is both your strength and a piece of who you were.</p>
+    <p>Every spell, every word, every blow — paid in remembrance. Spend the wrong ones, and you survive as someone else.</p>
+    <p><strong style="color: var(--gold)">Controls:</strong> Arrow keys or WASD to move. Space or Enter to interact with anything adjacent. E opens settings.</p>
+    <div class="modal-btns">
+      <button id="btn-close-about">CLOSE</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="ending-modal">
+  <div class="modal-inner">
+    <h2 id="end-title">—</h2>
+    <div class="sub" id="end-sub">—</div>
+    <div class="mem-tally" id="end-tally"></div>
+    <div id="end-body"></div>
+    <div class="modal-btns">
+      <button id="btn-end-restart">BEGIN AGAIN</button>
+      <button id="btn-end-menu">RETURN TO MENU</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =============================================================
+ * ECHOES OF THE FORGOTTEN
+ * A single-file browser RPG where memory is the only currency.
+ * Class structure:
+ *   - MemoryInventory: holds counts of the 5 memory types + lifetime stats
+ *   - EchoSystem: records decisions and spawns Echoes
+ *   - DialogueEngine: scripted branching dialogue with memory-gated choices
+ *   - CombatEngine: turn-based encounters costing memory
+ *   - Renderer: owns all DOM writes
+ *   - SoundManager: generates ambient drones + UI tones (Web Audio)
+ *   - SaveManager: localStorage persistence
+ *   - Game: top-level controller / state machine
+ * =============================================================*/
+
+// ---------- MEMORY TYPES ----------
+const MEMORY = {
+  joy:    { glyph: '\u2661', label: 'Joy' },
+  grief:  { glyph: '\u2602', label: 'Grief' },
+  wonder: { glyph: '\u2726', label: 'Wonder' },
+  anger:  { glyph: '\u{1F702}', label: 'Anger' },  // alchemical fire
+  shame:  { glyph: '\u25D0', label: 'Shame' },
+};
+const MEMORY_KEYS = Object.keys(MEMORY);
+
+// ---------- SPELLS / ACTIONS ----------
+// Each carries a cost object (memory type -> amount). Effects are resolved in CombatEngine.
+const SPELLS = {
+  strike:   { name: 'Strike',         cost: { anger: 1 },               dmg: 2, desc: 'A blow fed by indignation.' },
+  ward:     { name: 'Ward',           cost: { grief: 1 },               ward: 2, desc: 'Shroud yourself in old sorrows; the next blow is softened.' },
+  flame:    { name: 'Flame-Tongue',   cost: { anger: 2 },               dmg: 4, desc: 'Rage given voice. It hurts to speak.' },
+  soothe:   { name: 'Soothing Ember', cost: { joy: 1 },                 heal: 1, desc: 'Remember a laugh. Lend it to yourself; receive one memory back.' },
+  starsight:{ name: 'Starsight',      cost: { wonder: 2 },              reveal: true, dmg: 1, desc: 'See the true shape of the thing. It flinches.' },
+  dirge:    { name: 'Dirge',          cost: { grief: 2 },               dmg: 3, enfeeble: true, desc: 'Sing the grief that is not yours. The air cools.' },
+  absolve:  { name: 'Absolve',        cost: { shame: 1 },               dmg: 2, desc: 'Forgive a smaller self. It dissolves with a small light.' },
+  forgive:  { name: 'Forgive',        cost: { joy: 2, wonder: 1 },      end: true,  desc: 'Offer the thing mercy. Works only on Echoes and hollow kin.' },
+};
+
+// ---------- ENEMIES ----------
+const ENEMIES = {
+  hollow_child: {
+    name: 'Hollow Child', art: '\u{1F9D2}', hp: 5,
+    weakness: 'joy', absorbs: 'anger',
+    drops: { grief: 2 },
+    attack: { dmg: 1, drains: ['joy','wonder'] },
+    flavor: 'Its laughter is borrowed, and it does not know.'
+  },
+  shadow_wolf: {
+    name: 'Shadow-Wolf', art: '\u{1F43A}', hp: 6,
+    weakness: 'wonder', absorbs: 'shame',
+    drops: { anger: 2 },
+    attack: { dmg: 2, drains: ['wonder','joy'] },
+    flavor: 'It is the shape your fear takes when it is tired.'
+  },
+  grief_beast: {
+    name: 'Grief-Beast', art: '\u{1F43B}\u200D\u2744\uFE0F', hp: 7,
+    weakness: 'joy', absorbs: 'grief',
+    drops: { grief: 2, shame: 1 },
+    attack: { dmg: 2, drains: ['joy'] },
+    flavor: 'It is weeping and it has been, for a very long while.'
+  },
+  whisper_wraith: {
+    name: 'Whisper-Wraith', art: '\u{1F47B}', hp: 5,
+    weakness: 'grief', absorbs: 'wonder',
+    drops: { wonder: 2 },
+    attack: { dmg: 1, drains: ['grief','shame'] },
+    flavor: 'It speaks in a voice you almost recognize.'
+  },
+  forgotten_knight: {
+    name: 'The Forgotten Knight', art: '\u{1F9DD}', hp: 9,
+    weakness: 'shame', absorbs: 'anger',
+    drops: { anger: 2, shame: 1 },
+    attack: { dmg: 2, drains: ['anger','grief'] },
+    flavor: 'Armour the colour of forgetting. It bows before it strikes.'
+  },
+  echo_self: {
+    name: 'Your Echo', art: '\u{1F464}', hp: 8,
+    weakness: null, absorbs: null, // dynamic: weak to whatever you hoarded most
+    drops: { wonder: 2 },
+    attack: { dmg: 2, drains: ['joy','wonder','grief','anger','shame'] },
+    flavor: 'It has your face, but softer. It is waiting for you to speak first.'
+  },
+};
+
+// ---------- MAPS ----------
+// Tile codes: . grass | , path | # tree | H house | W water | S stone | D door | _ shrine-floor
+// Entities are placed by id; they render their own glyph from the ENTITIES table.
+const ENTITIES = {
+  // act 1
+  elder:     { glyph: '\u{1F475}', type: 'dialogue', dlg: 'elder' },
+  merchant:  { glyph: '\u{1F9D4}', type: 'dialogue', dlg: 'merchant' },
+  orphan:    { glyph: '\u{1F9D2}', type: 'dialogue', dlg: 'orphan' },
+  hermit:    { glyph: '\u{1F9D9}', type: 'dialogue', dlg: 'hermit' },
+  innkeeper: { glyph: '\u{1F9D1}', type: 'dialogue', dlg: 'innkeeper' },
+  old_halim: { glyph: '\u{1F474}', type: 'dialogue', dlg: 'halim' },
+  well:      { glyph: '\u{1F4A7}', type: 'dialogue', dlg: 'well' },
+  locked_door:{ glyph: '\u{1F6AA}',type: 'locked', cost: { joy: 2 }, unlocks: 'village_exit', line: 'The door remembers your laughter. It asks if you still do.' },
+  village_exit:{ glyph: '\u{1F32B}\uFE0F', type: 'transition', to: 'act2' },
+
+  // act 2
+  scholar:   { glyph: '\u{1F468}\u200D\u{1F4BC}', type: 'dialogue', dlg: 'scholar' },
+  shrine:    { glyph: '\u{1F56F}\uFE0F', type: 'dialogue', dlg: 'shrine' },
+  chest:     { glyph: '\u{1F4E6}', type: 'chest', gives: { shame: 2 }, line: 'You pry it open. Inside is a memory you do not remember having — of a small cruelty, quietly done.' },
+  enemy_hollow:{ glyph: '\u{1F9D2}', type: 'combat', enemy: 'hollow_child' },
+  enemy_wolf:  { glyph: '\u{1F43A}', type: 'combat', enemy: 'shadow_wolf' },
+  enemy_wraith:{ glyph: '\u{1F47B}', type: 'combat', enemy: 'whisper_wraith' },
+  enemy_grief: { glyph: '\u{1F43B}\u200D\u2744\uFE0F', type: 'combat', enemy: 'grief_beast' },
+  forest_echo: { glyph: '\u{1F464}', type: 'dialogue', dlg: 'forest_echo' },
+  forest_exit: { glyph: '\u{1F5FF}', type: 'transition', to: 'act3' },
+
+  // act 3
+  altar:        { glyph: '\u{1F54B}', type: 'dialogue', dlg: 'altar' },
+  echo_merchant:{ glyph: '\u{1F464}', type: 'dialogue', dlg: 'echo_merchant' },
+  echo_orphan:  { glyph: '\u{1F464}', type: 'dialogue', dlg: 'echo_orphan' },
+  echo_knight:  { glyph: '\u{1F9DD}', type: 'combat', enemy: 'forgotten_knight' },
+  echo_self:    { glyph: '\u{1F464}', type: 'dialogue', dlg: 'echo_self' },
+  mirror_pool:  { glyph: '\u{1F319}', type: 'dialogue', dlg: 'mirror' },
+};
+
+const MAPS = {
+  act1: {
+    name: 'THE WAKING VILLAGE',
+    act: 1,
+    w: 12, h: 8,
+    tiles: [
+      '############',
+      '#....,,,,..#',
+      '#.H.,,..,.H#',
+      '#..,,,.,,,.#',
+      '#.H,.,,,,H.#',
+      '#..,,..,,.W#',
+      '#,,,,H,.,..#',
+      '############',
+    ],
+    spawn: { x: 2, y: 3 },
+    entities: [
+      { id: 'elder',     x: 5, y: 2 },
+      { id: 'merchant',  x: 8, y: 3 },
+      { id: 'orphan',    x: 3, y: 5 },
+      { id: 'old_halim', x: 9, y: 6 },
+      { id: 'well',      x: 10,y: 5 },
+      { id: 'innkeeper', x: 2, y: 6 },
+      { id: 'hermit',    x: 6, y: 6 },
+      { id: 'locked_door',x: 5, y: 1 },
+      { id: 'village_exit',x: 5, y: 0 },
+    ],
+  },
+  act2: {
+    name: 'THE HOLLOW FOREST',
+    act: 2,
+    w: 14, h: 10,
+    tiles: [
+      '##############',
+      '#............#',
+      '#.,,,,,,,,,,.#',
+      '#.,##,,,,##,.#',
+      '#.,,,,,,,,,,.#',
+      '#.,,##,,,,,,.#',
+      '#.,,,,,,,,,,.#',
+      '#.,_,,,,,,,,.#',
+      '#.,,,,,,,,,,.#',
+      '##############',
+    ],
+    spawn: { x: 1, y: 1 },
+    entities: [
+      { id: 'scholar',    x: 3, y: 1 },
+      { id: 'enemy_hollow',x: 7, y: 2 },
+      { id: 'enemy_wolf', x: 4, y: 4 },
+      { id: 'enemy_wraith',x: 9, y: 5 },
+      { id: 'enemy_grief',x: 6, y: 6 },
+      { id: 'chest',      x: 11, y: 3 },
+      { id: 'shrine',     x: 3, y: 7 },
+      { id: 'forest_echo',x: 8, y: 7 },
+      { id: 'forest_exit',x: 12, y: 8 },
+    ],
+  },
+  act3: {
+    name: 'THE SHRINE OF SELF',
+    act: 3,
+    w: 10, h: 10,
+    tiles: [
+      '##########',
+      '#__,,,,__#',
+      '#_,,,,,,_#',
+      '#,,,,,,,,#',
+      '#,,,__,,,#',
+      '#,,,__,,,#',
+      '#,,,,,,,,#',
+      '#_,,,,,,_#',
+      '#__,,,,__#',
+      '##########',
+    ],
+    spawn: { x: 4, y: 8 },
+    entities: [
+      { id: 'echo_merchant', x: 2, y: 3, condCreated: 'echo_merchant' },
+      { id: 'echo_orphan',   x: 7, y: 3, condCreated: 'echo_orphan' },
+      { id: 'echo_knight',   x: 4, y: 2, condCreated: 'echo_knight' },
+      { id: 'echo_self',     x: 5, y: 6 },
+      { id: 'mirror_pool',   x: 4, y: 1 },
+      { id: 'altar',         x: 4, y: 4 },
+    ],
+  },
+};
+
+// ---------- DIALOGUES ----------
+// Each dialogue is a tree of nodes. A node has text, optional speaker, and choices.
+// A choice may have:
+//   cost (memory object), gives (memory object), next (node id or null = end),
+//   onPick (function(game)), requireFlag, requireNotFlag,
+//   requireMemory (type), requireNoMemory (type), setFlag (list), spawnEcho (echoId)
+const DIALOGUES = {
+  elder: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'Elder Mara',
+        text: '"You walked out of the mist this morning, child, and you did not know your own name. I will not ask it. I will only tell you: this village is where the forgetting begins. Do you remember anything at all?"',
+        choices: [
+          { text: 'Say: I remember warmth. Someone laughing.', gives: { joy: 2, wonder: 1 }, next: 'b', narrate: 'She smiles, as if you have confirmed a kindness.' },
+          { text: 'Say: only weight. A grey, quiet weight.', gives: { grief: 2, shame: 1 }, next: 'c', narrate: 'She nods. Old sorrow knows old sorrow.' },
+          { text: 'Say nothing.', gives: { wonder: 1, shame: 1 }, next: 'd' },
+        ],
+      },
+      b: { text: '"Then keep it close. Out there, most things will ask you to spend what you remember. Spend wisely — you cannot tell which memories were the load-bearing ones until after they are gone."', choices: [{ text: 'Thank her. Leave.', next: null }] },
+      c: { text: '"Grief is honest currency. It will keep you alive in the forest. But try not to spend all of it, or you will come home to a house with no ghosts, and that is a lonelier thing than it sounds."', choices: [{ text: 'Nod. Leave.', next: null }] },
+      d: { text: '"Silence, then. That is also a memory — of a time you learned not to speak. Keep it. It is sometimes the only thing between you and a bad bargain."', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  merchant: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'Thesal the Merchant',
+        text: '"Wanderer! You look like someone who lost their yesterdays. I can help — for a modest fee. One memory of your choosing and I will sell you a trinket shaped like hope. A fair trade."',
+        choices: [
+          { text: 'Give him a memory of joy.', cost: { joy: 1 }, gives: { wonder: 1 }, spawnEcho: { id: 'echo_merchant_kind', line: 'He thanked you without meeting your eyes. He will remember.' }, setFlag: ['merchant_kind'], next: 'b' },
+          { text: 'Refuse. Walk past.', next: 'c', spawnEcho: { id: 'echo_merchant_cold', line: 'His shoulders fell. He will remember that too.' }, setFlag: ['merchant_cold'] },
+          { text: 'Call him a thief.', cost: { anger: 1 }, next: 'd', spawnEcho: { id: 'echo_merchant_cruel', line: 'You shouted, and did not know why. The word stayed in the square after you left.' }, setFlag: ['merchant_cruel'] },
+        ],
+      },
+      b: { text: '"Bless you, traveller. The trinket is a small mirror. Look into it only when you are not afraid of what you might see."', choices: [{ text: 'Leave.', next: null }] },
+      c: { text: '"Go on, then. I am used to being passed over."', choices: [{ text: 'Leave.', next: null }] },
+      d: { text: 'He does not answer. His hands keep working, but the light has gone out of them.', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  orphan: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'Lio',
+        text: '"Stranger, stranger — the grown ones forget, and it makes them hard. Do you have a memory of laughing? Any old one. I lost mine in the winter."',
+        choices: [
+          { text: 'Give her a memory of joy.', cost: { joy: 1 }, spawnEcho: { id: 'echo_orphan_kind', line: 'She ran off. You heard her laughing from three streets away. She will remember.' }, setFlag: ['orphan_kind'], next: 'b' },
+          { text: 'Tell her you have none to spare.', spawnEcho: { id: 'echo_orphan_cold', line: 'She said of course, of course, and her face became old for a moment. She will remember.' }, setFlag: ['orphan_cold'], next: 'c' },
+          { text: 'Give her a grief instead. It is all you can part with.', cost: { grief: 1 }, gives: { shame: 1 }, setFlag: ['orphan_grief'], next: 'd' },
+        ],
+      },
+      b: { text: '"Oh! That is a good one. I will keep it under my tongue."', choices: [{ text: 'Leave.', next: null }] },
+      c: { text: '"That is fine. I will ask the birds."', choices: [{ text: 'Leave.', next: null }] },
+      d: { text: 'She holds the memory carefully, the way you hold something that is warmer than it should be. "I will take care of it," she promises, "though it is heavy."', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  old_halim: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'Old Halim',
+        text: '"I am losing my wife again. It happens every morning. I wake and she is not there, and I have to remember, and I have to grieve her fresh, every day. I do not know if I can keep paying."',
+        choices: [
+          { text: 'Offer to share a grief, so his burden is lighter.', cost: { grief: 1 }, gives: { joy: 1 }, setFlag: ['halim_shared'], next: 'b' },
+          { text: 'Say nothing. Put a hand on his shoulder.', gives: { grief: 1 }, next: 'c' },
+          { text: 'Leave him alone.', next: null },
+        ],
+      },
+      b: { text: '"Bless you. I feel... a half-ounce lighter. Go on. And if the forest tries to take a joy from you, do not let it."', choices: [{ text: 'Leave.', next: null }] },
+      c: { text: 'He does not look up. After a while he says: "Thank you for not talking."', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  well: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'The Well',
+        text: 'You lean over its dark mouth. It does not have a face, exactly, but it has a patience. Something glimmers far below: a shape you almost recognise.',
+        choices: [
+          { text: 'Drop a coin of wonder into it.', cost: { wonder: 1 }, gives: { joy: 2 }, next: 'b' },
+          { text: 'Drop a coin of grief into it.', cost: { grief: 1 }, gives: { wonder: 2 }, next: 'c' },
+          { text: 'Leave the well alone.', next: null },
+        ],
+      },
+      b: { text: 'The water rings like a bell. Two warm memories rise and press themselves to your forehead before sinking back into you.', choices: [{ text: 'Leave.', next: null }] },
+      c: { text: 'The water darkens, then clears. You remember something you did not know you had forgotten: the name of a constellation.', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  innkeeper: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'The Innkeeper',
+        text: '"No rooms for the nameless, friend — house rule. But sit a while by the hearth, if you like. The fire is old and it has a lot of second-hand joy in it."',
+        choices: [
+          { text: 'Sit by the fire.', gives: { joy: 1 }, next: 'b' },
+          { text: 'Ask about the forest.', next: 'c' },
+          { text: 'Leave.', next: null },
+        ],
+      },
+      b: { text: 'You warm your hands. For a moment you almost remember being someone\'s child.', choices: [{ text: 'Leave.', next: null }] },
+      c: { text: '"The Hollow? It is where memories go when no one will keep them. They take shapes, eventually. Some of the shapes have teeth. Go around if you can. You cannot."', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  hermit: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'Hermit Vess',
+        text: '"You are walking toward the Shrine of Self. I can tell — you smell like someone about to meet themselves. Let me teach you something, before you do."',
+        choices: [
+          { text: 'Accept the lesson.', cost: { wonder: 1 }, setFlag: ['learned_forgive'], next: 'b' },
+          { text: 'Decline. You already know yourself.', gives: { shame: 1 }, next: 'c' },
+        ],
+      },
+      b: { text: '"Good. Listen. When you meet a thing that wears your face, you will want to destroy it. You will be wrong. The word you want is Forgive. It costs Joy and Wonder both. Do not use it unless you mean it." (You have learned FORGIVE.)', choices: [{ text: 'Thank him.', next: null }] },
+      c: { text: '"Ah. Then you will learn some other way. I am sorry for what you are about to lose."', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  scholar: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'A Wandering Scholar',
+        text: '"Oh, another one! Come, come, I am cataloguing Hollow types. Did you know Hollow Children are weak to Joy? Shadow-Wolves flinch from Wonder. Grief-Beasts cannot abide laughter. Whisper-Wraiths dissolve in true sadness. It helps to know what you are."',
+        choices: [
+          { text: 'Thank him and go.', gives: { wonder: 1 }, next: null },
+          { text: 'Ask him what he himself is afraid of.', next: 'b' },
+        ],
+      },
+      b: { text: '"Me? Oh — I am afraid I will write it all down and still not understand any of it. Safe travels, friend."', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  shrine: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'The Forest Shrine',
+        text: 'A stone with a face half-worn. It accepts offerings. It is said to return them as something else.',
+        choices: [
+          { text: 'Offer 2 Grief. Receive 2 Wonder.', cost: { grief: 2 }, gives: { wonder: 2 }, next: 'a' },
+          { text: 'Offer 2 Anger. Receive 2 Grief.',  cost: { anger: 2 }, gives: { grief: 2 }, next: 'a' },
+          { text: 'Offer 2 Shame. Receive 1 Joy.',    cost: { shame: 2 }, gives: { joy: 1 }, next: 'a' },
+          { text: 'Offer 1 Wonder. Receive 2 Anger.', cost: { wonder: 1 }, gives: { anger: 2 }, next: 'a' },
+          { text: 'Leave the shrine.', next: null },
+        ],
+      },
+    },
+  },
+
+  forest_echo: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'An Echo',
+        text: 'A figure made of soft light stands on the path. It has your posture. It says, gently: "I am what you would have been if you had left earlier. I am not angry. I only want to ask — are you being careful with what you spend?"',
+        choices: [
+          { text: 'Yes.', gives: { wonder: 1 }, next: 'b' },
+          { text: 'No. I am running out.', gives: { shame: 1, grief: 1 }, next: 'c' },
+          { text: 'I am not sure. I am tired.', gives: { grief: 1, wonder: 1 }, next: 'd' },
+        ],
+      },
+      b: { text: '"Good. Keep being careful. The last part of the road asks the most."', choices: [{ text: 'Leave.', next: null }] },
+      c: { text: '"I know. Try to save one of the good ones. Any of them. Please." It fades.', choices: [{ text: 'Leave.', next: null }] },
+      d: { text: '"Then rest a moment in the sound of this clearing. That is a small thing I can give you." It fades, slowly, as if bowing.', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  altar: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'The Altar',
+        text: 'A flat stone, black as a closed eye. There is a thin groove down the middle, as if something had once flowed through it, from you, toward the other side.',
+        choices: [
+          { text: 'Touch it and offer all you have left.', next: 'b', onPick: (g) => g.triggerEnding() },
+          { text: 'Step back. Look around first.', next: null },
+        ],
+      },
+      b: { text: 'The stone is warm.', choices: [] },
+    },
+  },
+
+  echo_merchant: {
+    start: 'a',
+    dynamic: true,
+    nodes: {
+      a_kind: { speaker: 'Echo of Thesal', text: '"You were kind to me," it says, "and I kept the memory you gave. Here — I have shaped it into something useful. Take it."', choices: [{ text: 'Accept.', gives: { joy: 2 }, next: null }] },
+      a_cold: { speaker: 'Echo of Thesal', text: '"You walked past. That was all. I would not call it cruelty. But I had been waiting all morning, and the small ache of it has grown into me. Forgive me — would you take it back?"',
+        choices: [
+          { text: 'Take the ache. (Gain shame.)', gives: { shame: 2 }, next: null },
+          { text: 'Apologise.', cost: { joy: 1 }, next: 'a_cold_done' },
+        ],
+      },
+      a_cold_done: { text: 'It bows. "Then the small ache is mine alone. Go well."', choices: [{ text: 'Leave.', next: null }] },
+      a_cruel: { speaker: 'Echo of Thesal', text: 'The echo has his face, but the light has not come back. "You shouted at me. I did not know why. I have been standing here turning the word over ever since."',
+        choices: [
+          { text: 'Apologise properly.', cost: { joy: 1, shame: 1 }, gives: { wonder: 1 }, next: 'a_cruel_done' },
+          { text: 'Strike it down.', onPick: (g) => g.startCombat('echo_self', 'echo_merchant_fight'), next: null },
+        ],
+      },
+      a_cruel_done: { text: 'The echo dissolves, like frost on a window when a house is warmed.', choices: [{ text: 'Leave.', next: null }] },
+    },
+  },
+
+  echo_orphan: {
+    start: 'a',
+    dynamic: true,
+    nodes: {
+      a_kind: { speaker: 'Echo of Lio', text: '"You gave me a laugh. It kept me warm the whole winter. I grew up. I grew up so fast." It hands you something small and shining.', choices: [{ text: 'Take it.', gives: { joy: 1, wonder: 2 }, next: null }] },
+      a_cold: { speaker: 'Echo of Lio', text: '"I asked the birds. They did not have any. I am not angry. I did grow up. But I grew up a little colder than I might have." ',
+        choices: [
+          { text: 'Give her a laugh now.', cost: { joy: 1 }, gives: { wonder: 1 }, next: 'a_cold_done' },
+          { text: 'Say you are sorry and mean it.', cost: { shame: 1 }, next: 'a_cold_done2' },
+          { text: 'Walk past her again.', gives: { shame: 2 }, next: null },
+        ],
+      },
+      a_cold_done: { text: 'She laughs — late, but real. It sounds like a bell that has been waiting.', choices: [{ text: 'Leave.', next: null }] },
+      a_cold_done2: { text: 'She nods, very seriously, the way a child does. "All right. All right then."', choices: [{ text: 'Leave.', next: null }] },
+      a_grief: { speaker: 'Echo of Lio', text: '"I kept your grief. It was heavy, and I was small, and I did my best. Take it back now, if you like. I have grown a place for joy of my own."',
+        choices: [
+          { text: 'Take it back.', gives: { grief: 1, joy: 1 }, next: null },
+          { text: 'Tell her to keep it.', gives: { shame: 1 }, next: null },
+        ],
+      },
+    },
+  },
+
+  echo_self: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'Your Echo',
+        text: '"I am what you were an hour ago. An hour and a lifetime. I am not here to fight unless you make me. I only want to know which of us is going to keep walking."',
+        choices: [
+          { text: 'Speak gently. Ask what it wants.', next: 'b' },
+          { text: 'Raise your hand. You will fight.', onPick: (g) => g.startCombat('echo_self', 'self_fight'), next: null },
+          { text: 'Say: we walk together, or neither of us does.', cost: { wonder: 1 }, gives: { joy: 1 }, next: 'c' },
+        ],
+      },
+      b: { text: '"I want to have mattered. That is all. Carry even one of me forward, and I will let you by."',
+        choices: [
+          { text: 'Promise to carry a joy forward.', cost: { joy: 1 }, gives: { wonder: 2 }, setFlag: ['carried_forward'], next: null },
+          { text: 'Promise nothing.', gives: { shame: 1 }, next: null },
+        ],
+      },
+      c: { text: 'It nods, slowly. It falls into step beside you. The altar, ahead, is already waiting.', choices: [{ text: 'Go to the altar.', setFlag: ['walked_with_self'], next: null }] },
+    },
+  },
+
+  mirror: {
+    start: 'a',
+    nodes: {
+      a: {
+        speaker: 'The Mirror Pool',
+        text: 'A still pool in the shape of a crescent moon. It shows you your own face. The face looks tired. The face asks you: are you finished with who you were?',
+        choices: [
+          { text: 'Yes. Let the water take it.', cost: { shame: 2 }, gives: { wonder: 1 }, next: null },
+          { text: 'No. I am still becoming.', gives: { wonder: 1 }, next: null },
+        ],
+      },
+    },
+  },
+};
+
+// ---------- NARRATIONS ----------
+const NARRATIONS = {
+  opening: [
+    'You wake on a path of grey stones. You do not know how long you have been walking.',
+    'Somewhere behind you, there is a name you used to answer to. Somewhere ahead, a thing that is waiting.',
+    'Between them: this village, and the memories you still have left to spend.',
+  ],
+  act2_intro: [
+    'The forest begins where the road forgets itself.',
+    'The trees here are thin, and the wind moves through them like a person half-remembering a song.',
+    'Things live in the Hollow that were once people. Be careful with what you spend to get through.',
+  ],
+  act3_intro: [
+    'You step out of the trees. The shrine is smaller than you imagined, and older.',
+    'Around it, figures you half-recognise stand in a soft silver light.',
+    'They have your walk. They have the small turns of your face. They are what you have left behind.',
+  ],
+};
+
+// ---------- ENDINGS ----------
+// Determined by: total memory spent across the run, and balance between
+// "bright" memories (joy + wonder) and "dark" memories (anger + shame).
+// See `determineEnding()` for the exact formula.
+const ENDINGS = {
+  hollow_hero: {
+    title: 'THE HOLLOW HERO',
+    sub: 'you spent too much, and too quickly',
+    body: [
+      'You reach the altar, and you know the shape of victory before it arrives, because it weighs very little. You have spent so much of yourself to get here that there is almost no-one left to feel the triumph.',
+      'The stone accepts your last offerings without comment. A door opens somewhere. You walk through it. You do not recognise the room on the other side, because the person who would have recognised it has been spent, in pieces, on the road.',
+      'You saved the world. You did it the quickest way. There is nobody inside you left to celebrate with.',
+    ],
+  },
+  haunted_saint: {
+    title: 'THE HAUNTED SAINT',
+    sub: 'you kept the bright things, and paid in blood',
+    body: [
+      'You reach the altar carrying Joy, and Wonder, and the small private laughs you refused to trade. Your body is tired. Your body hurts. But the things you kept are shining inside you, and the altar — which has seen every kind of arrival — softens when it sees yours.',
+      'You have done the harder work. You fought things you could have talked past, because you were not willing to spend what they asked for. The Echoes behind you are not all kind, but none of them are ashamed of you.',
+      'Walk back through the village when you are ready. There will be children. There will be a merchant. There will be an old man and an old woman and a well. They will know you, and you will still, mostly, know yourself.',
+    ],
+  },
+  vengeful_echo: {
+    title: 'THE VENGEFUL ECHO',
+    sub: 'you spent the bright; what stayed was sharp',
+    body: [
+      'You arrive at the altar holding only the dark things: anger still warm, shame still cold, and a small cold clarity where your laughter used to be. The altar accepts you exactly as you are. It does not ask you to change.',
+      'Something opens. A dark thing steps out of you, or maybe into you; it is difficult to tell. You have the strong, humming feeling that you are about to be very useful to someone you should not be useful to.',
+      'The village behind you will talk about you, for a while, as something that once walked through. They will not be able to agree on whether you were brave, or whether you were simply emptied.',
+    ],
+  },
+  balanced_witness: {
+    title: 'THE BALANCED WITNESS',
+    sub: 'you took the whole weight of yourself',
+    body: [
+      'You reach the altar with the full ledger of yourself — the Joy you kept, the Grief you carried, the Anger you admitted to, the Shame you did not hide, the Wonder you refused to trade for anything less than it was worth. You are not triumphant. You are not empty. You are the shape of a person who has walked a long way and arrived as themselves.',
+      'The altar does not shine for you. It does not need to. You light it, a little, from the inside.',
+      'You turn around and begin the walk home. The Echoes fall in behind you, one by one, and they are not a procession; they are a company. You will need all of them. You will be able to carry them, because you did not spend the parts that would have carried them.',
+    ],
+  },
+};
+
+// ============================================================
+// CLASSES
+// ============================================================
+
+/**
+ * MemoryInventory
+ * Tracks current memory counts AND lifetime spend/gain stats — the latter
+ * drive the ending. All mutations flow through spend()/gain() so they are
+ * fully counted.
+ */
+class MemoryInventory {
+  constructor() {
+    this.counts   = { joy: 0, grief: 0, wonder: 0, anger: 0, shame: 0 };
+    this.gained   = { joy: 0, grief: 0, wonder: 0, anger: 0, shame: 0 };
+    this.spent    = { joy: 0, grief: 0, wonder: 0, anger: 0, shame: 0 };
+  }
+  total() { return MEMORY_KEYS.reduce((a, k) => a + this.counts[k], 0); }
+  has(type, n = 1) { return this.counts[type] >= n; }
+  canAfford(costObj) { return Object.entries(costObj).every(([k, v]) => this.counts[k] >= v); }
+  gain(obj) {
+    for (const [k, v] of Object.entries(obj)) {
+      if (v <= 0) continue;
+      this.counts[k] += v;
+      this.gained[k] += v;
+    }
+  }
+  spend(obj) {
+    if (!this.canAfford(obj)) return false;
+    for (const [k, v] of Object.entries(obj)) {
+      this.counts[k] -= v;
+      this.spent[k]  += v;
+    }
+    return true;
+  }
+  spendRandom(n) {
+    const spent = {};
+    for (let i = 0; i < n; i++) {
+      const avail = MEMORY_KEYS.filter(k => this.counts[k] > 0);
+      if (!avail.length) return spent;
+      const pick = avail[Math.floor(Math.random() * avail.length)];
+      this.counts[pick]--;
+      this.spent[pick]++;
+      spent[pick] = (spent[pick] || 0) + 1;
+    }
+    return spent;
+  }
+  // For the Echo-Self combat: weakness = the type you HELD MOST; absorbs = least held.
+  hoardProfile() {
+    const entries = MEMORY_KEYS.map(k => [k, this.counts[k]]);
+    entries.sort((a, b) => b[1] - a[1]);
+    return { most: entries[0][0], least: entries[entries.length - 1][0] };
+  }
+}
+
+/**
+ * EchoSystem
+ * Records decisions and which Echoes should appear in Act 3.
+ */
+class EchoSystem {
+  constructor() { this.echoes = []; this.flags = {}; }
+  addEcho(id, line, act) { this.echoes.push({ id, line, act, resolved: false }); }
+  hasEcho(id) { return this.echoes.some(e => e.id === id); }
+  resolve(id) { const e = this.echoes.find(e => e.id === id); if (e) e.resolved = true; }
+  setFlag(flag) { this.flags[flag] = true; }
+}
+
+/**
+ * SoundManager — generates everything at runtime via Web Audio API.
+ * - act-keyed drone: slow sine pair, subtle detuning, pitch shifts with act
+ * - short tones for gain/spend/hit/echo
+ */
+class SoundManager {
+  constructor() {
+    this.enabled = true;
+    this.ctx = null;
+    this.droneNodes = null;
+    this.currentAct = 0;
+  }
+  _ensure() {
+    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+  }
+  _tone(freq, duration = 0.15, type = 'sine', gain = 0.05, when = 0) {
+    if (!this.enabled) return;
+    try { this._ensure(); } catch(e) { return; }
+    const t0 = this.ctx.currentTime + when;
+    const o = this.ctx.createOscillator();
+    const g = this.ctx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(gain, t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
+    o.connect(g).connect(this.ctx.destination);
+    o.start(t0); o.stop(t0 + duration + 0.02);
+  }
+  setDroneAct(act) {
+    if (!this.enabled) return;
+    try { this._ensure(); } catch(e) { return; }
+    if (this.currentAct === act && this.droneNodes) return;
+    this.currentAct = act;
+    // stop existing
+    if (this.droneNodes) {
+      const { osc1, osc2, g } = this.droneNodes;
+      g.gain.setTargetAtTime(0, this.ctx.currentTime, 0.6);
+      setTimeout(() => { try { osc1.stop(); osc2.stop(); } catch(e) {} }, 1800);
+      this.droneNodes = null;
+    }
+    if (act === 0) return;
+    // start new
+    const base = [0, 110, 98, 82.5][act] || 110; // act 1 = A2, 2 = G2, 3 = E2-ish
+    const osc1 = this.ctx.createOscillator();
+    const osc2 = this.ctx.createOscillator();
+    const g = this.ctx.createGain();
+    osc1.type = 'sine'; osc1.frequency.value = base;
+    osc2.type = 'sine'; osc2.frequency.value = base * 1.497; // perfect fifth-ish
+    g.gain.setValueAtTime(0, this.ctx.currentTime);
+    g.gain.linearRampToValueAtTime(0.025, this.ctx.currentTime + 2.5);
+    osc1.connect(g); osc2.connect(g); g.connect(this.ctx.destination);
+    osc1.start(); osc2.start();
+    this.droneNodes = { osc1, osc2, g };
+  }
+  memGain() { this._tone(660, 0.22, 'sine', 0.05); this._tone(990, 0.18, 'sine', 0.04, 0.04); }
+  memSpend(){ this._tone(200, 0.28, 'sine', 0.06); }
+  hit()     { this._tone(120, 0.12, 'square', 0.05); this._tone(90, 0.1, 'sawtooth', 0.04, 0.02); }
+  echo()    { // "reversed bell" approximation: rising shimmer, quick stop
+    this._tone(330, 0.6, 'sine', 0.04, 0);
+    this._tone(440, 0.55, 'sine', 0.035, 0.05);
+    this._tone(550, 0.5, 'sine', 0.03, 0.1);
+  }
+  setEnabled(b) { this.enabled = b; if (!b && this.droneNodes) this.setDroneAct(0); }
+}
+
+/**
+ * SaveManager — single slot in localStorage.
+ */
+class SaveManager {
+  constructor(key = 'echoes_save_v1') { this.key = key; }
+  save(game) {
+    const data = {
+      scene: game.currentMap,
+      pos: game.playerPos,
+      mem: game.memory.counts,
+      gained: game.memory.gained,
+      spent: game.memory.spent,
+      echoes: game.echoSystem.echoes,
+      flags: game.echoSystem.flags,
+      interactedRemoved: [...game.removedEntities],
+      timestamp: Date.now(),
+    };
+    localStorage.setItem(this.key, JSON.stringify(data));
+    return true;
+  }
+  load() {
+    const raw = localStorage.getItem(this.key);
+    if (!raw) return null;
+    try { return JSON.parse(raw); } catch(e) { return null; }
+  }
+  exists() { return !!localStorage.getItem(this.key); }
+  clear() { localStorage.removeItem(this.key); }
+}
+
+// ============================================================
+// GAME CONTROLLER
+// ============================================================
+class Game {
+  constructor() {
+    this.memory = new MemoryInventory();
+    this.echoSystem = new EchoSystem();
+    this.sound = new SoundManager();
+    this.saver = new SaveManager();
+    this.mode = 'menu';              // menu | map | dialogue | combat | narration | ending
+    this.currentMap = 'act1';
+    this.playerPos = { x: 0, y: 0 };
+    this.removedEntities = new Set();   // ids of entities (e.g., chests, defeated enemies) stripped from current run
+    this.currentDialogue = null;
+    this.currentDialogueNode = null;
+    this.currentSpeaker = null;
+    this.currentNPC = null;
+    this.combat = null;
+    this.narrationQueue = [];
+    this.logLines = [];
+    this._bindEvents();
+  }
+
+  // ---------- boot ----------
+  _bindEvents() {
+    document.getElementById('btn-new').addEventListener('click', () => this.startNew());
+    document.getElementById('btn-continue').addEventListener('click', () => this.loadGame());
+    document.getElementById('btn-about').addEventListener('click', () => document.getElementById('about-modal').classList.add('show'));
+    document.getElementById('btn-close-about').addEventListener('click', () => document.getElementById('about-modal').classList.remove('show'));
+
+    document.getElementById('gear-btn').addEventListener('click', () => this.openSettings());
+    document.getElementById('btn-close-settings').addEventListener('click', () => document.getElementById('settings-modal').classList.remove('show'));
+    document.getElementById('btn-save').addEventListener('click', () => { this.saver.save(this); this.log('The moment is written down.', 'memory'); });
+    document.getElementById('btn-load').addEventListener('click', () => { this.loadGame(); document.getElementById('settings-modal').classList.remove('show'); });
+    document.getElementById('btn-sound').addEventListener('click', (e) => {
+      this.sound.setEnabled(!this.sound.enabled);
+      e.target.textContent = 'SOUND: ' + (this.sound.enabled ? 'ON' : 'OFF');
+      if (this.sound.enabled && this.mode !== 'menu') this.sound.setDroneAct(MAPS[this.currentMap].act);
+    });
+    document.getElementById('btn-quit').addEventListener('click', () => this.quitToMenu());
+
+    document.getElementById('btn-end-restart').addEventListener('click', () => { document.getElementById('ending-modal').classList.remove('show'); this.startNew(); });
+    document.getElementById('btn-end-menu').addEventListener('click', () => { document.getElementById('ending-modal').classList.remove('show'); this.quitToMenu(); });
+
+    document.addEventListener('keydown', (e) => this.onKey(e));
+
+    // update continue button
+    document.getElementById('btn-continue').disabled = !this.saver.exists();
+  }
+
+  openSettings() {
+    document.getElementById('btn-sound').textContent = 'SOUND: ' + (this.sound.enabled ? 'ON' : 'OFF');
+    document.getElementById('settings-modal').classList.add('show');
+  }
+
+  startNew() {
+    this.memory = new MemoryInventory();
+    this.memory.gain({ joy: 1, grief: 1, wonder: 1, anger: 1, shame: 1 }); // everyone starts with one of each
+    this.echoSystem = new EchoSystem();
+    this.removedEntities = new Set();
+    this.currentMap = 'act1';
+    this.playerPos = { ...MAPS.act1.spawn };
+    this.logLines = [];
+    this._showGame();
+    this.sound.setDroneAct(1);
+    this.queueNarration(NARRATIONS.opening, () => this.enterMap());
+  }
+
+  loadGame() {
+    const data = this.saver.load();
+    if (!data) { this.log('There is nothing saved. The silence remembers that, too.', 'memory'); return; }
+    this.memory = new MemoryInventory();
+    this.memory.counts = data.mem;
+    this.memory.gained = data.gained || { joy:0,grief:0,wonder:0,anger:0,shame:0 };
+    this.memory.spent  = data.spent  || { joy:0,grief:0,wonder:0,anger:0,shame:0 };
+    this.echoSystem = new EchoSystem();
+    this.echoSystem.echoes = data.echoes || [];
+    this.echoSystem.flags = data.flags || {};
+    this.removedEntities = new Set(data.interactedRemoved || []);
+    this.currentMap = data.scene || 'act1';
+    this.playerPos = data.pos || { ...MAPS[this.currentMap].spawn };
+    this.logLines = [];
+    this._showGame();
+    this.sound.setDroneAct(MAPS[this.currentMap].act);
+    this.enterMap();
+    this.log('You remember where you were. Some of it, anyway.', 'memory');
+  }
+
+  _showGame() {
+    document.getElementById('menu').classList.add('hidden');
+    document.getElementById('game').classList.add('active');
+  }
+
+  quitToMenu() {
+    this.sound.setDroneAct(0);
+    document.getElementById('game').classList.remove('active');
+    document.getElementById('menu').classList.remove('hidden');
+    document.getElementById('settings-modal').classList.remove('show');
+    document.getElementById('btn-continue').disabled = !this.saver.exists();
+    this.mode = 'menu';
+  }
+
+  // ---------- core flow ----------
+  enterMap() {
+    this.mode = 'map';
+    this.render();
+  }
+
+  onKey(e) {
+    if (this.mode === 'menu' || this.mode === 'ending') return;
+    const k = e.key.toLowerCase();
+    if (k === 'e') { this.openSettings(); return; }
+    if (this.mode === 'map') {
+      let dx = 0, dy = 0;
+      if (k === 'arrowup' || k === 'w')    dy = -1;
+      else if (k === 'arrowdown' || k === 's')  dy = 1;
+      else if (k === 'arrowleft' || k === 'a')  dx = -1;
+      else if (k === 'arrowright' || k === 'd') dx = 1;
+      else if (k === ' ' || k === 'enter') { this.tryInteractAdjacent(); return; }
+      if (dx !== 0 || dy !== 0) this.tryMove(dx, dy);
+    } else if (this.mode === 'narration') {
+      if (k === ' ' || k === 'enter') this.advanceNarration();
+    }
+  }
+
+  // ---------- map & movement ----------
+  tryMove(dx, dy) {
+    const m = MAPS[this.currentMap];
+    const nx = this.playerPos.x + dx;
+    const ny = this.playerPos.y + dy;
+    if (nx < 0 || ny < 0 || nx >= m.w || ny >= m.h) return;
+    const tile = m.tiles[ny][nx];
+    if (tile === '#' || tile === 'H' || tile === 'W' || tile === 'S') return;
+    // entity blocking? we allow stepping onto entity's cell — interaction fires then.
+    const ent = this.entityAt(nx, ny);
+    this.playerPos = { x: nx, y: ny };
+    if (ent) this.interact(ent);
+    this.render();
+  }
+
+  tryInteractAdjacent() {
+    const { x, y } = this.playerPos;
+    for (const [dx, dy] of [[0,0],[0,-1],[0,1],[-1,0],[1,0]]) {
+      const ent = this.entityAt(x + dx, y + dy);
+      if (ent) { this.interact(ent); return; }
+    }
+  }
+
+  entityAt(x, y) {
+    const m = MAPS[this.currentMap];
+    for (const e of m.entities) {
+      if (e.x !== x || e.y !== y) continue;
+      if (this.removedEntities.has(this._entKey(e))) continue;
+      // Act 3 conditional echoes: only render if the corresponding decision created them
+      if (e.condCreated && !this._shouldSpawnEcho(e.condCreated)) continue;
+      return e;
+    }
+    return null;
+  }
+  _entKey(e) { return `${this.currentMap}:${e.id}@${e.x},${e.y}`; }
+
+  _shouldSpawnEcho(echoKey) {
+    // Returns whether the Act 3 Echo for a given decision should appear
+    const f = this.echoSystem.flags;
+    if (echoKey === 'echo_merchant') return f.merchant_kind || f.merchant_cold || f.merchant_cruel;
+    if (echoKey === 'echo_orphan')   return f.orphan_kind   || f.orphan_cold   || f.orphan_grief;
+    if (echoKey === 'echo_knight')   return true; // always appears as a guardian
+    return false;
+  }
+
+  interact(ent) {
+    const data = ENTITIES[ent.id];
+    if (!data) return;
+
+    if (data.type === 'dialogue') {
+      // dynamic dialogue: pick a starting node based on flags (for Act 3 echoes)
+      let startNode = DIALOGUES[data.dlg].start;
+      if (DIALOGUES[data.dlg].dynamic) startNode = this._pickDynamicStart(data.dlg);
+      this.openDialogue(data.dlg, startNode, ent);
+    } else if (data.type === 'combat') {
+      this.startCombat(data.enemy, ent);
+    } else if (data.type === 'chest') {
+      this.memory.gain(data.gives);
+      this.flashTopbar(data.gives, 'gain');
+      this.flash('black');
+      this.log(data.line, 'memory');
+      this.sound.memGain();
+      this.removedEntities.add(this._entKey(ent));
+      this.render();
+    } else if (data.type === 'locked') {
+      if (!this.memory.canAfford(data.cost)) {
+        this.log(data.line + ' (You lack the memory to unlock it.)');
+        return;
+      }
+      this.memory.spend(data.cost);
+      this.flashTopbar(data.cost, 'spend');
+      this.flash('white');
+      this.log(data.line + ' You gave what was asked. The door remembers.');
+      this.sound.memSpend();
+      // unlock: remove locked-door entity AND reveal its target if it was blocking
+      this.removedEntities.add(this._entKey(ent));
+      this.render();
+    } else if (data.type === 'transition') {
+      this.transitionTo(data.to);
+    }
+  }
+
+  _pickDynamicStart(dlg) {
+    const f = this.echoSystem.flags;
+    if (dlg === 'echo_merchant') {
+      if (f.merchant_cruel) return 'a_cruel';
+      if (f.merchant_cold)  return 'a_cold';
+      return 'a_kind';
+    }
+    if (dlg === 'echo_orphan') {
+      if (f.orphan_cold)  return 'a_cold';
+      if (f.orphan_grief) return 'a_grief';
+      return 'a_kind';
+    }
+    return DIALOGUES[dlg].start;
+  }
+
+  // ---------- dialogue ----------
+  openDialogue(dlgId, nodeId, npcEntity) {
+    this.mode = 'dialogue';
+    this.currentDialogue = dlgId;
+    this.currentDialogueNode = nodeId;
+    this.currentNPC = npcEntity;
+    this.currentSpeaker = DIALOGUES[dlgId].nodes[nodeId].speaker || null;
+    this.render();
+  }
+
+  pickChoice(idx) {
+    const dlg = DIALOGUES[this.currentDialogue];
+    const node = dlg.nodes[this.currentDialogueNode];
+    const choice = node.choices[idx];
+    if (!choice) return;
+
+    if (choice.cost && !this.memory.canAfford(choice.cost)) { this.log('You do not have enough of that to offer.'); return; }
+
+    // Narrate the pick itself
+    if (choice.narrate) this.log(choice.narrate);
+
+    // memory costs / gains
+    if (choice.cost) { this.memory.spend(choice.cost); this.flashTopbar(choice.cost, 'spend'); this.flash('white'); this.sound.memSpend(); this.log(this._memoryLine(choice.cost, 'spend'), 'memory'); }
+    if (choice.gives) { this.memory.gain(choice.gives); this.flashTopbar(choice.gives, 'gain'); this.flash('black'); this.sound.memGain(); this.log(this._memoryLine(choice.gives, 'gain'), 'memory'); }
+
+    // side effects
+    if (choice.setFlag) choice.setFlag.forEach(f => this.echoSystem.setFlag(f));
+    if (choice.spawnEcho) {
+      this.echoSystem.addEcho(choice.spawnEcho.id, choice.spawnEcho.line, MAPS[this.currentMap].act);
+      this.log('An Echo is born: ' + choice.spawnEcho.line, 'echo');
+      this.sound.echo();
+    }
+    if (choice.onPick) choice.onPick(this);
+
+    // advance
+    if (choice.next == null) {
+      this.closeDialogue();
+    } else {
+      this.currentDialogueNode = choice.next;
+      const n = dlg.nodes[choice.next];
+      if (n && n.speaker) this.currentSpeaker = n.speaker;
+      this.render();
+    }
+  }
+
+  closeDialogue() {
+    this.mode = 'map';
+    this.currentDialogue = null;
+    this.currentDialogueNode = null;
+    this.currentSpeaker = null;
+    this.currentNPC = null;
+    this.render();
+  }
+
+  // ---------- combat ----------
+  startCombat(enemyKey, npcEntity) {
+    const base = ENEMIES[enemyKey];
+    const enemy = JSON.parse(JSON.stringify(base));
+    // dynamic echo-self tuning
+    if (enemyKey === 'echo_self') {
+      const prof = this.memory.hoardProfile();
+      enemy.weakness = prof.least; // it bows to what you did not lean on
+      enemy.absorbs  = prof.most;  // it is made of the thing you used most
+      enemy.flavor = `It is built of everything you spent most freely. It flinches when it sees what you kept instead.`;
+    }
+    this.combat = { enemy, key: enemyKey, npcEntity, ward: 0, revealed: false, turn: 'player' };
+    this.mode = 'combat';
+    this.log(`A ${enemy.name} stands before you. ${enemy.flavor}`, 'combat');
+    this.render();
+  }
+
+  combatAction(spellKey) {
+    const c = this.combat;
+    if (!c || c.turn !== 'player') return;
+    const spell = SPELLS[spellKey];
+
+    if (spellKey === 'flee') {
+      // flee: costs 2 random memories
+      const total = this.memory.total();
+      if (total < 2) { this.log('You try to flee, but you have almost nothing left to pay with. You stay.'); return; }
+      const spent = this.memory.spendRandom(2);
+      this.flashTopbar(spent, 'spend'); this.flash('white'); this.sound.memSpend();
+      this.log(this._memoryLine(spent, 'spend') + ' You slip away into the trees.', 'combat');
+      this.endCombat(false);
+      return;
+    }
+
+    if (!this.memory.canAfford(spell.cost)) { this.log('You cannot pay for that one.'); return; }
+
+    this.memory.spend(spell.cost);
+    this.flashTopbar(spell.cost, 'spend'); this.flash('white'); this.sound.memSpend();
+    this.log(this._memoryLine(spell.cost, 'spend') + ` You use ${spell.name}. ${spell.desc}`, 'combat');
+
+    if (spell.heal) this.memory.gain(this._healGain(spell.heal));
+    if (spell.reveal) { c.revealed = true; this.log(`It is weak to ${MEMORY[c.enemy.weakness].label}. It absorbs ${MEMORY[c.enemy.absorbs].label}.`, 'combat'); }
+    if (spell.ward) c.ward = (c.ward || 0) + spell.ward;
+    if (spell.end) {
+      // Forgive: instant-resolve Echo-type enemies
+      if (c.key === 'echo_self' || c.key === 'hollow_child' || c.key === 'forgotten_knight') {
+        this.log('You speak the word, and you mean it. The thing bows, lets out a small light, and is not.', 'combat');
+        this.memory.gain({ wonder: 2, joy: 1 });
+        this.flashTopbar({ wonder: 2, joy: 1 }, 'gain');
+        this.endCombat(true, true);
+        return;
+      } else {
+        this.log('You offer mercy. The thing does not need it. It strikes anyway.', 'combat');
+      }
+    }
+
+    if (spell.dmg) {
+      let dmg = spell.dmg;
+      const usedType = Object.keys(spell.cost)[0];
+      if (usedType === c.enemy.weakness) { dmg += 2; this.log('It is weak to this. It flinches.', 'combat'); }
+      if (usedType === c.enemy.absorbs)  { dmg = 0;  this.log('It absorbs the blow. It grows fuller.', 'combat'); c.enemy.hp = Math.min(c.enemy.hp + 1, ENEMIES[c.key].hp + 2); }
+      c.enemy.hp -= dmg;
+      this.sound.hit();
+      document.querySelector('.combat-enemy')?.classList.add('combat-shake');
+      setTimeout(() => document.querySelector('.combat-enemy')?.classList.remove('combat-shake'), 300);
+    }
+
+    if (c.enemy.hp <= 0) { this.endCombat(true); return; }
+
+    c.turn = 'enemy';
+    setTimeout(() => this.enemyTurn(), 700);
+    this.render();
+  }
+
+  enemyTurn() {
+    const c = this.combat;
+    if (!c) return;
+    let dmg = c.enemy.attack.dmg;
+    if (c.ward > 0) { dmg = Math.max(0, dmg - c.ward); c.ward = 0; this.log('Your ward softens the blow.', 'combat'); }
+    if (dmg > 0) {
+      // drain dmg memories of preferred types
+      const drained = {};
+      const pref = c.enemy.attack.drains;
+      for (let i = 0; i < dmg; i++) {
+        const avail = pref.filter(k => this.memory.counts[k] > 0);
+        const pickFrom = avail.length ? avail : MEMORY_KEYS.filter(k => this.memory.counts[k] > 0);
+        if (!pickFrom.length) break;
+        const k = pickFrom[Math.floor(Math.random() * pickFrom.length)];
+        this.memory.counts[k]--;
+        this.memory.spent[k]++;
+        drained[k] = (drained[k] || 0) + 1;
+      }
+      if (Object.keys(drained).length) {
+        this.flashTopbar(drained, 'spend');
+        this.sound.memSpend();
+        this.log(`It strikes. You lose ${this._memListing(drained)}.`, 'combat');
+      } else {
+        this.log('It strikes, but there is almost nothing left to take.', 'combat');
+      }
+    }
+
+    // check whether player has been hollowed entirely
+    if (this.memory.total() === 0) { this.endCombat(false, false, true); return; }
+
+    c.turn = 'player';
+    this.render();
+  }
+
+  endCombat(victory, merciful = false, hollowed = false) {
+    const c = this.combat;
+    if (!c) return;
+    if (hollowed) {
+      this.log('You have nothing left to spend. You fall to your knees, and the altar calls you home, empty.', 'combat');
+      this.combat = null;
+      this.mode = 'narration';
+      this.triggerEnding(true);
+      return;
+    }
+    if (victory) {
+      const drops = c.enemy.drops;
+      this.memory.gain(drops);
+      this.flashTopbar(drops, 'gain'); this.flash('black'); this.sound.memGain();
+      this.log(`The ${c.enemy.name} dissolves. You absorb ${this._memListing(drops)}.${merciful ? ' It feels lighter than it should.' : ''}`, 'memory');
+      // Some fights are triggered from dialogue with no map entity attached; guard the removal.
+      if (c.npcEntity && typeof c.npcEntity === 'object') this.removedEntities.add(this._entKey(c.npcEntity));
+    }
+    this.combat = null;
+    this.mode = 'map';
+    this.render();
+  }
+
+  // ---------- transitions / endings ----------
+  transitionTo(mapId) {
+    const intro = { act2: NARRATIONS.act2_intro, act3: NARRATIONS.act3_intro }[mapId];
+    this.flash('white');
+    setTimeout(() => {
+      this.currentMap = mapId;
+      this.playerPos = { ...MAPS[mapId].spawn };
+      this.sound.setDroneAct(MAPS[mapId].act);
+      if (intro) this.queueNarration(intro, () => this.enterMap());
+      else this.enterMap();
+    }, 700);
+  }
+
+  /**
+   * Ending determination.
+   * Formula (documented):
+   *   total_spent = sum of all memory ever spent.
+   *   bright_spent = spent.joy + spent.wonder
+   *   dark_spent   = spent.anger + spent.shame
+   *   bright_kept  = counts.joy + counts.wonder
+   *   dark_kept    = counts.anger + counts.shame
+   *
+   *   If total_spent >= 14 AND (bright_kept + (counts.grief)) <= 2  -> HOLLOW HERO
+   *   Else if bright_kept >= 4 AND bright_kept > dark_kept          -> HAUNTED SAINT
+   *   Else if dark_kept  >= 4 AND dark_kept  > bright_kept + 1      -> VENGEFUL ECHO
+   *   Else                                                          -> BALANCED WITNESS
+   *
+   * These thresholds are tuned for a ~20-30min run with starting kit 1 of
+   * each type + typical gains. Tweak in this function to rebalance.
+   */
+  determineEnding() {
+    const s = this.memory.spent, c = this.memory.counts;
+    const totalSpent = MEMORY_KEYS.reduce((a, k) => a + s[k], 0);
+    const brightKept = c.joy + c.wonder;
+    const darkKept   = c.anger + c.shame;
+    if (totalSpent >= 14 && (brightKept + c.grief) <= 2) return 'hollow_hero';
+    if (brightKept >= 4 && brightKept > darkKept)         return 'haunted_saint';
+    if (darkKept >= 4 && darkKept > brightKept + 1)       return 'vengeful_echo';
+    return 'balanced_witness';
+  }
+
+  triggerEnding(forceHollow = false) {
+    const key = forceHollow ? 'hollow_hero' : this.determineEnding();
+    const e = ENDINGS[key];
+    document.getElementById('end-title').textContent = e.title;
+    document.getElementById('end-sub').textContent = e.sub;
+    // tally
+    const tally = document.getElementById('end-tally');
+    tally.innerHTML = '';
+    for (const k of MEMORY_KEYS) {
+      const d = document.createElement('div');
+      d.className = 't';
+      d.innerHTML = `<span style="color: var(--${k})">${MEMORY[k].glyph}</span> ${MEMORY[k].label}: kept ${this.memory.counts[k]} / spent ${this.memory.spent[k]}`;
+      tally.appendChild(d);
+    }
+    // body
+    const body = document.getElementById('end-body');
+    body.innerHTML = '';
+    e.body.forEach(p => { const el = document.createElement('p'); el.textContent = p; body.appendChild(el); });
+    this.sound.setDroneAct(0);
+    this.mode = 'ending';
+    setTimeout(() => document.getElementById('ending-modal').classList.add('show'), 800);
+    this.saver.clear(); // a completed run consumes its save
+  }
+
+  // ---------- narration ----------
+  queueNarration(lines, onDone) {
+    this.narrationQueue = [...lines];
+    this.narrationDone = onDone;
+    this.mode = 'narration';
+    this.render();
+  }
+  advanceNarration() {
+    this.narrationQueue.shift();
+    if (this.narrationQueue.length === 0) {
+      const cb = this.narrationDone; this.narrationDone = null;
+      if (cb) cb(); else this.enterMap();
+    } else this.render();
+  }
+
+  // ---------- helpers ----------
+  _healGain(n) {
+    // heal = gain of the least-held non-zero types
+    const out = {};
+    const entries = MEMORY_KEYS.map(k => [k, this.memory.counts[k]]).sort((a,b) => a[1] - b[1]);
+    for (let i = 0; i < n; i++) out[entries[i % entries.length][0]] = (out[entries[i % entries.length][0]] || 0) + 1;
+    return out;
+  }
+
+  _memListing(obj) {
+    return Object.entries(obj)
+      .filter(([,v]) => v > 0)
+      .map(([k, v]) => `${v} ${MEMORY[k].label}`)
+      .join(', ');
+  }
+  _memoryLine(obj, kind) {
+    const list = this._memListing(obj);
+    return kind === 'spend'
+      ? `You give up: ${list}.`
+      : `You receive: ${list}.`;
+  }
+
+  flashTopbar(obj, kind) {
+    const cls = kind === 'gain' ? 'flash-gain' : 'flash-spend';
+    // run after the next render pass so the class lands on the freshly-built mem items
+    requestAnimationFrame(() => {
+      for (const k of Object.keys(obj)) {
+        const el = document.querySelector(`.mem-item[data-type="${k}"]`);
+        if (!el) continue;
+        el.classList.add(cls);
+        setTimeout(() => el.classList.remove(cls), 700);
+      }
+    });
+  }
+  flash(color) {
+    const f = document.getElementById('flash');
+    f.className = '';
+    f.classList.add(color, 'visible');
+    setTimeout(() => f.classList.remove('visible'), 650);
+  }
+
+  log(text, cls = '') {
+    this.logLines.push({ text, cls });
+    if (this.logLines.length > 40) this.logLines.shift();
+    this._renderLog();
+  }
+  _renderLog() {
+    const el = document.getElementById('log');
+    el.innerHTML = '';
+    for (const { text, cls } of this.logLines.slice(-12)) {
+      const d = document.createElement('div');
+      d.className = 'log-line ' + cls;
+      d.textContent = text;
+      el.appendChild(d);
+    }
+    el.scrollTop = el.scrollHeight;
+  }
+
+  // ============================================================
+  // RENDER (all DOM writes centralised here for the viewport)
+  // ============================================================
+  render() {
+    this._renderTopbar();
+    this._renderJournal();
+    const vp = document.getElementById('viewport');
+    vp.innerHTML = '';
+    if (this.mode === 'map')        vp.appendChild(this._renderMap());
+    else if (this.mode === 'dialogue') vp.appendChild(this._renderDialogue());
+    else if (this.mode === 'combat')   vp.appendChild(this._renderCombat());
+    else if (this.mode === 'narration')vp.appendChild(this._renderNarration());
+  }
+
+  _renderTopbar() {
+    const strip = document.getElementById('mem-strip');
+    strip.innerHTML = '';
+    for (const k of MEMORY_KEYS) {
+      const d = document.createElement('div');
+      d.className = 'mem-item';
+      d.dataset.type = k;
+      d.innerHTML = `<span class="glyph">${MEMORY[k].glyph}</span><span>${this.memory.counts[k]}</span>`;
+      d.title = MEMORY[k].label;
+      strip.appendChild(d);
+    }
+    document.getElementById('act-label').textContent = 'ACT ' + ['I','II','III'][MAPS[this.currentMap].act - 1];
+    document.getElementById('scene-label').textContent = MAPS[this.currentMap].name;
+  }
+
+  _renderJournal() {
+    const el = document.getElementById('journal-body');
+    el.innerHTML = '';
+    if (this.echoSystem.echoes.length === 0) {
+      el.innerHTML = '<div class="empty">No echoes yet. What you do here will leave a mark.</div>';
+      return;
+    }
+    for (const e of this.echoSystem.echoes) {
+      const d = document.createElement('div');
+      d.className = 'echo-entry' + (e.resolved ? ' resolved' : '');
+      d.innerHTML = `<span class="when">ACT ${['I','II','III'][e.act - 1]}</span>${e.line}`;
+      el.appendChild(d);
+    }
+  }
+
+  _renderMap() {
+    const m = MAPS[this.currentMap];
+    const grid = document.createElement('div');
+    grid.className = 'tilemap';
+    grid.style.gridTemplateColumns = `repeat(${m.w}, 36px)`;
+    const tileClass = (ch) => ({
+      '.': 'grass', ',': 'path', '#': 'tree', 'H': 'house',
+      'W': 'water', 'S': 'stone', '_': 'shrine-floor', 'D': 'path',
+    }[ch] || 'grass');
+    const tileGlyph = (ch) => ({
+      '.': '', ',': '', '#': '\u{1F332}', 'H': '\u{1F3E0}', 'W': '\u{1F4A7}',
+      'S': '\u{1F5FF}', '_': '', 'D': '',
+    }[ch] || '');
+    for (let y = 0; y < m.h; y++) {
+      for (let x = 0; x < m.w; x++) {
+        const ch = m.tiles[y][x];
+        const cell = document.createElement('div');
+        cell.className = 'tile ' + tileClass(ch);
+        const isWalkable = !['#','H','W','S'].includes(ch);
+        if (isWalkable) cell.classList.add('walkable');
+        // default glyph
+        let glyph = tileGlyph(ch);
+        // entity overlay?
+        const ent = this.entityAt(x, y);
+        if (ent) {
+          const data = ENTITIES[ent.id];
+          glyph = data.glyph;
+          cell.classList.add('has-entity');
+          if (ent.id.startsWith('echo_') || data.dlg === 'forest_echo') cell.classList.add('echo-tile');
+        }
+        // player overlay (drawn on top)
+        if (this.playerPos.x === x && this.playerPos.y === y) {
+          glyph = '\u{1F464}';
+          cell.classList.add('player');
+        }
+        cell.textContent = glyph;
+        grid.appendChild(cell);
+      }
+    }
+    return grid;
+  }
+
+  _renderDialogue() {
+    const dlg = DIALOGUES[this.currentDialogue];
+    const node = dlg.nodes[this.currentDialogueNode];
+    const p = document.createElement('div');
+    p.className = 'panel';
+    const title = this.currentSpeaker || 'A Voice';
+    p.innerHTML = `<div class="speaker">${title}</div><div class="body">${node.text}</div>`;
+    const choicesDiv = document.createElement('div');
+    choicesDiv.className = 'choices';
+    (node.choices || []).forEach((c, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'choice';
+      let label = c.text;
+      const costStr = c.cost ? this._costPretty(c.cost, 'cost') : '';
+      const giveStr = c.gives ? this._costPretty(c.gives, 'give') : '';
+      const affordable = !c.cost || this.memory.canAfford(c.cost);
+      btn.innerHTML = label + (costStr ? ` <span class="cost-tag ${affordable ? 'affordable' : 'unaffordable'}">${costStr}</span>` : '') + (giveStr ? ` <span class="cost-tag affordable">${giveStr}</span>` : '');
+      if (!affordable) btn.disabled = true;
+      btn.addEventListener('click', () => this.pickChoice(i));
+      choicesDiv.appendChild(btn);
+    });
+    p.appendChild(choicesDiv);
+    return p;
+  }
+
+  _costPretty(obj, kind) {
+    const sign = kind === 'cost' ? '\u2212' : '+';
+    return '[' + Object.entries(obj).map(([k, v]) => `${sign}${v}${MEMORY[k].glyph}`).join(' ') + ']';
+  }
+
+  _renderCombat() {
+    const c = this.combat;
+    const enemyDef = ENEMIES[c.key];
+    const p = document.createElement('div');
+    p.className = 'panel';
+    const hpPct = Math.max(0, (c.enemy.hp / enemyDef.hp) * 100);
+    p.innerHTML = `
+      <div class="combat-enemy">
+        <div class="art">${c.enemy.art}</div>
+        <div class="name">${c.enemy.name}</div>
+        <div class="hp-bar"><div class="hp-fill" style="width:${hpPct}%"></div></div>
+        <div class="flavor">${c.enemy.flavor}</div>
+        ${c.revealed ? `<div class="flavor" style="color: var(--gold)">Weak: ${MEMORY[c.enemy.weakness].label} \u2022 Absorbs: ${MEMORY[c.enemy.absorbs].label}</div>` : ''}
+        ${c.ward > 0 ? `<div class="flavor" style="color: var(--grief)">Warded (${c.ward}).</div>` : ''}
+      </div>
+    `;
+    const choices = document.createElement('div');
+    choices.className = 'choices';
+    // actions: strike, ward, flame, dirge, starsight, soothe, absolve, forgive, flee
+    const actions = ['strike','ward','flame','dirge','starsight','soothe','absolve'];
+    if (this.echoSystem.flags.learned_forgive) actions.push('forgive');
+    actions.push('__flee');
+    for (const key of actions) {
+      const btn = document.createElement('button');
+      btn.className = 'choice';
+      if (key === '__flee') {
+        btn.innerHTML = `Flee <span class="cost-tag">[\u2212 2 random memories]</span>`;
+        btn.addEventListener('click', () => this.combatAction('flee'));
+      } else {
+        const sp = SPELLS[key];
+        const aff = this.memory.canAfford(sp.cost);
+        btn.innerHTML = `${sp.name} <span class="cost-tag ${aff ? 'affordable' : 'unaffordable'}">${this._costPretty(sp.cost, 'cost')}</span> <span class="cost-tag" style="opacity:0.6">${sp.desc}</span>`;
+        if (!aff) btn.disabled = true;
+        btn.addEventListener('click', () => this.combatAction(key));
+      }
+      choices.appendChild(btn);
+    }
+    if (c.turn !== 'player') {
+      choices.querySelectorAll('button').forEach(b => b.disabled = true);
+    }
+    p.appendChild(choices);
+    return p;
+  }
+
+  _renderNarration() {
+    const line = this.narrationQueue[0] || '';
+    const p = document.createElement('div');
+    p.className = 'panel';
+    p.innerHTML = `<div class="body" style="font-size: 22px; min-height: 120px;">${line}</div>
+      <div class="choices"><button class="choice" id="narr-next">Continue... (Space)</button></div>`;
+    setTimeout(() => document.getElementById('narr-next')?.addEventListener('click', () => this.advanceNarration()), 0);
+    return p;
+  }
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  window._game = new Game();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QUANTUM TIC-TAC-TOE: TEMPORAL SHIFT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-start: #0a0e27;
+  --bg-end: #1a1a3e;
+  --cyan: #00f0ff;
+  --magenta: #ff00ff;
+  --gold: #ffd84d;
+  --panel-bg: rgba(20, 24, 60, 0.35);
+  --panel-border: rgba(0, 240, 255, 0.25);
+  --cell-bg: rgba(14, 20, 50, 0.4);
+  --text: #e0e8ff;
+  --text-dim: #8590c0;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100vh; }
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 20px 24px 36px;
+}
+
+/* starfield backdrop */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1.5px 1.5px at 15% 20%, rgba(255,255,255,0.7), transparent 40%),
+    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.5), transparent 40%),
+    radial-gradient(1.5px 1.5px at 55% 80%, rgba(255,255,255,0.6), transparent 40%),
+    radial-gradient(1px 1px at 70% 15%, rgba(255,255,255,0.4), transparent 40%),
+    radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,0.5), transparent 40%),
+    radial-gradient(1px 1px at 40% 35%, rgba(255,255,255,0.3), transparent 40%),
+    radial-gradient(1px 1px at 5% 75%, rgba(255,255,255,0.4), transparent 40%),
+    radial-gradient(1.2px 1.2px at 95% 85%, rgba(255,255,255,0.5), transparent 40%),
+    radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.3), transparent 40%),
+    radial-gradient(1px 1px at 65% 30%, rgba(255,255,255,0.4), transparent 40%);
+  z-index: 0;
+}
+
+header {
+  text-align: center;
+  padding: 8px 0 20px;
+  position: relative;
+  z-index: 1;
+}
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(22px, 3.5vw, 40px);
+  letter-spacing: 6px;
+  background: linear-gradient(90deg, var(--cyan), #8a6bff, var(--magenta), var(--cyan));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: title-sweep 6s linear infinite;
+  margin: 0;
+}
+.subtitle {
+  font-size: 11px;
+  letter-spacing: 6px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+@keyframes title-sweep {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr 260px;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+.panel h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--cyan);
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.stat { margin-bottom: 14px; }
+.stat-label { font-size: 10px; letter-spacing: 2px; color: var(--text-dim); }
+.stat-value { font-size: 24px; font-weight: 700; font-family: 'Orbitron', sans-serif; line-height: 1.1; margin-top: 4px; }
+.stat-value.x { color: var(--cyan); text-shadow: 0 0 12px rgba(0, 240, 255, 0.5); }
+.stat-value.o { color: var(--magenta); text-shadow: 0 0 12px rgba(255, 0, 255, 0.5); }
+
+.decay-bar {
+  height: 5px;
+  background: rgba(255, 216, 77, 0.15);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.decay-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), #ff6b6b);
+  transition: width 0.4s ease;
+}
+
+.status-msg {
+  font-size: 12px;
+  color: var(--gold);
+  margin-top: 10px;
+  min-height: 34px;
+  line-height: 1.5;
+}
+
+.board-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+  width: 500px;
+  height: 500px;
+  max-width: 100%;
+  aspect-ratio: 1/1;
+  position: relative;
+  z-index: 1;
+}
+
+.cell {
+  position: relative;
+  background: var(--cell-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cell:hover { border-color: var(--cyan); background: rgba(0, 240, 255, 0.07); }
+
+.cell.gravity { border-color: rgba(255, 216, 77, 0.55); }
+.cell.gravity::before {
+  content: '';
+  position: absolute; inset: -20%;
+  background: radial-gradient(circle at center, rgba(255, 216, 77, 0.28), transparent 55%);
+  animation: gravity-rotate 8s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes gravity-rotate {
+  from { transform: rotate(0) scale(1); }
+  50% { transform: rotate(180deg) scale(1.12); }
+  to { transform: rotate(360deg) scale(1); }
+}
+
+.cell.cycle-highlight {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 20px rgba(255, 216, 77, 0.5), inset 0 0 30px rgba(255, 216, 77, 0.15);
+  animation: cycle-pulse 1.2s ease-in-out infinite;
+}
+@keyframes cycle-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 216, 77, 0.5), inset 0 0 30px rgba(255, 216, 77, 0.1); }
+  50% { box-shadow: 0 0 36px rgba(255, 216, 77, 0.8), inset 0 0 44px rgba(255, 216, 77, 0.25); }
+}
+
+.cell.pending-select {
+  border-color: var(--cyan);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.5);
+}
+.cell.win-line {
+  background: rgba(255, 216, 77, 0.18);
+  border-color: var(--gold);
+  box-shadow: 0 0 30px rgba(255, 216, 77, 0.55);
+}
+
+.real-mark {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 96px;
+  font-weight: 900;
+  z-index: 3;
+  animation: collapse-pop 0.5s cubic-bezier(0.2, 1.4, 0.4, 1);
+  user-select: none;
+}
+.real-mark.x { color: var(--cyan); text-shadow: 0 0 18px var(--cyan), 0 0 36px rgba(0, 240, 255, 0.5); }
+.real-mark.o { color: var(--magenta); text-shadow: 0 0 18px var(--magenta), 0 0 36px rgba(255, 0, 255, 0.5); }
+@keyframes collapse-pop {
+  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+  50% { transform: scale(1.3) rotate(-20deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.ghost-layer {
+  position: absolute; inset: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 4px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ghost {
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  animation: ghost-pulse 2s ease-in-out infinite;
+  background: rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+.ghost.x { color: var(--cyan); border: 1px solid rgba(0, 240, 255, 0.55); }
+.ghost.o { color: var(--magenta); border: 1px solid rgba(255, 0, 255, 0.55); }
+@keyframes ghost-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.9;  transform: scale(1.06); }
+}
+
+/* SVG overlay — entanglement arcs between paired ghost cells */
+.entanglement-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+}
+.entanglement-svg path {
+  fill: none;
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+  opacity: 0.6;
+  animation: dash-scroll 2s linear infinite;
+}
+.entanglement-svg path.x { stroke: var(--cyan); }
+.entanglement-svg path.o { stroke: var(--magenta); }
+@keyframes dash-scroll { to { stroke-dashoffset: -20; } }
+
+/* particle burst on collapse */
+.particles {
+  position: absolute; inset: 0; pointer-events: none; z-index: 5;
+}
+.particle {
+  position: absolute; left: 50%; top: 50%;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  animation: particle-fly 0.7s ease-out forwards;
+}
+@keyframes particle-fly {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+/* right-panel log */
+.log {
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.log::-webkit-scrollbar { width: 6px; }
+.log::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.3); border-radius: 3px; }
+
+.log-entry {
+  font-size: 11px;
+  padding: 5px 8px;
+  margin-bottom: 4px;
+  border-left: 2px solid var(--cyan);
+  background: rgba(0, 240, 255, 0.05);
+  border-radius: 0 4px 4px 0;
+  animation: log-slide 0.3s ease-out;
+  line-height: 1.4;
+  word-break: break-word;
+}
+.log-entry.o { border-left-color: var(--magenta); background: rgba(255, 0, 255, 0.05); }
+.log-entry.system { border-left-color: var(--gold); background: rgba(255, 216, 77, 0.05); color: var(--gold); }
+@keyframes log-slide {
+  from { opacity: 0; transform: translateX(8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.difficulty-select { margin-top: 16px; }
+.difficulty-select label {
+  display: block;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.difficulty-select select {
+  width: 100%;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+footer.controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+button.ctrl {
+  padding: 10px 20px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  color: var(--cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+button.ctrl:hover { background: rgba(0, 240, 255, 0.18); box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+button.ctrl:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.modal {
+  position: fixed; inset: 0;
+  background: rgba(5, 8, 22, 0.85);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.modal.show { display: flex; }
+.modal-body {
+  max-width: 640px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: linear-gradient(135deg, rgba(20,24,60,0.95), rgba(26,26,62,0.95));
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 28px 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 240, 255, 0.1);
+}
+.modal h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--cyan);
+  letter-spacing: 4px;
+  margin: 0 0 16px 0;
+  font-size: 20px;
+}
+.modal p { line-height: 1.65; font-size: 13px; margin-bottom: 12px; color: var(--text); }
+.modal .close { margin-top: 20px; }
+
+.rules-diagram { display: flex; gap: 20px; justify-content: center; margin: 14px 0; flex-wrap: wrap; }
+.mini-board {
+  display: grid;
+  grid-template-columns: repeat(3, 40px);
+  grid-template-rows: repeat(3, 40px);
+  gap: 3px;
+}
+.mini-cell {
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cyan);
+  font-weight: 700;
+}
+.mini-cell.o   { color: var(--magenta); border-color: rgba(255,0,255,0.4); }
+.mini-cell.grv { background: rgba(255, 216, 77, 0.18); border-color: var(--gold); }
+
+.game-over-banner {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  letter-spacing: 6px;
+  text-align: center;
+  margin: 12px 0;
+}
+.game-over-banner.x { color: var(--cyan);    text-shadow: 0 0 20px var(--cyan); }
+.game-over-banner.o { color: var(--magenta); text-shadow: 0 0 20px var(--magenta); }
+.game-over-banner.draw { color: var(--gold); text-shadow: 0 0 20px var(--gold); }
+
+@media (max-width: 900px) {
+  .game-layout { grid-template-columns: 1fr; }
+  .board { width: 100%; max-width: 460px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="title">QUANTUM TIC-TAC-TOE</h1>
+  <div class="subtitle">: : TEMPORAL SHIFT : :</div>
+</header>
+
+<main class="game-layout">
+  <aside class="panel">
+    <h3>STATUS</h3>
+    <div class="stat">
+      <div class="stat-label">CURRENT TURN</div>
+      <div class="stat-value" id="turn-player">X</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">TURN NUMBER</div>
+      <div class="stat-value" id="turn-num">1</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">GHOSTS PLACED</div>
+      <div class="stat-value" id="ghost-progress">0/2</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">DECAY COUNTDOWN</div>
+      <div class="stat-value" id="decay-count">3</div>
+      <div class="decay-bar"><div class="decay-bar-fill" id="decay-bar"></div></div>
+    </div>
+    <div class="status-msg" id="status-msg">Click two cells to place quantum marks.</div>
+  </aside>
+
+  <section class="board-wrap">
+    <div class="board" id="board"></div>
+  </section>
+
+  <aside class="panel">
+    <h3>ENTANGLEMENT LOG</h3>
+    <div class="log" id="log"></div>
+    <div class="difficulty-select">
+      <label>AI DIFFICULTY</label>
+      <select id="difficulty">
+        <option value="easy">EASY</option>
+        <option value="medium" selected>MEDIUM</option>
+        <option value="hard">HARD</option>
+      </select>
+    </div>
+  </aside>
+</main>
+
+<footer class="controls">
+  <button class="ctrl" id="new-game">NEW GAME</button>
+  <button class="ctrl" id="rules-btn">RULES</button>
+  <button class="ctrl" id="undo-btn">UNDO (1&times;)</button>
+</footer>
+
+<div class="modal" id="rules-modal">
+  <div class="modal-body">
+    <h2>RULES</h2>
+    <p><strong style="color: var(--cyan);">QUANTUM MOVES.</strong> Each turn you place TWO ghost marks of your symbol in two different cells. They represent a quantum superposition: your mark exists in <em>either</em> cell, but neither has "become real" yet.</p>
+    <div class="rules-diagram">
+      <div class="mini-board">
+        <div class="mini-cell">X&#8321;</div><div class="mini-cell"></div><div class="mini-cell">X&#8321;</div>
+        <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
+        <div class="mini-cell"></div><div class="mini-cell"></div><div class="mini-cell"></div>
+      </div>
+    </div>
+    <p><strong style="color: var(--gold);">ENTANGLEMENT CYCLES.</strong> Each pair of ghosts is an <em>edge</em> in the entanglement graph. When placing an edge creates a closed loop (cycle) through cells, all marks in the cycle <em>collapse</em>. The player who closed the cycle picks where their mark lands; the rest cascade deterministically around the loop.</p>
+    <div class="rules-diagram">
+      <div class="mini-board">
+        <div class="mini-cell">X&#8321;</div><div class="mini-cell">O&#8322;</div><div class="mini-cell">X&#8321;</div>
+        <div class="mini-cell">X&#8323;</div><div class="mini-cell">O&#8322;</div><div class="mini-cell"></div>
+        <div class="mini-cell">X&#8323;</div><div class="mini-cell"></div><div class="mini-cell"></div>
+      </div>
+    </div>
+    <p><strong style="color: var(--magenta);">TEMPORAL DECAY.</strong> Every 3rd turn, one random live ghost-pair vanishes from the board. Plan around the entropy.</p>
+    <p><strong style="color: var(--gold);">GRAVITY ZONES.</strong> One cell glows each round as the gravity well. If a collapsing edge has the gravity cell as an endpoint, the real mark is pulled there.</p>
+    <p><strong style="color: var(--cyan);">WINNING.</strong> Be first to get 3 real (collapsed) marks in a row, column, or diagonal.</p>
+    <button class="ctrl close" id="rules-close">CLOSE</button>
+  </div>
+</div>
+
+<div class="modal" id="end-modal">
+  <div class="modal-body" style="text-align:center;">
+    <h2>GAME OVER</h2>
+    <div class="game-over-banner" id="end-banner">X WINS</div>
+    <p id="end-subtitle"></p>
+    <button class="ctrl close" id="end-new-game">NEW GAME</button>
+  </div>
+</div>
+
+<script>
+/* =============================================================
+ * QUANTUM TIC-TAC-TOE: TEMPORAL SHIFT
+ * Single-file vanilla JS. Classes: EntanglementGraph, GameState,
+ * SoundManager, Renderer, AI, Game (controller).
+ * ============================================================= */
+
+// ---- constants ----
+const WIN_LINES = [
+  [0,1,2],[3,4,5],[6,7,8],   // rows
+  [0,3,6],[1,4,7],[2,5,8],   // cols
+  [0,4,8],[2,4,6]            // diagonals
+];
+const SUB_DIGITS = ['\u2080','\u2081','\u2082','\u2083','\u2084','\u2085','\u2086','\u2087','\u2088','\u2089'];
+const sub = (n) => String(n).split('').map(d => SUB_DIGITS[+d]).join('');
+
+/**
+ * EntanglementGraph
+ * -----------------
+ * Nodes are cell indices (0-8). Each quantum move adds one edge between
+ * two cells, tagged with {player, turn}. A cycle in this graph forces a
+ * collapse of the superpositions it contains.
+ *
+ * Cycle detection: when a new edge (a,b) is added, we search for a path
+ * from b back to a in the graph *without using the new edge*. Such a path
+ * plus the new edge forms a cycle. DFS is used since n <= 9 and edges are few.
+ */
+class EntanglementGraph {
+  constructor() {
+    this.edges = [];
+    this._nextId = 0;
+  }
+  addEdge(player, turn, cellA, cellB) {
+    const e = { id: this._nextId++, player, turn, cells: [cellA, cellB], alive: true };
+    this.edges.push(e);
+    return e;
+  }
+  liveEdges() { return this.edges.filter(e => e.alive); }
+
+  findCycleWith(newEdgeId) {
+    const newEdge = this.edges.find(e => e.id === newEdgeId);
+    if (!newEdge || !newEdge.alive) return null;
+    const [start, end] = newEdge.cells;
+
+    // adjacency list excluding the new edge
+    const adj = new Map();
+    for (const e of this.liveEdges()) {
+      if (e.id === newEdgeId) continue;
+      const [a, b] = e.cells;
+      if (!adj.has(a)) adj.set(a, []);
+      if (!adj.has(b)) adj.set(b, []);
+      adj.get(a).push({ other: b, edge: e });
+      adj.get(b).push({ other: a, edge: e });
+    }
+
+    const visitedEdges = new Set();
+    const path = [];
+    const dfs = (cur) => {
+      if (cur === end) return true;
+      for (const { other, edge } of adj.get(cur) || []) {
+        if (visitedEdges.has(edge.id)) continue;
+        visitedEdges.add(edge.id);
+        path.push(edge);
+        if (dfs(other)) return true;
+        path.pop();
+        // keep edge marked visited — we don't need to revisit it on other branches
+      }
+      return false;
+    };
+    if (dfs(start)) return [newEdge, ...path];
+    return null;
+  }
+}
+
+/**
+ * GameState
+ * ---------
+ * Single source of truth. No globals scattered around.
+ */
+class GameState {
+  constructor() { this.reset(); }
+  reset() {
+    this.cells = Array.from({ length: 9 }, () => ({ real: null, ghosts: [] }));
+    this.graph = new EntanglementGraph();
+    this.currentPlayer = 'X';
+    this.turn = 1;
+    this.pendingCell = null;
+    this.pendingGhostCount = 0;
+    this.gravityCell = Math.floor(Math.random() * 9);
+    this.turnsUntilDecay = 3;
+    this.gameOver = false;
+    this.winner = null;
+    this.winLine = null;
+    this.undoUsed = false;
+    this.undoSnapshot = null;
+    this.log = [];
+    this.awaitingCollapse = false;
+    this.collapseCycle = null;
+  }
+  canPlaceGhost(idx) {
+    if (this.gameOver || this.awaitingCollapse) return false;
+    if (this.cells[idx].real !== null) return false;
+    if (this.pendingCell === idx) return false;
+    return true;
+  }
+}
+
+/**
+ * SoundManager — tiny Web Audio synth. No external audio assets.
+ */
+class SoundManager {
+  constructor() { this.ctx = null; this.enabled = true; }
+  _ensure() {
+    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+  }
+  _tone(freq, duration = 0.12, type = 'sine', gain = 0.06, when = 0) {
+    if (!this.enabled) return;
+    try { this._ensure(); } catch(e) { return; }
+    const t0 = this.ctx.currentTime + when;
+    const osc = this.ctx.createOscillator();
+    const g = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(gain, t0 + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
+    osc.connect(g).connect(this.ctx.destination);
+    osc.start(t0);
+    osc.stop(t0 + duration + 0.02);
+  }
+  placeGhost() { this._tone(660, 0.09, 'triangle', 0.05); }
+  place()      { this._tone(520, 0.08, 'triangle', 0.05); }
+  collapse() {
+    this._tone(523, 0.35, 'sine', 0.05, 0);
+    this._tone(659, 0.35, 'sine', 0.05, 0.04);
+    this._tone(784, 0.40, 'sine', 0.05, 0.08);
+  }
+  decay() {
+    this._tone(330, 0.25, 'sawtooth', 0.04, 0);
+    this._tone(220, 0.30, 'sawtooth', 0.04, 0.1);
+  }
+  win() {
+    [523, 659, 784, 1047].forEach((f, i) => this._tone(f, 0.22, 'sine', 0.06, i * 0.12));
+  }
+  lose() {
+    this._tone(392, 0.25, 'sawtooth', 0.05, 0);
+    this._tone(311, 0.30, 'sawtooth', 0.05, 0.2);
+  }
+}
+
+/**
+ * Renderer — all DOM writes live here.
+ */
+class Renderer {
+  constructor(state) {
+    this.state = state;
+    this.boardEl = document.getElementById('board');
+    this.logEl = document.getElementById('log');
+    this._buildBoard();
+
+    this._entSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    this._entSVG.classList.add('entanglement-svg');
+    this._entSVG.setAttribute('viewBox', '0 0 500 500');
+    this._entSVG.setAttribute('preserveAspectRatio', 'none');
+    this.boardEl.appendChild(this._entSVG);
+  }
+  _buildBoard() {
+    this.boardEl.innerHTML = '';
+    this.cellEls = [];
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.idx = i;
+      const ghostLayer = document.createElement('div');
+      ghostLayer.className = 'ghost-layer';
+      cell.appendChild(ghostLayer);
+      this.boardEl.appendChild(cell);
+      this.cellEls.push(cell);
+    }
+  }
+  renderAll() {
+    this._renderCells();
+    this._renderEntanglement();
+    this._renderHUD();
+    this._renderLog();
+  }
+  _renderCells() {
+    const s = this.state;
+    for (let i = 0; i < 9; i++) {
+      const el = this.cellEls[i];
+      const data = s.cells[i];
+      el.classList.toggle('gravity',         s.gravityCell === i && !data.real);
+      el.classList.toggle('cycle-highlight', s.awaitingCollapse && s.collapseCycle && s.collapseCycle.some(e => e.cells.includes(i) && e.alive));
+      el.classList.toggle('pending-select',  s.pendingCell === i);
+      el.classList.toggle('win-line',        s.winLine && s.winLine.includes(i));
+
+      // real mark
+      const existingReal = el.querySelector('.real-mark');
+      if (data.real && !existingReal) {
+        const r = document.createElement('div');
+        r.className = 'real-mark ' + data.real.toLowerCase();
+        r.textContent = data.real;
+        el.appendChild(r);
+      } else if (!data.real && existingReal) {
+        existingReal.remove();
+      }
+
+      // ghosts
+      const layer = el.querySelector('.ghost-layer');
+      layer.innerHTML = '';
+      for (const g of data.ghosts) {
+        const span = document.createElement('span');
+        span.className = 'ghost ' + g.player.toLowerCase();
+        span.textContent = g.player + sub(g.turn);
+        layer.appendChild(span);
+      }
+    }
+  }
+  _renderEntanglement() {
+    const svg = this._entSVG;
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    for (const e of this.state.graph.liveEdges()) {
+      const [a, b] = e.cells;
+      const pa = cellCenter(a);
+      const pb = cellCenter(b);
+      const mx = (pa.x + pb.x) / 2, my = (pa.y + pb.y) / 2;
+      const dx = pb.x - pa.x, dy = pb.y - pa.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len, ny = dx / len;
+      const off = 30;
+      const cx = mx + nx * off, cy = my + ny * off;
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', `M ${pa.x} ${pa.y} Q ${cx} ${cy} ${pb.x} ${pb.y}`);
+      path.classList.add(e.player.toLowerCase());
+      svg.appendChild(path);
+    }
+  }
+  _renderHUD() {
+    const s = this.state;
+    const turnPlayer = document.getElementById('turn-player');
+    turnPlayer.textContent = s.currentPlayer;
+    turnPlayer.className = 'stat-value ' + s.currentPlayer.toLowerCase();
+    document.getElementById('turn-num').textContent = s.turn;
+    document.getElementById('ghost-progress').textContent = s.pendingGhostCount + '/2';
+    document.getElementById('decay-count').textContent = s.turnsUntilDecay;
+    const pct = ((3 - s.turnsUntilDecay) / 3) * 100;
+    document.getElementById('decay-bar').style.width = pct + '%';
+    document.getElementById('undo-btn').disabled = s.undoUsed || !s.undoSnapshot || s.currentPlayer !== 'X';
+
+    const msgEl = document.getElementById('status-msg');
+    if (s.gameOver) {
+      msgEl.textContent = s.winner === 'draw' ? 'Dimensional draw — no winner.' : `${s.winner} collapses reality.`;
+    } else if (s.awaitingCollapse) {
+      msgEl.textContent = s.currentPlayer === 'X'
+        ? '\u26a1 CYCLE DETECTED — click a highlighted cell to collapse your mark there.'
+        : '\u26a1 Opponent resolving cycle\u2026';
+    } else if (s.currentPlayer === 'O') {
+      msgEl.textContent = 'AI thinking\u2026';
+    } else if (s.pendingGhostCount === 0) {
+      msgEl.textContent = 'Your turn. Click the FIRST ghost cell.';
+    } else {
+      msgEl.textContent = 'Click a DIFFERENT cell for the second ghost.';
+    }
+  }
+  _renderLog() {
+    const s = this.state;
+    if (this.logEl.childElementCount === s.log.length) return;
+    this.logEl.innerHTML = '';
+    for (const entry of s.log.slice(-30)) {
+      const div = document.createElement('div');
+      div.className = 'log-entry ' + (entry.type || '');
+      div.textContent = entry.text;
+      this.logEl.appendChild(div);
+    }
+    this.logEl.scrollTop = this.logEl.scrollHeight;
+  }
+  particleBurst(cellIdx, color) {
+    const cell = this.cellEls[cellIdx];
+    const wrap = document.createElement('div');
+    wrap.className = 'particles';
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.background = color;
+      p.style.boxShadow = `0 0 8px ${color}`;
+      const ang = (i / 14) * Math.PI * 2;
+      const r = 55 + Math.random() * 35;
+      p.style.setProperty('--tx', `${Math.cos(ang) * r}px`);
+      p.style.setProperty('--ty', `${Math.sin(ang) * r}px`);
+      wrap.appendChild(p);
+    }
+    cell.appendChild(wrap);
+    setTimeout(() => wrap.remove(), 800);
+  }
+}
+
+// cell center in 500x500 SVG space
+function cellCenter(idx) {
+  const row = Math.floor(idx / 3), col = idx % 3;
+  const cellSize = (500 - 20) / 3; // 2 gaps of 10px
+  const gap = 10;
+  const x = col * (cellSize + gap) + cellSize / 2;
+  const y = row * (cellSize + gap) + cellSize / 2;
+  return { x, y };
+}
+
+/**
+ * AI — three difficulty tiers.
+ *   easy   : uniformly random legal pair
+ *   medium : heuristic (line pressure, center/corner, gravity bonus, cycle hint)
+ *   hard   : enumerate every legal pair (<=36) and score with a deeper heuristic
+ *            that rewards potential cycles and line pressure after the move.
+ */
+class AI {
+  constructor(state) { this.state = state; this.difficulty = 'medium'; }
+  pickMove() {
+    const legal = [];
+    for (let i = 0; i < 9; i++) if (!this.state.cells[i].real) legal.push(i);
+    if (legal.length < 2) return null;
+    if (this.difficulty === 'easy')   return this._random(legal);
+    if (this.difficulty === 'medium') return this._medium(legal);
+    return this._hard(legal);
+  }
+  _random(legal) {
+    const shuffled = legal.slice().sort(() => Math.random() - 0.5);
+    return [shuffled[0], shuffled[1]];
+  }
+  _medium(legal) {
+    const rank = (cell) => this._cellScore(cell);
+    const ranked = legal.slice().sort((a, b) => rank(b) - rank(a));
+    const topK = ranked.slice(0, Math.min(3, ranked.length));
+    const a = topK[Math.floor(Math.random() * topK.length)];
+    const rest = legal.filter(c => c !== a).sort((x, y) => rank(y) - rank(x));
+    const b = rest[Math.floor(Math.random() * Math.min(3, rest.length))];
+    return [a, b];
+  }
+  _hard(legal) {
+    let best = null, bestScore = -Infinity;
+    for (let i = 0; i < legal.length; i++) {
+      for (let j = i + 1; j < legal.length; j++) {
+        const a = legal[i], b = legal[j];
+        const sc = this._pairScore(a, b);
+        if (sc > bestScore) { bestScore = sc; best = [a, b]; }
+      }
+    }
+    return best;
+  }
+  _cellScore(cell) {
+    const s = this.state;
+    let sc = 0;
+    if (cell === 4) sc += 2;
+    if ([0,2,6,8].includes(cell)) sc += 1;
+    if (cell === s.gravityCell) sc += 1.5;
+    for (const line of WIN_LINES) {
+      if (!line.includes(cell)) continue;
+      let ox = 0, xx = 0;
+      for (const c of line) {
+        const d = s.cells[c];
+        if (d.real === 'O') ox += 2;
+        if (d.real === 'X') xx += 2;
+        ox += d.ghosts.filter(g => g.player === 'O').length * 0.5;
+        xx += d.ghosts.filter(g => g.player === 'X').length * 0.5;
+      }
+      sc += ox * 1.2 + xx * 1.0;
+    }
+    return sc;
+  }
+  _pairScore(a, b) {
+    const s = this.state;
+    let sc = this._cellScore(a) + this._cellScore(b);
+    // cycle-creation hint: prefer pairs that touch cells already visited by edges
+    const visitCount = new Map();
+    for (const e of s.graph.liveEdges()) for (const c of e.cells) visitCount.set(c, (visitCount.get(c)||0)+1);
+    if (visitCount.get(a)) sc += 2 * visitCount.get(a);
+    if (visitCount.get(b)) sc += 2 * visitCount.get(b);
+    // symmetry bonus for placing both ghosts on the same line (line pressure)
+    for (const line of WIN_LINES) {
+      if (line.includes(a) && line.includes(b)) sc += 2;
+    }
+    return sc;
+  }
+}
+
+/**
+ * Game — the top-level controller. Glues state, renderer, AI, sound, DOM events.
+ */
+class Game {
+  constructor() {
+    this.state = new GameState();
+    this.renderer = new Renderer(this.state);
+    this.ai = new AI(this.state);
+    this.sound = new SoundManager();
+    this._wireEvents();
+    this._log(`\u2699 New game. Gravity cell: ${this.state.gravityCell}.`, 'system');
+    this.renderer.renderAll();
+  }
+
+  _log(text, type='') { this.state.log.push({ text, type }); }
+
+  _wireEvents() {
+    this.renderer.boardEl.addEventListener('click', (ev) => {
+      const cell = ev.target.closest('.cell');
+      if (!cell) return;
+      this.onCellClick(+cell.dataset.idx);
+    });
+    document.getElementById('new-game').addEventListener('click', () => this.newGame());
+    document.getElementById('end-new-game').addEventListener('click', () => {
+      document.getElementById('end-modal').classList.remove('show');
+      this.newGame();
+    });
+    document.getElementById('rules-btn').addEventListener('click', () =>
+      document.getElementById('rules-modal').classList.add('show'));
+    document.getElementById('rules-close').addEventListener('click', () =>
+      document.getElementById('rules-modal').classList.remove('show'));
+    document.getElementById('undo-btn').addEventListener('click', () => this.undo());
+    document.getElementById('difficulty').addEventListener('change', (e) => {
+      this.ai.difficulty = e.target.value;
+      this._log(`\u2699 AI difficulty set to ${e.target.value.toUpperCase()}.`, 'system');
+      this.renderer.renderAll();
+    });
+  }
+
+  newGame() {
+    this.state.reset();
+    this.ai.state = this.state;
+    this.renderer.state = this.state;
+    this._log(`\u2699 New game. Gravity cell: ${this.state.gravityCell}.`, 'system');
+    this.renderer.renderAll();
+  }
+
+  // ---- click dispatch ----
+  onCellClick(idx) {
+    const s = this.state;
+    if (s.gameOver) return;
+    if (s.awaitingCollapse) { this._handleCollapseClick(idx); return; }
+    if (s.currentPlayer !== 'X') return;
+    this._placeGhostFlow(idx, 'X');
+  }
+
+  // ---- ghost placement ----
+  _placeGhostFlow(idx, player) {
+    const s = this.state;
+    if (!s.canPlaceGhost(idx)) return;
+
+    if (s.pendingGhostCount === 0) {
+      // Snapshot BEFORE the player places anything — so undo restores a clean state.
+      if (player === 'X' && !s.undoUsed) s.undoSnapshot = this._snapshot();
+      s.pendingCell = idx;
+      s.pendingGhostCount = 1;
+      s.cells[idx].ghosts.push({ player, turn: s.turn });
+      this.sound.placeGhost();
+      this._log(`${player}${sub(s.turn)} \u2192 cell ${idx}`, player.toLowerCase());
+      this.renderer.renderAll();
+      return;
+    }
+
+    // pendingGhostCount === 1 -> place second, create edge, check cycle
+    if (idx === s.pendingCell) return;
+    const firstCell = s.pendingCell;
+    s.cells[idx].ghosts.push({ player, turn: s.turn });
+    const edge = s.graph.addEdge(player, s.turn, firstCell, idx);
+    s.pendingGhostCount = 2;
+    s.pendingCell = null;
+    this.sound.place();
+    this._log(`${player}${sub(s.turn)} \u2192 cell ${idx} (edge ${firstCell}\u2194${idx})`, player.toLowerCase());
+    this.renderer.renderAll();
+
+    const cycle = s.graph.findCycleWith(edge.id);
+    if (cycle) this._triggerCollapse(cycle);
+    else this._endTurn();
+  }
+
+  // ---- cycle collapse ----
+  _triggerCollapse(cycle) {
+    const s = this.state;
+    s.awaitingCollapse = true;
+    s.collapseCycle = cycle;
+    const desc = cycle.map(e => `${e.player}${sub(e.turn)}(${e.cells[0]}\u2194${e.cells[1]})`).join(' \u2192 ');
+    this._log(`\u26a1 Cycle detected: ${desc}`, 'system');
+    this.renderer.renderAll();
+    if (s.currentPlayer === 'O') setTimeout(() => this._aiCollapseChoice(), 650);
+  }
+
+  _handleCollapseClick(idx) {
+    const s = this.state;
+    const cycleCells = new Set();
+    s.collapseCycle.forEach(e => { if (e.alive) { cycleCells.add(e.cells[0]); cycleCells.add(e.cells[1]); } });
+    if (!cycleCells.has(idx)) return;
+
+    // The player picks a cell that contains one of THEIR cycle ghosts.
+    const edge = s.collapseCycle.find(e =>
+      e.alive && e.player === s.currentPlayer && e.cells.includes(idx));
+    if (!edge) return;
+    this._resolveCollapse(edge, idx);
+  }
+
+  _aiCollapseChoice() {
+    const s = this.state;
+    const aiEdges = s.collapseCycle.filter(e => e.alive && e.player === 'O');
+    const target = aiEdges[0] || s.collapseCycle.find(e => e.alive) || s.collapseCycle[0];
+    // Prefer the cell that puts the AI closer to a win
+    const score = (cell) => {
+      let sc = 0;
+      for (const line of WIN_LINES) {
+        if (!line.includes(cell)) continue;
+        const os = line.filter(c => s.cells[c].real === 'O').length;
+        const xs = line.filter(c => s.cells[c].real === 'X').length;
+        if (xs === 0) sc += os + 1;
+      }
+      if (cell === s.gravityCell) sc += 1;
+      return sc;
+    };
+    const chosen = score(target.cells[0]) >= score(target.cells[1]) ? target.cells[0] : target.cells[1];
+    this._resolveCollapse(target, chosen);
+  }
+
+  /**
+   * _resolveCollapse(startEdge, startCell)
+   * --------------------------------------
+   * Runs the collapse cascade triggered by a cycle.
+   *
+   *  1. Pin `startEdge` to `startCell`: put a real player mark at startCell,
+   *     remove the two ghosts belonging to that edge.
+   *  2. Any ghost in a cell that just became "real" is forced to its edge's
+   *     OTHER endpoint, cascading — this can chain through edges outside
+   *     the detected cycle (standard QTTT collapse semantics).
+   *  3. Gravity: if a cascading edge has the gravity cell as an option,
+   *     it's preferred (ghost "pulled" toward the well).
+   */
+  _resolveCollapse(startEdge, startCell) {
+    const s = this.state;
+    const cycle = s.collapseCycle;
+
+    // Helper: pin edge to cell, cascade.
+    const pin = (edge, cell) => {
+      if (!edge.alive) return;
+      const otherCell = edge.cells[0] === cell ? edge.cells[1] : edge.cells[0];
+
+      // If the chosen cell is already occupied by a real mark, flip to the other.
+      if (s.cells[cell].real) {
+        if (!s.cells[otherCell].real) { cell = otherCell; }
+        else { edge.alive = false; this._removeGhostsOfEdge(edge); return; }
+      }
+
+      s.cells[cell].real = edge.player;
+      edge.alive = false;
+      this._removeGhostsOfEdge(edge);
+
+      this._log(
+        `\u21af ${edge.player}${sub(edge.turn)} collapsed at cell ${cell}` +
+        (cell === s.gravityCell ? ' (gravity well)' : ''),
+        'system'
+      );
+      this.renderer.particleBurst(cell, edge.player === 'X' ? '#00f0ff' : '#ff00ff');
+
+      // Forced cascade: any remaining ghost sitting in this now-real cell must
+      // jump to its edge partner (or die if the partner is also taken). This
+      // handles edges both inside and outside the detected cycle.
+      cascadeFromCell(cell);
+    };
+
+    const cascadeFromCell = (cellIdx) => {
+      const stuck = s.cells[cellIdx].ghosts.slice();
+      s.cells[cellIdx].ghosts = [];
+      for (const g of stuck) {
+        const e = s.graph.edges.find(x => x.alive && x.player === g.player && x.turn === g.turn);
+        if (!e) continue;
+        const partner = e.cells[0] === cellIdx ? e.cells[1] : e.cells[0];
+        // gravity preference: if partner is gravity cell and free, go there (default behavior already)
+        if (s.cells[partner].real) {
+          // partner also taken: edge disintegrates
+          e.alive = false;
+          this._removeGhostsOfEdge(e);
+          continue;
+        }
+        // move real mark to partner
+        s.cells[partner].real = e.player;
+        e.alive = false;
+        this._removeGhostsOfEdge(e);
+        this._log(`\u21af ${e.player}${sub(e.turn)} cascaded into cell ${partner}.`, 'system');
+        this.renderer.particleBurst(partner, e.player === 'X' ? '#00f0ff' : '#ff00ff');
+        cascadeFromCell(partner);
+      }
+    };
+
+    pin(startEdge, startCell);
+
+    // Any remaining alive edges in the cycle: each must now have at least one
+    // of its two cells real (because we're in a cycle). Pin it to the free side.
+    for (const e of cycle) {
+      if (!e.alive) continue;
+      const [a, b] = e.cells;
+      if (s.cells[a].real && !s.cells[b].real) pin(e, b);
+      else if (s.cells[b].real && !s.cells[a].real) pin(e, a);
+      else if (s.cells[a].real && s.cells[b].real) { e.alive = false; this._removeGhostsOfEdge(e); }
+      else {
+        // Neither side real — gravity decides if applicable, else random.
+        const grav = s.gravityCell;
+        if (a === grav) pin(e, a);
+        else if (b === grav) pin(e, b);
+        else pin(e, Math.random() < 0.5 ? a : b);
+      }
+    }
+
+    this.sound.collapse();
+    s.awaitingCollapse = false;
+    s.collapseCycle = null;
+    this.renderer.renderAll();
+
+    if (this._checkWinAndEnd()) return;
+    this._endTurn();
+  }
+
+  _removeGhostsOfEdge(edge) {
+    for (const c of edge.cells) {
+      this.state.cells[c].ghosts = this.state.cells[c].ghosts.filter(g =>
+        !(g.player === edge.player && g.turn === edge.turn));
+    }
+  }
+
+  // ---- turn lifecycle ----
+  _endTurn() {
+    const s = this.state;
+    if (s.gameOver) return;
+    if (s.pendingGhostCount < 2) return;
+    s.pendingGhostCount = 0;
+    s.pendingCell = null;
+
+    s.turnsUntilDecay--;
+    if (s.turnsUntilDecay <= 0) {
+      this._temporalDecay();
+      s.turnsUntilDecay = 3;
+    }
+    this._shiftGravity();
+
+    s.currentPlayer = s.currentPlayer === 'X' ? 'O' : 'X';
+    s.turn++;
+
+    if (this._checkWinAndEnd()) return;
+    this.renderer.renderAll();
+
+    if (s.currentPlayer === 'O' && !s.gameOver) setTimeout(() => this._aiTurn(), 550);
+  }
+
+  _temporalDecay() {
+    const s = this.state;
+    const edges = s.graph.liveEdges();
+    if (edges.length === 0) return;
+    const e = edges[Math.floor(Math.random() * edges.length)];
+    this._removeGhostsOfEdge(e);
+    e.alive = false;
+    this.sound.decay();
+    this._log(`\u231b Temporal decay: ${e.player}${sub(e.turn)} vanished (edge ${e.cells[0]}\u2194${e.cells[1]}).`, 'system');
+  }
+
+  _shiftGravity() {
+    const s = this.state;
+    const cands = [];
+    for (let i = 0; i < 9; i++) if (!s.cells[i].real) cands.push(i);
+    if (!cands.length) return;
+    const prev = s.gravityCell;
+    let next = cands[Math.floor(Math.random() * cands.length)];
+    if (next === prev && cands.length > 1) while (next === prev) next = cands[Math.floor(Math.random() * cands.length)];
+    s.gravityCell = next;
+  }
+
+  _aiTurn() {
+    const s = this.state;
+    if (s.gameOver) return;
+    const move = this.ai.pickMove();
+    if (!move) { this._checkWinAndEnd(); return; }
+    const [a, b] = move;
+    this._placeGhostFlow(a, 'O');
+    setTimeout(() => {
+      if (this.state.pendingGhostCount === 1 && this.state.currentPlayer === 'O' && !this.state.gameOver) {
+        this._placeGhostFlow(b, 'O');
+      }
+    }, 450);
+  }
+
+  _checkWinAndEnd() {
+    const s = this.state;
+    for (const line of WIN_LINES) {
+      const [a,b,c] = line;
+      const ra = s.cells[a].real, rb = s.cells[b].real, rc = s.cells[c].real;
+      if (ra && ra === rb && rb === rc) {
+        s.gameOver = true;
+        s.winner = ra;
+        s.winLine = line;
+        if (ra === 'X') this.sound.win(); else this.sound.lose();
+        this._log(`\u2726 ${ra} WINS on line ${line.join('-')}.`, 'system');
+        this.renderer.renderAll();
+        this._showEndModal();
+        return true;
+      }
+    }
+    const empty = s.cells.filter(c => !c.real).length;
+    const edgesAlive = s.graph.liveEdges().length;
+    if (empty <= 1 && edgesAlive === 0 && !s.awaitingCollapse) {
+      s.gameOver = true;
+      s.winner = 'draw';
+      this._log('\u223c Dimensional draw.', 'system');
+      this.renderer.renderAll();
+      this._showEndModal();
+      return true;
+    }
+    return false;
+  }
+
+  _showEndModal() {
+    const s = this.state;
+    const banner = document.getElementById('end-banner');
+    if (s.winner === 'draw') { banner.textContent = 'DRAW'; banner.className = 'game-over-banner draw'; }
+    else { banner.textContent = s.winner + ' WINS'; banner.className = 'game-over-banner ' + s.winner.toLowerCase(); }
+    document.getElementById('end-subtitle').textContent = `Resolved in ${s.turn} turn${s.turn === 1 ? '' : 's'}.`;
+    setTimeout(() => document.getElementById('end-modal').classList.add('show'), 600);
+  }
+
+  // ---- undo ----
+  _snapshot() {
+    const s = this.state;
+    return JSON.stringify({
+      cells: s.cells,
+      edges: s.graph.edges,
+      nextId: s.graph._nextId,
+      currentPlayer: s.currentPlayer,
+      turn: s.turn,
+      pendingCell: s.pendingCell,
+      pendingGhostCount: s.pendingGhostCount,
+      gravityCell: s.gravityCell,
+      turnsUntilDecay: s.turnsUntilDecay,
+    });
+  }
+  undo() {
+    const s = this.state;
+    if (s.undoUsed || !s.undoSnapshot || s.currentPlayer !== 'X') return;
+    const d = JSON.parse(s.undoSnapshot);
+    s.cells = d.cells;
+    s.graph.edges = d.edges;
+    s.graph._nextId = d.nextId;
+    s.currentPlayer = d.currentPlayer;
+    s.turn = d.turn;
+    s.pendingCell = d.pendingCell;
+    s.pendingGhostCount = d.pendingGhostCount;
+    s.gravityCell = d.gravityCell;
+    s.turnsUntilDecay = d.turnsUntilDecay;
+    s.awaitingCollapse = false;
+    s.collapseCycle = null;
+    s.undoUsed = true;
+    s.undoSnapshot = null;
+    this._log('\u21ba Quantum placement undone.', 'system');
+    this.renderer.renderAll();
+  }
+}
+
+// boot
+window.addEventListener('DOMContentLoaded', () => { window._game = new Game(); });
+</script>
+</body>
+</html>

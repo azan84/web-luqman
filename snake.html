@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>DIMENSHIFT</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #0a0e1a;
+    font-family: 'Courier New', ui-monospace, monospace;
+    color: #e0f0ff;
+    user-select: none;
+  }
+  #hud {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 10;
+    font-size: 14px;
+    line-height: 1.55;
+    text-shadow: 0 0 8px rgba(0, 234, 255, 0.6);
+    pointer-events: none;
+  }
+  #hud .title {
+    font-size: 20px;
+    letter-spacing: 6px;
+    color: #00eaff;
+    margin-bottom: 6px;
+  }
+  #hud .row { opacity: 0.85; }
+  #hud .val { color: #ffffff; }
+  #hud #mode { font-weight: bold; letter-spacing: 2px; }
+
+  #help {
+    position: fixed;
+    bottom: 12px;
+    left: 16px;
+    font-size: 11px;
+    opacity: 0.45;
+    line-height: 1.65;
+    pointer-events: none;
+  }
+
+  #overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 26, 0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 20;
+    text-align: center;
+  }
+  #overlay.show { display: flex; }
+  #overlay h1 {
+    font-size: 52px;
+    letter-spacing: 10px;
+    color: #ff6bd6;
+    text-shadow: 0 0 24px rgba(255, 107, 214, 0.7);
+    margin: 0 0 16px 0;
+  }
+  #overlay .sub {
+    font-size: 18px;
+    color: #00eaff;
+    margin: 4px 0;
+    letter-spacing: 2px;
+  }
+  #overlay .hint {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-top: 28px;
+    letter-spacing: 3px;
+  }
+
+  canvas { display: block; }
+</style>
+
+<!-- Import map so Three.js addons can resolve the bare "three" specifier they
+     use internally. Without this, OrbitControls / bloom imports fail silently
+     and the page renders blank. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<div id="hud">
+  <div class="title">DIMENSHIFT</div>
+  <div class="row">SCORE <span class="val" id="score">0</span></div>
+  <div class="row">MODE <span id="mode">2D</span></div>
+  <div class="row">LENGTH <span class="val" id="length">3</span></div>
+</div>
+
+<div id="help">
+  ARROWS / WASD move &nbsp;·&nbsp; Q / E z-axis (3D) &nbsp;·&nbsp; SPACE shift &nbsp;·&nbsp; R restart &nbsp;·&nbsp; DRAG rotate (3D)
+</div>
+
+<div id="overlay">
+  <h1>DIMENSION COLLAPSED</h1>
+  <div class="sub">FINAL SCORE <span id="finalScore">0</span></div>
+  <div class="sub">LENGTH <span id="finalLength">3</span></div>
+  <div class="hint">PRESS R TO RESTART</div>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+// ---------- Constants ----------
+const GRID = 20;                  // 20 x 20 x 20 cells
+const TICK_MS = 150;              // snake step interval
+const SHIFT_MS = 600;             // dimension-shift animation duration
+
+// Integer cell coord (0..GRID-1) -> centered world coord
+const cellToWorld = (c) => c - GRID / 2 + 0.5;
+
+// ---------- Game state (single source of truth) ----------
+const state = createInitialState();
+
+function createInitialState() {
+  const mid = Math.floor(GRID / 2);
+  return {
+    mode: '2D',
+    snake: [
+      { x: mid,     y: mid, z: mid },  // head
+      { x: mid - 1, y: mid, z: mid },
+      { x: mid - 2, y: mid, z: mid },
+    ],
+    dir:     { x: 1, y: 0, z: 0 },     // locked direction (this tick)
+    nextDir: { x: 1, y: 0, z: 0 },     // queued direction (next tick)
+    food: null,
+    score: 0,
+    gameOver: false,
+    lastTick: performance.now(),
+
+    // Dimension shift animation fields
+    shifting: false,
+    shiftStart: 0,
+    shiftFromMode: '2D',
+    shiftToMode: '2D',
+  };
+}
+
+// ---------- Three.js setup ----------
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0a0e1a);
+scene.fog = new THREE.Fog(0x0a0e1a, 35, 90);
+
+const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 200);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+document.body.appendChild(renderer.domElement);
+
+// Post-processing: bloom makes emissive materials glow
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(
+  new THREE.Vector2(innerWidth, innerHeight),
+  0.9,   // strength
+  0.5,   // radius
+  0.1    // threshold
+);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+// Minimal lighting — scene is mostly emissive
+scene.add(new THREE.AmbientLight(0x223344, 0.5));
+const keyLight = new THREE.DirectionalLight(0xffffff, 0.35);
+keyLight.position.set(20, 30, 20);
+scene.add(keyLight);
+
+// World-bounds wireframe
+{
+  const cubeGeo = new THREE.BoxGeometry(GRID, GRID, GRID);
+  const edges = new THREE.EdgesGeometry(cubeGeo);
+  const lineMat = new THREE.LineBasicMaterial({ color: 0x1e2f55, transparent: true, opacity: 0.8 });
+  scene.add(new THREE.LineSegments(edges, lineMat));
+}
+
+// Active Z-slice indicator — only visible in 2D mode
+const sliceGroup = new THREE.Group();
+scene.add(sliceGroup);
+const slicePlane = new THREE.Mesh(
+  new THREE.PlaneGeometry(GRID, GRID),
+  new THREE.MeshBasicMaterial({
+    color: 0x0d1a30,
+    transparent: true,
+    opacity: 0.22,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+  })
+);
+sliceGroup.add(slicePlane);
+const sliceGrid = new THREE.GridHelper(GRID, GRID, 0x2a4478, 0x1a2a50);
+sliceGrid.rotation.x = Math.PI / 2;           // put grid in XY plane
+sliceGrid.material.transparent = true;
+sliceGrid.material.opacity = 0.55;
+sliceGrid.material.depthWrite = false;
+sliceGroup.add(sliceGrid);
+
+// Snake container
+const snakeGroup = new THREE.Group();
+scene.add(snakeGroup);
+const snakeMeshes = []; // parallel to state.snake
+
+// Food mesh (live) + silhouette (shown in 2D when food is on another slice)
+const foodMesh = new THREE.Mesh(
+  new THREE.BoxGeometry(0.7, 0.7, 0.7),
+  new THREE.MeshStandardMaterial({
+    color: 0xffe680,
+    emissive: 0xffaa00,
+    emissiveIntensity: 2.0,
+  })
+);
+scene.add(foodMesh);
+
+const foodSilhouette = new THREE.Mesh(
+  new THREE.BoxGeometry(0.7, 0.7, 0.7),
+  new THREE.MeshBasicMaterial({
+    color: 0xffd84d,
+    transparent: true,
+    opacity: 0.18,
+    wireframe: true,
+  })
+);
+scene.add(foodSilhouette);
+
+// OrbitControls — only enabled in 3D mode
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.enablePan = false;
+controls.minDistance = 18;
+controls.maxDistance = 80;
+controls.target.set(0, 0, 0);
+
+// ---------- Camera presets ----------
+// In 2D the camera sits on +Z, squared with the head's active slice.
+// In 3D the camera sits at a fixed iso angle around the world center.
+function getCamPos(mode) {
+  if (mode === '2D') {
+    const head = state.snake[0];
+    return new THREE.Vector3(0, 0, cellToWorld(head.z) + 28);
+  }
+  return new THREE.Vector3(22, 18, 28);
+}
+function getCamTarget(mode) {
+  if (mode === '2D') {
+    const head = state.snake[0];
+    return new THREE.Vector3(0, 0, cellToWorld(head.z));
+  }
+  return new THREE.Vector3(0, 0, 0);
+}
+
+// ---------- Food ----------
+function spawnFood() {
+  const occupied = new Set(state.snake.map(s => `${s.x},${s.y},${s.z}`));
+  for (let tries = 0; tries < 2000; tries++) {
+    const c = {
+      x: Math.floor(Math.random() * GRID),
+      y: Math.floor(Math.random() * GRID),
+      z: Math.floor(Math.random() * GRID),
+    };
+    // While in 2D, bias food onto the head's slice most of the time so the
+    // game stays playable without constant shifting — the rest forces a shift.
+    if (state.mode === '2D' && Math.random() < 0.55) c.z = state.snake[0].z;
+    if (!occupied.has(`${c.x},${c.y},${c.z}`)) {
+      state.food = c;
+      return;
+    }
+  }
+}
+
+// ---------- Snake tick ----------
+function tickSnake() {
+  if (state.gameOver || state.shifting) return;
+
+  // Lock in queued direction for this step
+  state.dir = state.nextDir;
+
+  const head = state.snake[0];
+  const newHead = {
+    x: head.x + state.dir.x,
+    y: head.y + state.dir.y,
+    z: head.z + state.dir.z,
+  };
+
+  if (checkCollisions(newHead)) {
+    gameOver();
+    return;
+  }
+
+  state.snake.unshift(newHead);
+
+  // Eat?
+  const f = state.food;
+  if (f && newHead.x === f.x && newHead.y === f.y && newHead.z === f.z) {
+    // In 2D mode, head always sits on its own slice, so a food on a different
+    // slice simply isn't reachable until the player shifts to 3D and moves Z.
+    // That enforces the "must shift to eat off-slice food" rule for free.
+    state.score += state.mode === '3D' ? 25 : 10;
+    spawnFood();
+  } else {
+    state.snake.pop();
+  }
+
+  rebuildSnakeMeshes();
+}
+
+function checkCollisions(cell) {
+  // World bounds
+  if (cell.x < 0 || cell.x >= GRID) return true;
+  if (cell.y < 0 || cell.y >= GRID) return true;
+  if (cell.z < 0 || cell.z >= GRID) return true;
+
+  const head = state.snake[0];
+  for (let i = 0; i < state.snake.length; i++) {
+    const s = state.snake[i];
+    // The tail cell vacates this tick (unless we grow), so it's safe to enter.
+    if (i === state.snake.length - 1) continue;
+    // In 2D, segments on other slices are ghosts — visible but pass-through.
+    if (state.mode === '2D' && s.z !== head.z) continue;
+    if (s.x === cell.x && s.y === cell.y && s.z === cell.z) return true;
+  }
+  return false;
+}
+
+// ---------- Snake rendering ----------
+// Pooled: grow/shrink the mesh array only when snake length changes.
+function rebuildSnakeMeshes() {
+  while (snakeMeshes.length > state.snake.length) {
+    const m = snakeMeshes.pop();
+    snakeGroup.remove(m);
+    m.geometry.dispose();
+    m.material.dispose();
+  }
+  while (snakeMeshes.length < state.snake.length) {
+    const geo = new THREE.BoxGeometry(0.85, 0.85, 0.85);
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0x00eaff,
+      emissive: 0x00eaff,
+      emissiveIntensity: 1.0,
+      transparent: true,
+      opacity: 1.0,
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    snakeMeshes.push(mesh);
+    snakeGroup.add(mesh);
+  }
+
+  const head = state.snake[0];
+  for (let i = 0; i < state.snake.length; i++) {
+    const s = state.snake[i];
+    const mesh = snakeMeshes[i];
+    mesh.position.set(cellToWorld(s.x), cellToWorld(s.y), cellToWorld(s.z));
+    const isHead = i === 0;
+
+    // Gradient cyan (0.5 hue) -> magenta (~0.85 hue) along the body.
+    const t = state.snake.length > 1 ? i / (state.snake.length - 1) : 0;
+    const color = new THREE.Color().setHSL(0.5 + t * 0.35, 1.0, 0.55);
+    mesh.material.color.copy(color);
+    mesh.material.emissive.copy(color);
+
+    const size = isHead ? 0.98 : 0.85;
+    mesh.scale.set(size, size, size);
+    mesh.material.emissiveIntensity = isHead ? 2.0 : 1.1;
+
+    // Ghost segments: 2D mode, body segment not on head's slice -> fade.
+    const ghost = state.mode === '2D' && !isHead && s.z !== head.z;
+    mesh.material.opacity = ghost ? 0.22 : 1.0;
+    mesh.material.depthWrite = !ghost;
+  }
+}
+
+// ---------- Food rendering ----------
+function updateFoodMesh(time) {
+  if (!state.food) {
+    foodMesh.visible = false;
+    foodSilhouette.visible = false;
+    return;
+  }
+  const f = state.food;
+  foodMesh.position.set(cellToWorld(f.x), cellToWorld(f.y), cellToWorld(f.z));
+  foodSilhouette.position.copy(foodMesh.position);
+
+  // Pulse the live food
+  const pulse = 0.92 + Math.sin(time * 0.005) * 0.12;
+  foodMesh.scale.setScalar(pulse);
+  foodMesh.material.emissiveIntensity = 2.0 + Math.sin(time * 0.006) * 0.7;
+
+  const onHeadSlice = f.z === state.snake[0].z;
+  if (state.mode === '2D' && !onHeadSlice) {
+    // Silhouette tells the player: food exists off-slice, go 3D to reach it.
+    foodMesh.visible = false;
+    foodSilhouette.visible = true;
+  } else {
+    foodMesh.visible = true;
+    foodSilhouette.visible = false;
+  }
+}
+
+// Active-slice plane follows head's Z in 2D; hidden in pure 3D.
+function updateSlicePlane() {
+  const show2D = state.mode === '2D' || state.shifting;
+  sliceGroup.visible = show2D;
+  if (!show2D) return;
+  const head = state.snake[0];
+  const z = cellToWorld(head.z);
+  slicePlane.position.set(0, 0, z - 0.01);
+  sliceGrid.position.set(0, 0, z);
+}
+
+// ---------- Dimension shift ----------
+// This is the game's core trick. The camera interpolates between the 2D "flat"
+// preset and the 3D "iso" preset over SHIFT_MS with an ease-in-out cubic.
+// Ticking pauses during the shift so the snake can't step into an unintended
+// cell mid-animation. Collision rules swap on completion (ghost segments
+// become solid when entering 3D; solid off-slice segments become ghosts when
+// entering 2D).
+function shiftDimension() {
+  if (state.shifting || state.gameOver) return;
+  state.shifting = true;
+  state.shiftStart = performance.now();
+  state.shiftFromMode = state.mode;
+  state.shiftToMode = state.mode === '2D' ? '3D' : '2D';
+}
+
+const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+// Captured endpoints for the current shift (held so the lerp is stable even
+// if the snake-head preset changes mid-shift).
+const _fromPos = new THREE.Vector3();
+const _fromTgt = new THREE.Vector3();
+const _toPos   = new THREE.Vector3();
+const _toTgt   = new THREE.Vector3();
+let _shiftCaptured = false;
+
+function updateCamera(now) {
+  if (state.shifting) {
+    if (!_shiftCaptured) {
+      _fromPos.copy(camera.position);
+      _fromTgt.copy(controls.target);
+      _toPos.copy(getCamPos(state.shiftToMode));
+      _toTgt.copy(getCamTarget(state.shiftToMode));
+      _shiftCaptured = true;
+      controls.enabled = false;
+    }
+    const raw = Math.min(1, (now - state.shiftStart) / SHIFT_MS);
+    const t = easeInOutCubic(raw);
+    camera.position.lerpVectors(_fromPos, _toPos, t);
+    controls.target.lerpVectors(_fromTgt, _toTgt, t);
+    camera.lookAt(controls.target);
+
+    if (raw >= 1) {
+      state.shifting = false;
+      _shiftCaptured = false;
+      state.mode = state.shiftToMode;
+      controls.enabled = state.mode === '3D';
+      state.lastTick = now;   // resume ticking from a clean baseline
+      rebuildSnakeMeshes();   // re-evaluate ghost vs. solid styling
+    }
+    return;
+  }
+
+  if (state.mode === '2D') {
+    // Smoothly follow the head's Z slice (handy right after a 3D->2D snap).
+    camera.position.lerp(getCamPos('2D'), 0.2);
+    controls.target.lerp(getCamTarget('2D'), 0.2);
+    camera.lookAt(controls.target);
+  } else {
+    controls.update();
+  }
+}
+
+// ---------- Input ----------
+function setDir(dx, dy, dz) {
+  // Prevent 180° reversal that would immediately eat the neck segment.
+  const cur = state.dir;
+  if (state.snake.length > 1 && cur.x === -dx && cur.y === -dy && cur.z === -dz) return;
+  state.nextDir = { x: dx, y: dy, z: dz };
+}
+
+addEventListener('keydown', (e) => {
+  const k = e.key.toLowerCase();
+  if (k === ' ') { e.preventDefault(); shiftDimension(); return; }
+  if (k === 'r') { restart(); return; }
+  if (state.gameOver || state.shifting) return;
+
+  if (k === 'arrowup'    || k === 'w') setDir(0,  1, 0);
+  else if (k === 'arrowdown'  || k === 's') setDir(0, -1, 0);
+  else if (k === 'arrowleft'  || k === 'a') setDir(-1, 0, 0);
+  else if (k === 'arrowright' || k === 'd') setDir(1,  0, 0);
+  else if (state.mode === '3D' && k === 'q') setDir(0, 0, -1);
+  else if (state.mode === '3D' && k === 'e') setDir(0, 0,  1);
+});
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  composer.setSize(innerWidth, innerHeight);
+});
+
+// ---------- HUD ----------
+const elScore = document.getElementById('score');
+const elMode = document.getElementById('mode');
+const elLength = document.getElementById('length');
+const elFinalScore = document.getElementById('finalScore');
+const elFinalLength = document.getElementById('finalLength');
+const elOverlay = document.getElementById('overlay');
+
+function updateHUD() {
+  elScore.textContent = state.score;
+  elLength.textContent = state.snake.length;
+  if (state.shifting) {
+    elMode.textContent = `${state.shiftFromMode} → ${state.shiftToMode}`;
+    elMode.style.color = '#ffd84d';
+  } else {
+    elMode.textContent = state.mode;
+    elMode.style.color = state.mode === '3D' ? '#ff6bd6' : '#00eaff';
+  }
+}
+
+function gameOver() {
+  state.gameOver = true;
+  elFinalScore.textContent = state.score;
+  elFinalLength.textContent = state.snake.length;
+  elOverlay.classList.add('show');
+}
+
+function restart() {
+  elOverlay.classList.remove('show');
+  Object.assign(state, createInitialState());
+  camera.position.copy(getCamPos('2D'));
+  controls.target.copy(getCamTarget('2D'));
+  camera.lookAt(controls.target);
+  controls.enabled = false;
+  spawnFood();
+  rebuildSnakeMeshes();
+}
+
+// ---------- Main loop ----------
+function render() {
+  const now = performance.now();
+
+  // Tick logic runs on a fixed interval, independent of render frame rate.
+  if (!state.gameOver && !state.shifting && now - state.lastTick >= TICK_MS) {
+    tickSnake();
+    state.lastTick = now;
+  }
+
+  updateFoodMesh(now);
+  updateSlicePlane();
+  updateCamera(now);
+  updateHUD();
+
+  composer.render();
+  requestAnimationFrame(render);
+}
+
+// ---------- Boot ----------
+controls.enabled = false;
+camera.position.copy(getCamPos('2D'));
+controls.target.copy(getCamTarget('2D'));
+camera.lookAt(controls.target);
+spawnFood();
+rebuildSnakeMeshes();
+render();
+</script>
+</body>
+</html>
