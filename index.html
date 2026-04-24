@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luqman Asri — Hobbies & Creations</title>
+  <meta name="description" content="The personal corner of Luqman Asri — hobby collections, creative projects, and games he has built." />
+  <meta name="author" content="Luqman Asri" />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="canonical" href="https://luqman.biomechemical.com/" />
+  <meta property="og:title" content="Luqman Asri — Hobbies & Creations" />
+  <meta property="og:description" content="Hobby collections and homemade games by Luqman Asri." />
+  <meta property="og:url" content="https://luqman.biomechemical.com/" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=1" />
+  <script>
+    (function(){try{var t=localStorage.getItem('luqman-theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./">
+      <span class="brand-mark">L<span class="dot">.</span></span>
+      <span class="brand-name">Luqman Asri</span>
+    </a>
+    <nav class="nav">
+      <a href="./" class="nav-link active">Home</a>
+      <a href="hobbies.html" class="nav-link">Hobbies</a>
+      <a href="games.html" class="nav-link">Games</a>
+      <a href="contents.html" class="nav-link">Contents</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="toggle-icon"></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">hello, i&rsquo;m</p>
+          <h1>Luqman Asri.</h1>
+          <p class="tagline">Collector of curious things. Builder of small games. This is where the hobbies and experiments live.</p>
+          <div class="cta-row">
+            <a href="hobbies.html" class="btn btn-primary">Browse Hobbies</a>
+            <a href="games.html" class="btn btn-ghost">Play My Games</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orb orb-1"></div>
+          <div class="orb orb-2"></div>
+          <div class="orb orb-3"></div>
+          <div class="grid-lines"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stat-row">
+      <div class="stat">
+        <span class="stat-num" data-count="0">0</span>
+        <span class="stat-label">Hobby Collections</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-count="0">0</span>
+        <span class="stat-label">Games Created</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-count="0">0</span>
+        <span class="stat-label">Years Tinkering</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>What lives here</h2>
+        <p class="section-sub">Two shelves and a workbench.</p>
+      </div>
+      <div class="card-grid">
+        <a class="card feature-card" href="hobbies.html">
+          <div class="card-icon">
+            <svg viewBox="0 0 48 48" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="10" width="36" height="28" rx="3"/>
+              <path d="M6 18 h36"/>
+              <path d="M16 10 v28"/>
+            </svg>
+          </div>
+          <h3>Hobbies Collection</h3>
+          <p>The shelf. Everything I collect, build, or obsess over — organised and catalogued.</p>
+          <span class="card-link">Open the shelf &rarr;</span>
+        </a>
+        <a class="card feature-card" href="games.html">
+          <div class="card-icon">
+            <svg viewBox="0 0 48 48" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="14" width="40" height="22" rx="8"/>
+              <circle cx="14" cy="25" r="1.5" fill="currentColor"/>
+              <circle cx="18" cy="25" r="1.5" fill="currentColor"/>
+              <path d="M30 21 v8 M26 25 h8"/>
+            </svg>
+          </div>
+          <h3>Games I Made</h3>
+          <p>The workbench. Playable prototypes, side projects, and finished little things.</p>
+          <span class="card-link">Press Start &rarr;</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Luqman Asri. Built with caffeine and curiosity.</p>
+  </footer>
+
+  <script src="script.js?v=1"></script>
+</body>
+</html>

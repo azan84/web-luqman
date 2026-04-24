@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hobbies Collection — Luqman Asri</title>
+  <meta name="description" content="Luqman Asri's hobby collections — catalogued, sorted, and lovingly obsessed over." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="canonical" href="https://luqman.biomechemical.com/hobbies.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=1" />
+  <script>
+    (function(){try{var t=localStorage.getItem('luqman-theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./">
+      <span class="brand-mark">L<span class="dot">.</span></span>
+      <span class="brand-name">Luqman Asri</span>
+    </a>
+    <nav class="nav">
+      <a href="./" class="nav-link">Home</a>
+      <a href="hobbies.html" class="nav-link active">Hobbies</a>
+      <a href="games.html" class="nav-link">Games</a>
+      <a href="contents.html" class="nav-link">Contents</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="toggle-icon"></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">the shelf</p>
+      <h1>Hobbies Collection</h1>
+      <p class="tagline">Things I collect, build, tinker with, or can talk about for longer than is socially acceptable.</p>
+    </section>
+
+    <section class="section">
+      <div class="filter-row" role="tablist" aria-label="Filter collections">
+        <button class="chip active" data-filter="all" type="button">All</button>
+        <button class="chip" data-filter="build" type="button">Building</button>
+        <button class="chip" data-filter="collect" type="button">Collecting</button>
+        <button class="chip" data-filter="play" type="button">Playing</button>
+        <button class="chip" data-filter="craft" type="button">Crafting</button>
+      </div>
+
+      <div class="card-grid collection-grid">
+        <!-- HOBBY CARD TEMPLATE — duplicate and fill in -->
+        <article class="card hobby-card" data-cat="build">
+          <div class="thumb thumb-gradient-1" aria-hidden="true">
+            <span class="thumb-emoji">&#x1F9F1;</span>
+          </div>
+          <div class="card-body">
+            <span class="tag">Building</span>
+            <h3>LEGO &amp; Brick Builds</h3>
+            <p>Modular city blocks, MOC experiments, and the occasional Technic disaster.</p>
+            <ul class="meta">
+              <li><span>Items</span><b>—</b></li>
+              <li><span>Since</span><b>—</b></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card hobby-card" data-cat="collect">
+          <div class="thumb thumb-gradient-2" aria-hidden="true">
+            <span class="thumb-emoji">&#x1F3AE;</span>
+          </div>
+          <div class="card-body">
+            <span class="tag">Collecting</span>
+            <h3>Retro Gaming Cartridges</h3>
+            <p>Game Boy, NES, and whatever else the dusty flea-market bin offers.</p>
+            <ul class="meta">
+              <li><span>Items</span><b>—</b></li>
+              <li><span>Since</span><b>—</b></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card hobby-card" data-cat="craft">
+          <div class="thumb thumb-gradient-3" aria-hidden="true">
+            <span class="thumb-emoji">&#x1F3A8;</span>
+          </div>
+          <div class="card-body">
+            <span class="tag">Crafting</span>
+            <h3>Miniature Painting</h3>
+            <p>Tiny brushes, smaller figures, and far too many shades of grey.</p>
+            <ul class="meta">
+              <li><span>Items</span><b>—</b></li>
+              <li><span>Since</span><b>—</b></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card hobby-card" data-cat="play">
+          <div class="thumb thumb-gradient-4" aria-hidden="true">
+            <span class="thumb-emoji">&#x1F3B2;</span>
+          </div>
+          <div class="card-body">
+            <span class="tag">Playing</span>
+            <h3>Board &amp; Tabletop Games</h3>
+            <p>Euro-style strategy, party chaos, and the occasional print-and-play.</p>
+            <ul class="meta">
+              <li><span>Items</span><b>—</b></li>
+              <li><span>Since</span><b>—</b></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card hobby-card" data-cat="build">
+          <div class="thumb thumb-gradient-5" aria-hidden="true">
+            <span class="thumb-emoji">&#x1F9EA;</span>
+          </div>
+          <div class="card-body">
+            <span class="tag">Building</span>
+            <h3>Electronics &amp; Arduino</h3>
+            <p>LEDs that blink, servos that twitch, and wires that judge me.</p>
+            <ul class="meta">
+              <li><span>Items</span><b>—</b></li>
+              <li><span>Since</span><b>—</b></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card hobby-card" data-cat="collect">
+          <div class="thumb thumb-gradient-6" aria-hidden="true">
+            <span class="thumb-emoji">&#x1F4DA;</span>
+          </div>
+          <div class="card-body">
+            <span class="tag">Collecting</span>
+            <h3>Books &amp; Manga</h3>
+            <p>Sci-fi, fantasy, and the occasional suspicious self-help title.</p>
+            <ul class="meta">
+              <li><span>Items</span><b>—</b></li>
+              <li><span>Since</span><b>—</b></li>
+            </ul>
+          </div>
+        </article>
+        <!-- END TEMPLATE -->
+      </div>
+
+      <p class="hint">Placeholder cards above — swap titles, categories, counts, and emojis with real ones. Add more &lt;article class="card hobby-card" data-cat="..."&gt; blocks as needed.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Luqman Asri. Built with caffeine and curiosity.</p>
+  </footer>
+
+  <script src="script.js?v=1"></script>
+</body>
+</html>

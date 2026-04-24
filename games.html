@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Games I Created — Luqman Asri</title>
+  <meta name="description" content="A collection of games created by Luqman Asri — prototypes, jam entries, and finished little worlds." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="canonical" href="https://luqman.biomechemical.com/games.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=1" />
+  <script>
+    (function(){try{var t=localStorage.getItem('luqman-theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./">
+      <span class="brand-mark">L<span class="dot">.</span></span>
+      <span class="brand-name">Luqman Asri</span>
+    </a>
+    <nav class="nav">
+      <a href="./" class="nav-link">Home</a>
+      <a href="hobbies.html" class="nav-link">Hobbies</a>
+      <a href="games.html" class="nav-link active">Games</a>
+      <a href="contents.html" class="nav-link">Contents</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="toggle-icon"></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">the workbench</p>
+      <h1>Games I Created</h1>
+      <p class="tagline">Small worlds, playable ideas, jam entries, and prototypes that somehow made it out of my notebook.</p>
+    </section>
+
+    <section class="section">
+      <div class="filter-row" role="tablist" aria-label="Filter games">
+        <button class="chip active" data-filter="all" type="button">All</button>
+        <button class="chip" data-filter="released" type="button">Released</button>
+        <button class="chip" data-filter="jam" type="button">Game Jam</button>
+        <button class="chip" data-filter="wip" type="button">Work in Progress</button>
+        <button class="chip" data-filter="prototype" type="button">Prototype</button>
+      </div>
+
+      <div class="card-grid game-grid">
+        <!-- GAME CARD TEMPLATE — duplicate and fill in -->
+        <article class="card game-card" data-cat="released">
+          <div class="thumb thumb-game-1" aria-hidden="true">
+            <div class="pixel-art">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="badge-row">
+              <span class="badge badge-green">Released</span>
+              <span class="badge-plain">2025</span>
+            </div>
+            <h3>Untitled Puzzle Game</h3>
+            <p>A tile-shifting puzzle with a twist that I haven&rsquo;t decided on yet. Made in Unity.</p>
+            <ul class="meta">
+              <li><span>Engine</span><b>Unity</b></li>
+              <li><span>Platform</span><b>Web / PC</b></li>
+            </ul>
+            <div class="card-actions">
+              <a href="#" class="btn btn-small btn-primary">Play</a>
+              <a href="#" class="btn btn-small btn-ghost">Source</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card game-card" data-cat="jam">
+          <div class="thumb thumb-game-2" aria-hidden="true">
+            <div class="pixel-art">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="badge-row">
+              <span class="badge badge-purple">Game Jam</span>
+              <span class="badge-plain">48h</span>
+            </div>
+            <h3>Neon Courier</h3>
+            <p>A one-button endless runner made in a weekend jam. Vibes over polish.</p>
+            <ul class="meta">
+              <li><span>Engine</span><b>Godot</b></li>
+              <li><span>Platform</span><b>Web</b></li>
+            </ul>
+            <div class="card-actions">
+              <a href="#" class="btn btn-small btn-primary">Play</a>
+              <a href="#" class="btn btn-small btn-ghost">Jam Page</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card game-card" data-cat="wip">
+          <div class="thumb thumb-game-3" aria-hidden="true">
+            <div class="pixel-art">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="badge-row">
+              <span class="badge badge-yellow">Work in Progress</span>
+              <span class="badge-plain">&sim;30%</span>
+            </div>
+            <h3>Project Ember</h3>
+            <p>A cosy base-builder set around a dying campfire. Currently juggling pathfinding.</p>
+            <ul class="meta">
+              <li><span>Engine</span><b>Unity</b></li>
+              <li><span>Platform</span><b>PC</b></li>
+            </ul>
+            <div class="card-actions">
+              <a href="#" class="btn btn-small btn-ghost">Devlog</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card game-card" data-cat="prototype">
+          <div class="thumb thumb-game-4" aria-hidden="true">
+            <div class="pixel-art">
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="badge-row">
+              <span class="badge badge-grey">Prototype</span>
+              <span class="badge-plain">Sketch</span>
+            </div>
+            <h3>Gravity Loop</h3>
+            <p>An experiment with flip-gravity platforming. The player taught me what wasn&rsquo;t fun.</p>
+            <ul class="meta">
+              <li><span>Engine</span><b>HTML5</b></li>
+              <li><span>Platform</span><b>Web</b></li>
+            </ul>
+            <div class="card-actions">
+              <a href="#" class="btn btn-small btn-primary">Try It</a>
+            </div>
+          </div>
+        </article>
+        <!-- END TEMPLATE -->
+      </div>
+
+      <p class="hint">Placeholder game cards above — update titles, dates, engines, and links. Swap &lt;div class="pixel-art"&gt; with real screenshots when available (use an &lt;img&gt; tag).</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Luqman Asri. Built with caffeine and curiosity.</p>
+  </footer>
+
+  <script src="script.js?v=1"></script>
+</body>
+</html>
