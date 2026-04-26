@@ -454,6 +454,7 @@ html[data-theme="light"] .grid-lines {
 .thumb-game-2 { background: linear-gradient(135deg, #2a0845, #6441a5); }
 .thumb-game-3 { background: linear-gradient(135deg, #134e5e, #71b280); }
 .thumb-game-4 { background: linear-gradient(135deg, #232526, #414345); }
+.thumb-game-5 { background: linear-gradient(135deg, #0d1a0d, #1a3a10); }
 
 /* Pixel art placeholder for games */
 .pixel-art {
