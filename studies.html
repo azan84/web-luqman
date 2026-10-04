@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studies — Luqman Asri</title>
+  <meta name="description" content="Luqman Asri's study corner — flash cards and notes for school subjects." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="canonical" href="https://luqman.biomechemical.com/studies.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=1" />
+  <script>
+    (function(){try{var t=localStorage.getItem('luqman-theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();
+  </script>
+  <style>
+    /* Studies: Sejarah T3 "story spine" */
+    .subject {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .subject-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.2rem;
+      align-items: center;
+      padding: 1.6rem 1.6rem 1.2rem;
+      background:
+        radial-gradient(600px 200px at 0% 0%, color-mix(in srgb, var(--accent-4) 18%, transparent), transparent),
+        radial-gradient(600px 200px at 100% 100%, color-mix(in srgb, var(--accent) 18%, transparent), transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .subject-icon {
+      width: 72px; height: 72px; border-radius: 18px;
+      display: grid; place-items: center; font-size: 2.4rem;
+      background: linear-gradient(135deg, #facc15, #fb7185);
+      box-shadow: var(--shadow);
+    }
+    .subject-head h2 { margin: .15em 0 .2em; }
+    .subject-head p { margin: 0; color: var(--text-dim); }
+    .subject-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+    .overall { font-family: var(--font-mono); font-size: .8rem; color: var(--text-muted); margin-top: .7rem; }
+    .overall .bar { margin-top: .35rem; }
+
+    .acts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-bottom: 1px solid var(--border); }
+    .act { padding: .7rem 1rem; text-align: center; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); position: relative; }
+    .act + .act::before { content: "→"; position: absolute; left: -.45em; top: 50%; transform: translateY(-50%); color: var(--accent-2); }
+    .act b { display: block; color: var(--text); font-family: var(--font-sans); font-size: .95rem; letter-spacing: 0; text-transform: none; }
+
+    .spine {
+      display: grid;
+      grid-template-columns: 1fr 4fr 1fr 2fr;
+      gap: .8rem;
+      padding: 1.2rem;
+    }
+    .spine .col { display: grid; gap: .8rem; }
+    .spine .col.tadbir { grid-template-columns: repeat(4, 1fr); }
+    .spine .col.reaksi { grid-template-columns: repeat(2, 1fr); }
+    .bab {
+      --c: var(--accent);
+      display: flex; flex-direction: column; gap: .35rem;
+      padding: .9rem .9rem .8rem;
+      border-radius: var(--radius-sm);
+      background: color-mix(in srgb, var(--c) 10%, var(--bg-elev));
+      border: 1px solid color-mix(in srgb, var(--c) 40%, var(--border));
+      border-top: 4px solid var(--c);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+      min-height: 150px;
+    }
+    .bab:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .bab .no { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; color: var(--c); font-weight: 600; }
+    .bab .t { font-weight: 600; line-height: 1.25; font-size: .98rem; }
+    .bab .k { font-family: var(--font-mono); font-size: .72rem; color: var(--text-muted); margin-top: auto; }
+    .bar { height: 6px; border-radius: 99px; background: color-mix(in srgb, var(--text-muted) 25%, transparent); overflow: hidden; }
+    .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 99px; transition: width .6s; }
+
+    .threads { padding: 0 1.2rem 1.3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .8rem; }
+    .thread { font-size: .88rem; color: var(--text-dim); padding: .7rem .9rem; border-radius: var(--radius-sm); border: 1px dashed var(--border); }
+    .thread b { color: var(--text); }
+    .thread .lbl { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-3); display: block; margin-bottom: .2rem; }
+
+    .soon { opacity: .55; }
+
+    @media (max-width: 900px) {
+      .spine { grid-template-columns: 1fr; }
+      .spine .col.tadbir { grid-template-columns: repeat(2, 1fr); }
+      .acts { display: none; }
+      .spine .col::before { content: attr(data-act); font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; color: var(--accent-2); text-transform: uppercase; grid-column: 1 / -1; }
+    }
+    @media (max-width: 480px) {
+      .subject-head { grid-template-columns: 1fr; }
+      .spine .col.tadbir, .spine .col.reaksi { grid-template-columns: 1fr; }
+      .bab { min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./">
+      <span class="brand-mark">L<span class="dot">.</span></span>
+      <span class="brand-name">Luqman Asri</span>
+    </a>
+    <nav class="nav">
+      <a href="./" class="nav-link">Home</a>
+      <a href="hobbies.html" class="nav-link">Hobbies</a>
+      <a href="studies.html" class="nav-link active">Studies</a>
+      <a href="games.html" class="nav-link">Games</a>
+      <a href="contents.html" class="nav-link">Contents</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="toggle-icon"></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">the study desk</p>
+      <h1>Studies</h1>
+      <p class="tagline">Flash cards, notes and memory tricks for school. Flip, test, repeat.</p>
+    </section>
+
+    <section class="section">
+      <article class="subject" id="sejarah-t3">
+        <div class="subject-head">
+          <div class="subject-icon" aria-hidden="true">&#x1F4DC;</div>
+          <div>
+            <span class="tag">KSSM · Tingkatan 3</span>
+            <h2>Sejarah Tingkatan 3</h2>
+            <p>Lapan bab, satu cerita: Barat <b>datang</b>, <b>mentadbir</b>, meninggalkan <b>kesan</b>, dan raja serta rakyat <b>bertindak balas</b>. Pilih bab untuk mula kad imbas.</p>
+            <div class="subject-actions">
+              <a href="studies/sejarah-t3/kad-imbas.html" class="btn btn-small btn-primary">&#x1F0CF; Semua kad imbas</a>
+              <a href="studies/sejarah-t3/kad-imbas.html?bab=x" class="btn btn-small btn-ghost">&#x1F9F5; Kad rentas bab</a>
+              <a href="studies/sejarah-t3/nota.html" class="btn btn-small btn-ghost">&#x1F4D6; Nota lengkap (boleh cetak)</a>
+            </div>
+            <div class="overall"><span id="overallText">Kemajuan: 0 kad dihafal</span><div class="bar"><i id="overallBar"></i></div></div>
+          </div>
+        </div>
+
+        <div class="acts" aria-hidden="true">
+          <div class="act">Babak 1<b>Datang</b></div>
+          <div class="act">Babak 2<b>Tadbir</b></div>
+          <div class="act">Babak 3<b>Kesan</b></div>
+          <div class="act">Babak 4<b>Reaksi</b></div>
+        </div>
+
+        <div class="spine">
+          <div class="col" data-act="Babak 1 · Datang">
+            <a class="bab" style="--c:#a78bfa" href="studies/sejarah-t3/kad-imbas.html?bab=1" data-bab="1">
+              <span class="no">BAB 1</span><span class="t">Kedatangan Kuasa Barat</span><span class="k">BaPuPeA · 1873</span><div class="bar"><i></i></div>
+            </a>
+          </div>
+          <div class="col tadbir" data-act="Babak 2 · Tadbir (4 model)">
+            <a class="bab" style="--c:#2dd4bf" href="studies/sejarah-t3/kad-imbas.html?bab=2" data-bab="2">
+              <span class="no">BAB 2</span><span class="t">Negeri-negeri Selat</span><span class="k">Ti-Ma-Pak · 1826</span><div class="bar"><i></i></div>
+            </a>
+            <a class="bab" style="--c:#60a5fa" href="studies/sejarah-t3/kad-imbas.html?bab=3" data-bab="3">
+              <span class="no">BAB 3</span><span class="t">NNMB</span><span class="k">PeSeNePa · 1874</span><div class="bar"><i></i></div>
+            </a>
+            <a class="bab" style="--c:#f59e0b" href="studies/sejarah-t3/kad-imbas.html?bab=4" data-bab="4">
+              <span class="no">BAB 4</span><span class="t">NNMTB</span><span class="k">KPKT + J · 1909</span><div class="bar"><i></i></div>
+            </a>
+            <a class="bab" style="--c:#facc15" href="studies/sejarah-t3/kad-imbas.html?bab=5" data-bab="5">
+              <span class="no">BAB 5</span><span class="t">Sarawak &amp; Sabah</span><span class="k">RUPEK · 1881</span><div class="bar"><i></i></div>
+            </a>
+          </div>
+          <div class="col" data-act="Babak 3 · Kesan">
+            <a class="bab" style="--c:#22d3ee" href="studies/sejarah-t3/kad-imbas.html?bab=6" data-bab="6">
+              <span class="no">BAB 6</span><span class="t">Kesan Ekonomi &amp; Sosial</span><span class="k">Mo-Te-Bu-Ta-Ska</span><div class="bar"><i></i></div>
+            </a>
+          </div>
+          <div class="col reaksi" data-act="Babak 4 · Reaksi">
+            <a class="bab" style="--c:#fb7185" href="studies/sejarah-t3/kad-imbas.html?bab=7" data-bab="7">
+              <span class="no">BAB 7 · LAWAN</span><span class="t">Penentangan Masyarakat Tempatan</span><span class="k">Mu-Ku-Sen-Undang</span><div class="bar"><i></i></div>
+            </a>
+            <a class="bab" style="--c:#4ade80" href="studies/sejarah-t3/kad-imbas.html?bab=8" data-bab="8">
+              <span class="no">BAB 8 · BIJAK</span><span class="t">Kebijaksanaan Raja &amp; Pembesar</span><span class="k">DuDiEnUnMo</span><div class="bar"><i></i></div>
+            </a>
+          </div>
+        </div>
+
+        <div class="threads">
+          <div class="thread"><span class="lbl">Benang merah 1</span><b>Pangkor 1874</b> (Bab 3) → Birch dibunuh, <b>Dato' Maharaja Lela</b> (Bab 7) → <b>Durbar</b> (Bab 8)</div>
+          <div class="thread"><span class="lbl">Benang merah 2</span><b>Bangkok 1909</b> tanpa rundingan (Bab 4) → bantahan raja (Bab 8); cukai baharu → <b>Tok Janggut</b>, <b>Abdul Rahman Limbong</b> (Bab 7)</div>
+          <div class="thread"><span class="lbl">Benang merah 3</span><b>Brooke &amp; SBUB</b> (Bab 5) → <b>Rentap</b>, <b>Mat Salleh</b> (Bab 7)</div>
+          <div class="thread"><span class="lbl">Benang merah 4</span><b>London 1824</b> (Bab 2) → Johor bijak bertahan hingga <b>1914</b> (Bab 4 &amp; 8)</div>
+        </div>
+      </article>
+
+      <p class="hint">More subjects coming soon. Kemajuan "sudah hafal" disimpan dalam pelayar ini sahaja.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Luqman Asri. Built with caffeine and curiosity.</p>
+  </footer>
+
+  <script src="script.js?v=1"></script>
+  <script>
+    // Kemajuan setiap bab, ditulis oleh kad-imbas.html
+    (function () {
+      var p = {};
+      try { p = JSON.parse(localStorage.getItem('sej3progress') || '{}'); } catch (e) {}
+      var known = 0, total = 0;
+      document.querySelectorAll('.bab[data-bab]').forEach(function (a) {
+        var r = p[a.getAttribute('data-bab')];
+        if (!r || !r[1]) return;
+        a.querySelector('.bar i').style.width = Math.round(100 * r[0] / r[1]) + '%';
+        a.querySelector('.k').textContent += ' · ' + r[0] + '/' + r[1];
+      });
+      Object.keys(p).forEach(function (k) { known += p[k][0]; total += p[k][1]; });
+      if (total) {
+        document.getElementById('overallText').textContent = 'Kemajuan: ' + known + '/' + total + ' kad dihafal';
+        document.getElementById('overallBar').style.width = Math.round(100 * known / total) + '%';
+      }
+    })();
+  </script>
+</body>
+</html>

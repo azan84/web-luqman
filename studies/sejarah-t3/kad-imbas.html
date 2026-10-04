@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kad Imbas Sejarah T3</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<style>
+:root{
+  --bg:#fbf8f2; --card:#fff; --ink:#1f2328; --muted:#5b6370; --line:#e4ddd0; --accent:#7c3aed;
+  --x:#475569; --c1:#7c3aed; --c2:#0d9488; --c3:#2563eb; --c4:#d97706; --c5:#ca8a04; --c6:#0891b2; --c7:#dc2626; --c8:#16a34a;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#15171c;--card:#1e2128;--ink:#e8e6e1;--muted:#a0a7b4;--line:#343844}
+}
+:root[data-theme="dark"]{--bg:#15171c;--card:#1e2128;--ink:#e8e6e1;--muted:#a0a7b4;--line:#343844}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{max-width:900px;margin:0 auto;padding:20px 16px 0}
+h1{margin:.2em 0;font-size:1.6rem}
+.sub{color:var(--muted);margin:0 0 .8em}
+.bar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.bar button,.bar select{font:600 14px system-ui;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.bar button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.help{font-size:.88rem;color:var(--muted)}
+
+/* ---------- Mod skrin: kad terbalik ---------- */
+#deck{max-width:900px;margin:0 auto;padding:8px 16px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.flip{perspective:900px;height:210px;cursor:pointer}
+.inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;background:var(--card);border:1px solid var(--line);border-top:7px solid var(--c)}
+.back{transform:rotateY(180deg)}
+.face .lbl{position:absolute;top:8px;left:14px;font-size:.72rem;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.05em}
+.face .no{position:absolute;top:8px;right:14px;font-size:.72rem;color:var(--muted)}
+.q{font-weight:700;font-size:1.02rem;text-align:center}
+.a{font-size:.93rem}
+.a ul{margin:0;padding-left:1.1em}
+.flip.known{opacity:.45}
+.mark{position:absolute;bottom:8px;right:12px;font-size:.75rem;color:var(--muted)}
+
+/* ---------- Mod cetak ---------- */
+#print{display:none}
+@page{size:A4;margin:8mm}
+@media print{
+  :root,:root[data-theme="dark"]{--bg:#fff;--card:#fff;--ink:#111;--muted:#555;--line:#999}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+  header,#deck{display:none}
+  #print{display:block}
+  .sheet{width:194mm;height:280mm;display:grid;grid-template-columns:97mm 97mm;grid-template-rows:repeat(5,56mm);break-after:page}
+  .sheet:last-child{break-after:auto}
+  .pc{border:1px dashed #999;padding:5mm 5mm 3mm;position:relative;display:flex;flex-direction:column;justify-content:center;border-top:4mm solid var(--c);overflow:hidden}
+  .pc .lbl{position:absolute;top:2mm;left:5mm;font-size:7.5pt;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.05em}
+  .pc .no{position:absolute;top:2mm;right:5mm;font-size:7.5pt;color:#777}
+  .pc .q{font-size:11.5pt}
+  .pc .a{font-size:9.5pt}
+  .pc.blank{border-color:transparent}
+}
+@media print{.noprint{display:none!important}}
+</style>
+</head>
+<body>
+<a class="noprint" href="../../studies.html#sejarah-t3" style="display:inline-block;margin:12px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 14px system-ui;text-decoration:none">← Studies</a>
+
+
+<header>
+  <p class="sub">Sejarah Tingkatan 3 · KSSM · Bab 1–8</p>
+  <h1>🃏 Kad Imbas Sejarah Tingkatan 3</h1>
+  <p class="help">Skrin: ketik kad untuk terbalikkan. Tekan ✓ jika sudah hafal; kad itu akan pudar.<br>
+  Cetak: A4, <b>cetak dua muka (flip on long edge)</b>. Halaman soalan dan jawapan disusun supaya jawapan berada tepat di belakang soalan. Gunting ikut garisan putus-putus.</p>
+  <div class="bar">
+    <select id="filter" aria-label="Tapis topik"></select>
+    <button id="shuffle">🔀 Kocok</button>
+    <button id="reset">↺ Set semula</button>
+    <button class="primary" onclick="window.print()">🖨️ Cetak kad</button>
+  </div>
+</header>
+
+<div id="deck"></div>
+<div id="print"></div>
+
+<script>
+// [topik, soalan, jawapan]
+const T = {"1": ["Bab 1 · Kedatangan Barat", "--c1"], "2": ["Bab 2 · NNS", "--c2"], "3": ["Bab 3 · NNMB", "--c3"], "4": ["Bab 4 · NNMTB", "--c4"], "5": ["Bab 5 · Sarawak & Sabah", "--c5"], "6": ["Bab 6 · Kesan Ekonomi & Sosial", "--c6"], "7": ["Bab 7 · Penentangan", "--c7"], "8": ["Bab 8 · Kebijaksanaan Raja", "--c8"], "x": ["Rentas Bab", "--x"]};
+// [topik, soalan, jawapan]
+const CARDS = [
+[
+"1",
+"Apakah tiga aras sistem pemerintahan Melayu?",
+"<b>Sultan/raja → pembesar → penghulu/penggawa</b>."
+],
+[
+"1",
+"Apakah dua jenis undang-undang tradisional?",
+"Undang-undang tidak bertulis (adat) dan bertulis."
+],
+[
+"1",
+"Beri tiga contoh undang-undang bertulis.",
+"Hukum Kanun Melaka, Hukum Kanun Pahang, Undang-Undang 99 Perak."
+],
+[
+"1",
+"Siapakah mengurus pelabuhan?",
+"<b>Syahbandar</b>."
+],
+[
+"1",
+"Nyatakan empat faktor kedatangan Barat abad ke-16.",
+"Barangan mewah, pusat pengumpulan barang, pelabuhan persinggahan, agama Kristian."
+],
+[
+"1",
+"Apakah tiga matlamat penjajahan Portugis dan Sepanyol?",
+"<b>Kekayaan, keagamaan, kemasyhuran</b>."
+],
+[
+"1",
+"Bilakah SHTI ditubuhkan?",
+"<b>1600</b>, di England."
+],
+[
+"1",
+"Apakah perubahan dasar Barat selepas Revolusi Perindustrian?",
+"Mencari bahan mentah, pusat perdagangan/tanah jajahan dan pasaran luas."
+],
+[
+"1",
+"Mengapa getah asli penting kepada industri abad ke-19?",
+"Untuk tayar kereta dan penebat barangan elektrik."
+],
+[
+"1",
+"Apakah kesan industri mengetin terhadap negeri Melayu?",
+"Harga dan permintaan bijih timah meningkat, khususnya selepas <b>1840</b>."
+],
+[
+"1",
+"Apakah dua pelabuhan yang dihubungkan Terusan Suez?",
+"Pelabuhan Said di Laut Mediterranean dengan Suez di Laut Merah."
+],
+[
+"1",
+"Nyatakan tiga strategi Belanda.",
+"Serangan fizikal, pakatan, perjanjian."
+],
+[
+"1",
+"Nyatakan tujuh strategi British.",
+"Manipulasi, ugutan/desakan, tipu helah, pakatan, perjanjian, pajakan, serangan fizikal."
+],
+[
+"1",
+"Apakah perubahan dasar British pada 1873?",
+"Dasar tidak campur tangan ditukar kepada <b>dasar campur tangan</b>."
+],
+[
+"1",
+"Apakah syarat utama Perjanjian Inggeris-Belanda 1824 yang disebut buku teks?",
+"British memperoleh Melaka; Belanda memperoleh Bangkahulu."
+],
+[
+"1",
+"Mengapakah Belanda berpakatan dengan Johor pada 1641?",
+"Untuk mengalahkan Portugis di Melaka."
+],
+[
+"1",
+"Siapakah menggunakan tipu helah untuk mendapatkan Pulau Pinang?",
+"<b>Francis Light</b>."
+],
+[
+"1",
+"KBAT: Mengapa pelabuhan strategik menjadikan sesebuah negeri mudah menjadi sasaran kuasa Barat?",
+"Pelabuhan menguasai laluan perdagangan, bekalan kapal, pengumpulan bahan mentah dan pasaran."
+],
+[
+"1",
+"KBAT: Mengapa strategi British lebih berkesan daripada serangan semata-mata?",
+"British mengeksploitasi konflik tempatan dan menggunakan perjanjian, ugutan serta manipulasi untuk mendapatkan kuasa dengan lebih mudah."
+],
+[
+"1",
+"KBAT: Apakah iktibar daripada strategi pajakan?",
+"Hak/kedaulatan boleh terhakis secara beransur-ansur; pemimpin perlu teliti syarat perjanjian dan mempertahankan kepentingan negara."
+],
+[
+"2",
+"Apakah tiga strategi British menguasai tiga petempatan Selat?",
+"<b>Tipu helah di Pulau Pinang, manipulasi politik di Singapura, pakatan dengan Belanda di Melaka.</b>"
+],
+[
+"2",
+"Siapakah yang menggunakan tipu helah untuk menduduki Pulau Pinang?",
+"<b>Francis Light.</b>"
+],
+[
+"2",
+"Tahun bilakah British menduduki Pulau Pinang?",
+"<b>1786.</b>"
+],
+[
+"2",
+"Apakah tiga keperluan British terhadap Pulau Pinang?",
+"Pusat pengumpulan barang, pelabuhan persinggahan dan pangkalan tentera."
+],
+[
+"2",
+"Apakah syarat Sultan Abdullah ketika menawarkan Pulau Pinang?",
+"SHTI membantu ketenteraan dan melindungi Kedah daripada ancaman Siam."
+],
+[
+"2",
+"Apakah nama British bagi Pulau Pinang dan petempatannya?",
+"<b>Prince of Wales Island</b> dan <b>Georgetown</b>."
+],
+[
+"2",
+"Apakah kesan Perjanjian 1791 kepada Pulau Pinang?",
+"Pendudukan British di Pulau Pinang diiktiraf secara rasmi."
+],
+[
+"2",
+"Bilakah British menduduki Seberang Perai dan apakah nama kemudiannya?",
+"<b>1800</b>; <b>Province of Wellesley</b>."
+],
+[
+"2",
+"Apakah strategi Raffles di Singapura?",
+"Memanipulasi isu pewarisan takhta Kesultanan Johor Riau."
+],
+[
+"2",
+"Siapakah Sultan yang diangkat Raffles di Singapura?",
+"<b>Tengku Hussein</b>, bergelar <b>Sultan Hussein Muhammad Shah</b>."
+],
+[
+"2",
+"Apakah tarikh Perjanjian British dengan Sultan Hussein dan Temenggung Abdul Rahman?",
+"<b>6 Februari 1819.</b>"
+],
+[
+"2",
+"Apakah kesan Perjanjian 2 Ogos 1824 di Singapura?",
+"Singapura diserahkan kepada British selama-lamanya; Sultan dan Temenggung hilang kedaulatan."
+],
+[
+"2",
+"Bilakah dan di manakah Perjanjian London ditandatangani?",
+"<b>17 Mac 1824 di London, England.</b>"
+],
+[
+"2",
+"Nyatakan satu syarat British dan satu syarat Belanda dalam Perjanjian London 1824.",
+"British berundur dari Sumatera; Belanda menyerahkan Melaka kepada British."
+],
+[
+"2",
+"Apakah dua lingkungan pengaruh akibat Perjanjian London 1824?",
+"Tanah Melayu/Singapura di bawah British; Riau Lingga dan kawasan selatan/barat Selat Melaka di bawah Belanda."
+],
+[
+"2",
+"Mengapakah Perjanjian London 1824 menjejaskan kedaulatan Alam Melayu?",
+"British dan Belanda membahagikan wilayah tanpa merujuk Raja-raja Melayu."
+],
+[
+"2",
+"Bilakah NNS dibentuk dan negeri apakah yang digabungkan?",
+"<b>1826</b>; Pulau Pinang, Singapura dan Melaka."
+],
+[
+"2",
+"Apakah dua tujuan pembentukan NNS?",
+"Menjimatkan perbelanjaan dan menyeragamkan pentadbiran."
+],
+[
+"2",
+"Bilakah pentadbiran NNS dipindahkan ke Pejabat Tanah Jajahan London?",
+"<b>1 April 1867.</b>"
+],
+[
+"2",
+"KBAT: Mengapakah pelabuhan bebas penting kepada British di NNS?",
+"Menarik pedagang/kapal antarabangsa, mengumpulkan hasil Alam Melayu dan mengukuhkan perdagangan British."
+],
+[
+"2",
+"KBAT: Apakah iktibar daripada tindakan Francis Light terhadap Kedah?",
+"Pemerintah perlu berwaspada, memastikan janji kuasa asing disahkan melalui perjanjian yang melindungi kedaulatan."
+],
+[
+"3",
+"Apakah empat negeri NNMB?",
+"Perak, Selangor, Negeri Sembilan dan Pahang."
+],
+[
+"3",
+"Apakah hasil bumi utama yang menarik British ke NNMB?",
+"Bijih timah dan emas."
+],
+[
+"3",
+"Siapakah menerima Larut melalui surat kuasa 28 Februari 1850?",
+"Long Jaafar."
+],
+[
+"3",
+"Apakah konflik pelombong Cina di Perak?",
+"Perang Larut 1861–1874 antara Ghee Hin dengan Hai San."
+],
+[
+"3",
+"Apakah dua krisis yang dimanipulasi British di Perak?",
+"Perang Larut dan perebutan takhta Kesultanan Perak."
+],
+[
+"3",
+"Bilakah Perjanjian Pangkor?",
+"1874."
+],
+[
+"3",
+"Apakah syarat paling penting Perjanjian Pangkor?",
+"Sultan menerima Residen dan nasihatnya wajib dipatuhi kecuali agama Islam serta adat Melayu."
+],
+[
+"3",
+"Siapakah diiktiraf Sultan Perak dalam Perjanjian Pangkor?",
+"Raja Abdullah."
+],
+[
+"3",
+"Apakah konflik di Selangor?",
+"Perang Klang 1866–1874 antara Raja Abdullah dan Raja Mahadi."
+],
+[
+"3",
+"Mengapa Sungai Linggi penting?",
+"Laluan membawa bijih timah dari Sungai Ujong ke Melaka dan sumber pungutan cukai."
+],
+[
+"3",
+"Apakah alasan British mendesak Pahang pada 1888?",
+"Kematian Goh Hui di pekarangan istana."
+],
+[
+"3",
+"Apakah Sistem Residen?",
+"Pentadbiran British secara tidak langsung melalui Residen di Perak, Selangor, Negeri Sembilan dan Pahang."
+],
+[
+"3",
+"Apakah kuasa pembesar yang terhakis dalam Sistem Residen?",
+"Pentadbiran dan pungutan cukai."
+],
+[
+"3",
+"Bilakah Perjanjian Persekutuan membentuk NNMB?",
+"1895."
+],
+[
+"3",
+"Di manakah pusat pentadbiran NNMB?",
+"Kuala Lumpur."
+],
+[
+"3",
+"Nyatakan empat faktor pembentukan NNMB.",
+"Atasi kelemahan Residen, seragam pentadbiran, jamin keselamatan, tangani kewangan Pahang."
+],
+[
+"3",
+"Bilakah dan di manakah Durbar pertama?",
+"1897 di Kuala Kangsar."
+],
+[
+"3",
+"Apakah fungsi Majlis Mesyuarat Persekutuan 1909?",
+"Meluluskan undang-undang NNMB."
+],
+[
+"3",
+"KBAT: Mengapakah kekayaan bijih timah memudahkan British campur tangan?",
+"Bijih timah penting kepada industri dan perdagangan British; British menggunakan konflik yang mengganggu keuntungan sebagai alasan campur tangan."
+],
+[
+"3",
+"KBAT: Bagaimanakah pemerintah tempatan boleh mengurangkan peluang manipulasi asing?",
+"Memelihara kestabilan politik, menyelesaikan konflik melalui muafakat dan mengawal hasil/cukai secara telus."
+],
+[
+"4",
+"Nyatakan lima NNMTB.",
+"Perlis, Kedah, Kelantan, Terengganu dan Johor."
+],
+[
+"4",
+"Bilakah Perlis berpisah daripada Kedah?",
+"1842."
+],
+[
+"4",
+"Siapakah Raja Perlis pertama yang diiktiraf Siam pada 1843?",
+"Syed Hussin Jamalullail."
+],
+[
+"4",
+"Apakah Sistem Jemaah Menteri Kelantan dan siapakah pembentuknya?",
+"Sistem pentadbiran Sultan dan pembesar yang dibentuk oleh Sultan Muhammad II (1839–1886)."
+],
+[
+"4",
+"Siapakah pengasas Kesultanan Terengganu?",
+"Sultan Zainal Abidin I, menaiki takhta pada 1708."
+],
+[
+"4",
+"Apakah undang-undang penting Johor pada 1895?",
+"Undang-Undang Tubuh Kerajaan Johor."
+],
+[
+"4",
+"Nyatakan lima faktor peluasan British di negeri Melayu Utara.",
+"Strategik, sekat kuasa Barat lain, kekayaan hasil, hubungkan Burma–Pulau Pinang–Singapura/India, Beban Orang Putih."
+],
+[
+"4",
+"Apakah maksud bunga emas dan perak menurut Siam dan negeri Melayu Utara?",
+"Siam: tanda pertuanan/kepatuhan; negeri Melayu: tanda persahabatan."
+],
+[
+"4",
+"Bilakah Perjanjian Bangkok ditandatangani?",
+"10 Mac 1909."
+],
+[
+"4",
+"Apakah kesan utama Perjanjian Bangkok 1909?",
+"Perlis, Kedah, Kelantan dan Terengganu menerima Penasihat British."
+],
+[
+"4",
+"Siapakah wakil British dalam Perjanjian Bangkok 1909?",
+"Ralph Paget."
+],
+[
+"4",
+"Apakah kandungan utama Pengisytiharan British–Siam 1902?",
+"Siam mengawal hubungan luar Kelantan dan Terengganu; konsesi asing memerlukan izin Siam."
+],
+[
+"4",
+"Mengapakah British gagal menggunakan pinjaman 200,000 dolar untuk menguasai Johor?",
+"Johor menolak kerana pinjaman itu boleh menjejaskan ekonominya."
+],
+[
+"4",
+"Bilakah Johor menerima Penasihat Am British?",
+"12 Mei 1914."
+],
+[
+"4",
+"Siapakah Penasihat Am British pertama Johor?",
+"Douglas Graham Campbell."
+],
+[
+"4",
+"Nyatakan tiga ciri NNMTB.",
+"Tiada gabungan formal, pentadbiran berasingan/longgar, raja berautonomi lebih besar daripada di NNMB."
+],
+[
+"4",
+"Apakah tiga perkembangan sistem pentadbiran NNMTB?",
+"Kedudukan Sultan dikekalkan, sistem tradisional diteruskan, birokrasi Barat diperkenalkan."
+],
+[
+"4",
+"Mengapa Johor dapat mengekalkan kedaulatannya hingga 1914?",
+"Pemerintah cekap, ekonomi komersial, pemodenan dan pentadbir yang berkesan."
+],
+[
+"4",
+"KBAT: Mengapakah British memilih perjanjian dengan Siam, bukan serangan terbuka, di negeri Melayu Utara?",
+"Negeri-negeri itu berada di bawah pengaruh Siam; perjanjian mengelakkan konfrontasi dan memberi British laluan sah untuk campur tangan."
+],
+[
+"4",
+"KBAT: Bagaimanakah Undang-Undang Tubuh Johor membantu mempertahan kedaulatan?",
+"Ia menetapkan Sultan dan menteri tidak boleh menyerahkan Johor kepada kuasa asing serta menyediakan asas pentadbiran berperlembagaan."
+],
+[
+"5",
+"Apakah tiga sistem pemerintahan di Sabah?",
+"Sistem kesukuan, kesultanan dan Ketua Bebas."
+],
+[
+"5",
+"Siapakah menguasai pantai barat dan pantai timur Sabah?",
+"Brunei di pantai barat; Sulu di pantai timur."
+],
+[
+"5",
+"Apakah asas Sistem Ketua Bebas?",
+"Kuasa individu berani di kawasan kuasa sultan lemah; ada undang-undang sendiri."
+],
+[
+"5",
+"Siapakah Syarif Osman?",
+"Ketua Bebas di Marudu, 1830–1840."
+],
+[
+"5",
+"Apakah kekayaan Sarawak yang menarik James Brooke?",
+"Sagu, antimoni dan emas."
+],
+[
+"5",
+"Siapakah mencetus perbalahan di Sarawak melalui cukai tinggi dan kerahan tenaga?",
+"Pengiran Indera Mahkota."
+],
+[
+"5",
+"Siapakah memimpin penentangan terhadap Pengiran Indera Mahkota?",
+"Datu Patinggi Ali."
+],
+[
+"5",
+"Nyatakan 4 strategi James Brooke.",
+"Rundingan, ugutan, perjanjian dan ketenteraan."
+],
+[
+"5",
+"Apakah wilayah dalam Perjanjian 1841?",
+"Tanjung Datu hingga Sungai Samarahan."
+],
+[
+"5",
+"Berapakah ufti Brooke kepada Sultan Brunei menurut Perjanjian 1842?",
+"2,500 Dolar Sepanyol setahun."
+],
+[
+"5",
+"Kapal apakah menyokong tindakan ketenteraan James Brooke?",
+"HMS <i>Dido</i>."
+],
+[
+"5",
+"Apakah kawasan diserahkan pada 1861?",
+"Sungai Rajang, termasuk Oya, Mukah, Tatau dan Bintulu."
+],
+[
+"5",
+"Siapa menyewa Sabah daripada Sultan Brunei pada 1865?",
+"Charles Lee Moses, selama 10 tahun."
+],
+[
+"5",
+"Siapa memajak pantai timur Sabah daripada Sultan Sulu pada 1878?",
+"Alfred dan Edward Dent."
+],
+[
+"5",
+"Bilakah SBUB menerima Piagam Diraja?",
+"1 November 1881."
+],
+[
+"5",
+"Siapakah Gabenor pertama SBUB?",
+"William Hood Treacher, 1881–1887."
+],
+[
+"5",
+"Nyatakan dua matlamat SBUB.",
+"Eksploitasi sumber untuk pembangunan ekonomi; melindungi/mempertahankan hak masyarakat tempatan."
+],
+[
+"5",
+"Apakah lima bentuk pemantapan pentadbiran Barat?",
+"Wilayah, elit tempatan, hierarki, kaum, perundangan."
+],
+[
+"5",
+"KBAT: Mengapa Piagam Diraja memperluas kuasa British walaupun Sabah ditadbir syarikat?",
+"Piagam mengiktiraf SBUB sebagai wakil British dan mengikatnya dengan syarat British."
+],
+[
+"5",
+"KBAT: Mengapa Brooke mengekalkan pembesar tempatan?",
+"Untuk memudahkan pentadbiran, memperoleh penerimaan masyarakat dan mengawal wilayah melalui struktur sedia ada."
+],
+[
+"6",
+"Apakah 5 ciri ekonomi moden British?",
+"Modal besar, teknologi moden, buruh ramai, tanah luas, pengeluaran skala besar berorientasikan eksport."
+],
+[
+"6",
+"Di manakah lombong bawah tanah bijih timah terpanjang dan terdalam dunia dibuka pada 1888?",
+"Sungai Lembing, Pahang."
+],
+[
+"6",
+"Siapakah memperkenalkan sistem torehan ibedem pada 1897?",
+"H.N. Ridley."
+],
+[
+"6",
+"Apakah tujuan sistem torehan ibedem?",
+"Memanjangkan hayat pokok getah."
+],
+[
+"6",
+"Apakah Sistem Kontrak?",
+"Sistem majikan membawa buruh China ke lombong; tambang, makanan, pakaian dan tempat tinggal disediakan majikan."
+],
+[
+"6",
+"Apakah Sistem Kangani?",
+"Sistem pengambilan buruh India ke ladang getah melalui kangani/mandur; buruh bekerja hingga hutang tambang selesai."
+],
+[
+"6",
+"Apakah akta tanah utama tahun 1913?",
+"Akta Tanah Simpanan Melayu."
+],
+[
+"6",
+"Apakah syarat utama Akta Tanah Simpanan Melayu 1913?",
+"Tanah simpanan Melayu tidak boleh dijual, dipajak gadai atau dipindah milik kepada bukan Melayu."
+],
+[
+"6",
+"Bilakah Chinese Protectorate ditubuhkan?",
+"1877."
+],
+[
+"6",
+"Apakah peranan syarikat perwakilan?",
+"Mengurus rangkaian kewangan, insurans, perkapalan, penyelidikan dan perdagangan antarabangsa."
+],
+[
+"6",
+"Apakah mata wang yang menggantikan Dolar Selat pada 1939?",
+"Dolar Malaya."
+],
+[
+"6",
+"Apakah tujuan utama kereta api dan jalan raya British dibina?",
+"Mengangkut bijih timah/getah dari kawasan pengeluaran ke pelabuhan untuk eksport."
+],
+[
+"6",
+"Bilakah landasan kereta api pertama Sabah dibina dan di mana?",
+"1896 di Bukau, kira-kira 13 km dari Weston."
+],
+[
+"6",
+"Nyatakan dua pelabuhan penting Sarawak.",
+"Contoh: Kuching, Rajang, Bintulu atau Miri."
+],
+[
+"6",
+"Apakah 5 kesan sosial perkembangan ekonomi?",
+"Bandar, masyarakat berbilang kaum, pendidikan, kesihatan dan penjara."
+],
+[
+"6",
+"Mengapakah masyarakat berbilang kaum terbentuk?",
+"Kemasukan buruh asing untuk memenuhi keperluan industri bijih timah dan getah."
+],
+[
+"6",
+"Apakah kesan pendidikan vernakular terhadap perpaduan?",
+"Sekolah berkembang mengikut etnik dan menyukarkan proses perpaduan kaum."
+],
+[
+"6",
+"KBAT: Mengapakah pembinaan prasarana British tidak boleh dianggap semata-mata demi kebajikan penduduk?",
+"Tujuan utamanya melicinkan eksploitasi dan eksport bahan mentah; manfaat kepada penduduk berlaku sebagai kesan sampingan."
+],
+[
+"6",
+"KBAT: Bagaimanakah Akta Tanah Simpanan Melayu boleh melindungi tetapi juga mengehadkan masyarakat Melayu?",
+"Ia menghalang pemindahan tanah kepada bukan Melayu, tetapi banyak tanah simpanan tidak subur/tidak sesuai untuk perladangan komersial."
+],
+[
+"6",
+"KBAT: Apakah iktibar daripada jurang bandar–luar bandar pada zaman British?",
+"Kekayaan negara perlu diagih secara saksama dan pembangunan perlu inklusif serta mengutamakan kebajikan rakyat."
+],
+[
+"7",
+"Apakah 3 matlamat penentangan masyarakat tempatan?",
+"Mempertahankan hak/kedudukan; mengekalkan pentadbiran tradisional; menentang peraturan baharu yang menyusahkan rakyat."
+],
+[
+"7",
+"Nyatakan 3 bentuk penentangan.",
+"Bersenjata, mencabar perjanjian, menggunakan sistem perundangan."
+],
+[
+"7",
+"Mengapakah Dol Said menentang British?",
+"Menolak cukai hasil tahunan <b>1/10</b> dan menegaskan Naning negeri merdeka."
+],
+[
+"7",
+"Apakah hasil Perang Naning 1831 dan 1832?",
+"1831 Dol Said menang; 1832 British menawan Taboh dan menyatukan Naning dengan Melaka."
+],
+[
+"7",
+"Berapakah angkatan Yamtuan Antah?",
+"<b>4,000 pengikut</b>."
+],
+[
+"7",
+"Siapakah yang berunding dengan Yamtuan Antah pada 1876?",
+"William Jervois, Gabenor Negeri-negeri Selat."
+],
+[
+"7",
+"Mengapakah Dato’ Bahaman bangkit?",
+"Kehilangan hak memungut cukai dan pembinaan balai polis tanpa pengetahuannya."
+],
+[
+"7",
+"Siapakah sekutu Dato’ Bahaman pada 1891?",
+"Tok Gajah dan Mat Kilau."
+],
+[
+"7",
+"Apakah nama sebenar Rentap?",
+"Libau."
+],
+[
+"7",
+"Senaraikan dua sebab Rentap menentang Brooke.",
+"Dituduh lanun dan petempatan Iban dihapuskan."
+],
+[
+"7",
+"Apakah senjata utama Rentap di Bukit Sadok?",
+"Meriam besi <b>Bujang Timpang Berang</b>."
+],
+[
+"7",
+"Mengapakah Sharif Masahor menentang Brooke?",
+"Sarikei diletakkan di bawah Brooke dan kuasa pembesar tempatan terjejas."
+],
+[
+"7",
+"Apakah punca penentangan Tok Janggut?",
+"Kekerasan Encik Abdul Latiff dan cukai tanah 1915."
+],
+[
+"7",
+"Apakah janji SBUB kepada Mat Salleh pada 1898?",
+"Membenarkan beliau mentadbir Tambunan; janji dimungkiri pada 1899."
+],
+[
+"7",
+"Apakah hujah Haji Abdul Rahman Limbong di mahkamah?",
+"Tanah ialah “Hak Allah SWT”; rakyat bebas mengerjakannya dan cukai British berlawanan hukum syarak."
+],
+[
+"7",
+"Nyatakan 4 kekuatan penentangan.",
+"Muafakat, kubu pertahanan, persenjataan, perundangan."
+],
+[
+"7",
+"Mengapakah kebangkitan tempatan gagal?",
+"Setempat, sokongan istana tidak menyeluruh, teknologi lemah dan strategi British lebih licik."
+],
+[
+"7",
+"Apakah tiga angka kerugian perang British?",
+"Naning £100,000; Perak £400,000; Pahang £7,000."
+],
+[
+"7",
+"KBAT: Mengapakah pemecahbelahan pakatan berkesan kepada British?",
+"Penentangan kehilangan sokongan tenaga, wilayah dan sumber; contoh Dol Said tidak lagi dibantu pada 1832."
+],
+[
+"7",
+"KBAT: Apakah pengajaran daripada tindakan Haji Abdul Rahman Limbong?",
+"Penentangan boleh dibuat melalui ilmu undang-undang, hujah agama dan saluran mahkamah, bukan semata-mata senjata."
+],
+[
+"8",
+"Bilakah Perjanjian Bangkok dimeterai?",
+"<b>10 Mac 1909</b>."
+],
+[
+"8",
+"Apakah asas garisan sempadan Protokol Bangkok 1909?",
+"<b>Legeh dan lembah sungai</b>."
+],
+[
+"8",
+"Wilayah Perlis yang diserahkan kepada Siam?",
+"<b>Pujoh</b>."
+],
+[
+"8",
+"Nyatakan wilayah Kedah yang terjejas akibat Perjanjian Bangkok.",
+"<b>Sadao, Setul, Pulau Terutau, Butang dan pulau sekitarnya</b>."
+],
+[
+"8",
+"Mengapakah Sultan Zainal Abidin III menolak dakwaan Siam ke atas Terengganu?",
+"Bunga emas ialah <b>tanda persahabatan</b>, bukan pengakuan Terengganu jajahan Siam."
+],
+[
+"8",
+"Siapakah pemerintah Johor yang memperkenalkan Sistem Kangcu?",
+"<b>Temenggung Daeng Ibrahim</b>."
+],
+[
+"8",
+"Apakah dua tanaman utama Sistem Kangcu?",
+"<b>Gambir dan lada hitam</b>."
+],
+[
+"8",
+"Apakah tujuan Durbar?",
+"Wadah Raja-raja Melayu membangkitkan isu dan melindungi kepentingan rakyat kepada British."
+],
+[
+"8",
+"Apakah tuntutan Tuanku Muhammad dalam Durbar Kuala Lumpur 1903?",
+"Bahasa Melayu dijadikan <b>bahasa rasmi Persekutuan</b>."
+],
+[
+"8",
+"Bilakah Undang-Undang Tubuh Kerajaan Johor dimasyhurkan?",
+"<b>14 April 1895</b>."
+],
+[
+"8",
+"Berapakah fasal Undang-Undang Tubuh Johor dan Terengganu?",
+"Johor <b>64 fasal</b>; Terengganu <b>53 fasal</b>."
+],
+[
+"8",
+"Apakah prinsip utama kedua-dua undang-undang tubuh terhadap kuasa asing?",
+"Pemerintah tidak boleh <b>menyerahkan negeri kepada kuasa asing</b>."
+],
+[
+"8",
+"Siapakah Penasihat British pertama di Terengganu?",
+"<b>J.L. Humphreys</b>."
+],
+[
+"8",
+"Bilakah Terengganu menerima Penasihat British?",
+"<b>1919</b>."
+],
+[
+"8",
+"Apakah ukuran Terusan Wan Muhammad Saman?",
+"<b>36 km × 7.5 m × 1.5 m</b>."
+],
+[
+"8",
+"Apakah sumbangan utama Dato’ Muhammad Salleh bin Perang?",
+"Melukis peta lengkap pertama Johor dan membuka Muar, Endau serta Batu Pahat."
+],
+[
+"8",
+"Bilakah PTM ditubuhkan dan apa tujuannya?",
+"<b>1910</b>; melatih orang Melayu menyertai pentadbiran negeri."
+],
+[
+"8",
+"Apakah hubungan Kompeni Percubaan 1933 dengan Rejimen Askar Melayu?",
+"Kompeni Percubaan di Port Dickson menjadi asas <b>Rejimen Askar Melayu pada 1935</b>."
+],
+[
+"8",
+"KBAT: Mengapa undang-undang tubuh lebih sukar ditangani British berbanding bantahan lisan?",
+"Kerana ia menetapkan larangan dan aturan pemerintahan secara bertulis, sekali gus mengukuhkan asas kedaulatan negeri."
+],
+[
+"8",
+"KBAT: Apakah iktibar strategi Johor?",
+"Kedaulatan lebih kukuh apabila diplomasi disokong oleh pentadbiran cekap, ekonomi makmur dan undang-undang yang jelas."
+],
+[
+"x",
+"Apakah 4 babak cerita Sejarah Tingkatan 3?",
+"<b>DATANG</b> (Bab 1) → <b>TADBIR</b> (Bab 2–5) → <b>KESAN</b> (Bab 6) → <b>REAKSI</b>: lawan (Bab 7) / bijak (Bab 8)"
+],
+[
+"x",
+"Apakah 4 model pentadbiran Barat (Bab 2–5)?",
+"NNS (tanah jajahan) · NNMB (Residen, persekutuan) · NNMTB (Penasihat, berasingan) · Sarawak (Brooke) &amp; Sabah (SBUB)"
+],
+[
+"x",
+"Rantaikan: Perjanjian Pangkor 1874 → ? → ?",
+"Residen <b>J.W.W. Birch</b> ambil hak cukai (Bab 3) → <b>Dato' Maharaja Lela</b> bunuh Birch 1875 (Bab 7) → raja tuntut kuasa melalui <b>Durbar</b> (Bab 8)"
+],
+[
+"x",
+"Rantaikan: Perjanjian Bangkok 1909 → ? → ?",
+"Dibuat <b>tanpa rundingan</b> &amp; wilayah hilang (Bab 4) → <b>bantahan raja</b> Kedah, Perlis, Kelantan, Terengganu (Bab 8) → kemudian pentadbiran &amp; cukai baharu → <b>Tok Janggut 1915</b>, <b>Haji Abdul Rahman Limbong 1922–1928</b> (Bab 7)"
+],
+[
+"x",
+"Penentangan mana berpunca daripada pentadbiran Brooke dan SBUB (Bab 5)?",
+"Brooke → <b>Rentap</b>, <b>Sharif Masahor</b>; SBUB → <b>Mat Salleh</b>, <b>Mat Sator</b>"
+],
+[
+"x",
+"Kaitkan Perjanjian London 1824 (Bab 2) dengan Johor (Bab 4 &amp; 8).",
+"Empayar Johor-Riau berpecah → Johor di bawah pengaruh British → Johor guna diplomasi &amp; UU Tubuh 1895 untuk kekal berdaulat hingga <b>1914</b>"
+],
+[
+"x",
+"Kenapa kereta api dibina dalam 3 fasa (Bab 6)? Kaitkan dengan Bab 3 &amp; 4.",
+"1885–1896 lombong→pelabuhan; 1897–1909 utara–selatan selepas <b>NNMB</b> (Bab 3); 1910–1931 seluruh Tanah Melayu selepas <b>NNMTB</b> (Bab 4)"
+],
+[
+"x",
+"Bezakan Residen (Bab 3) dan Penasihat British (Bab 4).",
+"Residen: NNMB, berpusat di bawah Residen Jeneral, kuasa raja sangat terhakis. Penasihat: NNMTB, setiap negeri berasingan, raja lebih autonomi. Kedua-dua: nasihat wajib kecuali <b>Islam &amp; adat Melayu</b>"
+],
+[
+"x",
+"Bezakan tahun Penasihat British diterima dengan tahun perjanjian rasmi.",
+"<b>Penasihat:</b> Kedah &amp; Perlis 1909 → Kelantan 1910 → Johor 1914 → Terengganu 1919 (paling lewat). <b>Perjanjian rasmi:</b> Kedah 1923, Perlis 1930 (paling lewat)"
+],
+[
+"x",
+"Apakah kaitan Bab 7 dan Bab 8?",
+"Bab 7 tunjuk penentangan bersenjata gagal (teknologi, setempat); Bab 8 tunjuk strategi pelengkap: diplomasi, undang-undang tubuh, pemodenan, Durbar"
+],
+[
+"x",
+"Mnemonik utama setiap bab?",
+"1 BaPuPeA · 2 Ti-Ma-Pak · 3 PeSeNePa · 4 KPKT+J · 5 RUPEK · 6 Mo-Te-Bu-Ta-Ska &amp; Ba-Ma-Pe-Ke-Pe · 7 Mu-Ku-Sen-Undang · 8 DuDiEnUnMo"
+]
+];
+
+let KNOWN = new Set();
+try{ KNOWN = new Set(JSON.parse(localStorage.getItem('sej3known')||'[]')); }catch(e){}
+const save=()=>{try{
+  localStorage.setItem('sej3known',JSON.stringify([...KNOWN]));
+  // ringkasan kemajuan setiap bab: {bab:[hafal, jumlah]}
+  const prog={}; CARDS.forEach((c,i)=>{const r=prog[c[0]]||(prog[c[0]]=[0,0]); r[1]++; if(KNOWN.has(i)) r[0]++;});
+  localStorage.setItem('sej3progress',JSON.stringify(prog));
+}catch(e){}};
+
+const sel=document.getElementById('filter');
+sel.innerHTML='<option value="">Semua topik ('+CARDS.length+')</option>'+Object.entries(T).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join('');
+
+let order=CARDS.map((_,i)=>i);
+function render(){
+  const f=sel.value, deck=document.getElementById('deck');
+  deck.innerHTML='';
+  order.filter(i=>!f||CARDS[i][0]===f).forEach(i=>{
+    const [t,q,a]=CARDS[i], c=`var(${T[t][1]})`;
+    const el=document.createElement('div');
+    el.className='flip'+(KNOWN.has(i)?' known':'');
+    el.style.setProperty('--c',c);
+    el.innerHTML=`<div class="inner">
+      <div class="face"><span class="lbl">${T[t][0]}</span><span class="no">#${i+1}</span><div class="q">${q}</div></div>
+      <div class="face back"><span class="lbl">Jawapan</span><span class="no">#${i+1}</span><div class="a">${a}</div>
+        <button class="mark" style="border:0;background:none;cursor:pointer;color:inherit">${KNOWN.has(i)?'✗ belum hafal':'✓ sudah hafal'}</button></div></div>`;
+    el.addEventListener('click',e=>{
+      if(e.target.classList.contains('mark')){ KNOWN.has(i)?KNOWN.delete(i):KNOWN.add(i); save(); render(); return; }
+      el.classList.toggle('on');
+    });
+    deck.appendChild(el);
+  });
+}
+sel.onchange=render;
+// ?bab=4 membuka terus kad bab itu
+try{const b=new URLSearchParams(location.search).get('bab'); if(b&&T[b]) sel.value=b;}catch(e){}
+save();
+document.getElementById('shuffle').onclick=()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}render()};
+document.getElementById('reset').onclick=()=>{KNOWN.clear();save();order=CARDS.map((_,i)=>i);render()};
+render();
+
+// Halaman cetak: 10 kad sehelai. Muka belakang ditukar kiri-kanan supaya sejajar bila dicetak dua muka (long edge).
+(function(){
+  const out=document.getElementById('print'), PER=10;
+  for(let s=0;s<CARDS.length;s+=PER){
+    const grp=CARDS.slice(s,s+PER).map((c,k)=>[c,s+k]);
+    while(grp.length<PER) grp.push(null);
+    let front='<div class="sheet">', back='<div class="sheet">';
+    grp.forEach(x=>{ front+= x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">${T[x[0][0]][0]}</span><span class="no">#${x[1]+1}</span><div class="q">${x[0][1]}</div></div>`:'<div class="pc blank"></div>'; });
+    for(let r=0;r<PER/2;r++){
+      [grp[r*2+1],grp[r*2]].forEach(x=>{ back+= x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">Jawapan</span><span class="no">#${x[1]+1}</span><div class="a">${x[0][2]}</div></div>`:'<div class="pc blank"></div>'; });
+    }
+    out.innerHTML+=front+'</div>'+back+'</div>';
+  }
+})();
+</script>
+</body>
+</html>
