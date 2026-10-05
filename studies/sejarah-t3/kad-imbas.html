@@ -3,1006 +3,3532 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kad Imbas Sejarah T3</title>
+<title>Hikayat Sejarah T3</title>
 <script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 <link rel="icon" href="data:,">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#fbf8f2; --card:#fff; --ink:#1f2328; --muted:#5b6370; --line:#e4ddd0; --accent:#7c3aed;
-  --x:#475569; --c1:#7c3aed; --c2:#0d9488; --c3:#2563eb; --c4:#d97706; --c5:#ca8a04; --c6:#0891b2; --c7:#dc2626; --c8:#16a34a;
+  --bg:#f7f1fb; --panel:#ffffff; --panel2:#efe5f5; --ink:#2a1433; --muted:#6c5a75; --line:#ddcde6;
+  --gold:#a8670f; --gold2:#f4b942; --red:#c62d45; --jade:#13866f; --sea:#d9ecf2; --sea2:#9fcadb;
+  --x:#475569; --c1:#7c3aed; --c2:#0d9488; --c3:#2563eb; --c4:#d97706; --c5:#a16207; --c6:#0891b2; --c7:#dc2626; --c8:#16a34a;
+  --disp:"Bungee",system-ui,sans-serif; --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){--bg:#15171c;--card:#1e2128;--ink:#e8e6e1;--muted:#a0a7b4;--line:#343844}
+  :root:not([data-theme="light"]){--bg:#1c0d23;--panel:#2c1636;--panel2:#3a1f46;--ink:#fbefdc;--muted:#c4aecb;--line:#4d2f5a;
+    --gold:#f4b942;--red:#ff6b7f;--jade:#3fd1b0;--sea:#14223a;--sea2:#24406a;
+    --x:#94a3b8;--c1:#a78bfa;--c2:#2dd4bf;--c3:#60a5fa;--c4:#f59e0b;--c5:#facc15;--c6:#22d3ee;--c7:#fb7185;--c8:#4ade80}
 }
-:root[data-theme="dark"]{--bg:#15171c;--card:#1e2128;--ink:#e8e6e1;--muted:#a0a7b4;--line:#343844}
+:root[data-theme="dark"]{--bg:#1c0d23;--panel:#2c1636;--panel2:#3a1f46;--ink:#fbefdc;--muted:#c4aecb;--line:#4d2f5a;
+  --gold:#f4b942;--red:#ff6b7f;--jade:#3fd1b0;--sea:#14223a;--sea2:#24406a;
+  --x:#94a3b8;--c1:#a78bfa;--c2:#2dd4bf;--c3:#60a5fa;--c4:#f59e0b;--c5:#facc15;--c6:#22d3ee;--c7:#fb7185;--c8:#4ade80}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{max-width:900px;margin:0 auto;padding:20px 16px 0}
-h1{margin:.2em 0;font-size:1.6rem}
-.sub{color:var(--muted);margin:0 0 .8em}
-.bar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.bar button,.bar select{font:600 14px system-ui;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
-.bar button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.help{font-size:.88rem;color:var(--muted)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 var(--body)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px}
+b{font-weight:800}
 
-/* ---------- Mod skrin: kad terbalik ---------- */
-#deck{max-width:900px;margin:0 auto;padding:8px 16px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+/* Songket band: the gold-thread diamond strip */
+.songket{height:14px;background:
+  linear-gradient(135deg,transparent 35%,var(--gold2) 35% 42%,transparent 42% 58%,var(--gold2) 58% 65%,transparent 65%) 0 0/14px 14px,
+  linear-gradient(45deg,transparent 35%,var(--gold2) 35% 42%,transparent 42% 58%,var(--gold2) 58% 65%,transparent 65%) 0 0/14px 14px,
+  var(--red)}
+
+/* ---------- HUD ---------- */
+.hud{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--line)}
+.hud .wrap{display:flex;align-items:center;gap:12px;padding-top:10px;padding-bottom:10px}
+.rank{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.lvl{font-family:var(--disp);font-size:1.1rem;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--red);color:#fff;flex:none;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)}
+.rank .t{font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xpbar{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-top:4px}
+.xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold2),var(--red));border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.xptxt{font-size:.75rem;color:var(--muted)}
+.pill{display:flex;align-items:center;gap:4px;font-weight:900;padding:6px 10px;border-radius:99px;background:var(--panel2);white-space:nowrap}
+.iconbtn{border:0;background:var(--panel2);border-radius:99px;width:38px;height:38px;cursor:pointer;font-size:1.05rem;flex:none}
+
+/* ---------- Hub ---------- */
+.hero{padding:22px 0 6px}
+.hero h1{font-family:var(--disp);font-weight:400;font-size:clamp(1.7rem,6vw,2.6rem);line-height:1.05;margin:0;color:var(--ink)}
+.hero h1 span{display:block;font-size:.5em;color:var(--gold);margin-top:6px}
+.hero p{margin:.6em 0 0;color:var(--muted);max-width:60ch}
+
+.mapbox{position:relative;margin:18px 0 8px;padding:18px;border-radius:24px;background:
+  radial-gradient(circle at 20% 30%,color-mix(in srgb,var(--sea2) 35%,transparent) 0 2px,transparent 3px) 0 0/34px 34px,
+  var(--sea);border:2px solid var(--sea2);overflow:hidden}
+.mapbox svg.route{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.mapbox svg.route path{fill:none;stroke:var(--gold2);stroke-width:4;stroke-dasharray:3 11;stroke-width:5;stroke-linecap:round;opacity:.9}
+.isles{position:relative;max-width:700px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:22px 18px}
+.isle{--c:var(--x);position:relative;border:0;cursor:pointer;padding:14px 8px 10px;border-radius:46% 54% 48% 52%/55% 45% 55% 45%;
+  background:color-mix(in srgb,var(--c) 22%,var(--panel));box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 70%,transparent),0 8px 0 -2px color-mix(in srgb,var(--c) 45%,#000 20%);
+  display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-height:118px;transition:transform .2s}
+.isle:hover{transform:translateY(-3px) rotate(-1deg)}
+.isle .n{font-family:var(--disp);font-size:1.7rem;line-height:1;color:var(--c)}
+.isle .nm{font-weight:800;font-size:.82rem;line-height:1.15}
+.isle .st{font-size:.95rem;letter-spacing:1px;color:var(--gold)}
+.isle .ct{font-size:.72rem;color:var(--muted);font-weight:700}
+.isle.sel{background:color-mix(in srgb,var(--c) 40%,var(--panel))}
+.boat{position:absolute;left:0;top:0;font-size:2rem;z-index:3;pointer-events:none;transition:transform .9s cubic-bezier(.45,0,.2,1);filter:drop-shadow(0 3px 0 rgba(0,0,0,.25))}
+.boat.bob{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{translate:0 -5px;rotate:-6deg}}
+.mapnote{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:6px 2px 0;font-weight:800}
+.mapnote button{border:2px solid var(--line);background:var(--panel);border-radius:99px;padding:4px 12px;cursor:pointer;font-weight:800;font-size:.85rem}
+
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0}
+.mode{border:0;cursor:pointer;text-align:left;padding:16px;border-radius:18px;background:var(--panel);box-shadow:0 0 0 2px var(--line),0 6px 0 var(--line);
+  display:flex;flex-direction:column;gap:4px;transition:transform .12s,box-shadow .12s;min-height:130px}
+.mode:hover{transform:translateY(-2px);box-shadow:0 0 0 2px var(--gold2),0 8px 0 var(--gold2)}
+.mode:active{transform:translateY(4px);box-shadow:0 0 0 2px var(--gold2),0 2px 0 var(--gold2)}
+.mode .e{font-size:2rem;line-height:1}
+.mode .h{font-family:var(--disp);font-size:1rem;line-height:1.15}
+.mode .d{font-size:.86rem;color:var(--muted)}
+.mode .rec{margin-top:auto;font-size:.75rem;font-weight:800;color:var(--gold)}
+
+h2.sec{font-family:var(--disp);font-weight:400;font-size:1.15rem;margin:26px 0 10px}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.bdg{padding:12px 8px;border-radius:16px;background:var(--panel);border:2px dashed var(--line);text-align:center}
+.bdg .e{font-size:1.8rem;filter:grayscale(1);opacity:.35}
+.bdg .h{font-weight:900;font-size:.82rem;line-height:1.2}
+.bdg .d{font-size:.7rem;color:var(--muted);line-height:1.25}
+.bdg.got{border:2px solid var(--gold2);background:color-mix(in srgb,var(--gold2) 14%,var(--panel))}
+.bdg.got .e{filter:none;opacity:1}
+.foot{color:var(--muted);font-size:.85rem;margin:28px 0 40px}
+.foot button{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:inherit;padding:0}
+
+/* ---------- Stage (permainan) ---------- */
+#stage{display:none;padding:14px 0 60px}
+body.playing #hub{display:none}
+body.playing #stage{display:block}
+.stagebar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.stagebar .ttl{font-family:var(--disp);font-size:1rem;flex:1;min-width:0}
+.quit{border:2px solid var(--line);background:var(--panel);border-radius:99px;padding:6px 14px;font-weight:800;cursor:pointer}
+.meters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.meters .pill{background:var(--panel)}
+.hearts{letter-spacing:2px}
+.combo{color:var(--red)}
+.combo.hot{animation:pulse .5s}
+@keyframes pulse{40%{transform:scale(1.25)}}
+.timer{height:12px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-bottom:14px}
+.timer i{display:block;height:100%;background:var(--jade);transition:width .25s linear}
+.timer.low i{background:var(--red)}
+
+.qcard{--c:var(--x);background:var(--panel);border-radius:22px;padding:22px 20px;border:2px solid var(--line);border-top:10px solid var(--c);box-shadow:0 8px 0 var(--line);margin-bottom:16px}
+.qcard .lbl{font-size:.75rem;font-weight:900;color:var(--c)}
+.qcard .q{font-size:1.18rem;font-weight:800;margin-top:6px}
+.opts{display:grid;gap:10px}
+.opt{border:0;cursor:pointer;text-align:left;padding:14px 16px 14px 52px;border-radius:16px;background:var(--panel);box-shadow:0 0 0 2px var(--line),0 5px 0 var(--line);position:relative;font-size:.95rem;transition:transform .1s}
+.opt::before{content:attr(data-k);position:absolute;left:12px;top:50%;translate:0 -50%;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--panel2);font-family:var(--disp);font-size:.85rem}
+.opt:hover:not(:disabled){transform:translateY(-2px)}
+.opt:disabled{cursor:default}
+.opt.ok{background:color-mix(in srgb,var(--jade) 22%,var(--panel));box-shadow:0 0 0 3px var(--jade),0 5px 0 var(--jade)}
+.opt.no{background:color-mix(in srgb,var(--red) 18%,var(--panel));box-shadow:0 0 0 3px var(--red),0 5px 0 var(--red);animation:shake .35s}
+.opt.dim{opacity:.45}
+@keyframes shake{20%,60%{translate:-6px 0}40%,80%{translate:6px 0}}
+.next{display:block;margin:16px auto 0;border:0;cursor:pointer;padding:12px 28px;border-radius:99px;background:var(--red);color:#fff;font-weight:900;font-size:1rem;box-shadow:0 5px 0 color-mix(in srgb,var(--red) 60%,#000)}
+.next:active{translate:0 3px;box-shadow:0 2px 0 color-mix(in srgb,var(--red) 60%,#000)}
+.next.alt{background:var(--panel2);color:var(--ink);box-shadow:0 5px 0 var(--line)}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* kad imbas besar */
+.big{perspective:1200px;height:300px;cursor:pointer;margin-bottom:16px}
+.big .inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.big.on .inner{transform:rotateY(180deg)}
+.big .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:24px;padding:28px 22px 22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  background:var(--panel);border:2px solid var(--line);border-top:10px solid var(--c);box-shadow:0 8px 0 var(--line);overflow:auto}
+.big .back{transform:rotateY(180deg);background:color-mix(in srgb,var(--c) 10%,var(--panel))}
+.big .q{font-size:1.25rem;font-weight:800}
+.big .a{font-size:1.05rem}
+.big .tap{position:absolute;bottom:10px;font-size:.75rem;color:var(--muted);font-weight:700}
+.big .lbl{position:absolute;top:10px;left:16px;font-size:.75rem;font-weight:900;color:var(--c)}
+
+/* padan pasangan */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:grid;gap:10px;align-content:start}
+.tile{border:0;cursor:pointer;padding:12px;overflow-wrap:anywhere;border-radius:14px;background:var(--panel);box-shadow:0 0 0 2px var(--line),0 4px 0 var(--line);font-size:.86rem;text-align:left;min-height:64px;transition:transform .15s,opacity .3s}
+.tile.q{font-weight:800}
+.tile.pick{box-shadow:0 0 0 3px var(--gold2),0 4px 0 var(--gold2);transform:translateY(-2px)}
+.tile.no{animation:shake .35s;box-shadow:0 0 0 3px var(--red),0 4px 0 var(--red)}
+.tile.done{animation:pop .45s forwards;pointer-events:none}
+@keyframes pop{40%{transform:scale(1.08);box-shadow:0 0 0 3px var(--jade)}100%{transform:scale(.85);opacity:0;visibility:hidden}}
+
+/* susun garis masa */
+.slots{display:grid;gap:8px;margin-bottom:14px;counter-reset:s}
+.slot{min-height:54px;border-radius:14px;border:2px dashed var(--line);padding:10px 12px 10px 48px;position:relative;font-size:.92rem;display:flex;align-items:center;gap:8px}
+.slot::before{counter-increment:s;content:counter(s);position:absolute;left:12px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--panel2);font-family:var(--disp);font-size:.8rem}
+.slot.full{border-style:solid;background:var(--panel);cursor:pointer}
+.slot .yr{margin-left:auto;font-family:var(--disp);font-size:.85rem;color:var(--gold);white-space:nowrap}
+.slot.ok{border-color:var(--jade);background:color-mix(in srgb,var(--jade) 16%,var(--panel))}
+.slot.no{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--panel))}
+.pool{display:grid;gap:8px}
+.ev{border:0;cursor:pointer;text-align:left;padding:12px 14px;border-radius:14px;background:var(--panel);box-shadow:0 0 0 2px var(--line),0 4px 0 var(--line);font-size:.92rem}
+.ev[hidden]{display:none}
+.hint{font-size:.85rem;color:var(--muted);text-align:center;margin:0 0 12px}
+
+/* keputusan */
+.result{text-align:center;padding:20px 10px}
+.result .big-e{font-size:4rem;line-height:1;animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes drop{from{transform:translateY(-40px) scale(.4);opacity:0}}
+.result h3{font-family:var(--disp);font-weight:400;font-size:1.6rem;margin:.3em 0 .1em}
+.result .sc{font-size:1.1rem;font-weight:800}
+.result .gain{font-family:var(--disp);color:var(--gold);font-size:1.3rem;margin:.4em 0}
+.review{text-align:left;margin:18px auto 0;max-width:640px}
+.review h4{margin:0 0 8px}
+.review div{padding:10px 12px;border-radius:12px;background:var(--panel);border-left:5px solid var(--red);margin-bottom:8px;font-size:.88rem}
+
+/* XP terapung, toast, sambutan */
+.float{position:fixed;z-index:60;pointer-events:none;font-family:var(--disp);color:var(--gold);font-size:1.3rem;text-shadow:0 2px 0 rgba(0,0,0,.25);animation:up 1s forwards}
+@keyframes up{to{transform:translateY(-60px);opacity:0}}
+#toast{position:fixed;left:50%;bottom:20px;translate:-50% 0;z-index:70;display:grid;gap:8px;width:min(92vw,380px)}
+.tst{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--panel);border:2px solid var(--gold2);box-shadow:0 10px 30px rgba(0,0,0,.25);animation:tin .4s cubic-bezier(.3,1.5,.5,1)}
+.tst .e{font-size:1.8rem}
+.tst small{display:block;color:var(--muted)}
+@keyframes tin{from{transform:translateY(30px);opacity:0}}
+#lvlup{position:fixed;inset:0;z-index:80;display:none;place-items:center;background:rgba(20,6,26,.7);padding:16px}
+#lvlup.on{display:grid}
+#lvlup .box{background:var(--panel);border-radius:26px;padding:26px 22px;text-align:center;max-width:360px;width:100%;border:3px solid var(--gold2);animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
+#lvlup .crest{font-family:var(--disp);font-size:3.2rem;width:110px;height:110px;margin:0 auto 8px;border-radius:30px;display:grid;place-items:center;background:var(--red);color:#fff;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2)}
+#lvlup h3{font-family:var(--disp);font-weight:400;margin:.2em 0}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:75}
+
+/* senarai & cetak */
+#list{display:none}
+body.listing #hub{display:none}
+body.listing #list{display:block}
+#deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;padding:8px 0 60px}
 .flip{perspective:900px;height:210px;cursor:pointer}
-.inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip .inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
 .flip.on .inner{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;background:var(--card);border:1px solid var(--line);border-top:7px solid var(--c)}
-.back{transform:rotateY(180deg)}
-.face .lbl{position:absolute;top:8px;left:14px;font-size:.72rem;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.05em}
-.face .no{position:absolute;top:8px;right:14px;font-size:.72rem;color:var(--muted)}
-.q{font-weight:700;font-size:1.02rem;text-align:center}
-.a{font-size:.93rem}
-.a ul{margin:0;padding-left:1.1em}
-.flip.known{opacity:.45}
-.mark{position:absolute;bottom:8px;right:12px;font-size:.75rem;color:var(--muted)}
+.flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;background:var(--panel);border:1px solid var(--line);border-top:7px solid var(--c);overflow:auto}
+.flip .back{transform:rotateY(180deg)}
+.flip .lbl{position:absolute;top:8px;left:14px;font-size:.72rem;font-weight:900;color:var(--c)}
+.flip .no{position:absolute;top:8px;right:14px;font-size:.72rem;color:var(--muted)}
+.flip .q{font-weight:800;text-align:center}
+.flip .a{font-size:.93rem}
+.flip.known{opacity:.5}
+.flip .mark{position:absolute;bottom:6px;right:10px;font-size:.75rem;color:var(--muted);border:0;background:none;cursor:pointer}
+.listbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+.listbar select,.listbar button{font:800 14px var(--body);padding:8px 14px;border-radius:99px;border:2px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.listbar .primary{background:var(--red);color:#fff;border-color:var(--red)}
 
-/* ---------- Mod cetak ---------- */
 #print{display:none}
 @page{size:A4;margin:8mm}
 @media print{
-  :root,:root[data-theme="dark"]{--bg:#fff;--card:#fff;--ink:#111;--muted:#555;--line:#999}
+  :root,:root[data-theme="dark"]{--bg:#fff;--panel:#fff;--ink:#111;--muted:#555;--line:#999;
+    --x:#475569;--c1:#7c3aed;--c2:#0d9488;--c3:#2563eb;--c4:#d97706;--c5:#a16207;--c6:#0891b2;--c7:#dc2626;--c8:#16a34a}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body{background:#fff}
-  header,#deck{display:none}
+  .hud,#hub,#stage,#list,#toast,#lvlup,#fx,.noprint{display:none!important}
   #print{display:block}
   .sheet{width:194mm;height:280mm;display:grid;grid-template-columns:97mm 97mm;grid-template-rows:repeat(5,56mm);break-after:page}
   .sheet:last-child{break-after:auto}
-  .pc{border:1px dashed #999;padding:5mm 5mm 3mm;position:relative;display:flex;flex-direction:column;justify-content:center;border-top:4mm solid var(--c);overflow:hidden}
+  .pc{border:1px dashed #999;padding:5mm 5mm 3mm;position:relative;display:flex;flex-direction:column;justify-content:center;border-top:4mm solid var(--c);overflow:hidden;font-family:system-ui,sans-serif}
   .pc .lbl{position:absolute;top:2mm;left:5mm;font-size:7.5pt;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.05em}
   .pc .no{position:absolute;top:2mm;right:5mm;font-size:7.5pt;color:#777}
-  .pc .q{font-size:11.5pt}
-  .pc .a{font-size:9.5pt}
+  .pc .q{font-size:11pt;font-weight:700;text-align:center}
+  .pc .a{font-size:9pt}
   .pc.blank{border-color:transparent}
 }
-@media print{.noprint{display:none!important}}
+@media (max-width:560px){
+  .isles{gap:16px 10px}
+  .isle{min-height:104px;padding:10px 4px 8px}
+  .isle .nm{font-size:.72rem}
+  .rank .xptxt{display:none}
+  .match{gap:8px}.match .col{gap:8px}
+  .tile{font-size:.78rem;padding:8px 7px}
+  .big{height:330px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
 <a class="noprint" href="../../studies.html#sejarah-t3" style="display:inline-block;margin:12px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 14px system-ui;text-decoration:none">← Studies</a>
 
 
-<header>
-  <p class="sub">Sejarah Tingkatan 3 · KSSM · Bab 1–8</p>
-  <h1>🃏 Kad Imbas Sejarah Tingkatan 3</h1>
-  <p class="help">Skrin: ketik kad untuk terbalikkan. Tekan ✓ jika sudah hafal; kad itu akan pudar.<br>
-  Cetak: A4, <b>cetak dua muka (flip on long edge)</b>. Halaman soalan dan jawapan disusun supaya jawapan berada tepat di belakang soalan. Gunting ikut garisan putus-putus.</p>
-  <div class="bar">
+<div class="hud">
+  <div class="songket"></div>
+  <div class="wrap">
+    <div class="rank">
+      <div class="lvl" id="lvl">1</div>
+      <div style="min-width:0;flex:1">
+        <div class="t" id="rankName">Rakyat</div>
+        <div class="xpbar"><i id="xpBar"></i></div>
+        <div class="xptxt" id="xpTxt">0 XP</div>
+      </div>
+    </div>
+    <span class="pill" title="Hari belajar berturut-turut">🔥 <span id="streak">0</span></span>
+    <span class="pill" title="Kad dihafal">🧠 <span id="knownN">0</span></span>
+    <button class="iconbtn" id="mute" aria-label="Bunyi">🔊</button>
+  </div>
+</div>
+
+<main class="wrap">
+<section id="hub">
+  <div class="hero">
+    <h1>Hikayat Sejarah<span>Tingkatan 3 · Bab 1–8</span></h1>
+    <p>Pilih pulau (bab), kemudian pilih permainan. Jawab betul dua kali berturut-turut dan kad itu dikira <b>dihafal</b>. Kumpul bintang di setiap pulau.</p>
+  </div>
+
+  <div class="mapbox" id="map">
+    <svg class="route" aria-hidden="true"><path id="routePath"/></svg>
+    <div class="boat bob" id="boat" aria-hidden="true">⛵</div>
+    <div class="isles" id="isles"></div>
+  </div>
+  <div class="mapnote"><span id="selName">Semua bab</span><button id="allBtn">🌏 Semua bab</button></div>
+
+  <div class="modes" id="modes"></div>
+
+  <h2 class="sec">🏅 Lencana</h2>
+  <div class="badges" id="badges"></div>
+
+  <p class="foot">Kemajuan disimpan dalam pelayar ini sahaja. <button id="toList">Lihat senarai semua kad &amp; cetak</button> · <button id="resetAll">Set semula kemajuan</button></p>
+</section>
+
+<section id="stage"></section>
+
+<section id="list">
+  <div class="listbar">
+    <button id="backHub">← Kembali</button>
     <select id="filter" aria-label="Tapis topik"></select>
     <button id="shuffle">🔀 Kocok</button>
-    <button id="reset">↺ Set semula</button>
     <button class="primary" onclick="window.print()">🖨️ Cetak kad</button>
   </div>
-</header>
+  <p class="hint" style="text-align:left">Cetak A4, <b>dua muka (flip on long edge)</b>: jawapan jatuh tepat di belakang soalan. Gunting ikut garisan putus-putus.</p>
+  <div id="deck"></div>
+</section>
+</main>
 
-<div id="deck"></div>
 <div id="print"></div>
+<div id="toast" aria-live="polite"></div>
+<div id="lvlup" role="dialog" aria-modal="true" aria-labelledby="lvlT"><div class="box"><div class="crest" id="lvlN">2</div><h3 id="lvlT">Naik pangkat!</h3><p id="lvlD"></p><button class="next" id="lvlOk">Teruskan</button></div></div>
+<canvas id="fx"></canvas>
 
 <script>
-// [topik, soalan, jawapan]
 const T = {"1": ["Bab 1 · Kedatangan Barat", "--c1"], "2": ["Bab 2 · NNS", "--c2"], "3": ["Bab 3 · NNMB", "--c3"], "4": ["Bab 4 · NNMTB", "--c4"], "5": ["Bab 5 · Sarawak & Sabah", "--c5"], "6": ["Bab 6 · Kesan Ekonomi & Sosial", "--c6"], "7": ["Bab 7 · Penentangan", "--c7"], "8": ["Bab 8 · Kebijaksanaan Raja", "--c8"], "x": ["Rentas Bab", "--x"]};
 // [topik, soalan, jawapan]
 const CARDS = [
 [
 "1",
 "Apakah tiga aras sistem pemerintahan Melayu?",
-"<b>Sultan/raja → pembesar → penghulu/penggawa</b>."
+"<b>Sultan/raja → pembesar → penghulu/penggawa</b>.",
+"0e411718e3"
 ],
 [
 "1",
 "Apakah dua jenis undang-undang tradisional?",
-"Undang-undang tidak bertulis (adat) dan bertulis."
+"Undang-undang tidak bertulis (adat) dan bertulis.",
+"0824c23967"
 ],
 [
 "1",
 "Beri tiga contoh undang-undang bertulis.",
-"Hukum Kanun Melaka, Hukum Kanun Pahang, Undang-Undang 99 Perak."
+"Hukum Kanun Melaka, Hukum Kanun Pahang, Undang-Undang 99 Perak.",
+"8bcb0c8cdf"
 ],
 [
 "1",
 "Siapakah mengurus pelabuhan?",
-"<b>Syahbandar</b>."
+"<b>Syahbandar</b>.",
+"88b4ee5799"
 ],
 [
 "1",
 "Nyatakan empat faktor kedatangan Barat abad ke-16.",
-"Barangan mewah, pusat pengumpulan barang, pelabuhan persinggahan, agama Kristian."
+"Barangan mewah, pusat pengumpulan barang, pelabuhan persinggahan, agama Kristian.",
+"2d1a99482d"
 ],
 [
 "1",
 "Apakah tiga matlamat penjajahan Portugis dan Sepanyol?",
-"<b>Kekayaan, keagamaan, kemasyhuran</b>."
+"<b>Kekayaan, keagamaan, kemasyhuran</b>.",
+"05e975e723"
 ],
 [
 "1",
 "Bilakah SHTI ditubuhkan?",
-"<b>1600</b>, di England."
+"<b>1600</b>, di England.",
+"cfc2037fce"
 ],
 [
 "1",
 "Apakah perubahan dasar Barat selepas Revolusi Perindustrian?",
-"Mencari bahan mentah, pusat perdagangan/tanah jajahan dan pasaran luas."
+"Mencari bahan mentah, pusat perdagangan/tanah jajahan dan pasaran luas.",
+"45148c0356"
 ],
 [
 "1",
 "Mengapa getah asli penting kepada industri abad ke-19?",
-"Untuk tayar kereta dan penebat barangan elektrik."
+"Untuk tayar kereta dan penebat barangan elektrik.",
+"24d7da9c48"
 ],
 [
 "1",
 "Apakah kesan industri mengetin terhadap negeri Melayu?",
-"Harga dan permintaan bijih timah meningkat, khususnya selepas <b>1840</b>."
+"Harga dan permintaan bijih timah meningkat, khususnya selepas <b>1840</b>.",
+"5ce1150283"
 ],
 [
 "1",
 "Apakah dua pelabuhan yang dihubungkan Terusan Suez?",
-"Pelabuhan Said di Laut Mediterranean dengan Suez di Laut Merah."
+"Pelabuhan Said di Laut Mediterranean dengan Suez di Laut Merah.",
+"1beebf5ba9"
 ],
 [
 "1",
 "Nyatakan tiga strategi Belanda.",
-"Serangan fizikal, pakatan, perjanjian."
+"Serangan fizikal, pakatan, perjanjian.",
+"959f852c75"
 ],
 [
 "1",
 "Nyatakan tujuh strategi British.",
-"Manipulasi, ugutan/desakan, tipu helah, pakatan, perjanjian, pajakan, serangan fizikal."
+"Manipulasi, ugutan/desakan, tipu helah, pakatan, perjanjian, pajakan, serangan fizikal.",
+"2e5ba8da1d"
 ],
 [
 "1",
 "Apakah perubahan dasar British pada 1873?",
-"Dasar tidak campur tangan ditukar kepada <b>dasar campur tangan</b>."
+"Dasar tidak campur tangan ditukar kepada <b>dasar campur tangan</b>.",
+"5bfbdd5a9d"
 ],
 [
 "1",
 "Apakah syarat utama Perjanjian Inggeris-Belanda 1824 yang disebut buku teks?",
-"British memperoleh Melaka; Belanda memperoleh Bangkahulu."
+"British memperoleh Melaka; Belanda memperoleh Bangkahulu.",
+"a975c806ab"
 ],
 [
 "1",
 "Mengapakah Belanda berpakatan dengan Johor pada 1641?",
-"Untuk mengalahkan Portugis di Melaka."
+"Untuk mengalahkan Portugis di Melaka.",
+"b6c60df48f"
 ],
 [
 "1",
 "Siapakah menggunakan tipu helah untuk mendapatkan Pulau Pinang?",
-"<b>Francis Light</b>."
+"<b>Francis Light</b>.",
+"0233adc867"
 ],
 [
 "1",
 "KBAT: Mengapa pelabuhan strategik menjadikan sesebuah negeri mudah menjadi sasaran kuasa Barat?",
-"Pelabuhan menguasai laluan perdagangan, bekalan kapal, pengumpulan bahan mentah dan pasaran."
+"Pelabuhan menguasai laluan perdagangan, bekalan kapal, pengumpulan bahan mentah dan pasaran.",
+"7e3422e7e1"
 ],
 [
 "1",
 "KBAT: Mengapa strategi British lebih berkesan daripada serangan semata-mata?",
-"British mengeksploitasi konflik tempatan dan menggunakan perjanjian, ugutan serta manipulasi untuk mendapatkan kuasa dengan lebih mudah."
+"British mengeksploitasi konflik tempatan dan menggunakan perjanjian, ugutan serta manipulasi untuk mendapatkan kuasa dengan lebih mudah.",
+"7d4e9bf5b5"
 ],
 [
 "1",
 "KBAT: Apakah iktibar daripada strategi pajakan?",
-"Hak/kedaulatan boleh terhakis secara beransur-ansur; pemimpin perlu teliti syarat perjanjian dan mempertahankan kepentingan negara."
+"Hak/kedaulatan boleh terhakis secara beransur-ansur; pemimpin perlu teliti syarat perjanjian dan mempertahankan kepentingan negara.",
+"7f845a65b2"
 ],
 [
 "2",
 "Apakah tiga strategi British menguasai tiga petempatan Selat?",
-"<b>Tipu helah di Pulau Pinang, manipulasi politik di Singapura, pakatan dengan Belanda di Melaka.</b>"
+"<b>Tipu helah di Pulau Pinang, manipulasi politik di Singapura, pakatan dengan Belanda di Melaka.</b>",
+"879dfa5658"
 ],
 [
 "2",
 "Siapakah yang menggunakan tipu helah untuk menduduki Pulau Pinang?",
-"<b>Francis Light.</b>"
+"<b>Francis Light.</b>",
+"aad0c1a117"
 ],
 [
 "2",
 "Tahun bilakah British menduduki Pulau Pinang?",
-"<b>1786.</b>"
+"<b>1786.</b>",
+"27dda11c46"
 ],
 [
 "2",
 "Apakah tiga keperluan British terhadap Pulau Pinang?",
-"Pusat pengumpulan barang, pelabuhan persinggahan dan pangkalan tentera."
+"Pusat pengumpulan barang, pelabuhan persinggahan dan pangkalan tentera.",
+"0132e77522"
 ],
 [
 "2",
 "Apakah syarat Sultan Abdullah ketika menawarkan Pulau Pinang?",
-"SHTI membantu ketenteraan dan melindungi Kedah daripada ancaman Siam."
+"SHTI membantu ketenteraan dan melindungi Kedah daripada ancaman Siam.",
+"ea5e0c900c"
 ],
 [
 "2",
 "Apakah nama British bagi Pulau Pinang dan petempatannya?",
-"<b>Prince of Wales Island</b> dan <b>Georgetown</b>."
+"<b>Prince of Wales Island</b> dan <b>Georgetown</b>.",
+"e5f8d82e93"
 ],
 [
 "2",
 "Apakah kesan Perjanjian 1791 kepada Pulau Pinang?",
-"Pendudukan British di Pulau Pinang diiktiraf secara rasmi."
+"Pendudukan British di Pulau Pinang diiktiraf secara rasmi.",
+"baeda7e347"
 ],
 [
 "2",
 "Bilakah British menduduki Seberang Perai dan apakah nama kemudiannya?",
-"<b>1800</b>; <b>Province of Wellesley</b>."
+"<b>1800</b>; <b>Province of Wellesley</b>.",
+"c7dfb08520"
 ],
 [
 "2",
 "Apakah strategi Raffles di Singapura?",
-"Memanipulasi isu pewarisan takhta Kesultanan Johor Riau."
+"Memanipulasi isu pewarisan takhta Kesultanan Johor Riau.",
+"beccf1eeff"
 ],
 [
 "2",
 "Siapakah Sultan yang diangkat Raffles di Singapura?",
-"<b>Tengku Hussein</b>, bergelar <b>Sultan Hussein Muhammad Shah</b>."
+"<b>Tengku Hussein</b>, bergelar <b>Sultan Hussein Muhammad Shah</b>.",
+"f9e55a1395"
 ],
 [
 "2",
 "Apakah tarikh Perjanjian British dengan Sultan Hussein dan Temenggung Abdul Rahman?",
-"<b>6 Februari 1819.</b>"
+"<b>6 Februari 1819.</b>",
+"a53adbf405"
 ],
 [
 "2",
 "Apakah kesan Perjanjian 2 Ogos 1824 di Singapura?",
-"Singapura diserahkan kepada British selama-lamanya; Sultan dan Temenggung hilang kedaulatan."
+"Singapura diserahkan kepada British selama-lamanya; Sultan dan Temenggung hilang kedaulatan.",
+"6fc48b1a67"
 ],
 [
 "2",
 "Bilakah dan di manakah Perjanjian London ditandatangani?",
-"<b>17 Mac 1824 di London, England.</b>"
+"<b>17 Mac 1824 di London, England.</b>",
+"48ff11e81a"
 ],
 [
 "2",
 "Nyatakan satu syarat British dan satu syarat Belanda dalam Perjanjian London 1824.",
-"British berundur dari Sumatera; Belanda menyerahkan Melaka kepada British."
+"British berundur dari Sumatera; Belanda menyerahkan Melaka kepada British.",
+"c7f1d51bd4"
 ],
 [
 "2",
 "Apakah dua lingkungan pengaruh akibat Perjanjian London 1824?",
-"Tanah Melayu/Singapura di bawah British; Riau Lingga dan kawasan selatan/barat Selat Melaka di bawah Belanda."
+"Tanah Melayu/Singapura di bawah British; Riau Lingga dan kawasan selatan/barat Selat Melaka di bawah Belanda.",
+"d95630975e"
 ],
 [
 "2",
 "Mengapakah Perjanjian London 1824 menjejaskan kedaulatan Alam Melayu?",
-"British dan Belanda membahagikan wilayah tanpa merujuk Raja-raja Melayu."
+"British dan Belanda membahagikan wilayah tanpa merujuk Raja-raja Melayu.",
+"b1b032741d"
 ],
 [
 "2",
 "Bilakah NNS dibentuk dan negeri apakah yang digabungkan?",
-"<b>1826</b>; Pulau Pinang, Singapura dan Melaka."
+"<b>1826</b>; Pulau Pinang, Singapura dan Melaka.",
+"ecd3cf79a0"
 ],
 [
 "2",
 "Apakah dua tujuan pembentukan NNS?",
-"Menjimatkan perbelanjaan dan menyeragamkan pentadbiran."
+"Menjimatkan perbelanjaan dan menyeragamkan pentadbiran.",
+"5f1012b48b"
 ],
 [
 "2",
 "Bilakah pentadbiran NNS dipindahkan ke Pejabat Tanah Jajahan London?",
-"<b>1 April 1867.</b>"
+"<b>1 April 1867.</b>",
+"4831e622de"
 ],
 [
 "2",
 "KBAT: Mengapakah pelabuhan bebas penting kepada British di NNS?",
-"Menarik pedagang/kapal antarabangsa, mengumpulkan hasil Alam Melayu dan mengukuhkan perdagangan British."
+"Menarik pedagang/kapal antarabangsa, mengumpulkan hasil Alam Melayu dan mengukuhkan perdagangan British.",
+"58d5464b91"
 ],
 [
 "2",
 "KBAT: Apakah iktibar daripada tindakan Francis Light terhadap Kedah?",
-"Pemerintah perlu berwaspada, memastikan janji kuasa asing disahkan melalui perjanjian yang melindungi kedaulatan."
+"Pemerintah perlu berwaspada, memastikan janji kuasa asing disahkan melalui perjanjian yang melindungi kedaulatan.",
+"7ffecc1e22"
 ],
 [
 "3",
 "Apakah empat negeri NNMB?",
-"Perak, Selangor, Negeri Sembilan dan Pahang."
+"Perak, Selangor, Negeri Sembilan dan Pahang.",
+"d83ca8c5a5"
 ],
 [
 "3",
 "Apakah hasil bumi utama yang menarik British ke NNMB?",
-"Bijih timah dan emas."
+"Bijih timah dan emas.",
+"458d93dfad"
 ],
 [
 "3",
 "Siapakah menerima Larut melalui surat kuasa 28 Februari 1850?",
-"Long Jaafar."
+"Long Jaafar.",
+"311b25f131"
 ],
 [
 "3",
 "Apakah konflik pelombong Cina di Perak?",
-"Perang Larut 1861–1874 antara Ghee Hin dengan Hai San."
+"Perang Larut 1861–1874 antara Ghee Hin dengan Hai San.",
+"ebe7d6d35c"
 ],
 [
 "3",
 "Apakah dua krisis yang dimanipulasi British di Perak?",
-"Perang Larut dan perebutan takhta Kesultanan Perak."
+"Perang Larut dan perebutan takhta Kesultanan Perak.",
+"adc0000b6f"
 ],
 [
 "3",
 "Bilakah Perjanjian Pangkor?",
-"1874."
+"1874.",
+"de58531225"
 ],
 [
 "3",
 "Apakah syarat paling penting Perjanjian Pangkor?",
-"Sultan menerima Residen dan nasihatnya wajib dipatuhi kecuali agama Islam serta adat Melayu."
+"Sultan menerima Residen dan nasihatnya wajib dipatuhi kecuali agama Islam serta adat Melayu.",
+"7e590ed2e1"
 ],
 [
 "3",
 "Siapakah diiktiraf Sultan Perak dalam Perjanjian Pangkor?",
-"Raja Abdullah."
+"Raja Abdullah.",
+"98ff6f359f"
 ],
 [
 "3",
 "Apakah konflik di Selangor?",
-"Perang Klang 1866–1874 antara Raja Abdullah dan Raja Mahadi."
+"Perang Klang 1866–1874 antara Raja Abdullah dan Raja Mahadi.",
+"10a051f1ed"
 ],
 [
 "3",
 "Mengapa Sungai Linggi penting?",
-"Laluan membawa bijih timah dari Sungai Ujong ke Melaka dan sumber pungutan cukai."
+"Laluan membawa bijih timah dari Sungai Ujong ke Melaka dan sumber pungutan cukai.",
+"dc23257114"
 ],
 [
 "3",
 "Apakah alasan British mendesak Pahang pada 1888?",
-"Kematian Goh Hui di pekarangan istana."
+"Kematian Goh Hui di pekarangan istana.",
+"396c2b833b"
 ],
 [
 "3",
 "Apakah Sistem Residen?",
-"Pentadbiran British secara tidak langsung melalui Residen di Perak, Selangor, Negeri Sembilan dan Pahang."
+"Pentadbiran British secara tidak langsung melalui Residen di Perak, Selangor, Negeri Sembilan dan Pahang.",
+"a1c469d47d"
 ],
 [
 "3",
 "Apakah kuasa pembesar yang terhakis dalam Sistem Residen?",
-"Pentadbiran dan pungutan cukai."
+"Pentadbiran dan pungutan cukai.",
+"be4178c8c2"
 ],
 [
 "3",
 "Bilakah Perjanjian Persekutuan membentuk NNMB?",
-"1895."
+"1895.",
+"2ac59324ff"
 ],
 [
 "3",
 "Di manakah pusat pentadbiran NNMB?",
-"Kuala Lumpur."
+"Kuala Lumpur.",
+"d9e5affd63"
 ],
 [
 "3",
 "Nyatakan empat faktor pembentukan NNMB.",
-"Atasi kelemahan Residen, seragam pentadbiran, jamin keselamatan, tangani kewangan Pahang."
+"Atasi kelemahan Residen, seragam pentadbiran, jamin keselamatan, tangani kewangan Pahang.",
+"d757b9abd0"
 ],
 [
 "3",
 "Bilakah dan di manakah Durbar pertama?",
-"1897 di Kuala Kangsar."
+"1897 di Kuala Kangsar.",
+"1ed5ba02d1"
 ],
 [
 "3",
 "Apakah fungsi Majlis Mesyuarat Persekutuan 1909?",
-"Meluluskan undang-undang NNMB."
+"Meluluskan undang-undang NNMB.",
+"6436ebb9a2"
 ],
 [
 "3",
 "KBAT: Mengapakah kekayaan bijih timah memudahkan British campur tangan?",
-"Bijih timah penting kepada industri dan perdagangan British; British menggunakan konflik yang mengganggu keuntungan sebagai alasan campur tangan."
+"Bijih timah penting kepada industri dan perdagangan British; British menggunakan konflik yang mengganggu keuntungan sebagai alasan campur tangan.",
+"83609211d0"
 ],
 [
 "3",
 "KBAT: Bagaimanakah pemerintah tempatan boleh mengurangkan peluang manipulasi asing?",
-"Memelihara kestabilan politik, menyelesaikan konflik melalui muafakat dan mengawal hasil/cukai secara telus."
+"Memelihara kestabilan politik, menyelesaikan konflik melalui muafakat dan mengawal hasil/cukai secara telus.",
+"05544d5a70"
 ],
 [
 "4",
 "Nyatakan lima NNMTB.",
-"Perlis, Kedah, Kelantan, Terengganu dan Johor."
+"Perlis, Kedah, Kelantan, Terengganu dan Johor.",
+"5d94738726"
 ],
 [
 "4",
 "Bilakah Perlis berpisah daripada Kedah?",
-"1842."
+"1842.",
+"45d95ab677"
 ],
 [
 "4",
 "Siapakah Raja Perlis pertama yang diiktiraf Siam pada 1843?",
-"Syed Hussin Jamalullail."
+"Syed Hussin Jamalullail.",
+"2989f84bb7"
 ],
 [
 "4",
 "Apakah Sistem Jemaah Menteri Kelantan dan siapakah pembentuknya?",
-"Sistem pentadbiran Sultan dan pembesar yang dibentuk oleh Sultan Muhammad II (1839–1886)."
+"Sistem pentadbiran Sultan dan pembesar yang dibentuk oleh Sultan Muhammad II (1839–1886).",
+"cb9278fceb"
 ],
 [
 "4",
 "Siapakah pengasas Kesultanan Terengganu?",
-"Sultan Zainal Abidin I, menaiki takhta pada 1708."
+"Sultan Zainal Abidin I, menaiki takhta pada 1708.",
+"792b86ecef"
 ],
 [
 "4",
 "Apakah undang-undang penting Johor pada 1895?",
-"Undang-Undang Tubuh Kerajaan Johor."
+"Undang-Undang Tubuh Kerajaan Johor.",
+"b02e44d9c1"
 ],
 [
 "4",
 "Nyatakan lima faktor peluasan British di negeri Melayu Utara.",
-"Strategik, sekat kuasa Barat lain, kekayaan hasil, hubungkan Burma–Pulau Pinang–Singapura/India, Beban Orang Putih."
+"Strategik, sekat kuasa Barat lain, kekayaan hasil, hubungkan Burma–Pulau Pinang–Singapura/India, Beban Orang Putih.",
+"9fd56d2003"
 ],
 [
 "4",
 "Apakah maksud bunga emas dan perak menurut Siam dan negeri Melayu Utara?",
-"Siam: tanda pertuanan/kepatuhan; negeri Melayu: tanda persahabatan."
+"Siam: tanda pertuanan/kepatuhan; negeri Melayu: tanda persahabatan.",
+"d167ed2858"
 ],
 [
 "4",
 "Bilakah Perjanjian Bangkok ditandatangani?",
-"10 Mac 1909."
+"10 Mac 1909.",
+"f1f81f63bf"
 ],
 [
 "4",
 "Apakah kesan utama Perjanjian Bangkok 1909?",
-"Perlis, Kedah, Kelantan dan Terengganu menerima Penasihat British."
+"Perlis, Kedah, Kelantan dan Terengganu menerima Penasihat British.",
+"b037f29726"
 ],
 [
 "4",
 "Siapakah wakil British dalam Perjanjian Bangkok 1909?",
-"Ralph Paget."
+"Ralph Paget.",
+"96b3261021"
 ],
 [
 "4",
 "Apakah kandungan utama Pengisytiharan British–Siam 1902?",
-"Siam mengawal hubungan luar Kelantan dan Terengganu; konsesi asing memerlukan izin Siam."
+"Siam mengawal hubungan luar Kelantan dan Terengganu; konsesi asing memerlukan izin Siam.",
+"8c6346872a"
 ],
 [
 "4",
 "Mengapakah British gagal menggunakan pinjaman 200,000 dolar untuk menguasai Johor?",
-"Johor menolak kerana pinjaman itu boleh menjejaskan ekonominya."
+"Johor menolak kerana pinjaman itu boleh menjejaskan ekonominya.",
+"5e66757477"
 ],
 [
 "4",
 "Bilakah Johor menerima Penasihat Am British?",
-"12 Mei 1914."
+"12 Mei 1914.",
+"4bd8c40fb8"
 ],
 [
 "4",
 "Siapakah Penasihat Am British pertama Johor?",
-"Douglas Graham Campbell."
+"Douglas Graham Campbell.",
+"0e072fa2ed"
 ],
 [
 "4",
 "Nyatakan tiga ciri NNMTB.",
-"Tiada gabungan formal, pentadbiran berasingan/longgar, raja berautonomi lebih besar daripada di NNMB."
+"Tiada gabungan formal, pentadbiran berasingan/longgar, raja berautonomi lebih besar daripada di NNMB.",
+"ed0e011307"
 ],
 [
 "4",
 "Apakah tiga perkembangan sistem pentadbiran NNMTB?",
-"Kedudukan Sultan dikekalkan, sistem tradisional diteruskan, birokrasi Barat diperkenalkan."
+"Kedudukan Sultan dikekalkan, sistem tradisional diteruskan, birokrasi Barat diperkenalkan.",
+"e237c07040"
 ],
 [
 "4",
 "Mengapa Johor dapat mengekalkan kedaulatannya hingga 1914?",
-"Pemerintah cekap, ekonomi komersial, pemodenan dan pentadbir yang berkesan."
+"Pemerintah cekap, ekonomi komersial, pemodenan dan pentadbir yang berkesan.",
+"a811c1e893"
 ],
 [
 "4",
 "KBAT: Mengapakah British memilih perjanjian dengan Siam, bukan serangan terbuka, di negeri Melayu Utara?",
-"Negeri-negeri itu berada di bawah pengaruh Siam; perjanjian mengelakkan konfrontasi dan memberi British laluan sah untuk campur tangan."
+"Negeri-negeri itu berada di bawah pengaruh Siam; perjanjian mengelakkan konfrontasi dan memberi British laluan sah untuk campur tangan.",
+"155a8f223d"
 ],
 [
 "4",
 "KBAT: Bagaimanakah Undang-Undang Tubuh Johor membantu mempertahan kedaulatan?",
-"Ia menetapkan Sultan dan menteri tidak boleh menyerahkan Johor kepada kuasa asing serta menyediakan asas pentadbiran berperlembagaan."
+"Ia menetapkan Sultan dan menteri tidak boleh menyerahkan Johor kepada kuasa asing serta menyediakan asas pentadbiran berperlembagaan.",
+"13c43d7c27"
 ],
 [
 "5",
 "Apakah tiga sistem pemerintahan di Sabah?",
-"Sistem kesukuan, kesultanan dan Ketua Bebas."
+"Sistem kesukuan, kesultanan dan Ketua Bebas.",
+"e7eb97aaf9"
 ],
 [
 "5",
 "Siapakah menguasai pantai barat dan pantai timur Sabah?",
-"Brunei di pantai barat; Sulu di pantai timur."
+"Brunei di pantai barat; Sulu di pantai timur.",
+"3873a01466"
 ],
 [
 "5",
 "Apakah asas Sistem Ketua Bebas?",
-"Kuasa individu berani di kawasan kuasa sultan lemah; ada undang-undang sendiri."
+"Kuasa individu berani di kawasan kuasa sultan lemah; ada undang-undang sendiri.",
+"8d030b7d37"
 ],
 [
 "5",
 "Siapakah Syarif Osman?",
-"Ketua Bebas di Marudu, 1830–1840."
+"Ketua Bebas di Marudu, 1830–1840.",
+"5299ad7c4a"
 ],
 [
 "5",
 "Apakah kekayaan Sarawak yang menarik James Brooke?",
-"Sagu, antimoni dan emas."
+"Sagu, antimoni dan emas.",
+"e4d551a6f6"
 ],
 [
 "5",
 "Siapakah mencetus perbalahan di Sarawak melalui cukai tinggi dan kerahan tenaga?",
-"Pengiran Indera Mahkota."
+"Pengiran Indera Mahkota.",
+"9d0704a969"
 ],
 [
 "5",
 "Siapakah memimpin penentangan terhadap Pengiran Indera Mahkota?",
-"Datu Patinggi Ali."
+"Datu Patinggi Ali.",
+"b94afa1b76"
 ],
 [
 "5",
 "Nyatakan 4 strategi James Brooke.",
-"Rundingan, ugutan, perjanjian dan ketenteraan."
+"Rundingan, ugutan, perjanjian dan ketenteraan.",
+"2206b1aa55"
 ],
 [
 "5",
 "Apakah wilayah dalam Perjanjian 1841?",
-"Tanjung Datu hingga Sungai Samarahan."
+"Tanjung Datu hingga Sungai Samarahan.",
+"86a3b7ec8d"
 ],
 [
 "5",
 "Berapakah ufti Brooke kepada Sultan Brunei menurut Perjanjian 1842?",
-"2,500 Dolar Sepanyol setahun."
+"2,500 Dolar Sepanyol setahun.",
+"df61c6b180"
 ],
 [
 "5",
 "Kapal apakah menyokong tindakan ketenteraan James Brooke?",
-"HMS <i>Dido</i>."
+"HMS <i>Dido</i>.",
+"f3dcb4379d"
 ],
 [
 "5",
 "Apakah kawasan diserahkan pada 1861?",
-"Sungai Rajang, termasuk Oya, Mukah, Tatau dan Bintulu."
+"Sungai Rajang, termasuk Oya, Mukah, Tatau dan Bintulu.",
+"a493dc781d"
 ],
 [
 "5",
 "Siapa menyewa Sabah daripada Sultan Brunei pada 1865?",
-"Charles Lee Moses, selama 10 tahun."
+"Charles Lee Moses, selama 10 tahun.",
+"ccf742afae"
 ],
 [
 "5",
 "Siapa memajak pantai timur Sabah daripada Sultan Sulu pada 1878?",
-"Alfred dan Edward Dent."
+"Alfred dan Edward Dent.",
+"a88a3426c0"
 ],
 [
 "5",
 "Bilakah SBUB menerima Piagam Diraja?",
-"1 November 1881."
+"1 November 1881.",
+"c8ac9a88cb"
 ],
 [
 "5",
 "Siapakah Gabenor pertama SBUB?",
-"William Hood Treacher, 1881–1887."
+"William Hood Treacher, 1881–1887.",
+"61fe44ab31"
 ],
 [
 "5",
 "Nyatakan dua matlamat SBUB.",
-"Eksploitasi sumber untuk pembangunan ekonomi; melindungi/mempertahankan hak masyarakat tempatan."
+"Eksploitasi sumber untuk pembangunan ekonomi; melindungi/mempertahankan hak masyarakat tempatan.",
+"82e678bcbe"
 ],
 [
 "5",
 "Apakah lima bentuk pemantapan pentadbiran Barat?",
-"Wilayah, elit tempatan, hierarki, kaum, perundangan."
+"Wilayah, elit tempatan, hierarki, kaum, perundangan.",
+"0636ea8d3a"
 ],
 [
 "5",
 "KBAT: Mengapa Piagam Diraja memperluas kuasa British walaupun Sabah ditadbir syarikat?",
-"Piagam mengiktiraf SBUB sebagai wakil British dan mengikatnya dengan syarat British."
+"Piagam mengiktiraf SBUB sebagai wakil British dan mengikatnya dengan syarat British.",
+"bc52b28a36"
 ],
 [
 "5",
 "KBAT: Mengapa Brooke mengekalkan pembesar tempatan?",
-"Untuk memudahkan pentadbiran, memperoleh penerimaan masyarakat dan mengawal wilayah melalui struktur sedia ada."
+"Untuk memudahkan pentadbiran, memperoleh penerimaan masyarakat dan mengawal wilayah melalui struktur sedia ada.",
+"785dca7f4e"
 ],
 [
 "6",
 "Apakah 5 ciri ekonomi moden British?",
-"Modal besar, teknologi moden, buruh ramai, tanah luas, pengeluaran skala besar berorientasikan eksport."
+"Modal besar, teknologi moden, buruh ramai, tanah luas, pengeluaran skala besar berorientasikan eksport.",
+"3b469cb406"
 ],
 [
 "6",
 "Di manakah lombong bawah tanah bijih timah terpanjang dan terdalam dunia dibuka pada 1888?",
-"Sungai Lembing, Pahang."
+"Sungai Lembing, Pahang.",
+"8cd472155f"
 ],
 [
 "6",
 "Siapakah memperkenalkan sistem torehan ibedem pada 1897?",
-"H.N. Ridley."
+"H.N. Ridley.",
+"7ff908d553"
 ],
 [
 "6",
 "Apakah tujuan sistem torehan ibedem?",
-"Memanjangkan hayat pokok getah."
+"Memanjangkan hayat pokok getah.",
+"e30c9f675e"
 ],
 [
 "6",
 "Apakah Sistem Kontrak?",
-"Sistem majikan membawa buruh China ke lombong; tambang, makanan, pakaian dan tempat tinggal disediakan majikan."
+"Sistem majikan membawa buruh China ke lombong; tambang, makanan, pakaian dan tempat tinggal disediakan majikan.",
+"e04f5c2e0e"
 ],
 [
 "6",
 "Apakah Sistem Kangani?",
-"Sistem pengambilan buruh India ke ladang getah melalui kangani/mandur; buruh bekerja hingga hutang tambang selesai."
+"Sistem pengambilan buruh India ke ladang getah melalui kangani/mandur; buruh bekerja hingga hutang tambang selesai.",
+"a63f3ccfbb"
 ],
 [
 "6",
 "Apakah akta tanah utama tahun 1913?",
-"Akta Tanah Simpanan Melayu."
+"Akta Tanah Simpanan Melayu.",
+"9494ebf9ae"
 ],
 [
 "6",
 "Apakah syarat utama Akta Tanah Simpanan Melayu 1913?",
-"Tanah simpanan Melayu tidak boleh dijual, dipajak gadai atau dipindah milik kepada bukan Melayu."
+"Tanah simpanan Melayu tidak boleh dijual, dipajak gadai atau dipindah milik kepada bukan Melayu.",
+"96e9fce4c0"
 ],
 [
 "6",
 "Bilakah Chinese Protectorate ditubuhkan?",
-"1877."
+"1877.",
+"f9a64c18c7"
 ],
 [
 "6",
 "Apakah peranan syarikat perwakilan?",
-"Mengurus rangkaian kewangan, insurans, perkapalan, penyelidikan dan perdagangan antarabangsa."
+"Mengurus rangkaian kewangan, insurans, perkapalan, penyelidikan dan perdagangan antarabangsa.",
+"4b1669924d"
 ],
 [
 "6",
 "Apakah mata wang yang menggantikan Dolar Selat pada 1939?",
-"Dolar Malaya."
+"Dolar Malaya.",
+"18a5da55c4"
 ],
 [
 "6",
 "Apakah tujuan utama kereta api dan jalan raya British dibina?",
-"Mengangkut bijih timah/getah dari kawasan pengeluaran ke pelabuhan untuk eksport."
+"Mengangkut bijih timah/getah dari kawasan pengeluaran ke pelabuhan untuk eksport.",
+"e29f75a52a"
 ],
 [
 "6",
 "Bilakah landasan kereta api pertama Sabah dibina dan di mana?",
-"1896 di Bukau, kira-kira 13 km dari Weston."
+"1896 di Bukau, kira-kira 13 km dari Weston.",
+"f10c86968a"
 ],
 [
 "6",
 "Nyatakan dua pelabuhan penting Sarawak.",
-"Contoh: Kuching, Rajang, Bintulu atau Miri."
+"Contoh: Kuching, Rajang, Bintulu atau Miri.",
+"f952508b75"
 ],
 [
 "6",
 "Apakah 5 kesan sosial perkembangan ekonomi?",
-"Bandar, masyarakat berbilang kaum, pendidikan, kesihatan dan penjara."
+"Bandar, masyarakat berbilang kaum, pendidikan, kesihatan dan penjara.",
+"9c18b5db6f"
 ],
 [
 "6",
 "Mengapakah masyarakat berbilang kaum terbentuk?",
-"Kemasukan buruh asing untuk memenuhi keperluan industri bijih timah dan getah."
+"Kemasukan buruh asing untuk memenuhi keperluan industri bijih timah dan getah.",
+"a61add64c6"
 ],
 [
 "6",
 "Apakah kesan pendidikan vernakular terhadap perpaduan?",
-"Sekolah berkembang mengikut etnik dan menyukarkan proses perpaduan kaum."
+"Sekolah berkembang mengikut etnik dan menyukarkan proses perpaduan kaum.",
+"4ac292fbb2"
 ],
 [
 "6",
 "KBAT: Mengapakah pembinaan prasarana British tidak boleh dianggap semata-mata demi kebajikan penduduk?",
-"Tujuan utamanya melicinkan eksploitasi dan eksport bahan mentah; manfaat kepada penduduk berlaku sebagai kesan sampingan."
+"Tujuan utamanya melicinkan eksploitasi dan eksport bahan mentah; manfaat kepada penduduk berlaku sebagai kesan sampingan.",
+"5f72cd0c75"
 ],
 [
 "6",
 "KBAT: Bagaimanakah Akta Tanah Simpanan Melayu boleh melindungi tetapi juga mengehadkan masyarakat Melayu?",
-"Ia menghalang pemindahan tanah kepada bukan Melayu, tetapi banyak tanah simpanan tidak subur/tidak sesuai untuk perladangan komersial."
+"Ia menghalang pemindahan tanah kepada bukan Melayu, tetapi banyak tanah simpanan tidak subur/tidak sesuai untuk perladangan komersial.",
+"8cfcafb2d0"
 ],
 [
 "6",
 "KBAT: Apakah iktibar daripada jurang bandar–luar bandar pada zaman British?",
-"Kekayaan negara perlu diagih secara saksama dan pembangunan perlu inklusif serta mengutamakan kebajikan rakyat."
+"Kekayaan negara perlu diagih secara saksama dan pembangunan perlu inklusif serta mengutamakan kebajikan rakyat.",
+"bb16710cac"
 ],
 [
 "7",
 "Apakah 3 matlamat penentangan masyarakat tempatan?",
-"Mempertahankan hak/kedudukan; mengekalkan pentadbiran tradisional; menentang peraturan baharu yang menyusahkan rakyat."
+"Mempertahankan hak/kedudukan; mengekalkan pentadbiran tradisional; menentang peraturan baharu yang menyusahkan rakyat.",
+"7582e5eaa4"
 ],
 [
 "7",
 "Nyatakan 3 bentuk penentangan.",
-"Bersenjata, mencabar perjanjian, menggunakan sistem perundangan."
+"Bersenjata, mencabar perjanjian, menggunakan sistem perundangan.",
+"fc8f3553b2"
 ],
 [
 "7",
 "Mengapakah Dol Said menentang British?",
-"Menolak cukai hasil tahunan <b>1/10</b> dan menegaskan Naning negeri merdeka."
+"Menolak cukai hasil tahunan <b>1/10</b> dan menegaskan Naning negeri merdeka.",
+"e25e89b700"
 ],
 [
 "7",
 "Apakah hasil Perang Naning 1831 dan 1832?",
-"1831 Dol Said menang; 1832 British menawan Taboh dan menyatukan Naning dengan Melaka."
+"1831 Dol Said menang; 1832 British menawan Taboh dan menyatukan Naning dengan Melaka.",
+"7e56630016"
 ],
 [
 "7",
 "Berapakah angkatan Yamtuan Antah?",
-"<b>4,000 pengikut</b>."
+"<b>4,000 pengikut</b>.",
+"746bb166b5"
 ],
 [
 "7",
 "Siapakah yang berunding dengan Yamtuan Antah pada 1876?",
-"William Jervois, Gabenor Negeri-negeri Selat."
+"William Jervois, Gabenor Negeri-negeri Selat.",
+"0fa674a136"
 ],
 [
 "7",
 "Mengapakah Dato’ Bahaman bangkit?",
-"Kehilangan hak memungut cukai dan pembinaan balai polis tanpa pengetahuannya."
+"Kehilangan hak memungut cukai dan pembinaan balai polis tanpa pengetahuannya.",
+"171d5870e7"
 ],
 [
 "7",
 "Siapakah sekutu Dato’ Bahaman pada 1891?",
-"Tok Gajah dan Mat Kilau."
+"Tok Gajah dan Mat Kilau.",
+"76bd558ed3"
 ],
 [
 "7",
 "Apakah nama sebenar Rentap?",
-"Libau."
+"Libau.",
+"d012b588ff"
 ],
 [
 "7",
 "Senaraikan dua sebab Rentap menentang Brooke.",
-"Dituduh lanun dan petempatan Iban dihapuskan."
+"Dituduh lanun dan petempatan Iban dihapuskan.",
+"83c2d564c7"
 ],
 [
 "7",
 "Apakah senjata utama Rentap di Bukit Sadok?",
-"Meriam besi <b>Bujang Timpang Berang</b>."
+"Meriam besi <b>Bujang Timpang Berang</b>.",
+"c2cc800133"
 ],
 [
 "7",
 "Mengapakah Sharif Masahor menentang Brooke?",
-"Sarikei diletakkan di bawah Brooke dan kuasa pembesar tempatan terjejas."
+"Sarikei diletakkan di bawah Brooke dan kuasa pembesar tempatan terjejas.",
+"7e220beaff"
 ],
 [
 "7",
 "Apakah punca penentangan Tok Janggut?",
-"Kekerasan Encik Abdul Latiff dan cukai tanah 1915."
+"Kekerasan Encik Abdul Latiff dan cukai tanah 1915.",
+"e8282f8579"
 ],
 [
 "7",
 "Apakah janji SBUB kepada Mat Salleh pada 1898?",
-"Membenarkan beliau mentadbir Tambunan; janji dimungkiri pada 1899."
+"Membenarkan beliau mentadbir Tambunan; janji dimungkiri pada 1899.",
+"febd273d81"
 ],
 [
 "7",
 "Apakah hujah Haji Abdul Rahman Limbong di mahkamah?",
-"Tanah ialah “Hak Allah SWT”; rakyat bebas mengerjakannya dan cukai British berlawanan hukum syarak."
+"Tanah ialah “Hak Allah SWT”; rakyat bebas mengerjakannya dan cukai British berlawanan hukum syarak.",
+"44d82af923"
 ],
 [
 "7",
 "Nyatakan 4 kekuatan penentangan.",
-"Muafakat, kubu pertahanan, persenjataan, perundangan."
+"Muafakat, kubu pertahanan, persenjataan, perundangan.",
+"b5eb6efa36"
 ],
 [
 "7",
 "Mengapakah kebangkitan tempatan gagal?",
-"Setempat, sokongan istana tidak menyeluruh, teknologi lemah dan strategi British lebih licik."
+"Setempat, sokongan istana tidak menyeluruh, teknologi lemah dan strategi British lebih licik.",
+"ecc93010f7"
 ],
 [
 "7",
 "Apakah tiga angka kerugian perang British?",
-"Naning £100,000; Perak £400,000; Pahang £7,000."
+"Naning £100,000; Perak £400,000; Pahang £7,000.",
+"95ea1855bb"
 ],
 [
 "7",
 "KBAT: Mengapakah pemecahbelahan pakatan berkesan kepada British?",
-"Penentangan kehilangan sokongan tenaga, wilayah dan sumber; contoh Dol Said tidak lagi dibantu pada 1832."
+"Penentangan kehilangan sokongan tenaga, wilayah dan sumber; contoh Dol Said tidak lagi dibantu pada 1832.",
+"4670d0b6bc"
 ],
 [
 "7",
 "KBAT: Apakah pengajaran daripada tindakan Haji Abdul Rahman Limbong?",
-"Penentangan boleh dibuat melalui ilmu undang-undang, hujah agama dan saluran mahkamah, bukan semata-mata senjata."
+"Penentangan boleh dibuat melalui ilmu undang-undang, hujah agama dan saluran mahkamah, bukan semata-mata senjata.",
+"069b4f821d"
 ],
 [
 "8",
 "Bilakah Perjanjian Bangkok dimeterai?",
-"<b>10 Mac 1909</b>."
+"<b>10 Mac 1909</b>.",
+"2c1cf61bae"
 ],
 [
 "8",
 "Apakah asas garisan sempadan Protokol Bangkok 1909?",
-"<b>Legeh dan lembah sungai</b>."
+"<b>Legeh dan lembah sungai</b>.",
+"266b3324e5"
 ],
 [
 "8",
 "Wilayah Perlis yang diserahkan kepada Siam?",
-"<b>Pujoh</b>."
+"<b>Pujoh</b>.",
+"cc896de394"
 ],
 [
 "8",
 "Nyatakan wilayah Kedah yang terjejas akibat Perjanjian Bangkok.",
-"<b>Sadao, Setul, Pulau Terutau, Butang dan pulau sekitarnya</b>."
+"<b>Sadao, Setul, Pulau Terutau, Butang dan pulau sekitarnya</b>.",
+"0c6958071b"
 ],
 [
 "8",
 "Mengapakah Sultan Zainal Abidin III menolak dakwaan Siam ke atas Terengganu?",
-"Bunga emas ialah <b>tanda persahabatan</b>, bukan pengakuan Terengganu jajahan Siam."
+"Bunga emas ialah <b>tanda persahabatan</b>, bukan pengakuan Terengganu jajahan Siam.",
+"64ef601647"
 ],
 [
 "8",
 "Siapakah pemerintah Johor yang memperkenalkan Sistem Kangcu?",
-"<b>Temenggung Daeng Ibrahim</b>."
+"<b>Temenggung Daeng Ibrahim</b>.",
+"3ca5be363c"
 ],
 [
 "8",
 "Apakah dua tanaman utama Sistem Kangcu?",
-"<b>Gambir dan lada hitam</b>."
+"<b>Gambir dan lada hitam</b>.",
+"84ab6a8027"
 ],
 [
 "8",
 "Apakah tujuan Durbar?",
-"Wadah Raja-raja Melayu membangkitkan isu dan melindungi kepentingan rakyat kepada British."
+"Wadah Raja-raja Melayu membangkitkan isu dan melindungi kepentingan rakyat kepada British.",
+"a76e7cd0e8"
 ],
 [
 "8",
 "Apakah tuntutan Tuanku Muhammad dalam Durbar Kuala Lumpur 1903?",
-"Bahasa Melayu dijadikan <b>bahasa rasmi Persekutuan</b>."
+"Bahasa Melayu dijadikan <b>bahasa rasmi Persekutuan</b>.",
+"bd379b7b53"
 ],
 [
 "8",
 "Bilakah Undang-Undang Tubuh Kerajaan Johor dimasyhurkan?",
-"<b>14 April 1895</b>."
+"<b>14 April 1895</b>.",
+"0c404603ff"
 ],
 [
 "8",
 "Berapakah fasal Undang-Undang Tubuh Johor dan Terengganu?",
-"Johor <b>64 fasal</b>; Terengganu <b>53 fasal</b>."
+"Johor <b>64 fasal</b>; Terengganu <b>53 fasal</b>.",
+"8429e20491"
 ],
 [
 "8",
 "Apakah prinsip utama kedua-dua undang-undang tubuh terhadap kuasa asing?",
-"Pemerintah tidak boleh <b>menyerahkan negeri kepada kuasa asing</b>."
+"Pemerintah tidak boleh <b>menyerahkan negeri kepada kuasa asing</b>.",
+"148e812547"
 ],
 [
 "8",
 "Siapakah Penasihat British pertama di Terengganu?",
-"<b>J.L. Humphreys</b>."
+"<b>J.L. Humphreys</b>.",
+"6af1b0731f"
 ],
 [
 "8",
 "Bilakah Terengganu menerima Penasihat British?",
-"<b>1919</b>."
+"<b>1919</b>.",
+"c780c836bb"
 ],
 [
 "8",
 "Apakah ukuran Terusan Wan Muhammad Saman?",
-"<b>36 km × 7.5 m × 1.5 m</b>."
+"<b>36 km × 7.5 m × 1.5 m</b>.",
+"4a6bad9741"
 ],
 [
 "8",
 "Apakah sumbangan utama Dato’ Muhammad Salleh bin Perang?",
-"Melukis peta lengkap pertama Johor dan membuka Muar, Endau serta Batu Pahat."
+"Melukis peta lengkap pertama Johor dan membuka Muar, Endau serta Batu Pahat.",
+"6cdcbc084a"
 ],
 [
 "8",
 "Bilakah PTM ditubuhkan dan apa tujuannya?",
-"<b>1910</b>; melatih orang Melayu menyertai pentadbiran negeri."
+"<b>1910</b>; melatih orang Melayu menyertai pentadbiran negeri.",
+"4155fa43ec"
 ],
 [
 "8",
 "Apakah hubungan Kompeni Percubaan 1933 dengan Rejimen Askar Melayu?",
-"Kompeni Percubaan di Port Dickson menjadi asas <b>Rejimen Askar Melayu pada 1935</b>."
+"Kompeni Percubaan di Port Dickson menjadi asas <b>Rejimen Askar Melayu pada 1935</b>.",
+"fec13a2ca3"
 ],
 [
 "8",
 "KBAT: Mengapa undang-undang tubuh lebih sukar ditangani British berbanding bantahan lisan?",
-"Kerana ia menetapkan larangan dan aturan pemerintahan secara bertulis, sekali gus mengukuhkan asas kedaulatan negeri."
+"Kerana ia menetapkan larangan dan aturan pemerintahan secara bertulis, sekali gus mengukuhkan asas kedaulatan negeri.",
+"a717f4207c"
 ],
 [
 "8",
 "KBAT: Apakah iktibar strategi Johor?",
-"Kedaulatan lebih kukuh apabila diplomasi disokong oleh pentadbiran cekap, ekonomi makmur dan undang-undang yang jelas."
+"Kedaulatan lebih kukuh apabila diplomasi disokong oleh pentadbiran cekap, ekonomi makmur dan undang-undang yang jelas.",
+"5487b9f571"
 ],
 [
 "x",
 "Apakah 4 babak cerita Sejarah Tingkatan 3?",
-"<b>DATANG</b> (Bab 1) → <b>TADBIR</b> (Bab 2–5) → <b>KESAN</b> (Bab 6) → <b>REAKSI</b>: lawan (Bab 7) / bijak (Bab 8)"
+"<b>DATANG</b> (Bab 1) → <b>TADBIR</b> (Bab 2–5) → <b>KESAN</b> (Bab 6) → <b>REAKSI</b>: lawan (Bab 7) / bijak (Bab 8)",
+"8dcbf2303d"
 ],
 [
 "x",
 "Apakah 4 model pentadbiran Barat (Bab 2–5)?",
-"NNS (tanah jajahan) · NNMB (Residen, persekutuan) · NNMTB (Penasihat, berasingan) · Sarawak (Brooke) &amp; Sabah (SBUB)"
+"NNS (tanah jajahan) · NNMB (Residen, persekutuan) · NNMTB (Penasihat, berasingan) · Sarawak (Brooke) &amp; Sabah (SBUB)",
+"66fa85ce1f"
 ],
 [
 "x",
 "Rantaikan: Perjanjian Pangkor 1874 → ? → ?",
-"Residen <b>J.W.W. Birch</b> ambil hak cukai (Bab 3) → <b>Dato' Maharaja Lela</b> bunuh Birch 1875 (Bab 7) → raja tuntut kuasa melalui <b>Durbar</b> (Bab 8)"
+"Residen <b>J.W.W. Birch</b> ambil hak cukai (Bab 3) → <b>Dato' Maharaja Lela</b> bunuh Birch 1875 (Bab 7) → raja tuntut kuasa melalui <b>Durbar</b> (Bab 8)",
+"846218a7b1"
 ],
 [
 "x",
 "Rantaikan: Perjanjian Bangkok 1909 → ? → ?",
-"Dibuat <b>tanpa rundingan</b> &amp; wilayah hilang (Bab 4) → <b>bantahan raja</b> Kedah, Perlis, Kelantan, Terengganu (Bab 8) → kemudian pentadbiran &amp; cukai baharu → <b>Tok Janggut 1915</b>, <b>Haji Abdul Rahman Limbong 1922–1928</b> (Bab 7)"
+"Dibuat <b>tanpa rundingan</b> &amp; wilayah hilang (Bab 4) → <b>bantahan raja</b> Kedah, Perlis, Kelantan, Terengganu (Bab 8) → kemudian pentadbiran &amp; cukai baharu → <b>Tok Janggut 1915</b>, <b>Haji Abdul Rahman Limbong 1922–1928</b> (Bab 7)",
+"5b7e38866e"
 ],
 [
 "x",
 "Penentangan mana berpunca daripada pentadbiran Brooke dan SBUB (Bab 5)?",
-"Brooke → <b>Rentap</b>, <b>Sharif Masahor</b>; SBUB → <b>Mat Salleh</b>, <b>Mat Sator</b>"
+"Brooke → <b>Rentap</b>, <b>Sharif Masahor</b>; SBUB → <b>Mat Salleh</b>, <b>Mat Sator</b>",
+"8bc2a83395"
 ],
 [
 "x",
 "Kaitkan Perjanjian London 1824 (Bab 2) dengan Johor (Bab 4 &amp; 8).",
-"Empayar Johor-Riau berpecah → Johor di bawah pengaruh British → Johor guna diplomasi &amp; UU Tubuh 1895 untuk kekal berdaulat hingga <b>1914</b>"
+"Empayar Johor-Riau berpecah → Johor di bawah pengaruh British → Johor guna diplomasi &amp; UU Tubuh 1895 untuk kekal berdaulat hingga <b>1914</b>",
+"a21be28efe"
 ],
 [
 "x",
 "Kenapa kereta api dibina dalam 3 fasa (Bab 6)? Kaitkan dengan Bab 3 &amp; 4.",
-"1885–1896 lombong→pelabuhan; 1897–1909 utara–selatan selepas <b>NNMB</b> (Bab 3); 1910–1931 seluruh Tanah Melayu selepas <b>NNMTB</b> (Bab 4)"
+"1885–1896 lombong→pelabuhan; 1897–1909 utara–selatan selepas <b>NNMB</b> (Bab 3); 1910–1931 seluruh Tanah Melayu selepas <b>NNMTB</b> (Bab 4)",
+"e733566820"
 ],
 [
 "x",
 "Bezakan Residen (Bab 3) dan Penasihat British (Bab 4).",
-"Residen: NNMB, berpusat di bawah Residen Jeneral, kuasa raja sangat terhakis. Penasihat: NNMTB, setiap negeri berasingan, raja lebih autonomi. Kedua-dua: nasihat wajib kecuali <b>Islam &amp; adat Melayu</b>"
+"Residen: NNMB, berpusat di bawah Residen Jeneral, kuasa raja sangat terhakis. Penasihat: NNMTB, setiap negeri berasingan, raja lebih autonomi. Kedua-dua: nasihat wajib kecuali <b>Islam &amp; adat Melayu</b>",
+"c9c732bfe2"
 ],
 [
 "x",
 "Bezakan tahun Penasihat British diterima dengan tahun perjanjian rasmi.",
-"<b>Penasihat:</b> Kedah &amp; Perlis 1909 → Kelantan 1910 → Johor 1914 → Terengganu 1919 (paling lewat). <b>Perjanjian rasmi:</b> Kedah 1923, Perlis 1930 (paling lewat)"
+"<b>Penasihat:</b> Kedah &amp; Perlis 1909 → Kelantan 1910 → Johor 1914 → Terengganu 1919 (paling lewat). <b>Perjanjian rasmi:</b> Kedah 1923, Perlis 1930 (paling lewat)",
+"a9f6d08430"
 ],
 [
 "x",
 "Apakah kaitan Bab 7 dan Bab 8?",
-"Bab 7 tunjuk penentangan bersenjata gagal (teknologi, setempat); Bab 8 tunjuk strategi pelengkap: diplomasi, undang-undang tubuh, pemodenan, Durbar"
+"Bab 7 tunjuk penentangan bersenjata gagal (teknologi, setempat); Bab 8 tunjuk strategi pelengkap: diplomasi, undang-undang tubuh, pemodenan, Durbar",
+"01d6e1b7cf"
 ],
 [
 "x",
 "Mnemonik utama setiap bab?",
-"1 BaPuPeA · 2 Ti-Ma-Pak · 3 PeSeNePa · 4 KPKT+J · 5 RUPEK · 6 Mo-Te-Bu-Ta-Ska &amp; Ba-Ma-Pe-Ke-Pe · 7 Mu-Ku-Sen-Undang · 8 DuDiEnUnMo"
+"1 BaPuPeA · 2 Ti-Ma-Pak · 3 PeSeNePa · 4 KPKT+J · 5 RUPEK · 6 Mo-Te-Bu-Ta-Ska &amp; Ba-Ma-Pe-Ke-Pe · 7 Mu-Ku-Sen-Undang · 8 DuDiEnUnMo",
+"405bdd417c"
+],
+[
+"1",
+"Siapakah pemerintah tertinggi di Negeri Sembilan?",
+"<b>Yang di-Pertuan Besar</b> (Yamtuan Besar).",
+"f64372ac0e"
+],
+[
+"1",
+"Apakah dua kaedah perlombongan bijih timah tradisional?",
+"<b>Mendulang</b> dan <b>melampan</b>.",
+"1372ffde45"
+],
+[
+"1",
+"Bilakah Syarikat Hindia Timur Belanda ditubuhkan?",
+"<b>1602</b>.",
+"bdb00f5afe"
+],
+[
+"1",
+"Bilakah Syarikat Hindia Timur Perancis ditubuhkan?",
+"<b>1664</b>.",
+"b2b0a142fd"
+],
+[
+"1",
+"Siapakah jurutera yang merancang Terusan Suez?",
+"<b>Ferdinand de Lesseps</b>.",
+"05fe8008c8"
+],
+[
+"1",
+"Bilakah pembinaan Terusan Suez bermula?",
+"<b>1859</b>.",
+"7b3c84dfa9"
+],
+[
+"1",
+"Berapakah jarak laluan selepas Terusan Suez dibina?",
+"<b>8,000 batu</b> (daripada 12,400 batu).",
+"9c78b102fe"
+],
+[
+"1",
+"Apakah slogan Perancis untuk menjustifikasi penjajahan?",
+"<b>“Tugas Menyebarkan Tamadun”</b>.",
+"2a6798644f"
+],
+[
+"1",
+"Siapakah menggantikan Gabenor Harry Ord di Negeri-negeri Selat?",
+"<b>Andrew Clarke</b>.",
+"4df725da28"
+],
+[
+"1",
+"Bilakah Belanda menyerang Pulau Pangkor?",
+"<b>1650</b>.",
+"60b4441972"
+],
+[
+"1",
+"Apakah tempoh keluarga Brooke memperluas Sarawak?",
+"<b>1853–1905</b>.",
+"fe789b595e"
+],
+[
+"1",
+"Nyatakan hierarki pemerintahan Negeri Sembilan.",
+"Yamtuan Besar → Undang → Lembaga → Buapak → Anak Buah dan Ibu Soko.",
+"9d9b807283"
+],
+[
+"1",
+"Nyatakan lapan faktor kedatangan Barat pada abad ke-19 hingga ke-20.",
+"Industri kereta, tanah subur dan hasil bumi, industri mengetin, Terusan Suez, kapal wap, persaingan kuasa Barat, telegraf dan slogan “Beban Orang Putih”.",
+"363614bf23"
+],
+[
+"1",
+"Apakah empat ciri kemakmuran negara kita sebelum kedatangan Barat?",
+"Kekayaan hasil alam; hasil alam untuk kraf dan ekonomi; sistem perdagangan teratur; perkembangan persuratan.",
+"d5a7d52241"
+],
+[
+"1",
+"Nyatakan contoh manipulasi British dalam menguasai negeri Melayu.",
+"Perebutan takhta Perak (1871), rompakan lanun dan konflik pembesar Sungai Ujong.",
+"a00ab362fc"
+],
+[
+"1",
+"Apakah tiga contoh wang tempatan yang digunakan sebelum Barat?",
+"Wang emas Kedah, duit kijang Kelantan dan duit pitih Terengganu.",
+"0eebfb60c0"
+],
+[
+"1",
+"KBAT: Mengapakah perjanjian yang dibuat tanpa persetujuan pemerintah tempatan merugikan negeri Melayu?",
+"Kedaulatan terhakis kerana wilayah dan hak ditentukan oleh kuasa asing demi kepentingan mereka.",
+"146d010a8e"
+],
+[
+"1",
+"KBAT: Mengapakah pertumbuhan industri di Eropah mendorong penjajahan ke Alam Melayu?",
+"Kilang memerlukan bahan mentah dan pasaran luas, maka Alam Melayu yang kaya sumber menjadi sasaran.",
+"f1a8ed7a99"
+],
+[
+"2",
+"Bilakah Batu Uban dibuka sebagai pelabuhan awal?",
+"<b>1759</b>, oleh orang Melayu dari Sumatera.",
+"f9c52eac16"
+],
+[
+"2",
+"Bilakah Union Jack dinaikkan di Pulau Pinang?",
+"<b>11 Ogos 1786</b>.",
+"3085259bd2"
+],
+[
+"2",
+"Bilakah Union Jack dinaikkan di Singapura?",
+"<b>13 Februari 1819</b>.",
+"ceed4e0f9f"
+],
+[
+"2",
+"Siapakah Residen pertama Singapura?",
+"<b>William Farquhar</b> (1819–1823).",
+"f30f009446"
+],
+[
+"2",
+"Siapakah wakil British yang menandatangani perjanjian 2 Ogos 1824 di Singapura?",
+"<b>John Crawfurd</b>.",
+"c284489dbc"
+],
+[
+"2",
+"Bilakah Pulau Pinang menjadi pelabuhan bebas?",
+"<b>1787</b>.",
+"9c4a412652"
+],
+[
+"2",
+"Bilakah Singapura diisytiharkan pelabuhan bebas?",
+"<b>1823</b>.",
+"92c2f76d2d"
+],
+[
+"2",
+"Bilakah pusat pentadbiran NNS dipindahkan ke Singapura?",
+"<b>1832</b>.",
+"79fb78e53f"
+],
+[
+"2",
+"Siapakah orang Melayu pertama dalam Majlis Perundangan NNS?",
+"<b>Mohammad Eunos Abdullah</b>.",
+"2bb2f5b383"
+],
+[
+"2",
+"Bilakah NNS dibubarkan?",
+"<b>1946</b>.",
+"968f91b7ec"
+],
+[
+"2",
+"Siapakah mengisytiharkan Pahang bebas dan berdaulat pada 1853?",
+"<b>Bendahara Tun Ali</b>.",
+"b8e4f27e3b"
+],
+[
+"2",
+"Nyatakan tiga syarat utama Belanda dalam Perjanjian London 1824.",
+"Mengiktiraf Singapura, menyerahkan Melaka kepada British, tidak membuka petempatan baharu di Tanah Melayu.",
+"08f904298c"
+],
+[
+"2",
+"Nyatakan tiga syarat utama British dalam Perjanjian London 1824.",
+"Berundur dari Sumatera, menyerahkan Bangkahulu, tidak membuka petempatan baharu di Riau Lingga.",
+"eea0732041"
+],
+[
+"2",
+"Nyatakan lima faktor pemindahan NNS ke Pejabat Tanah Jajahan.",
+"Tiada wakil, rompakan, cadangan rupee, cukai pelabuhan, banduan (Ti-Rom-Ru-Cu-Ban).",
+"fb1fcded58"
+],
+[
+"2",
+"Apakah struktur pentadbiran NNS selepas 1867?",
+"Pejabat Tanah Jajahan → Gabenor → Majlis Eksekutif dan Majlis Perundangan.",
+"3b7ece9d1e"
+],
+[
+"2",
+"Nyatakan empat kepentingan pembentukan NNS kepada British.",
+"Kuasai Selat Melaka, pelabuhan bebas, pusat kumpul bijih timah, pintu masuk buruh dan modal.",
+"dd3e2d26d8"
+],
+[
+"2",
+"KBAT: Mengapakah Majlis Perundangan penting kepada Negeri-negeri Selat?",
+"Ia membolehkan NNS menggubal dan meluluskan undang-undang sendiri tanpa bergantung pada India.",
+"954868ac69"
+],
+[
+"2",
+"KBAT: Mengapakah pembahagian wilayah dalam Perjanjian London 1824 dianggap tidak adil kepada Alam Melayu?",
+"Kuasa Barat memecahkan Empayar Johor Riau tanpa merujuk Raja-raja Melayu.",
+"cd1ebcabf6"
+],
+[
+"3",
+"Bilakah bijih timah mula dilombong di Manjung dan Beruas?",
+"<b>1616</b>.",
+"3015aed4c5"
+],
+[
+"3",
+"Siapakah yang memajukan Klian Pauh dan Klian Baru bersama Long Jaafar?",
+"<b>Ngah Ibrahim</b>.",
+"899855a28f"
+],
+[
+"3",
+"Di manakah Kota Belanda dibina pada 1670?",
+"<b>Pulau Pangkor</b> (gedung menyimpan bijih timah).",
+"09d62fa891"
+],
+[
+"3",
+"Apakah kawasan pengeluar utama bijih timah dunia di Perak pada akhir abad ke-19?",
+"<b>Lembah Kinta</b>.",
+"51ae1fc59d"
+],
+[
+"3",
+"Siapakah Residen Jeneral NNMB dari 1896 hingga 1900?",
+"<b>Frank Swettenham</b>.",
+"7873c83b78"
+],
+[
+"3",
+"Siapakah Pesuruhjaya Tinggi NNMB?",
+"<b>Gabenor Negeri-negeri Selat</b>.",
+"2aeed3e5de"
+],
+[
+"3",
+"Apakah pusat pungutan cukai timah Selangor melalui Sungai Langat?",
+"<b>Jugra</b>.",
+"7e2bea356a"
+],
+[
+"3",
+"Bilakah Bangunan Sultan Abdul Samad dibina?",
+"<b>1894–1897</b>.",
+"67d37ebfdf"
+],
+[
+"3",
+"Di atas kapal apakah Perjanjian Pangkor 1874 ditandatangani?",
+"<b>HMS Pluto</b>.",
+"f2ae15ae3a"
+],
+[
+"3",
+"Siapakah dibantu British dalam Perang Klang?",
+"<b>Tunku Kudin</b>.",
+"8238dde9d6"
+],
+[
+"3",
+"Nyatakan tiga strategi British meluaskan kuasa (MaDePe).",
+"<b>Ma</b>nipulasi konflik tempatan, <b>De</b>sakan/ugutan menerima perlindungan, <b>Pe</b>rjanjian dengan pemerintah tempatan.",
+"81032f3df1"
+],
+[
+"3",
+"Apakah tiga kesan utama Sistem Residen?",
+"Sultan dan pembesar hilang kuasa pentadbiran dan cukai; Residen ganti pembesar; jabatan dan sistem Barat gantikan sistem tradisional.",
+"a2bb65d65b"
+],
+[
+"3",
+"Nyatakan keahlian Majlis Mesyuarat Persekutuan 1909.",
+"Pesuruhjaya Tinggi (pengerusi), Residen Jeneral, 4 Raja Melayu, 4 Residen, 4 Ahli Tidak Rasmi (3 Eropah, 1 Cina).",
+"37f3213ce0"
+],
+[
+"3",
+"Apakah kesan penubuhan Majlis Mesyuarat Persekutuan 1909 terhadap Raja Melayu?",
+"British mengawal undang-undang dan kewangan; Raja Melayu hanya ahli biasa.",
+"f39ba8d4b9"
+],
+[
+"3",
+"Nyatakan syarat Perjanjian British-Pahang 1887.",
+"Wakil British ditempatkan, British menjaga keamanan, Pahang tidak boleh berjanji dengan kuasa asing tanpa izin British.",
+"353ee88a96"
+],
+[
+"3",
+"Apakah kesan Perjanjian Pangkor 1874?",
+"British menguasai pentadbiran dan ekonomi Perak; menjadi titik peralihan kepada perjanjian dengan negeri Melayu lain.",
+"4152a45386"
+],
+[
+"3",
+"KBAT: Mengapakah British sukar mencari alasan campur tangan di Pahang berbanding di Perak?",
+"Sultan Ahmad berhati-hati dan tiada kekacauan pelombong Cina seperti Perang Larut, maka British perlu menggunakan Sultan Abu Bakar dan kes Goh Hui.",
+"9729523af7"
+],
+[
+"3",
+"KBAT: Mengapakah pembentukan Majlis Mesyuarat Persekutuan 1909 menghakis kewibawaan Raja Melayu?",
+"Kuasa membuat undang-undang dan mengawal kewangan dipegang British; Raja hanya ahli biasa, sedangkan sebelum itu Raja mempengerusikan Majlis Mesyuarat Negeri.",
+"9827391857"
+],
+[
+"4",
+"Berapakah bilangan mukim di Perlis?",
+"<b>22 mukim</b>.",
+"1e29eabb52"
+],
+[
+"4",
+"Siapakah sultan pertama Kedah?",
+"<b>Sultan Mudzaffar Shah</b>.",
+"db044a9e6c"
+],
+[
+"4",
+"Bilakah Long Yunus menyatukan Kelantan?",
+"<b>1776–1794</b>.",
+"db3babf77c"
+],
+[
+"4",
+"Apakah gelaran yang diterima Sultan Muhammad I Kelantan daripada Siam?",
+"<b>Phya Pipit Pakdi</b>.",
+"845b1b1017"
+],
+[
+"4",
+"Bilakah Undang-Undang Bagi Diri Kerajaan Terengganu diluluskan?",
+"<b>1911</b>.",
+"064b95fc26"
+],
+[
+"4",
+"Bilakah Perjanjian Sulit British–Siam ditandatangani?",
+"<b>6 April 1897</b>.",
+"24f2e42f7a"
+],
+[
+"4",
+"Siapakah wakil Siam dalam Perjanjian Bangkok 1909?",
+"<b>Putera Devawongse Varaprakar</b>.",
+"2c5e6db53e"
+],
+[
+"4",
+"Bilakah Perjanjian Burney antara British dengan Siam?",
+"<b>1826</b>.",
+"c18974f063"
+],
+[
+"4",
+"Bilakah Majlis Mesyuarat Negeri Kedah diwujudkan?",
+"<b>1905</b>.",
+"48d372748e"
+],
+[
+"4",
+"Apakah taraf wakil British dalam Perjanjian Setia 1885 di Johor?",
+"<b>Konsul</b>, bukan Penasihat.",
+"eb672f33bf"
+],
+[
+"4",
+"Nyatakan tiga kesan utama Penasihat British.",
+"Dasar negeri dikawal British; kuasa Sultan dan pembesar terhakis; jabatan, polis dan mahkamah sivil Barat berkembang.",
+"b520e0a6ea"
+],
+[
+"4",
+"Apakah kandungan Perjanjian Sulit 1897?",
+"British mengakui hak pertuanan Siam ke atas Kedah, Kelantan dan Terengganu bagi menghalang kuasa lain.",
+"01f5872c95"
+],
+[
+"4",
+"Apakah kandungan Perjanjian Sempadan 1899?",
+"Menetapkan sempadan Perak, Kelantan, Terengganu, Pahang dan Kedah serta menyelesaikan isu Perak–Reman.",
+"2a12ddfac2"
+],
+[
+"4",
+"Nyatakan kuasa Barat lain yang ingin disekat British di negeri Melayu Utara.",
+"Perancis (Segenting Kra), Jerman (Langkawi), Amerika Syarikat (Terengganu), Rusia (Ujung Salang).",
+"9533ee9ebd"
+],
+[
+"4",
+"Apakah kesan Perjanjian 1914 terhadap kedudukan Johor?",
+"Konsul diganti Penasihat Am British; Johor menjadi negeri naungan British walaupun kedudukan Sultan diakui.",
+"3692adf95a"
+],
+[
+"4",
+"Apakah perbezaan kuasa raja NNMTB berbanding raja NNMB?",
+"Raja NNMTB mempunyai kuasa autonomi lebih besar; usaha menggabungkan NNMTB dan NNMB gagal akibat tentangan raja.",
+"c4f978849c"
+],
+[
+"4",
+"KBAT: Mengapakah British mengambil pendekatan berbeza di NNMTB berbanding NNMB?",
+"NNMTB ialah negeri di bawah pengaruh Siam dan raja berautonomi lebih besar, maka British memerintah secara longgar melalui Penasihat tanpa gabungan formal.",
+"eab041395e"
+],
+[
+"4",
+"KBAT: Mengapakah pemodenan pentadbiran penting dalam mengekalkan kedaulatan Johor hingga 1914?",
+"Pemodenan pentadbiran, infrastruktur dan sosial bersama ekonomi komersial menguatkan Johor sehingga British sukar mencari alasan campur tangan.",
+"b4128905fb"
+],
+[
+"5",
+"Siapakah Raja Putih Sarawak yang kedua?",
+"<b>Charles Brooke</b> (1868–1917).",
+"939f9f0d31"
+],
+[
+"5",
+"Siapakah bapa saudara Sultan Brunei yang gagal menyelesaikan konflik di Sarawak?",
+"<b>Pengiran Raja Muda Hashim</b>.",
+"1567c12d6c"
+],
+[
+"5",
+"Bilakah Charles Brooke memperoleh Limbang?",
+"Pada <b>1890</b>.",
+"afa5e2b535"
+],
+[
+"5",
+"Siapakah presiden pertama SBUB?",
+"<b>Sir Rutherford Alcock</b>.",
+"a28cf4c914"
+],
+[
+"5",
+"Apakah ibu negeri pertama SBUB dan bilakah?",
+"<b>Kudat</b>, 1881–1884.",
+"7f74e52415"
+],
+[
+"5",
+"Bilakah Borneo Utara menjadi negeri naungan British?",
+"Pada <b>1888</b>.",
+"081e638d8f"
+],
+[
+"5",
+"Bilakah Majlis Penasihat SBUB ditubuhkan?",
+"Pada <b>1883</b>; menasihati Gabenor.",
+"0a6bb5bbd6"
+],
+[
+"5",
+"Bilakah Undang-undang Lapan Perkara dilaksanakan di Sarawak?",
+"<b>Januari 1842</b>.",
+"6027271a82"
+],
+[
+"5",
+"Bilakah Mahkamah Cina diwujudkan di Kuching?",
+"Pada <b>1911</b>.",
+"2b02004b61"
+],
+[
+"5",
+"Siapakah Datu Kerunding?",
+"Ketua Bebas di Tungku, akhir abad ke-19.",
+"35371c1613"
+],
+[
+"5",
+"Nyatakan empat syarat Piagam Diraja SBUB (PAHA).",
+"Menerima <b>Penasihat British</b>; memelihara adat/agama/undang-undang; pegawai diakui British; tidak serah Sabah tanpa izin British.",
+"915830698f"
+],
+[
+"5",
+"Nyatakan syarat Perjanjian 1842 antara James Brooke dengan Sultan Brunei.",
+"Semua hasil pendapatan wilayah diserahkan kepada Brooke; Brooke membayar ufti tahunan 2,500 Dolar Sepanyol; tidak campur tangan dalam adat dan agama; Sarawak tidak boleh dipindah milik tanpa izin Sultan Brunei; Sultan mengiktiraf James Brooke sebagai Raja Putih Sarawak.",
+"360b327e29"
+],
+[
+"5",
+"Apakah dua faktor yang menarik pemodal asing ke Sabah?",
+"Kedudukan strategik di laluan maritim; kekayaan hasil bumi dan hasil laut.",
+"5fb208c194"
+],
+[
+"5",
+"Nyatakan hierarki pentadbiran Sarawak zaman Brooke.",
+"Raja Brooke, Majlis Negeri, Residen, Bahagian, Pegawai Daerah, Daerah, Penghulu, Kampung.",
+"04fe459b7d"
+],
+[
+"5",
+"Apakah dasar pecah dan perintah berasaskan kaum di Sarawak?",
+"Melayu dalam pentadbiran, Cina dalam ekonomi, Iban dalam keselamatan/ketenteraan.",
+"30c57a9861"
+],
+[
+"5",
+"Nyatakan tiga kesan segera pentadbiran Barat di Sarawak dan Sabah.",
+"Sempadan mentakrif semula wilayah dan cukai; kuasa pembesar dalam birokrasi Barat; sumber dieksploitasi untuk pemodal.",
+"d8469bb615"
+],
+[
+"5",
+"KBAT: Mengapakah Perjanjian 1842 menunjukkan Sarawak belum bebas sepenuhnya daripada Brunei?",
+"Brooke masih membayar ufti tahunan kepada Sultan dan Sarawak tidak boleh dipindah milik tanpa izin Sultan Brunei.",
+"94e3d741e0"
+],
+[
+"5",
+"KBAT: Mengapakah Brooke menggunakan empat strategi secara berurutan dan bukan serentak?",
+"Rundingan dan ugutan mendapatkan penyerahan dahulu, perjanjian mengesahkannya, kemudian ketenteraan (HMS Dido) mengukuhkan kuasa.",
+"9697bb6c3f"
+],
+[
+"6",
+"Di manakah petroleum ditemui pada 1910?",
+"Di <b>Miri</b>, Sarawak.",
+"9b3c44db54"
+],
+[
+"6",
+"Berapakah peratus pengeluaran bijih timah dunia disumbangkan Tanah Melayu pada akhir abad ke-19?",
+"<b>55%</b>.",
+"749415e80f"
+],
+[
+"6",
+"Bilakah Jabatan Kerja Raya (PWD) ditubuhkan?",
+"Pada <b>1872</b>.",
+"7d3d8cab89"
+],
+[
+"6",
+"Bilakah Institut Penyelidikan Getah Malaya (RRIM) ditubuhkan?",
+"Pada <b>1926</b>.",
+"2b4b768287"
+],
+[
+"6",
+"Di manakah hospital kerajaan pertama dibina pada 1878?",
+"Di <b>Taiping</b>.",
+"e67ac045d1"
+],
+[
+"6",
+"Bilakah Kolej Melayu Kuala Kangsar (MCKK) ditubuhkan?",
+"Pada <b>1905</b>.",
+"d8e0724519"
+],
+[
+"6",
+"Siapakah membina Hospital Tung Shin pada 1881?",
+"<b>Yap Kwan Seng</b>.",
+"185a1ea1a0"
+],
+[
+"6",
+"Bilakah Ordinan Buruh Kontrak diluluskan?",
+"Pada <b>1882</b>.",
+"98b34863a3"
+],
+[
+"6",
+"Apakah fungsi Tabung Imigran India 1908?",
+"Tabung ini memberikan kemudahan pelayaran percuma dari Madras ke negeri Melayu.",
+"a8928435b5"
+],
+[
+"6",
+"Apakah fungsi Sultan Idris Training College (1922)?",
+"Melatih guru Melayu di <b>Tanjung Malim</b>.",
+"0829b03420"
+],
+[
+"6",
+"Apakah kandungan Proklamasi III Perlindungan Hak Peribumi 1889?",
+"Urus niaga tanah dengan Eropah dimaklumkan kepada ketua peribumi; peribumi boleh memohon ganti rugi.",
+"768705d123"
+],
+[
+"6",
+"Nyatakan tiga sebab buruh asing dibawa masuk.",
+"Perusahaan timah dan getah pesat; kekurangan buruh; peluang pekerjaan.",
+"bd91ab55f6"
+],
+[
+"6",
+"Nyatakan tiga fasa pembinaan kereta api di NN Melayu.",
+"1885–1896 lombong ke pelabuhan; 1897–1909 utara–selatan; 1910–1931 seluruh Tanah Melayu.",
+"5c11706002"
+],
+[
+"6",
+"Apakah kesan Ordinan Buruh 1912 terhadap pendidikan?",
+"Majikan ladang wajib mendirikan <b>sekolah Tamil</b> peringkat rendah.",
+"ff7cfc2c7e"
+],
+[
+"6",
+"Bagaimanakah peratus Melayu dan Cina berubah antara 1911 dengan 1931?",
+"Melayu 58.6% kepada 49.2%; Cina 29.6% kepada 33.9%.",
+"d4a132a247"
+],
+[
+"6",
+"Mengapakah getah berkembang pesat pada awal abad ke-20?",
+"Harga kopi jatuh akibat penyakit dan pengeluaran berlebihan di Brazil.",
+"04765e7381"
+],
+[
+"6",
+"KBAT: Mengapakah Sistem Kangani menyukarkan buruh India menamatkan kontrak mereka?",
+"Buruh bekerja sehingga hutang tambang selesai, maka mereka terikat kepada majikan.",
+"76731c4e6f"
+],
+[
+"6",
+"KBAT: Mengapakah rangkaian kereta api dibina dari lombong dan ladang ke pelabuhan?",
+"Untuk mengangkut bijih timah dan getah ke pelabuhan bagi eksport, menunjukkan ekonomi berorientasikan keuntungan British.",
+"f80637d371"
+],
+[
+"7",
+"Bilakah Dol Said dilahirkan?",
+"<b>1773</b>",
+"18ad461e4b"
+],
+[
+"7",
+"Apakah nama sebenar Tok Janggut?",
+"<b>Haji Mat Hassan bin Munas</b>",
+"075086d372"
+],
+[
+"7",
+"Bilakah Bukit Sadok ditawan oleh Brooke?",
+"<b>1861</b>",
+"ce44233048"
+],
+[
+"7",
+"Siapakah yang dibunuh di Pasir Salak pada 2 November 1875?",
+"<b>J.W.W. Birch</b>",
+"446f23bacb"
+],
+[
+"7",
+"Apakah maksud nama \"Rentap\"?",
+"<b>Penggoncang dunia</b>",
+"84a3c89250"
+],
+[
+"7",
+"Di manakah Mat Sator membina kubunya?",
+"<b>Kampung Kapayan Lama</b>, Tambunan",
+"dc75ba2056"
+],
+[
+"7",
+"Apakah institusi yang ditubuhkan British pada 1905 untuk anak bangsawan Melayu?",
+"<b>Kolej Melayu Kuala Kangsar</b>",
+"0726f51925"
+],
+[
+"7",
+"Berapakah elaun yang ditawarkan kepada Dato' Bahaman?",
+"<b>$70 sebulan</b>",
+"62e763585c"
+],
+[
+"7",
+"Siapakah pegawai British yang terbunuh di Nanga Skrang pada 1853?",
+"<b>Alan Lee</b>",
+"57416abb1f"
+],
+[
+"7",
+"Bilakah Persekutuan Negeri Sembilan dibentuk?",
+"<b>1895</b>",
+"fe8d320d02"
+],
+[
+"7",
+"Nyatakan 3 kuasa pemerintah yang terjejas akibat sistem pentadbiran Barat.",
+"Kuasa <b>mentadbir/hubungan luar</b>, <b>perundangan</b> dan <b>kewangan</b>.",
+"e847c54e43"
+],
+[
+"7",
+"Apakah 3 sebab umum penentangan masyarakat tempatan?",
+"Hak dan kedudukan pemerintah terhakis; kuasa undang-undang/kewangan diambil alih; cukai dan peraturan baharu menyengsarakan rakyat.",
+"ef8b61dd63"
+],
+[
+"7",
+"Nyatakan 3 kesan penentangan terhadap pihak British.",
+"<b>Kerugian perang</b>; pentadbiran lebih berhati-hati dan tersusun; kuasa Barat dimantapkan.",
+"48abd3ea82"
+],
+[
+"7",
+"Apakah 3 kesan penentangan terhadap masyarakat tempatan?",
+"Kehilangan jawatan/kedudukan; kematian atau dibuang negeri; menjadi <b>inspirasi</b> perjuangan kemerdekaan.",
+"b3f1f371f0"
+],
+[
+"7",
+"Apakah hukuman yang dikenakan pada 1877 ke atas pemimpin yang membunuh Birch?",
+"Dato' Maharaja Lela, Dato' Sagor, Pandak Indut dan Siputum <b>digantung</b>.",
+"02c9f2547e"
+],
+[
+"7",
+"Senaraikan cukai tanaman di Pasir Puteh selepas pemerintahan British.",
+"Pokok durian 12½ sen sepokok, kelapa berbuah 3 sen sepokok, pinang 1 sen sepokok dan sirih 5 sen sejunjung.",
+"50ab497f6b"
+],
+[
+"7",
+"KBAT: Mengapakah British menubuhkan Kolej Melayu Kuala Kangsar dan memilih Residen yang fasih bahasa Melayu selepas penentangan?",
+"Supaya pentadbiran lebih memahami adat Melayu dan mengelakkan penentangan, sambil melibatkan aristokrat Melayu dalam pentadbiran.",
+"f18a4044ca"
+],
+[
+"7",
+"KBAT: Mengapakah kubu di kawasan tinggi dan hutan tebal menjadi kekuatan pejuang tempatan?",
+"Sukar didaki dan dihalang ranjau atau pokok tumbang; namun tetap tewas kepada meriam besar dan senjata moden British.",
+"1a2de049c5"
+],
+[
+"8",
+"Siapakah Raja Perlis yang membantah kehilangan Pujoh?",
+"<b>Raja Syed Alwi Jamalullail</b>",
+"2dda006805"
+],
+[
+"8",
+"Bilakah Terengganu menghantar bantahan kepada Gabenor NNS tentang Perjanjian Bangkok?",
+"<b>24 Mei 1909</b>",
+"8827632ecd"
+],
+[
+"8",
+"Berapakah kira-kira orang Melayu yang mendiami Tabal?",
+"Kira-kira <b>15,000 orang</b>",
+"628e385947"
+],
+[
+"8",
+"Bilakah Iskandar Puteri dinamakan Johor Bahru?",
+"<b>1 Januari 1866</b>",
+"2684d9474e"
+],
+[
+"8",
+"Apakah gelaran yang diterima Sultan Abu Bakar pada 1868?",
+"<b>Maharaja Johor</b>",
+"1b402b15f8"
+],
+[
+"8",
+"Bilakah Perjanjian British-Terengganu yang meminda Perjanjian Bangkok dimeterai?",
+"<b>22 April 1910</b>",
+"b2d792755d"
+],
+[
+"8",
+"Siapakah Penasihat British pertama di Kelantan?",
+"<b>J.S. Mason</b>",
+"a331cf804b"
+],
+[
+"8",
+"Siapakah digelar \"Bapa Kedah Moden\"?",
+"<b>Sultan Abdul Hamid Halim Shah</b>",
+"73097affb3"
+],
+[
+"8",
+"Siapakah Menteri Besar Johor yang pertama?",
+"<b>Dato' Jaafar bin Muhammad</b> (1882–1919)",
+"6b2905964d"
+],
+[
+"8",
+"Apakah nama lain Undang-Undang Bagi Diri Kerajaan Terengganu?",
+"<b><i>Itqan al-Muluk bi Ta'dil al-Suluk</b></i>",
+"f48584f4cb"
+],
+[
+"8",
+"Nyatakan 4 sebab pemerintah NNMU membantah Perjanjian Bangkok 1909.",
+"Tidak dirundingkan; kehilangan wilayah; kedaulatan dicabar; sempadan baharu mengabaikan geografi, etnik, agama dan budaya.",
+"b1a1d7aaa7"
+],
+[
+"8",
+"Senaraikan 5 strategi raja menangani cabaran Barat.",
+"<b>Durbar</b>, <b>diplomasi</b>, enggan menerima Penasihat British, undang-undang tubuh, <b>pemodenan</b> negeri.",
+"5aa58dac9b"
+],
+[
+"8",
+"Apakah empat ciri Undang-Undang Tubuh Kerajaan Johor?",
+"Negeri tidak boleh diserahkan kepada kuasa asing; Islam ialah agama negeri; Jemaah Menteri terdiri daripada orang Melayu, rakyat Johor dan beragama Islam; ahli Majlis Mesyuarat Kerajaan mestilah rakyat Johor.",
+"8058a58c75"
+],
+[
+"8",
+"Apakah 4 kesan pemodenan oleh pembesar Melayu?",
+"Ekonomi berkembang; pertanian dan pengairan lebih baik; bandar dan perhubungan berkembang; pentadbiran dan pendidikan diperkukuh.",
+"bbd1522fb5"
+],
+[
+"8",
+"Apakah yang dikekalkan dalam Perjanjian Kedah-British 1 November 1923?",
+"<b>Bahasa Melayu</b>, kalendar Hijrah, cuti Jumaat dan keutamaan pegawai Melayu.",
+"19a01461c7"
+],
+[
+"8",
+"Apakah syarat Perjanjian British-Kelantan 1910?",
+"Sultan hendaklah menerima nasihat Penasihat British kecuali dalam hal agama Islam dan adat Melayu, serta tidak boleh berhubung dengan kuasa luar tanpa melalui Penasihat British.",
+"0021b7e51a"
+],
+[
+"8",
+"KBAT: Mengapakah Johor dapat menangguhkan penerimaan Penasihat Am British sehingga 1914?",
+"Diplomasi Sultan Abu Bakar, undang-undang tubuh 1895 dan pentadbiran cekap memperkukuh kedaulatan; Penasihat Am diterima selepas baginda mangkat.",
+"c7bdedc995"
+],
+[
+"8",
+"KBAT: Mengapakah institusi raja tidak dihapuskan oleh British walaupun kuasa pembesar digantikan?",
+"Undang-undang masih memerlukan tandatangan dan cap mohor sultan, maka raja berguna untuk mengesahkan pentadbiran British.",
+"b380cfadb6"
+]
+];
+// [bab, tahun, label, peristiwa]
+const EVENTS = [
+[
+"1",
+1600,
+"1600",
+"SHTI ditubuhkan di England."
+],
+[
+"1",
+1602,
+"1602",
+"Syarikat Hindia Timur Belanda ditubuhkan."
+],
+[
+"1",
+1641,
+"1641",
+"Pakatan Belanda-Johor menewaskan Portugis di Melaka."
+],
+[
+"1",
+1650,
+"1650",
+"Belanda berperang di Pulau Pangkor; perjanjian Belanda-Perak untuk bijih timah."
+],
+[
+"1",
+1651,
+"1651",
+"Belanda berperang di Kuala Perak."
+],
+[
+"1",
+1664,
+"1664",
+"Syarikat Hindia Timur Perancis ditubuhkan."
+],
+[
+"1",
+1763,
+"1763",
+"Belanda berperang dengan Selangor dan Rembau."
+],
+[
+"1",
+1782,
+"1782",
+"Belanda berperang dengan Johor."
+],
+[
+"1",
+1786,
+"1786",
+"Perjanjian Belanda-Selangor; Sultan Ibrahim setuju menjual bijih timah kepada Belanda."
+],
+[
+"1",
+1819,
+"1819",
+"Perjanjian Raffles–Sultan Hussein–Temenggung Abdul Rahman di Singapura."
+],
+[
+"1",
+1824,
+"1824",
+"Perjanjian Inggeris-Belanda; British memperoleh Melaka, Belanda memperoleh Bangkahulu."
+],
+[
+"1",
+1840,
+"Selepas 1840",
+"Permintaan bijih timah dari negeri Melayu meningkat pesat."
+],
+[
+"1",
+1859,
+"1859",
+"Pembinaan Terusan Suez bermula."
+],
+[
+"1",
+1871,
+"1871",
+"Perebutan takhta Perak dimanipulasi British."
+],
+[
+"1",
+1873,
+"1873",
+"Britain menukar dasar tidak campur tangan kepada campur tangan."
+],
+[
+"2",
+1511,
+"1511",
+"Portugis menawan Melaka."
+],
+[
+"2",
+1641,
+"1641",
+"Belanda menguasai Melaka."
+],
+[
+"2",
+1759,
+"1759",
+"Batu Uban dibuka oleh orang Melayu dari Sumatera."
+],
+[
+"2",
+1786,
+"1786",
+"Francis Light menduduki Pulau Pinang."
+],
+[
+"2",
+1786,
+"11 Ogos 1786",
+"Union Jack dinaikkan di Pulau Pinang."
+],
+[
+"2",
+1787,
+"1787",
+"Pulau Pinang menjadi pelabuhan bebas."
+],
+[
+"2",
+1791,
+"1791",
+"Perjanjian mengiktiraf pendudukan British di Pulau Pinang."
+],
+[
+"2",
+1800,
+"1800",
+"British menduduki Seberang Perai."
+],
+[
+"2",
+1805,
+"1805",
+"Pulau Pinang menjadi Presidensi keempat British di India."
+],
+[
+"2",
+1812,
+"1812",
+"Sultan Mahmud Shah III mangkat; krisis pewarisan Johor Riau."
+],
+[
+"2",
+1819,
+"6 Februari 1819",
+"Perjanjian British–Sultan Hussein–Temenggung Abdul Rahman."
+],
+[
+"2",
+1819,
+"13 Februari 1819",
+"Union Jack dinaikkan di Singapura."
+],
+[
+"2",
+1823,
+"1823",
+"Singapura diisytiharkan pelabuhan bebas."
+],
+[
+"2",
+1824,
+"17 Mac 1824",
+"Perjanjian London."
+],
+[
+"2",
+1824,
+"2 Ogos 1824",
+"Singapura diserahkan kepada British selama-lamanya."
+],
+[
+"2",
+1826,
+"1826",
+"NNS dibentuk."
+],
+[
+"2",
+1832,
+"1832",
+"Pusat pentadbiran NNS dipindahkan dari Pulau Pinang ke Singapura."
+],
+[
+"2",
+1853,
+"1853",
+"Pahang diisytiharkan bebas dan berdaulat oleh Bendahara Tun Ali."
+],
+[
+"2",
+1858,
+"1858",
+"NNS di bawah Pejabat India."
+],
+[
+"2",
+1867,
+"1 April 1867",
+"NNS menjadi Tanah Jajahan British di bawah Pejabat Tanah Jajahan London."
+],
+[
+"2",
+1911,
+"1911",
+"Belanda menghapuskan institusi Kesultanan Riau Lingga."
+],
+[
+"2",
+1946,
+"1946",
+"NNS dibubarkan."
+],
+[
+"3",
+1616,
+"1616",
+"bijih timah mula dilombong di Manjung dan Beruas."
+],
+[
+"3",
+1670,
+"1670",
+"Kota Belanda, Pulau Pangkor dibina."
+],
+[
+"3",
+1790,
+"1790",
+"perjanjian penjualan hasil timah Selangor–Belanda."
+],
+[
+"3",
+1850,
+"1850",
+"Larut dikurniakan kepada Long Jaafar."
+],
+[
+"3",
+1873,
+"1873",
+"rompakan kapal dagang British di Kuala Langat."
+],
+[
+"3",
+1874,
+"1874",
+"serangan rumah api Tanjung Rachado; Perjanjian Pangkor; Perjanjian British-Sungai Ujong."
+],
+[
+"3",
+1875,
+"1875",
+"Perjanjian British-Selangor."
+],
+[
+"3",
+1887,
+"1887",
+"British gunakan Sultan Abu Bakar memujuk Sultan Ahmad; Perjanjian British-Pahang."
+],
+[
+"3",
+1888,
+"1888",
+"kes Goh Hui dijadikan alasan desakan British di Pahang."
+],
+[
+"3",
+1895,
+"1895",
+"Perjanjian Persekutuan; Perjanjian British-Negeri Sembilan."
+],
+[
+"3",
+1896,
+"1896",
+"NNMB/Persekutuan 1896 bermula."
+],
+[
+"3",
+1897,
+"1897",
+"Durbar pertama di Kuala Kangsar."
+],
+[
+"3",
+1909,
+"1909",
+"Majlis Mesyuarat Persekutuan ditubuhkan."
+],
+[
+"4",
+1650,
+"1650",
+"Kanun undang-undang Kedah pertama ditulis."
+],
+[
+"4",
+1699,
+"1699",
+"Jurai keturunan Sultan Melaka berakhir; Johor diperintah keturunan Bendahara."
+],
+[
+"4",
+1708,
+"1708",
+"Sultan Zainal Abidin I menaiki takhta Terengganu."
+],
+[
+"4",
+1812,
+"1812",
+"Sultan Muhammad I Kelantan membuat persetiaan dengan Siam."
+],
+[
+"4",
+1826,
+"1826",
+"Perjanjian Burney British–Siam."
+],
+[
+"4",
+1842,
+"1842",
+"Perlis berpisah daripada Kedah."
+],
+[
+"4",
+1843,
+"1843",
+"Syed Hussin Jamalullail diiktiraf sebagai Raja Perlis pertama."
+],
+[
+"4",
+1855,
+"1855",
+"Perjanjian Sultan Ali–Temenggung Ibrahim tentang Kesang."
+],
+[
+"4",
+1885,
+"1885",
+"Daeng Abu Bakar menjadi Sultan Johor; Perjanjian Setia Johor–British."
+],
+[
+"4",
+1895,
+"1895",
+"Undang-Undang Tubuh Kerajaan Johor dimasyhurkan."
+],
+[
+"4",
+1897,
+"1897",
+"Perjanjian Sulit British–Siam."
+],
+[
+"4",
+1899,
+"1899",
+"Perjanjian Sempadan British–Siam."
+],
+[
+"4",
+1902,
+"1902",
+"Pengisytiharan British–Siam."
+],
+[
+"4",
+1905,
+"1905",
+"Majlis Mesyuarat Negeri Kedah diwujudkan."
+],
+[
+"4",
+1909,
+"10 Mac 1909",
+"Perjanjian Bangkok British–Siam."
+],
+[
+"4",
+1911,
+"1911",
+"Undang-Undang Bagi Diri Kerajaan Terengganu diluluskan."
+],
+[
+"4",
+1914,
+"12 Mei 1914",
+"Johor menerima Penasihat Am British."
+],
+[
+"4",
+1919,
+"24 Mei 1919",
+"Perjanjian Terengganu–British; wakil British menjadi Penasihat British."
+],
+[
+"5",
+1827,
+"1827",
+"Sultan Omar Ali Saifuddin II berhasrat mengawal perdagangan Sarawak."
+],
+[
+"5",
+1841,
+"1841",
+"Perjanjian Brooke–Pengiran Raja Muda Hashim; Sarawak Tanjung Datu–Sungai Samarahan."
+],
+[
+"5",
+1842,
+"1842",
+"Perjanjian Brooke–Sultan Brunei; Brooke diiktiraf Raja Putih."
+],
+[
+"5",
+1842,
+"Januari 1842",
+"Undang-undang Lapan Perkara di Sarawak."
+],
+[
+"5",
+1853,
+"1853",
+"Brooke menguasai Sadong, Batang Lupar, Saribas dan Kalaka."
+],
+[
+"5",
+1861,
+"1861",
+"Sungai Rajang, Oya, Mukah, Tatau dan Bintulu diserahkan kepada Brooke."
+],
+[
+"5",
+1865,
+"1865",
+"Charles Lee Moses menyewa Sabah daripada Sultan Brunei selama 10 tahun."
+],
+[
+"5",
+1878,
+"1878",
+"Dent memajak pantai timur Sabah daripada Sultan Sulu."
+],
+[
+"5",
+1881,
+"1881",
+"SBUB menerima Piagam Diraja; Treacher menjadi Gabenor pertama."
+],
+[
+"5",
+1883,
+"1883",
+"Majlis Penasihat SBUB ditubuhkan; Brooke memperoleh Baram."
+],
+[
+"5",
+1885,
+"1885",
+"Brooke memperoleh Sungai Trusan; menambah bahagian Sarawak."
+],
+[
+"5",
+1888,
+"1888",
+"Borneo Utara menjadi negeri naungan British."
+],
+[
+"5",
+1890,
+"1890",
+"Brooke memperoleh Limbang; Sarawak mempunyai lima bahagian."
+],
+[
+"5",
+1911,
+"1911",
+"Mahkamah Cina diwujudkan di Kuching."
+],
+[
+"5",
+1942,
+"1942",
+"Pentadbiran SBUB berakhir."
+],
+[
+"6",
+1580,
+"1580",
+"Mata wang perak Sepanyol diperkenalkan."
+],
+[
+"6",
+1816,
+"1816",
+"Penang Free School dibuka."
+],
+[
+"6",
+1819,
+"1819",
+"Sekolah Melayu Gelugor dibuka."
+],
+[
+"6",
+1826,
+"1826",
+"Malacca Free School dibuka."
+],
+[
+"6",
+1833,
+"1833",
+"Sekolah Abang Kassim, Kuching dibuka."
+],
+[
+"6",
+1856,
+"1856",
+"Syarikat Borneo Berhad ditubuhkan."
+],
+[
+"6",
+1866,
+"1866",
+"Pejabat pos dan telegraf Batu Gajah dibina."
+],
+[
+"6",
+1872,
+"1872",
+"Jabatan Kerja Raya ditubuhkan."
+],
+[
+"6",
+1877,
+"1877",
+"Chinese Protectorate ditubuhkan."
+],
+[
+"6",
+1878,
+"1878",
+"Hospital kerajaan pertama di Taiping."
+],
+[
+"6",
+1881,
+"1881",
+"Hospital Tung Shin dibina."
+],
+[
+"6",
+1882,
+"1882",
+"Ordinan Buruh Kontrak; getah diuji di Sandakan."
+],
+[
+"6",
+1886,
+"1886",
+"Telegraf Kuala Lumpur–Melaka."
+],
+[
+"6",
+1888,
+"1888",
+"Lombong bawah tanah Sungai Lembing dibuka."
+],
+[
+"6",
+1889,
+"1889",
+"Proklamasi III Perlindungan Hak Peribumi Sabah."
+],
+[
+"6",
+1890,
+"1890",
+"Straits Steamship; Lembaga Penasihat Orang Cina Sandakan; Rumah Pasong Sibu."
+],
+[
+"6",
+1896,
+"1896",
+"Landasan pertama Sabah di Bukau."
+],
+[
+"6",
+1897,
+"1897",
+"Sistem torehan ibedem oleh H.N. Ridley; Lembaga Pesuruhjaya Wang; telegraf Kuching–Singapura."
+],
+[
+"6",
+1900,
+"1900",
+"Institut Penyelidikan Perubatan KL; Beaufort–Jesselton–Tenom."
+],
+[
+"6",
+1901,
+"1901",
+"Buruh Foochow dibawa ke Sarawak."
+],
+[
+"6",
+1905,
+"1905",
+"MCKK; Jabatan Pertanian."
+],
+[
+"6",
+1908,
+"1908",
+"Tabung Imigran India."
+],
+[
+"6",
+1910,
+"1910",
+"Petroleum Miri; getah eksport Sarawak."
+],
+[
+"6",
+1912,
+"1912",
+"Ordinan Buruh mewajibkan sekolah Tamil di ladang."
+],
+[
+"6",
+1913,
+"1913",
+"Akta Tanah Simpanan Melayu."
+],
+[
+"6",
+1917,
+"1917",
+"Kelapa sawit komersial Kuala Selangor; kereta api Bau–Kuching."
+],
+[
+"6",
+1922,
+"1922",
+"Sultan Idris Training College dibuka."
+],
+[
+"6",
+1926,
+"1926",
+"RRIM ditubuhkan."
+],
+[
+"6",
+1931,
+"1931",
+"Jabatan Parit dan Tali Air; Land Settlement Order Sarawak."
+],
+[
+"6",
+1935,
+"1935",
+"Maktab Perguruan Perempuan Melayu Melaka."
+],
+[
+"6",
+1937,
+"1937",
+"Wearne Air Service."
+],
+[
+"6",
+1939,
+"1939",
+"Dolar Malaya menggantikan Dolar Selat; jaringan jalan raya seluruh negeri di Tanah Melayu."
+],
+[
+"6",
+1941,
+"1941",
+"Sabah mempunyai kira-kira 165 km jalan berturap."
+],
+[
+"7",
+1773,
+"1773",
+"Dol Said lahir."
+],
+[
+"7",
+1800,
+"1800",
+"Rentap lahir."
+],
+[
+"7",
+1831,
+"1831",
+"Dol Said menang Perang Naning Pertama."
+],
+[
+"7",
+1832,
+"1832",
+"British menang Perang Naning Kedua; Naning disatukan dengan Melaka."
+],
+[
+"7",
+1853,
+"1853",
+"Rentap menyerang Nanga Skrang; Alan Lee terbunuh."
+],
+[
+"7",
+1860,
+"1860",
+"Pakatan Sharif Masahor–Dato’ Patinggi Abdul Gapur menentang Brooke."
+],
+[
+"7",
+1861,
+"1861",
+"Bukit Sadok ditawan Brooke; Rentap berundur ke Entabai."
+],
+[
+"7",
+1874,
+"1874",
+"British meluaskan kuasa di Sungai Ujong; pakatan sulit Dato’ Maharaja Lela."
+],
+[
+"7",
+1875,
+"2 November 1875",
+"J.W.W. Birch dibunuh di Pasir Salak."
+],
+[
+"7",
+1877,
+"1877",
+"Dato’ Maharaja Lela, Dato’ Sagor, Pandak Indut dan Siputum dihukum gantung."
+],
+[
+"7",
+1891,
+"1891",
+"Dato’ Bahaman memulakan gerakan di Pahang."
+],
+[
+"7",
+1894,
+"1894",
+"Jeram Ampai ditawan Dato’ Bahaman; Bailey mengenakan cukai terhadap Iban Ulu Batang Lupar."
+],
+[
+"7",
+1895,
+"1895",
+"Persekutuan Negeri Sembilan dibentuk."
+],
+[
+"7",
+1897,
+"1897",
+"Mat Salleh menyerang Pulau Gaya dan Ambong."
+],
+[
+"7",
+1898,
+"1898",
+"Rundingan Mat Salleh–Cowie di Menggatal."
+],
+[
+"7",
+1899,
+"1899",
+"SBUB mengambil alih Tambunan."
+],
+[
+"7",
+1900,
+"1900",
+"Mat Salleh dan Mat Sator gugur."
+],
+[
+"7",
+1915,
+"1 Januari 1915",
+"Cukai baharu Kelantan dikuatkuasakan."
+],
+[
+"7",
+1915,
+"29 April 1915",
+"Tok Janggut memboikot cukai di Kampung Tok Akib."
+],
+[
+"7",
+1905,
+"1905",
+"Kolej Melayu Kuala Kangsar ditubuhkan."
+],
+[
+"8",
+1826,
+"1826",
+"Long Jaafar membina sekolah Melayu Matang."
+],
+[
+"8",
+1866,
+"1866",
+"Iskandar Puteri dinamakan Johor Bahru."
+],
+[
+"8",
+1868,
+"1868",
+"Sultan Abu Bakar menerima gelaran Maharaja Johor."
+],
+[
+"8",
+1882,
+"1882",
+"Dato’ Jaafar bin Muhammad menjadi Menteri Besar Johor pertama."
+],
+[
+"8",
+1883,
+"1883",
+"Dato’ Muhammad Ibrahim Munsyi mengetuai Jabatan Pelajaran Johor."
+],
+[
+"8",
+1888,
+"1888",
+"Pakatan Belajar Mengajar Pengetahuan Bahasa ditubuhkan."
+],
+[
+"8",
+1895,
+"14 April 1895",
+"Undang-Undang Tubuh Kerajaan Johor dimasyhurkan."
+],
+[
+"8",
+1903,
+"1903",
+"Durbar Kuala Lumpur."
+],
+[
+"8",
+1909,
+"10 Mac 1909",
+"Perjanjian Bangkok."
+],
+[
+"8",
+1909,
+"15 Julai 1909",
+"Penasihat British dilantik di Perlis dan Kedah."
+],
+[
+"8",
+1910,
+"1910",
+"Perjanjian British-Kelantan; PTM ditubuhkan."
+],
+[
+"8",
+1910,
+"22 April 1910",
+"Perjanjian British-Terengganu."
+],
+[
+"8",
+1911,
+"2 November 1911",
+"Undang-Undang Bagi Diri Kerajaan Terengganu digubal."
+],
+[
+"8",
+1912,
+"1912",
+"Jemaah Mesyuarat Kerajaan dan Jemaah Menteri Terengganu ditubuhkan."
+],
+[
+"8",
+1914,
+"1914",
+"Penasihat Am British ditempatkan di Johor."
+],
+[
+"8",
+1919,
+"24 Mei 1919",
+"Perjanjian Terengganu-British; Penasihat British diterima."
+],
+[
+"8",
+1923,
+"1923",
+"Perjanjian Kedah-British."
+],
+[
+"8",
+1930,
+"1930",
+"Perjanjian Perlis-British."
+],
+[
+"8",
+1933,
+"1933",
+"Kompeni Percubaan Askar Melayu di Port Dickson."
+],
+[
+"8",
+1935,
+"1935",
+"Rejimen Askar Melayu ditubuhkan."
+],
+[
+"8",
+1939,
+"1939",
+"Durbar Seri Menanti; cadangan Malay Girls College."
 ]
 ];
 
-let KNOWN = new Set();
-try{ KNOWN = new Set(JSON.parse(localStorage.getItem('sej3known')||'[]')); }catch(e){}
-const save=()=>{try{
-  localStorage.setItem('sej3known',JSON.stringify([...KNOWN]));
-  // ringkasan kemajuan setiap bab: {bab:[hafal, jumlah]}
-  const prog={}; CARDS.forEach((c,i)=>{const r=prog[c[0]]||(prog[c[0]]=[0,0]); r[1]++; if(KNOWN.has(i)) r[0]++;});
-  localStorage.setItem('sej3progress',JSON.stringify(prog));
-}catch(e){}};
+/* ================= Keadaan & simpanan ================= */
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const IDX={};CARDS.forEach((c,i)=>IDX[c[3]]=i);
+const LEGACY=172;  // bilangan kad dalam versi lama yang menyimpan indeks
+let KNOWN=new Set();
+(function(){const ids=store.get('sej3known_id',null);
+  if(ids) ids.forEach(id=>{if(id in IDX)KNOWN.add(IDX[id])});
+  else store.get('sej3known',[]).forEach(i=>{if(Number.isInteger(i)&&i<LEGACY&&i<CARDS.length)KNOWN.add(i)});})();
+const G=Object.assign({xp:0,streak:0,last:'',right:{},badges:{},blitz:0,matchBest:0,quizPerfect:0,games:0,mute:false},store.get('sej3game',{}));
+const rk=i=>CARDS[i][3];  // G.right disimpan ikut ID kad
+const save=()=>{
+  store.set('sej3known_id',[...KNOWN].map(rk)); store.set('sej3game',G);
+  // kemajuan Bab 1-8 untuk studies.html (kad rentas 'x' tidak dikira)
+  const prog={}; CARDS.forEach((c,i)=>{if(c[0]==='x')return;const r=prog[c[0]]||(prog[c[0]]=[0,0]); r[1]++; if(KNOWN.has(i)) r[0]++;});
+  store.set('sej3progress',prog);
+};
+const strip=s=>s.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const sel=document.getElementById('filter');
-sel.innerHTML='<option value="">Semua topik ('+CARDS.length+')</option>'+Object.entries(T).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join('');
+/* ================= Pangkat ================= */
+const RANKS=['Rakyat','Murid Pondok','Penghulu','Hulubalang','Panglima','Laksamana','Temenggung','Bendahara','Lagenda Sejarah'];
+const need=l=>50*l*(l-1);              // XP minimum untuk tahap l: 0,100,300,600,1000...
+const levelOf=xp=>{let l=1;while(xp>=need(l+1))l++;return l};
+const rankOf=l=>l<=RANKS.length?RANKS[l-1]:RANKS[RANKS.length-1]+' '+'★'.repeat(Math.min(5,l-RANKS.length));
 
-let order=CARDS.map((_,i)=>i);
-function render(){
-  const f=sel.value, deck=document.getElementById('deck');
-  deck.innerHTML='';
-  order.filter(i=>!f||CARDS[i][0]===f).forEach(i=>{
-    const [t,q,a]=CARDS[i], c=`var(${T[t][1]})`;
-    const el=document.createElement('div');
-    el.className='flip'+(KNOWN.has(i)?' known':'');
-    el.style.setProperty('--c',c);
-    el.innerHTML=`<div class="inner">
-      <div class="face"><span class="lbl">${T[t][0]}</span><span class="no">#${i+1}</span><div class="q">${q}</div></div>
-      <div class="face back"><span class="lbl">Jawapan</span><span class="no">#${i+1}</span><div class="a">${a}</div>
-        <button class="mark" style="border:0;background:none;cursor:pointer;color:inherit">${KNOWN.has(i)?'✗ belum hafal':'✓ sudah hafal'}</button></div></div>`;
-    el.addEventListener('click',e=>{
-      if(e.target.classList.contains('mark')){ KNOWN.has(i)?KNOWN.delete(i):KNOWN.add(i); save(); render(); return; }
-      el.classList.toggle('on');
+/* ================= Bunyi (WebAudio) ================= */
+let AC=null;
+function tone(seq){ if(G.mute) return; try{
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  let t=AC.currentTime;
+  seq.forEach(([f,d,type])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type||'triangle';o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.8;});
+}catch(e){} }
+const SFX={ok:(c=0)=>{const m=Math.pow(2,Math.min(c,8)/12);tone([[660*m,.09],[990*m,.14]])},no:()=>tone([[180,.22,'sawtooth']]),flip:()=>tone([[520,.05]]),
+  win:()=>tone([[523,.1],[659,.1],[784,.1],[1047,.25]]),lvl:()=>tone([[392,.12],[523,.12],[659,.12],[784,.12],[1047,.35]]),tick:()=>tone([[880,.03,'square']])};
+
+/* ================= Kesan visual ================= */
+const fx=$('#fx'),cx=fx.getContext('2d');let parts=[],raf=0;
+function sizeFx(){fx.width=innerWidth;fx.height=innerHeight}
+addEventListener('resize',sizeFx);sizeFx();
+function confetti(n=90,x=innerWidth/2,y=innerHeight/3){
+  if(RM) return;
+  const cols=['#f4b942','#e0475b','#3fd1b0','#a78bfa','#60a5fa','#fbefdc'];
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=4+Math.random()*7;
+    parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5,r:3+Math.random()*4,c:cols[i%cols.length],l:70+Math.random()*40,rot:Math.random()*6});}
+  if(!raf) raf=requestAnimationFrame(step);
+}
+function step(){cx.clearRect(0,0,fx.width,fx.height);
+  parts=parts.filter(p=>p.l-->0);
+  parts.forEach(p=>{p.vy+=.25;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.rot+=.2;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.l/30);cx.fillRect(-p.r,-p.r/2,p.r*2,p.r);cx.restore();});
+  raf=parts.length?requestAnimationFrame(step):0;}
+function floatXP(txt,el){const r=el?el.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:0};
+  const f=document.createElement('div');f.className='float';f.textContent=txt;f.style.left=(r.left+r.width/2-20)+'px';f.style.top=(r.top-10)+'px';
+  document.body.appendChild(f);setTimeout(()=>f.remove(),1000);}
+function toast(e,h,d){const t=document.createElement('div');t.className='tst';t.innerHTML=`<span class="e">${e}</span><div><b>${h}</b><small>${d}</small></div>`;
+  $('#toast').appendChild(t);setTimeout(()=>t.remove(),3200);}
+
+/* ================= XP, streak, lencana ================= */
+let pendingLvl=0;
+function addXP(n,el){
+  if(n<=0) return;
+  const before=levelOf(G.xp); G.xp+=n;
+  const d=today();
+  if(G.last!==d){const y=new Date();y.setDate(y.getDate()-1);const yd=y.getFullYear()+'-'+(y.getMonth()+1)+'-'+y.getDate();
+    G.streak=(G.last===yd)?G.streak+1:1;G.last=d;}
+  if(el) floatXP('+'+n,el);
+  const after=levelOf(G.xp); if(after>before) pendingLvl=after;
+  save(); hud(); checkBadges();
+}
+function showLevelUp(){ if(!pendingLvl) return; const l=pendingLvl; pendingLvl=0;
+  $('#lvlN').textContent=l; $('#lvlD').innerHTML=`Kini anda <b>${rankOf(l)}</b>. Teruskan belayar!`;
+  $('#lvlup').classList.add('on'); SFX.lvl(); confetti(140); $('#lvlOk').focus(); }
+$('#lvlOk').onclick=()=>$('#lvlup').classList.remove('on');
+
+function chapStats(t){let k=0,n=0;CARDS.forEach((c,i)=>{if(c[0]===t){n++;if(KNOWN.has(i))k++;}});return[k,n]}
+function starsOf(t){const[k,n]=chapStats(t);const p=n?k/n:0;return p>=1?3:p>=.67?2:p>=.34?1:0}
+const BADGES=[
+  ['first','🌱','Langkah Pertama','Jawab betul soalan pertama',()=>G.games>0||KNOWN.size>0],
+  ['k25','🧠','Ingatan Tajam','25 kad dihafal',()=>KNOWN.size>=25],
+  ['k100','📚','Perpustakaan Bergerak','100 kad dihafal',()=>KNOWN.size>=100],
+  ['kall','👑','Pakar Hikayat','Semua kad dihafal',()=>KNOWN.size>=CARDS.length],
+  ['combo5','🔥','Api Semangat','Combo ×5 dalam kuiz',()=>G.badges.combo5],
+  ['combo10','☄️','Tak Terhenti','Combo ×10 dalam kuiz',()=>G.badges.combo10],
+  ['perfect','💯','Sempurna','Kuiz Kilat 10/10',()=>G.quizPerfect>0],
+  ['blitz15','⚡','Kilat Petir','15+ markah dalam Lawan Masa',()=>G.blitz>=15],
+  ['blitz25','🌩️','Halilintar','25+ markah dalam Lawan Masa',()=>G.blitz>=25],
+  ['match','🧩','Pemadan Pantas','Padan Pasangan tanpa silap',()=>G.badges.match],
+  ['time','📜','Penjaga Masa','Susun garis masa 5/5 pusingan sempurna',()=>G.badges.time],
+  ['s3','🔥','3 Hari Berturut','Belajar 3 hari berturut-turut',()=>G.streak>=3],
+  ['s7','🏆','Seminggu Gigih','Belajar 7 hari berturut-turut',()=>G.streak>=7],
+  ['star1','⭐','Tuan Pulau','3 bintang di satu bab',()=>Object.keys(T).some(t=>starsOf(t)===3)],
+  ['starall','🌟','Laksamana Lautan','3 bintang di semua pulau',()=>Object.keys(T).every(t=>starsOf(t)===3)],
+];
+function checkBadges(){BADGES.forEach(([id,e,h,d,f])=>{if(!G.badges['got_'+id]&&f()){G.badges['got_'+id]=1;toast(e,'Lencana baharu: '+h,d);SFX.win();confetti(60);}});store.set('sej3game',G);}
+
+/* ================= Kemas kini kad ================= */
+function answer(i,ok){
+  const k=rk(i);G.right[k]=ok?(G.right[k]||0)+1:0;
+  if(ok&&G.right[k]>=2) KNOWN.add(i);
+  if(!ok) KNOWN.delete(i);
+  save();
+}
+
+/* ================= HUD ================= */
+function hud(){
+  const l=levelOf(G.xp),a=need(l),b=need(l+1);
+  $('#lvl').textContent=l; $('#rankName').textContent=rankOf(l);
+  $('#xpBar').style.width=Math.min(100,100*(G.xp-a)/(b-a))+'%';
+  $('#xpTxt').textContent=G.xp+' XP · '+(b-G.xp)+' lagi ke '+rankOf(l+1);
+  $('#streak').textContent=G.streak; $('#knownN').textContent=KNOWN.size+'/'+CARDS.length;
+  $('#mute').textContent=G.mute?'🔇':'🔊';
+}
+$('#mute').onclick=()=>{G.mute=!G.mute;save();hud();};
+
+/* ================= Peta pulau ================= */
+const ORDER=['1','2','3','6','5','4','7','8','x'];  // susunan ular: 1→2→3 ↓ 4←5←6 ↓ 7→8→x
+const ROUTE=['1','2','3','4','5','6','7','8','x'];
+let SEL=null;
+try{const b=new URLSearchParams(location.search).get('bab');if(b&&T[b])SEL=b;}catch(e){}
+function shortName(t){return T[t][0].replace(/^Bab \d+ · /,'')}
+function renderMap(){
+  $('#isles').innerHTML=ORDER.map(t=>{const[k,n]=chapStats(t),s=starsOf(t);
+    return `<button class="isle${SEL===t?' sel':''}" data-t="${t}" style="--c:var(${T[t][1]})" aria-pressed="${SEL===t}">
+      <span class="n">${t==='x'?'∞':t}</span><span class="nm">${t==='x'?'Rentas Bab':shortName(t)}</span>
+      <span class="st" aria-label="${s} bintang">${'★'.repeat(s)}${'☆'.repeat(3-s)}</span><span class="ct">${k}/${n}</span></button>`}).join('');
+  document.querySelectorAll('.isle').forEach(b=>b.onclick=()=>{SEL=SEL===b.dataset.t?null:b.dataset.t;SFX.flip();renderMap();});
+  $('#selName').textContent=SEL?(SEL==='x'?'Pulau ∞ · Rentas Bab':'Pulau '+T[SEL][0]):'Semua bab dipilih';
+  requestAnimationFrame(drawRoute);
+  renderModes();
+}
+function drawRoute(){
+  const box=$('#map').getBoundingClientRect();
+  const pts=ROUTE.map(t=>{const r=document.querySelector(`.isle[data-t="${t}"]`).getBoundingClientRect();return[r.left-box.left+r.width/2,r.top-box.top+r.height/2]});
+  let d='M'+pts[0];for(let i=1;i<pts.length;i++){const[a,b]=pts[i-1],[c,e]=pts[i];const mx=(a+c)/2,my=(b+e)/2+(i%2?-18:18);d+=` Q${mx},${my} ${c},${e}`;}
+  $('#routePath').setAttribute('d',d);
+  const tgt=document.querySelector(`.isle[data-t="${SEL||'1'}"]`).getBoundingClientRect();
+  const bt=$('#boat');if(!bt.dataset.on){bt.style.transition='none';requestAnimationFrame(()=>{bt.style.transition='';bt.dataset.on=1});}
+  bt.style.transform=`translate(${tgt.left-box.left+tgt.width-34}px,${tgt.top-box.top-8}px)`;
+}
+addEventListener('resize',()=>{if(!document.body.classList.contains('playing'))drawRoute()});
+$('#allBtn').onclick=()=>{SEL=null;renderMap();};
+
+/* ================= Kolam kad ================= */
+const txtLen=i=>strip(CARDS[i][2]).length;
+function pool(filter){const ids=CARDS.map((_,i)=>i).filter(i=>!SEL||CARDS[i][0]===SEL);return filter?ids.filter(filter):ids}
+// Utamakan kad yang belum dihafal (75%)
+function pickCards(ids,n){const un=shuffle(ids.filter(i=>!KNOWN.has(i))),kn=shuffle(ids.filter(i=>KNOWN.has(i)));
+  const out=[];while(out.length<n&&(un.length||kn.length)){out.push((Math.random()<.75&&un.length)||!kn.length?un.pop():kn.pop())}return out}
+function options(i){
+  const ans=strip(CARDS[i][2]),len=ans.length;
+  let cand=CARDS.map((_,j)=>j).filter(j=>j!==i&&CARDS[j][0]===CARDS[i][0]&&strip(CARDS[j][2])!==ans&&txtLen(j)<=180);
+  if(cand.length<3) cand=CARDS.map((_,j)=>j).filter(j=>j!==i&&strip(CARDS[j][2])!==ans&&txtLen(j)<=180);
+  cand.sort((a,b)=>Math.abs(txtLen(a)-len)-Math.abs(txtLen(b)-len));
+  const seen=new Set([ans]);cand=cand.filter(j=>{const t=strip(CARDS[j][2]);if(seen.has(t))return false;seen.add(t);return true});
+  const pick=shuffle(cand.slice(0,9)).slice(0,3);
+  return shuffle([i,...pick]);
+}
+
+/* ================= Mod permainan ================= */
+const MODES=[
+  ['kad','🃏','Kad Imbas','Terbalikkan kad, nilai diri sendiri.',()=>''],
+  ['kuiz','⚡','Kuiz Kilat','10 soalan, 3 nyawa. Bina combo!',()=>G.quizPerfect?'💯 ×'+G.quizPerfect:''],
+  ['masa','⏱️','Lawan Masa','60 saat. Berapa banyak yang betul?',()=>G.blitz?'Rekod: '+G.blitz:''],
+  ['padan','🧩','Padan Pasangan','Padankan soalan dengan jawapan.',()=>G.matchBest?'Terpantas: '+G.matchBest+'s':''],
+  ['susun','📜','Susun Garis Masa','Susun peristiwa ikut tahun.',()=>''],
+];
+function renderModes(){
+  $('#modes').innerHTML=MODES.map(([id,e,h,d,r])=>`<button class="mode" data-m="${id}"><span class="e">${e}</span><span class="h">${h}</span><span class="d">${d}</span><span class="rec">${r()}</span></button>`).join('');
+  document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>start(b.dataset.m));
+}
+function renderBadges(){$('#badges').innerHTML=BADGES.map(([id,e,h,d])=>`<div class="bdg${G.badges['got_'+id]?' got':''}"><div class="e">${e}</div><div class="h">${h}</div><div class="d">${d}</div></div>`).join('')}
+
+let timerId=0,SID=0;
+// setTimeout yang terbatal sendiri jika pemain keluar / mula permainan lain
+function later(fn,ms){const s=SID;return setTimeout(()=>{if(s===SID)fn()},ms)}
+function stage(title,html){
+  clearInterval(timerId);SID++;
+  document.body.classList.add('playing');scrollTo(0,0);
+  $('#stage').innerHTML=`<div class="stagebar"><span class="ttl">${title}</span><button class="quit" id="quit">✕ Keluar</button></div><div id="sv">${html||''}</div>`;
+  $('#quit').onclick=home;
+}
+function home(){clearInterval(timerId);SID++;document.body.classList.remove('playing','listing');$('#stage').innerHTML='';renderMap();renderBadges();hud();showLevelUp();}
+function scope(){return SEL?(SEL==='x'?'Rentas Bab':T[SEL][0]):'Semua bab'}
+function start(m){({kad:playKad,kuiz:playQuiz,masa:playBlitz,padan:playMatch,susun:playTime})[m]();}
+
+function result(e,h,sc,gain,again,missed){
+  const rv=(missed&&missed.length)?`<div class="review"><h4>Ulang kaji soalan yang tersilap</h4>${missed.map(i=>`<div><b>${CARDS[i][1]}</b><br>${CARDS[i][2]}</div>`).join('')}</div>`:'';
+  $('#sv').innerHTML=`<div class="result"><div class="big-e">${e}</div><h3>${h}</h3><div class="sc">${sc}</div><div class="gain">+${gain} XP</div>
+    <div class="row"><button class="next" id="again">Main lagi</button><button class="next alt" id="toHub">Ke peta</button></div>${rv}</div>`;
+  $('#again').onclick=again;$('#toHub').onclick=home;$('#again').focus();
+  G.games++;save();checkBadges();later(showLevelUp,700);
+}
+
+/* ---- Kad Imbas ---- */
+function playKad(){
+  const ids=pickCards(pool(),20),requeued=new Set(); let k=0,got=0,xp=0;
+  stage('🃏 Kad Imbas · '+scope());
+  const show=()=>{
+    if(k>=ids.length){addXP(xp);SFX.win();confetti();return result('🃏','Sesi tamat!',`${got}/${ids.length} kad anda sudah ingat`,xp,playKad);}
+    const i=ids[k],[t,q,a]=CARDS[i];
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">Kad ${k+1}/${ids.length}</span><span class="pill">✅ ${got}</span></div>
+      <div class="big" id="bc" style="--c:var(${T[t][1]})" tabindex="0" role="button" aria-label="Terbalikkan kad"><div class="inner">
+      <div class="face"><span class="lbl">${T[t][0]}</span><div class="q">${q}</div><span class="tap">Ketik untuk lihat jawapan · tanda ✅ dua kali (dua sesi) untuk hafal</span></div>
+      <div class="face back"><span class="lbl">Jawapan</span><div class="a">${a}</div></div></div></div>
+      <div class="row" id="rate" style="visibility:hidden"><button class="next alt" id="again1">🔁 Belum ingat</button><button class="next" id="gotit">✅ Dah ingat</button></div>`;
+    const bc=$('#bc'),flip=()=>{bc.classList.toggle('on');SFX.flip();$('#rate').style.visibility='visible';};
+    bc.onclick=flip;bc.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}};
+    $('#gotit').onclick=e=>{answer(i,true);got++;xp+=3;floatXP('+3',e.target);SFX.ok();k++;later(show,250);};
+    $('#again1').onclick=()=>{answer(i,false);if(!requeued.has(i)){requeued.add(i);ids.push(i);}k++;show();};
+  };
+  show();
+}
+
+/* ---- Soalan aneka pilihan (dipakai Kuiz & Lawan Masa) ---- */
+function mcq(i,onDone){
+  const[t,q]=CARDS[i],opts=options(i);
+  return{html:`<div class="qcard" style="--c:var(${T[t][1]})"><div class="lbl">${T[t][0]}</div><div class="q">${q}</div></div>
+    <div class="opts">${opts.map((j,n)=>`<button class="opt" data-j="${j}" data-k="${'ABCD'[n]}">${CARDS[j][2]}</button>`).join('')}</div>`,
+   bind(){document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=+b.dataset.j===i;
+      document.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(+o.dataset.j===i)o.classList.add('ok');else if(o!==b)o.classList.add('dim')});
+      if(!ok)b.classList.add('no');
+      answer(i,ok);onDone(ok,b);
+   })}};
+}
+function keys(e){const m={a:0,b:1,c:2,d:3,'1':0,'2':1,'3':2,'4':3}[e.key.toLowerCase()];
+  if(m!==undefined){const o=document.querySelectorAll('.opt')[m];if(o&&!o.disabled)o.click();}
+  else if(e.key==='Enter'){const n=$('#nx');if(n)n.click();}}
+addEventListener('keydown',e=>{if(document.body.classList.contains('playing')&&!$('#lvlup').classList.contains('on'))keys(e)});
+
+/* ---- Kuiz Kilat ---- */
+function playQuiz(){
+  const ids=pickCards(pool(i=>txtLen(i)<=180),10);let k=0,lives=3,combo=0,best=0,score=0,xp=0;const missed=[];
+  stage('⚡ Kuiz Kilat · '+scope());
+  const show=()=>{
+    if(k>=ids.length||lives<=0){
+      if(score===ids.length&&ids.length>=10){G.quizPerfect++;xp+=50;}
+      addXP(xp);
+      const win=lives>0;(win?SFX.win:SFX.no)();if(win)confetti(score===ids.length?160:80);
+      return result(score===ids.length?'💯':win?'🏆':'💔',score===ids.length?'Sempurna!':win?'Tahniah!':'Nyawa habis!',`${score}/${ids.length} betul · combo terbaik ×${best}`,xp,playQuiz,missed);
+    }
+    const i=ids[k],Q=mcq(i,(ok,b)=>{
+      if(ok){combo++;SFX.ok(combo);best=Math.max(best,combo);score++;const g=10*Math.min(combo,5);xp+=g;floatXP('+'+g,b);if(combo>=3)confetti(25,b.getBoundingClientRect().left+b.offsetWidth/2,b.getBoundingClientRect().top);
+        if(combo>=5)G.badges.combo5=1;if(combo>=10)G.badges.combo10=1;}
+      else{SFX.no();combo=0;lives--;missed.push(i);}
+      meters();$('#sv').insertAdjacentHTML('beforeend','<button class="next" id="nx">Seterusnya ⏎</button>');$('#nx').onclick=()=>{k++;show()};$('#nx').focus();
     });
+    $('#sv').innerHTML=`<div class="meters" id="mt"></div>`+Q.html;Q.bind();meters();
+  };
+  const meters=()=>{$('#mt').innerHTML=`<span class="pill">Soalan ${Math.min(k+1,ids.length)}/${ids.length}</span><span class="pill hearts">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</span><span class="pill combo${combo>=2?' hot':''}">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span>`;};
+  show();
+}
+
+/* ---- Lawan Masa ---- */
+function playBlitz(){
+  const all=pool(i=>txtLen(i)<=140);let left=60,score=0,combo=0,xp=0,over=false,bag=[];const missed=[];
+  stage('⏱️ Lawan Masa · '+scope());
+  const next=()=>{if(!bag.length)bag=pickCards(all,all.length);return bag.pop()};
+  const end=()=>{if(over)return;over=true;clearInterval(timerId);const rec=score>G.blitz;if(rec)G.blitz=score;xp=score*6+(rec?30:0);addXP(xp);SFX.win();confetti(rec?150:70);
+    result(rec?'🏅':'⏱️',rec?'Rekod baharu!':'Masa tamat!',`${score} betul dalam 60 saat`,xp,playBlitz,missed.slice(0,8));};
+  const show=()=>{
+    const i=next(),Q=mcq(i,(ok,b)=>{
+      if(over)return;
+      if(ok){score++;combo++;SFX.ok(combo);if(combo%3===0){left=Math.min(60,left+3);floatXP('+3s',b);}}
+      else{SFX.no();combo=0;left=Math.max(0,left-3);missed.push(i);}
+      bar();if(left<=0)return end();
+      later(()=>{if(!over)show()},ok?350:900);
+    });
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">✅ ${score}</span><span class="pill combo">🔥 ×${combo}</span><span class="pill" id="sec">${left}s</span></div><div class="timer" id="tm"><i></i></div>`+Q.html;Q.bind();bar();
+  };
+  const bar=()=>{const t=$('#tm');if(!t)return;t.firstChild.style.width=(left/60*100)+'%';t.classList.toggle('low',left<=10);$('#sec').textContent=left+'s';};
+  timerId=setInterval(()=>{if(over)return;left--;if(left<=5&&left>0)SFX.tick();bar();if(left<=0)end();},1000);
+  show();
+}
+
+/* ---- Padan Pasangan ---- */
+function playMatch(){
+  const ids=pickCards(pool(i=>txtLen(i)<=70&&strip(CARDS[i][1]).length<=110),5);
+  if(ids.length<3){stage('🧩 Padan Pasangan');$('#sv').innerHTML='<p class="hint">Bab ini tiada cukup kad pendek. Pilih bab lain.</p>';return;}
+  let pick=null,done=0,miss=0,t0=Date.now();
+  stage('🧩 Padan Pasangan · '+scope());
+  $('#sv').innerHTML=`<p class="hint">Ketik satu soalan, kemudian jawapannya.</p><div class="meters"><span class="pill" id="mm">✅ 0/${ids.length}</span><span class="pill" id="ms">❌ 0</span></div>
+    <div class="match"><div class="col">${shuffle(ids).map(i=>`<button class="tile q" data-i="${i}" data-s="q">${CARDS[i][1]}</button>`).join('')}</div>
+    <div class="col">${shuffle(ids).map(i=>`<button class="tile" data-i="${i}" data-s="a">${CARDS[i][2]}</button>`).join('')}</div></div>`;
+  document.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{
+    if(!pick||pick.dataset.s===b.dataset.s){if(pick)pick.classList.remove('pick');pick=b;b.classList.add('pick');SFX.flip();return;}
+    const a=pick,ok=a.dataset.i===b.dataset.i;pick=null;a.classList.remove('pick');
+    if(ok){[a,b].forEach(x=>x.classList.add('done'));done++;answer(+b.dataset.i,true);SFX.ok(done);floatXP('+8',b);$('#mm').textContent=`✅ ${done}/${ids.length}`;
+      if(done===ids.length){const s=Math.round((Date.now()-t0)/1000);if(!G.matchBest||s<G.matchBest)G.matchBest=s;if(!miss)G.badges.match=1;
+        const xp=done*8+Math.max(0,40-s)+(miss?0:20);addXP(xp);confetti(120);SFX.win();
+        later(()=>result('🧩','Semua sepadan!',`${s} saat · ${miss} silap`,xp,playMatch),600);}}
+    else{miss++;[a,b].forEach(x=>{x.classList.remove('no');void x.offsetWidth;x.classList.add('no')});SFX.no();$('#ms').textContent='❌ '+miss;}
+  });
+}
+
+/* ---- Susun Garis Masa ---- */
+function playTime(){
+  let evs=EVENTS.filter(e=>!SEL||e[0]===SEL||SEL==='x');
+  if(evs.length<8) evs=EVENTS;
+  let round=0,perfect=0,xp=0;
+  stage('📜 Susun Garis Masa · '+(evs===EVENTS&&SEL?'Semua bab':scope()));
+  const show=()=>{
+    if(round>=5){if(perfect===5)G.badges.time=1;addXP(xp);SFX.win();confetti(perfect*30);
+      return result(perfect===5?'📜':'⌛',perfect===5?'Penjaga Masa!':'Pusingan tamat',`${perfect}/5 pusingan sempurna`,xp,playTime);}
+    // 4 peristiwa dengan tahun berbeza
+    const set=[],yrs=new Set();for(const e of shuffle(evs)){if(!yrs.has(e[1])){set.push(e);yrs.add(e[1]);}if(set.length===4)break;}
+    const placed=[];let checking=false;
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">Pusingan ${round+1}/5</span><span class="pill">🎯 ${perfect}</span></div>
+      <p class="hint">Ketik peristiwa dari yang <b>paling awal</b> hingga <b>paling akhir</b>. Ketik slot untuk batal.</p>
+      <div class="slots">${set.map(()=>'<div class="slot"></div>').join('')}</div>
+      <div class="pool">${set.map((e,n)=>`<button class="ev" data-n="${n}">${e[3]}</button>`).join('')}</div>`;
+    const slots=[...document.querySelectorAll('.slot')];
+    const paint=()=>{slots.forEach((s,n)=>{const e=placed[n];s.className='slot'+(e!==undefined?' full':'');s.innerHTML=e!==undefined?set[e][3]:'';});
+      document.querySelectorAll('.ev').forEach(b=>b.hidden=placed.includes(+b.dataset.n));};
+    slots.forEach((s,n)=>s.onclick=()=>{if(!checking&&placed[n]!==undefined&&placed.length<4){placed.splice(n,1);paint();}});
+    document.querySelectorAll('.ev').forEach(b=>b.onclick=()=>{if(checking||placed.includes(+b.dataset.n))return;placed.push(+b.dataset.n);SFX.flip();paint();if(placed.length===4)check();});
+    const check=()=>{
+      checking=true;
+      const sorted=set.map((e,n)=>n).sort((a,b)=>set[a][1]-set[b][1]);let good=0;
+      slots.forEach((s,n)=>{const e=set[placed[n]],ok=set[placed[n]][1]===set[sorted[n]][1];if(ok)good++;
+        later(()=>{s.classList.add(ok?'ok':'no');s.insertAdjacentHTML('beforeend',`<span class="yr">${e[2]}</span>`);(ok?SFX.ok:SFX.no)()},n*280);});
+      const g=good*5+(good===4?15:0);xp+=g;if(good===4)perfect++;
+      later(()=>{if(good===4)confetti(50);
+        const fix=good<4?`<div class="review" style="max-width:none"><h4>Susunan betul</h4>${sorted.map(n=>`<div style="border-left-color:var(--jade)"><b>${set[n][2]}</b> · ${set[n][3]}</div>`).join('')}</div>`:'';
+        $('#sv').insertAdjacentHTML('beforeend',`<p class="hint" style="margin-top:12px"><b>${good}/4 betul</b> · +${g} XP</p>${fix}<button class="next" id="nx">Seterusnya ⏎</button>`);
+        $('#nx').onclick=()=>{round++;show()};$('#nx').focus();},4*280+150);
+    };
+  };
+  show();
+}
+
+/* ================= Senarai & cetak ================= */
+const sel=$('#filter');
+sel.innerHTML='<option value="">Semua topik ('+CARDS.length+')</option>'+Object.entries(T).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join('');
+let order=CARDS.map((_,i)=>i).sort((a,b)=>(CARDS[a][0]==='x')-(CARDS[b][0]==='x')||CARDS[a][0].localeCompare(CARDS[b][0])||a-b);
+function renderList(){
+  const f=sel.value,deck=$('#deck');deck.innerHTML='';
+  order.filter(i=>!f||CARDS[i][0]===f).forEach(i=>{
+    const[t,q,a]=CARDS[i];const el=document.createElement('div');
+    el.className='flip'+(KNOWN.has(i)?' known':'');el.style.setProperty('--c',`var(${T[t][1]})`);
+    el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Terbalikkan kad #'+(i+1));
+    el.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target===el){e.preventDefault();el.classList.toggle('on')}};
+    el.innerHTML=`<div class="inner"><div class="face"><span class="lbl">${T[t][0]}</span><span class="no">#${i+1}</span><div class="q">${q}</div></div>
+      <div class="face back"><span class="lbl">Jawapan</span><span class="no">#${i+1}</span><div class="a">${a}</div><button class="mark">${KNOWN.has(i)?'✗ Tanda belum hafal':'✓ Tanda sudah hafal'}</button></div></div>`;
+    el.onclick=e=>{if(e.target.classList.contains('mark')){KNOWN.has(i)?KNOWN.delete(i):KNOWN.add(i);save();hud();renderList();return;}el.classList.toggle('on');};
     deck.appendChild(el);
   });
 }
-sel.onchange=render;
-// ?bab=4 membuka terus kad bab itu
-try{const b=new URLSearchParams(location.search).get('bab'); if(b&&T[b]) sel.value=b;}catch(e){}
-save();
-document.getElementById('shuffle').onclick=()=>{for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}render()};
-document.getElementById('reset').onclick=()=>{KNOWN.clear();save();order=CARDS.map((_,i)=>i);render()};
-render();
+sel.onchange=renderList;
+$('#shuffle').onclick=()=>{order=shuffle(order);renderList()};
+$('#toList').onclick=()=>{document.body.classList.add('listing');if(SEL)sel.value=SEL;renderList();scrollTo(0,0)};
+$('#backHub').onclick=home;
+$('#resetAll').onclick=()=>{if(confirm('Padam semua XP, lencana dan kad dihafal?')){KNOWN.clear();Object.keys(G).forEach(k=>delete G[k]);Object.assign(G,{xp:0,streak:0,last:'',right:{},badges:{},blitz:0,matchBest:0,quizPerfect:0,games:0,mute:false});save();home();}};
 
-// Halaman cetak: 10 kad sehelai. Muka belakang ditukar kiri-kanan supaya sejajar bila dicetak dua muka (long edge).
+// Halaman cetak: 10 kad sehelai; muka belakang ditukar kiri-kanan supaya sejajar bila dicetak dua muka (long edge).
 (function(){
-  const out=document.getElementById('print'), PER=10;
-  for(let s=0;s<CARDS.length;s+=PER){
-    const grp=CARDS.slice(s,s+PER).map((c,k)=>[c,s+k]);
-    while(grp.length<PER) grp.push(null);
-    let front='<div class="sheet">', back='<div class="sheet">';
-    grp.forEach(x=>{ front+= x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">${T[x[0][0]][0]}</span><span class="no">#${x[1]+1}</span><div class="q">${x[0][1]}</div></div>`:'<div class="pc blank"></div>'; });
-    for(let r=0;r<PER/2;r++){
-      [grp[r*2+1],grp[r*2]].forEach(x=>{ back+= x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">Jawapan</span><span class="no">#${x[1]+1}</span><div class="a">${x[0][2]}</div></div>`:'<div class="pc blank"></div>'; });
-    }
-    out.innerHTML+=front+'</div>'+back+'</div>';
+  const out=$('#print'),PER=10;let h='';
+  for(let s=0;s<order.length;s+=PER){
+    const grp=order.slice(s,s+PER).map(i=>[CARDS[i],i]);
+    while(grp.length<PER)grp.push(null);
+    let front='<div class="sheet">',back='<div class="sheet">';
+    grp.forEach(x=>{front+=x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">${T[x[0][0]][0]}</span><span class="no">#${x[1]+1}</span><div class="q">${x[0][1]}</div></div>`:'<div class="pc blank"></div>';});
+    for(let r=0;r<PER/2;r++){[grp[r*2+1],grp[r*2]].forEach(x=>{back+=x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">Jawapan</span><span class="no">#${x[1]+1}</span><div class="a">${x[0][2]}</div></div>`:'<div class="pc blank"></div>';});}
+    h+=front+'</div>'+back+'</div>';
   }
+  out.innerHTML=h;
 })();
+
+save();hud();checkBadges();renderMap();renderBadges();
+document.fonts&&document.fonts.ready.then(drawRoute);
 </script>
 </body>
 </html>
