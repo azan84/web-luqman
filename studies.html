@@ -84,6 +84,14 @@
     .thread b { color: var(--text); }
     .thread .lbl { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-3); display: block; margin-bottom: .2rem; }
 
+
+    /* Studies: Geografi T3 */
+    #geografi-t3 { margin-top: 1.6rem; }
+    #geografi-t3 .subject-icon { background: linear-gradient(135deg, #51cf66, #1c7ed6); }
+    .gzones { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .8rem; padding: 1.2rem; }
+    .gzone { display: grid; gap: .6rem; align-content: start; }
+    .gzone > span { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-2); }
+    .gzone .bab { min-height: 0; }
     .soon { opacity: .55; }
 
     @media (max-width: 900px) {
@@ -191,7 +199,50 @@
         </div>
       </article>
 
-      <p class="hint">More subjects coming soon. Kemajuan "sudah hafal" disimpan dalam pelayar ini sahaja.</p>
+
+      <article class="subject" id="geografi-t3">
+        <div class="subject-head">
+          <div class="subject-icon" aria-hidden="true">&#x1F30F;</div>
+          <div>
+            <span class="tag">KSSM · Tingkatan 3</span>
+            <h2>Geografi Tingkatan 3</h2>
+            <p>Dua belas level, satu ekspedisi: baca nota bergambar &amp; animasi, kemudian main <b>Ekspedisi Geografi</b>: 7 permainan, XP, pangkat dan lencana.</p>
+            <div class="subject-actions">
+              <a href="studies/geografi-t3/kad-imbas.html" class="btn btn-small btn-primary">&#x1F3AE; Main Ekspedisi Geografi</a>
+              <a href="studies/geografi-t3/nota.html" class="btn btn-small btn-ghost">&#x1F4D6; Nota Ekspedisi (animasi + foto)</a>
+            </div>
+            <div class="overall"><span id="gOverallText">Kemajuan: 0 kad dihafal</span><div class="bar"><i id="gOverallBar"></i></div></div>
+          </div>
+        </div>
+        <div class="gzones">
+          <div class="gzone"><span>📊 Kemahiran</span>
+            <a class="bab" style="--c:#4dabf7" href="studies/geografi-t3/kad-imbas.html?bab=1" data-gbab="1"><span class="no">BAB 1</span><span class="t">Jadual dan Graf</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#9775fa" href="studies/geografi-t3/kad-imbas.html?bab=2" data-gbab="2"><span class="no">BAB 2</span><span class="t">Carta Pai</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+          <div class="gzone"><span>🌿 Fizikal</span>
+            <a class="bab" style="--c:#38d9a9" href="studies/geografi-t3/kad-imbas.html?bab=3" data-gbab="3"><span class="no">BAB 3</span><span class="t">Persekitaran &amp; Kepelbagaian Hidupan</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#69db7c" href="studies/geografi-t3/kad-imbas.html?bab=4" data-gbab="4"><span class="no">BAB 4</span><span class="t">Tumbuh-tumbuhan Semula Jadi Malaysia</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#ff922b" href="studies/geografi-t3/kad-imbas.html?bab=5" data-gbab="5"><span class="no">BAB 5</span><span class="t">Hidupan Liar Malaysia</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+          <div class="gzone"><span>⛏️ Manusia</span>
+            <a class="bab" style="--c:#e0a37a" href="studies/geografi-t3/kad-imbas.html?bab=6" data-gbab="6"><span class="no">BAB 6</span><span class="t">Sumber Semula Jadi Malaysia</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#fcc419" href="studies/geografi-t3/kad-imbas.html?bab=7" data-gbab="7"><span class="no">BAB 7</span><span class="t">Kegiatan Ekonomi Malaysia</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+          <div class="gzone"><span>🌍 Dunia</span>
+            <a class="bab" style="--c:#f783ac" href="studies/geografi-t3/kad-imbas.html?bab=8" data-gbab="8"><span class="no">BAB 8</span><span class="t">Tumbuhan &amp; Hidupan Liar Dunia</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#ff8787" href="studies/geografi-t3/kad-imbas.html?bab=9" data-gbab="9"><span class="no">BAB 9</span><span class="t">Sumber &amp; Kerjasama Ekonomi Dunia</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+          <div class="gzone"><span>♻️ Alam Sekitar</span>
+            <a class="bab" style="--c:#a9e34b" href="studies/geografi-t3/kad-imbas.html?bab=10" data-gbab="10"><span class="no">BAB 10</span><span class="t">Sumber Hutan</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#3bc9db" href="studies/geografi-t3/kad-imbas.html?bab=11" data-gbab="11"><span class="no">BAB 11</span><span class="t">Kitar Semula</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+          <div class="gzone"><span>🧭 Lapangan</span>
+            <a class="bab" style="--c:#da77f2" href="studies/geografi-t3/kad-imbas.html?bab=12" data-gbab="12"><span class="no">BAB 12</span><span class="t">Panduan Kerja Lapangan</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+        </div>
+      </article>
+
+      <p class="hint">More subjects coming soon. Kemajuan disimpan dalam pelayar ini sahaja.</p>
     </section>
   </main>
 
@@ -216,6 +267,24 @@
       if (total) {
         document.getElementById('overallText').textContent = 'Kemajuan: ' + known + '/' + total + ' kad dihafal';
         document.getElementById('overallBar').style.width = Math.round(100 * known / total) + '%';
+      }
+    })();
+    // Kemajuan Geografi, ditulis oleh studies/geografi-t3/kad-imbas.html
+    (function () {
+      var p = {}, r = {};
+      try { p = JSON.parse(localStorage.getItem('geo3progress') || '{}'); r = JSON.parse(localStorage.getItem('geo3read') || '{}'); } catch (e) {}
+      var known = 0, total = 0;
+      document.querySelectorAll('.bab[data-gbab]').forEach(function (a) {
+        var b = a.getAttribute('data-gbab'), x = p[b];
+        if (r[b]) a.querySelector('.k').textContent = '📖 dibaca';
+        if (!x || !x[1]) return;
+        a.querySelector('.bar i').style.width = Math.round(100 * x[0] / x[1]) + '%';
+        a.querySelector('.k').textContent += ' · ' + x[0] + '/' + x[1];
+      });
+      Object.keys(p).forEach(function (k) { known += p[k][0]; total += p[k][1]; });
+      if (total) {
+        document.getElementById('gOverallText').textContent = 'Kemajuan: ' + known + '/' + total + ' kad dihafal';
+        document.getElementById('gOverallBar').style.width = Math.round(100 * known / total) + '%';
       }
     })();
   </script>

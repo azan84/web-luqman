@@ -1,0 +1,4816 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ekspedisi Geografi T3</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eaf3e4; --panel:#ffffff; --panel2:#e1ecd9; --ink:#10261c; --muted:#4f6b5c; --line:#c9dbbf;
+  --trail:#e8590c; --forest:#2b8a3e; --river:#1c7ed6; --sand:#f2c94c; --red:#e03131; --topo:#b9d3ad;
+  --x:#495057; --c1:#1c7ed6; --c2:#7048e8; --c3:#0ca678; --c4:#2b8a3e; --c5:#e8590c; --c6:#a0522d; --c7:#e67700; --c8:#d6336c; --c9:#c92a2a; --c10:#5c940d; --c11:#1098ad; --c12:#862e9c;
+  --onc:#fff; --disp:"Lilita One",system-ui,sans-serif; --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--onc:#0d1f17;--bg:#0d1f17;--panel:#16302a;--panel2:#1f3d34;--ink:#eef7ea;--muted:#a3bfae;--line:#2d4d40;
+    --trail:#ff922b;--forest:#51cf66;--river:#4dabf7;--sand:#ffd43b;--red:#ff6b6b;--topo:#1e3b2f;
+    --x:#adb5bd;--c1:#4dabf7;--c2:#9775fa;--c3:#38d9a9;--c4:#69db7c;--c5:#ff922b;--c6:#e0a37a;--c7:#fcc419;--c8:#f783ac;--c9:#ff8787;--c10:#a9e34b;--c11:#3bc9db;--c12:#da77f2}
+}
+:root[data-theme="dark"]{--onc:#0d1f17;--bg:#0d1f17;--panel:#16302a;--panel2:#1f3d34;--ink:#eef7ea;--muted:#a3bfae;--line:#2d4d40;
+  --trail:#ff922b;--forest:#51cf66;--river:#4dabf7;--sand:#ffd43b;--red:#ff6b6b;--topo:#1e3b2f;
+  --x:#adb5bd;--c1:#4dabf7;--c2:#9775fa;--c3:#38d9a9;--c4:#69db7c;--c5:#ff922b;--c6:#e0a37a;--c7:#fcc419;--c8:#f783ac;--c9:#ff8787;--c10:#a9e34b;--c11:#3bc9db;--c12:#da77f2}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 var(--body)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+b{font-weight:800}
+.disp{font-family:var(--disp);font-weight:400;letter-spacing:.01em}
+
+/* ---------- HUD ---------- */
+.hud{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:3px solid var(--forest)}
+.hud .wrap{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px}
+.rank{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.lvl{font-family:var(--disp);font-size:1.3rem;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--forest);color:var(--onc);flex:none;border:3px solid var(--sand)}
+.rank .t{font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xpbar{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-top:4px}
+.xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sand),var(--trail));border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.xptxt{font-size:.75rem;color:var(--muted)}
+.pill{display:flex;align-items:center;gap:4px;font-weight:900;padding:6px 10px;border-radius:99px;background:var(--panel2);white-space:nowrap}
+.iconbtn{border:0;background:var(--panel2);border-radius:99px;width:38px;height:38px;cursor:pointer;font-size:1.05rem;flex:none}
+
+/* ---------- Hub ---------- */
+.hero{padding:22px 0 4px}
+.hero h1{font-family:var(--disp);font-weight:400;font-size:clamp(2rem,7vw,3.1rem);line-height:1;margin:0}
+.hero h1 small{display:block;font-size:.42em;color:var(--trail);margin-top:6px}
+.hero p{margin:.6em 0 0;color:var(--muted);max-width:58ch}
+.hubgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start;margin-top:16px}
+.side{position:sticky;top:86px;display:grid;gap:12px}
+.quick{display:grid;gap:10px}
+.bigplay{border:0;cursor:pointer;border-radius:20px;padding:16px 18px;background:var(--trail);color:var(--onc);text-align:left;box-shadow:0 6px 0 color-mix(in srgb,var(--trail) 55%,#000);display:flex;gap:12px;align-items:center}
+.bigplay .e{font-size:2rem}
+.bigplay b{font-family:var(--disp);font-weight:400;font-size:1.25rem;display:block;line-height:1.1}
+.bigplay span{font-size:.85rem;opacity:.95}
+.bigplay:active{translate:0 4px;box-shadow:0 2px 0 color-mix(in srgb,var(--trail) 55%,#000)}
+.bigplay.alt{background:var(--river);box-shadow:0 6px 0 color-mix(in srgb,var(--river) 55%,#000)}
+.bigplay.alt2{background:var(--forest);box-shadow:0 6px 0 color-mix(in srgb,var(--forest) 55%,#000)}
+
+/* Peta laluan (gaya level-select) */
+.trail{position:relative;border-radius:28px;border:3px solid var(--line);overflow:hidden;padding:10px 0 30px;
+  background:
+   repeating-radial-gradient(circle at 18% 12%,transparent 0 22px,var(--topo) 22px 24px),
+   repeating-radial-gradient(circle at 85% 55%,transparent 0 26px,var(--topo) 26px 28px),
+   repeating-radial-gradient(circle at 30% 88%,transparent 0 20px,var(--topo) 20px 22px),
+   var(--panel2);
+  background-size:100% 100%}
+.trail svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.trail svg path.road{fill:none;stroke:var(--panel);stroke-width:18;stroke-linecap:round;opacity:.9}
+.trail svg path.dash{fill:none;stroke:var(--trail);stroke-width:4;stroke-dasharray:2 12;stroke-linecap:round}
+.nodes{position:relative}
+.zone{position:absolute;left:50%;translate:-50% 0;white-space:nowrap;font-family:var(--disp);font-size:1rem;padding:6px 16px;border-radius:12px;background:var(--panel);border:3px solid var(--line);box-shadow:0 4px 0 var(--line);z-index:2}
+.node{--c:var(--x);position:absolute;translate:-50% -50%;width:84px;height:84px;border-radius:50%;border:0;cursor:pointer;z-index:3;
+  background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--c) 55%,#fff),var(--c) 70%);color:var(--onc);
+  box-shadow:0 7px 0 color-mix(in srgb,var(--c) 55%,#000),0 0 0 5px var(--panel);display:grid;place-items:center;transition:transform .15s}
+.node:hover{transform:scale(1.06)}
+.node:active{transform:translateY(4px)}
+.node .n{font-family:var(--disp);font-size:2rem;line-height:1}
+.node .st{position:absolute;bottom:-26px;left:50%;translate:-50% 0;font-size:.95rem;letter-spacing:1px;color:var(--trail);white-space:nowrap;text-shadow:0 1px 0 var(--panel)}
+.node .rd{position:absolute;top:-6px;right:-6px;font-size:1.05rem;background:var(--panel);border-radius:50%;width:28px;height:28px;display:grid;place-items:center;box-shadow:0 2px 0 var(--line)}
+.node .lb{position:absolute;top:50%;translate:0 -50%;width:150px;font-size:.8rem;font-weight:900;line-height:1.15;color:var(--ink);text-align:left;pointer-events:none;
+  background:color-mix(in srgb,var(--panel) 85%,transparent);padding:4px 8px;border-radius:8px}
+.node.r .lb{left:96px}
+.node.l .lb{right:96px;text-align:right}
+.node.sel{box-shadow:0 7px 0 color-mix(in srgb,var(--c) 55%,#000),0 0 0 5px var(--panel),0 0 0 10px var(--sand)}
+.node.next::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:3px solid var(--sand);animation:ring 1.6s ease-out infinite}
+@keyframes ring{from{transform:scale(.8);opacity:1}to{transform:scale(1.25);opacity:0}}
+.me{position:absolute;z-index:4;font-size:2.1rem;pointer-events:none;transition:left .8s cubic-bezier(.45,0,.2,1),top .8s cubic-bezier(.45,0,.2,1);translate:-50% -100%;filter:drop-shadow(0 3px 0 rgba(0,0,0,.2));animation:hop 1.8s ease-in-out infinite}
+@keyframes hop{50%{margin-top:-6px}}
+
+/* Kad level */
+.levelcard{background:var(--panel);border-radius:22px;border:3px solid var(--line);box-shadow:0 6px 0 var(--line);overflow:hidden}
+.levelcard .top{padding:14px 16px;background:var(--c,var(--x));color:var(--onc)}
+.levelcard .top small{font-weight:800;opacity:.9}
+.levelcard .top h3{font-family:var(--disp);font-weight:400;margin:.1em 0 0;font-size:1.3rem;line-height:1.15}
+.levelcard .meta{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px 0;font-weight:800;font-size:.88rem}
+.levelcard .meta .pill{background:var(--panel2)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px 16px}
+.mode{border:0;cursor:pointer;text-align:left;padding:10px;border-radius:14px;background:var(--panel2);display:flex;gap:8px;align-items:center;font-weight:800;font-size:.86rem;line-height:1.15;box-shadow:0 3px 0 var(--line);transition:transform .1s}
+.mode .e{font-size:1.5rem}
+.mode small{display:block;font-weight:600;color:var(--muted);font-size:.72rem}
+.mode:hover{transform:translateY(-2px)}
+.mode:active{transform:translateY(2px);box-shadow:none}
+.mode[disabled]{opacity:.4;cursor:not-allowed}
+.readlink{display:block;margin:0 16px 16px;text-align:center;font-weight:900;padding:10px;border-radius:14px;border:2px dashed var(--c,var(--line));color:var(--ink);text-decoration:none}
+
+h2.sec{font-family:var(--disp);font-weight:400;font-size:1.35rem;margin:28px 0 10px}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.bdg{padding:12px 8px;border-radius:16px;background:var(--panel);border:2px dashed var(--line);text-align:center}
+.bdg .e{font-size:1.8rem;filter:grayscale(1);opacity:.35}
+.bdg .h{font-weight:900;font-size:.82rem;line-height:1.2}
+.bdg .d{font-size:.7rem;color:var(--muted);line-height:1.25}
+.bdg.got{border:2px solid var(--sand);background:color-mix(in srgb,var(--sand) 16%,var(--panel))}
+.bdg.got .e{filter:none;opacity:1}
+.foot{color:var(--muted);font-size:.85rem;margin:28px 0 40px}
+.foot button{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:inherit;padding:0}
+
+/* ---------- Stage ---------- */
+#stage{display:none;padding:14px 0 60px;max-width:760px;margin:0 auto}
+body.playing #hub{display:none}
+body.playing #stage{display:block}
+.stagebar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.stagebar .ttl{font-family:var(--disp);font-size:1.15rem;flex:1;min-width:0}
+.quit{border:2px solid var(--line);background:var(--panel);border-radius:99px;padding:6px 14px;font-weight:800;cursor:pointer}
+.meters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.meters .pill{background:var(--panel)}
+.combo{color:var(--trail)}
+.combo.hot{animation:pulse .5s}
+@keyframes pulse{40%{transform:scale(1.25)}}
+.timer{height:12px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-bottom:14px}
+.timer i{display:block;height:100%;background:var(--forest);transition:width .25s linear}
+.timer.low i{background:var(--red)}
+
+.qcard{--c:var(--x);background:var(--panel);border-radius:22px;padding:22px 20px;border:2px solid var(--line);border-top:10px solid var(--c);box-shadow:0 8px 0 var(--line);margin-bottom:16px}
+.qcard .lbl{font-size:.75rem;font-weight:900;color:var(--c)}
+.qcard .q{font-size:1.18rem;font-weight:800;margin-top:6px}
+.opts{display:grid;gap:10px}
+.opt{border:0;cursor:pointer;text-align:left;padding:14px 16px 14px 52px;border-radius:16px;background:var(--panel);box-shadow:0 0 0 2px var(--line),0 5px 0 var(--line);position:relative;font-size:.95rem;transition:transform .1s}
+.opt::before{content:attr(data-k);position:absolute;left:12px;top:50%;translate:0 -50%;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--panel2);font-family:var(--disp);font-size:.95rem}
+.opt:hover:not(:disabled){transform:translateY(-2px)}
+.opt:disabled{cursor:default}
+.opt.ok{background:color-mix(in srgb,var(--forest) 22%,var(--panel));box-shadow:0 0 0 3px var(--forest),0 5px 0 var(--forest)}
+.opt.no{background:color-mix(in srgb,var(--red) 18%,var(--panel));box-shadow:0 0 0 3px var(--red),0 5px 0 var(--red);animation:shake .35s}
+.opt.dim{opacity:.45}
+@keyframes shake{20%,60%{translate:-6px 0}40%,80%{translate:6px 0}}
+.next{display:block;margin:16px auto 0;border:0;cursor:pointer;padding:12px 28px;border-radius:99px;background:var(--trail);color:var(--onc);font-weight:900;font-size:1rem;box-shadow:0 5px 0 color-mix(in srgb,var(--trail) 55%,#000)}
+.next:active{translate:0 3px;box-shadow:0 2px 0 color-mix(in srgb,var(--trail) 55%,#000)}
+.next.alt{background:var(--panel2);color:var(--ink);box-shadow:0 5px 0 var(--line)}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.explain{margin-top:12px;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--river) 12%,var(--panel));border-left:5px solid var(--river);font-size:.92rem}
+
+/* kad imbas besar */
+.big{perspective:1200px;height:300px;cursor:pointer;margin-bottom:16px}
+.big .inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.big.on .inner{transform:rotateY(180deg)}
+.big .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:24px;padding:28px 22px 22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  background:var(--panel);border:2px solid var(--line);border-top:10px solid var(--c);box-shadow:0 8px 0 var(--line);overflow:auto}
+.big .back{transform:rotateY(180deg);background:color-mix(in srgb,var(--c) 10%,var(--panel))}
+.big .q{font-size:1.25rem;font-weight:800}
+.big .a{font-size:1.05rem}
+.big .tap{position:absolute;bottom:10px;font-size:.75rem;color:var(--muted);font-weight:700}
+.big .lbl{position:absolute;top:10px;left:16px;font-size:.75rem;font-weight:900;color:var(--c)}
+
+/* padan */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:grid;gap:10px;align-content:start}
+.tile{border:0;cursor:pointer;padding:12px;border-radius:14px;background:var(--panel);box-shadow:0 0 0 2px var(--line),0 4px 0 var(--line);font-size:.88rem;text-align:left;min-height:60px;transition:transform .15s,opacity .3s;overflow-wrap:anywhere}
+.tile.q{font-weight:800}
+.tile.pick{box-shadow:0 0 0 3px var(--sand),0 4px 0 var(--sand);transform:translateY(-2px)}
+.tile.no{animation:shake .35s;box-shadow:0 0 0 3px var(--red),0 4px 0 var(--red)}
+.tile.done{animation:pop .45s forwards;pointer-events:none}
+@keyframes pop{40%{transform:scale(1.08);box-shadow:0 0 0 3px var(--forest)}100%{transform:scale(.85);opacity:0;visibility:hidden}}
+
+/* susun kumpulan (item jatuh ke dalam tong) */
+.sky{position:relative;height:250px;border-radius:20px;overflow:hidden;margin-bottom:12px;border:2px solid var(--line);
+  background:linear-gradient(var(--panel),color-mix(in srgb,var(--river) 14%,var(--panel)))}
+.drop{position:absolute;left:50%;top:-70px;translate:-50% 0;max-width:86%;padding:12px 16px;border-radius:16px;background:var(--panel);border:3px solid var(--ink);font-weight:900;text-align:center;box-shadow:0 5px 0 var(--ink);font-size:1rem}
+.drop.fall{top:calc(100% - 10px);transition:top linear}
+.drop.in{transition:top .25s,transform .35s,opacity .35s;transform:scale(.4);opacity:0}
+.drop.bad{animation:shake .35s;border-color:var(--red);box-shadow:0 5px 0 var(--red)}
+.danger{position:absolute;left:0;right:0;bottom:0;height:8px;background:repeating-linear-gradient(45deg,var(--red) 0 10px,transparent 10px 20px);opacity:.7}
+.bins{display:grid;gap:10px}
+.bin{--c:var(--x);border:0;cursor:pointer;border-radius:16px 16px 22px 22px;padding:14px 8px 12px;background:color-mix(in srgb,var(--c) 22%,var(--panel));box-shadow:0 0 0 3px var(--c),0 6px 0 var(--c);font-weight:900;font-size:.9rem;line-height:1.2;min-height:78px;position:relative}
+.bin small{display:block;font-family:var(--disp);font-size:1rem;color:var(--c)}
+.bin.flash{animation:binok .5s}
+@keyframes binok{40%{transform:scale(1.08) rotate(-2deg)}}
+.bin.hint{animation:pulse .6s 2}
+
+/* benar / salah */
+.tfwrap{position:relative;height:260px;margin-bottom:16px;touch-action:pan-y}
+.tfc{position:absolute;inset:0;border-radius:24px;background:var(--panel);border:3px solid var(--line);box-shadow:0 8px 0 var(--line);display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font-size:1.2rem;font-weight:800;cursor:grab;user-select:none;transition:transform .25s,opacity .25s}
+.tfc.drag{transition:none}
+.tfc .lbl{position:absolute;top:10px;left:16px;font-size:.75rem;font-weight:900;color:var(--c)}
+.tfc .stamp{position:absolute;top:18px;font-family:var(--disp);font-size:1.6rem;padding:2px 12px;border-radius:10px;border:4px solid;opacity:0}
+.tfc .stamp.t{right:18px;color:var(--forest);rotate:12deg}
+.tfc .stamp.f{left:18px;color:var(--red);rotate:-12deg}
+.tfbtns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tfbtns button{border:0;cursor:pointer;padding:16px;border-radius:18px;font-family:var(--disp);font-size:1.25rem;color:var(--onc)}
+.tfbtns .f{background:var(--red);box-shadow:0 6px 0 color-mix(in srgb,var(--red) 55%,#000)}
+.tfbtns .t{background:var(--forest);box-shadow:0 6px 0 color-mix(in srgb,var(--forest) 55%,#000)}
+.tfbtns button:active{translate:0 4px;box-shadow:none}
+
+/* makmal graf */
+.chart{background:var(--panel);border-radius:18px;border:2px solid var(--line);padding:12px;margin-bottom:12px}
+.chart svg{width:100%;height:auto;display:block}
+.pie{width:190px;height:190px;border-radius:50%;margin:6px auto;position:relative;animation:spin-in .9s cubic-bezier(.3,1.3,.5,1)}
+@keyframes spin-in{from{transform:rotate(-120deg) scale(.6);opacity:0}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:center;font-size:.85rem;font-weight:800}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.bar-g rect{transform-box:fill-box;transform-origin:bottom;animation:grow .8s cubic-bezier(.3,1.2,.5,1) backwards}
+@keyframes grow{from{transform:scaleY(0)}}
+
+/* keputusan */
+.result{text-align:center;padding:20px 10px}
+.result .big-e{font-size:4rem;line-height:1;animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes drop{from{transform:translateY(-40px) scale(.4);opacity:0}}
+.result h3{font-family:var(--disp);font-weight:400;font-size:1.8rem;margin:.3em 0 .1em}
+.result .sc{font-size:1.1rem;font-weight:800}
+.result .gain{font-family:var(--disp);color:var(--trail);font-size:1.5rem;margin:.4em 0}
+.review{text-align:left;margin:18px auto 0;max-width:640px}
+.review h4{margin:0 0 8px}
+.review div{padding:10px 12px;border-radius:12px;background:var(--panel);border-left:5px solid var(--red);margin-bottom:8px;font-size:.88rem}
+
+.float{position:fixed;z-index:60;pointer-events:none;font-family:var(--disp);color:var(--trail);font-size:1.4rem;text-shadow:0 2px 0 rgba(0,0,0,.25);animation:up 1s forwards}
+@keyframes up{to{transform:translateY(-60px);opacity:0}}
+#toast{position:fixed;left:50%;bottom:20px;translate:-50% 0;z-index:70;display:grid;gap:8px;width:min(92vw,380px)}
+.tst{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--panel);border:2px solid var(--sand);box-shadow:0 10px 30px rgba(0,0,0,.25);animation:tin .4s cubic-bezier(.3,1.5,.5,1)}
+.tst .e{font-size:1.8rem}
+.tst small{display:block;color:var(--muted)}
+@keyframes tin{from{transform:translateY(30px);opacity:0}}
+#lvlup{position:fixed;inset:0;z-index:80;display:none;place-items:center;background:rgba(5,20,12,.7);padding:16px}
+#lvlup.on{display:grid}
+#lvlup .box{background:var(--panel);border-radius:26px;padding:26px 22px;text-align:center;max-width:360px;width:100%;border:3px solid var(--sand);animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
+#lvlup .crest{font-family:var(--disp);font-size:3.4rem;width:110px;height:110px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;background:var(--forest);color:var(--onc);border:5px solid var(--sand)}
+#lvlup h3{font-family:var(--disp);font-weight:400;margin:.2em 0;font-size:1.6rem}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:75}
+
+/* senarai & cetak */
+#list{display:none}
+body.listing #hub{display:none}
+body.listing #list{display:block}
+#deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;padding:8px 0 60px}
+.flip{perspective:900px;height:210px;cursor:pointer}
+.flip .inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .inner{transform:rotateY(180deg)}
+.flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;background:var(--panel);border:1px solid var(--line);border-top:7px solid var(--c);overflow:auto}
+.flip .back{transform:rotateY(180deg)}
+.flip .lbl{position:absolute;top:8px;left:14px;font-size:.72rem;font-weight:900;color:var(--c)}
+.flip .no{position:absolute;top:8px;right:14px;font-size:.72rem;color:var(--muted)}
+.flip .q{font-weight:800;text-align:center}
+.flip .a{font-size:.93rem}
+.flip.known{opacity:.5}
+.flip .mark{position:absolute;bottom:6px;right:10px;font-size:.75rem;color:var(--muted);border:0;background:none;cursor:pointer}
+.listbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+.listbar select,.listbar button{font:800 14px var(--body);padding:8px 14px;border-radius:99px;border:2px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.listbar .primary{background:var(--trail);color:var(--onc);border-color:var(--trail)}
+.hint{font-size:.85rem;color:var(--muted);text-align:center;margin:0 0 12px}
+
+#print{display:none}
+@page{size:A4;margin:8mm}
+@media print{
+  :root,:root[data-theme="dark"]{--onc:#fff;--bg:#fff;--panel:#fff;--ink:#111;--muted:#555;--line:#999;
+    --x:#495057;--c1:#1c7ed6;--c2:#7048e8;--c3:#0ca678;--c4:#2b8a3e;--c5:#e8590c;--c6:#a0522d;--c7:#e67700;--c8:#d6336c;--c9:#c92a2a;--c10:#5c940d;--c11:#1098ad;--c12:#862e9c}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+  .hud,#hub,#stage,#list,#toast,#lvlup,#fx,.noprint{display:none!important}
+  #print{display:block}
+  .sheet{width:194mm;height:280mm;display:grid;grid-template-columns:97mm 97mm;grid-template-rows:repeat(5,56mm);break-after:page}
+  .sheet:last-child{break-after:auto}
+  .pc{border:1px dashed #999;padding:5mm 5mm 3mm;position:relative;display:flex;flex-direction:column;justify-content:center;border-top:4mm solid var(--c);overflow:hidden;font-family:system-ui,sans-serif}
+  .pc .lbl{position:absolute;top:2mm;left:5mm;font-size:7.5pt;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.05em}
+  .pc .no{position:absolute;top:2mm;right:5mm;font-size:7.5pt;color:#777}
+  .pc .q{font-size:11pt;font-weight:700;text-align:center}
+  .pc .a{font-size:9pt}
+  .pc.blank{border-color:transparent}
+}
+@media (max-width:820px){
+  .hubgrid{grid-template-columns:1fr}
+  .side{position:static}
+}
+@media (max-width:560px){
+  .rank .xptxt{display:none}
+  .node{width:72px;height:72px}
+  .node .n{font-size:1.7rem}
+  .node .lb{width:110px;font-size:.72rem}
+  .node.r .lb{left:82px}.node.l .lb{right:82px}
+  .tile{font-size:.8rem;padding:9px 8px}
+  .big{height:330px}
+  .bin{font-size:.8rem;min-height:70px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<a class="noprint" href="../../studies.html#geografi-t3" style="display:inline-block;margin:10px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card,var(--panel));color:var(--ink);font:700 14px system-ui;text-decoration:none">← Studies</a>
+
+
+<div class="hud">
+  <div class="wrap">
+    <div class="rank">
+      <div class="lvl" id="lvl">1</div>
+      <div style="min-width:0;flex:1">
+        <div class="t" id="rankName">Peneroka Baharu</div>
+        <div class="xpbar"><i id="xpBar"></i></div>
+        <div class="xptxt" id="xpTxt">0 XP</div>
+      </div>
+    </div>
+    <span class="pill" title="Hari belajar berturut-turut">🔥 <span id="streak">0</span></span>
+    <span class="pill" title="Kad dihafal">🧠 <span id="knownN">0</span></span>
+    <button class="iconbtn" id="mute" aria-label="Bunyi">🔊</button>
+  </div>
+</div>
+
+<main class="wrap">
+<section id="hub">
+  <div class="hero">
+    <h1>Ekspedisi Geografi<small>Tingkatan 3 · 12 checkpoint</small></h1>
+    <p>Ketik checkpoint untuk pilih bab dan permainan. Jawab betul 2 kali berturut-turut untuk <b>hafal</b> kad. Baca nota setiap bab untuk XP tambahan.</p>
+  </div>
+
+  <div class="hubgrid">
+    <div class="trail" id="trail">
+      <svg aria-hidden="true"><path class="road" id="road"/><path class="dash" id="dash"/></svg>
+      <div class="nodes" id="nodes"></div>
+    </div>
+    <aside class="side">
+      <div class="levelcard" id="levelcard"></div>
+      <div class="quick">
+        <button class="bigplay" id="mixQuiz"><span class="e">⚡</span><div><b>Cabaran Campur</b><span>Kuiz Kilat daripada semua 12 bab</span></div></button>
+        <button class="bigplay alt" id="mixTf"><span class="e">👍</span><div><b>Benar atau Salah?</b><span>45 saat, leret atau ketik</span></div></button>
+        <button class="bigplay alt2" id="mixSort"><span class="e">🗑️</span><div><b>Susun Kumpulan</b><span>Masukkan ke tong yang betul</span></div></button>
+      </div>
+    </aside>
+  </div>
+
+  <h2 class="sec">🏅 Lencana Penjelajah</h2>
+  <div class="badges" id="badges"></div>
+
+  <p class="foot">Kemajuan disimpan dalam pelayar ini sahaja. <button id="toList">Lihat senarai semua kad &amp; cetak</button> · <button id="resetAll">Set semula kemajuan</button></p>
+</section>
+
+<section id="stage"></section>
+
+<section id="list">
+  <div class="listbar">
+    <button id="backHub">← Kembali</button>
+    <select id="filter" aria-label="Tapis bab"></select>
+    <button id="shuffle">🔀 Kocok</button>
+    <button class="primary" onclick="window.print()">🖨️ Cetak kad</button>
+  </div>
+  <p class="hint" style="text-align:left">Cetak A4, <b>dua muka (lipat pada tepi panjang)</b>: jawapan jatuh tepat di belakang soalan. Gunting ikut garisan putus-putus.</p>
+  <div id="deck"></div>
+</section>
+</main>
+
+<div id="print"></div>
+<div id="toast" aria-live="polite"></div>
+<div id="lvlup" role="dialog" aria-modal="true" aria-labelledby="lvlT"><div class="box"><div class="crest" id="lvlN">2</div><h3 id="lvlT">Naik pangkat!</h3><p id="lvlD"></p><button class="next" id="lvlOk">Teruskan</button></div></div>
+<canvas id="fx"></canvas>
+
+<script>
+const T = {
+"1": [
+"Bab 1 · Jadual dan Graf",
+"--c1",
+"kemahiran"
+],
+"2": [
+"Bab 2 · Carta Pai",
+"--c2",
+"kemahiran"
+],
+"3": [
+"Bab 3 · Persekitaran & Kepelbagaian Hidupan",
+"--c3",
+"fizikal"
+],
+"4": [
+"Bab 4 · Tumbuh-tumbuhan Semula Jadi Malaysia",
+"--c4",
+"fizikal"
+],
+"5": [
+"Bab 5 · Hidupan Liar Malaysia",
+"--c5",
+"fizikal"
+],
+"6": [
+"Bab 6 · Sumber Semula Jadi Malaysia",
+"--c6",
+"manusia"
+],
+"7": [
+"Bab 7 · Kegiatan Ekonomi Malaysia",
+"--c7",
+"manusia"
+],
+"8": [
+"Bab 8 · Tumbuhan & Hidupan Liar Dunia",
+"--c8",
+"dunia"
+],
+"9": [
+"Bab 9 · Sumber & Kerjasama Ekonomi Dunia",
+"--c9",
+"dunia"
+],
+"10": [
+"Bab 10 · Sumber Hutan",
+"--c10",
+"alam"
+],
+"11": [
+"Bab 11 · Kitar Semula",
+"--c11",
+"alam"
+],
+"12": [
+"Bab 12 · Panduan Kerja Lapangan",
+"--c12",
+"lapangan"
+],
+"x": [
+"Rentas Bab",
+"--x",
+"lapangan"
+]
+};
+const ZONES = {
+"kemahiran": [
+"📊",
+"Kemahiran Geografi"
+],
+"fizikal": [
+"🌿",
+"Geografi Fizikal"
+],
+"manusia": [
+"⛏️",
+"Geografi Manusia"
+],
+"dunia": [
+"🌍",
+"Geografi Kawasan: Dunia"
+],
+"alam": [
+"♻️",
+"Isu & Alam Sekitar"
+],
+"lapangan": [
+"🧭",
+"Kerja Lapangan"
+]
+};
+// [bab, soalan, jawapan, id]
+const CARDS = [
+[
+"1",
+"Apakah jadual?",
+"Cara mempersembahkan data dan maklumat secara lebih tersusun.",
+"2a331fa958"
+],
+[
+"1",
+"Nyatakan ciri jadual.",
+"Tajuk, data dan maklumat, serta sumber yang bersesuaian.",
+"cb31cd24b2"
+],
+[
+"1",
+"Mengapa jadual digunakan?",
+"Untuk melihat perubahan dan pertalian antara dua set maklumat.",
+"3325bbc269"
+],
+[
+"1",
+"Nyatakan lima kaedah mengumpul maklumat.",
+"Pemerhatian, temu bual, banci, soal selidik dan rujukan kepustakaan.",
+"7c7b05aa94"
+],
+[
+"1",
+"Apakah pemerhatian?",
+"Mengumpul maklumat melalui pemerhatian dan catatan.",
+"7ff58fead6"
+],
+[
+"1",
+"Apakah temu bual?",
+"Pengumpulan maklumat secara lisan melalui perjumpaan atau soal jawab.",
+"08d94b90bb"
+],
+[
+"1",
+"Apakah banci?",
+"Kaedah mengumpul maklumat tentang sesuatu jumlah yang dihitung.",
+"0ec053fc44"
+],
+[
+"1",
+"Apakah soal selidik?",
+"Pengumpulan maklumat menggunakan borang yang diedarkan dan dikumpulkan semula.",
+"a6ebf3578d"
+],
+[
+"1",
+"Apakah rujukan kepustakaan?",
+"Merujuk bahan terbitan seperti buku, majalah, risalah atau laman web.",
+"f151d155d3"
+],
+[
+"1",
+"Nyatakan tiga jenis graf dalam bab ini.",
+"Graf bar mudah, graf garisan mudah dan graf gabungan.",
+"3580d1d0dc"
+],
+[
+"1",
+"Apakah kegunaan graf bar mudah?",
+"Mempersembahkan data boleh dikira dan menunjukkan perbezaan komponen.",
+"a366c738d2"
+],
+[
+"1",
+"Apakah lima komponen graf bar mudah?",
+"Tajuk, paksi menegak, paksi mendatar, bar dan petunjuk.",
+"0a12e9858b"
+],
+[
+"1",
+"Apakah maksud ketinggian bar?",
+"Kuantiti sesuatu komponen.",
+"6eb1ffb4da"
+],
+[
+"1",
+"Apakah kegunaan graf garisan mudah?",
+"Menunjukkan perubahan jumlah atau nilai yang berterusan.",
+"fc79c10e53"
+],
+[
+"1",
+"Apakah maksud garisan curam?",
+"Perubahan yang besar.",
+"1209518c06"
+],
+[
+"1",
+"Apakah maksud garisan mendatar?",
+"Tiada perubahan nilai dalam tempoh tertentu.",
+"46f0037ac6"
+],
+[
+"1",
+"Mengapa graf garisan mudah tidak memerlukan petunjuk?",
+"Kerana hanya mempunyai satu garisan.",
+"aa95b79f06"
+],
+[
+"1",
+"Apakah graf gabungan?",
+"Gabungan graf bar mudah dan graf garisan.",
+"178575e6e7"
+],
+[
+"1",
+"Bilakah graf gabungan sesuai digunakan?",
+"Untuk dua data saling berkaitan seperti suhu dan hujan.",
+"bae93add2f"
+],
+[
+"1",
+"Apakah langkah pertama membina jadual?",
+"Susun data atau maklumat dalam bentuk jadual.",
+"f5ee154885"
+],
+[
+"1",
+"Apakah langkah kedua membina jadual?",
+"Bina jadual kekerapan.",
+"31b9e434d5"
+],
+[
+"1",
+"Apakah langkah pertama graf garisan mudah?",
+"Lukis paksi mendatar dan paksi menegak serta pilih skala.",
+"6fbeb579db"
+],
+[
+"1",
+"Apakah langkah terakhir graf garisan mudah?",
+"Sambung titik, label paksi dan berikan tajuk.",
+"96bd38f977"
+],
+[
+"1",
+"Nyatakan langkah mentafsir selepas melihat tajuk.",
+"Perhatikan maklumat jadual serta paksi menegak dan paksi mendatar.",
+"0724007bbe"
+],
+[
+"1",
+"Apakah perlu dihuraikan bagi graf garisan mudah?",
+"Aliran perubahan data.",
+"74c1ba5037"
+],
+[
+"1",
+"KBAT: Mengapa data hujan dan suhu sesuai sebagai graf gabungan?",
+"Kedua-duanya dua maklumat berlainan yang saling berkaitan.",
+"b791904102"
+],
+[
+"1",
+"KBAT: Mengapa jadual perlu diringkaskan sebelum dibina graf?",
+"Supaya data lebih mudah dibaca, difahami dan ditafsir.",
+"f634a265ee"
+],
+[
+"1",
+"KBAT: Jika garisan jualan mendatar, apakah tafsirannya?",
+"Nilai jualan tidak berubah dalam tempoh tersebut.",
+"adfc8950f0"
+],
+[
+"2",
+"Apakah carta pai?",
+"Gambar rajah bulatan yang dibahagikan kepada beberapa sektor.",
+"3644cb77c8"
+],
+[
+"2",
+"Apakah yang diwakili oleh setiap sektor?",
+"Maklumat tertentu.",
+"dff2512149"
+],
+[
+"2",
+"Apakah nilai keseluruhan bulatan carta pai?",
+"360°.",
+"1d214c2522"
+],
+[
+"2",
+"360° mewakili berapa peratus?",
+"100%.",
+"b8203f9089"
+],
+[
+"2",
+"Dalam unit apakah nilai sektor dinyatakan?",
+"Peratus (%).",
+"52e3368211"
+],
+[
+"2",
+"Nyatakan tiga ciri lengkap carta pai.",
+"Tajuk, petunjuk dan jumlah keseluruhan.",
+"b002b31957"
+],
+[
+"2",
+"Apakah fungsi petunjuk?",
+"Menerangkan sektor carta pai.",
+"88fba87e3e"
+],
+[
+"2",
+"Apakah kegunaan carta pai?",
+"Menunjukkan perbandingan data dengan lebih jelas.",
+"547bca304d"
+],
+[
+"2",
+"Apakah satu contoh data untuk carta pai?",
+"Negara asal pelancong asing ke Malaysia.",
+"69d3ea550a"
+],
+[
+"2",
+"Siapakah pencipta carta pai?",
+"William Playfair.",
+"45e4461868"
+],
+[
+"2",
+"Bilakah carta pai dicipta?",
+"Tahun 1801.",
+"15646de7b0"
+],
+[
+"2",
+"Apakah langkah pertama membina carta pai?",
+"Tukarkan nilai mutlak kepada peratus.",
+"1abf21ece7"
+],
+[
+"2",
+"Bagaimanakah peratus dikira?",
+"Nilai kategori ÷ jumlah keseluruhan × 100%.",
+"bb92f8cc77"
+],
+[
+"2",
+"Bagaimanakah saiz sudut dikira?",
+"Peratus ÷ 100 × 360°.",
+"08cba1cef5"
+],
+[
+"2",
+"Apakah alat untuk melukis bulatan?",
+"Jangka lukis.",
+"7460422d2f"
+],
+[
+"2",
+"Apakah alat untuk mengukur saiz sudut?",
+"Jangka sudut.",
+"62ec0669bc"
+],
+[
+"2",
+"Bagaimanakah jejari pertama dilukis?",
+"Dari pusat bulatan tegak ke atas.",
+"efa3b29cb2"
+],
+[
+"2",
+"Apakah turutan lukisan sektor?",
+"Nilai terbesar ke nilai terkecil.",
+"1c843474de"
+],
+[
+"2",
+"Apakah arah melukis sektor?",
+"Mengikut arah putaran jam.",
+"f17e9a0070"
+],
+[
+"2",
+"Di manakah sektor “lain-lain” diletakkan?",
+"Sebagai sektor terakhir.",
+"6d0c1f693c"
+],
+[
+"2",
+"Apakah tiga perkara melengkapkan carta pai?",
+"Tajuk, petunjuk dan jumlah keseluruhan.",
+"b183557e64"
+],
+[
+"2",
+"Apakah langkah pertama mentafsir carta pai?",
+"Kenal pasti tajuk.",
+"1fa71cde93"
+],
+[
+"2",
+"Apakah sektor pelancong tertinggi ke Pahang 2016?",
+"Jepun, 69% atau 238 378 orang.",
+"3236ccfa61"
+],
+[
+"2",
+"Apakah sektor pelancong terendah ke Pahang 2016?",
+"Amerika Syarikat, 3% atau 11 842 orang.",
+"0361a31319"
+],
+[
+"2",
+"Berapakah beza Jepun dengan Amerika Syarikat?",
+"66% atau 226 536 orang.",
+"7348f568ff"
+],
+[
+"2",
+"KBAT: Mengapa pelancong Jepun ramai ke Pahang?",
+"Iklim tropika, sosiobudaya, riadah serta flora dan fauna.",
+"6184abcaf0"
+],
+[
+"2",
+"KBAT: Data manakah perlu dibandingkan untuk mengenal pasti sektor terbesar?",
+"Nilai atau peratus setiap sektor.",
+"764fb6f801"
+],
+[
+"2",
+"KBAT: Mengapa tajuk, petunjuk dan jumlah perlu ada?",
+"Untuk melengkapkan carta pai.",
+"10b9db3ff8"
+],
+[
+"3",
+"Apakah empat faktor persekitaran fizikal?",
+"Bentuk muka bumi, saliran, tanih dan iklim.",
+"60172e6363"
+],
+[
+"3",
+"Apakah maksud bentuk muka bumi?",
+"Ciri dan ketinggian permukaan daratan dari aras laut.",
+"686b4d0d70"
+],
+[
+"3",
+"Apakah maksud saliran?",
+"Pola aliran sungai, cawangan dan kuantiti air kawasan.",
+"2e5288f874"
+],
+[
+"3",
+"Apakah maksud tanih?",
+"Lapisan paling atas bumi daripada bahan organik dan bukan organik.",
+"65fd997f6c"
+],
+[
+"3",
+"Apakah maksud iklim?",
+"Gabungan unsur cuaca dalam tempoh panjang.",
+"55c84215b7"
+],
+[
+"3",
+"Nyatakan tiga jenis bentuk muka bumi.",
+"Tanah pamah, tanah tinggi dan pinggir laut.",
+"bc01b22f33"
+],
+[
+"3",
+"Apakah hutan di tanah pamah Malaysia?",
+"Hutan Hujan Tropika.",
+"fe2db7b6d7"
+],
+[
+"3",
+"Namakan dua hidupan liar Amazon.",
+"Puma, jaguar, anakonda atau ikan pirana.",
+"70761260e5"
+],
+[
+"3",
+"Berapakah ketinggian tanah tinggi?",
+"Melebihi 180 meter dari aras laut.",
+"603c3c6f8a"
+],
+[
+"3",
+"Selepas aras berapakah tumbuhan tanah tinggi banyak berubah?",
+"Melebihi 1 200 meter dari aras laut.",
+"fce3d8011f"
+],
+[
+"3",
+"Apakah tumbuhan pinggir laut yang tahan air laut?",
+"Bakau, kelapa, mengkuang laut atau tapak kuda.",
+"ad6efe3058"
+],
+[
+"3",
+"Apakah dua jenis saliran?",
+"Bersaliran baik dan bersaliran buruk.",
+"8a462c4ae1"
+],
+[
+"3",
+"Apakah ciri kawasan bersaliran baik?",
+"Tidak bertakung air.",
+"2af309f42f"
+],
+[
+"3",
+"Apakah ciri kawasan bersaliran buruk?",
+"Tanah rendah yang sentiasa bertakung air.",
+"aed4ad29ac"
+],
+[
+"3",
+"Apakah tumbuhan kawasan bersaliran buruk?",
+"Bakau, nipah dan mengkuang.",
+"84491fc2ac"
+],
+[
+"3",
+"Apakah bahan organik tanih?",
+"Pereputan sisa tumbuhan dan bangkai haiwan.",
+"f72377e655"
+],
+[
+"3",
+"Apakah tanih chernozem?",
+"Tanah hitam di padang rumput beriklim Steppe.",
+"4c37b3545f"
+],
+[
+"3",
+"Apakah ciri tanih permafrost?",
+"Kurang subur, sejuk dan membeku sepanjang tahun.",
+"579ea9f07e"
+],
+[
+"3",
+"Tanih apakah di Gurun Panas?",
+"Tanih aridisols.",
+"af0e31ee9b"
+],
+[
+"3",
+"Mengapakah tumbuhan Gurun Panas berakar panjang?",
+"Untuk menyerap air di dalam tanah.",
+"773e8736e7"
+],
+[
+"3",
+"Apakah tanih Hutan Hujan Tropika?",
+"Tanih latosol.",
+"326fb3c942"
+],
+[
+"3",
+"Apakah ciri tanih podzol?",
+"Nipis, berasid dan beku.",
+"baed2036ce"
+],
+[
+"3",
+"Apakah tanih Hutan Mediterranean?",
+"Tanih terra rossa.",
+"1e57bce342"
+],
+[
+"3",
+"Berapakah hujan tahunan Gurun Arab?",
+"Kurang daripada 250 mm.",
+"fac946ebcc"
+],
+[
+"3",
+"Berapakah suhu iklim Monsun Tropika?",
+"Antara 24°C hingga 27°C sepanjang tahun.",
+"06812751b4"
+],
+[
+"3",
+"Berapakah tempoh musim sejuk Siberia?",
+"Enam hingga lapan bulan.",
+"12c2669778"
+],
+[
+"3",
+"Apakah tumbuhan iklim Laurentia?",
+"Maple, fir, beech dan yellow birch.",
+"a63faf88b9"
+],
+[
+"3",
+"KBAT: Mengapa paya sesuai untuk memerang?",
+"Kawasan bersaliran buruk bertakung air sepanjang masa dan sesuai untuk hidupan liar yang hidup di kawasan berair.",
+"ab27de8bf1"
+],
+[
+"3",
+"KBAT: Mengapa Gurun Panas kurang tumbuhan?",
+"Tanihnya kering dan tandus serta hujan tahunan kurang daripada 250 mm.",
+"1dbc907e03"
+],
+[
+"3",
+"KBAT: Mengapa Hutan Hujan Tropika mempunyai banyak hidupan liar?",
+"Hutan padat, tinggi dan membekalkan habitat serta sumber makanan.",
+"6dd325a77d"
+],
+[
+"4",
+"Nyatakan lima jenis hutan semula jadi.",
+"Hujan Tropika, Pantai, Paya Air Tawar, Paya Air Masin, Gunung.",
+"bf6f4a1159"
+],
+[
+"4",
+"Apakah iklim Malaysia?",
+"Iklim Khatulistiwa.",
+"fcdb4c0e28"
+],
+[
+"4",
+"Berapakah suhu purata Malaysia?",
+"27°C.",
+"9471231b0a"
+],
+[
+"4",
+"Berapakah purata hujan Malaysia setahun?",
+"Kira-kira 2 600 mm.",
+"3578d7e540"
+],
+[
+"4",
+"Apakah empat faktor taburan tumbuhan?",
+"Bentuk muka bumi, saliran, iklim dan tanih.",
+"a9d6822638"
+],
+[
+"4",
+"Di manakah Hutan Gunung tumbuh?",
+"Tanah tinggi melebihi 1 200 m.",
+"0404a364d0"
+],
+[
+"4",
+"Di manakah Hutan Pantai tumbuh?",
+"Kawasan pantai berpasir.",
+"4a9d543d6a"
+],
+[
+"4",
+"Di manakah Hutan Paya Air Masin tumbuh?",
+"Pinggir laut berlumpur dan terlindung.",
+"e97d8e313a"
+],
+[
+"4",
+"Apakah empat lapisan Hutan Hujan Tropika?",
+"Lantai, tengah, kanopi, renjong.",
+"9a7c50bb49"
+],
+[
+"4",
+"Berapakah ketinggian lapisan renjong?",
+"40 hingga 50 m.",
+"3ddd329501"
+],
+[
+"4",
+"Apakah fungsi akar banir?",
+"Menyokong pokok daripada tumbang.",
+"843b4cf2ac"
+],
+[
+"4",
+"Apakah fungsi akar ceracak?",
+"Pernafasan di kawasan air masin.",
+"48a1e1f157"
+],
+[
+"4",
+"Apakah fungsi akar jangkang?",
+"Menyokong pokok dan menyerap udara ketika pasang.",
+"6d3fccf09f"
+],
+[
+"4",
+"Beri dua pokok Hutan Pantai.",
+"Pokok ru dan tapak kuda.",
+"3b38d42e70"
+],
+[
+"4",
+"Beri dua pokok Hutan Paya Air Tawar.",
+"Mengkuang dan meranti paya.",
+"c05289e9b3"
+],
+[
+"4",
+"Beri dua pokok Hutan Paya Air Masin.",
+"Bakau dan nipah.",
+"a6ad39e222"
+],
+[
+"4",
+"Apakah tanih Hutan Pantai?",
+"Tanih berpasir.",
+"4413b75f17"
+],
+[
+"4",
+"Apakah maksud ekosistem?",
+"Interaksi saling bergantung antara biotik dengan abiotik.",
+"6d89a1c6dd"
+],
+[
+"4",
+"Nyatakan lima kepentingan hutan.",
+"Tadahan hujan, ekosistem, perubatan, habitat, bahan mentah.",
+"881ed9004a"
+],
+[
+"4",
+"Apakah kegunaan kayu bakau?",
+"Bahan api dan cerucuk tapak pembinaan.",
+"1222e3827f"
+],
+[
+"4",
+"Apakah SMS?",
+"Hanya pokok balak matang ditebang.",
+"f91bc375bb"
+],
+[
+"4",
+"Nyatakan empat kesan negatif kegiatan manusia.",
+"Ekosistem terganggu, hakisan, tadahan terganggu, kepupusan.",
+"2e53d558c3"
+],
+[
+"4",
+"Mengapakah sungai menjadi cetek selepas hakisan?",
+"Tanih terhakis diangkut dan mendap di sungai.",
+"a79e7254ad"
+],
+[
+"4",
+"KBAT: Mengapa akar penting semasa hujan lebat?",
+"Akar menyerap air larian ke dalam tanah dan mengurangkan hakisan.",
+"0b3730b1af"
+],
+[
+"4",
+"KBAT: Apa berlaku jika hutan ditebang di tadahan hujan?",
+"Empangan boleh cetek akibat kelodak dan bekalan air terganggu.",
+"b48bd4cb06"
+],
+[
+"4",
+"KBAT: Mengapa pokok muda tidak ditebang dalam SMS?",
+"Supaya pokok terus membesar dan hutan diurus secara mampan.",
+"272cf6227b"
+],
+[
+"5",
+"Apakah hidupan liar?",
+"Spesies haiwan liar atau burung liar, sama ada yang dilindungi sepenuhnya atau yang dilindungi, vertebrata atau invertebrata, hidup atau mati, matang atau tidak matang dan sama ada boleh dijinakkan atau dibiakkan dalam kurungan atau tidak.",
+"0e723d59ca"
+],
+[
+"5",
+"Apakah vertebrata?",
+"Haiwan bertulang belakang.",
+"d0915fa7f7"
+],
+[
+"5",
+"Apakah invertebrata?",
+"Haiwan tidak bertulang belakang.",
+"b57ccbcc29"
+],
+[
+"5",
+"Tapir ialah herbivor, omnivor atau karnivor?",
+"Herbivor.",
+"1573aa94b1"
+],
+[
+"5",
+"Berapakah anggaran populasi Harimau Malaya?",
+"Kira-kira 250 hingga 340 ekor.",
+"376b0a14da"
+],
+[
+"5",
+"Apakah habitat dugong?",
+"Padang rumput laut.",
+"bb069d2a2f"
+],
+[
+"5",
+"Di manakah orang utan dipulihkan?",
+"Pusat Pemuliharaan Orang Utan Sepilok, Sabah.",
+"1219562df8"
+],
+[
+"5",
+"Apakah makanan helang merah?",
+"Daging; helang merah ialah karnivor.",
+"80e7676f71"
+],
+[
+"5",
+"Nyatakan empat spesies penyu Malaysia.",
+"Belimbing, Agar, Karah dan Lipas.",
+"f4cd0edbda"
+],
+[
+"5",
+"Apakah fungsi hidupan liar dalam ekosistem?",
+"Sebagai komponen siratan makanan.",
+"7b2a3aa969"
+],
+[
+"5",
+"Apakah kesan gangguan aras trofik?",
+"Aliran tenaga berubah dan ekosistem terjejas.",
+"a9d3c55e68"
+],
+[
+"5",
+"Apakah hasil penguraian tinja haiwan?",
+"Baja organik yang membekalkan nutrien kepada tanah.",
+"ede947011a"
+],
+[
+"5",
+"Apakah ekopelancongan?",
+"Pelancongan berasaskan sumber dan pemeliharaan alam semula jadi.",
+"cea90e4e0a"
+],
+[
+"5",
+"Nyatakan satu tempat ekopelancongan orang utan.",
+"Sepilok, Sabah.",
+"a7020eac58"
+],
+[
+"5",
+"Nyatakan dua kerjaya berkaitan hidupan liar.",
+"Veterinar dan penyelidik.",
+"ad75985d54"
+],
+[
+"5",
+"Apakah biodiversiti?",
+"Kepelbagaian spesies tumbuhan dan haiwan dalam persekitaran semula jadi.",
+"2c120f5f91"
+],
+[
+"5",
+"Nyatakan lima ancaman daripada manusia.",
+"Pembalakan, pengkuarian, empangan, pertanian, pengangkutan.",
+"69923a635d"
+],
+[
+"5",
+"Apakah kesan pembalakan terhadap habitat?",
+"Memusnahkan habitat flora dan fauna.",
+"81c91ddaac"
+],
+[
+"5",
+"Apakah kesan pengkuarian terhadap haiwan?",
+"Bunyi bising mengganggu hidupan liar dan habitat musnah.",
+"7854153518"
+],
+[
+"5",
+"Mengapakah pertanian menjejaskan hidupan air?",
+"Racun serangga dan bahan kimia dibawa ke sungai.",
+"5225823611"
+],
+[
+"5",
+"Apakah EIA?",
+"Kajian untuk menilai kesan alam sekitar projek pembangunan.",
+"9fbb8d5958"
+],
+[
+"5",
+"Bilakah EIA dikuatkuasakan di Malaysia?",
+"1 April 1998.",
+"e127baed50"
+],
+[
+"5",
+"Apakah hukuman maksimum gagal mematuhi EIA?",
+"Denda RM100 000 atau penjara lima tahun, atau kedua-duanya.",
+"31c6c55b4d"
+],
+[
+"5",
+"Apakah tujuan pusat konservasi?",
+"Penyelidikan, pendidikan, rekreasi dan ekologi.",
+"84b295a4f7"
+],
+[
+"5",
+"Apakah pemeliharaan?",
+"Usaha mengekalkan keadaan asal sumber alam daripada musnah.",
+"89ed6c77fb"
+],
+[
+"5",
+"Apakah pemuliharaan?",
+"Usaha memulihkan dan memelihara sumber alam semula jadi dengan bijak dan sistematik supaya dapat dinikmati oleh generasi akan datang.",
+"62eda36a40"
+],
+[
+"5",
+"KBAT: Mengapa jalan raya boleh mengancam hidupan liar?",
+"Habitat terganggu dan haiwan boleh mati dilanggar ketika melintas jalan.",
+"787c604d56"
+],
+[
+"5",
+"KBAT: Mengapa EIA perlu sebelum empangan dibina?",
+"Untuk meramal kesan dan menetapkan langkah mengurangkan kerosakan alam sekitar.",
+"47baf1c557"
+],
+[
+"5",
+"KBAT: Bagaimana pendidikan alam sekitar membantu hidupan liar?",
+"Menjadikan murid peka, berpengetahuan dan bertindak memelihara alam sekitar.",
+"a186dc0986"
+],
+[
+"6",
+"Apakah sumber semula jadi?",
+"Bahan atau punca di sekeliling kita, di bumi atau dalam air.",
+"a1a1d9df22"
+],
+[
+"6",
+"Apakah dua jenis sumber semula jadi?",
+"Sumber boleh baharu dan sumber tidak boleh baharu.",
+"7fe91e7091"
+],
+[
+"6",
+"Apakah sumber boleh baharu?",
+"Sumber yang tidak habis dan boleh diperbaharu.",
+"f5b1e256c3"
+],
+[
+"6",
+"Beri empat sumber boleh baharu.",
+"Hutan, suria, tanih dan air.",
+"2d8f7ca130"
+],
+[
+"6",
+"Apakah sumber tenaga alternatif?",
+"Tenaga mesra alam pengganti bahan api fosil.",
+"18700e95c1"
+],
+[
+"6",
+"Beri enam tenaga alternatif.",
+"Hidroelektrik, suria, biomas, ombak, geoterma dan angin.",
+"a3064b6775"
+],
+[
+"6",
+"Apakah biomas?",
+"Tenaga daripada bahan buangan organisma hidup.",
+"b3722f90ac"
+],
+[
+"6",
+"Apakah geoterma?",
+"Tenaga daripada haba dalaman bumi.",
+"16d732afd5"
+],
+[
+"6",
+"Di manakah tenaga biomas terdapat di Malaysia?",
+"Miri dan Sri Aman, Sarawak.",
+"cf0aca92a1"
+],
+[
+"6",
+"Di manakah tenaga angin terdapat di Malaysia?",
+"Pulau Layang-layang, Sabah.",
+"62811e701a"
+],
+[
+"6",
+"Apakah sumber tidak boleh baharu?",
+"Sumber yang akan habis atau pupus jika tidak dikawal.",
+"6380f047dd"
+],
+[
+"6",
+"Apakah dua jenis sumber mineral?",
+"Mineral logam dan mineral bukan logam.",
+"a670be0fb2"
+],
+[
+"6",
+"Beri lima mineral logam.",
+"Emas, bauksit, bijih timah, kuprum dan bijih besi.",
+"8834cc9012"
+],
+[
+"6",
+"Apakah kegunaan bauksit?",
+"Bahan asas aluminium.",
+"840f44d2cf"
+],
+[
+"6",
+"Apakah kegunaan kuprum?",
+"Wayar.",
+"bd86d10738"
+],
+[
+"6",
+"Beri enam mineral bukan logam.",
+"Batu granit, kaolin, gas asli, arang batu, pasir, petroleum.",
+"a7db071688"
+],
+[
+"6",
+"Apakah kegunaan kaolin?",
+"Barangan tembikar.",
+"4375e380eb"
+],
+[
+"6",
+"Apakah kegunaan arang batu?",
+"Menjana elektrik dan melebur besi.",
+"bfc7e50617"
+],
+[
+"6",
+"Apakah empangan?",
+"Tambak yang dibina untuk menahan aliran air.",
+"6abff58c6d"
+],
+[
+"6",
+"Bagaimanakah hidroelektrik dijana?",
+"Air dilepaskan memutarkan turbin untuk menghasilkan elektrik.",
+"32d6edbd00"
+],
+[
+"6",
+"Berapakah purata hujan Malaysia setahun?",
+"Kira-kira 2 600 mm.",
+"428fc47e19"
+],
+[
+"6",
+"Apakah empangan hidroelektrik terbesar di Malaysia?",
+"Empangan Bakun.",
+"2d3d6cc59c"
+],
+[
+"6",
+"Berapakah keupayaan Empangan Bakun?",
+"2 400 MV tenaga elektrik.",
+"527dd78598"
+],
+[
+"6",
+"Beri lima jenis hutan di Malaysia.",
+"Hujan Tropika, Paya Air Tawar, Paya Air Masin, Pantai, Gunung.",
+"cdb1938bbd"
+],
+[
+"6",
+"Apakah tanih Hutan Pantai?",
+"Tanih berpasir.",
+"d203f95c1f"
+],
+[
+"6",
+"Di manakah emas dilombong di Pahang?",
+"Raub dan Kuala Lipis.",
+"0d521ed087"
+],
+[
+"6",
+"Beri lima kepentingan sumber semula jadi.",
+"Bahan mentah, kerja, infrastruktur, pendapatan, kawasan baharu.",
+"83f54fdb0d"
+],
+[
+"6",
+"Apakah industri hiliran?",
+"Industri daripada penggunaan bahan mentah yang telah diproses.",
+"325e65793a"
+],
+[
+"6",
+"KBAT: Mengapa Malaysia berpotensi membangunkan hidroelektrik?",
+"Malaysia menerima kira-kira 2 600 mm hujan setahun.",
+"d7d1e45019"
+],
+[
+"6",
+"KBAT: Mengapa petroleum penting kepada ekonomi?",
+"Menjana elektrik, bahan api, bahan bakar dan industri petrokimia.",
+"5aaf203cf1"
+],
+[
+"6",
+"KBAT: Apakah kesan sumber terhadap bandar baharu?",
+"Sumber membangunkan Kerteh, Paka, Bintulu, Miri dan Sandakan.",
+"944aea0397"
+],
+[
+"7",
+"Apakah kegiatan ekonomi?",
+"Kegiatan manusia yang menghasilkan pendapatan.",
+"b3dfefb0ec"
+],
+[
+"7",
+"Namakan tiga sektor ekonomi.",
+"Primer, sekunder dan tertier.",
+"08c544fc0f"
+],
+[
+"7",
+"Apakah sektor primer?",
+"Mengeluarkan bahan mentah terus daripada sumber semula jadi.",
+"1e7e52d6d7"
+],
+[
+"7",
+"Beri tiga kegiatan primer.",
+"Pertanian, pembalakan dan perikanan.",
+"e323268446"
+],
+[
+"7",
+"Apakah sektor sekunder?",
+"Menukarkan bahan mentah kepada barangan siap.",
+"9a57c8ac23"
+],
+[
+"7",
+"Beri dua kegiatan sektor sekunder.",
+"Pembuatan atau perindustrian; pembinaan.",
+"0724529bc3"
+],
+[
+"7",
+"Apakah nama lain sektor tertier?",
+"Sektor perkhidmatan.",
+"9adba36a9a"
+],
+[
+"7",
+"Beri tiga kegiatan tertier.",
+"Pelancongan, perdagangan dan pengangkutan.",
+"84e2586fb7"
+],
+[
+"7",
+"Apakah tanaman jualan terpenting Malaysia?",
+"Kelapa sawit.",
+"229afb4ad4"
+],
+[
+"7",
+"Apakah tanaman jualan kedua terpenting Malaysia?",
+"Getah.",
+"33ea9dc104"
+],
+[
+"7",
+"Nyatakan dua kawasan getah di Johor.",
+"Kluang, Labis, Segamat atau Simpang Renggam.",
+"88c2644b2e"
+],
+[
+"7",
+"Nyatakan dua kawasan sawit di Sabah.",
+"Lahad Datu, Tawau atau Sandakan.",
+"6ddbac8b19"
+],
+[
+"7",
+"Apakah dua jenis industri di Malaysia?",
+"Industri berasaskan sumber dan bukan berasaskan sumber.",
+"fc9f782b6f"
+],
+[
+"7",
+"Beri satu produk industri berasaskan kayu.",
+"Perabot, papan lapis atau kayu gergaji.",
+"196043e3ca"
+],
+[
+"7",
+"Beri dua produk industri berasaskan getah.",
+"Tayar dan sarung tangan.",
+"b7ccbf75a6"
+],
+[
+"7",
+"Mengapa pelancongan meningkatkan sektor lain?",
+"Meningkatkan keperluan pengangkutan, perhotelan dan perhubungan.",
+"a8bc2e0838"
+],
+[
+"7",
+"Beri dua contoh kawasan pelancongan.",
+"Pulau Langkawi dan Gunung Kinabalu.",
+"cb1f241301"
+],
+[
+"7",
+"Nyatakan lima faktor fizikal.",
+"Bentuk muka bumi, tanih, iklim, saliran, bahan mentah.",
+"7e93f24526"
+],
+[
+"7",
+"Apakah kegiatan di pinggir laut?",
+"Perikanan, pelancongan dan pelabuhan.",
+"129ca47246"
+],
+[
+"7",
+"Tanih aluvium sesuai untuk tanaman apa?",
+"Padi sawah.",
+"be351509a8"
+],
+[
+"7",
+"Tanih gambut sesuai untuk tanaman apa?",
+"Nanas.",
+"43dda26999"
+],
+[
+"7",
+"Berapakah purata suhu Malaysia?",
+"27°C.",
+"8db992eff8"
+],
+[
+"7",
+"Apakah dua jenis modal?",
+"Modal domestik dan pelaburan langsung asing.",
+"80a88db48f"
+],
+[
+"7",
+"Apakah dua jenis pasaran?",
+"Pasaran tempatan dan pasaran antarabangsa.",
+"50763e8728"
+],
+[
+"7",
+"Apakah tiga jenis buruh?",
+"Mahir, separa mahir dan tidak mahir.",
+"5eba861e1b"
+],
+[
+"7",
+"Nyatakan dua kesan teknologi moden.",
+"Mempercepatkan kerja dan meningkatkan kualiti produk.",
+"e7ccc1e571"
+],
+[
+"7",
+"Apakah maksud kuasa beli?",
+"Kemampuan seseorang membeli barangan dan perkhidmatan.",
+"5dab6256e0"
+],
+[
+"7",
+"KBAT: Mengapa jalan raya penting kepada pertanian?",
+"Mengangkut hasil cepat rosak seperti sayur dan buah ke pasaran.",
+"032e9f3be3"
+],
+[
+"7",
+"KBAT: Mengapa kilang sesuai dibina di tanah pamah?",
+"Tanah pamah sesuai untuk pembinaan kilang dan pengangkutan.",
+"13865b0c3e"
+],
+[
+"7",
+"KBAT: Bagaimana ekonomi tempatan mengurangkan import?",
+"Menggalakkan IKS serta pengeluaran pertanian, perikanan dan ternakan.",
+"470d101d80"
+],
+[
+"8",
+"Apakah empat kawasan tumbuh-tumbuhan semula jadi Bab 8?",
+"Gurun Panas, Hutan Monsun Tropika, Hutan Daun Luruh Sederhana dan Hutan Konifer.",
+"7136c8fc4c"
+],
+[
+"8",
+"Apakah jenis tumbuhan yang hidup di Gurun Panas?",
+"Xerofit.",
+"dbf7a48502"
+],
+[
+"8",
+"Apakah maksud xerofit?",
+"Tumbuhan yang dapat hidup atau tumbuh di persekitaran kering.",
+"97068cf636"
+],
+[
+"8",
+"Nyatakan dua ciri pokok Gurun Panas.",
+"Tumbuh jarang-jarang; daun berkilat, liat dan berbulu.",
+"7629886e3e"
+],
+[
+"8",
+"Bagaimanakah akar tumbuhan gurun menyerap air?",
+"Akar panjang menjalar ke dalam tanah atau merebak di permukaan bumi.",
+"b78e49b82f"
+],
+[
+"8",
+"Apakah maksud nokturnal?",
+"Hidupan yang aktif pada waktu malam.",
+"beda637da4"
+],
+[
+"8",
+"Mengapakah haiwan Gurun Panas aktif pada malam?",
+"Untuk mencari makanan sambil menjimatkan tenaga dan air badan.",
+"d1db41f5b2"
+],
+[
+"8",
+"Namakan dua hidupan liar Gurun Panas.",
+"Unta dan kala jengking.",
+"df9e45766a"
+],
+[
+"8",
+"Negara manakah mempunyai Hutan Monsun Tropika?",
+"India, Sri Lanka, Bangladesh, Filipina, Myanmar, Thailand atau Laos.",
+"ccb4143dd7"
+],
+[
+"8",
+"Berapakah ketinggian pokok Hutan Monsun Tropika?",
+"Antara 20 hingga 30 meter.",
+"e59d812afb"
+],
+[
+"8",
+"Mengapakah daun Hutan Monsun Tropika banyak dan lebar?",
+"Untuk mendapatkan cahaya matahari.",
+"79ed9ce1a7"
+],
+[
+"8",
+"Apakah bentuk hujung daun Hutan Monsun Tropika?",
+"Tirus.",
+"5bcc313342"
+],
+[
+"8",
+"Namakan dua pokok Hutan Monsun Tropika.",
+"Jati dan buluh.",
+"c968bedb82"
+],
+[
+"8",
+"Di lapisan manakah rusa dan gajah hidup?",
+"Lapisan lantai hutan.",
+"569fcc1f97"
+],
+[
+"8",
+"Di lapisan manakah monyet dan pelbagai burung hidup?",
+"Lapisan atas hutan.",
+"c3685a5392"
+],
+[
+"8",
+"Nyatakan dua ciri daun Hutan Daun Luruh Sederhana.",
+"Nipis dan lembut.",
+"1652b21659"
+],
+[
+"8",
+"Mengapa kulit batang pokok daun luruh tebal?",
+"Mengurangkan transpirasi pada musim sejuk.",
+"938e6889bc"
+],
+[
+"8",
+"Apakah maksud hibernasi?",
+"Keadaan tidak aktif atau tidur sepanjang musim sejuk.",
+"151ece96e7"
+],
+[
+"8",
+"Apakah yang dilakukan chipmunk pada musim sejuk?",
+"Berhijrah atau berhibernasi.",
+"284b56a8e1"
+],
+[
+"8",
+"Namakan dua pokok Hutan Konifer.",
+"Pain dan fir.",
+"17c992e35a"
+],
+[
+"8",
+"Mengapakah kanopi konifer berbentuk kon?",
+"Untuk mengelakkan salji terkumpul di atasnya.",
+"d027a80b0a"
+],
+[
+"8",
+"Mengapakah daun konifer berbentuk jarum?",
+"Mengelakkan kehilangan air melalui transpirasi.",
+"857fb3f4bb"
+],
+[
+"8",
+"Apakah fungsi salutan lilin pada daun konifer?",
+"Mengelakkan ancaman fros.",
+"5a59172037"
+],
+[
+"8",
+"Nyatakan empat kepentingan tumbuh-tumbuhan semula jadi.",
+"Pelancongan, penghalang hakisan, ekonomi dan sumber perubatan.",
+"f24004d380"
+],
+[
+"8",
+"Bagaimanakah daun besar mengurangkan hakisan?",
+"Memecahkan butiran hujan dan mengurangkan kelajuan titisan air.",
+"754152ea78"
+],
+[
+"8",
+"Apakah kegunaan batang pokok Hutan Konifer?",
+"Kayu balak eksport dan bahan mentah membuat kertas.",
+"0c9a5cd43d"
+],
+[
+"8",
+"Apakah kegunaan biji pain?",
+"Antiseptik semula jadi untuk merawat luka.",
+"3e94d43f7c"
+],
+[
+"8",
+"KBAT: Mengapa bakau penting di pinggir laut?",
+"Akarnya menguatkan tanah dan menahan tindakan ombak.",
+"1395153851"
+],
+[
+"8",
+"KBAT: Mengapa rusa konifer berpindah ke selatan pada musim sejuk?",
+"Berpindah ke kawasan yang lebih panas.",
+"2772cd936c"
+],
+[
+"8",
+"KBAT: Mengapa daun gurun dan daun konifer berbeza?",
+"Daun menyesuaikan tumbuhan dengan cuaca panas kering atau musim sejuk.",
+"929328999e"
+],
+[
+"9",
+"Apakah tiga sumber tenaga bahan bakar?",
+"Petroleum, gas asli dan arang batu.",
+"0afecaf8fb"
+],
+[
+"9",
+"Apakah enam sumber tenaga alternatif?",
+"Ombak, angin, geoterma, air, suria dan biomas.",
+"1b1c3aa8ce"
+],
+[
+"9",
+"Negara sumber petroleum dalam peta buku?",
+"Arab Saudi.",
+"7786109148"
+],
+[
+"9",
+"Negara sumber gas asli dalam peta buku?",
+"Amerika Syarikat.",
+"f2a1c02b01"
+],
+[
+"9",
+"Negara sumber arang batu dalam peta buku?",
+"Rusia.",
+"9af99d8daa"
+],
+[
+"9",
+"Negara sumber geoterma?",
+"Iceland.",
+"78802512fe"
+],
+[
+"9",
+"Negara sumber angin?",
+"Belanda.",
+"6645c88fcd"
+],
+[
+"9",
+"Negara sumber ombak?",
+"Perancis.",
+"df30d9fbd5"
+],
+[
+"9",
+"Negara sumber suria?",
+"Jepun.",
+"341c29513e"
+],
+[
+"9",
+"Negara sumber air?",
+"China.",
+"8753129472"
+],
+[
+"9",
+"Negara sumber biomas?",
+"India.",
+"d59b16fbee"
+],
+[
+"9",
+"Apakah punca umum krisis sumber?",
+"Eksploitasi dan penerokaan berterusan serta tidak terancang.",
+"d2530472a5"
+],
+[
+"9",
+"Nyatakan empat aspek krisis sumber.",
+"Ekonomi, politik, masyarakat dan alam sekitar.",
+"75187b6842"
+],
+[
+"9",
+"Beri satu kesan ekonomi krisis sumber.",
+"Kenaikan harga petroleum dan gas asli.",
+"604a37f544"
+],
+[
+"9",
+"Beri satu kesan politik krisis sumber.",
+"Konflik wilayah akibat perebutan kawasan bersumber.",
+"8fd27a185d"
+],
+[
+"9",
+"Beri satu kesan masyarakat krisis sumber.",
+"Peningkatan kadar kebuluran.",
+"08a7802fcb"
+],
+[
+"9",
+"Beri satu kesan alam sekitar krisis sumber.",
+"Kemusnahan flora dan fauna.",
+"b9fca652eb"
+],
+[
+"9",
+"Apakah maksud ASEAN?",
+"Pertubuhan Negara-negara Asia Tenggara.",
+"55c37c0f2a"
+],
+[
+"9",
+"Bilakah ASEAN ditubuhkan?",
+"Tahun 1967.",
+"0a771750c1"
+],
+[
+"9",
+"Apakah IMS-GT?",
+"Segi Tiga Pertumbuhan Indonesia, Malaysia dan Singapura.",
+"1c73a4dd18"
+],
+[
+"9",
+"Bilakah IMT-GT ditubuhkan?",
+"Tahun 1994.",
+"5145e62e92"
+],
+[
+"9",
+"Apakah dua jenis pelaburan?",
+"Pelaburan ekuiti dan pelaburan langsung asing.",
+"cb4f9fefa9"
+],
+[
+"9",
+"Apakah maksud FDI?",
+"Pelaburan langsung asing.",
+"443111e2b3"
+],
+[
+"9",
+"Apakah maksud tarif?",
+"Cukai kerajaan ke atas barangan import.",
+"c78d469f64"
+],
+[
+"9",
+"Apakah maksud embargo?",
+"Larangan mengeksport dagangan ke sesebuah negara.",
+"0c69d979e0"
+],
+[
+"9",
+"Nyatakan dua agensi perdagangan Malaysia.",
+"MITI dan MATRADE.",
+"f3819390b7"
+],
+[
+"9",
+"KBAT: Mengapa negara mengimport bahan mentah?",
+"Untuk kegunaan domestik dan industri.",
+"613d914929"
+],
+[
+"9",
+"KBAT: Bagaimana kerjasama membantu teknologi?",
+"Melalui mesin, ekuiti, pelesenan, paten dan pakar asing.",
+"d279d7d3da"
+],
+[
+"9",
+"KBAT: Mengapa krisis sumber menaikkan kos sara hidup?",
+"Harga sumber meningkat dan kuasa beli menjadi lemah.",
+"6b12d006bc"
+],
+[
+"10",
+"Apakah sumber hutan?",
+"Sumber boleh baharu yang meliputi kawasan ditumbuhi pelbagai jenis flora dan fauna yang hidup secara semula jadi.",
+"44a3a5b58a"
+],
+[
+"10",
+"Apakah keluasan hutan Malaysia?",
+"18.56 juta hektar atau kira-kira 56.5% tanah.",
+"0848e84017"
+],
+[
+"10",
+"Negeri manakah mempunyai hutan terbesar?",
+"Sarawak, kira-kira 8.23 juta hektar.",
+"f5f234377e"
+],
+[
+"10",
+"Berapakah keluasan hutan Sabah?",
+"4.49 juta hektar.",
+"5f5d0a4380"
+],
+[
+"10",
+"Berapakah keluasan hutan Semenanjung Malaysia?",
+"5.84 juta hektar.",
+"0cc4a02ec2"
+],
+[
+"10",
+"Apakah empat kepentingan pengurusan hutan?",
+"Menjamin keseimbangan ekosistem, memenuhi keperluan masyarakat setempat, menggalakkan ekopelancongan dan membekalkan sumber bahan mentah.",
+"254baf8b79"
+],
+[
+"10",
+"Apakah ekosistem?",
+"Proses interaksi antara komponen biotik dengan komponen abiotik dalam alam sekitar.",
+"6d1aa5d20d"
+],
+[
+"10",
+"Beri tiga hasil hutan untuk masyarakat setempat.",
+"Rotan, gaharu dan buah-buahan.",
+"0770bc2e57"
+],
+[
+"10",
+"Apakah kegunaan kayu keras?",
+"Perabot, papan lapis, kayu gergaji dan bahan binaan.",
+"1d95dae7b8"
+],
+[
+"10",
+"Apakah kegunaan rotan dan buluh?",
+"Perabot dan kraf tangan.",
+"4cec9524d2"
+],
+[
+"10",
+"Daun mengkuang digunakan untuk apa?",
+"Tikar dan bakul.",
+"b1ff867907"
+],
+[
+"10",
+"Nyatakan tiga kawasan ekopelancongan hutan.",
+"Royal Belum, Endau-Rompin dan Niah.",
+"4bf12e15ee"
+],
+[
+"10",
+"Apakah pemeliharaan hutan?",
+"Melindungi, merancang dan mengurus hutan agar tidak musnah.",
+"206fc21719"
+],
+[
+"10",
+"Apakah pemuliharaan hutan?",
+"Membaik pulih hutan terganggu kepada keadaan asal.",
+"d943fc8b3b"
+],
+[
+"10",
+"Beri dua contoh pemeliharaan.",
+"Hutan simpan dan taman negara.",
+"a08e67cfe0"
+],
+[
+"10",
+"Beri dua contoh pemuliharaan.",
+"Penghutanan semula dan ladang hutan.",
+"4adbb1a277"
+],
+[
+"10",
+"Apakah Tapak Ramsar?",
+"Senarai tanah lembap yang dipersetujui melalui Konvensyen Tanah Lembap di Iran pada tahun 1971 untuk pemuliharaan tanah lembap serta sumbernya.",
+"b91b56cc1d"
+],
+[
+"10",
+"Beri dua contoh Tapak Ramsar.",
+"Tasik Bera dan Pulau Kukup.",
+"6be1c1ef86"
+],
+[
+"10",
+"Apakah geopark?",
+"Kawasan yang terdapat tapak warisan geologi untuk tujuan pemeliharaan, pendidikan dan pembangunan lestari.",
+"c296ce957b"
+],
+[
+"10",
+"Apakah taman negara?",
+"Kawasan dilindungi kerajaan untuk memelihara biodiversiti.",
+"3ab551e2f5"
+],
+[
+"10",
+"Apakah pembangunan lestari?",
+"Pembangunan yang memenuhi keperluan pada masa ini tanpa menjejaskan keupayaan generasi akan datang untuk memenuhi keperluan mereka sendiri.",
+"67ddead7bf"
+],
+[
+"10",
+"Apakah maksud ex situ?",
+"Program pengurusan sumber genetik tumbuhan di luar kawasan asal, seperti di ladang, taman botani dan taman pertanian.",
+"22e0ec9399"
+],
+[
+"10",
+"Apakah peranan JAS?",
+"Merancang, menyelaras dan memantau dasar biodiversiti serta perhutanan.",
+"fa8a4db02a"
+],
+[
+"10",
+"Apakah peranan FRIM?",
+"Menjana pengetahuan dan teknologi pengurusan serta pemuliharaan hutan.",
+"5312040a0a"
+],
+[
+"10",
+"Apakah peranan MNS?",
+"Melindungi biodiversiti dan memberi pendidikan alam sekitar.",
+"c423b7dfd7"
+],
+[
+"10",
+"KBAT: Mengapa hutan perlu diurus secara terancang?",
+"Untuk mengekalkan keseimbangan ekosistem dan bekalan sumber berterusan.",
+"e9539c2976"
+],
+[
+"10",
+"KBAT: Apakah kesan hutan bakau tidak dikawal?",
+"Keseimbangan ekosistem tanah lembap boleh terganggu.",
+"75c3149ae5"
+],
+[
+"10",
+"KBAT: Mengapa pembangunan lestari penting?",
+"Keperluan kini dipenuhi tanpa menjejaskan generasi akan datang.",
+"e0d2cb35c4"
+],
+[
+"11",
+"Apakah maksud kitar semula?",
+"Memungut dan mengasingkan sisa pepejal untuk menghasilkan keluaran.",
+"39ca890664"
+],
+[
+"11",
+"Apakah tiga elemen 3R?",
+"Reduce, Reuse dan Recycle.",
+"68c5d8a409"
+],
+[
+"11",
+"Apakah maksud Reduce?",
+"Mengurangkan sisa dan penggunaan sumber semula jadi.",
+"34a123d8e2"
+],
+[
+"11",
+"Apakah maksud Reuse?",
+"Menggunakan barangan secara berulang kali.",
+"128c106e2a"
+],
+[
+"11",
+"Apakah maksud Recycle?",
+"Mengasingkan bahan mengikut jenis untuk menghasilkan produk.",
+"9e1b056ec1"
+],
+[
+"11",
+"Mengapa sisa perlu diasingkan mengikut jenis?",
+"Menjimatkan masa dan memudahkan proses kitar semula.",
+"aca002fcc2"
+],
+[
+"11",
+"Apakah contoh menjana pendapatan melalui kitar semula?",
+"Menghasilkan baja kompos daripada sisa makanan.",
+"1a7aa7c32d"
+],
+[
+"11",
+"Nyatakan satu kesan kitar semula terhadap pencemaran.",
+"Mengurangkan pencemaran.",
+"c1e4776300"
+],
+[
+"11",
+"Nyatakan satu kesan kitar semula terhadap rumah hijau.",
+"Mengurangkan kesan rumah hijau.",
+"a6474d7eb7"
+],
+[
+"11",
+"Apakah tema amalan kitar semula di Malaysia?",
+"Fikir Dahulu Sebelum Buang.",
+"b025a9a37f"
+],
+[
+"11",
+"Berikan satu amalan Reduce.",
+"Menggunakan kedua-dua belah muka surat kertas.",
+"be020febe3"
+],
+[
+"11",
+"Berikan satu amalan Reuse.",
+"Membawa beg yang boleh digunakan semula.",
+"989203cfa8"
+],
+[
+"11",
+"Berikan satu amalan Recycle.",
+"Mengitar semula tayar terpakai menjadi pasu tanaman.",
+"1d295c04a9"
+],
+[
+"11",
+"Bilakah Hari Tanpa Beg Plastik bermula di Pulau Pinang?",
+"6 Julai 2009.",
+"6a803ea9c1"
+],
+[
+"11",
+"Berapakah bayaran beg plastik di premis terlibat?",
+"RM0.20.",
+"6555fac3ad"
+],
+[
+"11",
+"Bilakah Pengasingan Sisa di Punca bermula?",
+"1 September 2015.",
+"16cbc2ba0e"
+],
+[
+"11",
+"Apakah contoh sisa baki?",
+"Sisa dapur, makanan atau lampin pakai buang.",
+"c5386cb91b"
+],
+[
+"11",
+"Apakah contoh sisa pukal?",
+"Perabot dan barangan elektrik besar.",
+"dfacdd6973"
+],
+[
+"11",
+"Apakah contoh sisa kebun?",
+"Ranting, pelepah, batang pokok, daun dan bunga.",
+"e1a778bbe9"
+],
+[
+"11",
+"Berapa kali seminggu sisa baki dikutip?",
+"Dua kali seminggu.",
+"657530139d"
+],
+[
+"11",
+"Apakah tanda pada kotak di Jerman?",
+"Tanda hijau atau Green Dot.",
+"9a5d28014d"
+],
+[
+"11",
+"Apakah julat isi padu bekas minuman bercaj deposit di Jerman?",
+"0.1 liter hingga 3.0 liter.",
+"ce3057732f"
+],
+[
+"11",
+"Nyatakan satu program kitar semula Denmark.",
+"Program Cukai Hijau.",
+"d431f34129"
+],
+[
+"11",
+"Berapakah peratus sisa domestik dikitar semula di Sweden?",
+"99%.",
+"b4bab63413"
+],
+[
+"11",
+"Berapakah tenaga daripada satu tan sisa dibakar di Sweden?",
+"3 MWh.",
+"d22de88f7d"
+],
+[
+"11",
+"Apakah Program 4-Dalam-1 Taiwan?",
+"Kerjasama masyarakat, pihak berkuasa bandar, syarikat kitar semula dan badan sukarela.",
+"87351a1b2b"
+],
+[
+"11",
+"KBAT: Mengapa guna kedua-dua belah kertas ialah Reduce?",
+"Kerana mengurangkan penggunaan kertas dan penghasilan sisa.",
+"1d788705a8"
+],
+[
+"11",
+"KBAT: Mengapa sisa perlu diasingkan di rumah?",
+"Supaya proses kitar semula lebih mudah dan sistematik.",
+"3e06bbd5f8"
+],
+[
+"11",
+"KBAT: Mengapa Sweden menggunakan incinerator?",
+"Untuk menjana tenaga dan mengurangkan lambakan sisa.",
+"6df95d5387"
+],
+[
+"12",
+"Apakah tujuan kerja lapangan?",
+"Mengkaji, memahami dan memberi pendapat tentang isu dipilih.",
+"22e1bcec7d"
+],
+[
+"12",
+"Apakah dua manfaat kerja lapangan?",
+"Mengaplikasikan pengetahuan dan membina kemahiran berfikir.",
+"e9135aaa56"
+],
+[
+"12",
+"Apakah maksud objektif kerja lapangan?",
+"Perkara khusus yang ingin dicapai.",
+"b68fff90fb"
+],
+[
+"12",
+"Bagaimanakah objektif perlu ditulis?",
+"Boleh diukur, lengkap dan ringkas.",
+"0740df566f"
+],
+[
+"12",
+"Nyatakan empat kriteria tajuk.",
+"Idea baharu, jelas, tidak umum, data mudah diperoleh.",
+"4dce23fb5b"
+],
+[
+"12",
+"Tajuk perlu berdasarkan apa?",
+"Tema DSKP Tingkatan 3 yang dipelajari.",
+"06f88a6a24"
+],
+[
+"12",
+"Mengapa tajuk perlu praktikal?",
+"Untuk mendapatkan data atau maklumat.",
+"1d1b568a65"
+],
+[
+"12",
+"Nyatakan empat kaedah kajian.",
+"Pemerhatian, temu bual, soal selidik dan rujukan.",
+"f88daf0968"
+],
+[
+"12",
+"Apakah pemerhatian?",
+"Mengumpul data dengan mengamati perkara yang dikaji.",
+"c8c1a665b3"
+],
+[
+"12",
+"Bagaimanakah pemerhatian perlu dibuat?",
+"Secara sistematik dan berfokus.",
+"d080c34e07"
+],
+[
+"12",
+"Apakah alat teknologi bagi pemerhatian?",
+"Kamera atau perakam yang bersesuaian.",
+"41c2632af4"
+],
+[
+"12",
+"Siapakah terlibat dalam temu bual?",
+"Pengkaji dan responden.",
+"d74489f963"
+],
+[
+"12",
+"Bagaimanakah maklumat temu bual diperoleh?",
+"Secara lisan.",
+"16fc23ceed"
+],
+[
+"12",
+"Apakah perlu dibuat terhadap soalan temu bual?",
+"Senaraikan setiap soalan yang diperlukan.",
+"3c46e2bc12"
+],
+[
+"12",
+"Ciri soalan soal selidik?",
+"Ringkas, mudah difahami dan jelas.",
+"436149f968"
+],
+[
+"12",
+"Soalan soal selidik mesti merangkumi apa?",
+"Keseluruhan objektif kerja lapangan.",
+"d9156bf23a"
+],
+[
+"12",
+"Nyatakan dua bahan rujukan.",
+"Buku teks dan akhbar.",
+"388a0971ad"
+],
+[
+"12",
+"Apakah mesti dibuat pada bahan rujukan?",
+"Nyatakan sumber rujukan dalam laporan.",
+"f2c680f5f3"
+],
+[
+"12",
+"Apakah bentuk persembahan data?",
+"Peta pemikiran, jadual dan rajah sesuai.",
+"93022a36cc"
+],
+[
+"12",
+"Berapakah jumlah responden contoh Presint 6?",
+"15 orang.",
+"8376d577a9"
+],
+[
+"12",
+"Masalah manakah menerima 9 responden?",
+"Tiada pengangkutan awam.",
+"bccb746ce2"
+],
+[
+"12",
+"Apakah asas membuat rumusan?",
+"Data atau maklumat yang diperoleh.",
+"c465bee567"
+],
+[
+"12",
+"Berapakah kandungan format laporan?",
+"9 kandungan.",
+"6514e83bbe"
+],
+[
+"12",
+"Apakah kandungan terakhir laporan?",
+"Lampiran.",
+"835c87cff0"
+],
+[
+"12",
+"Apakah kandungan sebelum lampiran?",
+"Rujukan.",
+"8d84513007"
+],
+[
+"12",
+"KBAT: Kaedah sesuai untuk maklumat lisan?",
+"Temu bual.",
+"92108cede9"
+],
+[
+"12",
+"KBAT: Jika tajuk terlalu umum, apakah tindakan?",
+"Elakkan tajuk itu.",
+"2ec18a5aef"
+],
+[
+"12",
+"Apakah salah satu kandungan laporan akhir?",
+"Grafik.",
+"9ed513a5fd"
+],
+[
+"x",
+"Kaedah pengumpulan maklumat yang sama bagi jadual dan kerja lapangan?",
+"Pemerhatian, temu bual, soal selidik dan rujukan. (Bab 1 &amp; 12)",
+"9ed84ffc2e"
+],
+[
+"x",
+"Bagaimanakah data kerja lapangan boleh dipersembahkan?",
+"Melalui graf bar mudah dan carta pai. (Bab 1, 2 &amp; 12)",
+"6f7ba348c0"
+],
+[
+"x",
+"Apakah faktor yang menentukan taburan hutan Malaysia?",
+"Bentuk muka bumi, saliran, iklim dan tanih. (Bab 3 &amp; 4)",
+"f1e9a77097"
+],
+[
+"x",
+"Mengapa hutan penting sebagai sumber semula jadi?",
+"Hutan ialah sumber boleh baharu serta membekalkan bahan mentah. (Bab 4, 6 &amp; 10)",
+"f38adac2e3"
+],
+[
+"x",
+"Bagaimanakah taman negara melindungi hidupan liar?",
+"Taman negara melindungi biodiversiti dan struktur ekologi. (Bab 5 &amp; 10)",
+"c2e302b979"
+],
+[
+"x",
+"Apakah kesan pembalakan terhadap hutan dan hidupan liar?",
+"Ekosistem tidak seimbang, hakisan tanih dan kepupusan flora fauna. (Bab 4 &amp; 5)",
+"c37a4ebf0e"
+],
+[
+"x",
+"Bagaimanakah sumber semula jadi menyokong kegiatan ekonomi?",
+"Sumber membekalkan bahan mentah kepada sektor primer dan sekunder. (Bab 6 &amp; 7)",
+"6d143755ee"
+],
+[
+"x",
+"Apakah tenaga alternatif yang terdapat di Malaysia dan dunia?",
+"Hidroelektrik, suria, biomas, ombak, geoterma dan angin. (Bab 6 &amp; 9)",
+"ac7d3b003b"
+],
+[
+"x",
+"Mengapa kerjasama ekonomi antarabangsa penting?",
+"Membantu perdagangan, pasaran, pelaburan, teknologi, buruh dan bahan mentah. (Bab 7 &amp; 9)",
+"8b3f5f4071"
+],
+[
+"x",
+"Data kegiatan ekonomi manakah sesuai dipersembahkan melalui carta pai?",
+"Sumbangan sektor ekonomi kepada pendapatan negara. (Bab 2 &amp; 7)",
+"da7b684ae1"
+],
+[
+"x",
+"Apakah kepentingan hidupan liar di Malaysia dan dunia?",
+"Menyokong keseimbangan ekosistem, pelancongan dan pendidikan. (Bab 5 &amp; 8)",
+"194f6e40f7"
+],
+[
+"x",
+"Bagaimanakah tumbuh-tumbuhan mengurangkan hakisan?",
+"Daun memperlahankan hujan dan akar mengurangkan air larian. (Bab 4 &amp; 8)",
+"a4c8c5ae83"
+],
+[
+"x",
+"Bagaimanakah 3R membantu mengurus sumber?",
+"Reduce menjimatkan penggunaan sumber; Reuse dan Recycle mengurangkan sisa. (Bab 6 &amp; 11)",
+"59ecdb82d0"
+],
+[
+"x",
+"Apakah kaedah sesuai mengkaji kesan kegiatan manusia terhadap hidupan liar?",
+"Pemerhatian, temu bual, soal selidik dan rujukan. (Bab 5 &amp; 12)",
+"559af70dea"
+]
+];
+// [bab, kiri, kanan]
+const PAIRS = [
+[
+"1",
+"Jadual",
+"data lebih tersusun"
+],
+[
+"1",
+"Graf bar mudah",
+"data boleh dikira"
+],
+[
+"1",
+"Graf garisan mudah",
+"perubahan berterusan"
+],
+[
+"1",
+"Graf gabungan",
+"dua maklumat berlainan"
+],
+[
+"1",
+"Garisan curam",
+"perubahan besar"
+],
+[
+"1",
+"Garisan landai",
+"perubahan kecil"
+],
+[
+"1",
+"Garisan mendatar",
+"tiada perubahan"
+],
+[
+"1",
+"Banci",
+"menghitung sesuatu jumlah"
+],
+[
+"1",
+"Temu bual",
+"soal jawab secara lisan"
+],
+[
+"1",
+"Rujukan kepustakaan",
+"bahan telah diterbitkan"
+],
+[
+"1",
+"November 2017 Kuala Lumpur",
+"hujan 286 mm"
+],
+[
+"1",
+"Julai 2017 Kuala Lumpur",
+"hujan 129 mm"
+],
+[
+"2",
+"Carta pai",
+"Bulatan dibahagi kepada sektor"
+],
+[
+"2",
+"Bulatan penuh (sudut)",
+"360°"
+],
+[
+"2",
+"Bulatan penuh (peratus)",
+"100%"
+],
+[
+"2",
+"Jepun (peratus)",
+"69%"
+],
+[
+"2",
+"Thailand (peratus)",
+"21%"
+],
+[
+"2",
+"Australia",
+"7%"
+],
+[
+"2",
+"Amerika Syarikat (peratus)",
+"3%"
+],
+[
+"2",
+"Jepun (bilangan)",
+"238 378 orang"
+],
+[
+"2",
+"Amerika Syarikat (bilangan)",
+"11 842 orang"
+],
+[
+"2",
+"Jepun (sudut)",
+"248°"
+],
+[
+"2",
+"Thailand (sudut)",
+"76°"
+],
+[
+"2",
+"Jumlah pelancong Pahang",
+"347 197 orang"
+],
+[
+"3",
+"Bentuk muka bumi",
+"ciri dan ketinggian daratan"
+],
+[
+"3",
+"Saliran",
+"pola aliran sungai dan air"
+],
+[
+"3",
+"Tanih",
+"lapisan paling atas bumi"
+],
+[
+"3",
+"Bersaliran baik",
+"tidak bertakung air"
+],
+[
+"3",
+"Bersaliran buruk",
+"sentiasa bertakung air"
+],
+[
+"3",
+"Chernozem",
+"tanah hitam iklim Steppe"
+],
+[
+"3",
+"Permafrost",
+"tanih beku sangat sejuk"
+],
+[
+"3",
+"Aridisols",
+"tanih kering dan tandus"
+],
+[
+"3",
+"Latosol",
+"tanih hutan tropika"
+],
+[
+"3",
+"Podzol",
+"tanih nipis, berasid dan beku"
+],
+[
+"3",
+"Terra rossa",
+"campuran liat dan pasir"
+],
+[
+"3",
+"Gurun Panas",
+"hujan kurang 250 mm"
+],
+[
+"3",
+"Monsun Tropika",
+"suhu 24°C hingga 27°C"
+],
+[
+"3",
+"Siberia",
+"musim sejuk 6 hingga 8 bulan"
+],
+[
+"3",
+"Laurentia",
+"hujan sepanjang tahun"
+],
+[
+"4",
+"Hutan Gunung",
+"melebihi 1 200 m aras laut"
+],
+[
+"4",
+"Hutan Pantai",
+"kawasan pantai berpasir"
+],
+[
+"4",
+"Hutan Paya Air Tawar",
+"saliran buruk, air sungai/tasik"
+],
+[
+"4",
+"Hutan Paya Air Masin",
+"pinggir laut berlumpur"
+],
+[
+"4",
+"akar ceracak",
+"pernafasan bakau"
+],
+[
+"4",
+"akar jangkang",
+"menyokong pokok bakau"
+],
+[
+"4",
+"tongkat ali",
+"akar sebagai ubat"
+],
+[
+"4",
+"pegaga",
+"keseluruhan pokok sebagai ubat"
+],
+[
+"4",
+"SMS",
+"tebang pokok balak matang sahaja"
+],
+[
+"4",
+"tanih laterit",
+"tanah liat merah"
+],
+[
+"4",
+"27°C",
+"suhu purata Malaysia"
+],
+[
+"4",
+"2 600 mm",
+"hujan Malaysia setahun"
+],
+[
+"5",
+"Tapir",
+"Herbivor"
+],
+[
+"5",
+"Dugong",
+"Padang rumput laut"
+],
+[
+"5",
+"Orang utan",
+"Sepilok, Sabah"
+],
+[
+"5",
+"Gajah Pygmy",
+"Kinabatangan, Tabin, tengah Sabah"
+],
+[
+"5",
+"Monyet Belanda",
+"Omnivor"
+],
+[
+"5",
+"Konservasi",
+"Penjagaan sistematik hidupan liar"
+],
+[
+"5",
+"EIA",
+"Kajian kesan projek terhadap alam sekitar"
+],
+[
+"5",
+"Akta Perhutanan Negara 1984",
+"Hutan simpan kekal"
+],
+[
+"5",
+"Akta Pemuliharaan Hidupan Liar 2010",
+"Lesen memburu"
+],
+[
+"5",
+"Penyu",
+"Pantai berpasir dan pulau"
+],
+[
+"5",
+"Pusat Konservasi Gajah Kebangsaan",
+"Kuala Gandah, Pahang"
+],
+[
+"5",
+"Taman Negara Kinabalu",
+"Sabah"
+],
+[
+"6",
+"Biomas",
+"tenaga daripada bahan buangan organisma"
+],
+[
+"6",
+"Geoterma",
+"tenaga daripada haba dalaman bumi"
+],
+[
+"6",
+"Empangan",
+"tambak menahan aliran air"
+],
+[
+"6",
+"Empangan Kenyir",
+"Terengganu"
+],
+[
+"6",
+"Miri",
+"tenaga biomas"
+],
+[
+"6",
+"Pulau Layang-layang",
+"tenaga angin"
+],
+[
+"6",
+"Bauksit",
+"bahan asas aluminium"
+],
+[
+"6",
+"Kuprum",
+"wayar"
+],
+[
+"6",
+"Kaolin",
+"barangan tembikar"
+],
+[
+"6",
+"Pasir",
+"barangan kaca"
+],
+[
+"6",
+"Batu granit",
+"industri pembinaan"
+],
+[
+"6",
+"Raub dan Kuala Lipis",
+"emas"
+],
+[
+"6",
+"Silimpopon",
+"arang batu"
+],
+[
+"6",
+"Kerteh dan Paka",
+"bandar baharu"
+],
+[
+"7",
+"Sektor primer",
+"Bahan mentah sumber semula jadi"
+],
+[
+"7",
+"Sektor sekunder",
+"Menukarkan bahan mentah kepada barangan siap"
+],
+[
+"7",
+"Sektor tertier",
+"Sektor perkhidmatan"
+],
+[
+"7",
+"Tanih aluvium",
+"Padi sawah"
+],
+[
+"7",
+"Tanih gambut",
+"Nanas"
+],
+[
+"7",
+"Tanih beris",
+"Kenaf"
+],
+[
+"7",
+"Kayu balak",
+"Perabot dan kayu gergaji"
+],
+[
+"7",
+"Getah",
+"Sarung tangan dan tayar"
+],
+[
+"7",
+"Kaolin",
+"Tembikar dan jubin"
+],
+[
+"7",
+"Batu kapur",
+"Simen"
+],
+[
+"7",
+"GPS",
+"Sistem pengangkutan pintar"
+],
+[
+"7",
+"Gema bunyi",
+"Pengesanan ikan dalam laut"
+],
+[
+"8",
+"xerofit",
+"tumbuhan hidup di kawasan kering"
+],
+[
+"8",
+"nokturnal",
+"aktif pada waktu malam"
+],
+[
+"8",
+"hibernasi",
+"tidur sepanjang musim sejuk"
+],
+[
+"8",
+"fros",
+"keadaan apabila suhu permukaan bumi jatuh di bawah takat beku hingga terbentuk hablur air halus"
+],
+[
+"8",
+"kaktus",
+"Gurun Panas"
+],
+[
+"8",
+"jati",
+"Hutan Monsun Tropika"
+],
+[
+"8",
+"oak",
+"Hutan Daun Luruh Sederhana"
+],
+[
+"8",
+"fir",
+"Hutan Konifer"
+],
+[
+"8",
+"kanopi kon",
+"elak salji terkumpul"
+],
+[
+"8",
+"daun bersalut lilin",
+"elak ancaman fros"
+],
+[
+"8",
+"unta",
+"pengangkutan pelancong gurun"
+],
+[
+"8",
+"biji pain",
+"antiseptik semula jadi"
+],
+[
+"9",
+"Petroleum",
+"Arab Saudi"
+],
+[
+"9",
+"Gas asli",
+"Amerika Syarikat"
+],
+[
+"9",
+"Arang batu",
+"Rusia"
+],
+[
+"9",
+"Geoterma",
+"Iceland"
+],
+[
+"9",
+"Angin",
+"Belanda"
+],
+[
+"9",
+"Ombak",
+"Perancis"
+],
+[
+"9",
+"Suria",
+"Jepun"
+],
+[
+"9",
+"Air",
+"China"
+],
+[
+"9",
+"Biomas",
+"India"
+],
+[
+"9",
+"ASEAN",
+"Ditubuhkan pada 1967"
+],
+[
+"9",
+"IMS-GT",
+"Ditubuhkan pada 1992"
+],
+[
+"9",
+"IMT-GT",
+"Ditubuhkan pada 1994"
+],
+[
+"9",
+"APEC",
+"Ditubuhkan pada 1989"
+],
+[
+"9",
+"WTO",
+"Ditubuhkan pada 1995"
+],
+[
+"9",
+"Tarif",
+"Cukai ke atas barangan import"
+],
+[
+"10",
+"Sumber hutan",
+"Sumber boleh baharu yang meliputi kawasan flora dan fauna hidup secara semula jadi"
+],
+[
+"10",
+"Ekosistem",
+"Interaksi biotik dan abiotik"
+],
+[
+"10",
+"Pemeliharaan",
+"Melindungi hutan agar tidak musnah"
+],
+[
+"10",
+"Pemuliharaan",
+"Membaik pulih hutan terganggu"
+],
+[
+"10",
+"Kayu keras",
+"Perabot dan bahan binaan"
+],
+[
+"10",
+"Daun mengkuang",
+"Tikar dan bakul"
+],
+[
+"10",
+"Batang nibung",
+"Tiang rumah dan cerucuk kelong"
+],
+[
+"10",
+"Daun nipah",
+"Atap"
+],
+[
+"10",
+"Royal Belum",
+"Perak"
+],
+[
+"10",
+"Endau-Rompin",
+"Johor"
+],
+[
+"10",
+"Taman Negara Niah",
+"Sarawak"
+],
+[
+"10",
+"Tasik Bera",
+"Pahang"
+],
+[
+"10",
+"Pusat Konservasi Gajah",
+"Kuala Gandah, Pahang"
+],
+[
+"10",
+"JAS",
+"Merancang, menyelaras dan memantau pelaksanaan dasar serta strategi biodiversiti dan perhutanan"
+],
+[
+"10",
+"GEC",
+"Menggalakkan perlindungan dan penggunaan lestari hutan serta tanah lembap"
+],
+[
+"11",
+"Reduce",
+"Kurangkan"
+],
+[
+"11",
+"Reuse",
+"Guna semula"
+],
+[
+"11",
+"Recycle",
+"Kitar semula"
+],
+[
+"11",
+"Sisa baki",
+"Sisa dapur dan lampin"
+],
+[
+"11",
+"Sisa pukal",
+"Perabot dan elektrik besar"
+],
+[
+"11",
+"Sisa kebun",
+"Ranting, daun dan bunga"
+],
+[
+"11",
+"Green Dot",
+"Tanda hijau pada kotak"
+],
+[
+"11",
+"Incinerator",
+"Alat pembakaran sisa"
+],
+[
+"11",
+"Pulau Pinang",
+"Hari Tanpa Beg Plastik"
+],
+[
+"11",
+"Sweden",
+"99% sisa domestik dikitar semula"
+],
+[
+"11",
+"Taiwan",
+"Program 4-Dalam-1"
+],
+[
+"11",
+"Denmark",
+"Program Cukai Hijau"
+],
+[
+"12",
+"Pemerhatian",
+"Mengamati perkara yang dikaji"
+],
+[
+"12",
+"Temu bual",
+"Maklumat diperoleh secara lisan"
+],
+[
+"12",
+"Soal selidik",
+"Menggunakan borang soalan"
+],
+[
+"12",
+"Rujukan",
+"Merujuk pelbagai sumber"
+],
+[
+"12",
+"Mengenal pasti",
+"Menyatakan dengan pasti"
+],
+[
+"12",
+"Membandingkan",
+"Mencari persamaan dan perbezaan"
+],
+[
+"12",
+"Menilai",
+"Membuat pentaksiran"
+],
+[
+"12",
+"Mengkaji",
+"Menyelidik dengan teliti"
+],
+[
+"12",
+"Tiada pengangkutan awam",
+"9 responden"
+],
+[
+"12",
+"Tiada gerai jualan",
+"4 responden"
+],
+[
+"12",
+"Tiada parkir",
+"2 responden"
+],
+[
+"12",
+"Jumlah responden Presint 6",
+"15 orang"
+]
+];
+// [bab, tajuk, [[kumpulan,[item]]]]
+const CATS = [
+[
+"1",
+"Fakta ini tentang graf yang mana?",
+[
+[
+"Graf bar mudah",
+[
+"data boleh dikira",
+"bar boleh menegak",
+"bar boleh mendatar"
+]
+],
+[
+"Graf garisan mudah",
+[
+"perubahan berterusan",
+"tidak memerlukan petunjuk",
+"titik disambung"
+]
+],
+[
+"Graf gabungan",
+[
+"dua maklumat berlainan",
+"dua paksi menegak",
+"dua perkara berkaitan"
+]
+]
+]
+],
+[
+"2",
+"Nilai carta pai ini dalam bentuk apa?",
+[
+[
+"Peratus",
+[
+"bulatan penuh 100%",
+"Jepun 69%",
+"Thailand 21%",
+"Australia 7%"
+]
+],
+[
+"Sudut",
+[
+"bulatan penuh 360°",
+"Jepun 248°",
+"Thailand 76°"
+]
+]
+]
+],
+[
+"3",
+"Ciri iklim ini milik iklim mana?",
+[
+[
+"Gurun Panas",
+[
+"hujan kurang 250 mm",
+"min suhu 25°C",
+"suhu malam kira-kira 5°C"
+]
+],
+[
+"Monsun Tropika",
+[
+"hujan 1 000–2 000 mm",
+"suhu 24°C–27°C",
+"angin lembap dari laut"
+]
+],
+[
+"Siberia",
+[
+"musim sejuk 6–8 bulan",
+"julat suhu 30°C–50°C",
+"musim bunga dan musim luruh sangat singkat"
+]
+],
+[
+"Laurentia",
+[
+"hujan sepanjang tahun",
+"hujan lebih banyak pada musim panas",
+"min suhu 9°C–17°C"
+]
+]
+]
+],
+[
+"4",
+"Tumbuhan ini terdapat di hutan mana?",
+[
+[
+"Hutan Pantai",
+[
+"pokok ru",
+"tapak kuda",
+"jemerlang laut"
+]
+],
+[
+"Hutan Paya Air Tawar",
+[
+"kempas",
+"mersawa paya",
+"meranti paya"
+]
+],
+[
+"Hutan Paya Air Masin",
+[
+"bakau",
+"tumu merah",
+"lenggadai"
+]
+],
+[
+"Hutan Gunung",
+[
+"oak",
+"laurel",
+"orkid"
+]
+]
+]
+],
+[
+"5",
+"Kesan ini berpunca daripada kegiatan mana?",
+[
+[
+"Pembalakan",
+[
+"hakisan tanih",
+"tanah tandus"
+]
+],
+[
+"Pengkuarian",
+[
+"bunyi bising",
+"pencemaran udara"
+]
+],
+[
+"Pembinaan empangan",
+[
+"rantai makanan terjejas"
+]
+],
+[
+"Pengangkutan dan perhubungan",
+[
+"haiwan dilanggar kenderaan"
+]
+]
+]
+],
+[
+"6",
+"Mineral ini jenis apa?",
+[
+[
+"Mineral logam",
+[
+"emas",
+"bauksit",
+"bijih timah",
+"kuprum",
+"bijih besi"
+]
+],
+[
+"Mineral bukan logam",
+[
+"batu granit",
+"kaolin",
+"gas asli",
+"arang batu",
+"pasir",
+"petroleum"
+]
+]
+]
+],
+[
+"7",
+"Kegiatan ekonomi ini dalam sektor mana?",
+[
+[
+"Sektor primer",
+[
+"pertanian",
+"pembalakan",
+"perikanan",
+"perlombongan",
+"penternakan"
+]
+],
+[
+"Sektor sekunder",
+[
+"pembuatan atau perindustrian",
+"pembinaan"
+]
+],
+[
+"Sektor tertier",
+[
+"pelancongan",
+"perdagangan",
+"pengangkutan",
+"kewangan",
+"pendidikan"
+]
+]
+]
+],
+[
+"8",
+"Tumbuhan dan haiwan ini di hutan mana?",
+[
+[
+"Gurun Panas",
+[
+"kaktus",
+"akasia bantut",
+"unta",
+"tikus jerboa"
+]
+],
+[
+"Hutan Monsun Tropika",
+[
+"jati",
+"buluh",
+"gajah",
+"harimau bengal"
+]
+],
+[
+"Hutan Daun Luruh Sederhana",
+[
+"oak",
+"maple",
+"beaver",
+"badger"
+]
+],
+[
+"Hutan Konifer",
+[
+"pain",
+"fir",
+"moose",
+"burung raven"
+]
+]
+]
+],
+[
+"9",
+"Sumber tenaga ini jenis apa?",
+[
+[
+"Tenaga bahan bakar",
+[
+"petroleum",
+"gas asli",
+"arang batu"
+]
+],
+[
+"Tenaga alternatif",
+[
+"ombak",
+"angin",
+"geoterma",
+"air",
+"suria",
+"biomas"
+]
+]
+]
+],
+[
+"10",
+"Organisasi ini badan apa?",
+[
+[
+"Badan kerajaan",
+[
+"JAS",
+"Sabah Forestry Department",
+"Sarawak Forestry Corporation",
+"PERHILITAN",
+"FRIM"
+]
+],
+[
+"Badan bukan kerajaan",
+[
+"SAM",
+"MNS",
+"TRAFFIC",
+"GEC",
+"WWF"
+]
+]
+]
+],
+[
+"11",
+"Amalan ini dalam elemen 3R mana?",
+[
+[
+"Kurangkan",
+[
+"guna kedua-dua belah kertas",
+"guna kain ganti tisu",
+"guna e-mel",
+"beli ikut keperluan"
+]
+],
+[
+"Guna semula",
+[
+"bawa bekas makanan",
+"botol jadi bekas alat tulis",
+"bawa beg guna semula",
+"dermakan pakaian elok"
+]
+],
+[
+"Kitar semula",
+[
+"surat khabar jadi bakul",
+"sisa pertanian jadi baja",
+"tayar jadi pasu",
+"asingkan sisa ikut tong"
+]
+]
+]
+],
+[
+"12",
+"Kaedah kerja lapangan ini yang mana?",
+[
+[
+"Pemerhatian",
+[
+"mengamati secara sistematik",
+"pemerhatian berfokus",
+"hasil direkod"
+]
+],
+[
+"Temu bual",
+[
+"melibatkan pengkaji",
+"melibatkan responden",
+"maklumat secara lisan"
+]
+],
+[
+"Soal selidik",
+[
+"menggunakan borang",
+"soalan ringkas",
+"soalan mudah difahami"
+]
+],
+[
+"Rujukan",
+[
+"buku teks",
+"akhbar",
+"majalah ilmiah",
+"jurnal"
+]
+]
+]
+]
+];
+// [bab, kenyataan, benar?]
+const TF = [
+[
+"1",
+"Graf garisan mudah memerlukan petunjuk",
+false
+],
+[
+"1",
+"Graf gabungan mempunyai dua paksi menegak",
+true
+],
+[
+"1",
+"Ketinggian bar mewakili kuantiti komponen",
+true
+],
+[
+"1",
+"Banci digunakan untuk menghitung jumlah",
+true
+],
+[
+"1",
+"Graf bar mudah hanya boleh dilukis menegak",
+false
+],
+[
+"1",
+"Garisan curam menunjukkan perubahan besar",
+true
+],
+[
+"1",
+"Hujan KL tertinggi pada November 2017",
+true
+],
+[
+"1",
+"Suhu KL terendah pada April 2017",
+false
+],
+[
+"2",
+"Setiap sektor mewakili maklumat tertentu",
+true
+],
+[
+"2",
+"Nilai keseluruhan carta pai ialah 180°",
+false
+],
+[
+"2",
+"Nilai sektor dinyatakan dalam peratus",
+true
+],
+[
+"2",
+"Sektor dilukis dari kecil ke besar",
+false
+],
+[
+"2",
+"Sektor dilukis mengikut arah putaran jam",
+true
+],
+[
+"2",
+"Kategori lain-lain ialah sektor terakhir",
+true
+],
+[
+"2",
+"Pelancong Jepun paling sedikit ke Pahang",
+false
+],
+[
+"2",
+"Penipuan berjumlah 3 921 aduan",
+true
+],
+[
+"3",
+"Tanah tinggi melebihi 180 meter dari aras laut",
+true
+],
+[
+"3",
+"Saliran baik ialah kawasan sentiasa bertakung air",
+false
+],
+[
+"3",
+"Pokok bakau hidup di kawasan bersaliran buruk",
+true
+],
+[
+"3",
+"Tanih aridisols sesuai untuk pokok kaktus",
+true
+],
+[
+"3",
+"Podzol ialah tanih merah atau coklat kemerahan",
+false
+],
+[
+"3",
+"Hujan tahunan Gurun Arab kurang 250 mm",
+true
+],
+[
+"3",
+"Musim sejuk Siberia hanya satu bulan",
+false
+],
+[
+"3",
+"Hujan Laurentia turun sepanjang tahun",
+true
+],
+[
+"4",
+"Hutan Gunung tumbuh melebihi 1 200 m",
+true
+],
+[
+"4",
+"Hutan Pantai tumbuh di tanah gambut",
+false
+],
+[
+"4",
+"Akar ceracak membantu pernafasan",
+true
+],
+[
+"4",
+"Hutan Hujan Tropika mempunyai daun lebar",
+true
+],
+[
+"4",
+"Tanih berpasir sesuai untuk pokok kelapa",
+true
+],
+[
+"4",
+"Pembalakan mengurangkan hakisan tanih",
+false
+],
+[
+"4",
+"Hutan menapis air secara semula jadi",
+true
+],
+[
+"4",
+"Sarawak mempunyai sembilan taman negara",
+false
+],
+[
+"5",
+"Hidupan liar ialah komponen siratan makanan",
+true
+],
+[
+"5",
+"Tapir ialah haiwan karnivor",
+false
+],
+[
+"5",
+"Pembalakan boleh menyebabkan pencemaran air",
+true
+],
+[
+"5",
+"Pengkuarian tidak menghasilkan bunyi bising",
+false
+],
+[
+"5",
+"EIA menilai kesan projek pembangunan",
+true
+],
+[
+"5",
+"Hutan simpan boleh ditebang sesuka hati",
+false
+],
+[
+"5",
+"Pusat konservasi digunakan untuk penyelidikan",
+true
+],
+[
+"5",
+"CITES meluluskan perdagangan penuh tenggiling",
+false
+],
+[
+"6",
+"Sumber boleh baharu boleh diperbaharu",
+true
+],
+[
+"6",
+"Petroleum ialah mineral logam",
+false
+],
+[
+"6",
+"Empangan Bakun berada di Sarawak",
+true
+],
+[
+"6",
+"Empangan Bakun mampu menjana 2 400 MV",
+true
+],
+[
+"6",
+"Hutan Pantai hidup pada tanih berpasir",
+true
+],
+[
+"6",
+"Emas digunakan untuk membuat wayar",
+false
+],
+[
+"6",
+"Gas asli digunakan dalam industri petrokimia",
+true
+],
+[
+"6",
+"Perkhidmatan ialah sektor pekerja terkecil pada 2015",
+false
+],
+[
+"7",
+"Kelapa sawit ialah tanaman jualan terpenting Malaysia",
+true
+],
+[
+"7",
+"Getah ialah tanaman jualan kedua terpenting Malaysia",
+true
+],
+[
+"7",
+"Sektor tertier mengeluarkan bahan mentah",
+false
+],
+[
+"7",
+"Tanah tinggi sesuai untuk tanaman teh",
+true
+],
+[
+"7",
+"Malaysia beriklim Khatulistiwa",
+true
+],
+[
+"7",
+"Pasaran hanya pasaran tempatan",
+false
+],
+[
+"7",
+"Pelaburan asing boleh membuka kilang dan ladang",
+true
+],
+[
+"7",
+"Teknologi moden meningkatkan pencemaran",
+false
+],
+[
+"8",
+"Pokok gurun tumbuh secara jarang-jarang",
+true
+],
+[
+"8",
+"Haiwan Gurun Panas aktif mencari makanan pada siang hari",
+false
+],
+[
+"8",
+"Pokok Hutan Monsun Tropika tumbuh 20 hingga 30 meter",
+true
+],
+[
+"8",
+"Daun Hutan Monsun Tropika berbentuk jarum",
+false
+],
+[
+"8",
+"Chipmunk boleh berhibernasi pada musim sejuk",
+true
+],
+[
+"8",
+"Kanopi konifer berbentuk kon untuk mengumpul salji",
+false
+],
+[
+"8",
+"Akar bakau membantu menahan tindakan ombak",
+true
+],
+[
+"8",
+"Kayu Hutan Konifer tidak digunakan untuk membuat kertas",
+false
+],
+[
+"9",
+"Petroleum ialah sumber tenaga bahan bakar",
+true
+],
+[
+"9",
+"Biomas ialah sumber tenaga alternatif",
+true
+],
+[
+"9",
+"Geoterma terdapat di Iceland",
+true
+],
+[
+"9",
+"Krisis sumber hanya melibatkan ekonomi",
+false
+],
+[
+"9",
+"ASEAN ditubuhkan pada 1967",
+true
+],
+[
+"9",
+"WTO ialah segi tiga pertumbuhan",
+false
+],
+[
+"9",
+"FDI ialah pelaburan langsung asing",
+true
+],
+[
+"9",
+"Embargo ialah larangan mengeksport dagangan ke sesebuah negara",
+true
+],
+[
+"10",
+"Sumber hutan ialah sumber boleh baharu",
+true
+],
+[
+"10",
+"Sarawak mempunyai hutan terkecil di Malaysia",
+false
+],
+[
+"10",
+"Ekosistem melibatkan interaksi biotik dan abiotik",
+true
+],
+[
+"10",
+"Daun nipah digunakan untuk membuat atap",
+true
+],
+[
+"10",
+"Pemeliharaan ialah usaha membaik pulih hutan terganggu",
+false
+],
+[
+"10",
+"Taman negara melindungi biodiversiti",
+true
+],
+[
+"10",
+"TRAFFIC mengurus perdagangan mampan hidupan liar",
+true
+],
+[
+"10",
+"Pembangunan lestari mengabaikan generasi akan datang",
+false
+],
+[
+"11",
+"3R ialah Reduce, Reuse dan Recycle",
+true
+],
+[
+"11",
+"Reuse bermaksud membeli barang baharu",
+false
+],
+[
+"11",
+"Sisa baki dikutip dua kali seminggu",
+true
+],
+[
+"11",
+"Sisa pukal dikutip sekali seminggu",
+true
+],
+[
+"11",
+"Pulau Pinang mula kempen tanpa beg plastik pada 2009",
+true
+],
+[
+"11",
+"Sweden mengitar semula 1% sisa domestik",
+false
+],
+[
+"11",
+"Satu tan sisa yang dibakar dalam incinerator di Sweden menghasilkan 3 MWh",
+true
+],
+[
+"11",
+"Program 4-Dalam-1 melibatkan empat golongan",
+true
+],
+[
+"12",
+"Objektif kerja lapangan mestilah boleh diukur",
+true
+],
+[
+"12",
+"Tajuk kerja lapangan perlu terlalu umum",
+false
+],
+[
+"12",
+"Temu bual melibatkan pengkaji dan responden",
+true
+],
+[
+"12",
+"Rujukan tidak perlu dinyatakan dalam laporan",
+false
+],
+[
+"12",
+"Pemerhatian perlu sistematik dan berfokus",
+true
+],
+[
+"12",
+"Soal selidik perlu menggunakan soalan yang jelas",
+true
+],
+[
+"12",
+"Rumusan tidak dibuat berdasarkan data atau maklumat",
+false
+],
+[
+"12",
+"Lampiran ialah salah satu kandungan laporan",
+true
+]
+];
+
+/* ================= Keadaan & simpanan ================= */
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const IDX={};CARDS.forEach((c,i)=>IDX[c[3]]=i);
+let KNOWN=new Set();store.get('geo3known_id',[]).forEach(id=>{if(id in IDX)KNOWN.add(IDX[id])});
+const FRESH=()=>({xp:0,streak:0,last:'',right:{},badges:{},blitz:0,matchBest:0,quizPerfect:0,tfBest:0,sortBest:0,lab:0,games:0,mute:false});
+const G=Object.assign(FRESH(),store.get('geo3game',{}));
+const READ=()=>store.get('geo3read',{});   // ditulis oleh nota.html: {bab:1}
+const rk=i=>CARDS[i][3];
+// Jumlah XP = XP permainan + 30 XP bagi setiap bab yang notanya sudah dibaca (nota.html tulis geo3read)
+const TX=()=>G.xp+30*Object.keys(READ()).length;
+const save=()=>{
+  store.set('geo3known_id',[...KNOWN].map(rk)); store.set('geo3game',G);
+  const prog={}; CARDS.forEach((c,i)=>{if(c[0]==='x')return;const r=prog[c[0]]||(prog[c[0]]=[0,0]); r[1]++; if(KNOWN.has(i)) r[0]++;});
+  store.set('geo3progress',prog);
+};
+const strip=s=>String(s).replace(/<[^>]+>/g,'').replace(/&amp;/g,'&');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const BABS=Object.keys(T).filter(t=>t!=='x');
+
+/* ================= Pangkat ================= */
+const RANKS=['Peneroka Baharu','Pengembara','Pembaca Peta','Renjer Hutan','Penjejak Hidupan Liar','Juru Ukur','Pakar Cuaca','Profesor Geografi','Lagenda Bumi'];
+const need=l=>50*l*(l-1);
+const levelOf=xp=>{let l=1;while(xp>=need(l+1))l++;return l};
+const rankOf=l=>l<=RANKS.length?RANKS[l-1]:RANKS[RANKS.length-1]+' '+'★'.repeat(Math.min(5,l-RANKS.length));
+
+/* ================= Bunyi ================= */
+let AC=null;
+function tone(seq){ if(G.mute) return; try{
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  let t=AC.currentTime;
+  seq.forEach(([f,d,type])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type||'triangle';o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.8;});
+}catch(e){} }
+const SFX={ok:(c=0)=>{const m=Math.pow(2,Math.min(c,8)/12);tone([[660*m,.09],[990*m,.14]])},no:()=>tone([[180,.22,'sawtooth']]),flip:()=>tone([[520,.05]]),
+  win:()=>tone([[523,.1],[659,.1],[784,.1],[1047,.25]]),lvl:()=>tone([[392,.12],[523,.12],[659,.12],[784,.12],[1047,.35]]),tick:()=>tone([[880,.03,'square']]),
+  plop:()=>tone([[300,.06],[600,.08]])};
+
+/* ================= Kesan visual ================= */
+const fx=$('#fx'),cx=fx.getContext('2d');let parts=[],raf=0;
+function sizeFx(){fx.width=innerWidth;fx.height=innerHeight}
+addEventListener('resize',sizeFx);sizeFx();
+function confetti(n=90,x=innerWidth/2,y=innerHeight/3){
+  if(RM) return;
+  const cols=['#2b8a3e','#e8590c','#1c7ed6','#f2c94c','#0ca678','#d6336c','#ffffff'];
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=4+Math.random()*7,leaf=i%3===0;
+    parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5,r:3+Math.random()*4,c:cols[i%cols.length],l:70+Math.random()*40,rot:Math.random()*6,leaf});}
+  if(!raf) raf=requestAnimationFrame(step);
+}
+function step(){cx.clearRect(0,0,fx.width,fx.height);
+  parts=parts.filter(p=>p.l-->0);
+  parts.forEach(p=>{p.vy+=.25;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.rot+=.2;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.l/30);
+    if(p.leaf){cx.beginPath();cx.ellipse(0,0,p.r*1.6,p.r*.7,0,0,Math.PI*2);cx.fill();}else cx.fillRect(-p.r,-p.r/2,p.r*2,p.r);cx.restore();});
+  raf=parts.length?requestAnimationFrame(step):0;}
+function floatXP(txt,el){const r=el?el.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:0};
+  const f=document.createElement('div');f.className='float';f.textContent=txt;f.style.left=(r.left+r.width/2-20)+'px';f.style.top=(r.top-10)+'px';
+  document.body.appendChild(f);setTimeout(()=>f.remove(),1000);}
+function toast(e,h,d){const t=document.createElement('div');t.className='tst';t.innerHTML=`<span class="e">${e}</span><div><b>${h}</b><small>${d}</small></div>`;
+  $('#toast').appendChild(t);setTimeout(()=>t.remove(),3200);}
+
+/* ================= XP, streak, lencana ================= */
+let pendingLvl=0;
+function addXP(n,el){
+  if(n<=0) return;
+  const before=levelOf(TX()); G.xp+=n;
+  const d=today();
+  if(G.last!==d){const y=new Date();y.setDate(y.getDate()-1);const yd=y.getFullYear()+'-'+(y.getMonth()+1)+'-'+y.getDate();
+    G.streak=(G.last===yd)?G.streak+1:1;G.last=d;}
+  if(el) floatXP('+'+n,el);
+  const after=levelOf(TX()); if(after>before) pendingLvl=after;
+  save(); hud(); checkBadges();
+}
+function showLevelUp(){ if(!pendingLvl) return; const l=pendingLvl; pendingLvl=0;
+  $('#lvlN').textContent=l; $('#lvlD').innerHTML=`Kini anda <b>${rankOf(l)}</b>. Teruskan ekspedisi!`;
+  $('#lvlup').classList.add('on'); SFX.lvl(); confetti(140); $('#lvlOk').focus(); }
+$('#lvlOk').onclick=()=>$('#lvlup').classList.remove('on');
+
+function chapStats(t){let k=0,n=0;CARDS.forEach((c,i)=>{if(c[0]===t){n++;if(KNOWN.has(i))k++;}});return[k,n]}
+function starsOf(t){const[k,n]=chapStats(t);const p=n?k/n:0;return p>=1?3:p>=.67?2:p>=.34?1:0}
+const BADGES=[
+  ['first','🌱','Langkah Pertama','Habiskan permainan pertama',()=>G.games>0],
+  ['read1','📖','Ulat Buku','Baca nota satu bab',()=>Object.keys(READ()).length>=1],
+  ['readall','📚','Pembaca Tegar','Baca nota semua 12 bab',()=>BABS.every(b=>READ()[b])],
+  ['k50','🧠','Ingatan Tajam','50 kad dihafal',()=>KNOWN.size>=50],
+  ['k150','🗺️','Atlas Bergerak','150 kad dihafal',()=>KNOWN.size>=150],
+  ['combo5','🔥','Api Semangat','Combo ×5 dalam kuiz',()=>G.badges.combo5],
+  ['perfect','💯','Sempurna','Kuiz Kilat 10/10',()=>G.quizPerfect>0],
+  ['blitz20','⚡','Kilat Petir','20+ dalam Lawan Masa',()=>G.blitz>=20],
+  ['tf20','👍','Pengesan Fakta','20+ dalam Benar atau Salah',()=>G.tfBest>=20],
+  ['sort','🗑️','Juara Kitar Semula','Susun Kumpulan tanpa silap',()=>G.badges.sort],
+  ['lab','📊','Saintis Data','Makmal Graf 8/10 atau lebih',()=>G.lab>=8],
+  ['match','🧩','Pemadan Pantas','Padan Pasangan tanpa silap',()=>G.badges.match],
+  ['s3','🔥','3 Hari Berturut','Belajar 3 hari berturut-turut',()=>G.streak>=3],
+  ['s7','🏆','Seminggu Gigih','Belajar 7 hari berturut-turut',()=>G.streak>=7],
+  ['star1','⭐','Tawan Checkpoint','3 bintang di satu bab',()=>BABS.some(t=>starsOf(t)===3)],
+  ['starall','🌏','Lagenda Ekspedisi','3 bintang di semua bab',()=>BABS.every(t=>starsOf(t)===3)],
+];
+function checkBadges(){BADGES.forEach(([id,e,h,d,f])=>{if(!G.badges['got_'+id]&&f()){G.badges['got_'+id]=1;toast(e,'Lencana baharu: '+h,d);SFX.win();confetti(60);}});store.set('geo3game',G);}
+
+function answer(i,ok){
+  const k=rk(i);G.right[k]=ok?(G.right[k]||0)+1:0;
+  if(ok&&G.right[k]>=2) KNOWN.add(i);
+  if(!ok) KNOWN.delete(i);
+  save();
+}
+
+/* ================= HUD ================= */
+function hud(){
+  const x=TX(),l=levelOf(x),a=need(l),b=need(l+1);
+  $('#lvl').textContent=l; $('#rankName').textContent=rankOf(l);
+  $('#xpBar').style.width=Math.min(100,100*(x-a)/(b-a))+'%';
+  $('#xpTxt').textContent=x+' XP · '+(b-x)+' lagi ke '+rankOf(l+1);
+  $('#streak').textContent=G.streak; $('#knownN').textContent=KNOWN.size+'/'+CARDS.length;
+  $('#mute').textContent=G.mute?'🔇':'🔊';
+}
+$('#mute').onclick=()=>{G.mute=!G.mute;save();hud();};
+
+/* ================= Peta laluan ================= */
+let SEL=null;
+try{const b=new URLSearchParams(location.search).get('bab');if(b&&T[b])SEL=b;}catch(e){}
+const shortName=t=>T[t][0].replace(/^Bab \d+ · /,'');
+const XS=[50,74,50,26];  // corak zig-zag (% lebar)
+function nextBab(){return BABS.find(t=>starsOf(t)<3)||null}
+function renderMap(){
+  const read=READ(),nb=nextBab();let y=34,h='',pts=[],lastZone=null;
+  const route=CARDS.some(c=>c[0]==='x')?[...BABS,'x']:BABS;
+  route.forEach((t,k)=>{
+    const z=t==='x'?'puncak':T[t][2];
+    if(z!==lastZone){h+=t==='x'?`<div class="zone" style="top:${y-14}px">🏔️ Puncak: Rentas Bab</div>`:`<div class="zone" style="top:${y-14}px">${ZONES[z][0]} ${ZONES[z][1]}</div>`;y+=58;lastZone=z;}
+    const x=XS[k%4],s=starsOf(t),side=x>50?'l':'r';
+    h+=`<button class="node ${side}${SEL===t?' sel':''}${t===nb?' next':''}" data-t="${t}" style="left:${x}%;top:${y}px;--c:var(${T[t][1]})" aria-label="${esc(T[t][0])}, ${s} bintang">
+      <span class="n">${t==='x'?'🏔️':t}</span>${read[t]?'<span class="rd" title="Nota sudah dibaca">📖</span>':''}
+      <span class="st">${'★'.repeat(s)}${'☆'.repeat(3-s)}</span><span class="lb">${esc(shortName(t))}</span></button>`;
+    pts.push([x,y,t]);y+=118;
+  });
+  $('#nodes').style.height=(y-40)+'px';
+  $('#nodes').innerHTML=h+'<div class="me" id="me" aria-hidden="true">🧭</div>';
+  document.querySelectorAll('.node').forEach(b=>b.onclick=()=>{SEL=b.dataset.t;SFX.flip();renderMap();renderLevel();
+    if(innerWidth<=820)$('#levelcard').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});});
+  requestAnimationFrame(()=>drawTrail(pts));
+}
+function drawTrail(pts){
+  const W=$('#nodes').clientWidth,P=pts.map(([x,y])=>[x/100*W,y+10]);
+  let d=`M${P[0][0]},${P[0][1]}`;
+  for(let i=1;i<P.length;i++){const[a,b]=P[i-1],[c,e]=P[i];d+=` C${a},${(b+e)/2} ${c},${(b+e)/2} ${c},${e}`;}
+  $('#road').setAttribute('d',d);$('#dash').setAttribute('d',d);
+  const tgt=SEL||nextBab()||BABS[0],p=pts.find(q=>q[2]===tgt);
+  // avatar di sisi nod (bertentangan dengan label) supaya tidak menutup sepanduk zon
+  const me=$('#me'),side=p[0]>50?1:-1,off=innerWidth<=560?58:66;me.style.left=(p[0]/100*W+side*off)+'px';me.style.top=(p[1]+28)+'px';
+}
+addEventListener('resize',()=>{if(!document.body.classList.contains('playing'))renderMap()});
+
+/* Kad level (panel sisi) */
+const MODES=[
+  ['kad','🃏','Kad Imbas','terbalik & hafal'],
+  ['kuiz','⚡','Kuiz Kilat','10 soalan, 3 nyawa'],
+  ['masa','⏱️','Lawan Masa','60 saat'],
+  ['padan','🧩','Padan Pasangan','istilah ↔ maksud'],
+  ['susun','🗑️','Susun Kumpulan','masuk tong betul'],
+  ['tf','👍','Benar / Salah','leret pantas'],
+  ['graf','📊','Makmal Graf','kira & baca graf'],
+];
+function avail(m,t){
+  const inB=a=>a.some(x=>!t||x[0]===t);
+  if(m==='susun') return inB(CATS);
+  if(m==='tf') return TF.filter(x=>!t||x[0]===t).length+PAIRS.filter(x=>!t||x[0]===t).length>=6;
+  if(m==='padan') return PAIRS.filter(x=>!t||x[0]===t).length>=4||pool(i=>txtLen(i)<=70).length>=4;
+  if(m==='graf') return !t||t==='1'||t==='2';
+  return true;
+}
+function renderLevel(){
+  const t=SEL,lc=$('#levelcard');
+  if(!t){lc.style.setProperty('--c','var(--forest)');
+    lc.innerHTML=`<div class="top"><small>Belum pilih</small><h3>Ketik checkpoint pada peta</h3></div>
+      <div class="meta"><span class="pill">🧠 ${KNOWN.size}/${CARDS.length} kad</span><span class="pill">📖 ${Object.keys(READ()).length}/12 nota</span></div>
+      <div class="modes">${MODES.map(([id,e,h,d])=>`<button class="mode" data-m="${id}"${avail(id,null)?'':' disabled'}><span class="e">${e}</span><span>${h}<small>${d}</small></span></button>`).join('')}</div>`;
+  }else{
+    const[k,n]=chapStats(t),s=starsOf(t),rd=READ()[t];
+    lc.style.setProperty('--c',`var(${T[t][1]})`);
+    lc.innerHTML=`<div class="top"><small>${t==='x'?'🏔️ Puncak ekspedisi':ZONES[T[t][2]][0]+' '+ZONES[T[t][2]][1]+' · Bab '+t}</small><h3>${t==='x'?'Rentas Bab: kaitkan semua bab':esc(shortName(t))}</h3></div>
+      <div class="meta"><span class="pill">${'★'.repeat(s)}${'☆'.repeat(3-s)}</span><span class="pill">🧠 ${k}/${n}</span>${t==='x'?'':`<span class="pill">${rd?'📖 Sudah baca':'📖 Belum baca'}</span>`}</div>
+      <div class="modes">${MODES.map(([id,e,h,d])=>`<button class="mode" data-m="${id}"${avail(id,t)?'':' disabled'}><span class="e">${e}</span><span>${h}<small>${d}</small></span></button>`).join('')}</div>
+      ${t==='x'?'':`<a class="readlink" href="nota.html#bab${t}">📖 Baca nota Bab ${t}${rd?'':' (+30 XP)'}</a>`}`;
+  }
+  lc.querySelectorAll('.mode:not([disabled])').forEach(b=>b.onclick=()=>start(b.dataset.m));
+}
+function renderBadges(){$('#badges').innerHTML=BADGES.map(([id,e,h,d])=>`<div class="bdg${G.badges['got_'+id]?' got':''}"><div class="e">${e}</div><div class="h">${h}</div><div class="d">${d}</div></div>`).join('')}
+
+/* ================= Kolam kad ================= */
+const txtLen=i=>strip(CARDS[i][2]).length;
+function pool(filter){const ids=CARDS.map((_,i)=>i).filter(i=>!SEL||CARDS[i][0]===SEL);return filter?ids.filter(filter):ids}
+function pickCards(ids,n){const un=shuffle(ids.filter(i=>!KNOWN.has(i))),kn=shuffle(ids.filter(i=>KNOWN.has(i)));
+  const out=[];while(out.length<n&&(un.length||kn.length)){out.push((Math.random()<.75&&un.length)||!kn.length?un.pop():kn.pop())}return out}
+function options(i){
+  const ans=strip(CARDS[i][2]),len=ans.length;
+  let cand=CARDS.map((_,j)=>j).filter(j=>j!==i&&CARDS[j][0]===CARDS[i][0]&&strip(CARDS[j][2])!==ans&&txtLen(j)<=180);
+  if(cand.length<3) cand=CARDS.map((_,j)=>j).filter(j=>j!==i&&strip(CARDS[j][2])!==ans&&txtLen(j)<=180);
+  cand.sort((a,b)=>Math.abs(txtLen(a)-len)-Math.abs(txtLen(b)-len));
+  const seen=new Set([ans]);cand=cand.filter(j=>{const t=strip(CARDS[j][2]);if(seen.has(t))return false;seen.add(t);return true});
+  return shuffle([i,...shuffle(cand.slice(0,9)).slice(0,3)]);
+}
+
+/* ================= Rangka permainan ================= */
+let timerId=0,SID=0;
+function later(fn,ms){const s=SID;return setTimeout(()=>{if(s===SID)fn()},ms)}
+function stage(title){
+  clearInterval(timerId);SID++;
+  document.body.classList.add('playing');scrollTo(0,0);
+  $('#stage').innerHTML=`<div class="stagebar"><span class="ttl">${title}</span><button class="quit" id="quit">✕ Keluar</button></div><div id="sv"></div>`;
+  $('#quit').onclick=home;
+}
+function home(){clearInterval(timerId);SID++;document.body.classList.remove('playing','listing');$('#stage').innerHTML='';renderMap();renderLevel();renderBadges();hud();showLevelUp();}
+function scope(){return SEL?(SEL==='x'?'Rentas Bab':'Bab '+SEL):'Semua bab'}
+function start(m){({kad:playKad,kuiz:playQuiz,masa:playBlitz,padan:playMatch,susun:playSort,tf:playTF,graf:playLab})[m]();}
+$('#mixQuiz').onclick=()=>{SEL=null;playQuiz()};
+$('#mixTf').onclick=()=>{SEL=null;playTF()};
+$('#mixSort').onclick=()=>{SEL=null;playSort()};
+
+function result(e,h,sc,gain,again,missedHtml){
+  $('#sv').innerHTML=`<div class="result"><div class="big-e">${e}</div><h3>${h}</h3><div class="sc">${sc}</div><div class="gain">+${gain} XP</div>
+    <div class="row"><button class="next" id="again">Main lagi</button><button class="next alt" id="toHub">Ke peta</button></div>${missedHtml||''}</div>`;
+  $('#again').onclick=again;$('#toHub').onclick=home;$('#again').focus();
+  G.games++;save();checkBadges();later(showLevelUp,700);
+}
+const reviewCards=m=>m.length?`<div class="review"><h4>Ulang kaji soalan yang tersilap</h4>${m.map(i=>`<div><b>${CARDS[i][1]}</b><br>${CARDS[i][2]}</div>`).join('')}</div>`:'';
+const reviewTxt=m=>m.length?`<div class="review"><h4>Ulang kaji yang tersilap</h4>${m.map(x=>`<div>${x}</div>`).join('')}</div>`:'';
+
+/* ---- Kad Imbas ---- */
+function playKad(){
+  const ids=pickCards(pool(),20),requeued=new Set(); let k=0,got=0,xp=0;
+  stage('🃏 Kad Imbas · '+scope());
+  const show=()=>{
+    if(k>=ids.length){addXP(xp);SFX.win();confetti();return result('🃏','Sesi tamat!',`${got}/${ids.length} kad anda sudah ingat`,xp,playKad);}
+    const i=ids[k],[t,q,a]=CARDS[i];
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">Kad ${k+1}/${ids.length}</span><span class="pill">✅ ${got}</span></div>
+      <div class="big" id="bc" style="--c:var(${T[t][1]})" tabindex="0" role="button" aria-label="Terbalikkan kad"><div class="inner">
+      <div class="face"><span class="lbl">${T[t][0]}</span><div class="q">${q}</div><span class="tap">Ketik untuk lihat jawapan</span></div>
+      <div class="face back"><span class="lbl">Jawapan</span><div class="a">${a}</div></div></div></div>
+      <div class="row" id="rate" style="visibility:hidden"><button class="next alt" id="again1">🔁 Belum ingat</button><button class="next" id="gotit">✅ Dah ingat</button></div>`;
+    const bc=$('#bc'),flip=()=>{bc.classList.toggle('on');SFX.flip();$('#rate').style.visibility='visible';};
+    bc.onclick=flip;bc.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}};
+    $('#gotit').onclick=e=>{answer(i,true);got++;xp+=3;floatXP('+3',e.target);SFX.ok();k++;later(show,250);};
+    $('#again1').onclick=()=>{answer(i,false);if(!requeued.has(i)){requeued.add(i);ids.push(i);}k++;show();};
+  };
+  show();
+}
+
+/* ---- Aneka pilihan ---- */
+function mcq(i,onDone){
+  const[t,q]=CARDS[i],opts=options(i);
+  return{html:`<div class="qcard" style="--c:var(${T[t][1]})"><div class="lbl">${T[t][0]}</div><div class="q">${q}</div></div>
+    <div class="opts">${opts.map((j,n)=>`<button class="opt" data-j="${j}" data-k="${'ABCD'[n]}">${CARDS[j][2]}</button>`).join('')}</div>`,
+   bind(){document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=+b.dataset.j===i;
+      document.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(+o.dataset.j===i)o.classList.add('ok');else if(o!==b)o.classList.add('dim')});
+      if(!ok)b.classList.add('no');
+      answer(i,ok);onDone(ok,b);
+   })}};
+}
+let KEYS=null;  // pengendali kekunci khas permainan semasa
+addEventListener('keydown',e=>{
+  if(!document.body.classList.contains('playing')||$('#lvlup').classList.contains('on'))return;
+  if(KEYS&&KEYS(e))return;
+  const m={a:0,b:1,c:2,d:3,'1':0,'2':1,'3':2,'4':3}[e.key.toLowerCase()];
+  if(m!==undefined){const o=document.querySelectorAll('.opt')[m];if(o&&!o.disabled)o.click();}
+  else if(e.key==='Enter'){const n=$('#nx');if(n)n.click();}
+});
+
+/* ---- Kuiz Kilat ---- */
+function playQuiz(){
+  KEYS=null;
+  const ids=pickCards(pool(i=>txtLen(i)<=180),10);let k=0,lives=3,combo=0,best=0,score=0,xp=0;const missed=[];
+  stage('⚡ Kuiz Kilat · '+scope());
+  const show=()=>{
+    if(k>=ids.length||lives<=0){
+      if(score===ids.length&&ids.length>=10){G.quizPerfect++;xp+=50;}
+      addXP(xp);const win=lives>0;(win?SFX.win:SFX.no)();if(win)confetti(score===ids.length?160:80);
+      return result(score===ids.length?'💯':win?'🏆':'💔',score===ids.length?'Sempurna!':win?'Tahniah!':'Nyawa habis!',`${score}/${ids.length} betul · combo terbaik ×${best}`,xp,playQuiz,reviewCards(missed));
+    }
+    const i=ids[k],Q=mcq(i,(ok,b)=>{
+      if(ok){combo++;SFX.ok(combo);best=Math.max(best,combo);score++;const g=10*Math.min(combo,5);xp+=g;floatXP('+'+g,b);if(combo>=3)confetti(25,b.getBoundingClientRect().left+b.offsetWidth/2,b.getBoundingClientRect().top);
+        if(combo>=5)G.badges.combo5=1;}
+      else{SFX.no();combo=0;lives--;missed.push(i);}
+      meters();$('#sv').insertAdjacentHTML('beforeend','<button class="next" id="nx">Seterusnya ⏎</button>');$('#nx').onclick=()=>{k++;show()};$('#nx').focus();
+    });
+    $('#sv').innerHTML=`<div class="meters" id="mt"></div>`+Q.html;Q.bind();meters();
+  };
+  const meters=()=>{$('#mt').innerHTML=`<span class="pill">Soalan ${Math.min(k+1,ids.length)}/${ids.length}</span><span class="pill">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</span><span class="pill combo${combo>=2?' hot':''}">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span>`;};
+  show();
+}
+
+/* ---- Lawan Masa ---- */
+function playBlitz(){
+  KEYS=null;
+  const all=pool(i=>txtLen(i)<=140);let left=60,score=0,combo=0,xp=0,over=false,bag=[];const missed=[];
+  stage('⏱️ Lawan Masa · '+scope());
+  const next=()=>{if(!bag.length)bag=pickCards(all,all.length);return bag.pop()};
+  const end=()=>{if(over)return;over=true;clearInterval(timerId);const rec=score>G.blitz;if(rec)G.blitz=score;xp=score*6+(rec?30:0);addXP(xp);SFX.win();confetti(rec?150:70);
+    result(rec?'🏅':'⏱️',rec?'Rekod baharu!':'Masa tamat!',`${score} betul dalam 60 saat`,xp,playBlitz,reviewCards(missed.slice(0,8)));};
+  const show=()=>{
+    const i=next(),Q=mcq(i,(ok,b)=>{
+      if(over)return;
+      if(ok){score++;combo++;SFX.ok(combo);if(combo%3===0){left=Math.min(60,left+3);floatXP('+3s',b);}}
+      else{SFX.no();combo=0;left=Math.max(0,left-3);missed.push(i);}
+      bar();if(left<=0)return end();
+      later(()=>{if(!over)show()},ok?350:900);
+    });
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">✅ ${score}</span><span class="pill combo">🔥 ×${combo}</span><span class="pill" id="sec">${left}s</span></div><div class="timer" id="tm"><i></i></div>`+Q.html;Q.bind();bar();
+  };
+  const bar=()=>{const t=$('#tm');if(!t)return;t.firstChild.style.width=(left/60*100)+'%';t.classList.toggle('low',left<=10);$('#sec').textContent=left+'s';};
+  timerId=setInterval(()=>{if(over)return;left--;if(left<=5&&left>0)SFX.tick();bar();if(left<=0)end();},1000);
+  show();
+}
+
+/* ---- Padan Pasangan (PAIRS dahulu, kemudian kad pendek) ---- */
+function playMatch(){
+  KEYS=null;
+  // elak dua jubin yang kelihatan sama (cth. "Biomas" dalam Bab 6 dan Bab 9)
+  const seenL=new Set(),seenR=new Set();
+  let items=shuffle(PAIRS.filter(p=>!SEL||p[0]===SEL)).filter(p=>{const l=p[1].toLowerCase(),r=p[2].toLowerCase();if(seenL.has(l)||seenR.has(r))return false;seenL.add(l);seenR.add(r);return true})
+    .slice(0,5).map((p,n)=>({k:'p'+n,l:esc(p[1]),r:esc(p[2]),card:null}));
+  if(items.length<4) items=pickCards(pool(i=>txtLen(i)<=70&&strip(CARDS[i][1]).length<=110),5).map(i=>({k:'c'+i,l:CARDS[i][1],r:CARDS[i][2],card:i}));
+  let pick=null,done=0,miss=0,t0=Date.now();
+  stage('🧩 Padan Pasangan · '+scope());
+  $('#sv').innerHTML=`<p class="hint">Ketik satu di kiri, kemudian pasangannya di kanan.</p><div class="meters"><span class="pill" id="mm">✅ 0/${items.length}</span><span class="pill" id="ms">❌ 0</span></div>
+    <div class="match"><div class="col">${shuffle(items).map(x=>`<button class="tile q" data-k="${x.k}" data-s="q">${x.l}</button>`).join('')}</div>
+    <div class="col">${shuffle(items).map(x=>`<button class="tile" data-k="${x.k}" data-s="a">${x.r}</button>`).join('')}</div></div>`;
+  document.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{
+    if(!pick||pick.dataset.s===b.dataset.s){if(pick)pick.classList.remove('pick');pick=b;b.classList.add('pick');SFX.flip();return;}
+    const a=pick,ok=a.dataset.k===b.dataset.k;pick=null;a.classList.remove('pick');
+    if(ok){[a,b].forEach(x=>x.classList.add('done'));done++;const it=items.find(x=>x.k===b.dataset.k);if(it.card!==null)answer(it.card,true);SFX.ok(done);floatXP('+8',b);$('#mm').textContent=`✅ ${done}/${items.length}`;
+      if(done===items.length){const s=Math.round((Date.now()-t0)/1000);if(!G.matchBest||s<G.matchBest)G.matchBest=s;if(!miss)G.badges.match=1;
+        const xp=done*8+Math.max(0,40-s)+(miss?0:20);addXP(xp);confetti(120);SFX.win();
+        later(()=>result('🧩','Semua sepadan!',`${s} saat · ${miss} silap`,xp,playMatch),600);}}
+    else{miss++;[a,b].forEach(x=>{x.classList.remove('no');void x.offsetWidth;x.classList.add('no')});SFX.no();$('#ms').textContent='❌ '+miss;}
+  });
+}
+
+/* ---- Susun Kumpulan: item jatuh, ketik tong yang betul ---- */
+function playSort(){
+  const sets=shuffle(CATS.filter(c=>!SEL||c[0]===SEL));
+  if(!sets.length){stage('🗑️ Susun Kumpulan');$('#sv').innerHTML='<p class="hint">Tiada data kumpulan untuk bab ini.</p>';return;}
+  const set=sets[0],groups=set[2];
+  const items=shuffle(groups.flatMap((g,gi)=>g[1].map(it=>[it,gi]))).slice(0,12);
+  let k=0,lives=3,score=0,combo=0,xp=0,speed=6000,cur=null;const missed=[];
+  stage(`🗑️ Susun Kumpulan · Bab ${set[0]}`);
+  const cols=['var(--c1)','var(--c5)','var(--c4)','var(--c8)'];
+  $('#sv').innerHTML=`<div class="meters" id="mt"></div><p class="hint"><b>${esc(set[1])}</b> · ketik tong yang betul sebelum ia jatuh!</p>
+    <div class="sky" id="sky"><div class="danger"></div></div>
+    <div class="bins" style="grid-template-columns:repeat(${groups.length},1fr)">${groups.map((g,gi)=>`<button class="bin" data-g="${gi}" style="--c:${cols[gi]}"><small>${gi+1}</small>${esc(g[0])}</button>`).join('')}</div>`;
+  const meters=()=>{$('#mt').innerHTML=`<span class="pill">Item ${Math.min(k+1,items.length)}/${items.length}</span><span class="pill">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</span><span class="pill combo">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span>`};
+  const finish=()=>{cur=null;const perfect=!missed.length&&k>=items.length;if(perfect){G.badges.sort=1;xp+=40;}
+    G.sortBest=Math.max(G.sortBest,score);addXP(xp);(lives>0?SFX.win:SFX.no)();if(lives>0)confetti(perfect?150:70);
+    result(perfect?'🏆':lives>0?'🗑️':'💔',perfect?'Sempurna!':lives>0?'Bagus!':'Nyawa habis!',`${score}/${items.length} betul`,xp,playSort,reviewTxt(missed));};
+  const drop=()=>{
+    if(k>=items.length||lives<=0)return finish();
+    meters();const[txt,gi]=items[k],el=document.createElement('div');el.className='drop';el.textContent=txt;$('#sky').appendChild(el);
+    const tok={el,gi,done:false};cur=tok;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.transitionDuration=speed+'ms';el.classList.add('fall')}));
+    later(()=>{if(!tok.done)judge(-1)},speed+50);
+  };
+  const judge=g=>{
+    const tok=cur;if(!tok||tok.done)return;tok.done=true;
+    const ok=g===tok.gi,bin=document.querySelector(`.bin[data-g="${tok.gi}"]`);
+    if(ok){score++;combo++;const gain=8+Math.min(combo,5)*2;xp+=gain;SFX.ok(combo);floatXP('+'+gain,bin);bin.classList.remove('flash');void bin.offsetWidth;bin.classList.add('flash');
+      const st=getComputedStyle(tok.el).top;tok.el.style.top=st;tok.el.classList.remove('fall');tok.el.classList.add('in');}
+    else{lives--;combo=0;SFX.no();tok.el.classList.add('bad');bin.classList.remove('hint');void bin.offsetWidth;bin.classList.add('hint');
+      missed.push(`<b>${esc(items[k][0])}</b> → ${esc(groups[tok.gi][0])}`);const st=getComputedStyle(tok.el).top;tok.el.style.top=st;tok.el.classList.remove('fall');}
+    k++;speed=Math.max(2800,speed-300);meters();
+    later(()=>{tok.el.remove();drop()},ok?380:1100);
+  };
+  document.querySelectorAll('.bin').forEach(b=>b.onclick=()=>judge(+b.dataset.g));
+  KEYS=e=>{const n=+e.key;if(n>=1&&n<=groups.length){judge(n-1);return true}return false};
+  drop();
+}
+
+/* ---- Benar atau Salah (45 saat) ---- */
+function tfDeck(){
+  const st=TF.filter(x=>!SEL||x[0]===SEL).map(x=>({b:x[0],s:esc(x[1]),v:x[2],why:''}));
+  const pr=PAIRS.filter(x=>!SEL||x[0]===SEL);
+  // pasangan → kenyataan "kiri = kanan" benar, atau ditukar dengan kanan lain (salah)
+  pr.forEach((p,n)=>{const same=pr.filter(q=>q[0]===p[0]&&q[2]!==p[2]);
+    const card=r=>`<small style="color:var(--muted)">Pasangan ini betul?</small><br><b>${esc(p[1])}</b><br><span style="color:var(--trail)">➜</span> ${esc(r)}`;
+    if(Math.random()<.5||!same.length)st.push({b:p[0],s:card(p[2]),v:true,why:''});
+    else{const o=same[rnd(0,same.length-1)];st.push({b:p[0],s:card(o[2]),v:false,why:`<b>${esc(p[1])}</b> ➜ ${esc(p[2])}`});}});
+  return shuffle(st);
+}
+function playTF(){
+  let deck=tfDeck();
+  if(deck.length<6){stage('👍 Benar / Salah');$('#sv').innerHTML='<p class="hint">Tiada cukup kenyataan untuk bab ini.</p>';return;}
+  let left=45,score=0,combo=0,xp=0,over=false,k=0,busy=false;const missed=[];
+  stage('👍 Benar atau Salah · '+scope());
+  $('#sv').innerHTML=`<div class="meters"><span class="pill" id="sc">✅ 0</span><span class="pill combo" id="cb">🔥 ×0</span><span class="pill" id="sec">45s</span></div><div class="timer" id="tm"><i></i></div>
+    <div class="tfwrap" id="tfw"></div><div class="tfbtns"><button class="f" id="bf">← Salah</button><button class="t" id="bt">Benar →</button></div>
+    <p class="hint" style="margin-top:12px">Leret kad ke kanan = Benar, ke kiri = Salah. Papan kekunci: ← →</p>`;
+  const bar=()=>{$('#tm').firstChild.style.width=(left/45*100)+'%';$('#tm').classList.toggle('low',left<=10);$('#sec').textContent=left+'s';};
+  const end=()=>{if(over)return;over=true;clearInterval(timerId);const rec=score>G.tfBest;if(rec)G.tfBest=score;xp=score*5+(rec?30:0);addXP(xp);SFX.win();confetti(rec?150:70);
+    result(rec?'🏅':'👍',rec?'Rekod baharu!':'Masa tamat!',`${score} betul dalam 45 saat`,xp,playTF,reviewTxt(missed.slice(0,8)));};
+  const card=()=>{
+    if(k>=deck.length){deck=deck.concat(tfDeck());}
+    const d=deck[k];
+    $('#tfw').innerHTML=`<div class="tfc" id="tfc" style="--c:var(${T[d.b][1]})"><span class="lbl">Bab ${d.b}</span><span class="stamp t">BENAR</span><span class="stamp f">SALAH</span><div>${d.s}</div></div>`;
+    const c=$('#tfc');let x0=null,dx=0;
+    c.onpointerdown=e=>{x0=e.clientX;c.classList.add('drag');c.setPointerCapture(e.pointerId)};
+    c.onpointermove=e=>{if(x0===null)return;dx=e.clientX-x0;c.style.transform=`translateX(${dx}px) rotate(${dx/18}deg)`;
+      c.querySelector('.stamp.t').style.opacity=Math.max(0,dx/90);c.querySelector('.stamp.f').style.opacity=Math.max(0,-dx/90)};
+    c.onpointerup=()=>{c.classList.remove('drag');if(Math.abs(dx)>80)pick(dx>0);else{c.style.transform='';c.querySelectorAll('.stamp').forEach(s=>s.style.opacity=0)}x0=null;dx=0};
+  };
+  const pick=v=>{
+    if(over||busy)return;busy=true;const d=deck[k],ok=v===d.v,c=$('#tfc');
+    c.querySelector(v?'.stamp.t':'.stamp.f').style.opacity=1;
+    c.style.transform=`translateX(${v?420:-420}px) rotate(${v?25:-25}deg)`;c.style.opacity=0;
+    if(ok){score++;combo++;SFX.ok(combo);if(combo%4===0){left=Math.min(45,left+3);floatXP('+3s',$('#sec'));}}
+    else{combo=0;SFX.no();left=Math.max(0,left-3);missed.push(`${d.s.replace(/<small[^>]*>.*?<\/small><br>/,'').replace(/<br>/g,' ')} → <b>${d.v?'BENAR':'SALAH'}</b>${d.why?' (betul: '+d.why+')':''}`);}
+    $('#sc').textContent='✅ '+score;$('#cb').textContent='🔥 ×'+combo;bar();
+    if(left<=0)return end();
+    k++;later(()=>{busy=false;card()},260);
+  };
+  $('#bf').onclick=()=>pick(false);$('#bt').onclick=()=>pick(true);
+  KEYS=e=>{if(e.key==='ArrowLeft'){pick(false);return true}if(e.key==='ArrowRight'){pick(true);return true}return false};
+  timerId=setInterval(()=>{if(over)return;left--;if(left<=5&&left>0)SFX.tick();bar();if(left<=0)end();},1000);
+  card();bar();
+}
+
+/* ---- Makmal Graf: soalan kemahiran dijana (Bab 1 & 2) ---- */
+const PAL=['var(--c1)','var(--c5)','var(--c4)','var(--c8)','var(--c7)'];
+const LAB_ITEMS=[['Getah','Kelapa sawit','Koko','Padi','Lada'],['Kereta','Bas','Motosikal','Basikal','Lori'],['Plastik','Kertas','Kaca','Logam','Sisa makanan']];
+const MONTHS=['Jan','Feb','Mac','Apr','Mei','Jun','Jul','Ogo','Sep','Okt','Nov','Dis'];
+function numOpts(ans,unit,spread){const s=new Set([ans]);let g=0;while(s.size<4&&g++<50){const d=rnd(1,4)*spread*(Math.random()<.5?-1:1);if(ans+d>0)s.add(ans+d)}return shuffle([...s]).map(v=>[v+unit,v===ans])}
+function genLab(){
+  const kind=rnd(0,4);
+  if(kind<=1){ // sudut carta pai
+    const names=shuffle(LAB_ITEMS[rnd(0,2)]).slice(0,4);
+    const tot=[100,200,360,400,500,600,720,800,1000,1200][rnd(0,9)];
+    const fr=[[1,4],[1,2],[1,5],[1,10],[3,10],[2,5],[1,8],[3,8],[1,3],[1,6],[1,12],[1,9]].filter(([a,b])=>tot%b===0);
+    const[a,b]=fr[rnd(0,fr.length-1)],v=tot*a/b,ang=360*a/b;
+    if(kind===0) return{q:`Jumlah pengeluaran ialah <b>${tot}</b> tan. <b>${names[0]}</b> = <b>${v}</b> tan. Berapakah sudut sektor ${names[0]} dalam carta pai?`,
+      o:numOpts(ang,'°',ang>=60?15:5),why:`Sudut = nilai ÷ jumlah × 360° = ${v} ÷ ${tot} × 360° = <b>${ang}°</b>`,pie:[[names[0],ang],[ 'Lain-lain',360-ang]]};
+    return{q:`Sektor <b>${names[0]}</b> dalam carta pai ialah <b>${ang}°</b>. Jumlah keseluruhan = <b>${tot}</b>. Berapakah nilai ${names[0]}?`,
+      o:numOpts(v,'',Math.max(5,v/4|0)),why:`Nilai = sudut ÷ 360° × jumlah = ${ang} ÷ 360 × ${tot} = <b>${v}</b>`,pie:[[names[0],ang],['Lain-lain',360-ang]]};
+  }
+  if(kind===2){ // peratus
+    const tot=[200,400,500,800,1000][rnd(0,4)],p=[10,20,25,30,40,50,60,75][rnd(0,7)],v=tot*p/100,n=shuffle(LAB_ITEMS[rnd(0,2)])[0];
+    return{q:`${n} = <b>${v}</b> daripada jumlah <b>${tot}</b>. Berapakah peratusnya?`,o:numOpts(p,'%',5),why:`Peratus = ${v} ÷ ${tot} × 100% = <b>${p}%</b>`};
+  }
+  // baca graf bar / garisan
+  const line=kind===4,start=rnd(0,7),ms=MONTHS.slice(start,start+5);
+  // nilai unik supaya tertinggi/terendah tidak seri
+  const vals=shuffle(line?[...Array(10)].map((_,i)=>24+i):[...Array(27)].map((_,i)=>(i+4)*10)).slice(0,5);
+  const unit=line?'°C':' mm',hi=Math.max(...vals),lo=Math.min(...vals),qk=rnd(0,2);
+  let q,o,why;
+  if(qk===0){const m=ms[vals.indexOf(hi)];q=`Berdasarkan graf, bulan manakah ${line?'suhu':'hujan'} <b>paling tinggi</b>?`;o=shuffle(ms.slice(0,4).includes(m)?ms.slice(0,4):[m,...ms.filter(x=>x!==m).slice(0,3)]).map(x=>[x,x===m]);why=`Bar/titik paling tinggi ialah <b>${m}</b> (${hi}${unit}).`;}
+  else if(qk===1){q=`Berapakah <b>julat</b> ${line?'suhu':'hujan'} (tertinggi − terendah)?`;o=numOpts(hi-lo,unit,line?1:20);why=`Julat = ${hi} − ${lo} = <b>${hi-lo}${unit}</b>`;}
+  else{const s=vals.reduce((a,b)=>a+b,0);q=line?`Berapakah suhu <b>purata</b> bagi 5 bulan ini? (bundarkan)`:`Berapakah <b>jumlah</b> hujan bagi 5 bulan ini?`;
+    const ans=line?Math.round(s/5):s;o=numOpts(ans,unit,line?1:30);why=line?`Purata = (${vals.join(' + ')}) ÷ 5 = <b>${ans}${unit}</b> (dibundarkan)`:`Jumlah = ${vals.join(' + ')} = <b>${s}${unit}</b>`;}
+  return{q,o,why,graph:{line,ms,vals,unit}};
+}
+function graphSVG(g){
+  const W=420,H=220,L=44,B=190,max=Math.ceil(Math.max(...g.vals)*1.15/10)*10,min=g.line?Math.floor(Math.min(...g.vals)-3):0;
+  const Y=v=>B-(v-min)/(max-min)*160,X=i=>L+20+i*72;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Graf ${g.line?'garisan suhu':'bar hujan'}"><g fill="var(--muted)" font-size="11" font-family="Nunito,sans-serif">`;
+  for(let k=0;k<=4;k++){const v=Math.round(min+(max-min)*k/4);s+=`<line x1="${L}" x2="${W-10}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;}
+  s+=`<text x="10" y="18" font-weight="800">${g.line?'Suhu (°C)':'Hujan (mm)'}</text>`;
+  g.ms.forEach((m,i)=>s+=`<text x="${X(i)+18}" y="${B+18}" text-anchor="middle" font-weight="800">${m}</text>`);
+  s+='</g>';
+  if(g.line){const pts=g.vals.map((v,i)=>`${X(i)+18},${Y(v)}`).join(' ');
+    s+=`<polyline points="${pts}" fill="none" stroke="var(--c5)" stroke-width="4" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"><animate attributeName="stroke-dashoffset" from="1" to="0" dur="1s" fill="freeze"/></polyline>`;
+    g.vals.forEach((v,i)=>s+=`<circle cx="${X(i)+18}" cy="${Y(v)}" r="6" fill="var(--panel)" stroke="var(--c5)" stroke-width="3"/>`);}
+  else{s+='<g class="bar-g">';g.vals.forEach((v,i)=>s+=`<rect x="${X(i)}" y="${Y(v)}" width="36" height="${B-Y(v)}" rx="5" fill="var(--c1)" style="animation-delay:${i*90}ms"/>`);s+='</g>';}
+  return s+`<line x1="${L}" x2="${W-10}" y1="${B}" y2="${B}" stroke="var(--ink)" stroke-width="2"/></svg>`;
+}
+function pieHTML(p){let a=0;const stops=p.map(([n,d],i)=>{const s=`${PAL[i]} ${a}deg ${a+d}deg`;a+=d;return s}).join(',');
+  return `<div class="pie" style="background:conic-gradient(${stops})"></div><div class="legend">${p.map(([n],i)=>`<span><i style="background:${PAL[i]}"></i>${esc(n)}</span>`).join('')}</div>`}
+function playLab(){
+  KEYS=null;let k=0,score=0,xp=0;
+  stage('📊 Makmal Graf');
+  const show=()=>{
+    if(k>=10){G.lab=Math.max(G.lab,score);addXP(xp);SFX.win();confetti(score*15);return result(score>=8?'📊':'📈',score>=8?'Saintis Data!':'Makmal tamat',`${score}/10 betul`,xp,playLab);}
+    const P=genLab();
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">Soalan ${k+1}/10</span><span class="pill">✅ ${score}</span><span class="pill">✨ ${xp} XP</span></div>
+      ${P.graph?`<div class="chart">${graphSVG(P.graph)}</div>`:P.pie?`<div class="chart">${pieHTML(P.pie)}</div>`:''}
+      <div class="qcard" style="--c:var(--c2)"><div class="lbl">Kemahiran Geografi</div><div class="q">${P.q}</div></div>
+      <div class="opts">${P.o.map(([v,ok],n)=>`<button class="opt" data-ok="${ok?1:0}" data-k="${'ABCD'[n]}">${v}</button>`).join('')}</div>`;
+    document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.ok==='1';document.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.dataset.ok==='1')o.classList.add('ok');else if(o!==b)o.classList.add('dim')});
+      if(ok){score++;xp+=12;SFX.ok(score);floatXP('+12',b);}else{b.classList.add('no');SFX.no();}
+      $('#sv').insertAdjacentHTML('beforeend',`<div class="explain">🧮 ${P.why}</div><button class="next" id="nx">Seterusnya ⏎</button>`);$('#nx').onclick=()=>{k++;show()};$('#nx').focus();
+    });
+  };
+  show();
+}
+
+/* ================= Senarai & cetak ================= */
+const sel=$('#filter');
+sel.innerHTML='<option value="">Semua bab ('+CARDS.length+')</option>'+Object.entries(T).map(([k,v])=>`<option value="${k}">${esc(v[0])}</option>`).join('');
+const babNum=t=>t==='x'?99:+t;
+let order=CARDS.map((_,i)=>i).sort((a,b)=>babNum(CARDS[a][0])-babNum(CARDS[b][0])||a-b);
+function renderList(){
+  const f=sel.value,deck=$('#deck');deck.innerHTML='';
+  order.filter(i=>!f||CARDS[i][0]===f).forEach(i=>{
+    const[t,q,a]=CARDS[i];const el=document.createElement('div');
+    el.className='flip'+(KNOWN.has(i)?' known':'');el.style.setProperty('--c',`var(${T[t][1]})`);
+    el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Terbalikkan kad #'+(i+1));
+    el.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target===el){e.preventDefault();el.classList.toggle('on')}};
+    el.innerHTML=`<div class="inner"><div class="face"><span class="lbl">${T[t][0]}</span><span class="no">#${i+1}</span><div class="q">${q}</div></div>
+      <div class="face back"><span class="lbl">Jawapan</span><span class="no">#${i+1}</span><div class="a">${a}</div><button class="mark">${KNOWN.has(i)?'✗ Tanda belum hafal':'✓ Tanda sudah hafal'}</button></div></div>`;
+    el.onclick=e=>{if(e.target.classList.contains('mark')){KNOWN.has(i)?KNOWN.delete(i):KNOWN.add(i);save();hud();renderList();return;}el.classList.toggle('on');};
+    deck.appendChild(el);
+  });
+}
+sel.onchange=renderList;
+$('#shuffle').onclick=()=>{order=shuffle(order);renderList()};
+$('#toList').onclick=()=>{document.body.classList.add('listing');if(SEL)sel.value=SEL;renderList();scrollTo(0,0)};
+$('#backHub').onclick=home;
+$('#resetAll').onclick=()=>{if(confirm('Padam semua XP, lencana dan kad dihafal?')){KNOWN.clear();Object.keys(G).forEach(k=>delete G[k]);Object.assign(G,FRESH());store.set('geo3game',G);store.set('geo3read',{});save();home();}};
+
+(function(){
+  const out=$('#print'),PER=10;let h='';
+  for(let s=0;s<order.length;s+=PER){
+    const grp=order.slice(s,s+PER).map(i=>[CARDS[i],i]);
+    while(grp.length<PER)grp.push(null);
+    let front='<div class="sheet">',back='<div class="sheet">';
+    grp.forEach(x=>{front+=x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">${T[x[0][0]][0]}</span><span class="no">#${x[1]+1}</span><div class="q">${x[0][1]}</div></div>`:'<div class="pc blank"></div>';});
+    for(let r=0;r<PER/2;r++){[grp[r*2+1],grp[r*2]].forEach(x=>{back+=x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">Jawapan</span><span class="no">#${x[1]+1}</span><div class="a">${x[0][2]}</div></div>`:'<div class="pc blank"></div>';});}
+    h+=front+'</div>'+back+'</div>';
+  }
+  out.innerHTML=h;
+})();
+
+save();hud();checkBadges();renderMap();renderLevel();renderBadges();
+document.fonts&&document.fonts.ready.then(renderMap);
+// XP dari nota (tab lain) dikemas kini bila kembali
+addEventListener('focus',()=>{hud();checkBadges();if(!document.body.classList.contains('playing')){renderMap();renderLevel();renderBadges();}});
+</script>
+</body>
+</html>
