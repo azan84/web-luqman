@@ -3708,7 +3708,7 @@ const rankOf=l=>l<=RANKS.length?RANKS[l-1]:RANKS[RANKS.length-1]+' '+'★'.repea
 /* ================= Bunyi (WebAudio) ================= */
 let AC=null;
 function tone(seq){ if(G.mute) return; try{
-  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
   let t=AC.currentTime;
   seq.forEach(([f,d,type])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type||'triangle';o.frequency.value=f;
     g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);

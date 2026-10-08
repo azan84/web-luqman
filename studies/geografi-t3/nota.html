@@ -4791,7 +4791,7 @@ var LV=[[1, "Jadual & Graf", "kemahiran"], [2, "Carta Pai", "kemahiran"], [3, "P
     parts.forEach(function(p){p.vy+=.25;p.x+=p.vx;p.y+=p.vy;p.rot+=.2;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.l/30);cx.beginPath();cx.ellipse(0,0,p.r*1.5,p.r*.7,0,0,6.28);cx.fill();cx.restore()});
     raf=parts.length?requestAnimationFrame(step):0}
   function toast(e,t){var d=document.createElement('div');d.className='tst';d.innerHTML='<span class="e">'+e+'</span><div>'+t+'</div>';document.getElementById('toast').appendChild(d);setTimeout(function(){d.remove()},3000)}
-  function chime(){try{var g=store.get('geo3game',{});if(g.mute)return;var A=new (window.AudioContext||window.webkitAudioContext)(),t=A.currentTime;
+  function chime(){try{var g=store.get('geo3game',{});if(g.mute)return;var A=new (window.AudioContext||window.webkitAudioContext)();if(A.state==='suspended')A.resume();var t=A.currentTime;
     [523,659,784,1047].forEach(function(f,i){var o=A.createOscillator(),v=A.createGain();o.type='triangle';o.frequency.value=f;v.gain.setValueAtTime(.0001,t+i*.09);v.gain.exponentialRampToValueAtTime(.16,t+i*.09+.01);v.gain.exponentialRampToValueAtTime(.0001,t+i*.09+.2);o.connect(v).connect(A.destination);o.start(t+i*.09);o.stop(t+i*.09+.25)})}catch(e){}}
 
   // Butang level selesai
@@ -4824,14 +4824,15 @@ var LV=[[1, "Jadual & Graf", "kemahiran"], [2, "Carta Pai", "kemahiran"], [3, "P
   function setFocus(on){document.body.classList.toggle('focus',on);fb.setAttribute('aria-pressed',on);fb.textContent=on?'🎯 Fokus: ON':'🎯 Mod Fokus';try{localStorage.setItem('geo3focus',on?'1':'0')}catch(e){}}
   fb.onclick=function(){setFocus(!document.body.classList.contains('focus'))};
   try{if(localStorage.getItem('geo3focus')==='1')setFocus(true)}catch(e){}
-  addEventListener('beforeprint',function(){document.querySelectorAll('details').forEach(function(d){d.dataset.wasOpen=d.open;d.open=true})});
-  addEventListener('afterprint',function(){document.querySelectorAll('details').forEach(function(d){d.open=d.dataset.wasOpen==='true'})});
+  addEventListener('beforeprint',function(){document.querySelectorAll('details').forEach(function(d){if(!('wasOpen' in d.dataset))d.dataset.wasOpen=d.open;d.open=true})});
+  addEventListener('afterprint',function(){document.querySelectorAll('details').forEach(function(d){if('wasOpen' in d.dataset){d.open=d.dataset.wasOpen==='true';delete d.dataset.wasOpen}})});
 
   // Album foto: kilauan sekali apabila kelihatan; ketik untuk besarkan
   var fotos=[].slice.call(document.querySelectorAll('.foto'));
   if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('seen');io.unobserve(e.target)}})},{threshold:.5});fotos.forEach(function(f){io.observe(f)})}
   var lb=document.getElementById('lb');
-  fotos.forEach(function(f){f.querySelector('button').onclick=function(){var i=f.querySelector('img'),fc=f.querySelector('figcaption');lb.querySelector('img').src=i.src;lb.querySelector('img').alt=i.alt;lb.querySelector('p').innerHTML=fc?fc.innerHTML:'';lb.showModal()}});
+  fotos.forEach(function(f){f.querySelector('button').onclick=function(){var i=f.querySelector('img'),fc=f.querySelector('figcaption');lb.querySelector('img').src=i.src;lb.querySelector('img').alt=i.alt;lb.querySelector('p').innerHTML=fc?fc.innerHTML:'';lb._from=f.querySelector('button');lb.showModal()}});
+  lb.addEventListener('close',function(){if(lb._from)lb._from.focus()});
   lb.querySelector('.x').onclick=function(){lb.close()};
   lb.onclick=function(e){if(e.target===lb)lb.close()};
 

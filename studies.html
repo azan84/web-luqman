@@ -92,6 +92,15 @@
     .gzone { display: grid; gap: .6rem; align-content: start; }
     .gzone > span { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-2); }
     .gzone .bab { min-height: 0; }
+
+    /* Pemilih tingkatan */
+    .formtabs { display: flex; gap: .5rem; flex-wrap: wrap; margin: 0 0 1.2rem; }
+    .formtabs button { font: 600 .95rem var(--font-sans); padding: .55rem 1.1rem; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-soft); color: var(--text); cursor: pointer; }
+    .formtabs button[aria-selected="true"] { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #fff; border-color: transparent; }
+    .form-panel[hidden] { display: none; }
+    .form-panel > .subject + .subject { margin-top: 1.6rem; }
+    /* Studies: Sains T3 */
+    #sains-t3 .subject-icon { background: linear-gradient(135deg, #22d3ee, #f72585); }
     .soon { opacity: .55; }
 
     @media (max-width: 900px) {
@@ -133,6 +142,14 @@
     </section>
 
     <section class="section">
+      <div class="formtabs" role="tablist" aria-label="Pilih tingkatan">
+        <button role="tab" id="tab-t1" aria-controls="form-t1" aria-selected="false" data-form="t1" hidden>Tingkatan 1</button>
+        <button role="tab" id="tab-t3" aria-controls="form-t3" aria-selected="true" data-form="t3">Tingkatan 3</button>
+      </div>
+      <div class="form-panel" id="form-t1" role="tabpanel" aria-labelledby="tab-t1" hidden>
+        <!--T1-->
+      </div>
+      <div class="form-panel" id="form-t3" role="tabpanel" aria-labelledby="tab-t3">
       <article class="subject" id="sejarah-t3">
         <div class="subject-head">
           <div class="subject-icon" aria-hidden="true">&#x1F4DC;</div>
@@ -242,6 +259,43 @@
         </div>
       </article>
 
+
+      <article class="subject" id="sains-t3">
+        <div class="subject-head">
+          <div class="subject-icon" aria-hidden="true">&#x1F9EA;</div>
+          <div>
+            <span class="tag">KSSM · Tingkatan 3</span>
+            <h2>Sains Tingkatan 3</h2>
+            <p>Sepuluh bab sebagai <b>jadual berkala misi</b>: nota dengan rajah, animasi &amp; 50 foto, kemudian main <b>Misi Makmal Sains</b>: 8 permainan termasuk <b>Makmal Kira</b> (rumus &amp; pengiraan) dan <b>Teka Gambar</b>.</p>
+            <div class="subject-actions">
+              <a href="studies/sains-t3/kad-imbas.html" class="btn btn-small btn-primary">&#x1F3AE; Main Misi Makmal Sains</a>
+              <a href="studies/sains-t3/nota.html" class="btn btn-small btn-ghost">&#x1F4D6; Nota Makmal (animasi + foto)</a>
+            </div>
+            <div class="overall"><span id="sOverallText">Kemajuan: 0 kad dihafal</span><div class="bar"><i id="sOverallBar"></i></div></div>
+          </div>
+        </div>
+        <div class="gzones">
+          <div class="gzone"><span>🧬 Tema 1</span>
+            <a class="bab" style="--c:#4ade80" href="studies/sains-t3/kad-imbas.html?bab=1" data-sbab="1"><span class="no">BAB 1 · Rg</span><span class="t">Rangsangan &amp; Gerak Balas</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#2dd4bf" href="studies/sains-t3/kad-imbas.html?bab=2" data-sbab="2"><span class="no">BAB 2 · Rs</span><span class="t">Respirasi</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#fb7185" href="studies/sains-t3/kad-imbas.html?bab=3" data-sbab="3"><span class="no">BAB 3 · Pa</span><span class="t">Pengangkutan</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+          <div class="gzone"><span>⚗️ Tema 2</span>
+            <a class="bab" style="--c:#fb923c" href="studies/sains-t3/kad-imbas.html?bab=4" data-sbab="4"><span class="no">BAB 4 · Kl</span><span class="t">Kereaktifan Logam</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#fdba74" href="studies/sains-t3/kad-imbas.html?bab=5" data-sbab="5"><span class="no">BAB 5 · Tm</span><span class="t">Termokimia</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+          <div class="gzone"><span>⚡ Tema 3</span>
+            <a class="bab" style="--c:#60a5fa" href="studies/sains-t3/kad-imbas.html?bab=6" data-sbab="6"><span class="no">BAB 6 · Em</span><span class="t">Elektrik &amp; Kemagnetan</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#facc15" href="studies/sains-t3/kad-imbas.html?bab=7" data-sbab="7"><span class="no">BAB 7 · Tk</span><span class="t">Tenaga &amp; Kuasa</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#c084fc" href="studies/sains-t3/kad-imbas.html?bab=8" data-sbab="8"><span class="no">BAB 8 · Ra</span><span class="t">Keradioaktifan</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+          <div class="gzone"><span>🚀 Tema 4</span>
+            <a class="bab" style="--c:#f472b6" href="studies/sains-t3/kad-imbas.html?bab=9" data-sbab="9"><span class="no">BAB 9 · Ca</span><span class="t">Cuaca Angkasa Lepas</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+            <a class="bab" style="--c:#818cf8" href="studies/sains-t3/kad-imbas.html?bab=10" data-sbab="10"><span class="no">BAB 10 · Pl</span><span class="t">Penerokaan Angkasa Lepas</span><span class="k">kad</span><div class="bar"><i></i></div></a>
+          </div>
+        </div>
+      </article>
+      </div>
       <p class="hint">More subjects coming soon. Kemajuan disimpan dalam pelayar ini sahaja.</p>
     </section>
   </main>
@@ -285,6 +339,35 @@
       if (total) {
         document.getElementById('gOverallText').textContent = 'Kemajuan: ' + known + '/' + total + ' kad dihafal';
         document.getElementById('gOverallBar').style.width = Math.round(100 * known / total) + '%';
+      }
+    })();
+    // Pemilih tingkatan (diingat dalam pelayar; #id subjek membuka tab yang betul)
+    (function () {
+      var tabs = document.querySelectorAll('.formtabs button');
+      function show(f) { tabs.forEach(function (b) { var on = b.dataset.form === f; b.setAttribute('aria-selected', on); document.getElementById('form-' + b.dataset.form).hidden = !on; });
+        try { localStorage.setItem('luqman-form', f); } catch (e) {} }
+      tabs.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.form); }); });
+      var h = location.hash.slice(1), f = null;
+      if (h && document.getElementById(h)) { var pnl = document.getElementById(h).closest('.form-panel'); if (pnl) f = pnl.id.slice(5); }
+      if (!f) { try { f = localStorage.getItem('luqman-form'); } catch (e) {} }
+      show(f === 't1' && document.querySelector('#form-t1 .subject') ? 't1' : 't3');
+    })();
+    // Kemajuan Sains T3, ditulis oleh studies/sains-t3/kad-imbas.html
+    (function () {
+      var p = {}, r = {};
+      try { p = JSON.parse(localStorage.getItem('sci3progress') || '{}'); r = JSON.parse(localStorage.getItem('sci3read') || '{}'); } catch (e) {}
+      var known = 0, total = 0;
+      document.querySelectorAll('.bab[data-sbab]').forEach(function (a) {
+        var b = a.getAttribute('data-sbab'), x = p[b];
+        if (r[b]) a.querySelector('.k').textContent = '📖 dibaca';
+        if (!x || !x[1]) return;
+        a.querySelector('.bar i').style.width = Math.round(100 * x[0] / x[1]) + '%';
+        a.querySelector('.k').textContent += ' · ' + x[0] + '/' + x[1];
+      });
+      Object.keys(p).forEach(function (k) { known += p[k][0]; total += p[k][1]; });
+      if (total) {
+        document.getElementById('sOverallText').textContent = 'Kemajuan: ' + known + '/' + total + ' kad dihafal';
+        document.getElementById('sOverallBar').style.width = Math.round(100 * known / total) + '%';
       }
     })();
   </script>

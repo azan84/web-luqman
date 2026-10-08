@@ -1,0 +1,4632 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Misi Makmal Sains</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Space+Mono:wght@700&family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef4ff; --panel:#ffffff; --panel2:#e3ebfb; --ink:#0b1430; --muted:#4a5a80; --line:#cdd8f0;
+  --trail:#d6246e; --forest:#15803d; --river:#0891b2; --sand:#ca8a04; --red:#dc2626; --topo:#d5e0f5; --glow:#0891b2;
+  --x:#475569; --c1:#16a34a; --c2:#0d9488; --c3:#dc2626; --c4:#ea580c; --c5:#c2410c; --c6:#2563eb; --c7:#a16207; --c8:#7c3aed; --c9:#db2777; --c10:#4f46e5;
+  --onc:#fff; --disp:"Fredoka",system-ui,sans-serif; --mono:"Space Mono",ui-monospace,monospace; --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--onc:#0b1026;--bg:#0b1026;--panel:#141b3a;--panel2:#1c2550;--ink:#e9f1ff;--muted:#9fb0d6;--line:#27325e;
+    --trail:#f72585;--forest:#4ade80;--river:#22d3ee;--sand:#ffd60a;--red:#ff5d73;--topo:#18214a;--glow:#22d3ee;
+    --x:#94a3b8;--c1:#4ade80;--c2:#2dd4bf;--c3:#fb7185;--c4:#fb923c;--c5:#fdba74;--c6:#60a5fa;--c7:#facc15;--c8:#c084fc;--c9:#f472b6;--c10:#818cf8}
+}
+:root[data-theme="dark"]{--onc:#0b1026;--bg:#0b1026;--panel:#141b3a;--panel2:#1c2550;--ink:#e9f1ff;--muted:#9fb0d6;--line:#27325e;
+  --trail:#f72585;--forest:#4ade80;--river:#22d3ee;--sand:#ffd60a;--red:#ff5d73;--topo:#18214a;--glow:#22d3ee;
+  --x:#94a3b8;--c1:#4ade80;--c2:#2dd4bf;--c3:#fb7185;--c4:#fb923c;--c5:#fdba74;--c6:#60a5fa;--c7:#facc15;--c8:#c084fc;--c9:#f472b6;--c10:#818cf8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 var(--body)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+b{font-weight:800}
+.disp{font-family:var(--disp);font-weight:400;letter-spacing:.01em}
+
+/* ---------- HUD ---------- */
+.hud{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:3px solid var(--forest)}
+.hud .wrap{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px}
+.rank{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.lvl{font-family:var(--disp);font-size:1.3rem;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--forest);color:var(--onc);flex:none;border:3px solid var(--sand)}
+.rank .t{font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xpbar{height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-top:4px}
+.xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sand),var(--trail));border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.xptxt{font-size:.75rem;color:var(--muted)}
+.pill{display:flex;align-items:center;gap:4px;font-weight:900;padding:6px 10px;border-radius:99px;background:var(--panel2);white-space:nowrap}
+.iconbtn{border:0;background:var(--panel2);border-radius:99px;width:38px;height:38px;cursor:pointer;font-size:1.05rem;flex:none}
+
+/* ---------- Hub ---------- */
+.hero{padding:22px 0 4px}
+.hero h1{font-family:var(--disp);font-weight:400;font-size:clamp(2rem,7vw,3.1rem);line-height:1;margin:0}
+.hero h1 small{display:block;font-size:.42em;color:var(--trail);margin-top:6px}
+.hero p{margin:.6em 0 0;color:var(--muted);max-width:58ch}
+.hubgrid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start;margin-top:16px}
+.side{position:sticky;top:86px;display:grid;gap:12px}
+.quick{display:grid;gap:10px}
+.bigplay{border:0;cursor:pointer;border-radius:20px;padding:16px 18px;background:var(--trail);color:var(--onc);text-align:left;box-shadow:0 6px 0 color-mix(in srgb,var(--trail) 55%,#000);display:flex;gap:12px;align-items:center}
+.bigplay .e{font-size:2rem}
+.bigplay b{font-family:var(--disp);font-weight:400;font-size:1.25rem;display:block;line-height:1.1}
+.bigplay span{font-size:.85rem;opacity:.95}
+.bigplay:active{translate:0 4px;box-shadow:0 2px 0 color-mix(in srgb,var(--trail) 55%,#000)}
+.bigplay.alt{background:var(--river);box-shadow:0 6px 0 color-mix(in srgb,var(--river) 55%,#000)}
+.bigplay.alt2{background:var(--forest);box-shadow:0 6px 0 color-mix(in srgb,var(--forest) 55%,#000)}
+
+/* Peta: jadual berkala bab (setiap bab = satu "unsur") */
+.ptable{position:relative;border-radius:24px;border:2px solid var(--line);padding:16px;background:
+  linear-gradient(var(--topo) 1px,transparent 1px) 0 0/22px 22px,linear-gradient(90deg,var(--topo) 1px,transparent 1px) 0 0/22px 22px,var(--panel2)}
+.trow{display:grid;grid-template-columns:118px repeat(3,1fr);gap:10px;margin-bottom:10px;align-items:stretch}
+.trow:last-child{margin-bottom:0}
+.tema{font-family:var(--disp);font-weight:600;font-size:.8rem;line-height:1.2;color:var(--muted);display:flex;flex-direction:column;justify-content:center;padding-right:4px}
+.tema b{font-family:var(--mono);font-size:.7rem;color:var(--glow);display:block;letter-spacing:.05em}
+.el{--c:var(--x);position:relative;border:0;cursor:pointer;border-radius:14px;padding:8px 10px 8px;text-align:left;color:var(--ink);min-height:112px;
+  background:color-mix(in srgb,var(--c) 16%,var(--panel));box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--c) 70%,transparent),0 5px 0 color-mix(in srgb,var(--c) 40%,transparent);
+  display:flex;flex-direction:column;transition:transform .15s}
+.el:hover{transform:translateY(-3px)}
+.el:active{transform:translateY(2px)}
+.el .z{font-family:var(--mono);font-size:.8rem;color:var(--c)}
+.el .sym{font-family:var(--mono);font-size:2rem;line-height:1;color:var(--c);margin:2px 0}
+.el .nm{font-weight:800;font-size:.74rem;line-height:1.15}
+.el .st{font-size:.8rem;color:var(--sand);margin-top:auto;letter-spacing:1px}
+.el .ms{position:absolute;top:8px;right:9px;font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.el .rd{position:absolute;bottom:6px;right:8px;font-size:.95rem}
+.el.sel{box-shadow:inset 0 0 0 3px var(--c),0 0 0 3px var(--glow),0 0 22px color-mix(in srgb,var(--glow) 55%,transparent)}
+.el.nextup::after{content:"";position:absolute;inset:-6px;border-radius:18px;border:2px dashed var(--sand);animation:breathe 1.8s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.25}}
+.el.empty{visibility:hidden}
+/* elektron mengorbit unsur terpilih */
+.orbit{position:absolute;pointer-events:none;border:2px solid color-mix(in srgb,var(--glow) 60%,transparent);border-radius:50%;z-index:3;
+  transition:left .6s cubic-bezier(.45,0,.2,1),top .6s cubic-bezier(.45,0,.2,1);animation:spin 3s linear infinite}
+.orbit::before{content:"";position:absolute;top:-6px;left:50%;width:11px;height:11px;margin-left:-5px;border-radius:50%;background:var(--glow);box-shadow:0 0 12px var(--glow)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (max-width:560px){.trow{grid-template-columns:1fr 1fr 1fr}.tema{grid-column:1/-1;flex-direction:row;gap:6px;align-items:baseline}.el{min-height:100px;padding:7px}.el .sym{font-size:1.6rem}.el .nm{font-size:.68rem}}
+
+/* Kad level */
+.levelcard{background:var(--panel);border-radius:22px;border:3px solid var(--line);box-shadow:0 6px 0 var(--line);overflow:hidden}
+.levelcard .top{padding:14px 16px;background:var(--c,var(--x));color:var(--onc)}
+.levelcard .top small{font-weight:800;opacity:.9}
+.levelcard .top h3{font-family:var(--disp);font-weight:400;margin:.1em 0 0;font-size:1.3rem;line-height:1.15}
+.levelcard .meta{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px 0;font-weight:800;font-size:.88rem}
+.levelcard .meta .pill{background:var(--panel2)}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px 16px}
+.mode{border:0;cursor:pointer;text-align:left;padding:10px;border-radius:14px;background:var(--panel2);display:flex;gap:8px;align-items:center;font-weight:800;font-size:.86rem;line-height:1.15;box-shadow:0 3px 0 var(--line);transition:transform .1s}
+.mode .e{font-size:1.5rem}
+.mode small{display:block;font-weight:600;color:var(--muted);font-size:.72rem}
+.mode:hover{transform:translateY(-2px)}
+.mode:active{transform:translateY(2px);box-shadow:none}
+.mode[disabled]{opacity:.4;cursor:not-allowed}
+.readlink{display:block;margin:0 16px 16px;text-align:center;font-weight:900;padding:10px;border-radius:14px;border:2px dashed var(--c,var(--line));color:var(--ink);text-decoration:none}
+
+h2.sec{font-family:var(--disp);font-weight:400;font-size:1.35rem;margin:28px 0 10px}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.bdg{padding:12px 8px;border-radius:16px;background:var(--panel);border:2px dashed var(--line);text-align:center}
+.bdg .e{font-size:1.8rem;filter:grayscale(1);opacity:.35}
+.bdg .h{font-weight:900;font-size:.82rem;line-height:1.2}
+.bdg .d{font-size:.7rem;color:var(--muted);line-height:1.25}
+.bdg.got{border:2px solid var(--sand);background:color-mix(in srgb,var(--sand) 16%,var(--panel))}
+.bdg.got .e{filter:none;opacity:1}
+.foot{color:var(--muted);font-size:.85rem;margin:28px 0 40px}
+.foot button{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:inherit;padding:0}
+
+/* ---------- Stage ---------- */
+#stage{display:none;padding:14px 0 60px;max-width:760px;margin:0 auto}
+body.playing #hub{display:none}
+body.playing #stage{display:block}
+.stagebar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.stagebar .ttl{font-family:var(--disp);font-size:1.15rem;flex:1;min-width:0}
+.quit{border:2px solid var(--line);background:var(--panel);border-radius:99px;padding:6px 14px;font-weight:800;cursor:pointer}
+.meters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.meters .pill{background:var(--panel)}
+.combo{color:var(--trail)}
+.combo.hot{animation:pulse .5s}
+@keyframes pulse{40%{transform:scale(1.25)}}
+.timer{height:12px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-bottom:14px}
+.timer i{display:block;height:100%;background:var(--forest);transition:width .25s linear}
+.timer.low i{background:var(--red)}
+
+.qcard{--c:var(--x);background:var(--panel);border-radius:22px;padding:22px 20px;border:2px solid var(--line);border-top:10px solid var(--c);box-shadow:0 8px 0 var(--line);margin-bottom:16px}
+.qcard .lbl{font-size:.75rem;font-weight:900;color:var(--c)}
+.qcard .q{font-size:1.18rem;font-weight:800;margin-top:6px}
+.opts{display:grid;gap:10px}
+.opt{border:0;cursor:pointer;text-align:left;padding:14px 16px 14px 52px;border-radius:16px;background:var(--panel);box-shadow:0 0 0 2px var(--line),0 5px 0 var(--line);position:relative;font-size:.95rem;transition:transform .1s}
+.opt::before{content:attr(data-k);position:absolute;left:12px;top:50%;translate:0 -50%;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--panel2);font-family:var(--disp);font-size:.95rem}
+.opt:hover:not(:disabled){transform:translateY(-2px)}
+.opt:disabled{cursor:default}
+.opt.ok{background:color-mix(in srgb,var(--forest) 22%,var(--panel));box-shadow:0 0 0 3px var(--forest),0 5px 0 var(--forest)}
+.opt.no{background:color-mix(in srgb,var(--red) 18%,var(--panel));box-shadow:0 0 0 3px var(--red),0 5px 0 var(--red);animation:shake .35s}
+.opt.dim{opacity:.45}
+@keyframes shake{20%,60%{translate:-6px 0}40%,80%{translate:6px 0}}
+.next{display:block;margin:16px auto 0;border:0;cursor:pointer;padding:12px 28px;border-radius:99px;background:var(--trail);color:var(--onc);font-weight:900;font-size:1rem;box-shadow:0 5px 0 color-mix(in srgb,var(--trail) 55%,#000)}
+.next:active{translate:0 3px;box-shadow:0 2px 0 color-mix(in srgb,var(--trail) 55%,#000)}
+.next.alt{background:var(--panel2);color:var(--ink);box-shadow:0 5px 0 var(--line)}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.explain{margin-top:12px;padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--river) 12%,var(--panel));border-left:5px solid var(--river);font-size:.92rem}
+
+/* kad imbas besar */
+.big{perspective:1200px;height:300px;cursor:pointer;margin-bottom:16px}
+.big .inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.big.on .inner{transform:rotateY(180deg)}
+.big .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:24px;padding:28px 22px 22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  background:var(--panel);border:2px solid var(--line);border-top:10px solid var(--c);box-shadow:0 8px 0 var(--line);overflow:auto}
+.big .back{transform:rotateY(180deg);background:color-mix(in srgb,var(--c) 10%,var(--panel))}
+.big .q{font-size:1.25rem;font-weight:800}
+.big .a{font-size:1.05rem}
+.big .tap{position:absolute;bottom:10px;font-size:.75rem;color:var(--muted);font-weight:700}
+.big .lbl{position:absolute;top:10px;left:16px;font-size:.75rem;font-weight:900;color:var(--c)}
+
+/* padan */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:grid;gap:10px;align-content:start}
+.tile{border:0;cursor:pointer;padding:12px;border-radius:14px;background:var(--panel);box-shadow:0 0 0 2px var(--line),0 4px 0 var(--line);font-size:.88rem;text-align:left;min-height:60px;transition:transform .15s,opacity .3s;overflow-wrap:anywhere}
+.tile.q{font-weight:800}
+.tile.pick{box-shadow:0 0 0 3px var(--sand),0 4px 0 var(--sand);transform:translateY(-2px)}
+.tile.no{animation:shake .35s;box-shadow:0 0 0 3px var(--red),0 4px 0 var(--red)}
+.tile.done{animation:pop .45s forwards;pointer-events:none}
+@keyframes pop{40%{transform:scale(1.08);box-shadow:0 0 0 3px var(--forest)}100%{transform:scale(.85);opacity:0;visibility:hidden}}
+
+/* susun kumpulan (item jatuh ke dalam tong) */
+.sky{position:relative;height:250px;border-radius:20px;overflow:hidden;margin-bottom:12px;border:2px solid var(--line);
+  background:linear-gradient(var(--panel),color-mix(in srgb,var(--river) 14%,var(--panel)))}
+.drop{position:absolute;left:50%;top:-70px;translate:-50% 0;max-width:86%;padding:12px 16px;border-radius:16px;background:var(--panel);border:3px solid var(--ink);font-weight:900;text-align:center;box-shadow:0 5px 0 var(--ink);font-size:1rem}
+.drop.fall{top:calc(100% - 10px);transition:top linear}
+.drop.in{transition:top .25s,transform .35s,opacity .35s;transform:scale(.4);opacity:0}
+.drop.bad{animation:shake .35s;border-color:var(--red);box-shadow:0 5px 0 var(--red)}
+.danger{position:absolute;left:0;right:0;bottom:0;height:8px;background:repeating-linear-gradient(45deg,var(--red) 0 10px,transparent 10px 20px);opacity:.7}
+.bins{display:grid;gap:10px}
+.bin{--c:var(--x);border:0;cursor:pointer;border-radius:16px 16px 22px 22px;padding:14px 8px 12px;background:color-mix(in srgb,var(--c) 22%,var(--panel));box-shadow:0 0 0 3px var(--c),0 6px 0 var(--c);font-weight:900;font-size:.9rem;line-height:1.2;min-height:78px;position:relative}
+.bin small{display:block;font-family:var(--disp);font-size:1rem;color:var(--c)}
+.bin.flash{animation:binok .5s}
+@keyframes binok{40%{transform:scale(1.08) rotate(-2deg)}}
+.bin.hint{animation:pulse .6s 2}
+
+/* benar / salah */
+.tfwrap{position:relative;height:260px;margin-bottom:16px;touch-action:pan-y}
+.tfc{position:absolute;inset:0;border-radius:24px;background:var(--panel);border:3px solid var(--line);box-shadow:0 8px 0 var(--line);display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font-size:1.2rem;font-weight:800;cursor:grab;user-select:none;transition:transform .25s,opacity .25s}
+.tfc.drag{transition:none}
+.tfc .lbl{position:absolute;top:10px;left:16px;font-size:.75rem;font-weight:900;color:var(--c)}
+.tfc .stamp{position:absolute;top:18px;font-family:var(--disp);font-size:1.6rem;padding:2px 12px;border-radius:10px;border:4px solid;opacity:0}
+.tfc .stamp.t{right:18px;color:var(--forest);rotate:12deg}
+.tfc .stamp.f{left:18px;color:var(--red);rotate:-12deg}
+.tfbtns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tfbtns button{border:0;cursor:pointer;padding:16px;border-radius:18px;font-family:var(--disp);font-size:1.25rem;color:var(--onc)}
+.tfbtns .f{background:var(--red);box-shadow:0 6px 0 color-mix(in srgb,var(--red) 55%,#000)}
+.tfbtns .t{background:var(--forest);box-shadow:0 6px 0 color-mix(in srgb,var(--forest) 55%,#000)}
+.tfbtns button:active{translate:0 4px;box-shadow:none}
+
+/* makmal graf */
+.chart{background:var(--panel);border-radius:18px;border:2px solid var(--line);padding:12px;margin-bottom:12px}
+.chart svg{width:100%;height:auto;display:block}
+.pie{width:190px;height:190px;border-radius:50%;margin:6px auto;position:relative;animation:spin-in .9s cubic-bezier(.3,1.3,.5,1)}
+@keyframes spin-in{from{transform:rotate(-120deg) scale(.6);opacity:0}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:center;font-size:.85rem;font-weight:800}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.picq{margin:0 0 12px;border-radius:20px;overflow:hidden;border:4px solid var(--c);background:#05070f;box-shadow:0 8px 0 var(--line)}
+.picq img{display:block;width:100%;max-height:min(46vh,380px);object-fit:contain;animation:picin .6s ease-out}
+@keyframes picin{from{filter:blur(8px) brightness(1.6);opacity:.3}}
+.picq .pk{font-size:.68rem;color:#cbd5e1;padding:4px 10px}
+.picq .pk a{color:inherit}
+.bar-g rect{transform-box:fill-box;transform-origin:bottom;animation:grow .8s cubic-bezier(.3,1.2,.5,1) backwards}
+@keyframes grow{from{transform:scaleY(0)}}
+
+/* keputusan */
+.result{text-align:center;padding:20px 10px}
+.result .big-e{font-size:4rem;line-height:1;animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes drop{from{transform:translateY(-40px) scale(.4);opacity:0}}
+.result h3{font-family:var(--disp);font-weight:400;font-size:1.8rem;margin:.3em 0 .1em}
+.result .sc{font-size:1.1rem;font-weight:800}
+.result .gain{font-family:var(--disp);color:var(--trail);font-size:1.5rem;margin:.4em 0}
+.review{text-align:left;margin:18px auto 0;max-width:640px}
+.review h4{margin:0 0 8px}
+.review div{padding:10px 12px;border-radius:12px;background:var(--panel);border-left:5px solid var(--red);margin-bottom:8px;font-size:.88rem}
+
+.float{position:fixed;z-index:60;pointer-events:none;font-family:var(--disp);color:var(--trail);font-size:1.4rem;text-shadow:0 2px 0 rgba(0,0,0,.25);animation:up 1s forwards}
+@keyframes up{to{transform:translateY(-60px);opacity:0}}
+#toast{position:fixed;left:50%;bottom:20px;translate:-50% 0;z-index:70;display:grid;gap:8px;width:min(92vw,380px)}
+.tst{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--panel);border:2px solid var(--sand);box-shadow:0 10px 30px rgba(0,0,0,.25);animation:tin .4s cubic-bezier(.3,1.5,.5,1)}
+.tst .e{font-size:1.8rem}
+.tst small{display:block;color:var(--muted)}
+@keyframes tin{from{transform:translateY(30px);opacity:0}}
+#lvlup{position:fixed;inset:0;z-index:80;display:none;place-items:center;background:rgba(5,20,12,.7);padding:16px}
+#lvlup.on{display:grid}
+#lvlup .box{background:var(--panel);border-radius:26px;padding:26px 22px;text-align:center;max-width:360px;width:100%;border:3px solid var(--sand);animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
+#lvlup .crest{font-family:var(--disp);font-size:3.4rem;width:110px;height:110px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;background:var(--forest);color:var(--onc);border:5px solid var(--sand)}
+#lvlup h3{font-family:var(--disp);font-weight:400;margin:.2em 0;font-size:1.6rem}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:75}
+
+/* senarai & cetak */
+#list{display:none}
+body.listing #hub{display:none}
+body.listing #list{display:block}
+#deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;padding:8px 0 60px}
+.flip{perspective:900px;height:210px;cursor:pointer}
+.flip .inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .inner{transform:rotateY(180deg)}
+.flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;background:var(--panel);border:1px solid var(--line);border-top:7px solid var(--c);overflow:auto}
+.flip .back{transform:rotateY(180deg)}
+.flip .lbl{position:absolute;top:8px;left:14px;font-size:.72rem;font-weight:900;color:var(--c)}
+.flip .no{position:absolute;top:8px;right:14px;font-size:.72rem;color:var(--muted)}
+.flip .q{font-weight:800;text-align:center}
+.flip .a{font-size:.93rem}
+.flip.known{opacity:.5}
+.flip .mark{position:absolute;bottom:6px;right:10px;font-size:.75rem;color:var(--muted);border:0;background:none;cursor:pointer}
+.listbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+.listbar select,.listbar button{font:800 14px var(--body);padding:8px 14px;border-radius:99px;border:2px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.listbar .primary{background:var(--trail);color:var(--onc);border-color:var(--trail)}
+.hint{font-size:.85rem;color:var(--muted);text-align:center;margin:0 0 12px}
+
+#print{display:none}
+@page{size:A4;margin:8mm}
+@media print{
+  :root,:root[data-theme="dark"]{--onc:#fff;--bg:#fff;--panel:#fff;--ink:#111;--muted:#555;--line:#999;
+    --x:#475569;--c1:#16a34a;--c2:#0d9488;--c3:#dc2626;--c4:#ea580c;--c5:#c2410c;--c6:#2563eb;--c7:#a16207;--c8:#7c3aed;--c9:#db2777;--c10:#4f46e5}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+  .hud,#hub,#stage,#list,#toast,#lvlup,#fx,.noprint{display:none!important}
+  #print{display:block}
+  .sheet{width:194mm;height:280mm;display:grid;grid-template-columns:97mm 97mm;grid-template-rows:repeat(5,56mm);break-after:page}
+  .sheet:last-child{break-after:auto}
+  .pc{border:1px dashed #999;padding:5mm 5mm 3mm;position:relative;display:flex;flex-direction:column;justify-content:center;border-top:4mm solid var(--c);overflow:hidden;font-family:system-ui,sans-serif}
+  .pc .lbl{position:absolute;top:2mm;left:5mm;font-size:7.5pt;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.05em}
+  .pc .no{position:absolute;top:2mm;right:5mm;font-size:7.5pt;color:#777}
+  .pc .q{font-size:11pt;font-weight:700;text-align:center}
+  .pc .a{font-size:9pt}
+  .pc.blank{border-color:transparent}
+}
+@media (max-width:820px){
+  .hubgrid{grid-template-columns:1fr}
+  .side{position:static}
+}
+@media (max-width:560px){
+  .rank .xptxt{display:none}
+  .node{width:72px;height:72px}
+  .node .n{font-size:1.7rem}
+  .node .lb{width:110px;font-size:.72rem}
+  .node.r .lb{left:82px}.node.l .lb{right:82px}
+  .tile{font-size:.8rem;padding:9px 8px}
+  .big{height:330px}
+  .bin{font-size:.8rem;min-height:70px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<a class="noprint" href="../../studies.html#sains-t3" style="display:inline-block;margin:10px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card,var(--panel));color:var(--ink);font:700 14px system-ui;text-decoration:none">← Studies</a>
+
+
+<div class="hud">
+  <div class="wrap">
+    <div class="rank">
+      <div class="lvl" id="lvl">1</div>
+      <div style="min-width:0;flex:1">
+        <div class="t" id="rankName">Pelatih Makmal</div>
+        <div class="xpbar"><i id="xpBar"></i></div>
+        <div class="xptxt" id="xpTxt">0 XP</div>
+      </div>
+    </div>
+    <span class="pill" title="Hari belajar berturut-turut">🔥 <span id="streak">0</span></span>
+    <span class="pill" title="Kad dihafal">🧠 <span id="knownN">0</span></span>
+    <button class="iconbtn" id="mute" aria-label="Bunyi">🔊</button>
+  </div>
+</div>
+
+<main class="wrap">
+<section id="hub">
+  <div class="hero">
+    <h1>Misi Makmal Sains<small>Tingkatan 3 · 10 bab · jadual berkala misi</small></h1>
+    <p>Setiap bab ialah satu <b>unsur</b>. Ketik unsur untuk pilih misi. Jawab betul 2 kali berturut-turut untuk <b>hafal</b> kad. Baca nota setiap bab untuk XP tambahan.</p>
+  </div>
+
+  <div class="hubgrid">
+    <div class="ptable" id="ptable"><div id="nodes"></div><div class="orbit" id="orbit" aria-hidden="true"></div></div>
+    <aside class="side">
+      <div class="levelcard" id="levelcard"></div>
+      <div class="quick">
+        <button class="bigplay" id="mixQuiz"><span class="e">⚡</span><div><b>Cabaran Campur</b><span>Kuiz Kilat daripada semua 10 bab</span></div></button>
+        <button class="bigplay alt" id="mixTf"><span class="e">👍</span><div><b>Benar atau Salah?</b><span>45 saat, leret atau ketik</span></div></button>
+        <button class="bigplay alt2" id="mixKira"><span class="e">⚗️</span><div><b>Makmal Kira</b><span>Kira kos elektrik, kuasa, tenaga…</span></div></button>
+      </div>
+    </aside>
+  </div>
+
+  <h2 class="sec">🏅 Lencana Saintis</h2>
+  <div class="badges" id="badges"></div>
+
+  <p class="foot">Kemajuan disimpan dalam pelayar ini sahaja. <button id="toList">Lihat senarai semua kad &amp; cetak</button> · <button id="resetAll">Set semula kemajuan</button></p>
+</section>
+
+<section id="stage"></section>
+
+<section id="list">
+  <div class="listbar">
+    <button id="backHub">← Kembali</button>
+    <select id="filter" aria-label="Tapis bab"></select>
+    <button id="shuffle">🔀 Kocok</button>
+    <button class="primary" onclick="window.print()">🖨️ Cetak kad</button>
+  </div>
+  <p class="hint" style="text-align:left">Cetak A4, <b>dua muka (lipat pada tepi panjang)</b>: jawapan jatuh tepat di belakang soalan. Gunting ikut garisan putus-putus.</p>
+  <div id="deck"></div>
+</section>
+</main>
+
+<div id="print"></div>
+<div id="toast" aria-live="polite"></div>
+<div id="lvlup" role="dialog" aria-modal="true" aria-labelledby="lvlT"><div class="box"><div class="crest" id="lvlN">2</div><h3 id="lvlT">Naik pangkat!</h3><p id="lvlD"></p><button class="next" id="lvlOk">Teruskan</button></div></div>
+<canvas id="fx"></canvas>
+
+<script>
+const T = {
+"1": [
+"Bab 1 · Rangsangan dan Gerak Balas",
+"--c1",
+"Tema 1",
+"Rg"
+],
+"2": [
+"Bab 2 · Respirasi",
+"--c2",
+"Tema 1",
+"Rs"
+],
+"3": [
+"Bab 3 · Pengangkutan",
+"--c3",
+"Tema 1",
+"Pa"
+],
+"4": [
+"Bab 4 · Kereaktifan Logam",
+"--c4",
+"Tema 2",
+"Kl"
+],
+"5": [
+"Bab 5 · Termokimia",
+"--c5",
+"Tema 2",
+"Tm"
+],
+"6": [
+"Bab 6 · Elektrik dan Kemagnetan",
+"--c6",
+"Tema 3",
+"Em"
+],
+"7": [
+"Bab 7 · Tenaga dan Kuasa",
+"--c7",
+"Tema 3",
+"Tk"
+],
+"8": [
+"Bab 8 · Keradioaktifan",
+"--c8",
+"Tema 3",
+"Ra"
+],
+"9": [
+"Bab 9 · Cuaca Angkasa Lepas",
+"--c9",
+"Tema 4",
+"Ca"
+],
+"10": [
+"Bab 10 · Penerokaan Angkasa Lepas",
+"--c10",
+"Tema 4",
+"Pl"
+],
+"x": [
+"Rentas Bab",
+"--x",
+"Semua tema",
+"∞"
+]
+};
+const TEMAS = [
+[
+"Tema 1",
+"Penyenggaraan \u0026 Kesinambungan Hidup",
+[
+"1",
+"2",
+"3"
+]
+],
+[
+"Tema 2",
+"Penerokaan Unsur dalam Alam",
+[
+"4",
+"5"
+]
+],
+[
+"Tema 3",
+"Tenaga \u0026 Kelestarian Hidup",
+[
+"6",
+"7",
+"8"
+]
+],
+[
+"Tema 4",
+"Penerokaan Bumi \u0026 Angkasa Lepas",
+[
+"9",
+"10"
+]
+]
+];
+// [bab, soalan, jawapan, id]
+const CARDS = [
+[
+"1",
+"Apakah rangsangan?",
+"Perubahan persekitaran yang dapat dikesan.",
+"9d73b38357"
+],
+[
+"1",
+"Apakah gerak balas?",
+"Tindakan organisma terhadap rangsangan.",
+"a7df5f85bf"
+],
+[
+"1",
+"Apakah sistem saraf pusat?",
+"Otak dan saraf tunjang.",
+"8cc0217ec7"
+],
+[
+"1",
+"Apakah sistem saraf periferi?",
+"Saraf kranium dan saraf spina.",
+"f722126a05"
+],
+[
+"1",
+"Apakah fungsi otak?",
+"Mentafsir impuls dan menyelaras gerak balas.",
+"d830e9cd32"
+],
+[
+"1",
+"Apakah reseptor?",
+"Struktur yang mengesan rangsangan.",
+"97b2f116b1"
+],
+[
+"1",
+"Apakah efektor?",
+"Otot atau kelenjar yang menghasilkan gerak balas.",
+"c5ec53785d"
+],
+[
+"1",
+"Beri satu contoh tindakan terkawal.",
+"Menulis atau berjalan.",
+"15e16f9325"
+],
+[
+"1",
+"Beri satu contoh tindakan refleks.",
+"Menarik tangan daripada objek panas.",
+"9dc336d207"
+],
+[
+"1",
+"Laluan tindakan refleks melalui apa?",
+"Saraf tunjang.",
+"e00a9d7531"
+],
+[
+"1",
+"Apakah lima organ deria?",
+"Mata, telinga, hidung, lidah dan kulit.",
+"5e126668d5"
+],
+[
+"1",
+"Apakah fungsi iris?",
+"Mengawal saiz pupil.",
+"64b321643b"
+],
+[
+"1",
+"Apakah fungsi retina?",
+"Mengesan cahaya dan menghasilkan impuls saraf.",
+"77135fceea"
+],
+[
+"1",
+"Apakah fungsi saraf optik?",
+"Menghantar impuls dari retina ke otak.",
+"7303cf9977"
+],
+[
+"1",
+"Apa berlaku kepada pupil dalam cahaya terang?",
+"Pupil mengecil.",
+"7e45e0496b"
+],
+[
+"1",
+"Apakah fungsi koklea?",
+"Menukarkan getaran kepada impuls saraf.",
+"a335b10424"
+],
+[
+"1",
+"Apakah had pendengaran manusia?",
+"Sekitar 20 Hz hingga 20 000 Hz.",
+"ee28740b83"
+],
+[
+"1",
+"Apakah miopia?",
+"Rabun jauh; objek jauh kelihatan kabur.",
+"767afc368b"
+],
+[
+"1",
+"Kanta apakah membetulkan miopia?",
+"Kanta cekung.",
+"8a36d79d4a"
+],
+[
+"1",
+"Apakah hipermetropia?",
+"Rabun dekat; objek dekat kelihatan kabur.",
+"e616aaaaca"
+],
+[
+"1",
+"Kanta apakah membetulkan hipermetropia?",
+"Kanta cembung.",
+"118cdc2dd8"
+],
+[
+"1",
+"Apakah tropisme?",
+"Gerak balas terarah tumbuhan terhadap rangsangan.",
+"ffb78f5833"
+],
+[
+"1",
+"Akar menunjukkan geotropisme jenis apa?",
+"Geotropisme positif.",
+"385fe89854"
+],
+[
+"1",
+"Pucuk menunjukkan fototropisme jenis apa?",
+"Fototropisme positif.",
+"c460b92977"
+],
+[
+"1",
+"Apakah hidrotropisme?",
+"Gerak balas tumbuhan terhadap air.",
+"1c315f9c11"
+],
+[
+"1",
+"Apakah contoh gerak balas nastik?",
+"Daun pokok semalu menguncup apabila disentuh.",
+"fb1148431d"
+],
+[
+"1",
+"Apakah ciri mata haiwan stereoskopik?",
+"Kedua-dua mata di hadapan kepala.",
+"c1a078e6fc"
+],
+[
+"1",
+"Apakah kelebihan penglihatan stereoskopik?",
+"Menganggarkan jarak dengan tepat.",
+"6925ef4b74"
+],
+[
+"1",
+"KBAT: Mengapa arnab sesuai mempunyai mata di sisi kepala?",
+"Medan penglihatan luas membantu mengesan pemangsa.",
+"5277d2c6e7"
+],
+[
+"1",
+"KBAT: Mengapa akar tumbuh ke bawah dan ke arah air?",
+"Untuk mendapatkan air, mineral dan mencengkam tanah.",
+"0586d9ab8d"
+],
+[
+"1",
+"KBAT: Mengapa tindakan refleks penting?",
+"Mengelakkan kecederaan dengan gerak balas cepat.",
+"da3e4f2c87"
+],
+[
+"2",
+"Apakah fungsi sistem respirasi manusia?",
+"Membekalkan O₂ dan mengeluarkan CO₂ daripada sel badan.",
+"a9cb208e0d"
+],
+[
+"2",
+"Apakah pernafasan?",
+"Proses menarik dan menghembus udara oleh peparu.",
+"88737e5e13"
+],
+[
+"2",
+"Susun laluan udara selepas larinks.",
+"Trakea → bronkus → bronkiol → alveolus.",
+"15720d8e8e"
+],
+[
+"2",
+"Di manakah pertukaran gas berlaku?",
+"Alveolus.",
+"8a6525890b"
+],
+[
+"2",
+"Apakah fungsi epiglotis?",
+"Membuka atau menutup trakea.",
+"90c3366d0d"
+],
+[
+"2",
+"Apakah berlaku pada epiglotis semasa menelan?",
+"Jatuh dan menutup trakea.",
+"24cbb3062d"
+],
+[
+"2",
+"Otot interkostal semasa menarik nafas?",
+"Mengecut.",
+"6d451bde02"
+],
+[
+"2",
+"Sangkar rusuk semasa menarik nafas?",
+"Bergerak ke atas dan ke luar.",
+"626177f502"
+],
+[
+"2",
+"Diafragma semasa menarik nafas?",
+"Mengecut, bergerak ke bawah dan meleper.",
+"d867429e17"
+],
+[
+"2",
+"Tekanan rongga toraks semasa menarik nafas?",
+"Berkurang.",
+"c9da211801"
+],
+[
+"2",
+"Otot interkostal semasa menghembus nafas?",
+"Mengendur.",
+"36dff06f01"
+],
+[
+"2",
+"Diafragma semasa menghembus nafas?",
+"Mengendur dan melengkung ke atas.",
+"56c56b22ef"
+],
+[
+"2",
+"Mengapa udara masuk ke peparu?",
+"Tekanan luar lebih tinggi daripada tekanan rongga toraks.",
+"f676e2073c"
+],
+[
+"2",
+"Gas manakah mempunyai peratus lebih tinggi dalam udara hembusan berbanding udara sedutan?",
+"Karbon dioksida.",
+"343e9fccff"
+],
+[
+"2",
+"Apakah resapan?",
+"Pergerakan zarah dari kepekatan tinggi ke rendah.",
+"6c8b939546"
+],
+[
+"2",
+"Apakah hemoglobin?",
+"Sebatian merah gelap dalam sel darah merah.",
+"f1ef66ba85"
+],
+[
+"2",
+"Apakah oksihemoglobin?",
+"Hemoglobin yang berpadu dengan oksigen.",
+"f0c02ad2e7"
+],
+[
+"2",
+"Apakah hasil respirasi sel?",
+"Karbon dioksida, air dan tenaga.",
+"41c70ba3ff"
+],
+[
+"2",
+"Apakah kesan karbon monoksida?",
+"Menghalang hemoglobin mengangkut oksigen.",
+"347f4faed7"
+],
+[
+"2",
+"Apakah kesan tar rokok?",
+"Merosakkan sel trakea dan bronkiol.",
+"ba48ada171"
+],
+[
+"2",
+"Namakan empat penyakit respiratori.",
+"Asma, bronkitis, emfisema dan kanser peparu.",
+"ca0fe4529a"
+],
+[
+"2",
+"Struktur respirasi ikan?",
+"Insang.",
+"51a6ba98bd"
+],
+[
+"2",
+"Struktur respirasi serangga?",
+"Sistem trakea.",
+"a39614389e"
+],
+[
+"2",
+"Struktur respirasi katak di air?",
+"Kulit luar lembap.",
+"2a9d598073"
+],
+[
+"2",
+"Apakah stoma?",
+"Liang pada epidermis daun untuk pertukaran gas.",
+"eb2c0933a1"
+],
+[
+"2",
+"Apakah fungsi sel pengawal?",
+"Mengawal pembukaan dan penutupan stoma.",
+"db74dfaf10"
+],
+[
+"2",
+"Bilakah stoma terbuka?",
+"Apabila ada cahaya untuk fotosintesis.",
+"6f1bd630c1"
+],
+[
+"2",
+"Apakah osmosis?",
+"Pergerakan molekul air dari kepekatan tinggi ke kepekatan rendah merentasi membran separa telap.",
+"b555b82118"
+],
+[
+"2",
+"KBAT: Mengapa atlet bernafas lebih cepat semasa berlari?",
+"Otot memerlukan lebih O₂ untuk respirasi sel dan tenaga.",
+"b030543a82"
+],
+[
+"2",
+"KBAT: Mengapa jerebu menjejaskan tumbuhan?",
+"Debu boleh menutupi atau menyumbat stoma, mengurangkan pertukaran gas.",
+"ff3a3361fa"
+],
+[
+"2",
+"KBAT: Mengapa stoma tertutup ketika hari panas?",
+"Mengurangkan kehilangan air yang banyak.",
+"e4404d9997"
+],
+[
+"3",
+"Apakah fungsi sistem pengangkutan?",
+"Membawa bahan keperluan dan menyingkirkan bahan kumuh.",
+"5145fcca6a"
+],
+[
+"3",
+"Mengapakah Amoeba tidak perlukan sistem khas?",
+"Bahan boleh meresap terus melalui membran sel.",
+"749e047f40"
+],
+[
+"3",
+"Nyatakan 3 komponen sistem peredaran darah.",
+"Jantung, salur darah dan darah.",
+"c9383129c8"
+],
+[
+"3",
+"Apakah maksud sistem bertiub tertutup?",
+"Darah mengalir berterusan dalam salur darah.",
+"2d18d9b9b9"
+],
+[
+"3",
+"Apakah peredaran pulmonari?",
+"Jantung ke peparu dan kembali ke jantung.",
+"ff211f629a"
+],
+[
+"3",
+"Apakah peredaran sistemik?",
+"Jantung ke seluruh badan kecuali peparu dan kembali.",
+"192578b62a"
+],
+[
+"3",
+"Salur darah manakah membawa darah keluar jantung?",
+"Arteri.",
+"a4a2d02424"
+],
+[
+"3",
+"Apakah pengecualian bagi arteri?",
+"Arteri pulmonari membawa darah terdeoksigen ke peparu.",
+"f264f0d7c4"
+],
+[
+"3",
+"Salur darah manakah mempunyai injap?",
+"Vena.",
+"a528c29403"
+],
+[
+"3",
+"Mengapakah kapilari berdinding nipis?",
+"Untuk pertukaran bahan secara resapan.",
+"288cb207e9"
+],
+[
+"3",
+"Ruang jantung paling tebal dindingnya?",
+"Ventrikel kiri.",
+"5ac36fe783"
+],
+[
+"3",
+"Apakah fungsi septum?",
+"Menghalang darah beroksigen bercampur dengan darah terdeoksigen.",
+"5989273c99"
+],
+[
+"3",
+"Apakah denyutan nadi?",
+"Pergerakan turun naik arteri akibat denyutan jantung.",
+"8c091a6159"
+],
+[
+"3",
+"Nyatakan 4 faktor denyutan nadi.",
+"Jantina, umur, aktiviti fizikal dan kesihatan.",
+"9b542c5fa3"
+],
+[
+"3",
+"Apakah fungsi plasma?",
+"Mengangkut bahan terlarut seperti nutrien dan bahan kumuh.",
+"480eb4e163"
+],
+[
+"3",
+"Apakah fungsi sel darah merah?",
+"Mengangkut oksigen dengan hemoglobin.",
+"d3815789d4"
+],
+[
+"3",
+"Apakah fungsi sel darah putih?",
+"Mempertahankan badan daripada penyakit.",
+"1af28af5e5"
+],
+[
+"3",
+"Apakah fungsi platlet?",
+"Membantu pembekuan darah.",
+"6a6206fd7d"
+],
+[
+"3",
+"Apakah kesan darah tidak sepadan?",
+"Penggumpalan darah.",
+"f5c3091fa1"
+],
+[
+"3",
+"Apakah transpirasi?",
+"Kehilangan air dalam bentuk wap air dari permukaan tumbuhan ke udara secara penyejatan.",
+"ccbecd34bd"
+],
+[
+"3",
+"Apakah pelembakan?",
+"Kehilangan air sebagai cecair melalui hidatod.",
+"208a9900b8"
+],
+[
+"3",
+"Tisu manakah mengangkut air?",
+"Xilem.",
+"765ed9d7af"
+],
+[
+"3",
+"Tisu manakah mengangkut sukrosa?",
+"Floem.",
+"aaa5f8e7fa"
+],
+[
+"3",
+"KBAT: Mengapa gelang kulit menyebabkan bahagian atas dahan bengkak?",
+"Floem terputus; makanan terkumpul di atas gelang.",
+"7123f7316a"
+],
+[
+"3",
+"KBAT: Mengapa tumbuhan layu jika xilem rosak?",
+"Air dan garam mineral tidak sampai ke daun.",
+"7d804ce883"
+],
+[
+"3",
+"KBAT: Mengapa berlari menaikkan denyutan nadi?",
+"Otot perlukan lebih oksigen dan tenaga.",
+"9b8a36bb52"
+],
+[
+"4",
+"Apakah mineral?",
+"Unsur atau sebatian pepejal semula jadi berstruktur hablur dan berkomposisi tertentu.",
+"366b7c7fcc"
+],
+[
+"4",
+"Dua bentuk mineral?",
+"Unsur dan sebatian semula jadi.",
+"cc9171e9b6"
+],
+[
+"4",
+"Beri dua mineral unsur.",
+"Emas dan perak.",
+"fb1d332b35"
+],
+[
+"4",
+"Beri dua mineral sebatian.",
+"Bauksit dan hematit.",
+"99ed673b8e"
+],
+[
+"4",
+"Apakah kuarza?",
+"Silikon dioksida.",
+"16f6112d44"
+],
+[
+"4",
+"Apakah bauksit?",
+"Mineral yang mengandungi aluminium oksida.",
+"e570105ef1"
+],
+[
+"4",
+"Apakah hematit?",
+"Mineral yang mengandungi ferum(III) oksida.",
+"2217a2ce25"
+],
+[
+"4",
+"Apakah galena?",
+"Mineral yang mengandungi plumbum(II) sulfida.",
+"a5972612c8"
+],
+[
+"4",
+"Apakah kapur?",
+"Kalsium karbonat.",
+"10c82e52d1"
+],
+[
+"4",
+"Enam bentuk kalsium karbonat?",
+"Kalsit, batu kapur, marmar, kapur, terumbu karang, cangkerang.",
+"84c4159dd2"
+],
+[
+"4",
+"Apakah siri kereaktifan logam?",
+"Susunan logam mengikut kereaktifan terhadap oksigen.",
+"437b456e68"
+],
+[
+"4",
+"Apakah maksud nyalaan terang semasa tindak balas?",
+"Tindak balas lebih cergas; logam lebih reaktif.",
+"4193a3df58"
+],
+[
+"4",
+"Logam paling reaktif dalam siri?",
+"Kalium.",
+"27d0908c55"
+],
+[
+"4",
+"Logam paling kurang reaktif dalam siri?",
+"Emas.",
+"0f1ecfbece"
+],
+[
+"4",
+"Kedudukan karbon berbanding aluminium?",
+"Karbon kurang reaktif daripada aluminium.",
+"3eb7c06d83"
+],
+[
+"4",
+"Kedudukan karbon berbanding zink?",
+"Karbon lebih reaktif daripada zink.",
+"c97be871b8"
+],
+[
+"4",
+"Kedudukan hidrogen berbanding zink?",
+"Hidrogen kurang reaktif daripada zink.",
+"65b72e49fa"
+],
+[
+"4",
+"Kedudukan hidrogen berbanding ferum?",
+"Hidrogen lebih reaktif daripada ferum.",
+"1d18e84696"
+],
+[
+"4",
+"Apakah pengekstrakan logam?",
+"Proses memperoleh logam daripada bijihnya.",
+"80028e06df"
+],
+[
+"4",
+"Logam di atas karbon diekstrak bagaimana?",
+"Elektrolisis sebatian logam lebur.",
+"c149ea151b"
+],
+[
+"4",
+"Logam di bawah karbon diekstrak bagaimana?",
+"Penurunan oksida logam oleh karbon.",
+"349779c1e7"
+],
+[
+"4",
+"Logam apakah diekstrak dalam relau bagas?",
+"Besi.",
+"d0e8247bb2"
+],
+[
+"4",
+"Tiga bahan masuk relau bagas?",
+"Bijih besi pekat, arang kok dan batu kapur.",
+"0df59be5eb"
+],
+[
+"4",
+"Dua bahan keluar relau bagas?",
+"Leburan logam dan sanga.",
+"e90c0258c1"
+],
+[
+"4",
+"Di manakah simpanan arang batu terbesar Malaysia?",
+"Merit Pila, Sarawak.",
+"879e9f05fc"
+],
+[
+"4",
+"KBAT: Mengapa aluminium tidak boleh diekstrak dengan karbon?",
+"Aluminium lebih reaktif daripada karbon.",
+"04d0c98c8b"
+],
+[
+"4",
+"KBAT: Mengapa zink oksida boleh dipanaskan dengan karbon?",
+"Zink kurang reaktif daripada karbon.",
+"88f4ce7b49"
+],
+[
+"4",
+"Nyatakan satu kesan perlombongan yang tidak dirancang.",
+"Hakisan tanah akibat penggalian bijih.",
+"e8bdf73864"
+],
+[
+"5",
+"Apakah maksud termokimia?",
+"Kajian perubahan haba semasa tindak balas kimia berlaku.",
+"db9651a2cd"
+],
+[
+"5",
+"Apakah tindak balas eksotermik?",
+"Tindak balas yang membebaskan haba ke persekitaran.",
+"fa722cd0d1"
+],
+[
+"5",
+"Apakah tindak balas endotermik?",
+"Tindak balas yang menyerap haba daripada persekitaran.",
+"5462afcdbc"
+],
+[
+"5",
+"Apakah berlaku pada suhu bagi eksotermik?",
+"Suhu meningkat.",
+"0b199192d0"
+],
+[
+"5",
+"Apakah berlaku pada suhu bagi endotermik?",
+"Suhu menurun.",
+"a0de1a5df5"
+],
+[
+"5",
+"Alat apakah mengenal pasti jenis tindak balas?",
+"Termometer.",
+"ebdda6f744"
+],
+[
+"5",
+"Bacaan termometer meningkat menunjukkan tindak balas apa?",
+"Eksotermik.",
+"d46f3b65bb"
+],
+[
+"5",
+"Bacaan termometer menurun menunjukkan tindak balas apa?",
+"Endotermik.",
+"a5e47a3d95"
+],
+[
+"5",
+"Adakah respirasi eksotermik atau endotermik?",
+"Eksotermik.",
+"cceb9117d5"
+],
+[
+"5",
+"Adakah fotosintesis eksotermik atau endotermik?",
+"Endotermik.",
+"b8735479e8"
+],
+[
+"5",
+"Adakah pembakaran bunga api eksotermik atau endotermik?",
+"Eksotermik.",
+"d582bb08af"
+],
+[
+"5",
+"Adakah membuat kek eksotermik atau endotermik?",
+"Endotermik.",
+"5388848298"
+],
+[
+"5",
+"Adakah peneutralan asid dengan alkali eksotermik?",
+"Ya.",
+"7f16b20628"
+],
+[
+"5",
+"Adakah pelarutan ammonium klorida dalam air endotermik?",
+"Ya.",
+"ebe618ae26"
+],
+[
+"5",
+"Apakah konsep yang digunakan oleh pek panas segera?",
+"Tindak balas eksotermik.",
+"2f3488f672"
+],
+[
+"5",
+"Apakah konsep yang digunakan oleh pek sejuk segera?",
+"Tindak balas endotermik.",
+"5187ba03f9"
+],
+[
+"5",
+"Apakah kesan pek panas pada kekejangan otot?",
+"Melegakan kekejangan otot.",
+"5dae3ab1a4"
+],
+[
+"5",
+"Apakah kesan pek sejuk pada bengkak luka?",
+"Mengurangkan bengkak luka.",
+"d3dc1026ca"
+],
+[
+"5",
+"Apakah pemboleh ubah dimanipulasikan Eksperimen 5.1?",
+"Jenis bahan kimia.",
+"e0157a44f9"
+],
+[
+"5",
+"Apakah pemboleh ubah bergerak balas Eksperimen 5.1?",
+"Bacaan suhu akhir.",
+"7f5d7f92b3"
+],
+[
+"5",
+"Apakah pemboleh ubah dimalarkan Eksperimen 5.1?",
+"Isi padu air.",
+"300daffd41"
+],
+[
+"5",
+"Apakah tindak balas natrium hidroksida dengan air?",
+"Eksotermik.",
+"009b4c61b5"
+],
+[
+"5",
+"Apakah tindak balas ammonium klorida dengan air?",
+"Endotermik.",
+"4fdf590eb9"
+],
+[
+"5",
+"Apakah tindak balas asid hidroklorik dan natrium hidroksida?",
+"Eksotermik.",
+"1767cd7418"
+],
+[
+"5",
+"Apakah tindak balas asid hidroklorik dan natrium hidrogen karbonat?",
+"Endotermik.",
+"fef6f3c3b4"
+],
+[
+"5",
+"KBAT: Pek manakah sesuai untuk kekejangan otot?",
+"Pek panas segera kerana membebaskan haba.",
+"505055f119"
+],
+[
+"5",
+"KBAT: Pek manakah sesuai untuk bengkak luka?",
+"Pek sejuk segera kerana menyerap haba.",
+"20ad6e4698"
+],
+[
+"5",
+"KBAT: Mengapa penanaman pokok mengurangkan pemanasan global?",
+"Fotosintesis ialah tindak balas endotermik yang menyerap haba.",
+"c9ac5bc4f3"
+],
+[
+"6",
+"Apakah generator?",
+"Alat yang digunakan untuk menjana tenaga elektrik.",
+"bd34928825"
+],
+[
+"6",
+"Bilakah arus aruhan terhasil?",
+"Apabila garis medan magnet dipotong oleh dawai atau gegelung.",
+"d27c217a11"
+],
+[
+"6",
+"Siapakah mengkaji penjanaan elektrik pada 1831?",
+"Michael Faraday.",
+"e4ed31e221"
+],
+[
+"6",
+"Apakah arus terus?",
+"Arus elektrik yang mengalir dalam satu arah sahaja.",
+"e4443108c7"
+],
+[
+"6",
+"Beri satu sumber arus terus.",
+"Bateri, akumulator atau sel suria.",
+"10c523b4ae"
+],
+[
+"6",
+"Beri satu alat menggunakan arus terus.",
+"Lampu suluh, kalkulator atau kereta mainan.",
+"9c770cd700"
+],
+[
+"6",
+"Apakah arus ulang-alik?",
+"Arus yang arah alirannya berubah-ubah secara berterusan.",
+"f8d216294b"
+],
+[
+"6",
+"Beri satu alat menggunakan arus ulang-alik.",
+"Pembakar roti, pengering rambut atau pendingin hawa.",
+"d08ef9c14a"
+],
+[
+"6",
+"Apakah fungsi O.S.K.?",
+"Menunjukkan graf, arah arus dan perubahan voltan.",
+"c99a6297d0"
+],
+[
+"6",
+"Apakah perubahan tenaga stesen solar?",
+"Tenaga cahaya kepada tenaga elektrik.",
+"82de657c0d"
+],
+[
+"6",
+"Apakah perubahan tenaga hidroelektrik?",
+"Keupayaan graviti kepada kinetik kepada elektrik.",
+"d4a31077fc"
+],
+[
+"6",
+"Apakah perubahan tenaga stesen terma?",
+"Kimia kepada haba kepada kinetik kepada elektrik.",
+"1f8139c0bc"
+],
+[
+"6",
+"Apakah transformer?",
+"Alat untuk mengubah voltan arus ulang-alik.",
+"0884f6d490"
+],
+[
+"6",
+"Apakah dua jenis transformer?",
+"Transformer injak naik dan transformer injak turun.",
+"f27f1b1401"
+],
+[
+"6",
+"Apakah berlaku kepada voltan dalam injak naik?",
+"Voltan sekunder lebih tinggi daripada voltan primer.",
+"b31381f6a3"
+],
+[
+"6",
+"Apakah berlaku kepada lilitan dalam injak turun?",
+"Lilitan sekunder lebih sedikit daripada lilitan primer.",
+"1dfebd0031"
+],
+[
+"6",
+"Apakah rumus transformer?",
+"Vp/Vs = Np/Ns.",
+"17f0bc8aef"
+],
+[
+"6",
+"Mengapa voltan dinaikkan untuk penghantaran?",
+"Dihantar melalui Rangkaian Grid Nasional pada voltan tinggi.",
+"ef81a48491"
+],
+[
+"6",
+"Apakah voltan bekalan rumah?",
+"240 V satu fasa.",
+"c26b7f612f"
+],
+[
+"6",
+"Apakah voltan bekalan pejabat/hospital?",
+"415 V tiga fasa.",
+"3bd8d847a5"
+],
+[
+"6",
+"Apakah fungsi fius?",
+"Melebur apabila arus melebihi nilai fius.",
+"27a3a0b759"
+],
+[
+"6",
+"Apakah fungsi dawai bumi?",
+"Menyalurkan arus bocor ke bumi.",
+"a6ab3a3dc0"
+],
+[
+"6",
+"Apakah maksud kecekapan tenaga?",
+"Peratus tenaga input menjadi output berfaedah.",
+"aa634da1c9"
+],
+[
+"6",
+"Apakah unit S.I. kuasa?",
+"Watt, W.",
+"dc8e6daeb6"
+],
+[
+"6",
+"Apakah maksud 1 W?",
+"1 J tenaga digunakan dalam 1 s.",
+"b165063af3"
+],
+[
+"6",
+"Apakah maksud 1 kWj?",
+"Tenaga 1 kW digunakan selama 1 jam.",
+"a2bf1084d0"
+],
+[
+"6",
+"Apakah rumus kuasa?",
+"P = E/t dan P = VI.",
+"706eb73494"
+],
+[
+"6",
+"Apakah rumus tenaga elektrik?",
+"E = Pt.",
+"b6002ec666"
+],
+[
+"6",
+"KBAT: Mengapa LED menyala apabila gandar generator diputar?",
+"Gegelung memotong garis medan magnet lalu arus aruhan terhasil.",
+"3507ea19f4"
+],
+[
+"6",
+"KBAT: Mengapa telefon menggunakan injak turun?",
+"Voltan 240 V perlu diturunkan kepada voltan lebih rendah.",
+"89c2e57e7a"
+],
+[
+"6",
+"KBAT: Mengapa audit bil elektrik berguna?",
+"Mengenal pasti pola penggunaan dan langkah penjimatan tenaga.",
+"391a4330a3"
+],
+[
+"7",
+"Apakah definisi kerja?",
+"Hasil darab daya dengan sesaran dalam arah daya.",
+"f4b34e3af9"
+],
+[
+"7",
+"Apakah rumus kerja?",
+"W = Fs.",
+"4adfa12a0d"
+],
+[
+"7",
+"Apakah unit S.I. kerja?",
+"Joule, J.",
+"c76fbc91dc"
+],
+[
+"7",
+"Apakah maksud 1 J?",
+"Daya 1 N menggerakkan objek 1 m dalam arah daya.",
+"38c8447c7f"
+],
+[
+"7",
+"Bilakah kerja dilakukan?",
+"Apabila daya menyebabkan sesaran dalam arah daya.",
+"c01516391a"
+],
+[
+"7",
+"Apakah tenaga?",
+"Keupayaan untuk melakukan kerja.",
+"4578cad2d0"
+],
+[
+"7",
+"Apakah unit S.I. tenaga?",
+"Joule, J.",
+"db8e399a23"
+],
+[
+"7",
+"Apakah kuasa?",
+"Kadar melakukan kerja.",
+"6b12939080"
+],
+[
+"7",
+"Apakah rumus kuasa?",
+"P = W/t.",
+"155f314f28"
+],
+[
+"7",
+"Apakah unit S.I. kuasa?",
+"Watt, W.",
+"b9fb28904e"
+],
+[
+"7",
+"Apakah maksud 1 W?",
+"Kerja 1 J dilakukan dalam 1 s.",
+"8c12d9fd18"
+],
+[
+"7",
+"Apakah tenaga keupayaan graviti?",
+"Kerja untuk mengangkat objek ke suatu ketinggian.",
+"d159875f9b"
+],
+[
+"7",
+"Apakah rumus tenaga keupayaan graviti?",
+"Eₚ = mgh.",
+"c9212dba47"
+],
+[
+"7",
+"Nilai g yang digunakan dalam bab ini?",
+"10 m s⁻².",
+"64dc2c6b75"
+],
+[
+"7",
+"Apakah tenaga keupayaan kenyal?",
+"Tenaga spring yang dimampat atau diregang.",
+"15343de8dc"
+],
+[
+"7",
+"Apakah rumus tenaga keupayaan kenyal?",
+"Eₚ = ½Fx.",
+"ed4899d0cc"
+],
+[
+"7",
+"Apakah x dalam ½Fx?",
+"Sesaran dari kedudukan keseimbangan.",
+"0069fa9fd4"
+],
+[
+"7",
+"Apakah tenaga kinetik?",
+"Tenaga yang dimiliki oleh objek bergerak.",
+"19988f0b8f"
+],
+[
+"7",
+"Apakah rumus tenaga kinetik?",
+"Eₖ = ½mv².",
+"18e9e49a86"
+],
+[
+"7",
+"Mengapa peluru kecil boleh mempunyai Eₖ tinggi?",
+"Halajunya sangat tinggi dan v dikuasakan dua.",
+"b44df02d95"
+],
+[
+"7",
+"Nyatakan Prinsip Keabadian Tenaga.",
+"Tenaga tidak dicipta atau dimusnahkan, hanya berubah bentuk.",
+"390dc85afa"
+],
+[
+"7",
+"Bandul di kedudukan tertinggi: tenaga apa maksimum?",
+"Tenaga keupayaan graviti.",
+"20799d5a12"
+],
+[
+"7",
+"Bandul di kedudukan keseimbangan: tenaga apa maksimum?",
+"Tenaga kinetik.",
+"8ce5f7f80d"
+],
+[
+"7",
+"Spring di kedudukan paling regang: tenaga apa maksimum?",
+"Tenaga keupayaan kenyal.",
+"1b627a3b31"
+],
+[
+"7",
+"Apakah ciri jumlah tenaga dalam sistem ayunan tertutup?",
+"Jumlah tenaga keupayaan dan tenaga kinetik adalah malar, tidak berubah.",
+"d066cef817"
+],
+[
+"7",
+"KBAT: Mengapa roller-coaster laju di bahagian bawah?",
+"Tenaga keupayaan graviti berubah kepada tenaga kinetik.",
+"508b5ca0f8"
+],
+[
+"7",
+"KBAT: Mengapa masa lebih singkat menghasilkan kuasa lebih tinggi?",
+"Kerja yang sama dilakukan pada kadar lebih cepat.",
+"fd5cd010b9"
+],
+[
+"7",
+"KBAT: Mengapa tenaga spring pistol berubah menjadi Eₖ bola?",
+"Tenaga keupayaan kenyal dipindahkan kepada bola bergerak.",
+"9220f870f5"
+],
+[
+"8",
+"Siapakah menemukan sinar-X pada 1895?",
+"Wilhelm Conrad Roentgen.",
+"799fb1281b"
+],
+[
+"8",
+"Siapakah menemukan keradioaktifan pada 1896?",
+"Antoine Henri Becquerel.",
+"5a9f4b753d"
+],
+[
+"8",
+"Apakah dua unsur radioaktif yang diekstrak oleh Marie dan Pierre Curie?",
+"Polonium dan radium.",
+"7c4712b002"
+],
+[
+"8",
+"Apakah maksud bahan radioaktif?",
+"Bahan bernukleus tidak stabil yang memancarkan sinaran radioaktif.",
+"e1280476a0"
+],
+[
+"8",
+"Apakah maksud keradioaktifan?",
+"Proses pereputan secara rawak dan spontan bagi nukleus tidak stabil dengan memancarkan sinaran radioaktif.",
+"b6ea227c54"
+],
+[
+"8",
+"Apakah tiga sinaran radioaktif?",
+"Alfa, beta dan gama.",
+"68c03235ef"
+],
+[
+"8",
+"Apakah unit SI keradioaktifan?",
+"Becquerel, Bq.",
+"392bfc8481"
+],
+[
+"8",
+"Apakah maksud 1 Bq?",
+"Satu pereputan sesaat.",
+"4e4e483192"
+],
+[
+"8",
+"Berapakah 1 Ci dalam Bq?",
+"3.7 × 10¹⁰ Bq.",
+"10403e1bf5"
+],
+[
+"8",
+"Apakah maksud separuh hayat?",
+"Tempoh masa untuk bilangan nukleus yang belum mereput berkurang menjadi setengah daripada nilai asal.",
+"e69a872266"
+],
+[
+"8",
+"Di manakah proton berada?",
+"Dalam nukleus.",
+"8361fccab9"
+],
+[
+"8",
+"Apakah cas elektron?",
+"Negatif.",
+"318528f0e6"
+],
+[
+"8",
+"Bilakah atom neutral?",
+"Apabila bilangan proton sama dengan bilangan elektron.",
+"273e65a2bc"
+],
+[
+"8",
+"Apakah terbentuk apabila atom menderma elektron?",
+"Ion positif atau kation.",
+"c8cf7abce8"
+],
+[
+"8",
+"Apakah terbentuk apabila atom menerima elektron?",
+"Ion negatif atau anion.",
+"cf061038e2"
+],
+[
+"8",
+"Apakah maksud sinaran mengion?",
+"Sinaran yang menghasilkan ion positif dan ion negatif.",
+"0522147fc0"
+],
+[
+"8",
+"Apakah maksud sinaran tidak mengion?",
+"Sinaran yang tidak menghasilkan ion.",
+"a6de77b495"
+],
+[
+"8",
+"Sinaran manakah paling tinggi kuasa pengionannya?",
+"Sinar alfa.",
+"b43342363b"
+],
+[
+"8",
+"Sinaran manakah paling tinggi kuasa penembusannya?",
+"Sinar gama.",
+"760b89d749"
+],
+[
+"8",
+"Apakah penghalang sinar alfa?",
+"Kertas.",
+"b8fbf336b3"
+],
+[
+"8",
+"Apakah penghalang sinar beta?",
+"Kepingan aluminium.",
+"505b542b7d"
+],
+[
+"8",
+"Apakah penghalang sinar gama?",
+"Plumbum tebal atau konkrit.",
+"b2d60bcd1e"
+],
+[
+"8",
+"Namakan dua sumber sinaran semula jadi.",
+"Sinaran kosmik dan sinaran latar belakang.",
+"151f300a60"
+],
+[
+"8",
+"Apakah kegunaan karbon-14?",
+"Menentukan usia objek atau bahan purba.",
+"906c6b17b9"
+],
+[
+"8",
+"Berapakah separuh hayat karbon-14?",
+"5 700 tahun.",
+"243a46b0fc"
+],
+[
+"8",
+"Apakah kegunaan fosforus-32?",
+"Menentukan kadar penyerapan baja fosfat.",
+"8384e87ef8"
+],
+[
+"8",
+"Apakah kegunaan kobalt-60?",
+"Merawat kanser.",
+"76321d322b"
+],
+[
+"8",
+"KBAT: Mengapa sinar gama perlu disimpan dalam plumbum tebal?",
+"Kuasa penembusannya sangat tinggi.",
+"71c84a55fc"
+],
+[
+"8",
+"KBAT: Mengapa juruterbang perlu dihadkan waktu bekerja?",
+"Mereka terdedah kepada sinaran kosmik pada altitud tinggi.",
+"e5e4e8b47c"
+],
+[
+"8",
+"KBAT: Mengapa sinar-X perlu mengikut preskripsi doktor?",
+"Untuk mengelakkan dos sinaran mengion berlebihan.",
+"b77136e14e"
+],
+[
+"9",
+"Apakah tiga lapisan dalam Matahari?",
+"Teras, zon radiasi dan zon perolakan.",
+"0a68223b08"
+],
+[
+"9",
+"Apakah tiga lapisan atmosfera Matahari?",
+"Fotosfera, kromosfera dan korona.",
+"85280ceabd"
+],
+[
+"9",
+"Apakah granul?",
+"Bahagian atas zon perolakan plasma panas.",
+"fb5a44ff2d"
+],
+[
+"9",
+"Berapakah suhu granul yang dinyatakan?",
+"Setinggi 5 800°C.",
+"e90c320d61"
+],
+[
+"9",
+"Berapakah diameter purata granul?",
+"Kira-kira 1 000 km.",
+"3532523429"
+],
+[
+"9",
+"Apakah tompok Matahari?",
+"Kawasan gelap pada fotosfera.",
+"4dfd656126"
+],
+[
+"9",
+"Mengapa tompok Matahari kelihatan gelap?",
+"Suhunya lebih rendah daripada granul sekeliling.",
+"5155dafeab"
+],
+[
+"9",
+"Berapa lama kitaran suria?",
+"11 tahun.",
+"22f8478eb8"
+],
+[
+"9",
+"Apakah nama lain semarak suria?",
+"Prominen.",
+"3f1153e068"
+],
+[
+"9",
+"Apakah bentuk semarak suria?",
+"Gelungan besar atau lajur melengkung gas menyala.",
+"3efe2e8ce1"
+],
+[
+"9",
+"Apakah nyalaan suria?",
+"Letusan kuat gas bercas daripada Matahari.",
+"5ca2505abf"
+],
+[
+"9",
+"Nyalaan suria lazim berlaku berhampiran apa?",
+"Tompok Matahari.",
+"99ef8a8c2b"
+],
+[
+"9",
+"Berapa masa cahaya nyalaan suria sampai ke Bumi?",
+"Lapan minit.",
+"2e4886e76e"
+],
+[
+"9",
+"Apakah lentingan jisim korona?",
+"Letusan zarah gas yang bermagnet.",
+"95381c401f"
+],
+[
+"9",
+"Berapa masa zarah lentingan jisim korona sampai ke Bumi?",
+"Tiga hari.",
+"a08f85c86c"
+],
+[
+"9",
+"Apakah angin suria?",
+"Zarah plasma yang bergerak laju dari Matahari.",
+"b0ddb61164"
+],
+[
+"9",
+"Namakan tiga zarah dalam angin suria.",
+"Elektron, proton dan zarah alfa.",
+"16fe67ccc1"
+],
+[
+"9",
+"Apakah magnetosfera Bumi?",
+"Ruang angkasa bermedan magnet yang meliputi Bumi.",
+"546d5905bf"
+],
+[
+"9",
+"Bagaimanakah magnetosfera terbentuk?",
+"Interaksi medan magnet angin suria dengan medan magnet Bumi.",
+"8a6fe194ad"
+],
+[
+"9",
+"Apakah yang mengubah bentuk magnetosfera?",
+"Bilangan dan tenaga zarah angin suria.",
+"48298b6b71"
+],
+[
+"9",
+"Apakah aurora?",
+"Peragaan cahaya di sekitar kutub Bumi.",
+"2c98787732"
+],
+[
+"9",
+"Di manakah aurora berlaku secara unik?",
+"Ruang udara sekitar kutub Bumi.",
+"d392bb1eb0"
+],
+[
+"9",
+"Apakah cuaca angkasa lepas?",
+"Fenomena di Matahari atau di angkasa lepas.",
+"8504cc48ee"
+],
+[
+"9",
+"Beri dua kesan cuaca angkasa terhadap Bumi.",
+"Aurora dan gangguan telekomunikasi.",
+"4c0f479c33"
+],
+[
+"9",
+"Mengapa magnetosfera penting?",
+"Melindungi Bumi daripada zarah berbahaya.",
+"f67f8b1a1f"
+],
+[
+"9",
+"KBAT: Mengapa navigasi boleh terganggu semasa angin suria kuat?",
+"Zarah bercas berlebihan mengganggu sistem navigasi.",
+"2b6fa06e50"
+],
+[
+"9",
+"KBAT: Ramalkan kesan tanpa magnetosfera.",
+"Zarah berbahaya angin suria lebih mudah sampai ke Bumi.",
+"ae02389217"
+],
+[
+"9",
+"KBAT: Mengapa lebih banyak tompok Matahari perlu dipantau?",
+"Dikaitkan dengan peningkatan lentingan jisim korona dan angin suria.",
+"f3cc0a57c5"
+],
+[
+"10",
+"Apakah model Ptolemy?",
+"Model geosentrik.",
+"ff24cb2984"
+],
+[
+"10",
+"Apakah pusat Sistem Suria Ptolemy?",
+"Bumi.",
+"e72f2ffe30"
+],
+[
+"10",
+"Apakah bentuk orbit dalam model Ptolemy?",
+"Membulat.",
+"8de35fcacb"
+],
+[
+"10",
+"Siapakah pembina model heliosentrik awal?",
+"Copernicus.",
+"3bae18ac42"
+],
+[
+"10",
+"Apakah pusat Sistem Suria Copernicus?",
+"Matahari.",
+"d2d5fa5bb5"
+],
+[
+"10",
+"Apakah bentuk orbit Copernicus?",
+"Membulat.",
+"bd37c599b6"
+],
+[
+"10",
+"Siapakah mengubah suai model heliosentrik?",
+"Kepler.",
+"e8544bb266"
+],
+[
+"10",
+"Apakah bentuk orbit Kepler?",
+"Elips.",
+"2a19b59ee7"
+],
+[
+"10",
+"Matahari berada di mana dalam model Kepler?",
+"Pada satu fokus sepunya orbit elips.",
+"cecd1b849b"
+],
+[
+"10",
+"Apakah persamaan Copernicus dan Kepler?",
+"Kedua-duanya heliosentrik.",
+"a6b9ba95fa"
+],
+[
+"10",
+"Apakah sekstan astronomi?",
+"Alat untuk mengukur altitud bintang.",
+"58b188914b"
+],
+[
+"10",
+"Tahun Galileo menggunakan teleskop dalam astronomi?",
+"1609.",
+"0c70f4c29b"
+],
+[
+"10",
+"Apakah Sputnik?",
+"Satelit pertama, dilancarkan pada 1957.",
+"0ac1a2eb26"
+],
+[
+"10",
+"Siapakah manusia pertama di orbit?",
+"Yuri Gagarin.",
+"6223b05953"
+],
+[
+"10",
+"Siapakah manusia pertama di Bulan?",
+"Neil Armstrong.",
+"6e087a3be8"
+],
+[
+"10",
+"Misi pertama ke Musytari?",
+"US Pioneer 10, 1973.",
+"51453c1d59"
+],
+[
+"10",
+"Misi pertama ke Neptun?",
+"US Voyager 2, 1989.",
+"9c1152afcc"
+],
+[
+"10",
+"Apakah Hubble?",
+"Teleskop angkasa dalam orbit 500 km dari Bumi.",
+"3e09704244"
+],
+[
+"10",
+"Apakah fungsi Spitzer?",
+"Mengesan aktiviti angkasa yang sangat jauh.",
+"5d48d89b7d"
+],
+[
+"10",
+"Bagaimanakah roket bergerak ke atas?",
+"Gas panas keluar ke bawah dan menghasilkan daya tujah.",
+"eee8f76ca4"
+],
+[
+"10",
+"Apakah kuar angkasa?",
+"Kapal angkasa yang kumpul dan hantar maklumat ke Bumi.",
+"830081ae54"
+],
+[
+"10",
+"Apakah fungsi satelit?",
+"Mengumpul maklumat tentang angkasa lepas dan jasad angkasa.",
+"3bbef1a737"
+],
+[
+"10",
+"Apakah TiungSAT-1?",
+"Mikrosatelit Malaysia pertama.",
+"c9895ae58a"
+],
+[
+"10",
+"Apakah tugas MACRES?",
+"Mengendalikan projek penderiaan jauh di Malaysia.",
+"30a57f152e"
+],
+[
+"10",
+"Nyatakan satu kegunaan penderiaan jauh pertanian.",
+"Meramal hasil pengeluaran tanaman.",
+"f6b37eb11a"
+],
+[
+"10",
+"Nyatakan satu kegunaan penderiaan jauh geologi.",
+"Mencari sumber minyak atau mineral.",
+"3de22eb834"
+],
+[
+"10",
+"KBAT: Mengapa kuar sesuai untuk misi jauh?",
+"Ia boleh dihantar jauh dan beroperasi hingga puluhan tahun.",
+"9a322b507b"
+],
+[
+"10",
+"KBAT: Mengapa teleskop angkasa lebih baik untuk cerapan?",
+"Ia mencerap dari angkasa lepas, bukan permukaan Bumi.",
+"445bef5284"
+],
+[
+"10",
+"KBAT: Mengapa penderiaan jauh penting semasa banjir?",
+"Menentukan lokasi banjir dan tempat pemindahan selamat.",
+"8cdf5c7426"
+],
+[
+"x",
+"Mengapa kadar respirasi meningkat ketika aktiviti fizikal?",
+"Otot memerlukan lebih oksigen; oksigen digunakan dalam respirasi sel menghasilkan tenaga. [Bab 2, 7]",
+"bcb8788441"
+],
+[
+"x",
+"Bagaimanakah oksigen dari alveolus sampai ke sel badan?",
+"Oksigen meresap ke darah, berpadu dengan hemoglobin dan diangkut jantung ke seluruh badan. [Bab 2, 3]",
+"cb068eb39a"
+],
+[
+"x",
+"Mengapa pucuk menunjukkan fototropisme positif?",
+"Pucuk tumbuh ke arah cahaya untuk memperoleh cahaya bagi fotosintesis. [Bab 1, 2]",
+"22f63a1fb3"
+],
+[
+"x",
+"Apakah kaitan respirasi sel dengan termokimia?",
+"Respirasi ialah tindak balas eksotermik yang menghasilkan karbon dioksida, air dan tenaga. [Bab 2, 5]",
+"c077ec184a"
+],
+[
+"x",
+"Mengapa akar tumbuh ke arah kawasan lembap?",
+"Akar berhidrotropisme positif untuk menyerap air dan garam mineral yang diangkut dalam tumbuhan. [Bab 1, 3]",
+"c1534179cf"
+],
+[
+"x",
+"Bagaimanakah karbon monoksida menjejaskan respirasi sel?",
+"Karbon monoksida menghalang hemoglobin mengangkut oksigen yang diperlukan dalam respirasi sel. [Bab 2, 3]",
+"9cd366b474"
+],
+[
+"x",
+"Mengapa pengekstrakan besi daripada bijih memerlukan haba?",
+"Pengekstrakan besi daripada bijih besi ialah tindak balas endotermik yang menyerap haba. [Bab 4, 5]",
+"6fe3935993"
+],
+[
+"x",
+"Apakah prinsip pengekstrakan logam di bawah karbon?",
+"Oksida logam diturunkan oleh karbon; karbon menyingkirkan oksigen daripada oksida logam. [Bab 4, 5]",
+"7ec15e59ca"
+],
+[
+"x",
+"Bagaimanakah stesen hidroelektrik menunjukkan perubahan tenaga?",
+"Tenaga keupayaan graviti berubah kepada tenaga kinetik, kemudian tenaga elektrik. [Bab 6, 7]",
+"7e4a864a8f"
+],
+[
+"x",
+"Apakah hubungan antara kuasa elektrik dan kuasa dalam mekanik?",
+"Kedua-duanya berkaitan kadar penggunaan atau pemindahan tenaga; unit S.I. kuasa ialah watt. [Bab 6, 7]",
+"2b4e072073"
+],
+[
+"x",
+"Mengapa transformer injak naik digunakan sebelum penghantaran elektrik?",
+"Ia menaikkan voltan a.u. sebelum tenaga dihantar melalui Rangkaian Grid Nasional. [Bab 6, 7]",
+"331021b927"
+],
+[
+"x",
+"Bagaimanakah cuaca angkasa boleh menjejaskan bekalan elektrik?",
+"Zarah bercas berlebihan boleh mengganggu talian kuasa elektrik. [Bab 6, 9]",
+"24c517ce17"
+],
+[
+"x",
+"Apakah kaitan zarah alfa dengan keradioaktifan dan angin suria?",
+"Sinar alfa ialah nukleus helium; zarah alfa juga terdapat dalam angin suria. [Bab 8, 9]",
+"8f31f3a125"
+],
+[
+"x",
+"Bagaimanakah satelit membantu mengkaji cuaca angkasa?",
+"Satelit mengumpul maklumat tentang cuaca angkasa, keadaan angkasa lepas dan jasad angkasa jauh. [Bab 9, 10]",
+"6bfadba467"
+]
+];
+// [bab, kiri, kanan]
+const PAIRS = [
+[
+"1",
+"otak",
+"mentafsir impuls saraf"
+],
+[
+"1",
+"saraf tunjang",
+"tindakan refleks"
+],
+[
+"1",
+"reseptor",
+"mengesan rangsangan"
+],
+[
+"1",
+"efektor",
+"menghasilkan gerak balas"
+],
+[
+"1",
+"retina",
+"mengesan cahaya"
+],
+[
+"1",
+"saraf optik",
+"hantar impuls ke otak"
+],
+[
+"1",
+"koklea",
+"tukar getaran kepada impuls"
+],
+[
+"1",
+"pupil",
+"bukaan cahaya masuk"
+],
+[
+"1",
+"miopia",
+"rabun jauh"
+],
+[
+"1",
+"kanta cekung",
+"membetulkan miopia"
+],
+[
+"1",
+"hipermetropia",
+"rabun dekat"
+],
+[
+"1",
+"kanta cembung",
+"membetulkan hipermetropia"
+],
+[
+"1",
+"akar",
+"geotropisme positif"
+],
+[
+"1",
+"pucuk",
+"fototropisme positif"
+],
+[
+"2",
+"alveolus",
+"tempat pertukaran gas"
+],
+[
+"2",
+"hemoglobin",
+"berpadu dengan oksigen"
+],
+[
+"2",
+"oksihemoglobin",
+"hemoglobin bersama oksigen"
+],
+[
+"2",
+"diafragma mengecut",
+"bergerak ke bawah"
+],
+[
+"2",
+"diafragma mengendur",
+"melengkung ke atas"
+],
+[
+"2",
+"udara hembusan",
+"lebih karbon dioksida berbanding udara sedutan"
+],
+[
+"2",
+"tar rokok",
+"memusnahkan sel trakea dan bronkiol"
+],
+[
+"2",
+"karbon monoksida",
+"menghalang pengangkutan oksigen"
+],
+[
+"2",
+"sulfur dioksida",
+"merengsa salur pernafasan"
+],
+[
+"2",
+"insang",
+"struktur respirasi ikan"
+],
+[
+"2",
+"kulit lembap",
+"struktur respirasi katak"
+],
+[
+"2",
+"trakea",
+"struktur respirasi serangga"
+],
+[
+"2",
+"sel pengawal",
+"mengawal liang stoma"
+],
+[
+"2",
+"osmosis",
+"pergerakan molekul air"
+],
+[
+"2",
+"sel segah",
+"stoma terbuka"
+],
+[
+"3",
+"arteri",
+"membawa darah keluar dari jantung"
+],
+[
+"3",
+"vena",
+"membawa darah ke jantung"
+],
+[
+"3",
+"kapilari",
+"tempat pertukaran bahan"
+],
+[
+"3",
+"ventrikel kiri",
+"mengepam darah ke seluruh badan"
+],
+[
+"3",
+"septum",
+"menghalang darah bercampur"
+],
+[
+"3",
+"sel darah merah",
+"mengangkut oksigen"
+],
+[
+"3",
+"sel darah putih",
+"mempertahankan badan"
+],
+[
+"3",
+"platlet",
+"membantu pembekuan darah"
+],
+[
+"3",
+"xilem",
+"mengangkut air dan garam mineral"
+],
+[
+"3",
+"floem",
+"mengangkut sukrosa"
+],
+[
+"3",
+"transpirasi",
+"kehilangan air sebagai wap"
+],
+[
+"3",
+"pelembakan",
+"kehilangan air sebagai cecair"
+],
+[
+"4",
+"mineral",
+"unsur atau sebatian pepejal semula jadi berstruktur hablur dan berkomposisi kimia tertentu"
+],
+[
+"4",
+"kuarza",
+"silikon dioksida"
+],
+[
+"4",
+"bauksit",
+"aluminium oksida"
+],
+[
+"4",
+"hematit",
+"ferum(III) oksida"
+],
+[
+"4",
+"galena",
+"plumbum(II) sulfida"
+],
+[
+"4",
+"kapur",
+"kalsium karbonat"
+],
+[
+"4",
+"karbon",
+"menurunkan oksida logam bawahnya"
+],
+[
+"4",
+"elektrolisis",
+"logam di atas karbon"
+],
+[
+"4",
+"relau bagas",
+"pengekstrakan besi"
+],
+[
+"4",
+"arang kok",
+"bahan berkarbon dalam relau"
+],
+[
+"4",
+"sanga",
+"bahan buangan relau bagas"
+],
+[
+"4",
+"Merit Pila",
+"simpanan arang batu terbesar"
+],
+[
+"5",
+"Termokimia",
+"kajian perubahan haba"
+],
+[
+"5",
+"Eksotermik",
+"membebaskan haba"
+],
+[
+"5",
+"Endotermik",
+"menyerap haba"
+],
+[
+"5",
+"Suhu meningkat",
+"eksotermik"
+],
+[
+"5",
+"Suhu menurun",
+"endotermik"
+],
+[
+"5",
+"Termometer",
+"mengukur perubahan suhu"
+],
+[
+"5",
+"Respirasi",
+"eksotermik"
+],
+[
+"5",
+"Fotosintesis",
+"endotermik"
+],
+[
+"5",
+"Pek panas segera",
+"eksotermik"
+],
+[
+"5",
+"Pek sejuk segera",
+"endotermik"
+],
+[
+"5",
+"Natrium hidroksida + air",
+"eksotermik"
+],
+[
+"5",
+"Ammonium klorida + air",
+"endotermik"
+],
+[
+"6",
+"Generator",
+"menjana tenaga elektrik"
+],
+[
+"6",
+"Arus aruhan",
+"arus elektrik yang terhasil apabila dawai atau gegelung memotong garis medan magnet"
+],
+[
+"6",
+"Arus terus",
+"mengalir satu arah"
+],
+[
+"6",
+"Arus ulang-alik",
+"arah berubah berterusan"
+],
+[
+"6",
+"O.S.K",
+"papar graf arus dan voltan"
+],
+[
+"6",
+"Injak naik",
+"menaikkan voltan"
+],
+[
+"6",
+"Injak turun",
+"menurunkan voltan"
+],
+[
+"6",
+"Fius",
+"melebur apabila arus berlebihan"
+],
+[
+"6",
+"Dawai bumi",
+"lalukan arus bocor ke bumi"
+],
+[
+"6",
+"ELCB",
+"pemutus litar kebocoran bumi"
+],
+[
+"6",
+"1 kWj",
+"satu unit tenaga elektrik"
+],
+[
+"6",
+"Kuasa elektrik",
+"hasil darab voltan dengan arus"
+],
+[
+"7",
+"kerja",
+"daya × sesaran arah daya"
+],
+[
+"7",
+"tenaga",
+"keupayaan melakukan kerja"
+],
+[
+"7",
+"kuasa",
+"kadar melakukan kerja"
+],
+[
+"7",
+"1 joule",
+"1 newton meter"
+],
+[
+"7",
+"1 watt",
+"1 joule sesaat"
+],
+[
+"7",
+"tenaga keupayaan graviti",
+"mgh"
+],
+[
+"7",
+"tenaga kenyal",
+"½Fx"
+],
+[
+"7",
+"tenaga kinetik",
+"½mv²"
+],
+[
+"7",
+"bandul paling tinggi",
+"tenaga keupayaan graviti maksimum"
+],
+[
+"7",
+"bandul di keseimbangan",
+"tenaga kinetik maksimum"
+],
+[
+"7",
+"spring paling teregang",
+"tenaga keupayaan kenyal maksimum"
+],
+[
+"7",
+"sistem ayunan tertutup",
+"jumlah tenaga keupayaan dan tenaga kinetik malar"
+],
+[
+"8",
+"Wilhelm Roentgen",
+"menemukan sinar-X"
+],
+[
+"8",
+"Henri Becquerel",
+"menemukan keradioaktifan"
+],
+[
+"8",
+"Marie dan Pierre Curie",
+"mengekstrak polonium dan radium"
+],
+[
+"8",
+"proton",
+"cas positif"
+],
+[
+"8",
+"elektron",
+"cas negatif"
+],
+[
+"8",
+"neutron",
+"tiada cas"
+],
+[
+"8",
+"derma elektron",
+"ion positif"
+],
+[
+"8",
+"terima elektron",
+"ion negatif"
+],
+[
+"8",
+"sinar alfa",
+"dihentikan oleh kertas"
+],
+[
+"8",
+"sinar beta",
+"dihentikan oleh aluminium"
+],
+[
+"8",
+"sinar gama",
+"dihalang plumbum tebal"
+],
+[
+"8",
+"karbon-14",
+"pentarikhan bahan purba"
+],
+[
+"8",
+"fosforus-32",
+"kadar serapan baja fosfat"
+],
+[
+"8",
+"kobalt-60",
+"rawatan kanser"
+],
+[
+"9",
+"Granul",
+"bahagian atas zon perolakan"
+],
+[
+"9",
+"Tompok Matahari",
+"kawasan gelap di fotosfera"
+],
+[
+"9",
+"Kitaran suria",
+"pusingan 11 tahun tompok Matahari"
+],
+[
+"9",
+"Prominen",
+"semarak suria"
+],
+[
+"9",
+"Nyalaan suria",
+"letusan gas bercas"
+],
+[
+"9",
+"Lentingan jisim korona",
+"letusan zarah gas yang bermagnet"
+],
+[
+"9",
+"Angin suria",
+"zarah plasma bergerak laju"
+],
+[
+"9",
+"Magnetosfera",
+"pelindung Bumi di angkasa lepas"
+],
+[
+"9",
+"Elektron",
+"zarah bercas angin suria"
+],
+[
+"9",
+"Aurora",
+"cahaya sekitar kutub Bumi"
+],
+[
+"10",
+"Ptolemy",
+"model geosentrik"
+],
+[
+"10",
+"Copernicus",
+"orbit membulat mengelilingi Matahari"
+],
+[
+"10",
+"Kepler",
+"orbit elips mengelilingi Matahari"
+],
+[
+"10",
+"Sputnik",
+"satelit pertama"
+],
+[
+"10",
+"Yuri Gagarin",
+"manusia pertama di orbit"
+],
+[
+"10",
+"Neil Armstrong",
+"manusia pertama di Bulan"
+],
+[
+"10",
+"Pioneer 10",
+"penerbangan pertama ke Musytari"
+],
+[
+"10",
+"Voyager 2",
+"penerbangan pertama ke Neptun"
+],
+[
+"10",
+"Hubble",
+"teleskop di orbit 500 km"
+],
+[
+"10",
+"Spitzer",
+"mengesan aktiviti angkasa sangat jauh"
+],
+[
+"10",
+"TiungSAT-1",
+"mikrosatelit Malaysia pertama"
+],
+[
+"10",
+"MACRES",
+"mengendalikan projek penderiaan jauh di Malaysia"
+]
+];
+// [bab, tajuk, [[kumpulan,[item]]]]
+const CATS = [
+[
+"1",
+"Tindakan terkawal atau luar kawal?",
+[
+[
+"Terkawal",
+[
+"menulis",
+"berjalan",
+"menangkap pembaris"
+]
+],
+[
+"Luar kawal",
+[
+"denyutan jantung",
+"peristalsis",
+"bernafas",
+"pengecutan pupil"
+]
+]
+]
+],
+[
+"2",
+"Semasa menarik atau menghembus nafas?",
+[
+[
+"Menarik nafas",
+[
+"otot interkostal mengecut",
+"rusuk ke atas dan ke luar",
+"diafragma meleper",
+"udara masuk peparu"
+]
+],
+[
+"Menghembus nafas",
+[
+"otot interkostal mengendur",
+"rusuk ke bawah dan ke dalam",
+"diafragma melengkung ke atas",
+"udara keluar peparu"
+]
+]
+]
+],
+[
+"3",
+"Xilem atau floem?",
+[
+[
+"Xilem",
+[
+"air",
+"garam mineral terlarut",
+"dari akar ke daun"
+]
+],
+[
+"Floem",
+[
+"sukrosa",
+"sukrosa yang dihasilkan dalam daun",
+"dari daun ke bahagian lain"
+]
+]
+]
+],
+[
+"4",
+"Lebih atau kurang reaktif daripada karbon?",
+[
+[
+"Lebih reaktif",
+[
+"kalium",
+"natrium",
+"kalsium",
+"magnesium",
+"aluminium"
+]
+],
+[
+"Kurang reaktif",
+[
+"zink",
+"ferum",
+"timah",
+"plumbum",
+"kuprum"
+]
+]
+]
+],
+[
+"5",
+"Endotermik atau eksotermik?",
+[
+[
+"Eksotermik",
+[
+"respirasi",
+"peneutralan",
+"pembakaran kertas",
+"letupan bom",
+"pengaratan besi"
+]
+],
+[
+"Endotermik",
+[
+"fotosintesis",
+"membuat kek",
+"membuat roti",
+"pengekstrakan besi",
+"ammonium klorida dalam air"
+]
+]
+]
+],
+[
+"6",
+"Arus terus atau arus ulang-alik?",
+[
+[
+"Arus terus",
+[
+"sel suria",
+"akumulator",
+"bateri",
+"lampu suluh",
+"kalkulator",
+"kereta mainan"
+]
+],
+[
+"Arus ulang-alik",
+[
+"pembakar roti",
+"pengering rambut",
+"pendingin hawa"
+]
+]
+]
+],
+[
+"7",
+"Bentuk tenaga yang ditunjukkan?",
+[
+[
+"Tenaga keupayaan graviti",
+[
+"tukul yang telah diangkat",
+"ladung bandul di kedudukan X",
+"beban pada ketinggian 30 m"
+]
+],
+[
+"Tenaga keupayaan kenyal",
+[
+"spring termampat",
+"spring diregang",
+"stapler"
+]
+],
+[
+"Tenaga kinetik",
+[
+"kereta api bergerak",
+"bebola keluli bergerak",
+"elektron mengorbit atom"
+]
+]
+]
+],
+[
+"8",
+"Sinaran mengion atau tidak mengion?",
+[
+[
+"Mengion",
+[
+"sinar alfa",
+"sinar beta",
+"sinar gama",
+"sinar-X"
+]
+],
+[
+"Tidak mengion",
+[
+"gelombang radio",
+"gelombang mikro",
+"inframerah",
+"cahaya nampak"
+]
+]
+]
+],
+[
+"9",
+"Lapisan dalam atau atmosfera Matahari?",
+[
+[
+"Lapisan dalam",
+[
+"teras",
+"zon radiasi",
+"zon perolakan"
+]
+],
+[
+"Atmosfera Matahari",
+[
+"fotosfera",
+"kromosfera",
+"korona"
+]
+]
+]
+],
+[
+"10",
+"Ciri model Sistem Suria apakah ini?",
+[
+[
+"Geosentrik Ptolemy",
+[
+"Bumi di pusat",
+"Bumi pegun",
+"Matahari mengorbit Bumi"
+]
+],
+[
+"Heliosentrik Copernicus",
+[
+"Matahari di pusat",
+"Bumi berputar pada paksi",
+"Bumi dan planet lain mengorbit Matahari dalam orbit membulat"
+]
+],
+[
+"Heliosentrik Kepler",
+[
+"Matahari pada satu fokus",
+"orbit elips",
+"mengikut Hukum Kepler"
+]
+]
+]
+]
+];
+// [bab, kenyataan, benar?]
+const TF = [
+[
+"1",
+"Sistem saraf pusat terdiri daripada otak dan saraf tunjang",
+true
+],
+[
+"1",
+"Tindakan refleks dikawal sepenuhnya oleh otak",
+false
+],
+[
+"1",
+"Pupil mengecil dalam cahaya terang",
+true
+],
+[
+"1",
+"Koklea berada dalam telinga luar",
+false
+],
+[
+"1",
+"Akar menunjukkan geotropisme positif",
+true
+],
+[
+"1",
+"Pucuk tumbuh menjauhi cahaya",
+false
+],
+[
+"1",
+"Penglihatan stereoskopik menghasilkan imej tiga dimensi",
+true
+],
+[
+"1",
+"Arnab mempunyai penglihatan stereoskopik",
+false
+],
+[
+"2",
+"Bronkiol ialah tempat utama pertukaran gas",
+false
+],
+[
+"2",
+"Epiglotis menutup trakea semasa bolus ditelan",
+true
+],
+[
+"2",
+"Diafragma meleper semasa menarik nafas",
+true
+],
+[
+"2",
+"Udara hembusan mengandungi lebih O₂",
+false
+],
+[
+"2",
+"Oksihemoglobin ialah sebatian tidak stabil",
+true
+],
+[
+"2",
+"Karbon monoksida membantu hemoglobin membawa O₂",
+false
+],
+[
+"2",
+"Ikan menjalankan respirasi melalui insang",
+true
+],
+[
+"2",
+"Stoma boleh tertutup pada hari panas",
+true
+],
+[
+"3",
+"Arteri pulmonari membawa darah terdeoksigen",
+true
+],
+[
+"3",
+"Vena pulmonari membawa darah beroksigen",
+true
+],
+[
+"3",
+"Kapilari mempunyai dinding paling tebal",
+false
+],
+[
+"3",
+"Sel darah merah mempunyai nukleus",
+false
+],
+[
+"3",
+"Platlet membantu pembekuan darah",
+true
+],
+[
+"3",
+"Xilem mengangkut sukrosa",
+false
+],
+[
+"3",
+"Floem ialah tisu hidup",
+true
+],
+[
+"3",
+"Kelembapan tinggi menaikkan transpirasi",
+false
+],
+[
+"4",
+"Mineral boleh berbentuk unsur",
+true
+],
+[
+"4",
+"Bauksit ialah aluminium oksida",
+true
+],
+[
+"4",
+"Emas lebih reaktif daripada kalium",
+false
+],
+[
+"4",
+"Karbon di atas zink dalam siri",
+true
+],
+[
+"4",
+"Hidrogen di atas ferum dalam siri",
+true
+],
+[
+"4",
+"Besi diekstrak dalam relau bagas",
+true
+],
+[
+"4",
+"Semua logam diekstrak secara elektrolisis",
+false
+],
+[
+"4",
+"Sanga ialah leburan besi",
+false
+],
+[
+"5",
+"Eksotermik membebaskan haba ke persekitaran",
+true
+],
+[
+"5",
+"Endotermik menyebabkan suhu meningkat",
+false
+],
+[
+"5",
+"Respirasi ialah tindak balas eksotermik",
+true
+],
+[
+"5",
+"Fotosintesis ialah tindak balas endotermik",
+true
+],
+[
+"5",
+"Pek panas segera menyerap haba",
+false
+],
+[
+"5",
+"Termometer mengesan perubahan suhu",
+true
+],
+[
+"5",
+"Membuat kek ialah eksotermik",
+false
+],
+[
+"5",
+"Ammonium klorida dalam air ialah endotermik",
+true
+],
+[
+"6",
+"Transformer berfungsi menggunakan a.u",
+true
+],
+[
+"6",
+"Arus terus berubah arah berterusan",
+false
+],
+[
+"6",
+"Sel suria menghasilkan arus terus",
+true
+],
+[
+"6",
+"Transformer injak naik menaikkan voltan",
+true
+],
+[
+"6",
+"Rumah menerima bekalan satu fasa 240 V",
+true
+],
+[
+"6",
+"Fius tidak melebur apabila arus terlalu besar",
+false
+],
+[
+"6",
+"1 kWj ialah satu unit tenaga elektrik",
+true
+],
+[
+"6",
+"O.S.K. membezakan a.t. dengan a.u",
+true
+],
+[
+"7",
+"Kerja berlaku tanpa sesaran",
+false
+],
+[
+"7",
+"Unit kerja ialah joule",
+true
+],
+[
+"7",
+"Tenaga ialah keupayaan melakukan kerja",
+true
+],
+[
+"7",
+"Kuasa tinggi bermaksud masa lebih lama",
+false
+],
+[
+"7",
+"Spring diregang ada tenaga keupayaan kenyal",
+true
+],
+[
+"7",
+"Objek pegun mempunyai tenaga kinetik",
+false
+],
+[
+"7",
+"Halaju mempengaruhi tenaga kinetik",
+true
+],
+[
+"7",
+"Tenaga boleh dicipta dan dimusnahkan",
+false
+],
+[
+"8",
+"Atom neutral mempunyai proton sama dengan elektron",
+true
+],
+[
+"8",
+"Sinar gama bercas negatif",
+false
+],
+[
+"8",
+"Sinar alfa mempunyai kuasa pengionan tertinggi",
+true
+],
+[
+"8",
+"Sinar beta ialah gelombang elektromagnet",
+false
+],
+[
+"8",
+"1 Bq ialah 1 pereputan sesaat",
+true
+],
+[
+"8",
+"C-14 mempunyai separuh hayat 5 700 tahun",
+true
+],
+[
+"8",
+"Kertas menghalang sinar gama",
+false
+],
+[
+"8",
+"Juruterbang terdedah kepada sinaran kosmik",
+true
+],
+[
+"9",
+"Fotosfera ialah atmosfera Matahari",
+true
+],
+[
+"9",
+"Kitaran suria mengambil masa 11 tahun",
+true
+],
+[
+"9",
+"Tompok Matahari lebih panas daripada granul",
+false
+],
+[
+"9",
+"Semarak suria juga dinamakan prominen",
+true
+],
+[
+"9",
+"Cahaya nyalaan suria sampai dalam lapan minit",
+true
+],
+[
+"9",
+"Zarah lentingan jisim korona tiba dalam tiga hari",
+true
+],
+[
+"9",
+"Magnetosfera menghalang semua cahaya Matahari",
+false
+],
+[
+"9",
+"Angin suria mengandungi elektron",
+true
+],
+[
+"10",
+"Model Ptolemy meletakkan Bumi di pusat",
+true
+],
+[
+"10",
+"Copernicus mencadangkan orbit elips",
+false
+],
+[
+"10",
+"Kepler menggunakan orbit elips",
+true
+],
+[
+"10",
+"Sputnik ialah satelit pertama",
+true
+],
+[
+"10",
+"Hubble berada di permukaan Bumi",
+false
+],
+[
+"10",
+"Gas panas menolak roket ke atas",
+true
+],
+[
+"10",
+"Kuar angkasa menghantar maklumat ke Bumi",
+true
+],
+[
+"10",
+"Penderiaan jauh tidak digunakan dalam pertahanan",
+false
+]
+];
+const IMGS = [
+{
+"file": "bab1-fototropisme.jpg",
+"bab": "1",
+"teka": "Gerak balas apakah ditunjukkan oleh anak benih ini?",
+"jawapan": "Fototropisme positif",
+"kapsyen": "Anak benih membengkok dan tumbuh ke arah cahaya.",
+"pengarang": "Lequerik",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Positive_phototropism_in_Quercus_humboldtii_seedlings.jpg"
+},
+{
+"file": "bab1-mata.jpg",
+"bab": "1",
+"teka": "Bahagian hitam di tengah mata ini dipanggil apa?",
+"jawapan": "Pupil",
+"kapsyen": "Mata manusia dari hadapan: sklera putih, iris berwarna dan pupil hitam.",
+"pengarang": "Rapidreflex",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Human_eye_close_up,_anterior_view.jpg"
+},
+{
+"file": "bab1-neuron.jpg",
+"bab": "1",
+"teka": "Sel apakah yang membawa impuls saraf ini?",
+"jawapan": "Neuron",
+"kapsyen": "Sel saraf (neuron) tikus yang bercahaya di bawah mikroskop.",
+"pengarang": "ManuelSchottdorf",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:GFP_Neurons.png"
+},
+{
+"file": "bab1-semalu.jpg",
+"bab": "1",
+"teka": "Tumbuhan apakah yang ditunjukkan dalam gambar ini?",
+"jawapan": "Pokok semalu",
+"kapsyen": "Daun pokok semalu.",
+"pengarang": "NonNerd",
+"lesen": "CC0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Mimosa_pudica_leaves_close_up.jpg"
+},
+{
+"file": "bab2-insang.jpg",
+"bab": "2",
+"teka": "Struktur respirasi ikan apakah ini?",
+"jawapan": "Insang",
+"kapsyen": "Insang ikan yang kelihatan berwarna merah.",
+"pengarang": "Uwe Gille",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Gills_(esox).jpg"
+},
+{
+"file": "bab2-jerebu.jpg",
+"bab": "2",
+"teka": "Pencemaran udara apakah ini?",
+"jawapan": "Jerebu",
+"kapsyen": "Bangunan di Kuala Lumpur kabur dilitupi jerebu.",
+"pengarang": "Firdaus Latif",
+"lesen": "CC BY-SA 2.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:HAZE_strikes_Kuala_Lumpur_(7401602888).jpg"
+},
+{
+"file": "bab2-stoma.jpg",
+"bab": "2",
+"teka": "Liang pertukaran gas pada daun ini dipanggil apa?",
+"jawapan": "Stoma",
+"kapsyen": "Liang kecil pada permukaan daun tomato di bawah mikroskop elektron.",
+"pengarang": "Photohound",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Tomato_leaf_stomate_1-color.jpg"
+},
+{
+"file": "bab2-xray-dada.jpg",
+"bab": "2",
+"teka": "Organ respirasi apakah yang kelihatan di dalam dada ini?",
+"jawapan": "Peparu",
+"kapsyen": "Imej sinar-X dada yang menunjukkan peparu sihat dan tulang rusuk.",
+"pengarang": "Mikael Häggström",
+"lesen": "CC0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg"
+},
+{
+"file": "bab3-gutasi.jpg",
+"bab": "3",
+"teka": "Kehilangan air sebagai cecair melalui hidatod dipanggil apa?",
+"jawapan": "Pelembakan",
+"kapsyen": "Titisan air hasil pelembakan pada pinggir daun strawberi.",
+"pengarang": "Schnobby",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Guttation_on_a_strawberry_leaf.jpg"
+},
+{
+"file": "bab3-jantung.jpg",
+"bab": "3",
+"teka": "Organ apakah yang mengepam darah ini?",
+"jawapan": "Jantung",
+"kapsyen": "Keratan rentas jantung manusia: empat ruang, injap dan salur darah utama.",
+"pengarang": "Wapcaplet",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Diagram_of_the_human_heart_(cropped).svg"
+},
+{
+"file": "bab3-sel-darah-merah.jpg",
+"bab": "3",
+"teka": "Sel darah apakah yang mengangkut oksigen ini?",
+"jawapan": "Sel darah merah",
+"kapsyen": "Sel darah merah (kanan) berbentuk dwicekung tanpa nukleus.",
+"pengarang": "Joan-Lluis Vives-Corrons, Elena Krishnevskaya",
+"lesen": "CC BY 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Red_Blood_Cells_observed_with_scanning_electron_microscope_(SEM)._Left_spherocyte._Right_normal_red_blood_cell.png"
+},
+{
+"file": "bab3-sel-darah.jpg",
+"bab": "3",
+"teka": "Sel darah berbentuk dwicekung di sebelah kanan ialah apa?",
+"jawapan": "Sel darah merah",
+"kapsyen": "Sel darah merah, platlet dan sel darah putih (diwarnakan) di bawah mikroskop elektron.",
+"pengarang": "Electron Microscopy Facility at The National Cancer Institute at Frederick (NCI-Frederick)",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Red_White_Blood_cells.jpg"
+},
+{
+"file": "bab4-bauksit.jpg",
+"bab": "4",
+"teka": "Bijih aluminium apakah ini?",
+"jawapan": "Bauksit",
+"kapsyen": "Bauksit ialah bijih yang mengandungi aluminium oksida.",
+"pengarang": "James St. John",
+"lesen": "CC BY 2.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Pisolitic_bauxite_(Alcoa_Bauxite_Mine,_Arkansas,_USA)_1.jpg"
+},
+{
+"file": "bab4-hematit.jpg",
+"bab": "4",
+"teka": "Bijih besi apakah ini?",
+"jawapan": "Hematit",
+"kapsyen": "Hematit berwarna merah karat mengandungi ferum oksida.",
+"pengarang": "James St. John",
+"lesen": "CC BY 2.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Hematite_(iron_ore)_(weathered_zone_in_the_Biwabik_Iron-Formation,_Whiteside_Mine,_Buhl,_Minnesota.jpg"
+},
+{
+"file": "bab4-kasiterit.jpg",
+"bab": "4",
+"teka": "Logam apakah yang diekstrak daripada bijih ini?",
+"jawapan": "Timah",
+"kapsyen": "Hablur kasiterit hitam, iaitu bijih timah (timah oksida).",
+"pengarang": "Ralph Bottrill",
+"lesen": "CC BY 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Cassiterite_-_Mt_Bischoff_mine,_Waratah,_Tasmania,_Australia.jpg"
+},
+{
+"file": "bab4-natrium-air.jpg",
+"bab": "4",
+"teka": "Logam reaktif apakah yang bertindak balas dengan air ini?",
+"jawapan": "Natrium",
+"kapsyen": "Natrium bertindak balas sangat cergas dengan air sehingga meletup.",
+"pengarang": "Ajhalls",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Large_Sodium_Explosion.jpg"
+},
+{
+"file": "bab4-relau-bagas.jpg",
+"bab": "4",
+"teka": "Apakah nama relau tinggi ini?",
+"jawapan": "Relau bagas",
+"kapsyen": "Relau bagas di kilang besi untuk mengekstrak ferum daripada bijihnya.",
+"pengarang": "Aciarium",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:DSC06493_Blast_Furnace_4,_voestalpine_Leoben-Donawitz,_2026.jpg"
+},
+{
+"file": "bab5-bunga-api.jpg",
+"bab": "5",
+"teka": "Tindak balas pembakaran ini jenis apa?",
+"jawapan": "Tindak balas eksotermik",
+"kapsyen": "Bunga api membebaskan haba dan cahaya ke persekitaran.",
+"pengarang": "Martin Falbisoner",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Fireworks_over_Ponte_Vecchio.JPG"
+},
+{
+"file": "bab5-nyalaan-lilin.jpg",
+"bab": "5",
+"teka": "Pembakaran lilin ialah tindak balas jenis apa?",
+"jawapan": "Tindak balas eksotermik",
+"kapsyen": "Lilin terbakar membebaskan haba dan cahaya.",
+"pengarang": "domdomegg",
+"lesen": "CC BY 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Candle_flame_closeup.jpg"
+},
+{
+"file": "bab5-pek-panas.jpg",
+"bab": "5",
+"teka": "Pek panas menggunakan tindak balas jenis apa?",
+"jawapan": "Tindak balas eksotermik",
+"kapsyen": "Hablur natrium asetat terbentuk dan membebaskan haba, seperti dalam pek panas.",
+"pengarang": "Ivee",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Sodium_acetate_reaction.jpg"
+},
+{
+"file": "bab5-pek-sejuk.jpg",
+"bab": "5",
+"teka": "Pek sejuk menggunakan tindak balas jenis apa?",
+"jawapan": "Tindak balas endotermik",
+"kapsyen": "Pek sejuk segera menyerap haba untuk merawat kecederaan.",
+"pengarang": "Qurren",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Daiso_instant_cold_pack_300g.jpg"
+},
+{
+"file": "bab6-empangan.jpg",
+"bab": "6",
+"teka": "Stesen jana kuasa jenis apakah ini?",
+"jawapan": "Hidroelektrik",
+"kapsyen": "Empangan Murum di Sarawak menjana elektrik daripada air.",
+"pengarang": "UNIMAS Sarawak",
+"lesen": "CC BY 2.5",
+"sumber": "https://commons.wikimedia.org/wiki/File:Murum_Dam_view_from_afar.jpg"
+},
+{
+"file": "bab6-meter-elektrik.jpg",
+"bab": "6",
+"teka": "Alat apakah yang menyukat penggunaan elektrik ini?",
+"jawapan": "Meter elektrik",
+"kapsyen": "Meter elektrik di rumah menyukat tenaga elektrik yang digunakan.",
+"pengarang": "GautamSudhanshu",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Electricity_meter_in_India.jpg"
+},
+{
+"file": "bab6-panel-suria.jpg",
+"bab": "6",
+"teka": "Apakah nama panel yang menyerap cahaya matahari ini?",
+"jawapan": "Panel suria",
+"kapsyen": "Panel suria menukar sinaran matahari kepada tenaga elektrik.",
+"pengarang": "Wikideas1",
+"lesen": "CC0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Solar_panels_on_the_edge_of_farm.jpg"
+},
+{
+"file": "bab6-pilon.jpg",
+"bab": "6",
+"teka": "Menara penghantaran elektrik ini dipanggil apa?",
+"jawapan": "Pilon",
+"kapsyen": "Menara tinggi membawa kabel elektrik voltan tinggi.",
+"pengarang": "Matthew T Rader",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Transmission_towers_at_sunset_in_East_Texas.jpg"
+},
+{
+"file": "bab6-transformer.jpg",
+"bab": "6",
+"teka": "Alat yang mengubah voltan ini dipanggil apa?",
+"jawapan": "Transformer",
+"kapsyen": "Transformer di pencawang mengubah voltan arus ulang-alik.",
+"pengarang": "Bob Harvey",
+"lesen": "CC BY-SA 2.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Substation_transformer_-_geograph.org.uk_-_5573682.jpg"
+},
+{
+"file": "bab6-turbin-angin.jpg",
+"bab": "6",
+"teka": "Struktur penjana elektrik ini dipanggil apa?",
+"jawapan": "Turbin angin",
+"kapsyen": "Ladang turbin angin menjana elektrik daripada tenaga angin.",
+"pengarang": "ENERGY.GOV",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Power_County_Wind_Farm_002.jpg"
+},
+{
+"file": "bab7-cerucuk.jpg",
+"bab": "7",
+"teka": "Apakah tenaga yang disimpan oleh tukul apabila diangkat tinggi?",
+"jawapan": "Tenaga keupayaan graviti",
+"kapsyen": "Mesin menanam cerucuk di tapak pembinaan.",
+"pengarang": "AlfvanBeem",
+"lesen": "CC0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Caterpillar_385C_L_with_Junttan_pile_driver_(owner_Cofra)_p3.JPG"
+},
+{
+"file": "bab7-durian.jpg",
+"bab": "7",
+"teka": "Durian di atas pokok mempunyai tenaga apa?",
+"jawapan": "Tenaga keupayaan graviti",
+"kapsyen": "Buah durian tergantung tinggi pada dahan pokok.",
+"pengarang": "DXLINH",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Tender_fruit%27s_Durian_tree.JPG"
+},
+{
+"file": "bab7-petronas.jpg",
+"bab": "7",
+"teka": "Apakah tenaga yang bertambah apabila lif bergerak ke tingkat yang lebih tinggi?",
+"jawapan": "Tenaga keupayaan graviti",
+"kapsyen": "Menara Berkembar Petronas di Kuala Lumpur.",
+"pengarang": "Dcubillas",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Petronas_Towers_at_Night_-_from_the_base_upwards.jpg"
+},
+{
+"file": "bab7-roller-coaster.jpg",
+"bab": "7",
+"teka": "Di puncak, kereta ini mempunyai tenaga apa yang maksimum?",
+"jawapan": "Tenaga keupayaan graviti",
+"kapsyen": "Kereta roller-coaster di puncak landasan sebelum menjunam.",
+"pengarang": "ThrillZing",
+"lesen": "CC BY 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Compact_steel_coaster_lift_hill_and_drop_with_red_train,_Whirlwind,_July_2003_-_ThrillZing.jpg"
+},
+{
+"file": "bab8-becquerel.jpg",
+"bab": "8",
+"teka": "Saintis ini terkenal kerana menemukan apa?",
+"jawapan": "Keradioaktifan",
+"kapsyen": "Henri Becquerel menemukan keradioaktifan semasa mengkaji uranium.",
+"pengarang": "Paul Nadar / Adam Cuerden",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Paul_Nadar_-_Henri_Becquerel.jpg"
+},
+{
+"file": "bab8-geiger.jpg",
+"bab": "8",
+"teka": "Alat pengesan sinaran ini dipanggil apa?",
+"jawapan": "Pembilang Geiger",
+"kapsyen": "Pembilang Geiger digunakan untuk mengesan sinaran radioaktif.",
+"pengarang": "TimVickers",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Geiger_counter_2.jpg"
+},
+{
+"file": "bab8-marie-curie.jpg",
+"bab": "8",
+"teka": "Saintis ini menemukan unsur radioaktif apa?",
+"jawapan": "Polonium dan radium",
+"kapsyen": "Marie Curie di makmalnya di Paris pada tahun 1912.",
+"pengarang": "unattributed",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Marie_Curie_in_her_Paris_Laboratory,_1912.jpg"
+},
+{
+"file": "bab8-rontgen.jpg",
+"bab": "8",
+"teka": "Saintis ini menemukan sinaran apa pada tahun 1895?",
+"jawapan": "Sinar-X",
+"kapsyen": "Wilhelm Roentgen, ahli fizik Jerman.",
+"pengarang": "Nobel foundation",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:WilhelmR%C3%B6ntgen.JPG"
+},
+{
+"file": "bab8-simbol-radiasi.jpg",
+"bab": "8",
+"teka": "Simbol tiga bilah ini memberi amaran tentang apa?",
+"jawapan": "Sinaran radioaktif",
+"kapsyen": "Papan amaran terawal dengan simbol sinaran radioaktif (1946).",
+"pengarang": "Atomic Future",
+"lesen": "CC0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Radiation_symbol_-_Lawrence_Berkeley_National_Laboratory_-_DSC08823.png"
+},
+{
+"file": "bab8-xray-tangan.jpg",
+"bab": "8",
+"teka": "Gambar tulang tangan ini diambil menggunakan apa?",
+"jawapan": "Sinar-X",
+"kapsyen": "Antara gambar foto sinar-X terawal: tangan isteri Roentgen yang memakai cincin.",
+"pengarang": "Wilhelm Röntgen",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:First_medical_X-ray_by_Wilhelm_R%C3%B6ntgen_of_his_wife_Anna_Bertha_Ludwig%27s_hand_-_18951222.jpg"
+},
+{
+"file": "bab9-aurora.jpg",
+"bab": "9",
+"teka": "Fenomena cahaya di langit kutub ini ialah apa?",
+"jawapan": "Aurora",
+"kapsyen": "Cahaya berwarna-warni di langit Alaska berhampiran kutub.",
+"pengarang": "United States Air Force photo by Senior Airman Joshua Strang",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Aurora_borealis_over_Eielson_Air_Force_Base,_Alaska.jpg"
+},
+{
+"file": "bab9-lentingan-jisim-korona.jpg",
+"bab": "9",
+"teka": "Fenomena apakah ini?",
+"jawapan": "Lentingan jisim korona",
+"kapsyen": "Awan plasma yang besar terpancut dari Matahari ke angkasa (bulatan putih menunjukkan saiz Matahari).",
+"pengarang": "NASA/SOHO",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:05_Coronal_Mass_Ejection_(2819895025).jpg"
+},
+{
+"file": "bab9-matahari.jpg",
+"bab": "9",
+"teka": "Bintang terdekat dengan Bumi ini ialah apa?",
+"jawapan": "Matahari",
+"kapsyen": "Matahari dirakam oleh kapal angkasa NASA (Solar Dynamics Observatory).",
+"pengarang": "NASA/GSFC/Solar Dynamics Observatory",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Image_of_Sun_From_NASA%E2%80%99s_Solar_Dynamics_Observatory_(PIA26681).jpg"
+},
+{
+"file": "bab9-nyalaan-suria.jpg",
+"bab": "9",
+"teka": "Letusan terang secara tiba-tiba ini dipanggil apa?",
+"jawapan": "Nyalaan suria",
+"kapsyen": "Kilatan terang di pinggir kanan Matahari ialah letusan tenaga yang kuat.",
+"pengarang": "NASA/SDO",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:NASA-SDO_-_solar_flare_October_29,_2013,_X2,3_class.jpg"
+},
+{
+"file": "bab9-prominen.jpg",
+"bab": "9",
+"teka": "Fenomena apakah ini?",
+"jawapan": "Semarak suria (prominen)",
+"kapsyen": "Gelung gas panas yang besar memancut keluar dari pinggir Matahari.",
+"pengarang": "NASA/SDO",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Solar_Eruption.jpg"
+},
+{
+"file": "bab9-tompok-matahari.jpg",
+"bab": "9",
+"teka": "Bintik gelap pada Matahari ini dipanggil apa?",
+"jawapan": "Tompok Matahari",
+"kapsyen": "Bintik gelap pada permukaan Matahari kerana kawasan itu lebih sejuk.",
+"pengarang": "john.purvis",
+"lesen": "CC BY 2.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:White_Light_Sun_25_11_2014_(15794098065).jpg"
+},
+{
+"file": "bab10-apollo11.jpg",
+"bab": "10",
+"teka": "Misi apakah yang membawa manusia pertama ke Bulan?",
+"jawapan": "Apollo 11",
+"kapsyen": "Angkasawan Buzz Aldrin di Bulan; gambar ini dirakam oleh Neil Armstrong.",
+"pengarang": "Neil A. Armstrong",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Aldrin_Apollo_11.jpg"
+},
+{
+"file": "bab10-gagarin.jpg",
+"bab": "10",
+"teka": "Apakah pencapaian terkenal tokoh ini?",
+"jawapan": "Manusia pertama di angkasa lepas",
+"kapsyen": "Yuri Gagarin, angkasawan Soviet.",
+"pengarang": "Arto Jousi / Suomen valokuvataiteen museo",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Yuri_Gagarin_(1961)_-_Restoration.jpg"
+},
+{
+"file": "bab10-galileo.jpg",
+"bab": "10",
+"teka": "Alat apakah yang digunakan Galileo untuk mengkaji langit?",
+"jawapan": "Teleskop",
+"kapsyen": "Galileo Galilei, ahli astronomi Itali.",
+"pengarang": "Justus Sustermans",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Justus_Sustermans_-_Portrait_of_Galileo_Galilei_(Uffizi).jpg"
+},
+{
+"file": "bab10-hubble.jpg",
+"bab": "10",
+"teka": "Teleskop angkasa lepas yang terkenal ini ialah apa?",
+"jawapan": "Teleskop Angkasa Hubble",
+"kapsyen": "Teleskop Angkasa Hubble mengorbit Bumi.",
+"pengarang": "Ruffnax (Crew of STS-125)",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:HST-SM4.jpeg"
+},
+{
+"file": "bab10-iss.jpg",
+"bab": "10",
+"teka": "Stesen di orbit Bumi ini dipanggil apa?",
+"jawapan": "Stesen Angkasa Antarabangsa (ISS)",
+"kapsyen": "Stesen Angkasa Antarabangsa (ISS) mengorbit di atas Bumi.",
+"pengarang": "NASA/Crew of STS-132",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:International_Space_Station_after_undocking_of_STS-132.jpg"
+},
+{
+"file": "bab10-saturn-v.jpg",
+"bab": "10",
+"teka": "Roket gergasi ini dipanggil apa?",
+"jawapan": "Saturn V",
+"kapsyen": "Roket Saturn V melancarkan misi Apollo 11 pada tahun 1969.",
+"pengarang": "NASA",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Apollo_11_Launch_-_GPN-2000-000630.jpg"
+}
+];
+
+/* ================= Keadaan & simpanan ================= */
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const IDX={};CARDS.forEach((c,i)=>IDX[c[3]]=i);
+let KNOWN=new Set();store.get('sci3known_id',[]).forEach(id=>{if(id in IDX)KNOWN.add(IDX[id])});
+const FRESH=()=>({xp:0,streak:0,last:'',right:{},badges:{},blitz:0,matchBest:0,quizPerfect:0,tfBest:0,sortBest:0,lab:0,games:0,mute:false});
+const G=Object.assign(FRESH(),store.get('sci3game',{}));
+const READ=()=>store.get('sci3read',{});   // ditulis oleh nota.html: {bab:1}
+const rk=i=>CARDS[i][3];
+// Jumlah XP = XP permainan + 30 XP bagi setiap bab yang notanya sudah dibaca (nota.html tulis sci3read)
+const TX=()=>G.xp+30*Object.keys(READ()).length;
+const save=()=>{
+  store.set('sci3known_id',[...KNOWN].map(rk)); store.set('sci3game',G);
+  const prog={}; CARDS.forEach((c,i)=>{if(c[0]==='x')return;const r=prog[c[0]]||(prog[c[0]]=[0,0]); r[1]++; if(KNOWN.has(i)) r[0]++;});
+  store.set('sci3progress',prog);
+};
+const strip=s=>String(s).replace(/<[^>]+>/g,'').replace(/&amp;/g,'&');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const BABS=Object.keys(T).filter(t=>t!=='x');
+const KIRA_G=10;  // m s⁻², ikut buku teks
+
+/* ================= Pangkat ================= */
+const RANKS=['Pelatih Makmal','Pembantu Makmal','Juruteknik','Penyelidik Muda','Saintis','Saintis Kanan','Profesor','Pemenang Nobel','Lagenda Sains'];
+const need=l=>50*l*(l-1);
+const levelOf=xp=>{let l=1;while(xp>=need(l+1))l++;return l};
+const rankOf=l=>l<=RANKS.length?RANKS[l-1]:RANKS[RANKS.length-1]+' '+'★'.repeat(Math.min(5,l-RANKS.length));
+
+/* ================= Bunyi ================= */
+let AC=null;
+function tone(seq){ if(G.mute) return; try{
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
+  let t=AC.currentTime;
+  seq.forEach(([f,d,type])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type||'triangle';o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d+.02);t+=d*.8;});
+}catch(e){} }
+const SFX={ok:(c=0)=>{const m=Math.pow(2,Math.min(c,8)/12);tone([[660*m,.09],[990*m,.14]])},no:()=>tone([[180,.22,'sawtooth']]),flip:()=>tone([[520,.05]]),
+  win:()=>tone([[523,.1],[659,.1],[784,.1],[1047,.25]]),lvl:()=>tone([[392,.12],[523,.12],[659,.12],[784,.12],[1047,.35]]),tick:()=>tone([[880,.03,'square']]),
+  plop:()=>tone([[300,.06],[600,.08]])};
+
+/* ================= Kesan visual ================= */
+const fx=$('#fx'),cx=fx.getContext('2d');let parts=[],raf=0;
+function sizeFx(){fx.width=innerWidth;fx.height=innerHeight}
+addEventListener('resize',sizeFx);sizeFx();
+function confetti(n=90,x=innerWidth/2,y=innerHeight/3){
+  if(RM) return;
+  const cols=['#2b8a3e','#e8590c','#1c7ed6','#f2c94c','#0ca678','#d6336c','#ffffff'];
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=4+Math.random()*7,leaf=i%3===0;
+    parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5,r:3+Math.random()*4,c:cols[i%cols.length],l:70+Math.random()*40,rot:Math.random()*6,leaf});}
+  if(!raf) raf=requestAnimationFrame(step);
+}
+function step(){cx.clearRect(0,0,fx.width,fx.height);
+  parts=parts.filter(p=>p.l-->0);
+  parts.forEach(p=>{p.vy+=.25;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.rot+=.2;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.c;cx.globalAlpha=Math.min(1,p.l/30);
+    if(p.leaf){cx.beginPath();cx.ellipse(0,0,p.r*1.6,p.r*.7,0,0,Math.PI*2);cx.fill();}else cx.fillRect(-p.r,-p.r/2,p.r*2,p.r);cx.restore();});
+  raf=parts.length?requestAnimationFrame(step):0;}
+function floatXP(txt,el){const r=el?el.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:0};
+  const f=document.createElement('div');f.className='float';f.textContent=txt;f.style.left=(r.left+r.width/2-20)+'px';f.style.top=(r.top-10)+'px';
+  document.body.appendChild(f);setTimeout(()=>f.remove(),1000);}
+function toast(e,h,d){const t=document.createElement('div');t.className='tst';t.innerHTML=`<span class="e">${e}</span><div><b>${h}</b><small>${d}</small></div>`;
+  $('#toast').appendChild(t);setTimeout(()=>t.remove(),3200);}
+
+/* ================= XP, streak, lencana ================= */
+let pendingLvl=0;
+function addXP(n,el){
+  if(n<=0) return;
+  const before=levelOf(TX()); G.xp+=n;
+  const d=today();
+  if(G.last!==d){const y=new Date();y.setDate(y.getDate()-1);const yd=y.getFullYear()+'-'+(y.getMonth()+1)+'-'+y.getDate();
+    G.streak=(G.last===yd)?G.streak+1:1;G.last=d;}
+  if(el) floatXP('+'+n,el);
+  const after=levelOf(TX()); if(after>before) pendingLvl=after;
+  save(); hud(); checkBadges();
+}
+function showLevelUp(){ if(!pendingLvl) return; const l=pendingLvl; pendingLvl=0;
+  $('#lvlN').textContent=l; $('#lvlD').innerHTML=`Kini anda <b>${rankOf(l)}</b>. Teruskan eksperimen!`;
+  $('#lvlup').classList.add('on'); SFX.lvl(); confetti(140); $('#lvlOk').focus(); }
+$('#lvlOk').onclick=()=>$('#lvlup').classList.remove('on');
+
+function chapStats(t){let k=0,n=0;CARDS.forEach((c,i)=>{if(c[0]===t){n++;if(KNOWN.has(i))k++;}});return[k,n]}
+function starsOf(t){const[k,n]=chapStats(t);const p=n?k/n:0;return p>=1?3:p>=.67?2:p>=.34?1:0}
+const BADGES=[
+  ['first','🧪','Eksperimen Pertama','Habiskan permainan pertama',()=>G.games>0],
+  ['read1','📖','Ulat Buku','Baca nota satu bab',()=>Object.keys(READ()).length>=1],
+  ['readall','📚','Pembaca Tegar','Baca nota semua 10 bab',()=>BABS.every(b=>READ()[b])],
+  ['k50','🧠','Neuron Aktif','50 kad dihafal',()=>KNOWN.size>=50],
+  ['k150','🔬','Ensiklopedia Hidup','150 kad dihafal',()=>KNOWN.size>=150],
+  ['combo5','🔥','Tindak Balas Berantai','Combo ×5 dalam kuiz',()=>G.badges.combo5],
+  ['perfect','💯','Sempurna','Kuiz Kilat 10/10',()=>G.quizPerfect>0],
+  ['blitz20','⚡','Voltan Tinggi','20+ dalam Lawan Masa',()=>G.blitz>=20],
+  ['tf20','👍','Pengesan Fakta','20+ dalam Benar atau Salah',()=>G.tfBest>=20],
+  ['sort','🧫','Pengelas Pakar','Susun Kumpulan tanpa silap',()=>G.badges.sort],
+  ['kira','⚗️','Ahli Fizik','Makmal Kira 8/10 atau lebih',()=>G.lab>=8],
+  ['eye','🔭','Mata Teleskop','Teka Gambar 8/10 atau lebih',()=>G.badges.eye],
+  ['match','🧩','Pemadan Pantas','Padan Pasangan tanpa silap',()=>G.badges.match],
+  ['s3','🔥','3 Hari Berturut','Belajar 3 hari berturut-turut',()=>G.streak>=3],
+  ['s7','🏆','Seminggu Gigih','Belajar 7 hari berturut-turut',()=>G.streak>=7],
+  ['star1','⭐','Unsur Stabil','3 bintang di satu bab',()=>BABS.some(t=>starsOf(t)===3)],
+  ['starall','🚀','Lagenda Sains','3 bintang di semua bab',()=>BABS.every(t=>starsOf(t)===3)],
+];
+function checkBadges(){BADGES.forEach(([id,e,h,d,f])=>{if(!G.badges['got_'+id]&&f()){G.badges['got_'+id]=1;toast(e,'Lencana baharu: '+h,d);SFX.win();confetti(60);}});store.set('sci3game',G);}
+
+function answer(i,ok){
+  const k=rk(i);G.right[k]=ok?(G.right[k]||0)+1:0;
+  if(ok&&G.right[k]>=2) KNOWN.add(i);
+  if(!ok) KNOWN.delete(i);
+  save();
+}
+
+/* ================= HUD ================= */
+function hud(){
+  const x=TX(),l=levelOf(x),a=need(l),b=need(l+1);
+  $('#lvl').textContent=l; $('#rankName').textContent=rankOf(l);
+  $('#xpBar').style.width=Math.min(100,100*(x-a)/(b-a))+'%';
+  $('#xpTxt').textContent=x+' XP · '+(b-x)+' lagi ke '+rankOf(l+1);
+  $('#streak').textContent=G.streak; $('#knownN').textContent=KNOWN.size+'/'+CARDS.length;
+  $('#mute').textContent=G.mute?'🔇':'🔊';
+}
+$('#mute').onclick=()=>{G.mute=!G.mute;save();hud();};
+
+/* ================= Peta: jadual berkala ================= */
+let SEL=null;
+try{const b=new URLSearchParams(location.search).get('bab');if(b&&T[b])SEL=b;}catch(e){}
+const shortName=t=>T[t][0].replace(/^Bab \d+ · /,'');
+function nextBab(){return BABS.find(t=>starsOf(t)<3)||null}
+function tile(t){const[k,n]=chapStats(t),s=starsOf(t),rd=READ()[t];
+  return `<button class="el${SEL===t?' sel':''}${t===nextBab()?' nextup':''}" data-t="${t}" style="--c:var(${T[t][1]})" aria-pressed="${SEL===t}" aria-label="${esc(T[t][0])}: ${s} daripada 3 bintang, ${k} daripada ${n} kad dihafal">
+    <span class="z">${t==='x'?'∞':t}</span><span class="ms">${k}/${n}</span><span class="sym">${esc(T[t][3])}</span><span class="nm">${esc(t==='x'?'Rentas Bab':shortName(t))}</span>
+    <span class="st">${'★'.repeat(s)}${'☆'.repeat(3-s)}</span>${rd?'<span class="rd" title="Nota sudah dibaca">📖</span>':''}</button>`}
+function renderMap(){
+  const rows=TEMAS.map(([kod,nama,babs])=>`<div class="trow"><div class="tema"><b>${esc(kod)}</b>${esc(nama)}</div>${babs.map(tile).join('')}${'<span class="el empty"></span>'.repeat(3-babs.length)}</div>`);
+  if(CARDS.some(c=>c[0]==='x'))rows.push(`<div class="trow"><div class="tema"><b>∞</b>Gabung semua tema</div>${tile('x')}</div>`);
+  $('#nodes').innerHTML=rows.join('');
+  document.querySelectorAll('.el[data-t]').forEach(b=>b.onclick=()=>{SEL=b.dataset.t;SFX.flip();renderMap();renderLevel();
+    if(innerWidth<=820)$('#levelcard').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});});
+  requestAnimationFrame(drawOrbit);
+}
+// elektron mengorbit unsur terpilih (atau unsur yang disyorkan)
+function drawOrbit(){
+  const t=SEL||nextBab()||BABS[0],el=document.querySelector(`.el[data-t="${t}"]`),o=$('#orbit');if(!el){o.style.display='none';return}
+  const box=$('#ptable').getBoundingClientRect(),r=el.getBoundingClientRect(),d=Math.hypot(r.width,r.height)*1.02;
+  o.style.display='';o.style.width=o.style.height=d+'px';o.style.left=(r.left-box.left+r.width/2-d/2)+'px';o.style.top=(r.top-box.top+r.height/2-d/2)+'px';
+}
+addEventListener('resize',()=>{if(!document.body.classList.contains('playing'))drawOrbit()});
+
+/* Kad level (panel sisi) */
+const MODES=[
+  ['kad','🃏','Kad Imbas','terbalik & hafal'],
+  ['kuiz','⚡','Kuiz Kilat','10 soalan, 3 nyawa'],
+  ['masa','⏱️','Lawan Masa','60 saat'],
+  ['padan','🧩','Padan Pasangan','istilah ↔ maksud'],
+  ['susun','🗑️','Susun Kumpulan','masuk tong betul'],
+  ['tf','👍','Benar / Salah','leret pantas'],
+  ['kira','⚗️','Makmal Kira','rumus & pengiraan'],
+  ['gambar','🖼️','Teka Gambar','foto sains sebenar'],
+];
+function avail(m,t){
+  const inB=a=>a.some(x=>!t||x[0]===t);
+  if(m==='susun') return inB(CATS);
+  if(m==='tf') return TF.filter(x=>!t||x[0]===t).length+PAIRS.filter(x=>!t||x[0]===t).length>=6;
+  if(m==='padan') return PAIRS.filter(x=>!t||x[0]===t).length>=4||pool(i=>txtLen(i)<=70).length>=4;
+  if(m==='kira') return !t||KIRA_BAB.includes(t);
+  if(m==='gambar') return IMGS.filter(g=>!t||g.bab===t).length>=4;
+  return true;
+}
+function renderLevel(){
+  const t=SEL,lc=$('#levelcard');
+  if(!t){lc.style.setProperty('--c','var(--forest)');
+    lc.innerHTML=`<div class="top"><small>Belum pilih</small><h3>Ketik satu unsur (bab) dalam jadual</h3></div>
+      <div class="meta"><span class="pill">🧠 ${KNOWN.size}/${CARDS.length} kad</span><span class="pill">📖 ${Object.keys(READ()).length}/10 nota</span></div>
+      <div class="modes">${MODES.map(([id,e,h,d])=>`<button class="mode" data-m="${id}"${avail(id,null)?'':' disabled'}><span class="e">${e}</span><span>${h}<small>${d}</small></span></button>`).join('')}</div>`;
+  }else{
+    const[k,n]=chapStats(t),s=starsOf(t),rd=READ()[t];
+    lc.style.setProperty('--c',`var(${T[t][1]})`);
+    lc.innerHTML=`<div class="top"><small>${t==='x'?'∞ Gabung semua tema':esc(T[t][2])+' · Bab '+t+' · unsur '+esc(T[t][3])}</small><h3>${t==='x'?'Rentas Bab: kaitkan semua bab':esc(shortName(t))}</h3></div>
+      <div class="meta"><span class="pill">${'★'.repeat(s)}${'☆'.repeat(3-s)}</span><span class="pill">🧠 ${k}/${n}</span>${t==='x'?'':`<span class="pill">${rd?'📖 Sudah baca':'📖 Belum baca'}</span>`}</div>
+      <div class="modes">${MODES.map(([id,e,h,d])=>`<button class="mode" data-m="${id}"${avail(id,t)?'':' disabled'}><span class="e">${e}</span><span>${h}<small>${d}</small></span></button>`).join('')}</div>
+      ${t==='x'?'':`<a class="readlink" href="nota.html#bab${t}">📖 Baca nota Bab ${t}${rd?'':' (+30 XP)'}</a>`}`;
+  }
+  lc.querySelectorAll('.mode:not([disabled])').forEach(b=>b.onclick=()=>start(b.dataset.m));
+}
+function renderBadges(){$('#badges').innerHTML=BADGES.map(([id,e,h,d])=>`<div class="bdg${G.badges['got_'+id]?' got':''}"><div class="e">${e}</div><div class="h">${h}</div><div class="d">${d}</div></div>`).join('')}
+
+/* ================= Kolam kad ================= */
+const txtLen=i=>strip(CARDS[i][2]).length;
+function pool(filter){const ids=CARDS.map((_,i)=>i).filter(i=>!SEL||CARDS[i][0]===SEL);return filter?ids.filter(filter):ids}
+function pickCards(ids,n){const un=shuffle(ids.filter(i=>!KNOWN.has(i))),kn=shuffle(ids.filter(i=>KNOWN.has(i)));
+  const out=[];while(out.length<n&&(un.length||kn.length)){out.push((Math.random()<.75&&un.length)||!kn.length?un.pop():kn.pop())}return out}
+function options(i){
+  const ans=strip(CARDS[i][2]),len=ans.length;
+  let cand=CARDS.map((_,j)=>j).filter(j=>j!==i&&CARDS[j][0]===CARDS[i][0]&&strip(CARDS[j][2])!==ans&&txtLen(j)<=180);
+  if(cand.length<3) cand=CARDS.map((_,j)=>j).filter(j=>j!==i&&strip(CARDS[j][2])!==ans&&txtLen(j)<=180);
+  cand.sort((a,b)=>Math.abs(txtLen(a)-len)-Math.abs(txtLen(b)-len));
+  const seen=new Set([ans]);cand=cand.filter(j=>{const t=strip(CARDS[j][2]);if(seen.has(t))return false;seen.add(t);return true});
+  return shuffle([i,...shuffle(cand.slice(0,9)).slice(0,3)]);
+}
+
+/* ================= Rangka permainan ================= */
+let timerId=0,SID=0;
+function later(fn,ms){const s=SID;return setTimeout(()=>{if(s===SID)fn()},ms)}
+function stage(title){
+  clearInterval(timerId);SID++;
+  document.body.classList.add('playing');scrollTo(0,0);
+  $('#stage').innerHTML=`<div class="stagebar"><span class="ttl">${title}</span><button class="quit" id="quit">✕ Keluar</button></div><div id="sv"></div>`;
+  $('#quit').onclick=home;
+}
+function home(){clearInterval(timerId);SID++;document.body.classList.remove('playing','listing');$('#stage').innerHTML='';renderMap();renderLevel();renderBadges();hud();showLevelUp();}
+function scope(){return SEL?(SEL==='x'?'Rentas Bab':'Bab '+SEL):'Semua bab'}
+function start(m){({kad:playKad,kuiz:playQuiz,masa:playBlitz,padan:playMatch,susun:playSort,tf:playTF,kira:playKira,gambar:playPic})[m]();}
+$('#mixQuiz').onclick=()=>{SEL=null;playQuiz()};
+$('#mixTf').onclick=()=>{SEL=null;playTF()};
+$('#mixKira').onclick=()=>{SEL=null;playKira()};
+
+function result(e,h,sc,gain,again,missedHtml){
+  $('#sv').innerHTML=`<div class="result"><div class="big-e">${e}</div><h3>${h}</h3><div class="sc">${sc}</div><div class="gain">+${gain} XP</div>
+    <div class="row"><button class="next" id="again">Main lagi</button><button class="next alt" id="toHub">Ke peta</button></div>${missedHtml||''}</div>`;
+  $('#again').onclick=again;$('#toHub').onclick=home;$('#again').focus();
+  G.games++;save();checkBadges();later(showLevelUp,700);
+}
+const reviewCards=m=>m.length?`<div class="review"><h4>Ulang kaji soalan yang tersilap</h4>${m.map(i=>`<div><b>${CARDS[i][1]}</b><br>${CARDS[i][2]}</div>`).join('')}</div>`:'';
+const reviewTxt=m=>m.length?`<div class="review"><h4>Ulang kaji yang tersilap</h4>${m.map(x=>`<div>${x}</div>`).join('')}</div>`:'';
+
+/* ---- Kad Imbas ---- */
+function playKad(){
+  const ids=pickCards(pool(),20),requeued=new Set(); let k=0,got=0,xp=0;
+  stage('🃏 Kad Imbas · '+scope());
+  const show=()=>{
+    if(k>=ids.length){addXP(xp);SFX.win();confetti();return result('🃏','Sesi tamat!',`${got}/${ids.length} kad anda sudah ingat`,xp,playKad);}
+    const i=ids[k],[t,q,a]=CARDS[i];
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">Kad ${k+1}/${ids.length}</span><span class="pill">✅ ${got}</span></div>
+      <div class="big" id="bc" style="--c:var(${T[t][1]})" tabindex="0" role="button" aria-label="Terbalikkan kad"><div class="inner">
+      <div class="face"><span class="lbl">${T[t][0]}</span><div class="q">${q}</div><span class="tap">Ketik untuk lihat jawapan</span></div>
+      <div class="face back"><span class="lbl">Jawapan</span><div class="a">${a}</div></div></div></div>
+      <div class="row" id="rate" style="visibility:hidden"><button class="next alt" id="again1">🔁 Belum ingat</button><button class="next" id="gotit">✅ Dah ingat</button></div>`;
+    const bc=$('#bc'),flip=()=>{bc.classList.toggle('on');SFX.flip();$('#rate').style.visibility='visible';};
+    bc.onclick=flip;bc.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}};
+    $('#gotit').onclick=e=>{answer(i,true);got++;xp+=3;floatXP('+3',e.target);SFX.ok();k++;later(show,250);};
+    $('#again1').onclick=()=>{answer(i,false);if(!requeued.has(i)){requeued.add(i);ids.push(i);}k++;show();};
+  };
+  show();
+}
+
+/* ---- Aneka pilihan ---- */
+function mcq(i,onDone){
+  const[t,q]=CARDS[i],opts=options(i);
+  return{html:`<div class="qcard" style="--c:var(${T[t][1]})"><div class="lbl">${T[t][0]}</div><div class="q">${q}</div></div>
+    <div class="opts">${opts.map((j,n)=>`<button class="opt" data-j="${j}" data-k="${'ABCD'[n]}">${CARDS[j][2]}</button>`).join('')}</div>`,
+   bind(){document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=+b.dataset.j===i;
+      document.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(+o.dataset.j===i)o.classList.add('ok');else if(o!==b)o.classList.add('dim')});
+      if(!ok)b.classList.add('no');
+      answer(i,ok);onDone(ok,b);
+   })}};
+}
+let KEYS=null;  // pengendali kekunci khas permainan semasa
+addEventListener('keydown',e=>{
+  if(!document.body.classList.contains('playing')||$('#lvlup').classList.contains('on'))return;
+  if(KEYS&&KEYS(e))return;
+  const m={a:0,b:1,c:2,d:3,'1':0,'2':1,'3':2,'4':3}[e.key.toLowerCase()];
+  if(m!==undefined){const o=document.querySelectorAll('.opt')[m];if(o&&!o.disabled)o.click();}
+  else if(e.key==='Enter'){const n=$('#nx');if(n)n.click();}
+});
+
+/* ---- Kuiz Kilat ---- */
+function playQuiz(){
+  KEYS=null;
+  const ids=pickCards(pool(i=>txtLen(i)<=180),10);let k=0,lives=3,combo=0,best=0,score=0,xp=0;const missed=[];
+  stage('⚡ Kuiz Kilat · '+scope());
+  const show=()=>{
+    if(k>=ids.length||lives<=0){
+      if(score===ids.length&&ids.length>=10){G.quizPerfect++;xp+=50;}
+      addXP(xp);const win=lives>0;(win?SFX.win:SFX.no)();if(win)confetti(score===ids.length?160:80);
+      return result(score===ids.length?'💯':win?'🏆':'💔',score===ids.length?'Sempurna!':win?'Tahniah!':'Nyawa habis!',`${score}/${ids.length} betul · combo terbaik ×${best}`,xp,playQuiz,reviewCards(missed));
+    }
+    const i=ids[k],Q=mcq(i,(ok,b)=>{
+      if(ok){combo++;SFX.ok(combo);best=Math.max(best,combo);score++;const g=10*Math.min(combo,5);xp+=g;floatXP('+'+g,b);if(combo>=3)confetti(25,b.getBoundingClientRect().left+b.offsetWidth/2,b.getBoundingClientRect().top);
+        if(combo>=5)G.badges.combo5=1;}
+      else{SFX.no();combo=0;lives--;missed.push(i);}
+      meters();$('#sv').insertAdjacentHTML('beforeend','<button class="next" id="nx">Seterusnya ⏎</button>');$('#nx').onclick=()=>{k++;show()};$('#nx').focus();
+    });
+    $('#sv').innerHTML=`<div class="meters" id="mt"></div>`+Q.html;Q.bind();meters();
+  };
+  const meters=()=>{$('#mt').innerHTML=`<span class="pill">Soalan ${Math.min(k+1,ids.length)}/${ids.length}</span><span class="pill">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</span><span class="pill combo${combo>=2?' hot':''}">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span>`;};
+  show();
+}
+
+/* ---- Lawan Masa ---- */
+function playBlitz(){
+  KEYS=null;
+  const all=pool(i=>txtLen(i)<=140);let left=60,score=0,combo=0,xp=0,over=false,bag=[];const missed=[];
+  stage('⏱️ Lawan Masa · '+scope());
+  const next=()=>{if(!bag.length)bag=pickCards(all,all.length);return bag.pop()};
+  const end=()=>{if(over)return;over=true;clearInterval(timerId);const rec=score>G.blitz;if(rec)G.blitz=score;xp=score*6+(rec?30:0);addXP(xp);SFX.win();confetti(rec?150:70);
+    result(rec?'🏅':'⏱️',rec?'Rekod baharu!':'Masa tamat!',`${score} betul dalam 60 saat`,xp,playBlitz,reviewCards(missed.slice(0,8)));};
+  const show=()=>{
+    const i=next(),Q=mcq(i,(ok,b)=>{
+      if(over)return;
+      if(ok){score++;combo++;SFX.ok(combo);if(combo%3===0){left=Math.min(60,left+3);floatXP('+3s',b);}}
+      else{SFX.no();combo=0;left=Math.max(0,left-3);missed.push(i);}
+      bar();if(left<=0)return end();
+      later(()=>{if(!over)show()},ok?350:900);
+    });
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">✅ ${score}</span><span class="pill combo">🔥 ×${combo}</span><span class="pill" id="sec">${left}s</span></div><div class="timer" id="tm"><i></i></div>`+Q.html;Q.bind();bar();
+  };
+  const bar=()=>{const t=$('#tm');if(!t)return;t.firstChild.style.width=(left/60*100)+'%';t.classList.toggle('low',left<=10);$('#sec').textContent=left+'s';};
+  timerId=setInterval(()=>{if(over)return;left--;if(left<=5&&left>0)SFX.tick();bar();if(left<=0)end();},1000);
+  show();
+}
+
+/* ---- Padan Pasangan (PAIRS dahulu, kemudian kad pendek) ---- */
+function playMatch(){
+  KEYS=null;
+  // elak dua jubin yang kelihatan sama (cth. "Biomas" dalam Bab 6 dan Bab 9)
+  const seenL=new Set(),seenR=new Set();
+  let items=shuffle(PAIRS.filter(p=>!SEL||p[0]===SEL)).filter(p=>{const l=p[1].toLowerCase(),r=p[2].toLowerCase();if(seenL.has(l)||seenR.has(r))return false;seenL.add(l);seenR.add(r);return true})
+    .slice(0,5).map((p,n)=>({k:'p'+n,l:esc(p[1]),r:esc(p[2]),card:null}));
+  if(items.length<4) items=pickCards(pool(i=>txtLen(i)<=70&&strip(CARDS[i][1]).length<=110),5).map(i=>({k:'c'+i,l:CARDS[i][1],r:CARDS[i][2],card:i}));
+  let pick=null,done=0,miss=0,t0=Date.now();
+  stage('🧩 Padan Pasangan · '+scope());
+  $('#sv').innerHTML=`<p class="hint">Ketik satu di kiri, kemudian pasangannya di kanan.</p><div class="meters"><span class="pill" id="mm">✅ 0/${items.length}</span><span class="pill" id="ms">❌ 0</span></div>
+    <div class="match"><div class="col">${shuffle(items).map(x=>`<button class="tile q" data-k="${x.k}" data-s="q">${x.l}</button>`).join('')}</div>
+    <div class="col">${shuffle(items).map(x=>`<button class="tile" data-k="${x.k}" data-s="a">${x.r}</button>`).join('')}</div></div>`;
+  document.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{
+    if(!pick||pick.dataset.s===b.dataset.s){if(pick)pick.classList.remove('pick');pick=b;b.classList.add('pick');SFX.flip();return;}
+    const a=pick,ok=a.dataset.k===b.dataset.k;pick=null;a.classList.remove('pick');
+    if(ok){[a,b].forEach(x=>x.classList.add('done'));done++;const it=items.find(x=>x.k===b.dataset.k);if(it.card!==null)answer(it.card,true);SFX.ok(done);floatXP('+8',b);$('#mm').textContent=`✅ ${done}/${items.length}`;
+      if(done===items.length){const s=Math.round((Date.now()-t0)/1000);if(!G.matchBest||s<G.matchBest)G.matchBest=s;if(!miss)G.badges.match=1;
+        const xp=done*8+Math.max(0,40-s)+(miss?0:20);addXP(xp);confetti(120);SFX.win();
+        later(()=>result('🧩','Semua sepadan!',`${s} saat · ${miss} silap`,xp,playMatch),600);}}
+    else{miss++;[a,b].forEach(x=>{x.classList.remove('no');void x.offsetWidth;x.classList.add('no')});SFX.no();$('#ms').textContent='❌ '+miss;}
+  });
+}
+
+/* ---- Susun Kumpulan: item jatuh, ketik tong yang betul ---- */
+function playSort(){
+  const sets=shuffle(CATS.filter(c=>!SEL||c[0]===SEL));
+  if(!sets.length){stage('🗑️ Susun Kumpulan');$('#sv').innerHTML='<p class="hint">Tiada data kumpulan untuk bab ini.</p>';return;}
+  const set=sets[0],groups=set[2];
+  const items=shuffle(groups.flatMap((g,gi)=>g[1].map(it=>[it,gi]))).slice(0,12);
+  let k=0,lives=3,score=0,combo=0,xp=0,speed=6000,cur=null;const missed=[];
+  stage(`🗑️ Susun Kumpulan · Bab ${set[0]}`);
+  const cols=['var(--c1)','var(--c5)','var(--c4)','var(--c8)'];
+  $('#sv').innerHTML=`<div class="meters" id="mt"></div><p class="hint"><b>${esc(set[1])}</b> · ketik tong yang betul sebelum ia jatuh!</p>
+    <div class="sky" id="sky"><div class="danger"></div></div>
+    <div class="bins" style="grid-template-columns:repeat(${groups.length},1fr)">${groups.map((g,gi)=>`<button class="bin" data-g="${gi}" style="--c:${cols[gi]}"><small>${gi+1}</small>${esc(g[0])}</button>`).join('')}</div>`;
+  const meters=()=>{$('#mt').innerHTML=`<span class="pill">Item ${Math.min(k+1,items.length)}/${items.length}</span><span class="pill">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</span><span class="pill combo">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span>`};
+  const finish=()=>{cur=null;const perfect=!missed.length&&k>=items.length;if(perfect){G.badges.sort=1;xp+=40;}
+    G.sortBest=Math.max(G.sortBest,score);addXP(xp);(lives>0?SFX.win:SFX.no)();if(lives>0)confetti(perfect?150:70);
+    result(perfect?'🏆':lives>0?'🗑️':'💔',perfect?'Sempurna!':lives>0?'Bagus!':'Nyawa habis!',`${score}/${items.length} betul`,xp,playSort,reviewTxt(missed));};
+  const drop=()=>{
+    if(k>=items.length||lives<=0)return finish();
+    meters();const[txt,gi]=items[k],el=document.createElement('div');el.className='drop';el.textContent=txt;$('#sky').appendChild(el);
+    const tok={el,gi,done:false};cur=tok;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.transitionDuration=speed+'ms';el.classList.add('fall')}));
+    later(()=>{if(!tok.done)judge(-1)},speed+50);
+  };
+  const judge=g=>{
+    const tok=cur;if(!tok||tok.done)return;tok.done=true;
+    const ok=g===tok.gi,bin=document.querySelector(`.bin[data-g="${tok.gi}"]`);
+    if(ok){score++;combo++;const gain=8+Math.min(combo,5)*2;xp+=gain;SFX.ok(combo);floatXP('+'+gain,bin);bin.classList.remove('flash');void bin.offsetWidth;bin.classList.add('flash');
+      const st=getComputedStyle(tok.el).top;tok.el.style.top=st;tok.el.classList.remove('fall');tok.el.classList.add('in');}
+    else{lives--;combo=0;SFX.no();tok.el.classList.add('bad');bin.classList.remove('hint');void bin.offsetWidth;bin.classList.add('hint');
+      missed.push(`<b>${esc(items[k][0])}</b> → ${esc(groups[tok.gi][0])}`);const st=getComputedStyle(tok.el).top;tok.el.style.top=st;tok.el.classList.remove('fall');}
+    k++;speed=Math.max(2800,speed-300);meters();
+    later(()=>{tok.el.remove();drop()},ok?380:1100);
+  };
+  document.querySelectorAll('.bin').forEach(b=>b.onclick=()=>judge(+b.dataset.g));
+  KEYS=e=>{const n=+e.key;if(n>=1&&n<=groups.length){judge(n-1);return true}return false};
+  drop();
+}
+
+/* ---- Benar atau Salah (45 saat) ---- */
+function tfDeck(){
+  const st=TF.filter(x=>!SEL||x[0]===SEL).map(x=>({b:x[0],s:esc(x[1]),v:x[2],why:''}));
+  const pr=PAIRS.filter(x=>!SEL||x[0]===SEL);
+  // pasangan → kenyataan "kiri = kanan" benar, atau ditukar dengan kanan lain (salah)
+  pr.forEach((p,n)=>{const same=pr.filter(q=>q[0]===p[0]&&q[2]!==p[2]);
+    const card=r=>`<small style="color:var(--muted)">Pasangan ini betul?</small><br><b>${esc(p[1])}</b><br><span style="color:var(--trail)">➜</span> ${esc(r)}`;
+    if(Math.random()<.5||!same.length)st.push({b:p[0],s:card(p[2]),v:true,why:''});
+    else{const o=same[rnd(0,same.length-1)];st.push({b:p[0],s:card(o[2]),v:false,why:`<b>${esc(p[1])}</b> ➜ ${esc(p[2])}`});}});
+  return shuffle(st);
+}
+function playTF(){
+  let deck=tfDeck();
+  if(deck.length<6){stage('👍 Benar / Salah');$('#sv').innerHTML='<p class="hint">Tiada cukup kenyataan untuk bab ini.</p>';return;}
+  let left=45,score=0,combo=0,xp=0,over=false,k=0,busy=false;const missed=[];
+  stage('👍 Benar atau Salah · '+scope());
+  $('#sv').innerHTML=`<div class="meters"><span class="pill" id="sc">✅ 0</span><span class="pill combo" id="cb">🔥 ×0</span><span class="pill" id="sec">45s</span></div><div class="timer" id="tm"><i></i></div>
+    <div class="tfwrap" id="tfw"></div><div class="tfbtns"><button class="f" id="bf">← Salah</button><button class="t" id="bt">Benar →</button></div>
+    <p class="hint" style="margin-top:12px">Leret kad ke kanan = Benar, ke kiri = Salah. Papan kekunci: ← →</p>`;
+  const bar=()=>{$('#tm').firstChild.style.width=(left/45*100)+'%';$('#tm').classList.toggle('low',left<=10);$('#sec').textContent=left+'s';};
+  const end=()=>{if(over)return;over=true;clearInterval(timerId);const rec=score>G.tfBest;if(rec)G.tfBest=score;xp=score*5+(rec?30:0);addXP(xp);SFX.win();confetti(rec?150:70);
+    result(rec?'🏅':'👍',rec?'Rekod baharu!':'Masa tamat!',`${score} betul dalam 45 saat`,xp,playTF,reviewTxt(missed.slice(0,8)));};
+  const card=()=>{
+    if(k>=deck.length){deck=deck.concat(tfDeck());}
+    const d=deck[k];
+    $('#tfw').innerHTML=`<div class="tfc" id="tfc" style="--c:var(${T[d.b][1]})"><span class="lbl">Bab ${d.b}</span><span class="stamp t">BENAR</span><span class="stamp f">SALAH</span><div>${d.s}</div></div>`;
+    const c=$('#tfc');let x0=null,dx=0;
+    c.onpointerdown=e=>{x0=e.clientX;c.classList.add('drag');c.setPointerCapture(e.pointerId)};
+    c.onpointermove=e=>{if(x0===null)return;dx=e.clientX-x0;c.style.transform=`translateX(${dx}px) rotate(${dx/18}deg)`;
+      c.querySelector('.stamp.t').style.opacity=Math.max(0,dx/90);c.querySelector('.stamp.f').style.opacity=Math.max(0,-dx/90)};
+    c.onpointerup=()=>{c.classList.remove('drag');if(Math.abs(dx)>80)pick(dx>0);else{c.style.transform='';c.querySelectorAll('.stamp').forEach(s=>s.style.opacity=0)}x0=null;dx=0};
+  };
+  const pick=v=>{
+    if(over||busy)return;busy=true;const d=deck[k],ok=v===d.v,c=$('#tfc');
+    c.querySelector(v?'.stamp.t':'.stamp.f').style.opacity=1;
+    c.style.transform=`translateX(${v?420:-420}px) rotate(${v?25:-25}deg)`;c.style.opacity=0;
+    if(ok){score++;combo++;SFX.ok(combo);if(combo%4===0){left=Math.min(45,left+3);floatXP('+3s',$('#sec'));}}
+    else{combo=0;SFX.no();left=Math.max(0,left-3);missed.push(`${d.s.replace(/<small[^>]*>.*?<\/small><br>/,'').replace(/<br>/g,' ')} → <b>${d.v?'BENAR':'SALAH'}</b>${d.why?' (betul: '+d.why+')':''}`);}
+    $('#sc').textContent='✅ '+score;$('#cb').textContent='🔥 ×'+combo;bar();
+    if(left<=0)return end();
+    k++;later(()=>{busy=false;card()},260);
+  };
+  $('#bf').onclick=()=>pick(false);$('#bt').onclick=()=>pick(true);
+  KEYS=e=>{if(e.key==='ArrowLeft'){pick(false);return true}if(e.key==='ArrowRight'){pick(true);return true}return false};
+  timerId=setInterval(()=>{if(over)return;left--;if(left<=5&&left>0)SFX.tick();bar();if(left<=0)end();},1000);
+  card();bar();
+}
+
+/* ---- Makmal Graf: soalan kemahiran dijana (Bab 1 & 2) ---- */
+/* ---- Makmal Kira: soalan pengiraan dijana (Bab 6, 7, 8) ---- */
+// KIRA_G dan unit diselaraskan dengan buku teks (lihat briefs: "Rumus dan pengiraan")
+const fmtN=v=>(Math.round(v*100)/100).toString().replace('.',',');
+function numOpts(ans,unit,spread){ans=Math.round(ans*100)/100;const s=new Set([ans]);let g=0;while(s.size<4&&g++<60){const d=rnd(1,4)*spread*(Math.random()<.5?-1:1);const v=Math.round((ans+d)*100)/100;if(v>0)s.add(v)}return shuffle([...s]).map(v=>[fmtN(v)+unit,v===ans])}
+const pick=a=>a[rnd(0,a.length-1)];
+const KIRA=[
+  // [bab, penjana]
+  ['6',()=>{const P=pick([100,200,500,1000,1500,2000,2500]),h=pick([2,3,4,5,6,8,10]),r=pick([20,25,30,40,50]);const kwh=P/1000*h,kos=kwh*r;
+    return{q:`Seterika <b>${P} W</b> digunakan selama <b>${h} jam</b>. Kadar elektrik ialah <b>${r} sen</b> per kWj. Berapakah kos penggunaannya?`,o:numOpts(Math.round(kos*100)/100,' sen',Math.max(5,Math.round(kos/4))),
+      why:`Tenaga = kuasa (kW) × masa (j) = ${fmtN(P/1000)} kW × ${h} j = <b>${fmtN(kwh)} kWj</b><br>Kos = ${fmtN(kwh)} kWj × ${r} sen = <b>${fmtN(kos)} sen</b>`}}],
+  ['6',()=>{const P=pick([60,100,250,500,1000,1200,2000]),h=pick([1,2,3,4,5,10]);const kwh=P/1000*h;
+    return{q:`Peralatan <b>${P} W</b> dihidupkan selama <b>${h} jam</b>. Berapakah tenaga elektrik yang digunakan dalam kWj?`,o:numOpts(kwh,' kWj',Math.max(.1,Math.round(kwh/3*10)/10)),
+      why:`Tenaga (kWj) = kuasa (kW) × masa (j) = ${fmtN(P/1000)} × ${h} = <b>${fmtN(kwh)} kWj</b>`}}],
+  ['6',()=>{const Vp=pick([240,120,480]),Np=pick([100,200,400,500,1000,1200]),k=pick([2,4,5,10,20]);const up=Math.random()<.5,Ns=up?Np*k:Np/k;const Vs=Vp*Ns/Np;
+    return{q:`Transformer: voltan primer <b>${Vp} V</b>, gegelung primer <b>${Np} lilitan</b>, gegelung sekunder <b>${Ns} lilitan</b>. Berapakah voltan sekunder?`,o:numOpts(Vs,' V',Math.max(1,Math.round(Vs/4))),
+      why:`V<sub>p</sub>/V<sub>s</sub> = N<sub>p</sub>/N<sub>s</sub> → V<sub>s</sub> = ${Vp} × ${Ns}/${Np} = <b>${fmtN(Vs)} V</b> (transformer ${up?'injak naik':'injak turun'})`}}],
+  ['6',()=>{const V=pick([12,24,120,240]),I=pick([0.5,1,2,3,4,5,10]);const P=V*I;
+    return{q:`Peralatan disambung kepada bekalan <b>${V} V</b> dan arus <b>${fmtN(I)} A</b> mengalir. Berapakah kuasanya?`,o:numOpts(P,' W',Math.max(1,Math.round(P/4))),why:`Kuasa = voltan × arus = ${V} × ${fmtN(I)} = <b>${fmtN(P)} W</b>`}}],
+  ['6',()=>{const ein=pick([100,200,400,500,1000]),pct=pick([5,8,10,20,25,40,50,60,75,80]);const eout=ein*pct/100;
+    return{q:`Sebuah mentol menerima <b>${ein} J</b> tenaga elektrik dan menghasilkan <b>${fmtN(eout)} J</b> tenaga cahaya. Berapakah kecekapan tenaganya?`,o:numOpts(pct,'%',5),
+      why:`Kecekapan = (tenaga output berfaedah ÷ tenaga input) × 100% = ${fmtN(eout)} ÷ ${ein} × 100% = <b>${pct}%</b>`}}],
+  ['6',()=>{const P=pick([500,750,1000,1200,1500,2000]),min=pick([1,2,4,5,10]);const kj=P*min*60/1000;  // sentiasa nombor bulat
+    return{q:`Sebuah peralatan menggunakan <b>${kj} kJ</b> tenaga dalam <b>${min} minit</b>. Berapakah kuasanya?`,o:numOpts(P,' W',Math.max(10,Math.round(P/4))),
+      why:`P = E ÷ t = ${kj*1000} J ÷ ${min*60} s = <b>${fmtN(P)} W</b>`}}],
+  ['7',()=>{const F=pick([10,20,40,50,100]),cm=pick([10,20,40,50]);const x=cm/100,E=0.5*F*x;
+    return{q:`Sebuah spring dimampatkan sejauh <b>${cm} cm</b> oleh daya <b>${F} N</b>. Berapakah tenaga keupayaan kenyal yang tersimpan?`,o:numOpts(E,' J',Math.max(.5,Math.round(E/3*2)/2)),
+      why:`E<sub>p</sub> = ½Fx = ½ × ${F} N × ${fmtN(x)} m = <b>${fmtN(E)} J</b> (tukar ${cm} cm → ${fmtN(x)} m)`}}],
+  ['7',()=>{const F=pick([10,20,25,40,50,100,200]),d=pick([2,3,4,5,10,20]);const W=F*d;
+    return{q:`Seorang murid menolak troli dengan daya <b>${F} N</b> sejauh <b>${d} m</b>. Berapakah kerja yang dilakukan?`,o:numOpts(W,' J',Math.max(5,Math.round(W/4))),why:`Kerja = daya × sesaran = ${F} N × ${d} m = <b>${W} J</b>`}}],
+  ['7',()=>{const W=pick([100,200,300,600,1000,1200,1500,3000]),t=pick([2,4,5,10,20,30]);const P=W/t;
+    return{q:`Kerja sebanyak <b>${W} J</b> dilakukan dalam masa <b>${t} s</b>. Berapakah kuasanya?`,o:numOpts(P,' W',Math.max(1,Math.round(P/4))),why:`Kuasa = kerja ÷ masa = ${W} J ÷ ${t} s = <b>${fmtN(P)} W</b>`}}],
+  ['7',()=>{const m=pick([1,2,4,5,10,20,50]),h=pick([1,2,3,5,10,15]);const E=m*KIRA_G*h;
+    return{q:`Sebuah objek berjisim <b>${m} kg</b> diletakkan pada ketinggian <b>${h} m</b>. Berapakah tenaga keupayaan graviti? (g = ${KIRA_G} m s⁻²)`,o:numOpts(E,' J',Math.max(5,Math.round(E/4))),why:`E<sub>p</sub> = mgh = ${m} × ${KIRA_G} × ${h} = <b>${E} J</b>`}}],
+  ['7',()=>{const m=pick([2,4,10,20,50,60]),v=pick([2,3,4,5,6,10]);const E=0.5*m*v*v;
+    return{q:`Seorang pelari berjisim <b>${m} kg</b> bergerak dengan halaju <b>${v} m/s</b>. Berapakah tenaga kinetiknya?`,o:numOpts(E,' J',Math.max(5,Math.round(E/4))),why:`E<sub>k</sub> = ½mv² = ½ × ${m} × ${v}² = <b>${fmtN(E)} J</b>`}}],
+  ['8',()=>{const T=pick([2,5,8,10,15,30]),n=pick([1,2,3,4]),m0=pick([16,32,64,80,96,128,160]);const m=m0/Math.pow(2,n);
+    return{q:`Separuh hayat suatu bahan radioaktif ialah <b>${T} jam</b>. Jisim asal <b>${m0} g</b>. Berapakah jisim yang tinggal selepas <b>${T*n} jam</b>?`,o:numOpts(m,' g',Math.max(1,m/2)),
+      why:`${T*n} jam ÷ ${T} jam = ${n} kali separuh hayat → ${m0} g${Array.from({length:n},(_,i)=>' → '+fmtN(m0/Math.pow(2,i+1))+' g').join('')}. Tinggal <b>${fmtN(m)} g</b>`}}],
+];
+const KIRA_BAB=[...new Set(KIRA.map(k=>k[0]))];
+function playKira(){
+  KEYS=null;const gens=KIRA.filter(k=>!SEL||k[0]===SEL||!KIRA_BAB.includes(SEL));let k=0,score=0,xp=0;
+  stage('⚗️ Makmal Kira · '+(SEL&&KIRA_BAB.includes(SEL)?'Bab '+SEL:'Bab 6–8'));
+  const show=()=>{
+    if(k>=10){G.lab=Math.max(G.lab,score);addXP(xp);SFX.win();confetti(score*15);return result(score>=8?'⚗️':'🧪',score>=8?'Ahli Fizik!':'Makmal tamat',`${score}/10 betul`,xp,playKira);}
+    const[b,gen]=pick(gens),P=gen();
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">Soalan ${k+1}/10</span><span class="pill">✅ ${score}</span><span class="pill">✨ ${xp} XP</span></div>
+      <div class="qcard" style="--c:var(${T[b][1]})"><div class="lbl">${esc(T[b][0])}</div><div class="q">${P.q}</div></div>
+      <div class="opts">${P.o.map(([v,ok],n)=>`<button class="opt" data-ok="${ok?1:0}" data-k="${'ABCD'[n]}">${v}</button>`).join('')}</div>`;
+    document.querySelectorAll('.opt').forEach(btn=>btn.onclick=()=>{
+      const ok=btn.dataset.ok==='1';document.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.dataset.ok==='1')o.classList.add('ok');else if(o!==btn)o.classList.add('dim')});
+      if(ok){score++;xp+=12;SFX.ok(score);floatXP('+12',btn);}else{btn.classList.add('no');SFX.no();}
+      $('#sv').insertAdjacentHTML('beforeend',`<div class="explain">🧮 ${P.why}</div><button class="next" id="nx">Seterusnya ⏎</button>`);$('#nx').onclick=()=>{k++;show()};$('#nx').focus();
+    });
+  };
+  show();
+}
+
+/* ---- Teka Gambar (foto Wikimedia Commons / NASA) ---- */
+function playPic(){
+  KEYS=null;
+  if(IMGS.length<4){stage('🖼️ Teka Gambar');$('#sv').innerHTML='<p class="hint">Tiada cukup foto lagi.</p>';return;}
+  let pics=IMGS.filter(g=>!SEL||g.bab===SEL);if(pics.length<6)pics=IMGS;
+  const qs=shuffle(pics).slice(0,10);let k=0,score=0,combo=0,xp=0;const missed=[];
+  stage('🖼️ Teka Gambar · '+(pics===IMGS&&SEL?'Semua bab':scope()));
+  const show=()=>{
+    if(k>=qs.length){if(score>=8)G.badges.eye=1;G.picBest=Math.max(G.picBest||0,score);addXP(xp);SFX.win();confetti(score*15);
+      result(score>=8?'🔭':'🖼️',score>=8?'Mata Teleskop!':'Pusingan tamat',`${score}/${qs.length} betul`,xp,playPic,reviewTxt(missed));return;}
+    const g=qs[k];
+    // pilihan salah daripada soalan sejenis dahulu, kemudian bab yang sama
+    const simi=x=>(x.teka===g.teka?2:0)+(x.bab===g.bab?1:0);
+    const others=shuffle(IMGS.filter(x=>x.jawapan!==g.jawapan)).sort((a,b)=>simi(b)-simi(a));
+    const opts=[g.jawapan];for(const o of others){if(!opts.includes(o.jawapan))opts.push(o.jawapan);if(opts.length===4)break;}
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">Gambar ${k+1}/${qs.length}</span><span class="pill">✅ ${score}</span><span class="pill combo">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span></div>
+      <figure class="picq" style="--c:var(${T[g.bab][1]})"><img src="gambar/${g.file}" alt="Gambar teka-teki"><figcaption class="pk">📷 ${esc(g.pengarang)} · ${esc(g.lesen)} · <a href="${esc(g.sumber)}" target="_blank" rel="noopener">sumber</a></figcaption></figure>
+      <div class="qcard" style="--c:var(${T[g.bab][1]})"><div class="lbl">${esc(T[g.bab][0])}</div><div class="q">${esc(g.teka)}</div></div>
+      <div class="opts">${shuffle(opts).map((v,n)=>`<button class="opt" data-ok="${v===g.jawapan?1:0}" data-k="${'ABCD'[n]}">${esc(v)}</button>`).join('')}</div>`;
+    document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.ok==='1';document.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.dataset.ok==='1')o.classList.add('ok');else if(o!==b)o.classList.add('dim')});
+      if(ok){score++;combo++;const gn=10+Math.min(combo,5)*2;xp+=gn;SFX.ok(combo);floatXP('+'+gn,b);}else{b.classList.add('no');combo=0;SFX.no();missed.push(`<b>${esc(g.teka)}</b> ${esc(g.jawapan)}<br><small>${esc(g.kapsyen)}</small>`);}
+      $('#sv').insertAdjacentHTML('beforeend',`<div class="explain">💡 ${esc(g.kapsyen)}</div><button class="next" id="nx">Seterusnya ⏎</button>`);$('#nx').onclick=()=>{k++;show()};$('#nx').focus();
+    });
+  };
+  show();
+}
+
+/* ================= Senarai & cetak ================= */
+const sel=$('#filter');
+sel.innerHTML='<option value="">Semua bab ('+CARDS.length+')</option>'+Object.entries(T).map(([k,v])=>`<option value="${k}">${esc(v[0])}</option>`).join('');
+const babNum=t=>t==='x'?99:+t;
+let order=CARDS.map((_,i)=>i).sort((a,b)=>babNum(CARDS[a][0])-babNum(CARDS[b][0])||a-b);
+function renderList(){
+  const f=sel.value,deck=$('#deck');deck.innerHTML='';
+  order.filter(i=>!f||CARDS[i][0]===f).forEach(i=>{
+    const[t,q,a]=CARDS[i];const el=document.createElement('div');
+    el.className='flip'+(KNOWN.has(i)?' known':'');el.style.setProperty('--c',`var(${T[t][1]})`);
+    el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Terbalikkan kad #'+(i+1));
+    el.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target===el){e.preventDefault();el.classList.toggle('on')}};
+    el.innerHTML=`<div class="inner"><div class="face"><span class="lbl">${T[t][0]}</span><span class="no">#${i+1}</span><div class="q">${q}</div></div>
+      <div class="face back"><span class="lbl">Jawapan</span><span class="no">#${i+1}</span><div class="a">${a}</div><button class="mark">${KNOWN.has(i)?'✗ Tanda belum hafal':'✓ Tanda sudah hafal'}</button></div></div>`;
+    el.onclick=e=>{if(e.target.classList.contains('mark')){KNOWN.has(i)?KNOWN.delete(i):KNOWN.add(i);save();hud();renderList();return;}el.classList.toggle('on');};
+    deck.appendChild(el);
+  });
+}
+sel.onchange=renderList;
+$('#shuffle').onclick=()=>{order=shuffle(order);renderList()};
+$('#toList').onclick=()=>{document.body.classList.add('listing');if(SEL)sel.value=SEL;renderList();scrollTo(0,0)};
+$('#backHub').onclick=home;
+$('#resetAll').onclick=()=>{if(confirm('Padam semua XP, lencana dan kad dihafal?')){KNOWN.clear();Object.keys(G).forEach(k=>delete G[k]);Object.assign(G,FRESH());store.set('sci3game',G);store.set('sci3read',{});save();home();}};
+
+(function(){
+  const out=$('#print'),PER=10;let h='';
+  for(let s=0;s<order.length;s+=PER){
+    const grp=order.slice(s,s+PER).map(i=>[CARDS[i],i]);
+    while(grp.length<PER)grp.push(null);
+    let front='<div class="sheet">',back='<div class="sheet">';
+    grp.forEach(x=>{front+=x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">${T[x[0][0]][0]}</span><span class="no">#${x[1]+1}</span><div class="q">${x[0][1]}</div></div>`:'<div class="pc blank"></div>';});
+    for(let r=0;r<PER/2;r++){[grp[r*2+1],grp[r*2]].forEach(x=>{back+=x?`<div class="pc" style="--c:var(${T[x[0][0]][1]})"><span class="lbl">Jawapan</span><span class="no">#${x[1]+1}</span><div class="a">${x[0][2]}</div></div>`:'<div class="pc blank"></div>';});}
+    h+=front+'</div>'+back+'</div>';
+  }
+  out.innerHTML=h;
+})();
+
+save();hud();checkBadges();renderMap();renderLevel();renderBadges();
+document.fonts&&document.fonts.ready.then(drawOrbit);
+// XP dari nota (tab lain) dikemas kini bila kembali
+addEventListener('focus',()=>{hud();checkBadges();if(!document.body.classList.contains('playing')){renderMap();renderLevel();renderBadges();}});
+</script>
+</body>
+</html>

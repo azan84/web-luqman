@@ -88,7 +88,7 @@ b{font-weight:800}
 .node.r .lb{left:96px}
 .node.l .lb{right:96px;text-align:right}
 .node.sel{box-shadow:0 7px 0 color-mix(in srgb,var(--c) 55%,#000),0 0 0 5px var(--panel),0 0 0 10px var(--sand)}
-.node.next::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:3px solid var(--sand);animation:ring 1.6s ease-out infinite}
+.node.nextup::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:3px solid var(--sand);animation:ring 1.6s ease-out infinite}
 @keyframes ring{from{transform:scale(.8);opacity:1}to{transform:scale(1.25);opacity:0}}
 .me{position:absolute;z-index:4;font-size:2.1rem;pointer-events:none;transition:left .8s cubic-bezier(.45,0,.2,1),top .8s cubic-bezier(.45,0,.2,1);translate:-50% -100%;filter:drop-shadow(0 3px 0 rgba(0,0,0,.2));animation:hop 1.8s ease-in-out infinite}
 @keyframes hop{50%{margin-top:-6px}}
@@ -4306,7 +4306,7 @@ const rankOf=l=>l<=RANKS.length?RANKS[l-1]:RANKS[RANKS.length-1]+' '+'★'.repea
 /* ================= Bunyi ================= */
 let AC=null;
 function tone(seq){ if(G.mute) return; try{
-  AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+  AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
   let t=AC.currentTime;
   seq.forEach(([f,d,type])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type||'triangle';o.frequency.value=f;
     g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
@@ -4408,7 +4408,7 @@ function renderMap(){
     const z=t==='x'?'puncak':T[t][2];
     if(z!==lastZone){h+=t==='x'?`<div class="zone" style="top:${y-14}px">🏔️ Puncak: Rentas Bab</div>`:`<div class="zone" style="top:${y-14}px">${ZONES[z][0]} ${ZONES[z][1]}</div>`;y+=58;lastZone=z;}
     const x=XS[k%4],s=starsOf(t),side=x>50?'l':'r';
-    h+=`<button class="node ${side}${SEL===t?' sel':''}${t===nb?' next':''}" data-t="${t}" style="left:${x}%;top:${y}px;--c:var(${T[t][1]})" aria-label="${esc(T[t][0])}, ${s} bintang">
+    h+=`<button class="node ${side}${SEL===t?' sel':''}${t===nb?' nextup':''}" data-t="${t}" style="left:${x}%;top:${y}px;--c:var(${T[t][1]})" aria-label="${esc(T[t][0])}, ${s} bintang">
       <span class="n">${t==='x'?'🏔️':t}</span>${read[t]?'<span class="rd" title="Nota sudah dibaca">📖</span>':''}
       <span class="st">${'★'.repeat(s)}${'☆'.repeat(3-s)}</span><span class="lb">${esc(shortName(t))}</span></button>`;
     pts.push([x,y,t]);y+=118;
@@ -4706,7 +4706,7 @@ function playTF(){
 const PAL=['var(--c1)','var(--c5)','var(--c4)','var(--c8)','var(--c7)'];
 const LAB_ITEMS=[['Getah','Kelapa sawit','Koko','Padi','Lada'],['Kereta','Bas','Motosikal','Basikal','Lori'],['Plastik','Kertas','Kaca','Logam','Sisa makanan']];
 const MONTHS=['Jan','Feb','Mac','Apr','Mei','Jun','Jul','Ogo','Sep','Okt','Nov','Dis'];
-function numOpts(ans,unit,spread){const s=new Set([ans]);let g=0;while(s.size<4&&g++<50){const d=rnd(1,4)*spread*(Math.random()<.5?-1:1);if(ans+d>0)s.add(ans+d)}return shuffle([...s]).map(v=>[v+unit,v===ans])}
+function numOpts(ans,unit,spread){ans=Math.round(ans*100)/100;const s=new Set([ans]);let g=0;while(s.size<4&&g++<50){const d=rnd(1,4)*spread*(Math.random()<.5?-1:1);if(ans+d>0)s.add(ans+d)}return shuffle([...s]).map(v=>[v+unit,v===ans])}
 function genLab(){
   const kind=rnd(0,4);
   if(kind<=1){ // sudut carta pai
