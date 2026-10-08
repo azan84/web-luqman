@@ -4802,7 +4802,8 @@ var LV=[[1, "Jadual & Graf", "kemahiran"], [2, "Carta Pai", "kemahiran"], [3, "P
 
   // Bar kemajuan bacaan
   var pg=document.getElementById('prog');
-  addEventListener('scroll',function(){var h=document.documentElement;pg.style.width=(100*h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight))+'%'},{passive:true});
+  function prog(){var h=document.documentElement;pg.style.width=(100*h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight))+'%'}
+  addEventListener('scroll',prog,{passive:true});addEventListener('load',prog);requestAnimationFrame(prog);
 
   // Mod fokus
   var levels=[].slice.call(document.querySelectorAll('.lv'));

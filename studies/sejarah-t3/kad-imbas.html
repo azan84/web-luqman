@@ -49,7 +49,7 @@ b{font-weight:800}
 .xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold2),var(--red));border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
 .xptxt{font-size:.75rem;color:var(--muted)}
 .pill{display:flex;align-items:center;gap:4px;font-weight:900;padding:6px 10px;border-radius:99px;background:var(--panel2);white-space:nowrap}
-.iconbtn{border:0;background:var(--panel2);border-radius:99px;width:38px;height:38px;cursor:pointer;font-size:1.05rem;flex:none}
+.iconbtn{border:0;background:var(--panel2);border-radius:99px;width:44px;height:44px;cursor:pointer;font-size:1.05rem;flex:none}
 
 /* ---------- Hub ---------- */
 .hero{padding:22px 0 6px}
@@ -111,6 +111,7 @@ body.playing #stage{display:block}
 .hearts{letter-spacing:2px}
 .combo{color:var(--red)}
 .combo.hot{animation:pulse .5s}
+.lifeline{border:2px dashed var(--gold2);cursor:pointer;font:inherit;font-weight:900;color:var(--ink)}
 @keyframes pulse{40%{transform:scale(1.25)}}
 .timer{height:12px;border-radius:99px;background:var(--panel2);overflow:hidden;margin-bottom:14px}
 .timer i{display:block;height:100%;background:var(--jade);transition:width .25s linear}
@@ -194,6 +195,12 @@ body.playing #stage{display:block}
 #lvlup h3{font-family:var(--disp);font-weight:400;margin:.2em 0}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:75}
 
+.picq{margin:0 0 12px;border-radius:20px;overflow:hidden;border:4px solid var(--c);background:#111;box-shadow:0 8px 0 var(--line)}
+.picq img{display:block;width:100%;max-height:min(46vh,380px);object-fit:contain;background:#111;animation:picin .6s ease-out}
+@keyframes picin{from{filter:sepia(1) blur(6px);opacity:.3}}
+.picq .pk{font-size:.68rem;color:#ccc;padding:4px 10px;background:#111}
+.picq .pk a{color:inherit}
+.picinfo{margin-top:12px;padding:10px 14px;border-radius:14px;background:var(--panel);border-left:5px solid var(--gold2);font-size:.92rem}
 /* senarai & cetak */
 #list{display:none}
 body.listing #hub{display:none}
@@ -309,13 +316,13 @@ body.listing #list{display:block}
 <canvas id="fx"></canvas>
 
 <script>
-const T = {"1": ["Bab 1 · Kedatangan Barat", "--c1"], "2": ["Bab 2 · NNS", "--c2"], "3": ["Bab 3 · NNMB", "--c3"], "4": ["Bab 4 · NNMTB", "--c4"], "5": ["Bab 5 · Sarawak & Sabah", "--c5"], "6": ["Bab 6 · Kesan Ekonomi & Sosial", "--c6"], "7": ["Bab 7 · Penentangan", "--c7"], "8": ["Bab 8 · Kebijaksanaan Raja", "--c8"], "x": ["Rentas Bab", "--x"]};
+const T = {"1": ["Bab 1 · Kedatangan Barat", "--c1"], "2": ["Bab 2 · NNS", "--c2"], "3": ["Bab 3 · NNMB", "--c3"], "4": ["Bab 4 · NNMTB", "--c4"], "5": ["Bab 5 · Sarawak \u0026 Sabah", "--c5"], "6": ["Bab 6 · Kesan Ekonomi \u0026 Sosial", "--c6"], "7": ["Bab 7 · Penentangan", "--c7"], "8": ["Bab 8 · Kebijaksanaan Raja", "--c8"], "x": ["Rentas Bab", "--x"]};
 // [topik, soalan, jawapan]
 const CARDS = [
 [
 "1",
 "Apakah tiga aras sistem pemerintahan Melayu?",
-"<b>Sultan/raja → pembesar → penghulu/penggawa</b>.",
+"\u003cb\u003eSultan/raja → pembesar → penghulu/penggawa\u003c/b\u003e.",
 "0e411718e3"
 ],
 [
@@ -333,7 +340,7 @@ const CARDS = [
 [
 "1",
 "Siapakah mengurus pelabuhan?",
-"<b>Syahbandar</b>.",
+"\u003cb\u003eSyahbandar\u003c/b\u003e.",
 "88b4ee5799"
 ],
 [
@@ -345,13 +352,13 @@ const CARDS = [
 [
 "1",
 "Apakah tiga matlamat penjajahan Portugis dan Sepanyol?",
-"<b>Kekayaan, keagamaan, kemasyhuran</b>.",
+"\u003cb\u003eKekayaan, keagamaan, kemasyhuran\u003c/b\u003e.",
 "05e975e723"
 ],
 [
 "1",
 "Bilakah SHTI ditubuhkan?",
-"<b>1600</b>, di England.",
+"\u003cb\u003e1600\u003c/b\u003e, di England.",
 "cfc2037fce"
 ],
 [
@@ -369,7 +376,7 @@ const CARDS = [
 [
 "1",
 "Apakah kesan industri mengetin terhadap negeri Melayu?",
-"Harga dan permintaan bijih timah meningkat, khususnya selepas <b>1840</b>.",
+"Harga dan permintaan bijih timah meningkat, khususnya selepas \u003cb\u003e1840\u003c/b\u003e.",
 "5ce1150283"
 ],
 [
@@ -393,7 +400,7 @@ const CARDS = [
 [
 "1",
 "Apakah perubahan dasar British pada 1873?",
-"Dasar tidak campur tangan ditukar kepada <b>dasar campur tangan</b>.",
+"Dasar tidak campur tangan ditukar kepada \u003cb\u003edasar campur tangan\u003c/b\u003e.",
 "5bfbdd5a9d"
 ],
 [
@@ -411,7 +418,7 @@ const CARDS = [
 [
 "1",
 "Siapakah menggunakan tipu helah untuk mendapatkan Pulau Pinang?",
-"<b>Francis Light</b>.",
+"\u003cb\u003eFrancis Light\u003c/b\u003e.",
 "0233adc867"
 ],
 [
@@ -435,19 +442,19 @@ const CARDS = [
 [
 "2",
 "Apakah tiga strategi British menguasai tiga petempatan Selat?",
-"<b>Tipu helah di Pulau Pinang, manipulasi politik di Singapura, pakatan dengan Belanda di Melaka.</b>",
+"\u003cb\u003eTipu helah di Pulau Pinang, manipulasi politik di Singapura, pakatan dengan Belanda di Melaka.\u003c/b\u003e",
 "879dfa5658"
 ],
 [
 "2",
 "Siapakah yang menggunakan tipu helah untuk menduduki Pulau Pinang?",
-"<b>Francis Light.</b>",
+"\u003cb\u003eFrancis Light.\u003c/b\u003e",
 "aad0c1a117"
 ],
 [
 "2",
 "Tahun bilakah British menduduki Pulau Pinang?",
-"<b>1786.</b>",
+"\u003cb\u003e1786.\u003c/b\u003e",
 "27dda11c46"
 ],
 [
@@ -465,7 +472,7 @@ const CARDS = [
 [
 "2",
 "Apakah nama British bagi Pulau Pinang dan petempatannya?",
-"<b>Prince of Wales Island</b> dan <b>Georgetown</b>.",
+"\u003cb\u003ePrince of Wales Island\u003c/b\u003e dan \u003cb\u003eGeorgetown\u003c/b\u003e.",
 "e5f8d82e93"
 ],
 [
@@ -477,7 +484,7 @@ const CARDS = [
 [
 "2",
 "Bilakah British menduduki Seberang Perai dan apakah nama kemudiannya?",
-"<b>1800</b>; <b>Province of Wellesley</b>.",
+"\u003cb\u003e1800\u003c/b\u003e; \u003cb\u003eProvince of Wellesley\u003c/b\u003e.",
 "c7dfb08520"
 ],
 [
@@ -489,13 +496,13 @@ const CARDS = [
 [
 "2",
 "Siapakah Sultan yang diangkat Raffles di Singapura?",
-"<b>Tengku Hussein</b>, bergelar <b>Sultan Hussein Muhammad Shah</b>.",
+"\u003cb\u003eTengku Hussein\u003c/b\u003e, bergelar \u003cb\u003eSultan Hussein Muhammad Shah\u003c/b\u003e.",
 "f9e55a1395"
 ],
 [
 "2",
 "Apakah tarikh Perjanjian British dengan Sultan Hussein dan Temenggung Abdul Rahman?",
-"<b>6 Februari 1819.</b>",
+"\u003cb\u003e6 Februari 1819.\u003c/b\u003e",
 "a53adbf405"
 ],
 [
@@ -507,7 +514,7 @@ const CARDS = [
 [
 "2",
 "Bilakah dan di manakah Perjanjian London ditandatangani?",
-"<b>17 Mac 1824 di London, England.</b>",
+"\u003cb\u003e17 Mac 1824 di London, England.\u003c/b\u003e",
 "48ff11e81a"
 ],
 [
@@ -531,7 +538,7 @@ const CARDS = [
 [
 "2",
 "Bilakah NNS dibentuk dan negeri apakah yang digabungkan?",
-"<b>1826</b>; Pulau Pinang, Singapura dan Melaka.",
+"\u003cb\u003e1826\u003c/b\u003e; Pulau Pinang, Singapura dan Melaka.",
 "ecd3cf79a0"
 ],
 [
@@ -543,7 +550,7 @@ const CARDS = [
 [
 "2",
 "Bilakah pentadbiran NNS dipindahkan ke Pejabat Tanah Jajahan London?",
-"<b>1 April 1867.</b>",
+"\u003cb\u003e1 April 1867.\u003c/b\u003e",
 "4831e622de"
 ],
 [
@@ -861,7 +868,7 @@ const CARDS = [
 [
 "5",
 "Kapal apakah menyokong tindakan ketenteraan James Brooke?",
-"HMS <i>Dido</i>.",
+"HMS \u003ci\u003eDido\u003c/i\u003e.",
 "f3dcb4379d"
 ],
 [
@@ -1053,7 +1060,7 @@ const CARDS = [
 [
 "7",
 "Mengapakah Dol Said menentang British?",
-"Menolak cukai hasil tahunan <b>1/10</b> dan menegaskan Naning negeri merdeka.",
+"Menolak cukai hasil tahunan \u003cb\u003e1/10\u003c/b\u003e dan menegaskan Naning negeri merdeka.",
 "e25e89b700"
 ],
 [
@@ -1065,7 +1072,7 @@ const CARDS = [
 [
 "7",
 "Berapakah angkatan Yamtuan Antah?",
-"<b>4,000 pengikut</b>.",
+"\u003cb\u003e4,000 pengikut\u003c/b\u003e.",
 "746bb166b5"
 ],
 [
@@ -1101,7 +1108,7 @@ const CARDS = [
 [
 "7",
 "Apakah senjata utama Rentap di Bukit Sadok?",
-"Meriam besi <b>Bujang Timpang Berang</b>.",
+"Meriam besi \u003cb\u003eBujang Timpang Berang\u003c/b\u003e.",
 "c2cc800133"
 ],
 [
@@ -1161,43 +1168,43 @@ const CARDS = [
 [
 "8",
 "Bilakah Perjanjian Bangkok dimeterai?",
-"<b>10 Mac 1909</b>.",
+"\u003cb\u003e10 Mac 1909\u003c/b\u003e.",
 "2c1cf61bae"
 ],
 [
 "8",
 "Apakah asas garisan sempadan Protokol Bangkok 1909?",
-"<b>Legeh dan lembah sungai</b>.",
+"\u003cb\u003eLegeh dan lembah sungai\u003c/b\u003e.",
 "266b3324e5"
 ],
 [
 "8",
 "Wilayah Perlis yang diserahkan kepada Siam?",
-"<b>Pujoh</b>.",
+"\u003cb\u003ePujoh\u003c/b\u003e.",
 "cc896de394"
 ],
 [
 "8",
 "Nyatakan wilayah Kedah yang terjejas akibat Perjanjian Bangkok.",
-"<b>Sadao, Setul, Pulau Terutau, Butang dan pulau sekitarnya</b>.",
+"\u003cb\u003eSadao, Setul, Pulau Terutau, Butang dan pulau sekitarnya\u003c/b\u003e.",
 "0c6958071b"
 ],
 [
 "8",
 "Mengapakah Sultan Zainal Abidin III menolak dakwaan Siam ke atas Terengganu?",
-"Bunga emas ialah <b>tanda persahabatan</b>, bukan pengakuan Terengganu jajahan Siam.",
+"Bunga emas ialah \u003cb\u003etanda persahabatan\u003c/b\u003e, bukan pengakuan Terengganu jajahan Siam.",
 "64ef601647"
 ],
 [
 "8",
 "Siapakah pemerintah Johor yang memperkenalkan Sistem Kangcu?",
-"<b>Temenggung Daeng Ibrahim</b>.",
+"\u003cb\u003eTemenggung Daeng Ibrahim\u003c/b\u003e.",
 "3ca5be363c"
 ],
 [
 "8",
 "Apakah dua tanaman utama Sistem Kangcu?",
-"<b>Gambir dan lada hitam</b>.",
+"\u003cb\u003eGambir dan lada hitam\u003c/b\u003e.",
 "84ab6a8027"
 ],
 [
@@ -1209,43 +1216,43 @@ const CARDS = [
 [
 "8",
 "Apakah tuntutan Tuanku Muhammad dalam Durbar Kuala Lumpur 1903?",
-"Bahasa Melayu dijadikan <b>bahasa rasmi Persekutuan</b>.",
+"Bahasa Melayu dijadikan \u003cb\u003ebahasa rasmi Persekutuan\u003c/b\u003e.",
 "bd379b7b53"
 ],
 [
 "8",
 "Bilakah Undang-Undang Tubuh Kerajaan Johor dimasyhurkan?",
-"<b>14 April 1895</b>.",
+"\u003cb\u003e14 April 1895\u003c/b\u003e.",
 "0c404603ff"
 ],
 [
 "8",
 "Berapakah fasal Undang-Undang Tubuh Johor dan Terengganu?",
-"Johor <b>64 fasal</b>; Terengganu <b>53 fasal</b>.",
+"Johor \u003cb\u003e64 fasal\u003c/b\u003e; Terengganu \u003cb\u003e53 fasal\u003c/b\u003e.",
 "8429e20491"
 ],
 [
 "8",
 "Apakah prinsip utama kedua-dua undang-undang tubuh terhadap kuasa asing?",
-"Pemerintah tidak boleh <b>menyerahkan negeri kepada kuasa asing</b>.",
+"Pemerintah tidak boleh \u003cb\u003emenyerahkan negeri kepada kuasa asing\u003c/b\u003e.",
 "148e812547"
 ],
 [
 "8",
 "Siapakah Penasihat British pertama di Terengganu?",
-"<b>J.L. Humphreys</b>.",
+"\u003cb\u003eJ.L. Humphreys\u003c/b\u003e.",
 "6af1b0731f"
 ],
 [
 "8",
 "Bilakah Terengganu menerima Penasihat British?",
-"<b>1919</b>.",
+"\u003cb\u003e1919\u003c/b\u003e.",
 "c780c836bb"
 ],
 [
 "8",
 "Apakah ukuran Terusan Wan Muhammad Saman?",
-"<b>36 km × 7.5 m × 1.5 m</b>.",
+"\u003cb\u003e36 km × 7.5 m × 1.5 m\u003c/b\u003e.",
 "4a6bad9741"
 ],
 [
@@ -1257,13 +1264,13 @@ const CARDS = [
 [
 "8",
 "Bilakah PTM ditubuhkan dan apa tujuannya?",
-"<b>1910</b>; melatih orang Melayu menyertai pentadbiran negeri.",
+"\u003cb\u003e1910\u003c/b\u003e; melatih orang Melayu menyertai pentadbiran negeri.",
 "4155fa43ec"
 ],
 [
 "8",
 "Apakah hubungan Kompeni Percubaan 1933 dengan Rejimen Askar Melayu?",
-"Kompeni Percubaan di Port Dickson menjadi asas <b>Rejimen Askar Melayu pada 1935</b>.",
+"Kompeni Percubaan di Port Dickson menjadi asas \u003cb\u003eRejimen Askar Melayu pada 1935\u003c/b\u003e.",
 "fec13a2ca3"
 ],
 [
@@ -1281,55 +1288,55 @@ const CARDS = [
 [
 "x",
 "Apakah 4 babak cerita Sejarah Tingkatan 3?",
-"<b>DATANG</b> (Bab 1) → <b>TADBIR</b> (Bab 2–5) → <b>KESAN</b> (Bab 6) → <b>REAKSI</b>: lawan (Bab 7) / bijak (Bab 8)",
+"\u003cb\u003eDATANG\u003c/b\u003e (Bab 1) → \u003cb\u003eTADBIR\u003c/b\u003e (Bab 2–5) → \u003cb\u003eKESAN\u003c/b\u003e (Bab 6) → \u003cb\u003eREAKSI\u003c/b\u003e: lawan (Bab 7) / bijak (Bab 8)",
 "8dcbf2303d"
 ],
 [
 "x",
 "Apakah 4 model pentadbiran Barat (Bab 2–5)?",
-"NNS (tanah jajahan) · NNMB (Residen, persekutuan) · NNMTB (Penasihat, berasingan) · Sarawak (Brooke) &amp; Sabah (SBUB)",
+"NNS (tanah jajahan) · NNMB (Residen, persekutuan) · NNMTB (Penasihat, berasingan) · Sarawak (Brooke) \u0026amp; Sabah (SBUB)",
 "66fa85ce1f"
 ],
 [
 "x",
 "Rantaikan: Perjanjian Pangkor 1874 → ? → ?",
-"Residen <b>J.W.W. Birch</b> ambil hak cukai (Bab 3) → <b>Dato' Maharaja Lela</b> bunuh Birch 1875 (Bab 7) → raja tuntut kuasa melalui <b>Durbar</b> (Bab 8)",
+"Residen \u003cb\u003eJ.W.W. Birch\u003c/b\u003e ambil hak cukai (Bab 3) → \u003cb\u003eDato' Maharaja Lela\u003c/b\u003e bunuh Birch 1875 (Bab 7) → raja tuntut kuasa melalui \u003cb\u003eDurbar\u003c/b\u003e (Bab 8)",
 "846218a7b1"
 ],
 [
 "x",
 "Rantaikan: Perjanjian Bangkok 1909 → ? → ?",
-"Dibuat <b>tanpa rundingan</b> &amp; wilayah hilang (Bab 4) → <b>bantahan raja</b> Kedah, Perlis, Kelantan, Terengganu (Bab 8) → kemudian pentadbiran &amp; cukai baharu → <b>Tok Janggut 1915</b>, <b>Haji Abdul Rahman Limbong 1922–1928</b> (Bab 7)",
+"Dibuat \u003cb\u003etanpa rundingan\u003c/b\u003e \u0026amp; wilayah hilang (Bab 4) → \u003cb\u003ebantahan raja\u003c/b\u003e Kedah, Perlis, Kelantan, Terengganu (Bab 8) → kemudian pentadbiran \u0026amp; cukai baharu → \u003cb\u003eTok Janggut 1915\u003c/b\u003e, \u003cb\u003eHaji Abdul Rahman Limbong 1922–1928\u003c/b\u003e (Bab 7)",
 "5b7e38866e"
 ],
 [
 "x",
 "Penentangan mana berpunca daripada pentadbiran Brooke dan SBUB (Bab 5)?",
-"Brooke → <b>Rentap</b>, <b>Sharif Masahor</b>; SBUB → <b>Mat Salleh</b>, <b>Mat Sator</b>",
+"Brooke → \u003cb\u003eRentap\u003c/b\u003e, \u003cb\u003eSharif Masahor\u003c/b\u003e; SBUB → \u003cb\u003eMat Salleh\u003c/b\u003e, \u003cb\u003eMat Sator\u003c/b\u003e",
 "8bc2a83395"
 ],
 [
 "x",
-"Kaitkan Perjanjian London 1824 (Bab 2) dengan Johor (Bab 4 &amp; 8).",
-"Empayar Johor-Riau berpecah → Johor di bawah pengaruh British → Johor guna diplomasi &amp; UU Tubuh 1895 untuk kekal berdaulat hingga <b>1914</b>",
+"Kaitkan Perjanjian London 1824 (Bab 2) dengan Johor (Bab 4 \u0026amp; 8).",
+"Empayar Johor-Riau berpecah → Johor di bawah pengaruh British → Johor guna diplomasi \u0026amp; UU Tubuh 1895 untuk kekal berdaulat hingga \u003cb\u003e1914\u003c/b\u003e",
 "a21be28efe"
 ],
 [
 "x",
-"Kenapa kereta api dibina dalam 3 fasa (Bab 6)? Kaitkan dengan Bab 3 &amp; 4.",
-"1885–1896 lombong→pelabuhan; 1897–1909 utara–selatan selepas <b>NNMB</b> (Bab 3); 1910–1931 seluruh Tanah Melayu selepas <b>NNMTB</b> (Bab 4)",
+"Kenapa kereta api dibina dalam 3 fasa (Bab 6)? Kaitkan dengan Bab 3 \u0026amp; 4.",
+"1885–1896 lombong→pelabuhan; 1897–1909 utara–selatan selepas \u003cb\u003eNNMB\u003c/b\u003e (Bab 3); 1910–1931 seluruh Tanah Melayu selepas \u003cb\u003eNNMTB\u003c/b\u003e (Bab 4)",
 "e733566820"
 ],
 [
 "x",
 "Bezakan Residen (Bab 3) dan Penasihat British (Bab 4).",
-"Residen: NNMB, berpusat di bawah Residen Jeneral, kuasa raja sangat terhakis. Penasihat: NNMTB, setiap negeri berasingan, raja lebih autonomi. Kedua-dua: nasihat wajib kecuali <b>Islam &amp; adat Melayu</b>",
+"Residen: NNMB, berpusat di bawah Residen Jeneral, kuasa raja sangat terhakis. Penasihat: NNMTB, setiap negeri berasingan, raja lebih autonomi. Kedua-dua: nasihat wajib kecuali \u003cb\u003eIslam \u0026amp; adat Melayu\u003c/b\u003e",
 "c9c732bfe2"
 ],
 [
 "x",
 "Bezakan tahun Penasihat British diterima dengan tahun perjanjian rasmi.",
-"<b>Penasihat:</b> Kedah &amp; Perlis 1909 → Kelantan 1910 → Johor 1914 → Terengganu 1919 (paling lewat). <b>Perjanjian rasmi:</b> Kedah 1923, Perlis 1930 (paling lewat)",
+"\u003cb\u003ePenasihat:\u003c/b\u003e Kedah \u0026amp; Perlis 1909 → Kelantan 1910 → Johor 1914 → Terengganu 1919 (paling lewat). \u003cb\u003ePerjanjian rasmi:\u003c/b\u003e Kedah 1923, Perlis 1930 (paling lewat)",
 "a9f6d08430"
 ],
 [
@@ -1341,73 +1348,73 @@ const CARDS = [
 [
 "x",
 "Mnemonik utama setiap bab?",
-"1 BaPuPeA · 2 Ti-Ma-Pak · 3 PeSeNePa · 4 KPKT+J · 5 RUPEK · 6 Mo-Te-Bu-Ta-Ska &amp; Ba-Ma-Pe-Ke-Pe · 7 Mu-Ku-Sen-Undang · 8 DuDiEnUnMo",
+"1 BaPuPeA · 2 Ti-Ma-Pak · 3 PeSeNePa · 4 KPKT+J · 5 RUPEK · 6 Mo-Te-Bu-Ta-Ska \u0026amp; Ba-Ma-Pe-Ke-Pe · 7 Mu-Ku-Sen-Undang · 8 DuDiEnUnMo",
 "405bdd417c"
 ],
 [
 "1",
 "Siapakah pemerintah tertinggi di Negeri Sembilan?",
-"<b>Yang di-Pertuan Besar</b> (Yamtuan Besar).",
+"\u003cb\u003eYang di-Pertuan Besar\u003c/b\u003e (Yamtuan Besar).",
 "f64372ac0e"
 ],
 [
 "1",
 "Apakah dua kaedah perlombongan bijih timah tradisional?",
-"<b>Mendulang</b> dan <b>melampan</b>.",
+"\u003cb\u003eMendulang\u003c/b\u003e dan \u003cb\u003emelampan\u003c/b\u003e.",
 "1372ffde45"
 ],
 [
 "1",
 "Bilakah Syarikat Hindia Timur Belanda ditubuhkan?",
-"<b>1602</b>.",
+"\u003cb\u003e1602\u003c/b\u003e.",
 "bdb00f5afe"
 ],
 [
 "1",
 "Bilakah Syarikat Hindia Timur Perancis ditubuhkan?",
-"<b>1664</b>.",
+"\u003cb\u003e1664\u003c/b\u003e.",
 "b2b0a142fd"
 ],
 [
 "1",
 "Siapakah jurutera yang merancang Terusan Suez?",
-"<b>Ferdinand de Lesseps</b>.",
+"\u003cb\u003eFerdinand de Lesseps\u003c/b\u003e.",
 "05fe8008c8"
 ],
 [
 "1",
 "Bilakah pembinaan Terusan Suez bermula?",
-"<b>1859</b>.",
+"\u003cb\u003e1859\u003c/b\u003e.",
 "7b3c84dfa9"
 ],
 [
 "1",
 "Berapakah jarak laluan selepas Terusan Suez dibina?",
-"<b>8,000 batu</b> (daripada 12,400 batu).",
+"\u003cb\u003e8,000 batu\u003c/b\u003e (daripada 12,400 batu).",
 "9c78b102fe"
 ],
 [
 "1",
 "Apakah slogan Perancis untuk menjustifikasi penjajahan?",
-"<b>“Tugas Menyebarkan Tamadun”</b>.",
+"\u003cb\u003e“Tugas Menyebarkan Tamadun”\u003c/b\u003e.",
 "2a6798644f"
 ],
 [
 "1",
 "Siapakah menggantikan Gabenor Harry Ord di Negeri-negeri Selat?",
-"<b>Andrew Clarke</b>.",
+"\u003cb\u003eAndrew Clarke\u003c/b\u003e.",
 "4df725da28"
 ],
 [
 "1",
 "Bilakah Belanda menyerang Pulau Pangkor?",
-"<b>1650</b>.",
+"\u003cb\u003e1650\u003c/b\u003e.",
 "60b4441972"
 ],
 [
 "1",
 "Apakah tempoh keluarga Brooke memperluas Sarawak?",
-"<b>1853–1905</b>.",
+"\u003cb\u003e1853–1905\u003c/b\u003e.",
 "fe789b595e"
 ],
 [
@@ -1455,67 +1462,67 @@ const CARDS = [
 [
 "2",
 "Bilakah Batu Uban dibuka sebagai pelabuhan awal?",
-"<b>1759</b>, oleh orang Melayu dari Sumatera.",
+"\u003cb\u003e1759\u003c/b\u003e, oleh orang Melayu dari Sumatera.",
 "f9c52eac16"
 ],
 [
 "2",
 "Bilakah Union Jack dinaikkan di Pulau Pinang?",
-"<b>11 Ogos 1786</b>.",
+"\u003cb\u003e11 Ogos 1786\u003c/b\u003e.",
 "3085259bd2"
 ],
 [
 "2",
 "Bilakah Union Jack dinaikkan di Singapura?",
-"<b>13 Februari 1819</b>.",
+"\u003cb\u003e13 Februari 1819\u003c/b\u003e.",
 "ceed4e0f9f"
 ],
 [
 "2",
 "Siapakah Residen pertama Singapura?",
-"<b>William Farquhar</b> (1819–1823).",
+"\u003cb\u003eWilliam Farquhar\u003c/b\u003e (1819–1823).",
 "f30f009446"
 ],
 [
 "2",
 "Siapakah wakil British yang menandatangani perjanjian 2 Ogos 1824 di Singapura?",
-"<b>John Crawfurd</b>.",
+"\u003cb\u003eJohn Crawfurd\u003c/b\u003e.",
 "c284489dbc"
 ],
 [
 "2",
 "Bilakah Pulau Pinang menjadi pelabuhan bebas?",
-"<b>1787</b>.",
+"\u003cb\u003e1787\u003c/b\u003e.",
 "9c4a412652"
 ],
 [
 "2",
 "Bilakah Singapura diisytiharkan pelabuhan bebas?",
-"<b>1823</b>.",
+"\u003cb\u003e1823\u003c/b\u003e.",
 "92c2f76d2d"
 ],
 [
 "2",
 "Bilakah pusat pentadbiran NNS dipindahkan ke Singapura?",
-"<b>1832</b>.",
+"\u003cb\u003e1832\u003c/b\u003e.",
 "79fb78e53f"
 ],
 [
 "2",
 "Siapakah orang Melayu pertama dalam Majlis Perundangan NNS?",
-"<b>Mohammad Eunos Abdullah</b>.",
+"\u003cb\u003eMohammad Eunos Abdullah\u003c/b\u003e.",
 "2bb2f5b383"
 ],
 [
 "2",
 "Bilakah NNS dibubarkan?",
-"<b>1946</b>.",
+"\u003cb\u003e1946\u003c/b\u003e.",
 "968f91b7ec"
 ],
 [
 "2",
 "Siapakah mengisytiharkan Pahang bebas dan berdaulat pada 1853?",
-"<b>Bendahara Tun Ali</b>.",
+"\u003cb\u003eBendahara Tun Ali\u003c/b\u003e.",
 "b8e4f27e3b"
 ],
 [
@@ -1563,67 +1570,67 @@ const CARDS = [
 [
 "3",
 "Bilakah bijih timah mula dilombong di Manjung dan Beruas?",
-"<b>1616</b>.",
+"\u003cb\u003e1616\u003c/b\u003e.",
 "3015aed4c5"
 ],
 [
 "3",
 "Siapakah yang memajukan Klian Pauh dan Klian Baru bersama Long Jaafar?",
-"<b>Ngah Ibrahim</b>.",
+"\u003cb\u003eNgah Ibrahim\u003c/b\u003e.",
 "899855a28f"
 ],
 [
 "3",
 "Di manakah Kota Belanda dibina pada 1670?",
-"<b>Pulau Pangkor</b> (gedung menyimpan bijih timah).",
+"\u003cb\u003ePulau Pangkor\u003c/b\u003e (gedung menyimpan bijih timah).",
 "09d62fa891"
 ],
 [
 "3",
 "Apakah kawasan pengeluar utama bijih timah dunia di Perak pada akhir abad ke-19?",
-"<b>Lembah Kinta</b>.",
+"\u003cb\u003eLembah Kinta\u003c/b\u003e.",
 "51ae1fc59d"
 ],
 [
 "3",
 "Siapakah Residen Jeneral NNMB dari 1896 hingga 1900?",
-"<b>Frank Swettenham</b>.",
+"\u003cb\u003eFrank Swettenham\u003c/b\u003e.",
 "7873c83b78"
 ],
 [
 "3",
 "Siapakah Pesuruhjaya Tinggi NNMB?",
-"<b>Gabenor Negeri-negeri Selat</b>.",
+"\u003cb\u003eGabenor Negeri-negeri Selat\u003c/b\u003e.",
 "2aeed3e5de"
 ],
 [
 "3",
 "Apakah pusat pungutan cukai timah Selangor melalui Sungai Langat?",
-"<b>Jugra</b>.",
+"\u003cb\u003eJugra\u003c/b\u003e.",
 "7e2bea356a"
 ],
 [
 "3",
 "Bilakah Bangunan Sultan Abdul Samad dibina?",
-"<b>1894–1897</b>.",
+"\u003cb\u003e1894–1897\u003c/b\u003e.",
 "67d37ebfdf"
 ],
 [
 "3",
 "Di atas kapal apakah Perjanjian Pangkor 1874 ditandatangani?",
-"<b>HMS Pluto</b>.",
+"\u003cb\u003eHMS Pluto\u003c/b\u003e.",
 "f2ae15ae3a"
 ],
 [
 "3",
 "Siapakah dibantu British dalam Perang Klang?",
-"<b>Tunku Kudin</b>.",
+"\u003cb\u003eTunku Kudin\u003c/b\u003e.",
 "8238dde9d6"
 ],
 [
 "3",
 "Nyatakan tiga strategi British meluaskan kuasa (MaDePe).",
-"<b>Ma</b>nipulasi konflik tempatan, <b>De</b>sakan/ugutan menerima perlindungan, <b>Pe</b>rjanjian dengan pemerintah tempatan.",
+"\u003cb\u003eMa\u003c/b\u003enipulasi konflik tempatan, \u003cb\u003eDe\u003c/b\u003esakan/ugutan menerima perlindungan, \u003cb\u003ePe\u003c/b\u003erjanjian dengan pemerintah tempatan.",
 "81032f3df1"
 ],
 [
@@ -1671,61 +1678,61 @@ const CARDS = [
 [
 "4",
 "Berapakah bilangan mukim di Perlis?",
-"<b>22 mukim</b>.",
+"\u003cb\u003e22 mukim\u003c/b\u003e.",
 "1e29eabb52"
 ],
 [
 "4",
 "Siapakah sultan pertama Kedah?",
-"<b>Sultan Mudzaffar Shah</b>.",
+"\u003cb\u003eSultan Mudzaffar Shah\u003c/b\u003e.",
 "db044a9e6c"
 ],
 [
 "4",
 "Bilakah Long Yunus menyatukan Kelantan?",
-"<b>1776–1794</b>.",
+"\u003cb\u003e1776–1794\u003c/b\u003e.",
 "db3babf77c"
 ],
 [
 "4",
 "Apakah gelaran yang diterima Sultan Muhammad I Kelantan daripada Siam?",
-"<b>Phya Pipit Pakdi</b>.",
+"\u003cb\u003ePhya Pipit Pakdi\u003c/b\u003e.",
 "845b1b1017"
 ],
 [
 "4",
 "Bilakah Undang-Undang Bagi Diri Kerajaan Terengganu diluluskan?",
-"<b>1911</b>.",
+"\u003cb\u003e1911\u003c/b\u003e.",
 "064b95fc26"
 ],
 [
 "4",
 "Bilakah Perjanjian Sulit British–Siam ditandatangani?",
-"<b>6 April 1897</b>.",
+"\u003cb\u003e6 April 1897\u003c/b\u003e.",
 "24f2e42f7a"
 ],
 [
 "4",
 "Siapakah wakil Siam dalam Perjanjian Bangkok 1909?",
-"<b>Putera Devawongse Varaprakar</b>.",
+"\u003cb\u003ePutera Devawongse Varaprakar\u003c/b\u003e.",
 "2c5e6db53e"
 ],
 [
 "4",
 "Bilakah Perjanjian Burney antara British dengan Siam?",
-"<b>1826</b>.",
+"\u003cb\u003e1826\u003c/b\u003e.",
 "c18974f063"
 ],
 [
 "4",
 "Bilakah Majlis Mesyuarat Negeri Kedah diwujudkan?",
-"<b>1905</b>.",
+"\u003cb\u003e1905\u003c/b\u003e.",
 "48d372748e"
 ],
 [
 "4",
 "Apakah taraf wakil British dalam Perjanjian Setia 1885 di Johor?",
-"<b>Konsul</b>, bukan Penasihat.",
+"\u003cb\u003eKonsul\u003c/b\u003e, bukan Penasihat.",
 "eb672f33bf"
 ],
 [
@@ -1779,55 +1786,55 @@ const CARDS = [
 [
 "5",
 "Siapakah Raja Putih Sarawak yang kedua?",
-"<b>Charles Brooke</b> (1868–1917).",
+"\u003cb\u003eCharles Brooke\u003c/b\u003e (1868–1917).",
 "939f9f0d31"
 ],
 [
 "5",
 "Siapakah bapa saudara Sultan Brunei yang gagal menyelesaikan konflik di Sarawak?",
-"<b>Pengiran Raja Muda Hashim</b>.",
+"\u003cb\u003ePengiran Raja Muda Hashim\u003c/b\u003e.",
 "1567c12d6c"
 ],
 [
 "5",
 "Bilakah Charles Brooke memperoleh Limbang?",
-"Pada <b>1890</b>.",
+"Pada \u003cb\u003e1890\u003c/b\u003e.",
 "afa5e2b535"
 ],
 [
 "5",
 "Siapakah presiden pertama SBUB?",
-"<b>Sir Rutherford Alcock</b>.",
+"\u003cb\u003eSir Rutherford Alcock\u003c/b\u003e.",
 "a28cf4c914"
 ],
 [
 "5",
 "Apakah ibu negeri pertama SBUB dan bilakah?",
-"<b>Kudat</b>, 1881–1884.",
+"\u003cb\u003eKudat\u003c/b\u003e, 1881–1884.",
 "7f74e52415"
 ],
 [
 "5",
 "Bilakah Borneo Utara menjadi negeri naungan British?",
-"Pada <b>1888</b>.",
+"Pada \u003cb\u003e1888\u003c/b\u003e.",
 "081e638d8f"
 ],
 [
 "5",
 "Bilakah Majlis Penasihat SBUB ditubuhkan?",
-"Pada <b>1883</b>; menasihati Gabenor.",
+"Pada \u003cb\u003e1883\u003c/b\u003e; menasihati Gabenor.",
 "0a6bb5bbd6"
 ],
 [
 "5",
 "Bilakah Undang-undang Lapan Perkara dilaksanakan di Sarawak?",
-"<b>Januari 1842</b>.",
+"\u003cb\u003eJanuari 1842\u003c/b\u003e.",
 "6027271a82"
 ],
 [
 "5",
 "Bilakah Mahkamah Cina diwujudkan di Kuching?",
-"Pada <b>1911</b>.",
+"Pada \u003cb\u003e1911\u003c/b\u003e.",
 "2b02004b61"
 ],
 [
@@ -1839,7 +1846,7 @@ const CARDS = [
 [
 "5",
 "Nyatakan empat syarat Piagam Diraja SBUB (PAHA).",
-"Menerima <b>Penasihat British</b>; memelihara adat/agama/undang-undang; pegawai diakui British; tidak serah Sabah tanpa izin British.",
+"Menerima \u003cb\u003ePenasihat British\u003c/b\u003e; memelihara adat/agama/undang-undang; pegawai diakui British; tidak serah Sabah tanpa izin British.",
 "915830698f"
 ],
 [
@@ -1887,49 +1894,49 @@ const CARDS = [
 [
 "6",
 "Di manakah petroleum ditemui pada 1910?",
-"Di <b>Miri</b>, Sarawak.",
+"Di \u003cb\u003eMiri\u003c/b\u003e, Sarawak.",
 "9b3c44db54"
 ],
 [
 "6",
 "Berapakah peratus pengeluaran bijih timah dunia disumbangkan Tanah Melayu pada akhir abad ke-19?",
-"<b>55%</b>.",
+"\u003cb\u003e55%\u003c/b\u003e.",
 "749415e80f"
 ],
 [
 "6",
 "Bilakah Jabatan Kerja Raya (PWD) ditubuhkan?",
-"Pada <b>1872</b>.",
+"Pada \u003cb\u003e1872\u003c/b\u003e.",
 "7d3d8cab89"
 ],
 [
 "6",
 "Bilakah Institut Penyelidikan Getah Malaya (RRIM) ditubuhkan?",
-"Pada <b>1926</b>.",
+"Pada \u003cb\u003e1926\u003c/b\u003e.",
 "2b4b768287"
 ],
 [
 "6",
 "Di manakah hospital kerajaan pertama dibina pada 1878?",
-"Di <b>Taiping</b>.",
+"Di \u003cb\u003eTaiping\u003c/b\u003e.",
 "e67ac045d1"
 ],
 [
 "6",
 "Bilakah Kolej Melayu Kuala Kangsar (MCKK) ditubuhkan?",
-"Pada <b>1905</b>.",
+"Pada \u003cb\u003e1905\u003c/b\u003e.",
 "d8e0724519"
 ],
 [
 "6",
 "Siapakah membina Hospital Tung Shin pada 1881?",
-"<b>Yap Kwan Seng</b>.",
+"\u003cb\u003eYap Kwan Seng\u003c/b\u003e.",
 "185a1ea1a0"
 ],
 [
 "6",
 "Bilakah Ordinan Buruh Kontrak diluluskan?",
-"Pada <b>1882</b>.",
+"Pada \u003cb\u003e1882\u003c/b\u003e.",
 "98b34863a3"
 ],
 [
@@ -1941,7 +1948,7 @@ const CARDS = [
 [
 "6",
 "Apakah fungsi Sultan Idris Training College (1922)?",
-"Melatih guru Melayu di <b>Tanjung Malim</b>.",
+"Melatih guru Melayu di \u003cb\u003eTanjung Malim\u003c/b\u003e.",
 "0829b03420"
 ],
 [
@@ -1965,7 +1972,7 @@ const CARDS = [
 [
 "6",
 "Apakah kesan Ordinan Buruh 1912 terhadap pendidikan?",
-"Majikan ladang wajib mendirikan <b>sekolah Tamil</b> peringkat rendah.",
+"Majikan ladang wajib mendirikan \u003cb\u003esekolah Tamil\u003c/b\u003e peringkat rendah.",
 "ff7cfc2c7e"
 ],
 [
@@ -1995,67 +2002,67 @@ const CARDS = [
 [
 "7",
 "Bilakah Dol Said dilahirkan?",
-"<b>1773</b>",
+"\u003cb\u003e1773\u003c/b\u003e",
 "18ad461e4b"
 ],
 [
 "7",
 "Apakah nama sebenar Tok Janggut?",
-"<b>Haji Mat Hassan bin Munas</b>",
+"\u003cb\u003eHaji Mat Hassan bin Munas\u003c/b\u003e",
 "075086d372"
 ],
 [
 "7",
 "Bilakah Bukit Sadok ditawan oleh Brooke?",
-"<b>1861</b>",
+"\u003cb\u003e1861\u003c/b\u003e",
 "ce44233048"
 ],
 [
 "7",
 "Siapakah yang dibunuh di Pasir Salak pada 2 November 1875?",
-"<b>J.W.W. Birch</b>",
+"\u003cb\u003eJ.W.W. Birch\u003c/b\u003e",
 "446f23bacb"
 ],
 [
 "7",
 "Apakah maksud nama \"Rentap\"?",
-"<b>Penggoncang dunia</b>",
+"\u003cb\u003ePenggoncang dunia\u003c/b\u003e",
 "84a3c89250"
 ],
 [
 "7",
 "Di manakah Mat Sator membina kubunya?",
-"<b>Kampung Kapayan Lama</b>, Tambunan",
+"\u003cb\u003eKampung Kapayan Lama\u003c/b\u003e, Tambunan",
 "dc75ba2056"
 ],
 [
 "7",
 "Apakah institusi yang ditubuhkan British pada 1905 untuk anak bangsawan Melayu?",
-"<b>Kolej Melayu Kuala Kangsar</b>",
+"\u003cb\u003eKolej Melayu Kuala Kangsar\u003c/b\u003e",
 "0726f51925"
 ],
 [
 "7",
 "Berapakah elaun yang ditawarkan kepada Dato' Bahaman?",
-"<b>$70 sebulan</b>",
+"\u003cb\u003e$70 sebulan\u003c/b\u003e",
 "62e763585c"
 ],
 [
 "7",
 "Siapakah pegawai British yang terbunuh di Nanga Skrang pada 1853?",
-"<b>Alan Lee</b>",
+"\u003cb\u003eAlan Lee\u003c/b\u003e",
 "57416abb1f"
 ],
 [
 "7",
 "Bilakah Persekutuan Negeri Sembilan dibentuk?",
-"<b>1895</b>",
+"\u003cb\u003e1895\u003c/b\u003e",
 "fe8d320d02"
 ],
 [
 "7",
 "Nyatakan 3 kuasa pemerintah yang terjejas akibat sistem pentadbiran Barat.",
-"Kuasa <b>mentadbir/hubungan luar</b>, <b>perundangan</b> dan <b>kewangan</b>.",
+"Kuasa \u003cb\u003ementadbir/hubungan luar\u003c/b\u003e, \u003cb\u003eperundangan\u003c/b\u003e dan \u003cb\u003ekewangan\u003c/b\u003e.",
 "e847c54e43"
 ],
 [
@@ -2067,19 +2074,19 @@ const CARDS = [
 [
 "7",
 "Nyatakan 3 kesan penentangan terhadap pihak British.",
-"<b>Kerugian perang</b>; pentadbiran lebih berhati-hati dan tersusun; kuasa Barat dimantapkan.",
+"\u003cb\u003eKerugian perang\u003c/b\u003e; pentadbiran lebih berhati-hati dan tersusun; kuasa Barat dimantapkan.",
 "48abd3ea82"
 ],
 [
 "7",
 "Apakah 3 kesan penentangan terhadap masyarakat tempatan?",
-"Kehilangan jawatan/kedudukan; kematian atau dibuang negeri; menjadi <b>inspirasi</b> perjuangan kemerdekaan.",
+"Kehilangan jawatan/kedudukan; kematian atau dibuang negeri; menjadi \u003cb\u003einspirasi\u003c/b\u003e perjuangan kemerdekaan.",
 "b3f1f371f0"
 ],
 [
 "7",
 "Apakah hukuman yang dikenakan pada 1877 ke atas pemimpin yang membunuh Birch?",
-"Dato' Maharaja Lela, Dato' Sagor, Pandak Indut dan Siputum <b>digantung</b>.",
+"Dato' Maharaja Lela, Dato' Sagor, Pandak Indut dan Siputum \u003cb\u003edigantung\u003c/b\u003e.",
 "02c9f2547e"
 ],
 [
@@ -2103,61 +2110,61 @@ const CARDS = [
 [
 "8",
 "Siapakah Raja Perlis yang membantah kehilangan Pujoh?",
-"<b>Raja Syed Alwi Jamalullail</b>",
+"\u003cb\u003eRaja Syed Alwi Jamalullail\u003c/b\u003e",
 "2dda006805"
 ],
 [
 "8",
 "Bilakah Terengganu menghantar bantahan kepada Gabenor NNS tentang Perjanjian Bangkok?",
-"<b>24 Mei 1909</b>",
+"\u003cb\u003e24 Mei 1909\u003c/b\u003e",
 "8827632ecd"
 ],
 [
 "8",
 "Berapakah kira-kira orang Melayu yang mendiami Tabal?",
-"Kira-kira <b>15,000 orang</b>",
+"Kira-kira \u003cb\u003e15,000 orang\u003c/b\u003e",
 "628e385947"
 ],
 [
 "8",
 "Bilakah Iskandar Puteri dinamakan Johor Bahru?",
-"<b>1 Januari 1866</b>",
+"\u003cb\u003e1 Januari 1866\u003c/b\u003e",
 "2684d9474e"
 ],
 [
 "8",
 "Apakah gelaran yang diterima Sultan Abu Bakar pada 1868?",
-"<b>Maharaja Johor</b>",
+"\u003cb\u003eMaharaja Johor\u003c/b\u003e",
 "1b402b15f8"
 ],
 [
 "8",
 "Bilakah Perjanjian British-Terengganu yang meminda Perjanjian Bangkok dimeterai?",
-"<b>22 April 1910</b>",
+"\u003cb\u003e22 April 1910\u003c/b\u003e",
 "b2d792755d"
 ],
 [
 "8",
 "Siapakah Penasihat British pertama di Kelantan?",
-"<b>J.S. Mason</b>",
+"\u003cb\u003eJ.S. Mason\u003c/b\u003e",
 "a331cf804b"
 ],
 [
 "8",
 "Siapakah digelar \"Bapa Kedah Moden\"?",
-"<b>Sultan Abdul Hamid Halim Shah</b>",
+"\u003cb\u003eSultan Abdul Hamid Halim Shah\u003c/b\u003e",
 "73097affb3"
 ],
 [
 "8",
 "Siapakah Menteri Besar Johor yang pertama?",
-"<b>Dato' Jaafar bin Muhammad</b> (1882–1919)",
+"\u003cb\u003eDato' Jaafar bin Muhammad\u003c/b\u003e (1882–1919)",
 "6b2905964d"
 ],
 [
 "8",
 "Apakah nama lain Undang-Undang Bagi Diri Kerajaan Terengganu?",
-"<b><i>Itqan al-Muluk bi Ta'dil al-Suluk</b></i>",
+"\u003cb\u003e\u003ci\u003eItqan al-Muluk bi Ta'dil al-Suluk\u003c/b\u003e\u003c/i\u003e",
 "f48584f4cb"
 ],
 [
@@ -2169,7 +2176,7 @@ const CARDS = [
 [
 "8",
 "Senaraikan 5 strategi raja menangani cabaran Barat.",
-"<b>Durbar</b>, <b>diplomasi</b>, enggan menerima Penasihat British, undang-undang tubuh, <b>pemodenan</b> negeri.",
+"\u003cb\u003eDurbar\u003c/b\u003e, \u003cb\u003ediplomasi\u003c/b\u003e, enggan menerima Penasihat British, undang-undang tubuh, \u003cb\u003epemodenan\u003c/b\u003e negeri.",
 "5aa58dac9b"
 ],
 [
@@ -2187,7 +2194,7 @@ const CARDS = [
 [
 "8",
 "Apakah yang dikekalkan dalam Perjanjian Kedah-British 1 November 1923?",
-"<b>Bahasa Melayu</b>, kalendar Hijrah, cuti Jumaat dan keutamaan pegawai Melayu.",
+"\u003cb\u003eBahasa Melayu\u003c/b\u003e, kalendar Hijrah, cuti Jumaat dan keutamaan pegawai Melayu.",
 "19a01461c7"
 ],
 [
@@ -3154,6 +3161,519 @@ const EVENTS = [
 "Durbar Seri Menanti; cadangan Malay Girls College."
 ]
 ];
+// foto Teka Gambar (gambar/gambar.json)
+const IMGS = [
+{
+"file": "bab1-penaklukan-melaka-1511.jpg",
+"bab": "1",
+"teka": "Peristiwa apakah dalam lukisan ini?",
+"jawapan": "Penaklukan Melaka oleh Portugis (1511)",
+"kapsyen": "Litograf penaklukan Melaka oleh Portugis di bawah Afonso de Albuquerque pada 1511 (sekitar 1839)",
+"pengarang": "Maurício José do Carmo Sendim",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Capture_of_Malacca_(1511).jpg"
+},
+{
+"file": "bab1-kota-portugis-melaka-1630.jpg",
+"bab": "1",
+"teka": "Kota Portugis dalam pelan ini dikenali sebagai apa?",
+"jawapan": "A Famosa",
+"kapsyen": "Pelan kota Portugis (A Famosa) di Melaka, daripada buku António Bocarro (sekitar 1635)",
+"pengarang": "António Bocarro",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Malacca_1630.jpg"
+},
+{
+"file": "bab1-a-famosa-porta-de-santiago.jpg",
+"bab": "1",
+"teka": "Sisa kota ini terletak di bandar mana?",
+"jawapan": "Melaka",
+"kapsyen": "Porta de Santiago, sisa kota A Famosa yang dibina oleh Portugis di Melaka (foto 2014)",
+"pengarang": "CEphoto, Uwe Aranas",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Melaka_Malaysia_A-Famosa-01.jpg"
+},
+{
+"file": "bab1-stadthuys-belanda-melaka-1905.jpg",
+"bab": "1",
+"teka": "Bangunan peninggalan Belanda ini terletak di bandar mana?",
+"jawapan": "Melaka",
+"kapsyen": "Bangunan Stadthuys peninggalan Belanda (tengah, di belakang pokok) dan gereja Belanda di Melaka, sekitar 1905",
+"pengarang": "Kleingrothe, C.J. (Kleingrothe, Carl Josef, 1864-1925)",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_101100_-_Kleingrothe,_C.J._-_Medan_-_Dutch_Reformed_Church_(left)_and_the_Stadt_Huys_(center_behind_the_tree)_at_Malacca_(Melaka)_in_Malaysia_-_circa_1905.tif"
+},
+{
+"file": "bab1-fort-cornwallis-1804.jpg",
+"bab": "1",
+"teka": "Kubu British dalam ukiran ini terletak di pulau mana?",
+"jawapan": "Pulau Pinang",
+"kapsyen": "Ukiran Kota Cornwallis di Pulau Pinang (Prince of Wales Island), 1804 – kubu British yang dibina selepas Francis Light membuka Pulau Pinang (1786)",
+"pengarang": "James Baily / After William Westall",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Penang_Museum_historical_painting_N164b.jpg"
+},
+{
+"file": "bab1-stamford-raffles.jpg",
+"bab": "1",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "Stamford Raffles",
+"kapsyen": "Sir Stamford Raffles, yang membuka Singapura sebagai petempatan British pada 1819 (potret 1817)",
+"pengarang": "George Francis Joseph",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:George_Francis_Joseph_-_Sir_Thomas_Stamford_Bingley_Raffles.jpg"
+},
+{
+"file": "bab1-singapura-1819-houghton.jpg",
+"bab": "1",
+"teka": "Petempatan dalam lakaran tahun 1819 ini ialah?",
+"jawapan": "Singapura",
+"kapsyen": "Lakaran Singapura dari Rocky Point pada 1819 oleh John Michael Houghton, antara gambaran terawal Singapura",
+"pengarang": "John Michael Houghton",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:John_Michael_Houghton,_Drawing_from_the_Houghton_Album_titled_%27Singapore_from_the_Rocky_Point,_1819%27,_13_x_18_cm,_Collection_of_National_Museum_of_Singapore.jpg"
+},
+{
+"file": "bab2-peta-negeri-negeri-selat-1893.jpg",
+"bab": "2",
+"teka": "Peta ini menunjukkan gabungan wilayah British apa?",
+"jawapan": "Negeri-Negeri Selat",
+"kapsyen": "Peta Negeri-Negeri Selat (Pulau Pinang, Melaka dan Singapura), 1893",
+"pengarang": "The Edinburgh Geographical Institute / John Bartholomew and Co.",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Map_of_the_Straits_Settlements_of_British_Malaya,_from_the_Constable%27s_Hand_Atlas_of_India_(1893).jpg"
+},
+{
+"file": "bab2-fort-cornwallis-esplanade-1892.jpg",
+"bab": "2",
+"teka": "Kubu apakah dalam foto ini?",
+"jawapan": "Kota Cornwallis",
+"kapsyen": "Kota Cornwallis dan Esplanade di Pulau Pinang, sekitar 1892–1893",
+"pengarang": "Rijksmuseum",
+"lesen": "CC0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Gezicht_op_fort_Cornwall_en_Esplanade_te_Penang_Het_fort_Cornwall_en_de_Esplanade_te_Penang_(titel_op_object),_RP-F-F01153-AL.jpg"
+},
+{
+"file": "bab2-patung-francis-light.jpg",
+"bab": "2",
+"teka": "Siapakah tokoh yang diabadikan dalam patung ini?",
+"jawapan": "Francis Light",
+"kapsyen": "Patung gangsa Francis Light di Kota Cornwallis, George Town, Pulau Pinang; beliau membuka petempatan British di Pulau Pinang pada 1786 (foto 2013)",
+"pengarang": "shankar s.",
+"lesen": "CC BY 2.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Statue_of_Francis_Light_(12272030053).jpg"
+},
+{
+"file": "bab2-meriam-seri-rambai-kota-cornwallis.jpg",
+"bab": "2",
+"teka": "Meriam ini terletak di kubu mana?",
+"jawapan": "Kota Cornwallis",
+"kapsyen": "Meriam Seri Rambai di Kota Cornwallis, George Town, Pulau Pinang (foto 2016)",
+"pengarang": "Singora",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Seri-rambai-cannon-penang.jpg"
+},
+{
+"file": "bab2-pelan-bandar-singapura-1822.jpg",
+"bab": "2",
+"teka": "Bandar apakah dalam pelan tahun 1822 ini?",
+"jawapan": "Singapura",
+"kapsyen": "Pelan Bandar Singapura (1822) oleh Leftenan Philip Jackson, juga dikenali sebagai Pelan Jackson",
+"pengarang": "Leftenan Philip Jackson",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Plan_of_the_Town_of_Singapore_(1822)_by_Lieutenant_Philip_Jackson.jpg"
+},
+{
+"file": "bab3-jww-birch.jpg",
+"bab": "3",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "J.W.W. Birch",
+"kapsyen": "J.W.W. Birch, Residen British pertama di Perak (1874–1875)",
+"pengarang": "Tidak diketahui",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:JWWbirch.jpg"
+},
+{
+"file": "bab3-andrew-clarke-1873.jpg",
+"bab": "3",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "Sir Andrew Clarke",
+"kapsyen": "Sir Andrew Clarke, Gabenor Negeri-Negeri Selat (1873–1875) yang memeterai Perjanjian Pangkor 1874 (foto 1873)",
+"pengarang": "Gustav Richard Lambert",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Sir_Andrew_Clarke_(1873)_by_G_R_Lambert.jpg"
+},
+{
+"file": "bab3-sultan-abdullah-1874.jpg",
+"bab": "3",
+"teka": "Sultan Perak manakah dalam foto 1874 ini?",
+"jawapan": "Sultan Abdullah",
+"kapsyen": "Sultan Abdullah dan pengikut di Batak Rabit, Sungai Perak, Jun 1874",
+"pengarang": "The National Archives UK",
+"lesen": "Public domain (no known copyright restrictions)",
+"sumber": "https://commons.wikimedia.org/wiki/File:CO_1069-484-121_(7886263242).jpg"
+},
+{
+"file": "bab3-frank-swettenham-sargent.jpg",
+"bab": "3",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "Frank Swettenham",
+"kapsyen": "Sir Frank Swettenham, Residen Jeneral pertama Negeri-Negeri Melayu Bersekutu (potret oleh John Singer Sargent, 1904)",
+"pengarang": "John Singer Sargent",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Sir_Frank_Swettenham_by_John_Singer_Sargent_1904.jpg"
+},
+{
+"file": "bab3-hugh-low.jpg",
+"bab": "3",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "Hugh Low",
+"kapsyen": "Sir Hugh Low (1824–1905), Residen British di Perak (1877–1889)",
+"pengarang": "Tidak diketahui",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Hugh_Low.png"
+},
+{
+"file": "bab3-sultan-abdul-samad-selangor-1890.jpg",
+"bab": "3",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "Sultan Abdul Samad",
+"kapsyen": "Sultan Abdul Samad, Sultan Selangor, sekitar 1890",
+"pengarang": "G.R. Lambert \u0026 Co.",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_7248_-_Lambert_%26_Co.,_G.R._-_Singapore_-_Sir_Abdul_Samad,_Sultan_of_Selangor_-_circa_1890.tif"
+},
+{
+"file": "bab3-bangunan-sultan-abdul-samad-1900.jpg",
+"bab": "3",
+"teka": "Bangunan ini terletak di bandar mana?",
+"jawapan": "Kuala Lumpur",
+"kapsyen": "Bangunan pejabat kerajaan British di Kuala Lumpur, kini dikenali sebagai Bangunan Sultan Abdul Samad, sekitar 1900",
+"pengarang": "G.R. Lambert \u0026 Co.",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_105897_-_Lambert_%26_Co.,_G.R._-_Singapore_-_Mosque_at_Kuala_Lumpur_-_circa_1900_-_small.jpg"
+},
+{
+"file": "bab3-istana-sultan-perak-kuala-kangsar-1890.jpg",
+"bab": "3",
+"teka": "Istana ini milik sultan negeri mana?",
+"jawapan": "Perak",
+"kapsyen": "Istana Sultan Perak di Kuala Kangsar, sekitar 1890",
+"pengarang": "G.R. Lambert \u0026 Co.",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_91759_-_Lambert_%26_Co.,_G.R._-_Singapore_-_Palace_of_the_Sultan_of_Perak_at_Kuala_Kangsa_in_the_Straits_Settlements_-_circa_1890.tif"
+},
+{
+"file": "bab4-sultan-abu-bakar-johor.jpg",
+"bab": "4",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "Sultan Abu Bakar",
+"kapsyen": "Sultan Abu Bakar dari Johor (1833–1895)",
+"pengarang": "Tidak diketahui",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Maharaja_of_Johore_(PP-73-4-006).jpg"
+},
+{
+"file": "bab4-perjanjian-inggeris-siam-1909.jpg",
+"bab": "4",
+"teka": "Perjanjian apakah dokumen ini?",
+"jawapan": "Perjanjian Bangkok 1909",
+"kapsyen": "Halaman hadapan Perjanjian antara United Kingdom dan Siam (Perjanjian Bangkok), ditandatangani di Bangkok pada 10 Mac 1909",
+"pengarang": "Governments of the United Kingdom and Siam",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Treaty_between_the_United_Kingdom_and_Siam_(1909).pdf"
+},
+{
+"file": "bab4-masjid-sultan-abu-bakar-johor-1910.jpg",
+"bab": "4",
+"teka": "Masjid ini dinamakan sempena sultan Johor yang mana?",
+"jawapan": "Sultan Abu Bakar",
+"kapsyen": "Masjid Sultan Abu Bakar di Johor Bahru, sekitar 1910",
+"pengarang": "Kleingrothe, C.J. (Kleingrothe, Carl Josef, 1864-1925)",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_79915_-_Kleingrothe,_C.J._-_Medan_-_Mosque_at_Johor_-_circa_1910.tif"
+},
+{
+"file": "bab4-sultan-kelantan-1909.jpg",
+"bab": "4",
+"teka": "Tokoh ini pemerintah negeri mana?",
+"jawapan": "Kelantan",
+"kapsyen": "Pemerintah Kelantan (disebut 'Rajah of Kelantan' dalam rekod British), 1909–1910",
+"pengarang": "The National Archives UK",
+"lesen": "Public domain (no known copyright restrictions)",
+"sumber": "https://commons.wikimedia.org/wiki/File:CO_1069-495-03_(7892729340).jpg"
+},
+{
+"file": "bab4-balai-besar-alor-setar.jpg",
+"bab": "4",
+"teka": "Bangunan diraja ini terletak di bandar mana?",
+"jawapan": "Alor Setar",
+"kapsyen": "Balai Besar, balai penghadapan diraja Kedah di Alor Setar (foto 2011)",
+"pengarang": "CK Tan",
+"lesen": "CC BY 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Balai_Besar_Alor_Setar_-_panoramio.jpg"
+},
+{
+"file": "bab5-james-brooke-1847.jpg",
+"bab": "5",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "James Brooke",
+"kapsyen": "James Brooke, Raja Putih pertama Sarawak (potret oleh Francis Grant, 1847)",
+"pengarang": "Francis Grant",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Sir_James_Brooke_(1847)_by_Francis_Grant.jpg"
+},
+{
+"file": "bab5-charles-brooke.jpg",
+"bab": "5",
+"teka": "Siapakah tokoh ini?",
+"jawapan": "Charles Brooke",
+"kapsyen": "Charles Brooke, Raja Putih kedua Sarawak (memerintah 1868–1917)",
+"pengarang": "Alexander Bassano (Wellcome Collection)",
+"lesen": "CC BY 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Sir_Charles_Brooke,_Second_Rajah_of_Sarawak_Wellcome_V0037393.jpg"
+},
+{
+"file": "bab5-peta-perluasan-sarawak.png",
+"bab": "5",
+"teka": "Peta ini menunjukkan perluasan wilayah negeri mana?",
+"jawapan": "Sarawak",
+"kapsyen": "Peta perluasan sempadan Sarawak di bawah pemerintahan keluarga Brooke, 1841–1905",
+"pengarang": "Tidak diketahui",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Expanding_Boundaries_of_Sarawak.png"
+},
+{
+"file": "bab5-astana-kuching-1890.jpg",
+"bab": "5",
+"teka": "Istana Raja Brooke ini terletak di bandar mana?",
+"jawapan": "Kuching",
+"kapsyen": "Astana, istana keluarga Brooke di Kuching, Sarawak, sekitar 1890",
+"pengarang": "G.R. Lambert \u0026 Co.",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_91763_-_Lambert_%26_Co.,_G.R._-_Singapore_-_Palace_of_the_Prince_of_Kuching_in_Sarawak_-_circa_1890.tif"
+},
+{
+"file": "bab5-peta-politik-borneo-1892.jpg",
+"bab": "5",
+"teka": "Pulau apakah dalam peta ini?",
+"jawapan": "Borneo",
+"kapsyen": "Peta lakaran Borneo oleh Theodor Posewitz (1892) yang menunjukkan pembahagian politik pulau itu",
+"pengarang": "Theodor Posewitz",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Borneo_Political_1890.jpg"
+},
+{
+"file": "bab5-kudat-1890an.jpg",
+"bab": "5",
+"teka": "Bandar ini terletak di negeri mana hari ini?",
+"jawapan": "Sabah",
+"kapsyen": "Kudat, Borneo Utara, pada tahun 1890-an semasa pentadbiran Syarikat Borneo Utara British",
+"pengarang": "Dr. Johnstone; A.J. West (pegawai Syarikat Borneo Utara British)",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:OldKudat-1.gif"
+},
+{
+"file": "bab5-bendera-borneo-utara-1882.jpg",
+"bab": "5",
+"teka": "Bendera ini milik wilayah mana?",
+"jawapan": "Borneo Utara (Sabah)",
+"kapsyen": "Bendera Borneo Utara (1882–1902) semasa pentadbiran Syarikat Borneo Utara British (lukisan semula digital)",
+"pengarang": "Fry1989",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Flag_of_North_Borneo_(1882%E2%80%931902).svg"
+},
+{
+"file": "bab5-kubu-margherita-kuching.jpg",
+"bab": "5",
+"teka": "Kubu ini terletak di bandar mana?",
+"jawapan": "Kuching",
+"kapsyen": "Kubu Margherita di Kuching, Sarawak, kubu yang dibina pada zaman Charles Brooke (foto 2020)",
+"pengarang": "Damian Pankowiec",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Fort_Margherita_in_Kuching_sarawak.jpg"
+},
+{
+"file": "bab6-lombong-bijih-timah-tronoh-1910.jpg",
+"bab": "6",
+"teka": "Kegiatan ekonomi apakah dalam foto ini?",
+"jawapan": "Perlombongan bijih timah",
+"kapsyen": "Lombong bijih timah di Tronoh, berhampiran Ipoh, Perak, sekitar 1910",
+"pengarang": "Kleingrothe, C.J. (Kleingrothe, Carl Josef, 1864-1925)",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_79980_-_Kleingrothe,_C.J._-_Medan_-_Tin_mine_at_Tronoh_in_Ipoh,_Malaysia_-_circa_1910.tif"
+},
+{
+"file": "bab6-menoreh-getah-1910.jpg",
+"bab": "6",
+"teka": "Kegiatan ekonomi apakah dalam foto ini?",
+"jawapan": "Menoreh getah",
+"kapsyen": "Menoreh pokok getah di sebuah ladang di Tanah Melayu, sekitar 1910",
+"pengarang": "Kleingrothe, C.J. (Kleingrothe, Carl Josef, 1864-1925)",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_79938_-_Kleingrothe,_C.J._-_Medan_-_Tapping_of_twelve-_and_fifteen-year-old_rubber_trees_at_a_plantation_in_Malaysia_-_circa_1910.tif"
+},
+{
+"file": "bab6-stesen-kereta-api-tampin-1909.jpg",
+"bab": "6",
+"teka": "Pengangkutan apakah yang menggunakan stesen ini?",
+"jawapan": "Kereta api",
+"kapsyen": "Stesen kereta api Pulau Sebang (Tampin), persimpangan ke Melaka, Keretapi Negeri-Negeri Melayu Bersekutu (FMSR), 1909",
+"pengarang": "Federated Malay States Railways (now KTMB)",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Malacca_junction_at_Pulau_Sebang_(Tampin)_railway_station_in_1909.jpg"
+},
+{
+"file": "bab6-pelombong-bijih-timah-wanita-perak.jpg",
+"bab": "6",
+"teka": "Bahan galian apakah yang didulang wanita ini?",
+"jawapan": "Bijih timah",
+"kapsyen": "Wanita mendulang bijih timah di Perak (foto lama)",
+"pengarang": "Tidak diketahui",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Women_tin_miners_in_Perak,_late_19th_century.jpg"
+},
+{
+"file": "bab6-kuala-lumpur-1900.jpg",
+"bab": "6",
+"teka": "Bandar apakah dalam foto ini?",
+"jawapan": "Kuala Lumpur",
+"kapsyen": "Pemandangan bandar Kuala Lumpur, sekitar 1900",
+"pengarang": "G.R. Lambert \u0026 Co.",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:KITLV_-_105899_-_Lambert_%26_Co.,_G.R._-_Singapore_-_Panoramic_view_of_Kuala_Lumpur_-_circa_1900.tif"
+},
+{
+"file": "bab6-kereta-api-nnmb-1902.jpg",
+"bab": "6",
+"teka": "Pengangkutan apakah dalam foto ini?",
+"jawapan": "Kereta api",
+"kapsyen": "Kereta api dan stesen di Negeri-Negeri Melayu Bersekutu, daripada buku Handbook of the Federated Malay States (1902)",
+"pengarang": "H. Conway Belfield (buku); Internet Archive Book Images",
+"lesen": "Public domain (no known copyright restrictions)",
+"sumber": "https://commons.wikimedia.org/wiki/File:Handbook_of_the_federated_Malay_states_(1902)_(14595395638).jpg"
+},
+{
+"file": "bab7-ekspedisi-british-sungai-perak-1876.jpg",
+"bab": "7",
+"teka": "Peperangan apakah yang digambarkan dalam ukiran ini?",
+"jawapan": "Perang Perak (1875–1876)",
+"kapsyen": "Ukiran ekspedisi tentera British menyusur Sungai Perak pada 1876, semasa Perang Perak selepas kematian J.W.W. Birch di Pasir Salak (1875)",
+"pengarang": "C. R.",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Blue-jackets_and_marines_poling_the_British_expedition_up_the_Perak_river,_1876.jpg"
+},
+{
+"file": "bab7-tugu-kubu-mat-salleh-tambunan.jpg",
+"bab": "7",
+"teka": "Batu peringatan ini menandakan kubu pejuang mana?",
+"jawapan": "Mat Salleh",
+"kapsyen": "Batu peringatan di Tambunan, Sabah, menandakan tapak kubu Mat Salleh tempat beliau gugur pada 1900 (foto 2011)",
+"pengarang": "CEphoto, Uwe Aranas",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Tambunan_Sabab_Mat-Salleh-Memorial-01.jpg"
+},
+{
+"file": "bab7-kompleks-sejarah-pasir-salak.jpg",
+"bab": "7",
+"teka": "Kompleks sejarah ini terletak di mana?",
+"jawapan": "Pasir Salak, Perak",
+"kapsyen": "Rumah tradisional Melayu di Kompleks Sejarah Pasir Salak, Perak, tapak yang berkaitan dengan peristiwa pembunuhan J.W.W. Birch pada 1875 (foto 2012)",
+"pengarang": "spicytropic",
+"lesen": "CC BY-SA 3.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Historical_Complex_Pasir_Salak,_Perak_-_panoramio.jpg"
+},
+{
+"file": "bab7-relief-rentap.jpg",
+"bab": "7",
+"teka": "Siapakah pejuang Iban yang diabadikan di sini?",
+"jawapan": "Rentap",
+"kapsyen": "Relief Rentap pada tugu peringatan Rentap (Libau) di Sarawak (foto 2008)",
+"pengarang": "D-M",
+"lesen": "CC BY-SA 3.0 de",
+"sumber": "https://commons.wikimedia.org/wiki/File:Rentap.jpg"
+},
+{
+"file": "bab7-patung-antanom-tenom.jpg",
+"bab": "7",
+"teka": "Patung pahlawan Murut ini memperingati siapa?",
+"jawapan": "Antanom",
+"kapsyen": "Patung Ontoros Antanom di Tenom, Sabah; rupa patung ini rekaan kerana tiada foto atau lakaran asal beliau (foto 2011)",
+"pengarang": "CEphoto, Uwe Aranas",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Tenom_Statue-of-Ontoros-Antanom.JPG"
+},
+{
+"file": "bab7-kolej-melayu-kuala-kangsar.jpg",
+"bab": "7",
+"teka": "Sekolah ini terletak di bandar mana?",
+"jawapan": "Kuala Kangsar",
+"kapsyen": "Kolej Melayu Kuala Kangsar (MCKK), Perak, yang ditubuhkan pada 1905 (foto 2015)",
+"pengarang": "Miss Prema Darshini",
+"lesen": "CC BY-SA 4.0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Malay_College_Kuala_Kangsar.jpg"
+},
+{
+"file": "bab8-durbar-kuala-kangsar-1897.jpg",
+"bab": "8",
+"teka": "Persidangan raja-raja dalam foto ini dikenali sebagai?",
+"jawapan": "Durbar pertama (1897)",
+"kapsyen": "Durbar pertama di Kuala Kangsar, 1897: antara yang duduk ialah Sultan Idris (Perak), Sultan Abdul Samad (Selangor), Sultan Ahmad (Pahang), Yang di-Pertuan Besar Negeri Sembilan dan pegawai British",
+"pengarang": "G.R. Lambert \u0026 Co.",
+"lesen": "Public domain",
+"sumber": "https://commons.wikimedia.org/wiki/File:Sultans_at_the_first_Malayan_Durbar.jpg"
+},
+{
+"file": "bab8-sultan-terengganu-1909.jpg",
+"bab": "8",
+"teka": "Tokoh ini sultan bagi negeri mana?",
+"jawapan": "Terengganu",
+"kapsyen": "Sultan Terengganu di Istana Maziah, Kuala Terengganu, 26 Julai 1909",
+"pengarang": "The National Archives UK",
+"lesen": "Public domain (no known copyright restrictions)",
+"sumber": "https://commons.wikimedia.org/wiki/File:CO_1069-494-27_(7888237066).jpg"
+},
+{
+"file": "bab8-cap-mohor-sultan-muhammad-iv-kelantan.jpg",
+"bab": "8",
+"teka": "Cap mohor ini milik sultan mana?",
+"jawapan": "Sultan Muhammad IV (Kelantan)",
+"kapsyen": "Cap mohor dan tandatangan Sultan Muhammad IV, Sultan Kelantan, pada surat bertarikh 16 September 1918",
+"pengarang": "Sultan Muhammad IV (Kelantan)",
+"lesen": "CC0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Cap_Mohor_Sultan_Kelantan_Sultan_Muhammad_IV.jpg"
+},
+{
+"file": "bab8-undang-undang-tubuh-kerajaan-johor.jpg",
+"bab": "8",
+"teka": "Undang-undang tubuh negeri manakah dalam buku ini?",
+"jawapan": "Johor",
+"kapsyen": "Buku Undang-Undang Tubuh Kerajaan Johor dipamerkan di Pameran Raja Kita (foto 2024)",
+"pengarang": "Wiki Farazi",
+"lesen": "CC0",
+"sumber": "https://commons.wikimedia.org/wiki/File:Exhibit_of_Undang-Undang_Tubuh_Kerajaan_Negeri_Johor_at_Pameran_Raja_Kita_in_conjunction_with_the_coronation_of_Ibrahim_Iskandar_of_Johor_as_Yang_di-Pertuan_Agong_XVII_20240901_125301.jpg"
+},
+{
+"file": "bab8-sultan-idris-raja-chulan-london-1906.jpg",
+"bab": "8",
+"teka": "Siapakah sultan Perak di sebelah kanan?",
+"jawapan": "Sultan Idris",
+"kapsyen": "Sultan Idris Murshidul Adzam Shah dari Perak (kanan) bersama Raja Chulan (kiri) di Bangunan Parlimen, London, 1906",
+"pengarang": "Sir Benjamin Stone",
+"lesen": "Public domain (no known copyright restrictions)",
+"sumber": "https://commons.wikimedia.org/wiki/File:Sir_Benjamin_Stone%27s_pictures;_records_of_national_life_and_history_reproduced_from_the_collection_of_photographs_made_by_Sir_Benjamin_Stone,_M.P_(1906)_(14592056410).jpg"
+},
+{
+"file": "bab8-sultan-perak-dan-pengiring-1897.jpg",
+"bab": "8",
+"teka": "Sultan negeri manakah dalam foto ini?",
+"jawapan": "Perak",
+"kapsyen": "Sultan Perak bersama pegawai dan pengiring baginda, 1897",
+"pengarang": "The National Archives UK",
+"lesen": "Public domain (no known copyright restrictions)",
+"sumber": "https://commons.wikimedia.org/wiki/File:CO_1069-505-07_(7893293158).jpg"
+}
+];
 
 /* ================= Keadaan & simpanan ================= */
 const $=s=>document.querySelector(s);
@@ -3166,6 +3686,8 @@ let KNOWN=new Set();
   else store.get('sej3known',[]).forEach(i=>{if(Number.isInteger(i)&&i<LEGACY&&i<CARDS.length)KNOWN.add(i)});})();
 const G=Object.assign({xp:0,streak:0,last:'',right:{},badges:{},blitz:0,matchBest:0,quizPerfect:0,games:0,mute:false},store.get('sej3game',{}));
 const rk=i=>CARDS[i][3];  // G.right disimpan ikut ID kad
+const READ=()=>store.get('sej3read',{});   // ditulis oleh nota.html
+const TX=()=>G.xp+30*Object.keys(READ()).length;
 const save=()=>{
   store.set('sej3known_id',[...KNOWN].map(rk)); store.set('sej3game',G);
   // kemajuan Bab 1-8 untuk studies.html (kad rentas 'x' tidak dikira)
@@ -3220,12 +3742,12 @@ function toast(e,h,d){const t=document.createElement('div');t.className='tst';t.
 let pendingLvl=0;
 function addXP(n,el){
   if(n<=0) return;
-  const before=levelOf(G.xp); G.xp+=n;
+  const before=levelOf(TX()); G.xp+=n;
   const d=today();
   if(G.last!==d){const y=new Date();y.setDate(y.getDate()-1);const yd=y.getFullYear()+'-'+(y.getMonth()+1)+'-'+y.getDate();
     G.streak=(G.last===yd)?G.streak+1:1;G.last=d;}
   if(el) floatXP('+'+n,el);
-  const after=levelOf(G.xp); if(after>before) pendingLvl=after;
+  const after=levelOf(TX()); if(after>before){pendingLvl=after;G.lvSeen=after;}
   save(); hud(); checkBadges();
 }
 function showLevelUp(){ if(!pendingLvl) return; const l=pendingLvl; pendingLvl=0;
@@ -3247,6 +3769,9 @@ const BADGES=[
   ['blitz25','🌩️','Halilintar','25+ markah dalam Lawan Masa',()=>G.blitz>=25],
   ['match','🧩','Pemadan Pantas','Padan Pasangan tanpa silap',()=>G.badges.match],
   ['time','📜','Penjaga Masa','Susun garis masa 5/5 pusingan sempurna',()=>G.badges.time],
+  ['read1','📖','Ulat Buku','Tandakan satu bab nota selesai',()=>Object.keys(READ()).length>=1],
+  ['readall','📚','Pembaca Tegar','Selesai baca nota semua 8 bab',()=>['1','2','3','4','5','6','7','8'].every(b=>READ()[b])],
+  ['eye','🦅','Mata Helang','Teka Gambar 8/10 atau lebih',()=>G.badges.eye],
   ['s3','🔥','3 Hari Berturut','Belajar 3 hari berturut-turut',()=>G.streak>=3],
   ['s7','🏆','Seminggu Gigih','Belajar 7 hari berturut-turut',()=>G.streak>=7],
   ['star1','⭐','Tuan Pulau','3 bintang di satu bab',()=>Object.keys(T).some(t=>starsOf(t)===3)],
@@ -3264,10 +3789,10 @@ function answer(i,ok){
 
 /* ================= HUD ================= */
 function hud(){
-  const l=levelOf(G.xp),a=need(l),b=need(l+1);
+  const x=TX(),l=levelOf(x),a=need(l),b=need(l+1);
   $('#lvl').textContent=l; $('#rankName').textContent=rankOf(l);
-  $('#xpBar').style.width=Math.min(100,100*(G.xp-a)/(b-a))+'%';
-  $('#xpTxt').textContent=G.xp+' XP · '+(b-G.xp)+' lagi ke '+rankOf(l+1);
+  $('#xpBar').style.width=Math.min(100,100*(x-a)/(b-a))+'%';
+  $('#xpTxt').textContent=x+' XP · '+(b-x)+' lagi ke '+rankOf(l+1);
   $('#streak').textContent=G.streak; $('#knownN').textContent=KNOWN.size+'/'+CARDS.length;
   $('#mute').textContent=G.mute?'🔇':'🔊';
 }
@@ -3281,7 +3806,7 @@ try{const b=new URLSearchParams(location.search).get('bab');if(b&&T[b])SEL=b;}ca
 function shortName(t){return T[t][0].replace(/^Bab \d+ · /,'')}
 function renderMap(){
   $('#isles').innerHTML=ORDER.map(t=>{const[k,n]=chapStats(t),s=starsOf(t);
-    return `<button class="isle${SEL===t?' sel':''}" data-t="${t}" style="--c:var(${T[t][1]})" aria-pressed="${SEL===t}">
+    return `<button class="isle${SEL===t?' sel':''}" data-t="${t}" style="--c:var(${T[t][1]})" aria-pressed="${SEL===t}" aria-label="${t==='x'?'Rentas Bab':T[t][0]}: ${s} daripada 3 bintang, ${k} daripada ${n} kad dihafal">
       <span class="n">${t==='x'?'∞':t}</span><span class="nm">${t==='x'?'Rentas Bab':shortName(t)}</span>
       <span class="st" aria-label="${s} bintang">${'★'.repeat(s)}${'☆'.repeat(3-s)}</span><span class="ct">${k}/${n}</span></button>`}).join('');
   document.querySelectorAll('.isle').forEach(b=>b.onclick=()=>{SEL=SEL===b.dataset.t?null:b.dataset.t;SFX.flip();renderMap();});
@@ -3324,6 +3849,7 @@ const MODES=[
   ['masa','⏱️','Lawan Masa','60 saat. Berapa banyak yang betul?',()=>G.blitz?'Rekod: '+G.blitz:''],
   ['padan','🧩','Padan Pasangan','Padankan soalan dengan jawapan.',()=>G.matchBest?'Terpantas: '+G.matchBest+'s':''],
   ['susun','📜','Susun Garis Masa','Susun peristiwa ikut tahun.',()=>''],
+  ['gambar','🖼️','Teka Gambar','Foto sejarah sebenar. Kenal siapa/apa?',()=>G.picBest?'Terbaik: '+G.picBest+'/10':''],
 ];
 function renderModes(){
   $('#modes').innerHTML=MODES.map(([id,e,h,d,r])=>`<button class="mode" data-m="${id}"><span class="e">${e}</span><span class="h">${h}</span><span class="d">${d}</span><span class="rec">${r()}</span></button>`).join('');
@@ -3342,7 +3868,7 @@ function stage(title,html){
 }
 function home(){clearInterval(timerId);SID++;document.body.classList.remove('playing','listing');$('#stage').innerHTML='';renderMap();renderBadges();hud();showLevelUp();}
 function scope(){return SEL?(SEL==='x'?'Rentas Bab':T[SEL][0]):'Semua bab'}
-function start(m){({kad:playKad,kuiz:playQuiz,masa:playBlitz,padan:playMatch,susun:playTime})[m]();}
+function start(m){({kad:playKad,kuiz:playQuiz,masa:playBlitz,padan:playMatch,susun:playTime,gambar:playPic})[m]();}
 
 function result(e,h,sc,gain,again,missed){
   const rv=(missed&&missed.length)?`<div class="review"><h4>Ulang kaji soalan yang tersilap</h4>${missed.map(i=>`<div><b>${CARDS[i][1]}</b><br>${CARDS[i][2]}</div>`).join('')}</div>`:'';
@@ -3391,7 +3917,7 @@ addEventListener('keydown',e=>{if(document.body.classList.contains('playing')&&!
 
 /* ---- Kuiz Kilat ---- */
 function playQuiz(){
-  const ids=pickCards(pool(i=>txtLen(i)<=180),10);let k=0,lives=3,combo=0,best=0,score=0,xp=0;const missed=[];
+  const ids=pickCards(pool(i=>txtLen(i)<=180),10);let k=0,lives=3,combo=0,best=0,score=0,xp=0,fifty=1;const missed=[];
   stage('⚡ Kuiz Kilat · '+scope());
   const show=()=>{
     if(k>=ids.length||lives<=0){
@@ -3408,7 +3934,11 @@ function playQuiz(){
     });
     $('#sv').innerHTML=`<div class="meters" id="mt"></div>`+Q.html;Q.bind();meters();
   };
-  const meters=()=>{$('#mt').innerHTML=`<span class="pill">Soalan ${Math.min(k+1,ids.length)}/${ids.length}</span><span class="pill hearts">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</span><span class="pill combo${combo>=2?' hot':''}">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span>`;};
+  // Bantuan 50:50 — buang dua pilihan salah, sekali sahaja setiap pusingan
+  const use5050=()=>{if(!fifty)return;const wrong=shuffle([...document.querySelectorAll('.opt:not(:disabled)')].filter(o=>+o.dataset.j!==ids[k]));
+    if(wrong.length<2)return;fifty=0;wrong.slice(0,2).forEach(o=>{o.disabled=true;o.classList.add('dim')});SFX.flip();meters();};
+  const meters=()=>{$('#mt').innerHTML=`<span class="pill">Soalan ${Math.min(k+1,ids.length)}/${ids.length}</span><span class="pill hearts">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</span><span class="pill combo${combo>=2?' hot':''}">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span>`+
+    (fifty?`<button class="pill lifeline" id="ff" title="Buang dua jawapan salah (sekali sahaja)">🎯 50:50</button>`:'');const f=$('#ff');if(f)f.onclick=use5050;};
   show();
 }
 
@@ -3490,6 +4020,38 @@ function playTime(){
   show();
 }
 
+/* ---- Teka Gambar (foto Wikimedia Commons) ---- */
+const escH=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function playPic(){
+  if(IMGS.length<4){stage('🖼️ Teka Gambar');$('#sv').innerHTML='<p class="hint">Tiada cukup foto lagi.</p>';return;}
+  let pool=IMGS.filter(g=>!SEL||g.bab===SEL);if(pool.length<6)pool=IMGS;
+  const qs=shuffle(pool).slice(0,10);let k=0,score=0,combo=0,xp=0;const missed=[];
+  stage('🖼️ Teka Gambar · '+(pool===IMGS&&SEL?'Semua bab':scope()));
+  const show=()=>{
+    if(k>=qs.length){if(score>=8)G.badges.eye=1;G.picBest=Math.max(G.picBest||0,score);addXP(xp);SFX.win();confetti(score*15);
+      result(score>=8?'🦅':'🖼️',score>=8?'Mata Helang!':'Pusingan tamat',`${score}/${qs.length} betul`,xp,playPic);
+      if(missed.length)$('.result').insertAdjacentHTML('beforeend',`<div class="review"><h4>Ulang kaji</h4>${missed.join('')}</div>`);return;}
+    const g=qs[k];
+    // pilihan: jawapan lain yang berbeza, utamakan bab yang sama
+    // pilihan salah daripada soalan sejenis dahulu (tokoh dengan tokoh, tempat dengan tempat), kemudian bab yang sama
+    const kind=t=>/siapa/i.test(t)?'p':/bandar|pulau|negeri|terletak|tempat|di mana/i.test(t)?'l':'o';
+    const simi=x=>(kind(x.teka)===kind(g.teka)?2:0)+(x.bab===g.bab?1:0);
+    const others=shuffle(IMGS.filter(x=>x.jawapan!==g.jawapan)).sort((a,b)=>simi(b)-simi(a));
+    const opts=[g.jawapan];for(const o of others){if(!opts.includes(o.jawapan))opts.push(o.jawapan);if(opts.length===4)break;}
+    const sh=shuffle(opts);
+    $('#sv').innerHTML=`<div class="meters"><span class="pill">Gambar ${k+1}/${qs.length}</span><span class="pill">✅ ${score}</span><span class="pill combo">🔥 ×${combo}</span><span class="pill">✨ ${xp} XP</span></div>
+      <figure class="picq" style="--c:var(${T[g.bab][1]})"><img src="gambar/${g.file}" alt="Gambar teka-teki"><figcaption class="pk">📷 ${escH(g.pengarang)} · ${escH(g.lesen)} · <a href="${escH(g.sumber)}" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure>
+      <div class="qcard" style="--c:var(${T[g.bab][1]})"><div class="lbl">${T[g.bab][0]}</div><div class="q">${escH(g.teka)}</div></div>
+      <div class="opts">${sh.map((v,n)=>`<button class="opt" data-ok="${v===g.jawapan?1:0}" data-k="${'ABCD'[n]}">${escH(v)}</button>`).join('')}</div>`;
+    document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.dataset.ok==='1';document.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.dataset.ok==='1')o.classList.add('ok');else if(o!==b)o.classList.add('dim')});
+      if(ok){score++;combo++;const gn=10+Math.min(combo,5)*2;xp+=gn;SFX.ok(combo);floatXP('+'+gn,b);}else{b.classList.add('no');combo=0;SFX.no();missed.push(`<div><b>${escH(g.teka)}</b> ${escH(g.jawapan)}<br><small>${escH(g.kapsyen)}</small></div>`);}
+      $('#sv').insertAdjacentHTML('beforeend',`<div class="picinfo">💡 ${escH(g.kapsyen)}</div><button class="next" id="nx">Seterusnya ⏎</button>`);$('#nx').onclick=()=>{k++;show()};$('#nx').focus();
+    });
+  };
+  show();
+}
+
 /* ================= Senarai & cetak ================= */
 const sel=$('#filter');
 sel.innerHTML='<option value="">Semua topik ('+CARDS.length+')</option>'+Object.entries(T).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join('');
@@ -3511,7 +4073,7 @@ sel.onchange=renderList;
 $('#shuffle').onclick=()=>{order=shuffle(order);renderList()};
 $('#toList').onclick=()=>{document.body.classList.add('listing');if(SEL)sel.value=SEL;renderList();scrollTo(0,0)};
 $('#backHub').onclick=home;
-$('#resetAll').onclick=()=>{if(confirm('Padam semua XP, lencana dan kad dihafal?')){KNOWN.clear();Object.keys(G).forEach(k=>delete G[k]);Object.assign(G,{xp:0,streak:0,last:'',right:{},badges:{},blitz:0,matchBest:0,quizPerfect:0,games:0,mute:false});save();home();}};
+$('#resetAll').onclick=()=>{if(confirm('Padam semua XP, lencana dan kad dihafal?')){KNOWN.clear();Object.keys(G).forEach(k=>delete G[k]);Object.assign(G,{xp:0,streak:0,last:'',right:{},badges:{},blitz:0,matchBest:0,quizPerfect:0,games:0,mute:false});store.set('sej3read',{});save();home();}};
 
 // Halaman cetak: 10 kad sehelai; muka belakang ditukar kiri-kanan supaya sejajar bila dicetak dua muka (long edge).
 (function(){
@@ -3528,6 +4090,10 @@ $('#resetAll').onclick=()=>{if(confirm('Padam semua XP, lencana dan kad dihafal?
 })();
 
 save();hud();checkBadges();renderMap();renderBadges();
+// tahap yang sudah diraikan; XP bacaan nota (tab lain) boleh menaikkan pangkat tanpa addXP()
+function lvlSync(){const l=levelOf(TX());if(!G.lvSeen)G.lvSeen=l;else if(l>G.lvSeen){G.lvSeen=l;pendingLvl=l;if(!document.body.classList.contains('playing'))showLevelUp();}store.set('sej3game',G);}
+lvlSync();
+addEventListener('focus',()=>{hud();checkBadges();lvlSync();if(!document.body.classList.contains('playing')){renderMap();renderBadges();}});
 document.fonts&&document.fonts.ready.then(drawRoute);
 </script>
 </body>
