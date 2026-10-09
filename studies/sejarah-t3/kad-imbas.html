@@ -176,6 +176,9 @@ body.playing #stage{display:block}
 .result h3{font-family:var(--disp);font-weight:400;font-size:1.6rem;margin:.3em 0 .1em}
 .result .sc{font-size:1.1rem;font-weight:800}
 .result .gain{font-family:var(--disp);color:var(--gold);font-size:1.3rem;margin:.4em 0}
+.result .starline{font-weight:800;margin:.1em 0 .7em;color:var(--muted)}
+.result .starline b{color:#f2b705;font-size:1.35em;letter-spacing:2px;vertical-align:-2px}
+.result .starline.up{color:inherit;animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
 .review{text-align:left;margin:18px auto 0;max-width:640px}
 .review h4{margin:0 0 8px}
 .review div{padding:10px 12px;border-radius:12px;background:var(--panel);border-left:5px solid var(--red);margin-bottom:8px;font-size:.88rem}
@@ -3689,7 +3692,7 @@ const rk=i=>CARDS[i][3];  // G.right disimpan ikut ID kad
 const READ=()=>store.get('sej3read',{});   // ditulis oleh nota.html
 const TX=()=>G.xp+30*Object.keys(READ()).length;
 const save=()=>{
-  store.set('sej3known_id',[...KNOWN].map(rk)); store.set('sej3game',G);
+  lockStars();store.set('sej3known_id',[...KNOWN].map(rk)); store.set('sej3game',G);
   // kemajuan Bab 1-8 untuk studies.html (kad rentas 'x' tidak dikira)
   const prog={}; CARDS.forEach((c,i)=>{if(c[0]==='x')return;const r=prog[c[0]]||(prog[c[0]]=[0,0]); r[1]++; if(KNOWN.has(i)) r[0]++;});
   store.set('sej3progress',prog);
@@ -3756,7 +3759,28 @@ function showLevelUp(){ if(!pendingLvl) return; const l=pendingLvl; pendingLvl=0
 $('#lvlOk').onclick=()=>$('#lvlup').classList.remove('on');
 
 function chapStats(t){let k=0,n=0;CARDS.forEach((c,i)=>{if(c[0]===t){n++;if(KNOWN.has(i))k++;}});return[k,n]}
-function starsOf(t){const[k,n]=chapStats(t);const p=n?k/n:0;return p>=1?3:p>=.67?2:p>=.34?1:0}
+// Bintang bab (lihat tests/patch_stars.py): ★1 menang 1 permainan bab ini atau kemajuan 15%, ★2 kemajuan 50%, ★3 90% kad dihafal.
+// Kemajuan = kad dihafal (1) + kad betul sekali (½) + bonus 0.2 setiap jawapan betul dalam permainan bab ini (maks 30%). Bintang tidak pernah berkurang.
+function chapPts(t){let p=0,n=0;CARDS.forEach((c,i)=>{if(c[0]===t){n++;p+=KNOWN.has(i)?1:((G.right[c[3]]||0)>0?.5:0);}});
+  return n?Math.min(1,(p+Math.min(.3*n,.2*((G.hits||{})[t]||0)))/n):0}
+function starsNow(t){const[k,n]=chapStats(t),p=chapPts(t);return n&&k>=.9*n?3:p>=.5?2:(p>=.15||(G.wins||{})[t])?1:0}
+function starsOf(t){return Math.max(starsNow(t),(G.stars||{})[t]||0)}
+function lockStars(){G.stars=G.stars||{};Object.keys(T).forEach(t=>{const s=starsNow(t);if(s>(G.stars[t]||0))G.stars[t]=s;});}
+function nextStarTip(t,s){const[k,n]=chapStats(t);
+  if(s>=3)return 'Bab dikuasai!';
+  if(s===2)return `Hafal lagi ${Math.max(1,Math.ceil(.9*n)-k)} kad untuk ★★★`;
+  if(s===1)return `Lagi ${Math.max(1,Math.ceil((.5-chapPts(t))*100))}% kemajuan untuk ★★`;
+  return 'Menang satu permainan bab ini untuk ★ pertama';}
+/* Kiraan jawapan sesi semasa: setiap permainan memanggil SFX.ok / SFX.no bagi setiap jawapan */
+let RUN={ok:0,no:0,t:null,s0:0};
+{const ok0=SFX.ok,no0=SFX.no;SFX.ok=(...a)=>{RUN.ok++;return ok0(...a)};SFX.no=(...a)=>{RUN.no++;return no0(...a)};}
+function starCredit(){const t=RUN.t;if(!t)return;RUN.t=null;
+  G.hits=G.hits||{};G.wins=G.wins||{};
+  G.hits[t]=(G.hits[t]||0)+RUN.ok;
+  if(RUN.ok>=3&&RUN.ok>=RUN.no)G.wins[t]=1;
+  lockStars();const s=starsOf(t),up=s>RUN.s0,el=document.querySelector('#sv .result .gain');
+  if(el)el.insertAdjacentHTML('afterend',`<div class="starline${up?' up':''}" id="starline">${t==='x'?'Rentas Bab':'Bab '+t}: <b>${'★'.repeat(s)}${'☆'.repeat(3-s)}</b> · ${up?'⭐ Bintang baharu!':nextStarTip(t,s)}</div>`);
+  if(up){confetti(120);toast('⭐','Bintang baharu!',(t==='x'?'Rentas Bab':'Bab '+t)+' kini '+s+' bintang');}}
 const BADGES=[
   ['first','🌱','Langkah Pertama','Jawab betul soalan pertama',()=>G.games>0||KNOWN.size>0],
   ['k25','🧠','Ingatan Tajam','25 kad dihafal',()=>KNOWN.size>=25],
@@ -3861,7 +3885,7 @@ let timerId=0,SID=0;
 // setTimeout yang terbatal sendiri jika pemain keluar / mula permainan lain
 function later(fn,ms){const s=SID;return setTimeout(()=>{if(s===SID)fn()},ms)}
 function stage(title,html){
-  clearInterval(timerId);SID++;
+  clearInterval(timerId);SID++;RUN={ok:0,no:0,t:SEL&&T[SEL]?SEL:null,s0:0};if(RUN.t)RUN.s0=starsOf(RUN.t);
   document.body.classList.add('playing');scrollTo(0,0);
   $('#stage').innerHTML=`<div class="stagebar"><span class="ttl">${title}</span><button class="quit" id="quit">✕ Keluar</button></div><div id="sv">${html||''}</div>`;
   $('#quit').onclick=home;
@@ -3875,7 +3899,7 @@ function result(e,h,sc,gain,again,missed){
   $('#sv').innerHTML=`<div class="result"><div class="big-e">${e}</div><h3>${h}</h3><div class="sc">${sc}</div><div class="gain">+${gain} XP</div>
     <div class="row"><button class="next" id="again">Main lagi</button><button class="next alt" id="toHub">Ke peta</button></div>${rv}</div>`;
   $('#again').onclick=again;$('#toHub').onclick=home;$('#again').focus();
-  G.games++;save();checkBadges();later(showLevelUp,700);
+  G.games++;starCredit();save();checkBadges();later(showLevelUp,700);
 }
 
 /* ---- Kad Imbas ---- */
@@ -3893,7 +3917,7 @@ function playKad(){
     const bc=$('#bc'),flip=()=>{bc.classList.toggle('on');SFX.flip();$('#rate').style.visibility='visible';};
     bc.onclick=flip;bc.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}};
     $('#gotit').onclick=e=>{answer(i,true);got++;xp+=3;floatXP('+3',e.target);SFX.ok();k++;later(show,250);};
-    $('#again1').onclick=()=>{answer(i,false);if(!requeued.has(i)){requeued.add(i);ids.push(i);}k++;show();};
+    $('#again1').onclick=()=>{RUN.no++;answer(i,false);if(!requeued.has(i)){requeued.add(i);ids.push(i);}k++;show();};
   };
   show();
 }
