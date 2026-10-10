@@ -188,6 +188,24 @@ body.focus .chunk.cur{animation:slidein .35s ease-out}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 </style>
+<!--motion:css:start-->
+<style>
+/* Lapisan gerakan nota (lihat nota.js) */
+details.cq > :not(summary){transform-origin:top left}
+details.cq summary::before{display:inline-block;transition:transform .45s cubic-bezier(.3,1.45,.5,1)}
+details.cq[open] summary::before{transform:rotate(360deg) scale(1.15)}
+details.cq[open]{border-color:var(--c,var(--forest))}
+.lv.mflash .lvhead{animation:mflash 1.4s ease-out}
+@keyframes mflash{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c,#f2b705) 70%,transparent)}100%{box-shadow:0 0 0 18px transparent}}
+.mxp{position:fixed;left:0;top:0;z-index:70;pointer-events:none;font:900 1.05rem system-ui;color:#fff;background:var(--forest,#2b8a3e);
+  padding:6px 12px;border-radius:99px;box-shadow:0 4px 0 rgba(0,0,0,.25);white-space:nowrap}
+.mburst{position:fixed;width:0;height:0;pointer-events:none;z-index:71}
+.mburst i{position:absolute;left:0;top:0;width:8px;height:8px;border-radius:50%}
+@media (prefers-reduced-motion: reduce){.lv.mflash .lvhead{animation:none}details.cq summary::before{transition:none}.mxp,.mburst{display:none}}
+@media print{.mxp,.mburst{display:none}}
+
+</style>
+<!--motion:css:end-->
 </head>
 <body>
 <a class="noprint" href="../../studies.html#geografi-t1" style="display:inline-block;margin:10px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card,var(--panel));color:var(--ink);font:700 14px system-ui;text-decoration:none">← Studies</a>
@@ -5074,5 +5092,93 @@ var LV=[[1, "Arah", "kemahiran"], [2, "Kedudukan", "kemahiran"], [3, "Peta Lakar
   map();addEventListener('focus',map);
 })();
 </script>
+<!--motion:js:start-->
+<script>
+/* Lapisan gerakan nota (dikongsi semua subjek; disuntik oleh tests/patch_motion.py).
+   Bertindak balas kepada tindakan pembaca sahaja; dimatikan apabila prefers-reduced-motion. */
+(function () {
+  if (window.__motion) return; window.__motion = 1;
+  const mq = matchMedia('(prefers-reduced-motion: reduce)');
+  const still = () => mq.matches || !document.body.animate;
+  const EASE = 'cubic-bezier(.2,.8,.2,1)', SPRING = 'cubic-bezier(.3,1.45,.5,1)';
+  const smooth = () => { document.documentElement.style.scrollBehavior = still() ? 'auto' : 'smooth'; };
+  smooth(); if (mq.addEventListener) mq.addEventListener('change', smooth);
+
+  /* 1. Checkpoint: jawapan terbuka/tertutup dengan lancar */
+  document.querySelectorAll('main details, details.cq').forEach(d => {
+    const sum = d.querySelector(':scope > summary'); if (!sum || d._m) return; d._m = 1;
+    sum.addEventListener('click', e => {
+      if (still()) return;
+      e.preventDefault(); if (d._busy) return;   // abaikan ketikan kedua semasa animasi
+      d._busy = 1;
+      const h0 = d.offsetHeight;
+      if (!d.open) {
+        d.open = true; const h1 = d.offsetHeight;
+        const body = [...d.children].filter(c => c !== sum);
+        d.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 320, easing: EASE }).onfinish = () => { d._busy = 0; };
+        body.forEach(c => c.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 360, delay: 80, easing: EASE, fill: 'backwards' }));
+      } else {
+        const h1 = sum.offsetHeight + (d.offsetHeight - d.clientHeight);
+        d.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 260, easing: EASE }).onfinish = () => { d.open = false; d._busy = 0; };
+      }
+    });
+  });
+
+  /* 2. Level selesai: cip "+30 XP" terbang ke kaunter XP */
+  function burst(x, y, c) {
+    const box = document.createElement('div'); box.className = 'mburst'; box.style.left = x + 'px'; box.style.top = y + 'px';
+    document.body.appendChild(box);
+    for (let i = 0; i < 12; i++) { const d = document.createElement('i'), a = i / 12 * 6.283, r = 26 + Math.random() * 22; d.style.background = i % 2 ? c : '#f2b705'; box.appendChild(d);
+      d.animate([{ transform: 'translate(-50%,-50%)', opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * r}px),calc(-50% + ${Math.sin(a) * r}px)) scale(.2)`, opacity: 0 }], { duration: 600, easing: 'cubic-bezier(.1,.7,.3,1)', fill: 'forwards' }); }
+    setTimeout(() => box.remove(), 700);
+  }
+  document.querySelectorAll('.done').forEach(b => {
+    b.addEventListener('click', () => {
+      const was = b.classList.contains('got'), r = b.getBoundingClientRect();
+      setTimeout(() => {
+        const xp = document.getElementById('xp');
+        if (was || !b.classList.contains('got') || still()) return;
+        b.animate([{ scale: .9 }, { scale: 1.06 }, { scale: 1 }], { duration: 420, easing: SPRING });
+        if (!xp) return;
+        const t = xp.getBoundingClientRect(), c = document.createElement('div'); c.className = 'mxp'; c.textContent = '+30 XP';
+        document.body.appendChild(c);
+        const x0 = r.left + r.width / 2, y0 = r.top, x1 = t.left + t.width / 2, y1 = t.top + t.height / 2;
+        c.animate([
+          { transform: `translate(${x0}px,${y0}px) translate(-50%,-50%) scale(.6)`, opacity: 0 },
+          { transform: `translate(${x0}px,${y0 - 60}px) translate(-50%,-50%) scale(1.25)`, opacity: 1, offset: .3 },
+          { transform: `translate(${x1}px,${y1}px) translate(-50%,-50%) scale(.5)`, opacity: .9 }],
+          { duration: 1000, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' }).onfinish = () => {
+            c.remove(); burst(x1, y1, getComputedStyle(b).getPropertyValue('--c').trim() || '#2b8a3e');
+            xp.animate([{ scale: 1.5 }, { scale: 1 }], { duration: 600, easing: SPRING });
+            const link = document.querySelector(`#lvmap a[href="#bab${b.dataset.bab}"] .n`);
+            if (link) link.animate([{ scale: 0, rotate: '-180deg' }, { scale: 1, rotate: '0deg' }], { duration: 650, easing: SPRING });
+          };
+      }, 0);
+    }, true);   // fasa tangkap: baca keadaan sebelum pengendali asal menandakan level selesai
+  });
+
+  /* 3. Peta level: level yang dituju berdenyut sebaik tiba */
+  addEventListener('hashchange', () => {
+    const lv = document.querySelector(location.hash); if (!lv || !lv.classList.contains('lv') || still()) return;
+    lv.classList.remove('mflash'); void lv.offsetWidth; setTimeout(() => lv.classList.add('mflash'), 550);
+  });
+
+  /* 4. Mod Fokus: chunk seterusnya masuk dari kanan, chunk sebelum dari kiri */
+  const order = new Map(); document.querySelectorAll('.chunk').forEach((c, i) => order.set(c, i));
+  const lastBy = new Map();
+  document.querySelectorAll('.lv').forEach(lv => { const c = lv.querySelector('.chunk.cur'); if (c) lastBy.set(lv, c); });
+  new MutationObserver(ms => ms.forEach(m => {
+    const c = m.target; if (!c.classList.contains('chunk') || !c.classList.contains('cur') || (m.oldValue || '').split(' ').includes('cur')) return;
+    const lv = c.closest('.lv'), last = lastBy.get(lv);
+    if (document.body.classList.contains('focus') && last && last !== c && !still()) {
+      const dir = order.get(c) > order.get(last) ? 1 : -1;
+      c.animate([{ opacity: 0, transform: `translateX(${dir * 40}px)` }, { opacity: 1, transform: 'none' }], { duration: 380, easing: EASE });
+    }
+    lastBy.set(lv, c);
+  })).observe(document.querySelector('main') || document.body, { subtree: true, attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+})();
+
+</script>
+<!--motion:js:end-->
 </body>
 </html>

@@ -255,6 +255,21 @@ body.listing #list{display:block}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 </style>
+<!--motion:css:start-->
+<style>
+/* Lapisan gerakan permainan (lihat kad.js) */
+.mburst{position:fixed;width:0;height:0;pointer-events:none;z-index:60}
+.mburst i{position:absolute;left:0;top:0;width:9px;height:9px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.mstar{position:fixed;left:0;top:0;z-index:61;pointer-events:none;font-size:2rem;line-height:1;color:#f2b705;
+  text-shadow:0 0 14px rgba(242,183,5,.75),0 2px 0 rgba(0,0,0,.35);will-change:transform}
+.starline .ms{display:inline-block}
+/* paling banyak 3 toast kelihatan supaya peta/keputusan tidak tertutup */
+#toast .tst:nth-last-child(n+4){display:none}
+@media (prefers-reduced-motion: reduce){.mburst,.mstar{display:none}}
+@media print{.mburst,.mstar{display:none}}
+
+</style>
+<!--motion:css:end-->
 </head>
 <body>
 <a class="noprint" href="../../studies.html#sejarah-t3" style="display:inline-block;margin:12px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 14px system-ui;text-decoration:none">← Studies</a>
@@ -4120,5 +4135,178 @@ lvlSync();
 addEventListener('focus',()=>{hud();checkBadges();lvlSync();if(!document.body.classList.contains('playing')){renderMap();renderBadges();}});
 document.fonts&&document.fonts.ready.then(drawRoute);
 </script>
+<!--motion:js:start-->
+<script>
+/* Lapisan gerakan permainan (dikongsi semua subjek; disuntik oleh tests/patch_motion.py).
+   Hanya bertindak balas kepada tindakan pemain. Tiada perubahan logik permainan:
+   fungsi asal (stage/home/result/hud) dibalut, dan DOM diperhati dengan MutationObserver.
+   Semua kesan dimatikan apabila prefers-reduced-motion. */
+(function () {
+  if (window.__motion) return; window.__motion = 1;
+  const mq = matchMedia('(prefers-reduced-motion: reduce)');
+  const still = () => mq.matches || !document.body.animate;
+  const EASE = 'cubic-bezier(.2,.8,.2,1)', SPRING = 'cubic-bezier(.3,1.45,.5,1)';
+  const go = (el, kf, o) => (el && !still()) ? el.animate(kf, Object.assign({ duration: 420, easing: EASE }, o)) : null;
+  const q = s => document.querySelector(s);
+  const chip = (t, s) => q(`[data-t="${t}"] .st`);
+  const buzz = ms => { try { if (!(typeof G !== 'undefined' && G.mute) && navigator.vibrate && !mq.matches) navigator.vibrate(ms); } catch (e) {} };
+  const chime = seq => { try { if (typeof tone === 'function') tone(seq); } catch (e) {} };
+
+  /* Percikan titik dari tengah elemen (warna bab) */
+  function burst(el, n, color) {
+    if (!el || still()) return;
+    const r = el.getBoundingClientRect(); if (!r.width) return;
+    const c = color || getComputedStyle(el).getPropertyValue('--c').trim() || '#f2b705';
+    const box = document.createElement('div'); box.className = 'mburst';
+    box.style.left = (r.left + r.width / 2) + 'px'; box.style.top = (r.top + r.height / 2) + 'px';
+    document.body.appendChild(box);
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement('i'), a = (i / n) * Math.PI * 2 + Math.random() * .4, dist = 34 + Math.random() * 30;
+      d.style.background = i % 3 ? c : '#fff'; box.appendChild(d);
+      d.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${Math.cos(a) * dist}px),calc(-50% + ${Math.sin(a) * dist}px)) scale(.2)`, opacity: 0 }],
+        { duration: 520 + Math.random() * 180, easing: 'cubic-bezier(.1,.7,.3,1)', fill: 'forwards' });
+    }
+    setTimeout(() => box.remove(), 800);
+  }
+
+  /* Kira naik nombor pertama dalam elemen (cth. "8/10 betul", "+120 XP") */
+  function countUp(el, ms) {
+    if (!el || still() || el.children.length) return;
+    const txt = el.textContent, m = txt.match(/\d+/); if (!m) return;
+    const to = +m[0], pre = txt.slice(0, m.index), post = txt.slice(m.index + m[0].length);
+    if (to < 2) return;
+    const t0 = performance.now();
+    const tick = now => { const p = Math.min(1, (now - t0) / ms), v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+      if (!el.isConnected) return;
+      el.textContent = pre + v + post; if (p < 1) requestAnimationFrame(tick); };
+    el.textContent = pre + '0' + post; requestAnimationFrame(tick);
+  }
+
+  /* 1. Skrin permainan "berkembang" daripada butang yang ditekan (FLIP dengan clip-path) */
+  let origin = null;
+  const remember = e => { const b = e.target.closest && e.target.closest('button,a,[role=button]'); if (b) origin = b.getBoundingClientRect(); };
+  document.addEventListener('pointerdown', remember, true);
+  document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && document.activeElement) origin = document.activeElement.getBoundingClientRect(); }, true);
+
+  let flightGen = 0;
+  const _stage = stage;
+  stage = function () {
+    flightGen++;
+    const was = document.body.classList.contains('playing');
+    const out = _stage.apply(this, arguments);
+    const st = q('#stage');
+    if (!was && origin && st) {
+      const s = st.getBoundingClientRect(), o = origin, cl = v => Math.max(0, v);
+      go(st, [{ clipPath: `inset(${cl(o.top - s.top)}px ${cl(s.right - o.right)}px ${cl(s.bottom - o.bottom)}px ${cl(o.left - s.left)}px round 22px)`, opacity: .4 },
+        { clipPath: 'inset(0px 0px 0px 0px round 0px)', opacity: 1 }], { duration: 480 });
+    } else if (was) go(q('#sv'), [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
+    origin = null;
+    return out;
+  };
+
+  /* 2. Kembali ke peta: hab muncul semula, bintang baharu terbang ke nod bab */
+  const seen = {};
+  Object.keys(T).forEach(t => { try { seen[t] = starsOf(t); } catch (e) { seen[t] = 0; } });
+  const _home = home;
+  home = function () {
+    const was = document.body.classList.contains('playing');
+    const out = _home.apply(this, arguments);
+    if (was) go(q('#hub') || document.body.firstElementChild, [{ opacity: 0, transform: 'scale(.985)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+    const won = Object.keys(T).filter(t => { let s = 0; try { s = starsOf(t); } catch (e) {} const up = s > (seen[t] || 0); seen[t] = s; return up; });
+    if (won.length && !still()) document.querySelectorAll('#toast .tst').forEach(x =>   // toast keputusan sudah dilihat; beri laluan kepada bintang
+      x.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateX(40px)' }], { duration: 260, fill: 'forwards' }));
+    const g = flightGen; won.forEach((t, k) => setTimeout(() => flyStar(t, g), 350 + k * 650));
+    return out;
+  };
+  function flyStar(t, g, n) {
+    if (g !== flightGen || (n || 0) > 240) return;   // permainan baharu bermula / tetingkap terbuka terlalu lama (60 s)
+    const lu = q('#lvlup');   // tunggu tetingkap "Naik pangkat" ditutup dahulu
+    if (lu && lu.classList.contains('on')) return setTimeout(() => flyStar(t, g, (n || 0) + 1), 250);
+    const target = chip(t); if (!target) return;
+    const r0 = target.getBoundingClientRect();
+    if (r0.bottom < 0 || r0.top > innerHeight) { target.scrollIntoView({ block: 'center', behavior: still() ? 'auto' : 'smooth' }); return setTimeout(() => land(target), 600); }
+    land(target);
+  }
+  function land(target) {
+    if (still()) return;
+    const r = target.getBoundingClientRect(), s = document.createElement('div');
+    s.className = 'mstar'; s.textContent = '★'; document.body.appendChild(s);
+    const x0 = innerWidth / 2, y0 = innerHeight * .42, x1 = r.left + r.width / 2, y1 = r.top + r.height / 2;
+    const a = s.animate([
+      { transform: `translate(${x0}px,${y0}px) translate(-50%,-50%) scale(0) rotate(-90deg)`, opacity: 0 },
+      { transform: `translate(${x0}px,${y0}px) translate(-50%,-50%) scale(3.2) rotate(0deg)`, opacity: 1, offset: .35 },
+      { transform: `translate(${(x0 + x1) / 2}px,${Math.min(y0, y1) - 90}px) translate(-50%,-50%) scale(2) rotate(160deg)`, opacity: 1, offset: .7 },
+      { transform: `translate(${x1}px,${y1}px) translate(-50%,-50%) scale(.7) rotate(360deg)`, opacity: 1 }],
+      { duration: 1100, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+    a.onfinish = () => {
+      s.remove(); burst(target, 14, '#f2b705'); chime([[988, .07], [1319, .16]]); buzz([20, 40, 30]);
+      target.animate([{ scale: 2.1, filter: 'drop-shadow(0 0 10px #f2b705)' }, { scale: 1, filter: 'none' }], { duration: 650, easing: SPRING });
+    };
+  }
+
+  /* 3. HUD: XP dikira naik, nombor level melantun bila berubah */
+  if (typeof hud === 'function') {
+    const _hud = hud;
+    hud = function () {
+      const xt = q('#xpTxt'), lv = q('#lvl'), x0 = xt ? parseInt(xt.textContent, 10) : NaN, l0 = lv ? lv.textContent : '';
+      const out = _hud.apply(this, arguments);
+      if (xt && !isNaN(x0) && !still()) {
+        const txt = xt.textContent, m = txt.match(/^\d+/);
+        if (m && +m[0] > x0) {
+          const to = +m[0], rest = txt.slice(m[0].length), t0 = performance.now(), id = xt._mt = (xt._mt || 0) + 1;
+          const tick = now => { if (xt._mt !== id) return;
+            const p = Math.min(1, (now - t0) / 700); xt.textContent = Math.round(x0 + (to - x0) * (1 - Math.pow(1 - p, 3))) + rest; if (p < 1) requestAnimationFrame(tick); };
+          xt.textContent = x0 + rest; requestAnimationFrame(tick);
+        }
+      }
+      if (lv && l0 && lv.textContent !== l0) go(lv, [{ scale: 1.6, rotate: '-12deg' }, { scale: 1, rotate: '0deg' }], { duration: 700, easing: SPRING });
+      return out;
+    };
+  }
+
+  /* 4. Pemerhati pentas: soalan baharu masuk, jawapan betul memercik, keputusan dikira naik */
+  const st = q('#stage');
+  const once = new WeakSet();
+  const enter = el => {
+    if (once.has(el)) return; once.add(el);
+    if (el.matches('.qcard,.big,.picq,.match,.slots,.sky')) {
+      go(el, [{ opacity: 0, transform: 'translateX(34px)' }, { opacity: 1, transform: 'none' }], { duration: 380 });
+      el.parentNode.querySelectorAll(':scope > .opts .opt,:scope > .pool .ev').forEach((o, i) =>
+        go(o, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 340, delay: 60 + i * 55, fill: 'backwards' }));
+    } else if (el.matches('.tfc')) {
+      go(el, [{ opacity: 0, transform: 'scale(.86) translateY(18px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: SPRING });
+    } else if (el.matches('.explain,.review')) {
+      go(el, [{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }, { opacity: 1, clipPath: 'inset(0 0 0 0)' }], { duration: 380 });
+    } else if (el.matches('#nx')) {
+      go(el, [{ opacity: 0, scale: .6 }, { opacity: 1, scale: 1 }], { duration: 320, easing: SPRING, delay: 120, fill: 'backwards' });
+    } else if (el.matches('.result')) {
+      countUp(el.querySelector('.sc'), 800); countUp(el.querySelector('.gain'), 1000);
+    } else if (el.matches('.starline')) {
+      const b = el.querySelector('b'); if (!b || still()) return;
+      b.innerHTML = [...b.textContent].map(c => `<span class="ms${c === '★' ? ' on' : ''}">${c}</span>`).join('');
+      const on = [...b.querySelectorAll('.ms.on')];
+      b.querySelectorAll('.ms').forEach((s, i) => go(s, [{ opacity: 0, scale: 2.4, rotate: '-40deg' }, { opacity: 1, scale: 1, rotate: '0deg' }],
+        { duration: 520, delay: 450 + i * 160, easing: SPRING, fill: 'backwards' }));
+      if (el.classList.contains('up') && on.length) setTimeout(() => burst(on[on.length - 1], 16, '#f2b705'), 450 + (on.length - 1) * 160 + 380);
+    }
+  };
+  const hit = el => {
+    if (el.matches('.opt.ok,.tile.done,.slot.ok')) {
+      if (el.matches('.opt.ok') && !el.closest('.opts').querySelector('.opt.no')) { burst(el, 12); buzz(12); }
+      else if (!el.matches('.opt')) burst(el, 8);
+    }
+  };
+  if (st) new MutationObserver(ms => ms.forEach(m => {
+    if (m.type === 'childList') m.addedNodes.forEach(n => { if (n.nodeType !== 1) return; enter(n); n.querySelectorAll && n.querySelectorAll('.qcard,.big,.picq,.tfc,.match,.slots,.sky,.result,.starline,.explain,.review,#nx').forEach(enter); });
+    else if (m.type === 'attributes' && m.target.nodeType === 1) {
+      const was = (m.oldValue || '').split(/\s+/), el = m.target;
+      if ((el.classList.contains('ok') && !was.includes('ok')) || (el.classList.contains('done') && !was.includes('done'))) hit(el);
+    }
+  })).observe(st, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+})();
+
+</script>
+<!--motion:js:end-->
 </body>
 </html>

@@ -497,6 +497,20 @@
         }
       });
     })();
+    // Gerakan: bar kemajuan mengisi apabila halaman dibuka / tab tingkatan ditukar
+    (function () {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      function fill(root) {
+        var bars = [].slice.call(root.querySelectorAll('.bar i')).filter(function (b) { return b.style.width && b.style.width !== '0%'; });
+        bars.forEach(function (b) { b.dataset.w = b.dataset.w || b.style.width; b.style.transition = 'none'; b.style.width = '0'; });
+        void document.body.offsetWidth;
+        requestAnimationFrame(function () { bars.forEach(function (b, i) {
+          b.style.transition = 'width 1.1s cubic-bezier(.2,.8,.2,1) ' + Math.min(i * 30, 600) + 'ms'; b.style.width = b.dataset.w; }); });
+      }
+      var shown = document.querySelector('.form-panel:not([hidden])'); if (shown) fill(shown);
+      document.querySelectorAll('.formtabs button').forEach(function (t) { t.addEventListener('click', function () {
+        var pnl = document.getElementById('form-' + t.dataset.form); if (pnl) fill(pnl); }); });
+    })();
   </script>
 </body>
 </html>
