@@ -1,0 +1,1263 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amali Interaktif PI T3</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eaf2ee; --card:#fbfdfc; --ink:#10302c; --muted:#4f6b66; --line:#c9dbd4;
+  --teal:#0b6b60; --lapis:#1f4e8c; --gold:#b8861b; --ok:#1f8a4c; --no:#c2410c; --chip:#dceae5;
+  --c:var(--teal); --ui:"Lexend",system-ui,sans-serif; --ar:"Amiri","Scheherazade New","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0b1716; --card:#11221f; --ink:#e3f0ec; --muted:#9db8b1; --line:#24403b; --teal:#3fc1ae; --lapis:#7fa8ec; --gold:#e6b84f; --ok:#5fd38d; --no:#ff8a5c; --chip:#1a302c}}
+:root[data-theme="dark"]{--paper:#0b1716; --card:#11221f; --ink:#e3f0ec; --muted:#9db8b1; --line:#24403b; --teal:#3fc1ae; --lapis:#7fa8ec; --gold:#e6b84f; --ok:#5fd38d; --no:#ff8a5c; --chip:#1a302c}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--ui)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.ar{font-family:var(--ar);direction:rtl;unicode-bidi:isolate;font-size:1.6em;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px 60px}
+
+/* Kepala: jalur jubin bintang lapan */
+.band{height:30px;background-color:var(--teal);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cg fill='none' stroke='%23e6c06a' stroke-width='1.2' opacity='.75'%3E%3Crect x='8' y='8' width='14' height='14'/%3E%3Crect x='8' y='8' width='14' height='14' transform='rotate(45 15 15)'/%3E%3Ccircle cx='15' cy='15' r='2.2'/%3E%3C/g%3E%3C/svg%3E");}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 0 8px}
+.top h1{flex:1;min-width:230px;margin:0;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;font-weight:800;letter-spacing:-.01em}
+.top h1 small{display:block;font-size:.92rem;font-weight:400;color:var(--muted);margin-top:6px;letter-spacing:0}
+.pill{font-weight:800;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.icon{width:42px;height:42px;border-radius:50%;border:2px solid var(--line);background:var(--card);cursor:pointer;font-size:1.1rem}
+
+/* Laman utama: kumpulan bidang */
+.bid h2{font-size:1.05rem;margin:26px 0 10px;display:flex;gap:8px;align-items:center;color:var(--muted);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.act{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:4px 12px;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.act::after{content:"";position:absolute;right:-26px;top:-26px;width:70px;height:70px;border:2px solid var(--c);opacity:.25;transform:rotate(45deg)}
+.act:hover{transform:translateY(-2px);border-color:var(--c)}
+.act .ai{grid-row:1/3;font-size:2rem;width:54px;height:54px;display:grid;place-items:center;border-radius:14px;background:color-mix(in srgb,var(--c) 16%,transparent)}
+.act .at small{display:block;color:var(--muted);font-size:.75rem;font-weight:600}
+.act .at b{display:block;font-size:1.02rem;line-height:1.2}
+.act .at span{display:block;color:var(--muted);font-size:.86rem;line-height:1.35;margin-top:3px}
+.act .as{grid-column:2;color:var(--gold);letter-spacing:2px;font-size:.9rem}
+
+/* Pentas aktiviti */
+.sh{display:flex;gap:12px;align-items:center;margin:8px 0 6px}
+.sh .ai{font-size:2.2rem}
+.sh small{color:var(--muted);font-weight:600}
+.sh h2{margin:0;font-size:clamp(1.25rem,2.8vw,1.7rem);line-height:1.15}
+.say{min-height:52px;margin:8px 0 14px;padding:12px 14px;border-radius:14px;background:var(--card);border:2px solid var(--line);border-left:7px solid var(--c);font-size:1.02rem}
+.body{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;min-height:280px}
+.body svg{max-width:100%;height:auto}
+.body svg text{font-family:var(--ui);fill:var(--ink)}
+.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:800;cursor:pointer;background:var(--ink);color:var(--paper);box-shadow:0 4px 0 color-mix(in srgb,var(--ink) 55%,#000)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 55%,#000)}
+.btn.go{background:var(--c);color:#fff;box-shadow:0 4px 0 color-mix(in srgb,var(--c) 55%,#000)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
+.btn[disabled]{opacity:.45;cursor:default}
+/* komponen biasa untuk modul */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:9px 14px;cursor:pointer;font-weight:600;transition:background .2s,border-color .2s}
+.chip:hover{border-color:var(--c)}
+.chip.on{background:var(--c);border-color:var(--c);color:#fff}
+.chip.ok{background:color-mix(in srgb,var(--ok) 18%,var(--card));border-color:var(--ok)}
+.chip.no{background:color-mix(in srgb,var(--no) 14%,var(--card));border-color:var(--no)}
+.chip[disabled]{cursor:default}
+.slot{min-height:46px;border:2px dashed var(--line);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.slot.ok{border-style:solid;border-color:var(--ok)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box{border:2px solid var(--line);border-radius:16px;padding:12px}
+.box h3{margin:0 0 8px;font-size:1rem}
+.meter{height:10px;background:var(--chip);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--c);transition:width .4s}
+.hint{color:var(--muted);font-size:.9rem;margin:6px 0 0}
+.done{margin-top:16px;padding:16px;border-radius:18px;text-align:center;background:color-mix(in srgb,var(--ok) 12%,var(--card));border:2px solid var(--ok)}
+.done .big{font-size:2.2rem;color:var(--gold);letter-spacing:4px}
+.done p{margin:6px 0}
+.back{margin:14px 0 0}
+#toast{position:fixed;right:16px;bottom:16px;z-index:50;display:grid;gap:8px}
+.tst{background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:12px;font-weight:600}
+@media (max-width:600px){.top h1{flex-basis:100%}.grid{grid-template-columns:1fr}.body{padding:12px}.say{font-size:.96rem}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a class="noprint" href="../../studies.html#pendidikan-islam-t3" style="display:inline-block;margin:10px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 14px system-ui;text-decoration:none">← Studies</a>
+<a class="noprint" href="nota.html" style="display:inline-block;margin:10px 0 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 14px system-ui;text-decoration:none">📖 Nota</a>
+<a class="noprint" href="kad-imbas.html" style="display:inline-block;margin:10px 0 0 6px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 14px system-ui;text-decoration:none">🎮 Permainan</a>
+
+<div class="band" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <h1>Amali Interaktif<small>Pendidikan Islam Tingkatan 3 · cuba, sentuh dan susun sendiri</small></h1>
+    <span class="pill" id="xp">0 XP</span><button class="icon" id="mute" aria-label="Bunyi">🔊</button>
+  </header>
+  <main id="home"></main>
+  <main id="stage" hidden>
+    <button class="btn alt back" id="back">← Semua aktiviti</button>
+    <div class="sh" id="sh"></div>
+    <div class="say" id="say" aria-live="polite"></div>
+    <div class="body" id="body"></div>
+    <div id="fin"></div>
+  </main>
+</div>
+<div id="toast" aria-live="polite"></div>
+<script>
+const FORM = '3';
+/* ================= Enjin Amali Interaktif (Pendidikan Islam T1 & T3) =================
+   Modul aktiviti memanggil AMALI({...}) sekali. Lihat shared/amali/SPEC.md. */
+'use strict';
+const ACTS = [];
+function AMALI(a) { ACTS.push(a); }
+const NS = 'http://www.w3.org/2000/svg';
+function S(tag, at, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in at || {}) { if (k === 'text') e.textContent = at[k]; else e.setAttribute(k, at[k]); }
+  if (parent) parent.appendChild(e); return e;
+}
+function H(html) { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const anim = (el, kf, o) => (el && el.animate && !RM()) ? el.animate(kf, Object.assign({ duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }, o)) : null;
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const BIDANG = [["Al-Quran", "📖", [1, 2, 3, 4, 5, 6, 7, 8]], ["Hadis", "📜", [9, 10]], ["Akidah", "✨", [11, 12, 13, 14]], ["Fiqah", "🕌", [15, 16, 17, 18, 19, 20]], ["Sirah dan Tamadun Islam", "🐪", [21, 22]], ["Akhlak Islamiah", "🤝", [23, 24, 25, 26, 27]]];
+/* Pelajaran 3 · Meter Mad — kenal jenis mad, kemudian ketuk kadar harakat. Teks Arab disalin daripada baris ARAB: brief3 */
+(function () {
+  const T = {
+    asli: { n: 'Mad asli', k: [2], d: 'Huruf mad tanpa sebab lain (tiada hamzah atau sukun selepasnya).', c: '#2b8a3e' },
+    muttasil: { n: 'Mad wajib muttasil', k: [4, 5], d: 'Huruf mad bertemu hamzah dalam <b>satu</b> kalimah.', c: '#c92a2a' },
+    munfasil: { n: 'Mad jaiz munfasil', k: [4, 5], d: 'Huruf mad bertemu hamzah pada <b>dua</b> kalimah berlainan.', c: '#e8590c' },
+    badal: { n: 'Mad badal', k: [2], d: 'Hamzah <b>dahulu</b>, kemudian huruf mad, dalam satu kalimah.', c: '#5f3dc4' },
+    arid: { n: 'Mad ‘arid lissukun', k: [2, 4, 6], d: 'Huruf mad bertemu huruf akhir kalimah yang dibaca waqaf.', c: '#1971c2' },
+    lin: { n: 'Mad lin', k: [2, 4, 6], d: 'و / ي bersukun didahului baris atas, dibaca waqaf.', c: '#0c8599' },
+    iwad: { n: 'Mad ‘iwad', k: [2], d: 'Tanwin fathah dibaca baris satu di atas ketika waqaf.', c: '#9c36b5' },
+  };
+  const ORD = ['asli', 'muttasil', 'munfasil', 'badal', 'arid', 'lin', 'iwad'];
+  // [arab, jenis, transliterasi, waqaf?]
+  const W = {
+    asli: [['قَالَ', 'qāla'], ['يَقُولُ', 'yaqūlu'], ['قِيلَ', 'qīla'], ['يُوصَلُ', 'yūṣalu']],
+    muttasil: [['السَّمَآءُ', 'as-samā’u'], ['سُوٓءِ', 'sū’i']],
+    munfasil: [['بِمَآ أَنزَلَ اللَّهُ', 'bimā anzala Allāhu'], ['قَالُوٓا۟ أَتَجْعَلُ', 'qālū a-taj‘alu'], ['قُوٓا۟ أَنفُسَكُمْ', 'qū anfusakum']],
+    badal: [['ءَامَنَ', 'āmana'], ['ءَادَمَ', 'ādama'], ['أُوتُوا۟', 'ūtū'], ['إِيمَٰنًا', 'īmānan']],
+    arid: [['خَٰلِدُونَ', 'khālidūn'], ['الْمُبِينُ', 'al-mubīn']],
+    lin: [['خَوْفٍ', 'khauf'], ['قُرَيْشٍ', 'quraisy'], ['الْبَيْتِ', 'al-bait']],
+    iwad: [['غَرْقًا', 'gharqā'], ['إِنشَآءً', 'insyā’ā']],
+  };
+  const WAQ = { arid: 1, lin: 1, iwad: 1 };
+  const kadarTxt = k => k.length === 1 ? k[0] + ' harakat' : k.slice(0, -1).join(', ') + ' atau ' + k[k.length - 1] + ' harakat';
+
+  AMALI({
+    id: 'meter-mad', pel: 3, tajuk: 'Meter Mad', ikon: '🥁', warna: '#1971c2',
+    ringkas: 'Kenal pasti jenis mad, kemudian ketuk panjang harakatnya.',
+    arahan: 'Lihat kalimah. <b>1)</b> Pilih jenis mad. <b>2)</b> Ketuk 🥁 mengikut <b>kadar harakat</b>, kemudian tekan <b>Hantar</b>.',
+    mula(el, api) {
+      const pick = ORD.map(k => { const a = api.shuffle(W[k])[0]; return { k, a: a[0], r: a[1] }; });
+      const extra = api.shuffle(['muttasil', 'badal', 'lin'])[0];
+      const ex = W[extra].find(w => w[0] !== pick.find(p => p.k === extra).a) || W[extra][0];
+      const rounds = api.shuffle(pick.concat([{ k: extra, a: ex[0], r: ex[1] }]));
+      let i = 0, ok = 0, tot = 0, phase = 'jenis', beats = 0, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="mmn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="mmm"></i></div></div>
+        <div style="text-align:center;margin:10px 0 0"><span id="mmw" class="ar" style="font-size:clamp(2.6rem,9vw,3.8rem);display:inline-block;padding:0 10px;border-bottom:4px solid var(--line)"></span></div>
+        <p id="mmq" class="hint" style="text-align:center;min-height:1.4em;margin-top:4px"></p>
+        <style>#mmt{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}@media(max-width:600px){#mmt{grid-template-columns:1fr 1fr}}#mmt[hidden]{display:none}</style><div id="mmt"></div>
+        <div id="mmb" hidden>
+          <div id="mmbar" style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:6px 0 4px"></div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px" id="mmlab" aria-hidden="true"></div>
+          <div class="row" style="justify-content:center;margin-top:12px">
+            <button class="btn go" id="mmk" style="font-size:1.15rem">🥁 Ketuk</button>
+            <button class="btn alt" id="mmr" aria-label="Semula">↺</button>
+            <button class="btn" id="mms">Hantar ✔</button></div></div>
+        <div class="box" style="margin-top:14px"><h3>Rumus 2 · 45 · 246</h3><div class="chips" id="mmsum" style="font-size:.92rem"></div></div>`;
+      const $ = s => el.querySelector(s);
+      // butang jenis mad
+      const tb = {};
+      ORD.forEach(k => { const b = api.H(`<button class="chip" style="min-height:46px;text-align:center">${T[k].n}</button>`); b.onclick = () => chooseType(k); tb[k] = b; $('#mmt').appendChild(b); });
+      // bar ketukan 6 harakat
+      const cells = [];
+      for (let n = 1; n <= 6; n++) {
+        const c = api.H(`<button aria-label="${n} harakat" style="height:54px;border-radius:12px;border:2px solid var(--line);background:var(--chip);cursor:pointer;font-weight:800;font-size:1.05rem;color:var(--muted)">${n}</button>`);
+        c.onclick = () => { if (phase === 'kadar' && !lock) { beats = n; paint(); } }; cells.push(c); $('#mmbar').appendChild(c);
+        $('#mmlab').appendChild(api.H('<span style="text-align:center;font-size:.75rem;color:var(--muted)">' + (n === 1 ? 'harakat' : '') + '</span>'));
+      }
+      const paint = (good) => cells.forEach((c, j) => {
+        const on = j < beats, inK = good && good.includes(j + 1);
+        c.style.background = on ? 'var(--c)' : inK ? 'color-mix(in srgb,var(--ok) 22%,var(--card))' : 'var(--chip)';
+        c.style.color = on ? '#fff' : 'var(--muted)'; c.style.borderColor = inK ? 'var(--ok)' : on ? 'var(--c)' : 'var(--line)';
+      });
+      const sumBox = () => { $('#mmsum').innerHTML = [['2', 'Asli · Badal · ‘Iwad'], ['4 / 5', 'Wajib muttasil · Jaiz munfasil'], ['2 / 4 / 6', '‘Arid lissukun · Lin (waqaf)']].map(([a, b]) => `<span class="chip" style="cursor:default"><b>${a}</b> ${b}</span>`).join(''); };
+      sumBox();
+      const show = () => {
+        const r = rounds[i]; phase = 'jenis'; beats = 0; lock = false; paint();
+        $('#mmn').textContent = `Kalimah ${i + 1}/${rounds.length}`; $('#mmm').style.width = (100 * i / rounds.length) + '%';
+        $('#mmw').textContent = r.a; $('#mmq').innerHTML = WAQ[r.k] ? '⏹ Dibaca <b>waqaf</b> (berhenti) pada kalimah ini' : '▶ Dibaca seperti biasa';
+        Object.values(tb).forEach(b => { b.className = 'chip'; b.disabled = false; });
+        $('#mmt').hidden = false; $('#mmb').hidden = true;
+        api.anim($('#mmw'), [{ opacity: 0, transform: 'scale(.8)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+        api.say('Langkah 1: apakah <b>jenis mad</b> dalam kalimah ini?');
+      };
+      function chooseType(k) {
+        if (phase !== 'jenis' || lock) return; lock = true; tot++;
+        const r = rounds[i], t = T[r.k];
+        Object.values(tb).forEach(b => b.disabled = true);
+        if (k === r.k) { ok++; tb[k].className = 'chip ok'; api.betul(tb[k], `Betul, <b>${t.n}</b>. ${t.d}`); }
+        else { tb[k].className = 'chip no'; tb[r.k].className = 'chip ok'; api.salah(tb[k], `Ini <b>${t.n}</b>: ${t.d}`); }
+        $('#mmq').innerHTML = `${t.n} · <i>${r.r}</i>`;
+        setTimeout(() => { phase = 'kadar'; lock = false; $('#mmt').hidden = true; $('#mmb').hidden = false;
+          api.say(`Langkah 2: ketuk 🥁 kadar <b>${t.n}</b>, kemudian tekan <b>Hantar</b>.`); }, 1300);
+      }
+      $('#mmk').onclick = () => { if (phase !== 'kadar' || lock) return; beats = Math.min(6, beats + 1); paint();
+        api.anim(cells[beats - 1], [{ transform: 'scale(1.18)' }, { transform: 'none' }], { duration: 220 }); };
+      $('#mmr').onclick = () => { if (phase === 'kadar' && !lock) { beats = 0; paint(); } };
+      $('#mms').onclick = () => {
+        if (phase !== 'kadar' || lock) return;
+        if (!beats) { api.say('Ketuk 🥁 sekurang-kurangnya sekali dahulu.'); return; }
+        lock = true; tot++;
+        const r = rounds[i], t = T[r.k], right = t.k.includes(beats);
+        paint(t.k);
+        if (right) { ok++; api.betul($('#mmbar'), `Tepat! ${t.n} dibaca <b>${kadarTxt(t.k)}</b>.`); }
+        else api.salah($('#mmbar'), `${beats} harakat belum tepat. ${t.n} dibaca <b>${kadarTxt(t.k)}</b> (petak hijau).`);
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#mmm').style.width = '100%'; $('#mmb').hidden = true;
+          api.selesai(ok / tot, `${ok}/${tot} tepat. Ingat rumus <b>2 · 45 · 246</b>!`); } }, 1900);
+      };
+      show();
+      return { jawab() {
+        const go = () => { if (i >= rounds.length) return;
+          if (!lock) { const r = rounds[i]; if (phase === 'jenis') tb[r.k].click(); else { beats = 0; for (let n = 0; n < T[r.k].k[0]; n++) $('#mmk').click(); $('#mms').click(); } }
+          setTimeout(go, 700); };
+        go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 9 · Misi ke Masjid — amalan sedekah dalam hadis (senario & tingkatan sedekah daripada brief9) */
+(function () {
+  // [ikon, situasi, betul, [pengalih...], sebab (brief)]
+  const ST = [
+    ['🌳', 'Dalam perjalanan ke masjid, Afif nampak dahan pokok tumbang di tengah jalan.', 'Alihkan dahan itu', ['Langkah sahaja dan teruskan', 'Ambil gambar untuk media sosial'], 'Menghilangkan sesuatu yang berbahaya di jalan ialah sedekah — mengurangkan risiko kemalangan.'],
+    ['⚡', 'Afif melihat dua budak sedang bergaduh di tepi jalan.', 'Damaikan mereka', ['Bersorak menyokong seorang', 'Buat-buat tidak nampak'], 'Berlaku adil antara dua orang yang bertelingkah ialah sedekah dan menenteramkan hati kedua-dua pihak.'],
+    ['🚗', 'Seorang jiran sukar memasukkan beg-beg ke dalam keretanya.', 'Bantu angkat barang', ['Tunggu jiran siap sendiri', 'Tegur jiran kerana lambat'], 'Mengangkat barang ke atas tunggangannya ialah sedekah dan meringankan beban orang lain.'],
+    ['🦯', 'Seorang lelaki buta mahu melintas jalan.', 'Bantu dia', ['Biarkan dia mencuba sendiri', 'Panggil orang lain sahaja'], 'Membantu orang yang memerlukan seperti OKU memberi kesenangan kepadanya.'],
+    ['🤲', 'Seorang peminta sedekah datang, tetapi Afif tiada apa-apa untuk diberi.', 'Tolak dengan perkataan baik', ['Halau dengan kasar', 'Diam dan berpaling'], 'Perkataan yang baik ialah sedekah — menenangkan hati pendengar dan mengelakkan pertelingkahan.'],
+    ['👣', 'Masjid tinggal sedikit lagi, tetapi Afif rasa malas berjalan.', 'Teruskan berjalan ke masjid', ['Patah balik ke rumah', 'Solat di rumah sahaja'], 'Setiap langkah berjalan untuk solat ialah sedekah; berjalan dalam keadaan berwuduk meninggikan darjat dan menghapuskan dosa.'],
+  ];
+  const TANGGA = ['Bersedekah dengan duit', 'Bekerja sehingga mampu bersedekah', 'Membantu orang dalam kesusahan', 'Menyeru kepada kebaikan', 'Menahan diri daripada melakukan keburukan'];
+
+  AMALI({
+    id: 'misi-sedekah', pel: 9, tajuk: 'Misi Sedekah ke Masjid', ikon: '🕌', warna: '#2f9e44',
+    ringkas: 'Bantu Afif kumpul mata sedekah di sepanjang jalan ke masjid.',
+    arahan: '“Setiap perkara yang baik ialah sedekah.” Bantu Afif pilih tindakan yang betul di setiap <b>stesen</b> dalam perjalanan ke masjid.',
+    mula(el, api) {
+      let i = 0, ok = 0, tot = 0, lock = false, mode = 'jalan', tn = 0;
+      el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="msn"></b><b id="msp" style="color:var(--gold)">⭐ 0 mata sedekah</b></div>
+        <div id="msmap" style="margin:6px auto;max-width:560px"></div>
+        <div id="mscard" class="box" style="border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card));display:flex;gap:12px;align-items:center;min-height:76px">
+          <span id="msi" style="font-size:2.2rem" aria-hidden="true"></span><span id="mst" style="font-weight:700;font-size:1.05rem"></span></div>
+        <div id="mso" style="display:grid;gap:8px;margin-top:10px"></div>`;
+      const $ = s => el.querySelector(s);
+      // peta jalan: rumah → 6 stesen → masjid
+      const sv = api.S('svg', { viewBox: '0 0 530 130', role: 'img', 'aria-label': 'Peta jalan Afif ke masjid' }, $('#msmap'));
+      const X = n => 38 + n * 65;   // n: 0..7
+      api.S('path', { d: `M${X(0)} 70 C 110 20, 150 110, 210 64 S 310 20, 350 70 S 440 110, ${X(7)} 60`, fill: 'none', stroke: 'var(--line)', 'stroke-width': 16, 'stroke-linecap': 'round' }, sv);
+      api.S('path', { d: `M${X(0)} 70 C 110 20, 150 110, 210 64 S 310 20, 350 70 S 440 110, ${X(7)} 60`, fill: 'none', stroke: 'var(--card)', 'stroke-width': 2, 'stroke-dasharray': '10 10' }, sv);
+      api.S('text', { x: X(0), y: 122, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 700, text: 'Rumah' }, sv);
+      api.S('text', { x: X(7), y: 122, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 700, text: 'Masjid' }, sv);
+      // kubah masjid ringkas
+      api.S('path', { d: `M${X(7) - 22} 72 L${X(7) - 22} 46 Q${X(7)} 18 ${X(7) + 22} 46 L${X(7) + 22} 72 Z`, fill: 'var(--c)', opacity: .9 }, sv);
+      api.S('rect', { x: X(7) - 6, y: 56, width: 12, height: 16, rx: 6, fill: 'var(--card)' }, sv);
+      api.S('path', { d: `M${X(0) - 18} 74 L${X(0) - 18} 54 L${X(0)} 38 L${X(0) + 18} 54 L${X(0) + 18} 74 Z`, fill: 'var(--muted)' }, sv);
+      const dots = ST.map((s, n) => { const g = api.S('g', {}, sv);
+        api.S('circle', { cx: X(n + 1), cy: [52, 78, 56, 50, 80, 64][n], r: 20, fill: 'var(--card)', stroke: 'var(--line)', 'stroke-width': 3 }, g);
+        api.S('text', { x: X(n + 1), y: [52, 78, 56, 50, 80, 64][n] + 7, 'text-anchor': 'middle', 'font-size': 20, 'font-weight': 800, text: n + 1 }, g); return g; });
+      const walker = api.S('circle', { cx: X(0), cy: 70, r: 9, fill: 'var(--gold)', stroke: 'var(--ink)', 'stroke-width': 2, style: 'transition:all .6s' }, sv);
+      const pts = () => { $('#msp').textContent = `⭐ ${ok} mata sedekah`; };
+      const show = () => {
+        lock = false; const s = ST[i];
+        $('#msn').textContent = `Stesen ${i + 1}/${ST.length}`; $('#msi').textContent = s[0]; $('#mst').textContent = s[1];
+        const opts = api.shuffle([s[2]].concat(s[3]));
+        $('#mso').innerHTML = ''; opts.forEach(o => { const b = api.H(`<button class="chip" style="text-align:left;min-height:46px">${api.esc(o)}</button>`); b.onclick = () => answer(b, o); $('#mso').appendChild(b); });
+        const c = dots[i].querySelector('circle'); c.setAttribute('stroke', 'var(--gold)');
+        api.anim($('#mscard'), [{ opacity: 0, transform: 'translateX(20px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
+      };
+      function answer(b, o) {
+        if (lock) return; lock = true; tot++;
+        const s = ST[i], right = o === s[2];
+        $('#mso').querySelectorAll('button').forEach(x => { x.disabled = true; if (x.textContent === s[2]) x.className = 'chip ok'; });
+        const c = dots[i].querySelector('circle');
+        if (right) { ok++; api.betul(b, s[4]); c.setAttribute('fill', 'var(--ok)'); dots[i].querySelector('text').style.fill = '#fff'; }
+        else { b.className = 'chip no'; api.salah(b, `Pilihan terbaik: <b>${s[2]}</b>. ${s[4]}`); c.setAttribute('fill', 'color-mix(in srgb,var(--no) 30%,var(--card))'); }
+        pts(); walker.setAttribute('cx', X(i + 1)); walker.setAttribute('cy', [52, 78, 56, 50, 80, 64][i] - 26);
+        setTimeout(() => { i++; if (i < ST.length) show(); else tangga(); }, 2300);
+      }
+      // Bahagian 2: tangga lima tingkatan sedekah
+      function tangga() {
+        mode = 'tangga'; lock = false; walker.setAttribute('cx', X(7)); walker.setAttribute('cy', 26);
+        $('#msn').textContent = 'Tangga Sedekah'; $('#msi').textContent = '🪜';
+        $('#mst').innerHTML = 'Tiba di masjid! Susun <b>5 tingkatan sedekah</b> (hadis Muslim): mula dengan yang paling atas — <i>jika tidak mampu</i>, turun ke tingkat berikutnya.';
+        api.say('Bahagian 2: tekan tingkatan sedekah mengikut <b>tertib</b>, dari yang pertama.');
+        $('#mso').innerHTML = `<div id="mstg" style="display:grid;gap:6px"></div><div class="chips" id="msch" style="margin-top:8px"></div>`;
+        TANGGA.forEach((t, n) => $('#mstg').appendChild(api.H(`<div class="slot" style="margin-left:${n * 4}%"><b style="color:var(--muted)">${n + 1}</b> <span></span></div>`)));
+        api.shuffle(TANGGA).forEach(t => { const b = api.H(`<button class="chip">${t}</button>`); b.onclick = () => step(b, t); $('#msch').appendChild(b); });
+      }
+      function step(b, t) {
+        if (lock || b.disabled) return; tot++;
+        if (t === TANGGA[tn]) { ok++; const sl = $('#mstg').children[tn]; sl.classList.add('ok'); sl.querySelector('span').textContent = t; b.remove();
+          api.betul(sl, tn === 0 ? 'Betul! Tingkat pertama: bersedekah dengan duit.' : `Betul! Jika tidak mampu → <b>${t.toLowerCase()}</b>.`); tn++; pts();
+          if (tn === TANGGA.length) { lock = true; setTimeout(() => api.selesai(ok / tot, `${ok}/${tot} tepat. Sedekah bukan duit sahaja — <b>setiap perkara yang baik ialah sedekah</b>.`), 900); } }
+        else { api.salah(b, `Belum. Tingkat ${tn + 1} selepas “${tn ? TANGGA[tn - 1] : 'mula'}” ialah yang lain.`); }
+      }
+      show(); pts();
+      return { jawab() {
+        const go = () => { if (mode === 'jalan') { if (!lock) [...$('#mso').querySelectorAll('button')].find(x => x.textContent === ST[i][2]).click(); setTimeout(go, 600); }
+          else if (tn < TANGGA.length) { [...$('#msch').querySelectorAll('button')].find(x => x.textContent === TANGGA[tn]).click(); setTimeout(go, 250); } };
+        go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 12 · Garis Masa 25 Rasul + Ulul Azmi — urutan buku teks & fakta ringkas daripada brief12 (teks sahaja, tiada gambar) */
+(function () {
+  const R = [
+    ['Adam', 'Digelar Abu al-Basyar (bapa manusia).'], ['Idris', 'Pandai menulis dan menjahit.'],
+    ['Nuh', 'Berdakwah 950 tahun siang dan malam.'], ['Hud', 'Diutus kepada kaum ‘Ad di al-Ahqaf, Yaman (angin sarsar).'],
+    ['Saleh', 'Kaum Thamud di al-Hijr; mukjizat unta keluar dari batu.'], ['Ibrahim', 'Digelar Abu al-Anbiya’; berhadapan Namrud di Babylon.'],
+    ['Lut', 'Diutus kepada kaum Sodom, kawasan Laut Mati, Jordan.'], ['Ismail', 'Dibawa bapanya ke semenanjung tanah Arab; kepatuhannya ketika diuji menjadi syiar ibadah korban.'],
+    ['Ishak', 'Diutus kepada kaum Kan‘an di Palestin.'], ['Yaakub', '“Israil” (hamba Allah); dikurniakan 12 putera.'],
+    ['Yusuf', 'Mentafsir mimpi raja Mesir.'], ['Syuaib', 'Diutus kepada penduduk Madyan yang menipu sukatan dan timbangan.'],
+    ['Ayub', 'Sabar diuji sakit yang lama.'], ['Zulkifli', 'Rasul ke-14 dalam urutan buku teks.'],
+    ['Musa', 'Tongkat menjadi ular; berhadapan Firaun yang zalim.'], ['Harun', 'Rasul ke-16 dalam urutan buku teks.'],
+    ['Daud', 'Raja di Palestin; suara merdu, melembutkan besi.'], ['Sulaiman', 'Menguasai angin, jin dan haiwan.'],
+    ['Ilyas', 'Diutus kepada Bani Israil penyembah berhala Ba‘al.'], ['Ilyasa’', 'Rasul ke-20 dalam urutan buku teks.'],
+    ['Yunus', 'Diutus ke Ninawa, Iraq; ditelan ikan nun.'], ['Zakaria', 'Diutus kepada Bani Israil di Palestin.'],
+    ['Yahya', 'Rasul ke-23 dalam urutan buku teks.'], ['Isa', 'Rasul Bani Israil terakhir; pengikutnya al-Hawariyyun.'],
+    ['Muhammad SAW', 'Al-Amin, Khatam an-Nabiyyin, Sayyid al-Mursalin.'],
+  ];
+  const UA = { 'Nuh': 'Berdakwah 950 tahun, hanya sebahagian kecil beriman.', 'Ibrahim': 'Dihukum bakar oleh Namrud, diuji menyembelih Nabi Ismail.',
+    'Musa': 'Berhadapan Firaun yang zalim, berhijrah bersama Bani Israil yang degil.', 'Isa': 'Ditentang Yahudi yang merancang membunuh baginda.',
+    'Muhammad SAW': 'Ditentang musyrikin Quraisy di Mekah, Yahudi dan munafiqin di Madinah.' };
+  const nm = n => n === 'Muhammad SAW' ? 'Nabi Muhammad SAW' : 'Nabi ' + n + ' a.s.';
+
+  AMALI({
+    id: 'garis-masa-rasul', pel: 12, tajuk: 'Garis Masa 25 Rasul', ikon: '📜', warna: '#5f3dc4',
+    ringkas: 'Susun 25 rasul mengikut urutan, kemudian cari 5 rasul Ulul Azmi.',
+    arahan: 'Susun <b>25 rasul</b> mengikut urutan buku teks, lima demi lima. Setiap kad yang betul membuka fakta ringkas. Akhir sekali, cari <b>Ulul Azmi</b>.',
+    mula(el, api) {
+      let n = 0, miss = 0, ua = 0, uaMiss = 0, mode = 'susun', lock = false;
+      el.innerHTML = `<style>#gmr{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}@media(max-width:600px){#gmr{grid-template-columns:repeat(3,1fr)}}
+        #gmr .s{min-height:58px;border:2px dashed var(--line);border-radius:12px;padding:4px 6px;font-size:.86rem;line-height:1.2;display:flex;flex-direction:column;justify-content:center;text-align:center;background:var(--card);color:var(--ink);font-weight:700}
+        #gmr .s small{color:var(--muted);font-weight:600;font-size:.72rem}#gmr .s.f{border-style:solid;border-color:color-mix(in srgb,var(--c) 60%,var(--line));background:color-mix(in srgb,var(--c) 8%,var(--card))}
+        #gmr .s.ua{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 22%,var(--card));box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 35%,transparent)}</style>
+        <div class="row" style="justify-content:space-between"><b id="gmn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="gmm"></i></div></div>
+        <div id="gmf" class="box" style="margin:10px 0;min-height:58px;border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card))"></div>
+        <div class="chips" id="gmc" style="justify-content:center;margin-bottom:12px;min-height:48px"></div>
+        <div id="gmr"></div>`;
+      const $ = s => el.querySelector(s);
+      const slots = R.map((r, k) => { const s = api.H(`<button class="s" disabled><small>${k + 1}</small><span>?</span></button>`); s.onclick = () => pickUA(k, s); $('#gmr').appendChild(s); return s; });
+      const deal = () => {
+        const grp = R.slice(n, Math.min(n + 5, 25)).map(r => r[0]);
+        $('#gmc').innerHTML = '';
+        api.shuffle(grp).forEach(g => { const b = api.H(`<button class="chip" style="min-height:44px">${api.esc(g)}</button>`); b.onclick = () => tap(b, g); $('#gmc').appendChild(b); });
+        $('#gmn').textContent = `Rasul ${n + 1}–${Math.min(n + 5, 25)} daripada 25`;
+      };
+      function tap(b, g) {
+        if (mode !== 'susun' || lock) return;
+        if (g === R[n][0]) {
+          const s = slots[n]; s.classList.add('f'); s.querySelector('span').textContent = g; b.remove();
+          $('#gmf').innerHTML = `<b>${n + 1}. ${nm(g)}</b> — ${api.esc(R[n][1])}`; api.betul(s);
+          api.anim(s, [{ transform: 'scale(.6)', opacity: .3 }, { transform: 'none', opacity: 1 }], { duration: 320 });
+          n++; $('#gmm').style.width = (100 * n / 25) + '%';
+          api.say(n < 25 ? `Bagus! Seterusnya: rasul ke-<b>${n + 1}</b>.` : 'Lengkap 25 rasul!');
+          if (n % 5 === 0 && n < 25) setTimeout(deal, 350);
+          if (n === 25) { lock = true; setTimeout(startUA, 1100); }
+        } else { miss++; api.salah(b, `Belum. Rasul ke-${n + 1} datang selepas ${n ? nm(R[n - 1][0]) : 'permulaan'}.`); }
+      }
+      function startUA() {
+        mode = 'ua'; lock = false; $('#gmc').style.display = 'none'; $('#gmn').textContent = 'Cari Ulul Azmi: 0/5';
+        $('#gmf').innerHTML = '<b>Ulul Azmi</b> — rasul yang mempunyai kecekalan dan ketabahan hati menghadapi ujian dalam dakwah (Surah al-Ahqaf ayat 35).';
+        api.say('Bahagian 2: tekan <b>5 rasul Ulul Azmi</b> pada garis masa.');
+        slots.forEach(s => s.disabled = false);
+      }
+      function pickUA(k, s) {
+        if (mode !== 'ua' || lock || s.classList.contains('ua')) return;
+        const g = R[k][0];
+        if (UA[g]) { ua++; s.classList.add('ua'); $('#gmf').innerHTML = `<b>⭐ ${nm(g)}</b> — ${UA[g]}`; api.betul(s, `Ya! ${nm(g)} ialah Ulul Azmi.`); $('#gmn').textContent = `Cari Ulul Azmi: ${ua}/5`;
+          if (ua === 5) { lock = true; const tot = 30 + miss + uaMiss; setTimeout(() => api.selesai(30 / tot, `25 rasul tersusun, 5 Ulul Azmi ditemui (${miss + uaMiss} silap). Ingat <b>NIMIM</b>: Nuh, Ibrahim, Musa, Isa, Muhammad.`), 900); } }
+        else { uaMiss++; api.salah(s, `${nm(g)} bukan Ulul Azmi. Petua: <b>NIMIM</b>.`); }
+      }
+      deal(); api.say('Tekan rasul <b>pertama</b>.');
+      $('#gmf').innerHTML = 'Setiap Muslim wajib beriman kepada <b>25 rasul</b> yang disebut nama dalam al-Quran, bermula daripada Nabi Adam a.s. hingga Nabi Muhammad SAW.';
+      return { jawab() {
+        const go = () => { if (mode === 'susun') { if (!lock && n < 25) { const b = [...$('#gmc').querySelectorAll('button')].find(x => x.textContent === R[n][0]); if (b) b.click(); } setTimeout(go, 120); }
+          else if (ua < 5) { const k = R.findIndex((r, j) => UA[r[0]] && !slots[j].classList.contains('ua')); slots[k].click(); setTimeout(go, 200); } };
+        go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 13 · Perjalanan ke Akhirat — kronologi peristiwa hari akhirat (TERTIB brief13) + benar/salah. Ikon objek sahaja. */
+(function () {
+  const ST = [
+    ['📒', 'Amalan manusia', 'Pahala ialah ganjaran bagi yang taat; dosa ialah balasan buruk bagi yang melanggar larangan Allah SWT.'],
+    ['🕯️', 'Kematian & alam barzakh', 'Kematian ialah perpisahan roh dengan jasad. Alam barzakh ialah alam pemisah antara dunia dengan akhirat.'],
+    ['📯', 'Tiupan sangkakala pertama', 'Ditiup oleh malaikat Israfil AS: semua makhluk mati dan seluruh alam musnah.'],
+    ['🌅', 'Tiupan kedua: kebangkitan semula', 'Makhluk yang telah mati hidup semula dan bangkit berdiri menunggu (az-Zumar ayat 68).'],
+    ['🏜️', 'Mahsyar', 'Tempat perhimpunan semua makhluk yang dibangkitkan — kawasan amat putih seperti sekeping roti putih bersih.'],
+    ['📜', 'Suratan amalan', 'Penerima dengan tangan kanan dihisab dengan mudah; dari sebelah belakang (tangan kiri) meraung meminta kebinasaan.'],
+    ['🧮', 'Hisab', 'Perbicaraan amalan manusia setelah menerima buku catatan amalan.'],
+    ['⚖️', 'Mizan', 'Penimbang amalan baik dan buruk; berat timbangan amal baik → kehidupan senang-lenang (al-Qari‘ah 6–9).'],
+    ['🌉', 'Titian sirat', 'Merentang di atas neraka dari mahsyar ke syurga; lebih halus daripada rambut, lebih tajam daripada mata pedang.'],
+    ['🌿', 'Syurga atau neraka', 'Syurga untuk orang beriman dan beramal soleh; neraka penuh azab untuk orang kafir dan pelanggar perintah Allah SWT.'],
+  ];
+  const BS = [
+    ['Kemusnahan alam berlaku selepas tiupan sangkakala pertama.', true],
+    ['Sangkakala ditiup oleh malaikat Jibril AS.', false, 'Sangkakala ditiup oleh malaikat Israfil AS.'],
+    ['Alam barzakh berlaku sebelum kematian.', false, 'Roh ditempatkan di alam barzakh selepas kematian.'],
+    ['Orang yang ringan timbangan amal baiknya ke neraka Hawiyah.', true],
+    ['Titian sirat lebih halus daripada rambut.', true],
+    ['Matahari terbit dari barat dan pintu taubat ditutup.', true],
+    ['Dajjal termasuk tanda kecil kiamat.', false, 'Keluarnya Dajjal ialah tanda besar kiamat.'],
+  ];
+
+  AMALI({
+    id: 'perjalanan-akhirat', pel: 13, tajuk: 'Perjalanan ke Akhirat', ikon: '🧭', warna: '#0b7285',
+    ringkas: 'Susun 10 peringkat hari akhirat, dari amalan hingga syurga atau neraka.',
+    arahan: 'Susun peristiwa hari akhirat <b>mengikut kronologi</b>. Tekan kad peringkat yang <b>seterusnya</b>; setiap langkah membuka penerangannya.',
+    mula(el, api) {
+      let n = 0, miss = 0, mode = 'susun', b = 0, bOk = 0, lock = false;
+      const bs = api.shuffle(BS).slice(0, 4);
+      el.innerHTML = `<style>#pak{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;position:relative}@media(max-width:600px){#pak{grid-template-columns:1fr}}
+        #pak .s{display:flex;gap:10px;align-items:center;min-height:50px;border:2px dashed var(--line);border-radius:14px;padding:6px 10px;font-weight:700}
+        #pak .s .ic{font-size:1.5rem;width:34px;text-align:center;opacity:.35}#pak .s.ok .ic{opacity:1}
+        #pak .s .no{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--muted);font-size:.85rem;flex:none}
+        #pak .s.ok .no{background:var(--c);color:#fff}#pak .s.cur{border-color:var(--c)}</style>
+        <div class="row" style="justify-content:space-between"><b id="pan"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="pam"></i></div></div>
+        <div id="pain" class="box" style="margin:10px 0;min-height:64px;border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card))"></div>
+        <div class="chips" id="pac" style="justify-content:center;margin-bottom:12px"></div>
+        <div id="pak"></div>`;
+      const $ = s => el.querySelector(s);
+      const slots = ST.map((s, k) => { const d = api.H(`<div class="s"><span class="no">${k + 1}</span><span class="ic" aria-hidden="true">${s[0]}</span><span class="t" style="color:var(--muted)">…</span></div>`); $('#pak').appendChild(d); return d; });
+      // tunjukkan 4 pilihan pada satu masa: yang betul + 3 lain yang belum diletak
+      const deal = () => {
+        $('#pac').innerHTML = ''; slots.forEach((s, k) => s.classList.toggle('cur', k === n));
+        const rest = api.shuffle(ST.slice(n + 1).map(s => s[1])).slice(0, 3);
+        api.shuffle([ST[n][1]].concat(rest)).forEach(t => { const c = api.H(`<button class="chip" style="min-height:44px">${t}</button>`); c.onclick = () => tap(c, t); $('#pac').appendChild(c); });
+        $('#pan').textContent = `Peringkat ${n + 1}/10`;
+      };
+      function tap(c, t) {
+        if (mode !== 'susun' || lock) return;
+        if (t === ST[n][1]) {
+          lock = true; const s = slots[n]; s.classList.add('ok'); s.classList.remove('cur'); s.querySelector('.t').textContent = t; s.querySelector('.t').style.color = 'var(--ink)';
+          $('#pain').innerHTML = `<b>${ST[n][0]} ${t}</b><br>${ST[n][2]}`; api.betul(s, n < 9 ? 'Betul. Apakah yang berlaku seterusnya?' : 'Lengkap! Inilah destinasi akhir.');
+          api.anim(s, [{ transform: 'translateX(-12px)', opacity: .4 }, { transform: 'none', opacity: 1 }], { duration: 320 });
+          n++; $('#pam').style.width = (100 * n / 14) + '%';
+          setTimeout(() => { lock = false; if (n < 10) deal(); else startBS(); }, n < 10 ? 500 : 1500);
+        } else { miss++; api.salah(c, `Belum. “${t}” berlaku kemudian. Fikir: apa yang berlaku selepas <b>${n ? ST[n - 1][1].toLowerCase() : 'kehidupan dunia'}</b>?`); }
+      }
+      function startBS() {
+        mode = 'bs'; showBS(); api.say('Bahagian 2: <b>Benar atau Salah?</b>');
+      }
+      function showBS() {
+        lock = false; const q = bs[b];
+        $('#pan').textContent = `Benar atau Salah ${b + 1}/4`;
+        $('#pain').innerHTML = `<b style="font-size:1.08rem">${q[0]}</b>`;
+        $('#pac').innerHTML = `<button class="btn go" style="--c:#2b8a3e;min-width:120px" data-v="1">✔ Benar</button><button class="btn go" style="--c:#c92a2a;min-width:120px" data-v="0">✘ Salah</button>`;
+        $('#pac').querySelectorAll('button').forEach(x => x.onclick = () => ansBS(x, x.dataset.v === '1'));
+      }
+      function ansBS(x, v) {
+        if (lock) return; lock = true; const q = bs[b];
+        if (v === q[1]) { bOk++; api.betul(x, q[1] ? 'Betul, kenyataan itu BENAR.' : 'Betul, kenyataan itu SALAH. ' + q[2]); }
+        else api.salah(x, q[1] ? 'Kenyataan itu sebenarnya BENAR.' : 'Kenyataan itu SALAH. ' + q[2]);
+        b++; $('#pam').style.width = (100 * (10 + b) / 14) + '%';
+        setTimeout(() => { if (b < 4) showBS(); else { $('#pac').innerHTML = '';
+          api.selesai((10 + bOk) / (10 + miss + 4), `Kronologi: ${miss} silap · Benar/Salah: ${bOk}/4. Semua amalan akan dihisab — perbanyak amal soleh!`); } }, 1900);
+      }
+      deal(); $('#pain').innerHTML = 'Perjalanan bermula di dunia. Apakah peringkat <b>pertama</b>?';
+      return { jawab() {
+        const go = () => { if (mode === 'susun') { if (!lock) [...$('#pac').querySelectorAll('button')].find(x => x.textContent === ST[n][1]).click(); setTimeout(go, 650); }
+          else if (b < 4) { if (!lock) $('#pac').querySelector(`[data-v="${bs[b][1] ? 1 : 0}"]`).click(); setTimeout(go, 700); } };
+        go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 14 · Simulator Qada’ — qada’ mubram vs mu‘allaq (qada’ asal → asbab → qada’ berubah) + sikap mukmin. Fakta brief14. */
+(function () {
+  const ASB = { doa: '🤲 Berdoa', sedekah: '🪙 Bersedekah kepada fakir miskin', belajar: '📚 Belajar bersungguh-sungguh', silaturahim: '🤝 Hubungkan silaturahim' };
+  const KAD = [
+    { t: 'Ibu Sara sakit dan Sara rasa tidak berdaya.', asal: 'Sakit', jenis: 'mu', asb: ['doa', 'sedekah'], jadi: 'Sembuh', why: 'Doa dan sedekah antara asbab sakit menjadi sembuh.' },
+    { t: 'Aiman mendapat keputusan sederhana dan mahu cemerlang.', asal: 'Pencapaian sederhana', jenis: 'mu', asb: ['belajar'], jadi: 'Cemerlang', why: 'Pencapaian sederhana bertukar cemerlang kerana belajar bersungguh-sungguh.' },
+    { t: 'Imran mahu rezekinya diluaskan.', asal: 'Rezeki', jenis: 'mu', asb: ['silaturahim'], jadi: 'Rezeki diluaskan', why: 'Hadis Anas: sesiapa ingin diluaskan rezeki atau dipanjangkan umur, hubungkanlah silaturahim.' },
+    { t: 'Bangsa seseorang yang telah ditentukan.', asal: 'Bangsa', jenis: 'mb', why: 'Bangsa ialah contoh qada’ mubram — ketentuan yang tidak berubah (Surah Qaf ayat 29).' },
+    { t: 'Jantina seseorang yang telah ditentukan.', asal: 'Jantina', jenis: 'mb', why: 'Jantina ialah contoh qada’ mubram — tidak boleh diubah.' },
+  ];
+  const SIK = { syukur: '😊 Bersyukur', sabar: '🌧️ Sabar dan reda', amal: '💪 Terus beramal dan berusaha' };
+  const SEN = [
+    ['Haikal kalah perlawanan selepas berlatih bersungguh-sungguh.', 'sabar', 'Yakin ada hikmah pada setiap ketentuan Allah SWT.'],
+    ['Nadia mendapat hadiah yang tidak disangka.', 'syukur', 'Ketetapan Allah adalah yang terbaik untuknya.'],
+    ['Rakan berkata tidak perlu belajar kerana keputusan sudah ditakdirkan.', 'amal', 'Rasulullah SAW bersabda: “Beramallah, kerana setiap orang dipermudahkan untuk mencapai matlamat penciptaannya.”'],
+    ['Firdaus memandu dengan cermat tetapi tetap ditimpa kemalangan.', 'sabar', 'Kemalangan contoh ketentuan di luar kawalan manusia; reda dengan ketentuan Allah.'],
+  ];
+
+  AMALI({
+    id: 'simulator-qada', pel: 14, tajuk: 'Simulator Qada’', ikon: '🔄', warna: '#c2255c',
+    ringkas: 'Boleh berubah atau tidak? Pilih asbab dan lihat qada’ berubah.',
+    arahan: 'Setiap kad ialah satu ketentuan. Pilih 🔒 <b>Mubram</b> (tidak berubah) atau 🔄 <b>Mu‘allaq</b> (berubah sesuai usaha hamba). Jika mu‘allaq, pilih <b>asbab</b> yang sesuai.',
+    mula(el, api) {
+      const rounds = api.shuffle(KAD).concat(api.shuffle(SEN).map(s => ({ sen: s })));
+      let i = 0, ok = 0, tot = 0, lock = false, step = 'jenis';
+      el.innerHTML = `<style>#sqd{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:6px;align-items:center;margin:12px 0}
+        #sqd .bx{border:2px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;min-height:84px;display:grid;place-items:center;font-weight:700;line-height:1.25}
+        #sqd .bx small{display:block;color:var(--muted);font-weight:600;font-size:.74rem}#sqd .ar2{font-size:1.4rem;color:var(--muted)}
+        @media(max-width:600px){#sqd{grid-template-columns:1fr;gap:2px}#sqd .bx{min-height:50px;padding:6px}#sqd .ar2{transform:rotate(90deg);text-align:center}}</style>
+        <div class="row" style="justify-content:space-between"><b id="sqn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="sqm"></i></div></div>
+        <div id="sqc" class="box" style="margin-top:10px;text-align:center;font-weight:700;font-size:1.08rem;min-height:60px;display:grid;place-items:center;border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card))"></div>
+        <div id="sqd"><div class="bx" id="sqa"></div><span class="ar2" aria-hidden="true">➜</span><div class="bx" id="sqb"></div><span class="ar2" aria-hidden="true">➜</span><div class="bx" id="sqz"></div></div>
+        <div id="sqo" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px"></div>`;
+      const $ = s => el.querySelector(s);
+      const box = (id, lab, val, st) => { const b = $(id); b.innerHTML = `<span><small>${lab}</small>${val}</span>`; b.style.borderColor = st || 'var(--line)'; b.style.background = st ? `color-mix(in srgb,${st} 12%,var(--card))` : 'var(--card)'; };
+      const opts = (list, fn) => { $('#sqo').innerHTML = ''; list.forEach(([k, t]) => { const b = api.H(`<button class="chip" style="min-height:48px" data-k="${k}">${t}</button>`); b.onclick = () => fn(k, b); $('#sqo').appendChild(b); }); };
+      const next = () => setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#sqm').style.width = '100%'; $('#sqo').innerHTML = '';
+        api.selesai(ok / tot, `${ok}/${tot} tepat. Berusaha, berdoa, kemudian <b>bertawakal</b> — syukur ketika senang, sabar ketika susah.`); } }, 1900);
+      function show() {
+        const r = rounds[i]; lock = false; step = 'jenis'; $('#sqm').style.width = (100 * i / rounds.length) + '%';
+        if (r.sen) {
+          $('#sqn').textContent = `Sikap mukmin ${i - KAD.length + 1}/${SEN.length}`; $('#sqd').style.display = 'none';
+          $('#sqc').textContent = r.sen[0];
+          if (i === KAD.length) api.say('Bahagian 2: bagaimana <b>sikap mukmin</b> yang beriman kepada qada’ dan qadar?');
+          opts(Object.entries(SIK), sik);
+        } else {
+          $('#sqn').textContent = `Kad ketentuan ${i + 1}/${KAD.length}`; $('#sqd').style.display = '';
+          $('#sqc').textContent = r.t;
+          box('#sqa', 'Qada’ asal', r.asal); box('#sqb', 'Asbab', '?'); box('#sqz', 'Qada’ yang berubah', '?');
+          opts([['mb', '🔒 Qada’ mubram — tidak berubah'], ['mu', '🔄 Qada’ mu‘allaq — boleh berubah']], jenis);
+        }
+        api.anim($('#sqc'), [{ opacity: 0, transform: 'translateY(-10px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
+      }
+      function jenis(k, b) {
+        if (lock || step !== 'jenis') return; lock = true; tot++;
+        const r = rounds[i], right = k === r.jenis;
+        if (right) { ok++; b.className = 'chip ok'; } else b.className = 'chip no';
+        if (r.jenis === 'mb') {
+          box('#sqb', 'Asbab', '—'); box('#sqz', 'Kekal', '🔒 ' + r.asal, 'var(--muted)');
+          right ? api.betul(b, r.why) : api.salah(b, 'Ini qada’ <b>mubram</b>. ' + r.why);
+          api.anim($('#sqz'), [{ transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }, { transform: 'none' }], { duration: 400 });
+          return next();
+        }
+        right ? api.betul(b, 'Betul, ini qada’ <b>mu‘allaq</b>. Sekarang pilih <b>asbab</b> (usaha) yang sesuai.') : api.salah(b, 'Ini qada’ <b>mu‘allaq</b> — boleh berubah dengan usaha. Pilih <b>asbab</b> yang sesuai.');
+        setTimeout(() => { step = 'asbab'; lock = false; opts(Object.entries(ASB), asbab); }, 1100);
+      }
+      function asbab(k, b) {
+        if (lock || step !== 'asbab') return; lock = true; tot++;
+        const r = rounds[i], right = r.asb.includes(k);
+        if (right) { ok++; b.className = 'chip ok'; api.betul(b, r.why); } else { b.className = 'chip no'; api.salah(b, `Asbab yang sesuai: <b>${r.asb.map(a => ASB[a]).join(' / ')}</b>. ${r.why}`); }
+        box('#sqb', 'Asbab', ASB[right ? k : r.asb[0]], 'var(--gold)');
+        setTimeout(() => { box('#sqz', 'Qada’ yang berubah', '✨ ' + r.jadi, 'var(--ok)'); api.anim($('#sqz'), [{ transform: 'scale(.7)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 420 }); }, 400);
+        next();
+      }
+      function sik(k, b) {
+        if (lock) return; lock = true; tot++;
+        const s = rounds[i].sen;
+        if (k === s[1]) { ok++; b.className = 'chip ok'; api.betul(b, s[2]); } else { b.className = 'chip no'; api.salah(b, `Sikap terbaik: <b>${SIK[s[1]]}</b>. ${s[2]}`); }
+        next();
+      }
+      show();
+      return { jawab() {
+        const go = () => { if (i >= rounds.length) return;
+          if (!lock) { const r = rounds[i]; const want = r.sen ? r.sen[1] : step === 'jenis' ? r.jenis : r.asb[0]; $('#sqo').querySelector(`[data-k="${want}"]`).click(); }
+          setTimeout(go, 600); };
+        go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 16 · Pengurusan Jenazah — 4 kewajipan mengikut tertib, langkah setiap satu (brief16). Ikon & rajah ringkas, tiada gambaran jenazah. */
+(function () {
+  const KW = [['💧', 'Memandikan'], ['🤍', 'Mengafankan'], ['🤲', 'Menyembahyangkan'], ['🌿', 'Mengebumikan']];
+  const MANDI = ['Wudukkan jenazah dengan sempurna', 'Berniat memandikan', 'Siram seluruh tubuh dengan air bercampur daun bidara dan sabun', 'Bilas seluruh badan dengan air', 'Mandikan dengan air bercampur kapur barus'];
+  const TAKBIR = ['Baca al-Fatihah', 'Baca selawat ke atas Nabi SAW', 'Berdoa untuk jenazah', 'Memberi salam'];
+
+  AMALI({
+    id: 'pengurusan-jenazah', pel: 16, tajuk: 'Urus Jenazah: 4 Kewajipan', ikon: '🤍', warna: '#087f5b',
+    ringkas: 'Susun 4 kewajipan terhadap jenazah dan lengkapkan langkah setiap satu.',
+    arahan: 'Menguruskan jenazah hukumnya <b>fardu kifayah</b>. Mula-mula susun <b>4 kewajipan</b> mengikut tertib, kemudian selesaikan tugasan setiap stesen.',
+    mula(el, api) {
+      let ok = 0, tot = 0, stage = 0, k = 0, lock = false, q = 0;
+      el.innerHTML = `<style>#jz4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}@media(max-width:600px){#jz4{grid-template-columns:1fr 1fr}}
+        #jz4 .s{border:2px dashed var(--line);border-radius:14px;padding:8px 4px;text-align:center;min-height:70px;font-weight:700;font-size:.9rem;line-height:1.2}
+        #jz4 .s b{display:block;font-size:1.5rem}#jz4 .s.ok{border-style:solid;border-color:var(--ok)}#jz4 .s.cur{border-color:var(--c);border-style:solid;background:color-mix(in srgb,var(--c) 10%,var(--card))}
+        #jzs .slot{margin-bottom:6px;font-size:.95rem}</style>
+        <div id="jz4"></div>
+        <div id="jzq" class="box" style="margin:12px 0 8px;border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card));font-weight:700"></div>
+        <div id="jzv" style="max-width:420px;margin:0 auto"></div>
+        <div id="jzs"></div>
+        <div class="chips" id="jzc" style="justify-content:center;margin-top:8px"></div>`;
+      const $ = s => el.querySelector(s);
+      const sl = KW.map((w, j) => { const d = api.H(`<div class="s"><b aria-hidden="true">${j + 1}</b><span>?</span></div>`); $('#jz4').appendChild(d); return d; });
+      const chips = (list, fn, attr) => { $('#jzc').innerHTML = ''; list.forEach(t => { const b = api.H(`<button class="chip" style="min-height:46px">${t}</button>`); b.dataset.v = t; b.onclick = () => fn(b, t); $('#jzc').appendChild(b); }); };
+      const mark = (right, b, good, bad) => { tot++; if (right) { ok++; b && (b.className = 'chip ok'); api.betul(b, good); } else { b && (b.className = 'chip no'); api.salah(b, bad); } };
+      const cur = j => sl.forEach((s, x) => s.classList.toggle('cur', x === j));
+      // ---- Peringkat 0: susun 4 kewajipan
+      function s0() {
+        $('#jzq').textContent = 'Tekan kewajipan terhadap jenazah mengikut tertib (1 → 4).';
+        chips(api.shuffle(KW.map(w => w[0] + ' ' + w[1])), (b, t) => {
+          if (lock) return; const want = KW[k][0] + ' ' + KW[k][1]; tot++;
+          if (t === want) { ok++; sl[k].classList.add('ok'); sl[k].innerHTML = `<b aria-hidden="true">${KW[k][0]}</b>${k + 1}. ${KW[k][1]}`; b.remove(); api.betul(sl[k], `Betul! Kewajipan ${k + 1}: <b>${KW[k][1]}</b>.`); k++;
+            if (k === 4) { lock = true; setTimeout(s1, 1200); } }
+          else api.salah(b, `Belum. Kewajipan ke-${k + 1} bukan ${t.slice(2)}.`);
+        });
+      }
+      // ---- Stesen 1: memandikan (susun 5 langkah akhir)
+      function s1() {
+        lock = false; k = 0; cur(0); sl.forEach(s => s.classList.remove('ok'));
+        api.say('💧 <b>Memandikan</b>: meratakan air ke seluruh tubuh jenazah untuk membersihkan dan memuliakannya.');
+        $('#jzq').textContent = 'Stesen 1 · Susun langkah memandikan jenazah (selepas tubuh dibersihkan daripada najis):';
+        $('#jzs').innerHTML = MANDI.map((m, j) => `<div class="slot"><b style="color:var(--muted)">${j + 1}</b> <span></span></div>`).join('');
+        chips(api.shuffle(MANDI), (b, t) => {
+          if (lock) return; tot++;
+          if (t === MANDI[k]) { ok++; const s = $('#jzs').children[k]; s.classList.add('ok'); s.querySelector('span').textContent = t; b.remove(); api.betul(s); k++;
+            if (k === MANDI.length) { lock = true; api.say('✅ Mandian terakhir menggunakan air bercampur <b>kapur barus</b>. Bahagian badan yang terpisah (rambut, kuku) dikebumikan bersama jenazah.'); setTimeout(s2, 2000); } }
+          else api.salah(b, `Belum. Langkah ${k + 1} datang ${k ? 'selepas “' + MANDI[k - 1].toLowerCase() + '”' : 'dahulu'}.`);
+        });
+      }
+      // ---- Stesen 2: mengafankan (bilangan lapis kain)
+      const KF = [['lelaki', 3, 'Jenazah lelaki afdal dikafankan dengan <b>3 lapis</b> kain putih; setiap lapis menutup seluruh tubuh.'],
+                  ['perempuan', 5, 'Jenazah perempuan afdal <b>5 lapis</b>: 1 baju, 1 tudung, 1 pusat hingga lutut, 2 kain menutup seluruh tubuh.']];
+      function layers(nOn) {
+        const sv = api.S('svg', { viewBox: '0 0 300 130', role: 'img', 'aria-label': nOn + ' lapis kain' });
+        for (let j = 0; j < 5; j++) api.S('rect', { x: 30 + j * 6, y: 104 - j * 20, width: 240 - j * 12, height: 16, rx: 8, fill: j < nOn ? '#f8f9fa' : 'none', stroke: j < nOn ? 'var(--ink)' : 'var(--line)', 'stroke-width': 2, 'stroke-dasharray': j < nOn ? '' : '6 5' }, sv);
+        $('#jzv').innerHTML = ''; $('#jzv').appendChild(sv);
+      }
+      function s2() {
+        cur(1); sl[0].classList.add('ok'); $('#jzs').innerHTML = ''; lock = false; q = 0;
+        api.say('🤍 <b>Mengafankan</b>: menutup seluruh tubuh jenazah dengan sekurang-kurangnya sehelai kain, untuk menutup aurat.');
+        const ask = () => { const [j] = KF[q]; layers(0); $('#jzq').innerHTML = `Stesen 2 · Jenazah <b>${j}</b>: berapa lapis kain putih yang afdal?`;
+          chips(['1 lapis', '3 lapis', '5 lapis'], (b, t) => { if (lock) return; lock = true; const n = parseInt(t); layers(KF[q][1]);
+            mark(n === KF[q][1], b, KF[q][2], KF[q][2]); setTimeout(() => { lock = false; q++; q < 2 ? ask() : s3(); }, 2200); }); };
+        ask();
+      }
+      // ---- Stesen 3: menyembahyangkan (4 takbir)
+      function s3() {
+        cur(2); sl[1].classList.add('ok'); $('#jzv').innerHTML = ''; lock = false; k = 0;
+        api.say('🤲 <b>Menyembahyangkan</b>: solat ke atas jenazah untuk mendoakan rahmat dan keampunan Allah SWT. Solat jenazah ada <b>empat takbir</b>.');
+        $('#jzs').innerHTML = TAKBIR.map((m, j) => `<div class="slot"><b style="color:var(--c)">Takbir ${j + 1}</b> <span></span></div>`).join('');
+        $('#jzq').textContent = 'Stesen 3 · Selepas takbir pertama, apakah yang dibaca?';
+        chips(api.shuffle(TAKBIR), (b, t) => {
+          if (lock) return; tot++;
+          if (t === TAKBIR[k]) { ok++; const s = $('#jzs').children[k]; s.classList.add('ok'); s.querySelector('span').textContent = t; b.remove(); api.betul(s); k++;
+            if (k < 4) $('#jzq').textContent = `Stesen 3 · Selepas takbir ${['pertama', 'kedua', 'ketiga', 'keempat'][k]}?`;
+            else { lock = true; api.say('✅ Sebelum salam digalakkan membaca doa “Allahumma la tahrimna ajrahu wa la taftinna ba‘dahu waghfir lana wa lahu”.'); setTimeout(s4, 2200); } }
+          else api.salah(b, `Belum. Itu bukan bacaan selepas takbir ${k + 1}.`);
+        });
+      }
+      // ---- Stesen 4: mengebumikan (lahad / syaq, rusuk kanan)
+      function kubur(type) {
+        const sv = api.S('svg', { viewBox: '0 0 300 170', role: 'img', 'aria-label': 'Keratan rentas kubur' });
+        api.S('rect', { x: 0, y: 30, width: 300, height: 140, fill: type === 'syaq' ? '#e9d8a6' : '#a68a64', opacity: .55 }, sv);
+        api.S('path', { d: 'M0 30 H300', stroke: 'var(--ink)', 'stroke-width': 3 }, sv);
+        api.S('path', { d: 'M90 30 V140 H210 V30', fill: 'var(--card)', stroke: 'var(--ink)', 'stroke-width': 2 }, sv);
+        if (type === 'lahad') api.S('path', { d: 'M90 112 H60 Q52 112 52 122 V140 H90', fill: 'color-mix(in srgb,var(--gold) 45%,var(--card))', stroke: 'var(--ink)', 'stroke-width': 2 }, sv);
+        if (type === 'syaq') api.S('rect', { x: 130, y: 140, width: 40, height: 22, fill: 'color-mix(in srgb,var(--gold) 45%,var(--card))', stroke: 'var(--ink)', 'stroke-width': 2 }, sv);
+        api.S('text', { x: 150, y: 22, 'text-anchor': 'middle', 'font-size': 16, 'font-weight': 700, text: type === 'lahad' ? 'Liang lahad (dinding kubur)' : type === 'syaq' ? 'Liang syaq (tengah kubur)' : 'Kubur' }, sv);
+        $('#jzv').innerHTML = ''; $('#jzv').appendChild(sv);
+      }
+      const KB = [['keras', 'Liang lahad', 'lahad', 'Tanah keras → <b>liang lahad</b> dibuat pada dinding kubur.'],
+                  ['lembut dan berpasir', 'Liang syaq', 'syaq', 'Tanah lembut dan berpasir → <b>liang syaq</b>, lubang di tengah-tengah kubur.']];
+      function s4() {
+        cur(3); sl[2].classList.add('ok'); $('#jzs').innerHTML = ''; lock = false; q = 0;
+        api.say('🌿 <b>Mengebumikan</b>: menghalang bau yang tidak menyenangkan dan supaya tidak digali binatang buas.');
+        const order = api.shuffle(KB);
+        const ask = () => { if (q < 2) { const c = order[q]; kubur(''); $('#jzq').innerHTML = `Stesen 4 · Tanah perkuburan itu <b>${c[0]}</b>. Liang apakah yang dibuat?`;
+            chips(['Liang lahad', 'Liang syaq'], (b, t) => { if (lock) return; lock = true; kubur(c[2]); mark(t === c[1], b, c[3], c[3]); setTimeout(() => { lock = false; q++; ask(); }, 2200); }); }
+          else { $('#jzv').innerHTML = ''; $('#jzq').innerHTML = 'Stesen 4 · Dalam kubur, jenazah <b>wajib</b> diletakkan di atas rusuk … menghadap kiblat.';
+            chips(['Rusuk kanan', 'Rusuk kiri'], (b, t) => { if (lock) return; lock = true;
+              mark(t === 'Rusuk kanan', b, 'Betul — wajib di atas <b>rusuk kanan</b> menghadap kiblat. Sunat mendahulukan kepala ketika dihulurkan ke dalam kubur.', 'Jenazah wajib diletakkan di atas <b>rusuk kanan</b> menghadap kiblat.');
+              sl[3].classList.add('ok'); sl[3].classList.remove('cur'); $('#jzc').innerHTML = '';
+              setTimeout(() => api.selesai(ok / tot, `${ok}/${tot} tepat. Empat kewajipan: <b>mandi → kafan → solat → kebumi</b>. Fardu kifayah gugur apabila sebahagian masyarakat telah melaksanakannya.`), 1600); }); } };
+        ask();
+      }
+      s0();
+      return { jawab() {
+        const ans = () => { const t = $('#jzq').textContent;
+          if (/Tekan kewajipan/.test(t)) return KW[k] && KW[k][0] + ' ' + KW[k][1];
+          if (/memandikan/.test(t)) return MANDI[k];
+          if (/Stesen 2/.test(t)) return KF[q][1] + ' lapis';
+          if (/Stesen 3/.test(t)) return TAKBIR[k];
+          if (/rusuk/.test(t)) return 'Rusuk kanan';
+          if (/keras/.test(t)) return 'Liang lahad';
+          if (/lembut/.test(t)) return 'Liang syaq'; };
+        const go = () => { if (window.__amaliDone) return; if (!lock) { const v = ans(); const b = v && [...$('#jzc').querySelectorAll('button')].find(x => x.dataset.v === v); if (b) b.click(); } setTimeout(go, 300); };
+        go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 17 · Kalkulator Zakat Berpandu — zakat fitrah (2.7 kg), wang simpanan (nisab 85 g emas, 2.5%), tanaman (1 300 kg, 10%/5%), asnaf. Fakta brief17. */
+(function () {
+  const ASNAF = [
+    ['Fakir', 'Pak Ali perlu RM10 sehari tetapi hanya memperoleh RM3.'],
+    ['Miskin', 'Mak Su perlu RM10 sehari tetapi memperoleh RM8.'],
+    ['Amil', 'Dilantik oleh pemerintah untuk mengumpul dan mengagihkan zakat.'],
+    ['Muallaf', 'Orang yang baharu masuk Islam.'],
+    ['Hamba', 'Golongan hamba yang ingin membebaskan diri mereka.'],
+    ['Orang yang berhutang', 'Dibebani hutang untuk keperluan asas diri dan tanggungan, dan tidak mampu membayarnya.'],
+    ['Fi sabilillah', 'Orang yang berjuang di jalan Allah SWT.'],
+    ['Ibnu sabil', 'Bermusafir dengan tujuan yang diharuskan syarak, kemudian terputus perbelanjaan.'],
+  ];
+  const WAKTU = [['Harus', 'Sepanjang bulan Ramadan', '#868e96'], ['Wajib', 'Selepas terbenam matahari hari terakhir Ramadan', '#2b8a3e'],
+    ['Sunat', 'Sebelum solat Hari Raya Aidilfitri', '#1c7ed6'], ['Makruh', 'Selepas solat raya hingga sebelum terbenam matahari 1 Syawal', '#e67700'], ['Haram', 'Selepas terbenam matahari hari raya pertama', '#c92a2a']];
+  const nf = v => { const [a, b] = String(Math.round(v * 100) / 100).split('.'); return a.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + (b ? '.' + b : ''); };
+  const rm = v => 'RM' + nf(v);
+
+  AMALI({
+    id: 'kalkulator-zakat', pel: 17, tajuk: 'Kalkulator Zakat', ikon: '🪙', warna: '#e67700',
+    ringkas: 'Kira zakat fitrah, wang simpanan dan padi langkah demi langkah, kemudian agih kepada asnaf.',
+    arahan: 'Jadi <b>amil cilik</b>! Ikut setiap langkah kiraan. Kalkulator menunjukkan kerja kira — kamu pilih <b>kadar, nisab dan keputusan</b>.',
+    mula(el, api) {
+      let ok = 0, tot = 0, lock = false, want = null, misi = 0;
+      el.innerHTML = `<style>#kzk .calc{font-family:ui-monospace,Menlo,monospace;background:var(--chip);border-radius:12px;padding:10px 12px;margin:8px 0;line-height:1.7;font-size:.95rem;overflow-wrap:anywhere}
+        #kzk .calc b{color:var(--c)}#kzt{display:flex;border-radius:10px;overflow:hidden;margin:8px 0}#kzt span{flex:1;padding:6px 2px;text-align:center;color:#fff;font-size:.72rem;font-weight:700;opacity:.45;line-height:1.2}#kzt span.on{opacity:1;outline:3px solid var(--ink);outline-offset:-3px}
+        #kzk input[type=range]{width:100%;accent-color:var(--c);height:32px}</style>
+        <div id="kzk"><div class="row" style="justify-content:space-between"><b id="kzn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="kzm"></i></div></div>
+        <div id="kzw" class="box" style="margin-top:10px"></div>
+        <div id="kzq" style="font-weight:700;margin:12px 0 6px"></div>
+        <div class="chips" id="kzc"></div></div>`;
+      const $ = s => el.querySelector(s);
+      const LOG = [];
+      const calc = h => { LOG.push(h); const d = api.H(`<div class="calc">${h}</div>`); $('#kzw').appendChild(d); api.anim(d, [{ opacity: 0 }, { opacity: 1 }], { duration: 300 }); return d; };
+      // soalan pilihan; fn(betul?) dipanggil selepas jawapan
+      const ask = (q, opts, right, why, then) => {
+        $('#kzq').innerHTML = q; $('#kzc').innerHTML = ''; lock = false; want = right;
+        opts.forEach(o => { const b = api.H(`<button class="chip" style="min-height:44px">${o}</button>`); b.dataset.v = o;
+          b.onclick = () => { if (lock) return; lock = true; tot++; const r = o === right;
+            if (r) { ok++; b.className = 'chip ok'; api.betul(b, why); } else { b.className = 'chip no'; api.salah(b, `Jawapannya <b>${right}</b>. ${why}`); }
+            setTimeout(() => then(r), 1500); };
+          $('#kzc').appendChild(b); });
+      };
+      const head = (n, t, intro) => { misi = n; $('#kzn').textContent = `Misi ${n}/4 · ${t}`; $('#kzm').style.width = (25 * (n - 1)) + '%'; $('#kzw').innerHTML = intro; };
+      // ---------- Misi 1: zakat fitrah
+      let ahli = 4;
+      function m1() {
+        head(1, 'Zakat fitrah', `<b>Zakat fitrah</b> dikeluarkan bagi setiap orang mukalaf dan orang di bawah tanggungannya.
+          <div style="margin-top:8px">Bilangan ahli keluarga (termasuk tanggungan):</div><div class="row" style="margin-top:4px"><button class="btn alt" id="kzmn" aria-label="Kurang">−</button><b id="kzah" style="font-size:1.4rem;min-width:2ch;text-align:center">${ahli}</b><button class="btn alt" id="kzpl" aria-label="Tambah">+</button></div>`);
+        const upd = () => { $('#kzah').textContent = ahli; };
+        $('#kzmn').onclick = () => { if (ahli > 1) { ahli--; upd(); } }; $('#kzpl').onclick = () => { if (ahli < 15) { ahli++; upd(); } };
+        ask('Langkah 1: berapakah kadar zakat fitrah <b>seorang</b>?', api.shuffle(['1 gantang Baghdad = 2.7 kg beras', '85 gram emas', '2.5% harta']), '1 gantang Baghdad = 2.7 kg beras',
+          'Kadar zakat fitrah: 1 gantang Baghdad bersamaan 2.7 kilogram beras.', () => {
+            $('#kzmn').disabled = $('#kzpl').disabled = true;
+            calc(`Zakat fitrah = bilangan ahli × 2.7 kg<br>= ${ahli} × 2.7 kg = <b>${(ahli * 2.7).toFixed(1)} kg beras</b>`);
+            const tl = api.H(`<div id="kzt">${WAKTU.map(w => `<span style="background:${w[2]}">${w[0]}</span>`).join('')}</div>`); $('#kzw').appendChild(tl);
+            const qs = api.shuffle([['Ayah membayar pada 15 Ramadan.', 0], ['Aina membayar sebelum solat Hari Raya Aidilfitri.', 2], ['Adam membayar selepas terbenam matahari hari raya pertama.', 4]]).slice(0, 2);
+            let j = 0; const nx = () => { if (j >= qs.length) return m2(); const [t, w] = qs[j];
+              ask(`Langkah ${j + 2}: ${t} Apakah hukumnya?`, WAKTU.map(x => x[0]), WAKTU[w][0], `${WAKTU[w][0]}: ${WAKTU[w][1].toLowerCase()}.`, () => {
+                tl.children[w].classList.add('on'); j++; nx(); }); }; nx();
+          });
+      }
+      // ---------- Misi 2: wang simpanan RM18 000 (latihan buku)
+      let emas = 200;
+      function m2() {
+        head(2, 'Wang simpanan', `Situasi buku: zakat wang simpanan tahun 20XX, <b>baki terendah RM18 000</b>. Anggap cukup <b>haul</b> (genap setahun hijrah).
+          <label style="display:block;margin-top:8px">Harga emas semasa (masukkan sendiri, buku tidak memberikannya): <b id="kzev">${rm(emas)}</b> segram
+          <input type="range" id="kze" min="150" max="800" step="10" value="${emas}"></label>`);
+        $('#kze').oninput = e => { emas = +e.target.value; $('#kzev').textContent = rm(emas); };
+        ask('Langkah 1: nisab wang simpanan bersamaan berapa gram emas?', ['85 gram', '595 gram', '1 300 kg'], '85 gram', 'Nisab mata wang: 20 misqal = 85 gram emas.', () => {
+          $('#kze').disabled = true; const nis = 85 * emas, cukup = 18000 >= nis;
+          calc(`Nisab = 85 g × ${rm(emas)} = <b>${rm(nis)}</b>`);
+          ask(`Langkah 2: adakah RM18 000 mencapai nisab ${rm(nis)}?`, ['Ya, cukup nisab', 'Tidak cukup nisab'], cukup ? 'Ya, cukup nisab' : 'Tidak cukup nisab',
+            cukup ? 'RM18 000 ≥ nisab, maka wajib zakat.' : 'RM18 000 kurang daripada nisab, maka belum wajib zakat.', () => {
+              ask('Langkah 3: apakah kadar zakat wang simpanan?', ['2.5%', '10%', '20%'], '2.5%', 'Kadar zakat emas, perak dan mata wang ialah 2.5%.', () => {
+                calc(cukup ? `Zakat = 2.5% × RM18 000 = <b>RM450</b>` : `Tidak cukup nisab → <b>tiada zakat</b> (jika cukup: 2.5% × baki)`); setTimeout(m3, 1300); });
+            });
+        });
+      }
+      // ---------- Misi 3: tanaman padi
+      let padi = 2000;
+      function m3() {
+        const air = api.shuffle([['menggunakan air hujan dan parit tanpa kos besar', '10%'], ['menggunakan jentera dan pekerja dengan kos tinggi', '5%']])[0];
+        head(3, 'Tanaman padi', `Petani padi ${air[0]}.<label style="display:block;margin-top:8px">Hasil padi setahun: <b id="kzpv">${nf(padi)} kg</b>
+          <input type="range" id="kzp" min="500" max="5000" step="100" value="${padi}"></label>`);
+        $('#kzp').oninput = e => { padi = +e.target.value; $('#kzpv').textContent = nf(padi) + ' kg'; };
+        ask('Langkah 1: berapakah nisab zakat tanaman?', ['5 awsuq = 1 300 kg', '40 ekor', '85 gram emas'], '5 awsuq = 1 300 kg', 'Nisab tanaman: 5 awsuq = 363 gantang Malaysia = 1 300 kg.', () => {
+          $('#kzp').disabled = true; const cukup = padi >= 1300;
+          calc(`Hasil ${nf(padi)} kg ${cukup ? '≥' : '<'} nisab 1 300 kg → <b>${cukup ? 'wajib zakat' : 'belum wajib zakat'}</b>`);
+          ask('Langkah 2: apakah kadar zakat bagi petani ini?', ['10%', '5%', '2.5%'], air[1],
+            air[1] === '10%' ? '10% bagi tanaman air hujan, sungai atau parit yang tidak melibatkan kos banyak.' : '5% bagi tanaman yang menggunakan jentera, tenaga manusia dan kos tinggi.', () => {
+              const z = padi * parseFloat(air[1]) / 100;
+              calc(cukup ? `Zakat = ${air[1]} × ${nf(padi)} kg = <b>${nf(z)} kg padi</b>` : 'Tidak cukup nisab → <b>tiada zakat</b>'); setTimeout(m4, 1300); });
+        });
+      }
+      // ---------- Misi 4: agih kepada asnaf
+      function m4() {
+        const list = ASNAF.slice(0, 2).concat(api.shuffle(ASNAF.slice(2)).slice(0, 4));
+        const order = api.shuffle(list); let j = 0;
+        head(4, 'Agih kepada asnaf', '🪙 Zakat sudah dikumpul! Siapakah yang berhak? Padankan setiap penerima dengan <b>asnaf</b>nya (8 asnaf).<div class="chips" id="kzg" style="margin-top:8px"></div>');
+        const nx = () => { if (j >= order.length) { $('#kzm').style.width = '100%'; $('#kzc').innerHTML = ''; $('#kzq').innerHTML = '📋 Rekod kiraan amil:'; $('#kzc').innerHTML = LOG.map(h => `<div class="calc" style="flex:1 1 100%;margin:2px 0">${h}</div>`).join('');
+            return api.selesai(ok / tot, `${ok}/${tot} tepat. Zakat menyuburkan dan menyucikan harta, serta merapatkan jurang kaya dan miskin.`); }
+          const [a, d] = order[j];
+          ask(`Penerima ${j + 1}/${order.length}: ${d}`, ASNAF.map(x => x[0]), a, `<b>${a}</b>: ${d}`, () => { $('#kzg').appendChild(api.H(`<span class="chip ok" style="cursor:default">🪙 ${a}</span>`)); j++; nx(); }); };
+        nx();
+      }
+      m1();
+      return { jawab() { const go = () => { if (window.__amaliDone) return; if (!lock && want) { const b = [...$('#kzc').querySelectorAll('button')].find(x => x.dataset.v === want); if (b) b.click(); } setTimeout(go, 300); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 18 · Kira Takbir Solat Raya — pagi raya, takbir 7 & 5 diselangi tasbih, surah, khutbah 9 & 7 takbir, pulang ikut jalan lain (brief18) */
+(function () {
+  const TASBIH = 'Subhanallah walhamdulillah wa la ilaha illallah wallahu akbar';
+  AMALI({
+    id: 'kira-takbir', pel: 18, tajuk: 'Kira Takbir Solat Raya', ikon: '🌙', warna: '#0c8599',
+    ringkas: 'Pagi raya hingga khutbah: ketuk takbir 7 dan 5 kali diselangi tasbih.',
+    arahan: 'Sambut pagi raya mengikut sunnah, kemudian <b>ketuk takbir</b> dalam solat sunat hari raya — setiap takbir <b>dipisahkan dengan tasbih</b>.',
+    mula(el, api) {
+      let ok = 0, tot = 0, lock = false, want = null, mode = 'q', tgt = 0, t = 0, last = '', onDone = null;
+      el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="ktn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="ktm"></i></div></div>
+        <div id="ktv" style="max-width:300px;margin:8px auto 0"></div>
+        <div id="ktq" class="box" style="margin:8px 0;font-weight:700;text-align:center;border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card))"></div>
+        <div class="row" id="ktc" style="justify-content:center"></div>
+        <p class="hint" id="ktt" style="text-align:center"></p>`;
+      const $ = s => el.querySelector(s);
+      const STEPS = 8; let st = 0;
+      const prog = (lab) => { $('#ktn').textContent = lab; $('#ktm').style.width = (100 * st / STEPS) + '%'; };
+      const ask = (lab, q, opts, right, why, then) => {
+        mode = 'q'; prog(lab); $('#ktq').innerHTML = q; $('#ktc').innerHTML = ''; $('#ktt').textContent = ''; lock = false; want = right;
+        opts.forEach(o => { const b = api.H(`<button class="chip" style="min-height:46px">${o}</button>`); b.dataset.v = o;
+          b.onclick = () => { if (lock) return; lock = true; tot++;
+            if (o === right) { ok++; b.className = 'chip ok'; api.betul(b, why); } else { b.className = 'chip no'; api.salah(b, `Jawapannya: <b>${right}</b>. ${why}`); }
+            setTimeout(() => { st++; then(); }, 1600); };
+          $('#ktc').appendChild(b); });
+      };
+      // cincin manik takbir
+      let beads = [];
+      const ring = n => {
+        const sv = api.S('svg', { viewBox: '0 0 220 220', role: 'img', 'aria-label': 'Kiraan takbir' }); beads = [];
+        api.S('circle', { cx: 110, cy: 110, r: 86, fill: 'none', stroke: 'var(--line)', 'stroke-width': 3 }, sv);
+        for (let k = 0; k < n; k++) { const a = -Math.PI / 2 + k * 2 * Math.PI / n;
+          beads.push(api.S('circle', { cx: 110 + 86 * Math.cos(a), cy: 110 + 86 * Math.sin(a), r: 15, fill: 'var(--card)', stroke: 'var(--c)', 'stroke-width': 3 }, sv)); }
+        api.S('text', { x: 110, y: 116, 'text-anchor': 'middle', 'font-size': 44, 'font-weight': 800, id: 'ktcount', text: '0' }, sv);
+        api.S('text', { x: 110, y: 142, 'text-anchor': 'middle', 'font-size': 16, style: 'fill:var(--muted)', text: 'daripada ' + n }, sv);
+        $('#ktv').innerHTML = ''; $('#ktv').appendChild(sv);
+      };
+      const takbirStage = (lab, n, intro, then) => {
+        mode = 'tk'; tgt = n; t = 0; last = ''; onDone = then; lock = false; prog(lab); ring(n); $('#ktq').innerHTML = intro;
+        $('#ktc').innerHTML = `<button class="btn go" id="ktA" style="font-size:1.1rem">📣 Allahu akbar</button>
+          <button class="btn go" id="ktS" style="--c:#2b8a3e;font-size:1.1rem">📿 Tasbih</button><button class="btn alt" id="ktF">📖 Baca al-Fatihah</button>`;
+        $('#ktt').textContent = 'Tasbih: “' + TASBIH + '”';
+        $('#ktA').onclick = () => press('A'); $('#ktS').onclick = () => press('S'); $('#ktF').onclick = () => press('F');
+      };
+      let err = 0;
+      function press(k) {
+        if (mode !== 'tk' || lock) return;
+        if (k === 'A') {
+          if (t >= tgt) { err++; return api.salah($('#ktA'), `Sudah cukup <b>${tgt}</b> takbir. Sekarang baca al-Fatihah.`); }
+          if (last === 'A') { err++; return api.salah($('#ktA'), 'Pisahkan setiap takbir dengan <b>tasbih</b> dahulu.'); }
+          beads[t].setAttribute('fill', 'var(--c)'); api.anim(beads[t], [{ transform: 'scale(1.3)' }, { transform: 'none' }], { duration: 250 });
+          t++; last = 'A'; el.querySelector('#ktcount').textContent = t;
+          api.say(t < tgt ? `Takbir ${t}. Sekarang <b>tasbih</b>.` : `Takbir ${t} — lengkap! Sekarang <b>baca al-Fatihah</b>.`);
+        } else if (k === 'S') {
+          if (last !== 'A' || t >= tgt) { err++; return api.salah($('#ktS'), t >= tgt ? 'Takbir sudah lengkap; tiada tasbih lagi. Baca al-Fatihah.' : 'Tasbih dibaca <b>antara</b> dua takbir. Takbir dahulu.'); }
+          last = 'S'; beads[t - 1].setAttribute('stroke', 'var(--gold)'); api.say('📿 Tasbih dibaca. Takbir seterusnya!');
+        } else {
+          if (t < tgt) { err++; return api.salah($('#ktF'), `Baru ${t} takbir. Takbir tambahan hukumnya <b>sunat</b> — jika tertinggal, solat tetap sah. Tetapi cuba lengkapkan ${tgt} kali!`); }
+          lock = true; api.betul($('#ktF'), `Masya-Allah, ${tgt} takbir lengkap!`); st++; setTimeout(onDone, 900);
+        }
+      }
+      const flow = [
+        () => { const fit = Math.random() < .5;
+          const a = () => ask('Pagi raya', 'Pagi <b>Aidilfitri</b> (1 Syawal): bilakah sunat makan?', ['Makan sedikit sebelum solat raya', 'Makan selepas solat raya'], 'Makan sedikit sebelum solat raya', 'Aidilfitri: sunat makan sedikit sebelum solat sunat hari raya.', fit ? b : nx);
+          const b = () => ask('Pagi raya', 'Pagi <b>Aidiladha</b> (10 Zulhijjah): bilakah sunat makan?', ['Makan sedikit sebelum solat raya', 'Makan selepas solat raya'], 'Makan selepas solat raya', 'Aidiladha: sunat makan selepas menunaikan solat sunat hari raya.', fit ? nx : a);
+          (fit ? a : b)(); },
+        () => takbirStage('Rakaat 1', 7, 'Rakaat pertama: niat, takbiratul ihram dan doa iftitah sudah dibaca. Sekarang <b>7 takbir</b>!', nx),
+        () => ask('Rakaat 1', 'Selepas al-Fatihah, rakaat pertama membaca surah…', ['Surah al-A‘la', 'Surah al-Ghasyiyah', 'Surah al-Kafirun'], 'Surah al-A‘la', 'Rakaat pertama: Surah al-A‘la atau surah-surah lain.', nx),
+        () => takbirStage('Rakaat 2', 5, 'Rakaat kedua: <b>5 takbir</b>, setiap satu dipisahkan dengan tasbih.', nx),
+        () => ask('Rakaat 2', 'Selepas al-Fatihah, rakaat kedua membaca surah…', ['Surah al-A‘la', 'Surah al-Ghasyiyah', 'Surah al-Ikhlas'], 'Surah al-Ghasyiyah', 'Rakaat kedua: Surah al-Ghasyiyah atau surah-surah lain.', nx),
+        () => { $('#ktv').innerHTML = ''; ask('Khutbah', 'Bilakah khutbah hari raya disampaikan?', ['Sebelum solat raya', 'Selepas solat raya'], 'Selepas solat raya', 'Syarat sah: khutbah disampaikan selepas solat hari raya (dua khutbah).', nx); },
+        () => ask('Khutbah', 'Khutbah <b>pertama</b> sunat dimulakan dengan berapa kali takbir?', ['5 kali', '7 kali', '9 kali'], '9 kali', '9 kali takbir pada khutbah pertama, 7 kali pada khutbah kedua.', nx),
+        () => ask('Pulang', 'Selesai solat dan khutbah. Bagaimana sunat pulang ke rumah?', ['Ikut jalan yang sama', 'Ikut jalan yang berlainan'], 'Ikut jalan yang berlainan', 'Sunat pergi dan balik dari tempat solat melalui jalan yang berlainan.', nx),
+      ];
+      let fi = 0;
+      function nx() { fi++; if (fi < flow.length) flow[fi](); else { $('#ktm').style.width = '100%'; $('#ktc').innerHTML = ''; $('#ktt').textContent = '';
+        const score = (ok + 2) / (tot + 2 + err); api.selesai(score, `${ok}/${tot} soalan tepat, ${err} silap ketukan. Takbir <b>7 · 5</b> dalam solat, <b>9 · 7</b> dalam khutbah. Selamat hari raya!`); } }
+      flow[0]();
+      return { jawab() { const go = () => { if (window.__amaliDone) return;
+        if (!lock) { if (mode === 'q' && want) { const b = [...$('#ktc').querySelectorAll('button')].find(x => x.dataset.v === want); if (b) b.click(); }
+          else if (mode === 'tk') { if (t < tgt) press(last === 'A' ? 'S' : 'A'); else press('F'); } }
+        setTimeout(go, mode === 'tk' ? 120 : 300); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 21 · Hudaibiyah ke Pembukaan Mekah — kronologi, isi perjanjian, peta laluan (brief21). Teks & peta skematik sahaja; tiada gambaran tokoh. */
+(function () {
+  const TL = [
+    'Rasulullah SAW bermimpi memasuki Masjidil Haram dan berumrah',
+    'Bertolak awal Zulkaedah 6 H bersama 1 400 sahabat',
+    'Berniat umrah di Zulhulaifah dengan binatang korban',
+    'Khalid bin al-Walid dan 200 tentera menghalang di Kura’ al-Ghamim; baginda ikut jalan lain',
+    'Di Hudaibiyah, Budail bin Warqa’ menjadi perantara',
+    'Uthman bin Affan RA diutus dan ditahan → Bai‘ah ar-Ridwan',
+    'Suhail bin Amru diutus; Perjanjian Hudaibiyah dimeterai',
+  ];
+  const ISI = [
+    ['Tidak masuk Mekah tahun 6 H; dibenarkan tahun 7 H selama 3 hari tanpa senjata kecuali pedang bersarung', true],
+    ['Tiada peperangan selama 10 tahun', true],
+    ['Kabilah yang berjanji dengan mana-mana pihak turut terikat', true],
+    ['Orang Mekah yang lari ke Madinah dikembalikan; yang lari dari Madinah ke Mekah tidak perlu dikembalikan', true],
+    ['Umat Islam boleh tinggal di Mekah seminggu untuk umrah', false, 'Hanya 3 hari sahaja pada tahun 7 H.'],
+    ['Orang Madinah yang lari ke Mekah wajib dikembalikan ke Madinah', false, 'Sebaliknya — yang lari dari Madinah ke Mekah tidak perlu dikembalikan.'],
+    ['Gencatan perang selama 5 tahun', false, 'Gencatan perang ialah 10 tahun.'],
+  ];
+  const MAP = [
+    ['Madinah', 60, 40, '10 Ramadan 8 H: bergerak dengan berapa orang tentera?', ['10 000', '1 400', '3 000'], '10 000', 'Abu Ruhm al-Ghifari dilantik ketua sementara di Madinah.'],
+    ['Marr az-Zahran', 210, 120, 'Di Marr az-Zahran, apakah yang dinyalakan?', ['10 000 unggun api', '360 obor', 'Tiada apa-apa'], '10 000 unggun api', 'Abu Sufyan dibawa al-Abbas lalu memeluk Islam.'],
+    ['Zu Tuwa', 120, 190, 'Di Zu Tuwa, tentera dibahagikan kepada berapa pasukan?', ['2 pasukan', '4 pasukan', '10 pasukan'], '4 pasukan', 'Masuk dari arah berbeza; hanya pasukan Khalid ditentang.'],
+    ['Mekah', 250, 240, 'Mekah dibuka tahun 8 H (630 M). Apakah sikap Rasulullah SAW terhadap penduduk Mekah?', ['Memaafkan mereka', 'Membalas dendam'], 'Memaafkan mereka', '360 berhala dimusnahkan, Bilal azan di atas Kaabah, dan penduduk Mekah dimaafkan.'],
+  ];
+
+  AMALI({
+    id: 'hudaibiyah-mekah', pel: 21, tajuk: 'Hudaibiyah → Kota Mekah', ikon: '🐪', warna: '#a0522d',
+    ringkas: 'Susun peristiwa Hudaibiyah, lengkapkan isi perjanjian dan ikut laluan ke Mekah.',
+    arahan: 'Tiga misi sirah: <b>1)</b> susun kronologi Perjanjian Hudaibiyah, <b>2)</b> lengkapkan 4 isi perjanjian, <b>3)</b> ikut laluan pembukaan Kota Mekah.',
+    mula(el, api) {
+      let ok = 0, tot = 0, n = 0, mode = 'tl', lock = false, filled = 0, mi = 0, want = null;
+      el.innerHTML = `<style>#hdS .slot{margin-bottom:6px;font-size:.93rem}#hdS .scroll{border:3px double var(--gold);border-radius:6px 6px 22px 22px;padding:12px;background:color-mix(in srgb,var(--gold) 9%,var(--card))}</style>
+        <div class="row" style="justify-content:space-between"><b id="hdn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="hdm"></i></div></div>
+        <div id="hdS" style="margin-top:10px"></div>
+        <div id="hdq" style="font-weight:700;margin:10px 0 6px"></div>
+        <div class="chips" id="hdc"></div>`;
+      const $ = s => el.querySelector(s);
+      const bar = p => $('#hdm').style.width = p + '%';
+      // Misi 1: kronologi
+      function m1() {
+        $('#hdn').textContent = 'Misi 1/3 · Kronologi Hudaibiyah (6 H)';
+        $('#hdS').innerHTML = TL.map((t, j) => `<div class="slot"><b style="color:var(--muted)">${j + 1}</b> <span></span></div>`).join('');
+        $('#hdq').textContent = 'Tekan peristiwa yang berlaku dahulu:';
+        $('#hdc').innerHTML = ''; api.shuffle(TL).forEach(t => { const b = api.H(`<button class="chip" style="text-align:left">${t}</button>`); b.dataset.v = t; b.onclick = () => tap(b, t); $('#hdc').appendChild(b); });
+      }
+      function tap(b, t) {
+        if (mode !== 'tl' || lock) return; tot++;
+        if (t === TL[n]) { ok++; const s = $('#hdS').children[n]; s.classList.add('ok'); s.querySelector('span').textContent = t; b.remove(); api.betul(s, n === 5 ? 'Bai‘ah ar-Ridwan: baiah setia tidak meninggalkan Rasulullah SAW (al-Fath ayat 18).' : 'Betul!'); n++; bar(n / TL.length * 33);
+          if (n === TL.length) { lock = true; setTimeout(m2, 1300); } }
+        else api.salah(b, `Belum. Peristiwa ke-${n + 1} berlaku selepas: “${n ? TL[n - 1] : 'permulaan'}”.`);
+      }
+      // Misi 2: isi perjanjian
+      function m2() {
+        mode = 'isi'; lock = false; $('#hdn').textContent = 'Misi 2/3 · Isi Perjanjian Hudaibiyah';
+        $('#hdS').innerHTML = `<div class="scroll"><b>📜 Perjanjian Hudaibiyah</b><ol id="hdl" style="margin:8px 0 0;padding-left:22px">${'<li style="min-height:1.6em;color:var(--muted)">…</li>'.repeat(4)}</ol></div>`;
+        $('#hdq').textContent = 'Pilih 4 isi perjanjian yang betul (ada pilihan palsu!):';
+        $('#hdc').innerHTML = ''; api.shuffle(ISI).forEach(x => { const b = api.H(`<button class="chip" style="text-align:left">${x[0]}</button>`); b.dataset.v = x[0]; b.onclick = () => isi(b, x); $('#hdc').appendChild(b); });
+        api.say('Suhail bin Amru mewakili Quraisy. Apakah isi perjanjian itu?');
+      }
+      function isi(b, x) {
+        if (mode !== 'isi' || lock || b.disabled) return; tot++; b.disabled = true;
+        if (x[1]) { ok++; b.className = 'chip ok'; const li = $('#hdl').children[filled++]; li.textContent = x[0]; li.style.color = 'var(--ink)'; api.betul(li, 'Betul, itu isi perjanjian.'); bar(33 + filled / 4 * 33);
+          if (filled === 4) { lock = true; api.say('✅ Nampak merugikan, tetapi selepasnya dakwah, politik dan tentera Islam berkembang — daripada 3 000 kepada 10 000 orang dalam dua tahun.'); setTimeout(m3, 2600); } }
+        else { b.className = 'chip no'; api.salah(b, 'Bukan isi perjanjian. ' + x[2]); }
+      }
+      // Misi 3: peta laluan ke Mekah
+      let sv, dots = [];
+      function m3() {
+        mode = 'map'; $('#hdn').textContent = 'Misi 3/3 · Laluan pembukaan Kota Mekah (8 H)';
+        $('#hdS').innerHTML = '<div id="hdmap" style="max-width:380px;margin:0 auto"></div><p class="hint" style="text-align:center;margin:0">Peta skematik (bukan skala)</p>';
+        sv = api.S('svg', { viewBox: '0 0 330 280', role: 'img', 'aria-label': 'Peta laluan Madinah ke Mekah' }, $('#hdmap'));
+        api.S('rect', { x: 2, y: 2, width: 326, height: 276, rx: 18, fill: 'color-mix(in srgb,var(--gold) 10%,var(--card))', stroke: 'var(--line)', 'stroke-width': 2 }, sv);
+        const path = api.S('polyline', { points: MAP.map(m => m[1] + ',' + m[2]).join(' '), fill: 'none', stroke: 'var(--line)', 'stroke-width': 6, 'stroke-dasharray': '2 12', 'stroke-linecap': 'round' }, sv);
+        dots = MAP.map((m, j) => { const g = api.S('g', {}, sv);
+          api.S('circle', { cx: m[1], cy: m[2], r: 14, fill: 'var(--card)', stroke: 'var(--c)', 'stroke-width': 4 }, g);
+          api.S('text', { x: m[1], y: m[2] + 5, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 800, text: j + 1 }, g);
+          const lx = m[1] > 200 ? m[1] - 20 : m[1] + 20; api.S('text', { x: lx, y: m[2] - 18, 'text-anchor': m[1] > 200 ? 'end' : 'start', 'font-size': 17, 'font-weight': 700, text: m[0] }, g); return g; });
+        void path; mi = 0; stop();
+      }
+      function stop() {
+        const m = MAP[mi]; lock = false; want = m[5];
+        dots.forEach((g, j) => g.querySelector('circle').setAttribute('fill', j < mi ? 'var(--c)' : j === mi ? 'var(--gold)' : 'var(--card)'));
+        $('#hdq').innerHTML = `📍 ${m[0]}: ${m[3]}`;
+        $('#hdc').innerHTML = ''; m[4].forEach(o => { const b = api.H(`<button class="chip" style="min-height:44px">${o}</button>`); b.dataset.v = o;
+          b.onclick = () => { if (lock) return; lock = true; tot++;
+            if (o === m[5]) { ok++; b.className = 'chip ok'; api.betul(b, m[6]); } else { b.className = 'chip no'; api.salah(b, `Jawapannya <b>${m[5]}</b>. ${m[6]}`); }
+            dots[mi].querySelector('circle').setAttribute('fill', 'var(--c)'); bar(66 + (mi + 1) / 4 * 34);
+            setTimeout(() => { mi++; if (mi < MAP.length) stop(); else { $('#hdc').innerHTML = ''; $('#hdq').textContent = '';
+              api.selesai(ok / tot, `${ok}/${tot} tepat. Iktibar: kepimpinan berdasarkan syariat, tugasan terancang dan <b>memaafkan orang lain</b>.`); } }, 2000); };
+          $('#hdc').appendChild(b); });
+      }
+      m1();
+      return { jawab() { const go = () => { if (window.__amaliDone) return;
+        if (!lock) { let v = mode === 'tl' ? TL[n] : mode === 'isi' ? (ISI.find(x => x[1] && ![...$('#hdl').children].some(li => li.textContent === x[0])) || [])[0] : want;
+          const b = v && [...$('#hdc').querySelectorAll('button')].find(x => x.dataset.v === v); if (b) b.click(); }
+        setTimeout(go, 400); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 22 · Fail Tokoh Sahabat — padankan petunjuk & iktibar kepada 4 sahabat (brief22). Nama & ikon objek sahaja, tiada gambaran wajah. */
+(function () {
+  const SH = {
+    bilal: { n: 'Bilal bin Rabah RA', ic: '📢', c: '#1c7ed6', clue: ['Kunyah: Abu Abdillah', 'Ibunya bernama Hamamah', 'Berasal dari Habsyah', 'Muazin pertama dalam Islam', 'Diseksa tuannya, Umayyah bin Khalaf', 'Dibeli dan dibebaskan oleh Abu Bakar as-Siddiq RA', 'Wafat di Damsyik tahun 20 H, usia 63 tahun'] },
+    muaz: { n: 'Muaz bin Jabal RA', ic: '📚', c: '#2b8a3e', clue: ['Kunyah: Abu Abdul Rahman', 'Ibunya bernama Hind binti Sahl', 'Bani Salamah, golongan Ansar', 'Paling alim dalam ilmu halal dan haram', 'Pakar rujuk al-Quran dan fiqh di Mekah dan Yaman', 'Wafat di Syam tahun 18 H, usia 33 tahun'] },
+    abd: { n: 'Abdul Rahman bin Auf RA', ic: '🪙', c: '#e67700', clue: ['Kunyah: Abu Muhammad', 'Bani Zuhrah, golongan Muhajirin', 'Menolak tawaran wang Sa’d bin ar-Rabi’', 'Menjual tanah 40 000 dinar untuk orang miskin', 'Membebaskan 30 hamba dalam sehari', 'Wafat di Madinah tahun 32 H, dikebumikan di al-Baqi’'] },
+    khalid: { n: 'Khalid bin al-Walid RA', ic: '🛡️', c: '#c92a2a', clue: ['Kunyah: Abu Sulaiman', 'Berketurunan Bani Makhzum', 'Digelar Saifullah (pedang Allah)', 'Memimpin dalam perang Mu’tah selepas semua panglima syahid', 'Perang Yarmuk menentang tentera Rom', 'Wafat di Hims, Syria tahun 21 H, usia 60 tahun'] },
+  };
+  const IK = [
+    ['Rakan mengajak Amin menyertai kumpulan berfahaman melampau.', 'bilal', 'Tolak dan jauhi — pertahankan akidah seperti Bilal.'],
+    ['Hakim pandai tetapi kedekut berkongsi nota.', 'muaz', 'Sebarkan ilmu — saham akhirat yang berkekalan, seperti Muaz.'],
+    ['Faris berniaga di bazar dan tergoda menipu timbangan.', 'abd', 'Berniaga dengan jujur dan amanah agar rezeki diberkati, seperti Abdul Rahman.'],
+    ['Pasukan debat sekolah mahu menang pertandingan.', 'khalid', 'Susun strategi dengan baik, seperti Khalid.'],
+    ['Aina diejek kerana teguh menjaga solat.', 'bilal', 'Kekal teguh — Bilal tetap beriman walaupun diseksa.'],
+    ['Seorang kawan menawarkan wang percuma kepada Danial untuk memulakan perniagaan.', 'abd', 'Usaha dengan kemahiran sendiri — Abdul Rahman menolak tawaran Sa’d bin ar-Rabi’.'],
+  ];
+  const KEYS = ['bilal', 'muaz', 'abd', 'khalid'];
+
+  AMALI({
+    id: 'kad-sahabat', pel: 22, tajuk: 'Fail Tokoh Sahabat', ikon: '🗂️', warna: '#364fc7',
+    ringkas: 'Padankan petunjuk dan iktibar kepada Bilal, Muaz, Abdul Rahman dan Khalid.',
+    arahan: 'Baca <b>petunjuk</b>, kemudian tekan fail sahabat yang betul. Petunjuk yang betul masuk ke dalam fail tersebut.',
+    mula(el, api) {
+      const clues = api.shuffle(KEYS.flatMap(k => api.shuffle(SH[k].clue).slice(0, 3).map(c => ({ k, c }))));
+      const rounds = clues.concat(api.shuffle(IK).slice(0, 4).map(x => ({ k: x[1], c: x[0], ik: x[2] })));
+      let i = 0, ok = 0, lock = false;
+      el.innerHTML = `<style>#ksf{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}@media(max-width:700px){#ksf{grid-template-columns:1fr 1fr}}
+        #ksf button{border:2px solid var(--line);border-top:8px solid var(--k);border-radius:14px;background:var(--card);color:var(--ink);padding:10px 8px;text-align:left;cursor:pointer;min-height:96px;font:inherit;display:flex;flex-direction:column;gap:4px}
+        #ksf button b{font-size:.92rem;line-height:1.2}#ksf .ic{font-size:1.6rem}#ksf ul{margin:0;padding-left:16px;font-size:.74rem;color:var(--muted);line-height:1.3}</style>
+        <div class="row" style="justify-content:space-between"><b id="ksn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="ksm"></i></div></div>
+        <div id="ksc" class="box" style="margin:10px 0;text-align:center;font-weight:700;font-size:1.08rem;min-height:64px;display:grid;place-items:center;border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card))"></div>
+        <div id="ksf"></div>`;
+      const $ = s => el.querySelector(s);
+      const files = {};
+      KEYS.forEach(k => { const s = SH[k], b = api.H(`<button style="--k:${s.c}" data-k="${k}"><span class="ic" aria-hidden="true">${s.ic}</span><b>${s.n}</b><ul></ul></button>`);
+        b.onclick = () => pick(k); files[k] = b; $('#ksf').appendChild(b); });
+      const show = () => { lock = false; const r = rounds[i];
+        $('#ksn').textContent = r.ik ? `Iktibar ${i - clues.length + 1}/4` : `Petunjuk ${i + 1}/${clues.length}`; $('#ksm').style.width = (100 * i / rounds.length) + '%';
+        $('#ksc').innerHTML = r.ik ? `<span>💡 ${api.esc(r.c)}<br><small style="color:var(--muted);font-weight:600">Iktibar sahabat manakah yang sesuai?</small></span>` : `<span>🔎 ${api.esc(r.c)}</span>`;
+        if (i === clues.length) api.say('Bahagian 2: pilih sahabat yang <b>iktibarnya</b> sesuai dengan situasi.');
+        api.anim($('#ksc'), [{ opacity: 0, transform: 'scale(.95)' }, { opacity: 1, transform: 'none' }], { duration: 280 }); };
+      function pick(k) {
+        if (lock || i >= rounds.length) return; lock = true;
+        const r = rounds[i], s = SH[r.k];
+        if (k === r.k) { ok++; api.betul(files[k], r.ik ? r.ik : `Betul — <b>${s.n}</b>.`);
+          if (!r.ik) { const li = document.createElement('li'); li.textContent = r.c; files[k].querySelector('ul').appendChild(li); } }
+        else api.salah(files[k], `Bukan. Ini <b>${s.n}</b>. ${r.ik || ''}`);
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#ksm').style.width = '100%';
+          api.selesai(ok / rounds.length, `${ok}/${rounds.length} tepat. Iman Bilal, ilmu Muaz, ekonomi Abdul Rahman, strategi Khalid — contohilah mereka!`); } }, 1500);
+      }
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return; if (!lock) files[rounds[i].k].click(); setTimeout(go, 500); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 26 · Telefon Beradab — pilih respons beradab dalam situasi komunikasi + padankan 6 prinsip qaulan (brief26) */
+(function () {
+  const SEN = [
+    ['📩 Mesej berantai', '“Tahniah!!! Simpan mesej ini dapat kekayaan. Hantar kepada empat orang dalam empat jam dapat rezeki melimpah.”', 'Semak, jangan sebarkan', ['Hantar kepada empat orang', 'Kongsi ke semua kumpulan'], 'Prinsip “Semak sebelum sebar” — jangan sebar maklumat palsu.'],
+    ['🕌 Azan berkumandang', 'Kamu sedang rancak bersembang dalam talian dengan rakan.', 'Berhenti dan tunaikan solat', ['Sambung sembang dahulu', 'Solat selepas sembang tamat'], 'Adab: komunikasi tidak boleh melalaikan daripada ibadah dan tanggungjawab.'],
+    ['🏍️ Atas motosikal', 'Mesej masuk ketika kamu sedang menunggang motosikal.', 'Tunggu sehingga berhenti', ['Balas cepat sambil menunggang', 'Rakam nota suara sambil menunggang'], 'Adab kesesuaian masa dan tempat — elak gajet semasa menunggang motosikal.'],
+    ['👥 Kumpulan WhatsApp', 'Seorang ahli menyebarkan gosip tentang rakan sekelas.', 'Jangan sebarkan gosip itu', ['Tambah cerita lagi', 'Kongsi ke kumpulan lain'], 'Adab: tidak menyebarkan fitnah dan membuka aib — hindari gosip dan mengadu domba.'],
+    ['😶 Gelaran', 'Rakan-rakan memanggil Danial dengan gelaran yang dia tidak suka. Mereka ajak kamu turut memanggilnya begitu.', 'Panggil dia dengan nama yang baik', ['Ikut sahaja supaya kelakar', 'Cipta gelaran baharu'], 'Tidak memanggil orang dengan panggilan yang tidak disukainya.'],
+    ['🌙 Kunjungan raya', 'Kamu sedang beraya di rumah saudara. Telefon berbunyi dengan notifikasi permainan.', 'Simpan telefon, layan tuan rumah', ['Main sebentar di sudut', 'Tunjuk skrin kepada tuan rumah'], 'Adab kesesuaian masa dan tempat — elak gajet semasa kunjungan hari raya.'],
+    ['🧑‍🏫 Ditanya guru', 'Guru bertanya mengapa kamu tidak hadir ke kelas semalam tanpa sebab.', 'Jawab dengan benar dan sopan', ['Reka alasan yang meyakinkan', 'Diam dan buat tidak tahu'], 'Qaulan sadida: kata-kata yang benar, jujur, tidak bohong dan tidak berbelit-belit.'],
+  ];
+  const Q = [['Qaulan sadida', 'Kata-kata yang benar, jujur, tidak bohong dan tidak berbelit-belit'], ['Qaulan baligha', 'Kata-kata yang tepat mengenai sasaran dan memberi kesan pada jiwa'],
+    ['Qaulan layyina', 'Bahasa yang lemah lembut'], ['Qaulan maisura', 'Bahasa yang mudah difahami'], ['Qaulan ma‘rufa', 'Kata-kata yang baik'], ['Qaulan karima', 'Kata-kata yang mulia']];
+
+  AMALI({
+    id: 'telefon-beradab', pel: 26, tajuk: 'Telefon Beradab', ikon: '📱', warna: '#7048e8',
+    ringkas: 'Pilih respons beradab di telefon dan padankan 6 prinsip qaulan.',
+    arahan: 'Telefon kamu berbunyi! Pilih <b>respons yang beradab</b> bagi setiap situasi. Kemudian padankan <b>6 prinsip komunikasi Islam</b>.',
+    mula(el, api) {
+      const rounds = api.shuffle(SEN).slice(0, 6).map(s => ({ s })).concat(api.shuffle(Q).map(q => ({ q })));
+      let i = 0, ok = 0, lock = false;
+      el.innerHTML = `<style>#tbp{max-width:360px;margin:0 auto;border:3px solid var(--ink);border-radius:34px;padding:14px 12px 18px;background:color-mix(in srgb,var(--c) 6%,var(--card))}
+        #tbp .bar{display:flex;justify-content:space-between;font-size:.78rem;font-weight:700;color:var(--muted);padding:0 8px 8px}
+        #tbp .in{background:var(--card);border:2px solid var(--line);border-radius:18px 18px 18px 4px;padding:10px 12px;margin:6px 0;max-width:92%}
+        #tbp .rp{display:block;width:100%;margin:8px 0 0 auto;text-align:right;border-radius:18px 18px 4px 18px;min-height:46px}</style>
+        <div class="row" style="justify-content:space-between;margin-bottom:8px"><b id="tbn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="tbm"></i></div></div>
+        <div id="tbp"><div class="bar"><span>9:41</span><span id="tbh"></span><span>📶 🔋</span></div><div id="tbb"></div><div id="tbo"></div></div>`;
+      const $ = s => el.querySelector(s);
+      const show = () => {
+        lock = false; const r = rounds[i]; $('#tbm').style.width = (100 * i / rounds.length) + '%'; $('#tbo').innerHTML = '';
+        if (r.s) {
+          const s = r.s; $('#tbn').textContent = `Situasi ${i + 1}/6`; $('#tbh').textContent = s[0];
+          $('#tbb').innerHTML = `<div class="in"><b>${s[0]}</b><br>${api.esc(s[1])}</div>`;
+          api.shuffle([s[2]].concat(s[3])).forEach(o => { const b = api.H(`<button class="chip rp">${api.esc(o)}</button>`); b.dataset.v = o; b.onclick = () => pick(b, o === s[2], s[4], s[2]); $('#tbo').appendChild(b); });
+        } else {
+          if (i === 6) api.say('Bahagian 2: padankan maksud dengan <b>prinsip komunikasi Islam</b> (qaulan).');
+          $('#tbn').textContent = `Prinsip ${i - 5}/6`; $('#tbh').textContent = '📖 Qaulan';
+          $('#tbb').innerHTML = `<div class="in">Prinsip apakah ini?<br><b>“${r.q[1]}”</b></div>`;
+          $('#tbo').innerHTML = '<div class="chips" style="justify-content:flex-end;margin-top:8px"></div>';
+          Q.forEach(([n]) => { const b = api.H(`<button class="chip" style="min-height:44px">${n}</button>`); b.dataset.v = n; b.onclick = () => pick(b, n === r.q[0], `<b>${r.q[0]}</b>: ${r.q[1].toLowerCase()}.`, r.q[0]); $('#tbo .chips').appendChild(b); });
+        }
+        api.anim($('#tbb'), [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
+      };
+      function pick(b, right, why, best) {
+        if (lock) return; lock = true;
+        $('#tbo').querySelectorAll('button').forEach(x => { x.disabled = true; if (x.dataset.v === best) x.className = x.className.replace(/\bchip\b/, 'chip ok'); });
+        if (right) { ok++; api.betul(b, why); } else { b.className = b.className.replace(/\bchip\b/, 'chip no'); api.salah(b, `Respons terbaik: <b>${api.esc(best)}</b>. ${why}`); }
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#tbm').style.width = '100%';
+          api.selesai(ok / rounds.length, `${ok}/${rounds.length} tepat. Ingat: <b>semak sebelum sebar</b>, dan pilih kata yang benar, lembut dan mulia.`); } }, 1800);
+      }
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return;
+        if (!lock) { const r = rounds[i], v = r.s ? r.s[2] : r.q[0]; [...$('#tbo').querySelectorAll('button')].find(x => x.dataset.v === v).click(); }
+        setTimeout(go, 500); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 27 · Jom Musafir — hukum bermusafir, adab mengikut susunan buku, 2 marhalah (81 km) & rukhsah (brief27) */
+(function () {
+  const HK = { wajib: ['Wajib', '#2b8a3e'], sunat: ['Sunat', '#1c7ed6'], harus: ['Harus', '#868e96'], makruh: ['Makruh', '#e67700'], haram: ['Haram', '#c92a2a'] };
+  const SEN = [
+    ['Encik Ismail dan isterinya bermusafir menunaikan haji.', 'wajib', 'Menunaikan fardu haji apabila cukup syarat.'],
+    ['Ali bermusafir ke Madinah untuk menziarahi Masjid Nabawi.', 'sunat', 'Bermusafir untuk melakukan perkara sunat.'],
+    ['Ahmad bermusafir ke England mewakili negara dalam pertandingan bola sepak.', 'harus', 'Menyertai pertandingan sukan ialah perkara harus.'],
+    ['Hakim keluar berjalan jauh tanpa tujuan dan matlamat.', 'makruh', 'Bermusafir untuk perkara sia-sia.'],
+    ['Fatimah bermusafir bersama rakan tanpa pengetahuan suaminya.', 'haram', 'Isteri bermusafir tanpa izin suami.'],
+  ];
+  const ADAB = ['Bermusafir dengan tujuan dan niat yang baik', 'Sediakan bekalan dan keperluan secukupnya', 'Mohon pertolongan Allah dan solat sunat musafir',
+    'Ucap selamat tinggal kepada keluarga; baca basmalah dan doa musafir', 'Lantik seorang ketua jika melebihi tiga orang', 'Jaga solat fardu, patuhi undang-undang, pelihara alam sekitar',
+    'Perbanyak doa sepanjang bermusafir', 'Segera kembali kepada keluarga setelah selesai urusan'];
+  const RUK = [['Mengqasarkan solat', true], ['Menjamakkan solat', true], ['Berbuka puasa', true], ['Meninggalkan solat fardu', false], ['Tidak perlu menjaga adab', false]];
+
+  AMALI({
+    id: 'jom-musafir', pel: 27, tajuk: 'Jom Musafir!', ikon: '🧳', warna: '#1098ad',
+    ringkas: 'Tentukan hukum perjalanan, susun adab musafir dan tuntut rukhsah.',
+    arahan: 'Bermusafir = keluar dari tempat bermukim melebihi <b>2 marhalah (81 km)</b>. Tentukan hukum setiap perjalanan, kemudian susun <b>adab bermusafir</b>.',
+    mula(el, api) {
+      const sen = api.shuffle(SEN);
+      let ok = 0, tot = 0, lock = false, mode = 'hk', i = 0, n = 0, rk = 0;
+      el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="jmn"></b><div class="meter" style="flex:1;min-width:120px;max-width:260px"><i id="jmm"></i></div></div>
+        <div style="position:relative;height:58px;margin:12px 4px 26px;border-radius:12px;background:linear-gradient(var(--chip),var(--chip)) center/100% 22px no-repeat">
+          <div style="position:absolute;left:0;right:0;top:28px;border-top:3px dashed var(--card)"></div>
+          <span style="position:absolute;left:0;bottom:-20px;font-size:.75rem;color:var(--muted);font-weight:700">🏠 0 km</span>
+          <span style="position:absolute;left:78%;top:0;bottom:0;border-left:3px solid var(--gold)"></span><span style="position:absolute;left:79%;bottom:-20px;font-size:.75rem;font-weight:700;color:var(--gold)">81 km</span>
+          <span id="jmcar" style="position:absolute;top:8px;left:0;font-size:1.7rem;transition:left .6s" aria-hidden="true">🚗</span></div>
+        <div id="jmq" class="box" style="margin:10px 0;font-weight:700;min-height:56px;border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card))"></div>
+        <div id="jms"></div><div class="chips" id="jmc" style="justify-content:center"></div>`;
+      const $ = s => el.querySelector(s);
+      const TOT = SEN.length + ADAB.length + 1 + 3; let done = 0;
+      const step = () => { done++; $('#jmm').style.width = (100 * done / TOT) + '%'; $('#jmcar').style.left = Math.min(88, 90 * done / TOT) + '%'; };
+      function hk() {
+        lock = false; const s = sen[i]; $('#jmn').textContent = `Hukum perjalanan ${i + 1}/5`; $('#jmq').textContent = s[0];
+        $('#jmc').innerHTML = ''; Object.entries(HK).forEach(([k, [nm, c]]) => { const b = api.H(`<button class="btn go" style="--c:${c};min-width:92px">${nm}</button>`); b.dataset.v = k;
+          b.onclick = () => { if (lock) return; lock = true; tot++; step();
+            if (k === s[1]) { ok++; api.betul(b, `${HK[k][0]} — ${s[2]}`); } else api.salah(b, `Hukumnya <b>${HK[s[1]][0]}</b> — ${s[2]}`);
+            setTimeout(() => { i++; i < sen.length ? hk() : adab(); }, 1800); };
+          $('#jmc').appendChild(b); });
+      }
+      function adab() {
+        mode = 'adab'; lock = false; $('#jmn').textContent = 'Adab bermusafir'; $('#jmq').textContent = 'Susun adab bermusafir mengikut susunan peta buku, dari sebelum bertolak hingga pulang:';
+        api.say('Bahagian 2: tekan adab mengikut <b>tertib</b>.');
+        $('#jms').innerHTML = ADAB.map((a, j) => `<div class="slot" style="margin-bottom:6px;font-size:.93rem"><b style="color:var(--muted)">${j + 1}</b> <span></span></div>`).join('');
+        $('#jmc').innerHTML = ''; api.shuffle(ADAB).forEach(a => { const b = api.H(`<button class="chip" style="text-align:left">${a}</button>`); b.dataset.v = a;
+          b.onclick = () => { if (lock) return; tot++;
+            if (a === ADAB[n]) { ok++; const s = $('#jms').children[n]; s.classList.add('ok'); s.querySelector('span').textContent = a; b.remove(); api.betul(s); n++; step();
+              if (n === ADAB.length) { lock = true; setTimeout(jarak, 1200); } }
+            else api.salah(b, `Belum. Adab ke-${n + 1} datang ${n ? 'selepas “' + ADAB[n - 1].toLowerCase() + '”' : 'paling awal'}.`); };
+          $('#jmc').appendChild(b); });
+      }
+      function jarak() {
+        mode = 'jarak'; lock = false; $('#jms').innerHTML = ''; $('#jmn').textContent = 'Rukhsah';
+        $('#jmq').innerHTML = 'Danial bermusafir <b>melebihi 81 km</b> dan masuk waktu Zuhur. 2 marhalah bersamaan berapa kilometer?';
+        $('#jmc').innerHTML = ''; ['18 km', '81 km', '180 km'].forEach(o => { const b = api.H(`<button class="chip" style="min-height:44px">${o}</button>`); b.dataset.v = o;
+          b.onclick = () => { if (lock) return; lock = true; tot++; step();
+            if (o === '81 km') { ok++; api.betul(b, '2 marhalah = 81 km (al-Fiqh al-Manhaji).'); } else api.salah(b, '2 marhalah bersamaan <b>81 km</b>.');
+            setTimeout(ruk, 1500); }; $('#jmc').appendChild(b); });
+      }
+      function ruk() {
+        mode = 'ruk'; lock = false; $('#jmq').innerHTML = 'Pilih <b>3 rukhsah</b> (keringanan) bagi orang bermusafir:';
+        $('#jmc').innerHTML = ''; api.shuffle(RUK).forEach(([t, r]) => { const b = api.H(`<button class="chip" style="min-height:44px">${t}</button>`); b.dataset.v = t;
+          b.onclick = () => { if (lock || b.disabled) return; b.disabled = true; tot++;
+            if (r) { ok++; rk++; step(); b.className = 'chip ok'; api.betul(b, `Ya — diharuskan ${t.toLowerCase()}.`);
+              if (rk === 3) { lock = true; $('#jmcar').style.left = '88%'; setTimeout(() => api.selesai(ok / tot, `${ok}/${tot} tepat. Doa orang bermusafir dimakbulkan — mulakan perjalanan dengan <b>basmalah dan doa</b>!`), 1200); } }
+            else { b.className = 'chip no'; api.salah(b, 'Bukan rukhsah. Solat fardu tidak boleh ditinggalkan dan adab tetap dijaga.'); } };
+          $('#jmc').appendChild(b); });
+      }
+      hk();
+      return { jawab() { const go = () => { if (window.__amaliDone) return;
+        if (!lock) { const v = mode === 'hk' ? sen[i][1] : mode === 'adab' ? ADAB[n] : mode === 'jarak' ? '81 km' : (RUK.find(([t, r]) => r && !$(`#jmc [data-v="${t}"]`).disabled) || [])[0];
+          const b = v && [...$('#jmc').querySelectorAll('button')].find(x => x.dataset.v === v && !x.disabled); if (b) b.click(); }
+        setTimeout(go, 350); }; go(); } };
+    },
+  });
+})();
+
+/* ================= Aplikasi Amali Interaktif ================= */
+(function () {
+  const $ = s => document.querySelector(s);
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'pi' + FORM + 'amali';
+  const G = Object.assign({ xp: 0, best: {}, main: {}, mute: false }, store.get(KEY, {}));
+  const save = () => { store.set(KEY, G); $('#xp').textContent = G.xp + ' XP'; };
+  ACTS.sort((a, b) => a.pel - b.pel || String(a.id).localeCompare(b.id));
+  const BID = BIDANG.map(([nama, ikon, pels]) => [nama, ikon, ACTS.filter(a => pels.includes(a.pel))]).filter(b => b[2].length);
+  const stars = n => '★'.repeat(n) + '☆'.repeat(3 - n);
+
+  /* bunyi kecil (WebAudio), boleh dibisukan */
+  let AC = null;
+  function tone(fs, d) { if (G.mute) return; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); const t = AC.currentTime;
+    fs.forEach((f, i) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.value = f; o.connect(g); g.connect(AC.destination);
+      g.gain.setValueAtTime(.0001, t + i * d); g.gain.exponentialRampToValueAtTime(.18, t + i * d + .02); g.gain.exponentialRampToValueAtTime(.0001, t + i * d + d * 1.6);
+      o.start(t + i * d); o.stop(t + i * d + d * 1.7); }); } catch (e) {} }
+
+  function home() {
+    cur = null; history.replaceState(null, '', location.pathname);
+    $('#stage').hidden = true; $('#home').hidden = false;
+    $('#home').innerHTML = BID.map(([nama, ikon, acts]) => `<section class="bid"><h2><span aria-hidden="true">${ikon}</span> ${esc(nama)}</h2><div class="grid">${acts.map(a =>
+      `<button class="act" data-id="${esc(a.id)}" style="--c:${a.warna || 'var(--teal)'}"><span class="ai" aria-hidden="true">${a.ikon}</span>
+       <span class="at"><small>Pelajaran ${a.pel}</small><b>${esc(a.tajuk)}</b><span>${esc(a.ringkas || '')}</span></span>
+       <span class="as" aria-label="${G.best[a.id] || 0} bintang">${stars(G.best[a.id] || 0)}</span></button>`).join('')}</div></section>`).join('');
+    $('#home').querySelectorAll('.act').forEach(b => b.onclick = () => open(b.dataset.id));
+    if (!RM()) $('#home').querySelectorAll('.act').forEach((b, i) => anim(b, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { delay: Math.min(i * 30, 500), duration: 380 }));
+  }
+  let cur = null, ctl = null, gen = 0;
+  function open(id) {
+    const a = ACTS.find(x => x.id === id); if (!a) return home();
+    cur = a; gen++; history.replaceState(null, '', '?a=' + encodeURIComponent(id));
+    $('#home').hidden = true; $('#stage').hidden = false;
+    document.documentElement.style.setProperty('--c', a.warna || 'var(--teal)');
+    $('#sh').innerHTML = `<span class="ai" aria-hidden="true">${a.ikon}</span><div><small>Pelajaran ${a.pel}</small><h2>${esc(a.tajuk)}</h2></div>`;
+    $('#say').innerHTML = a.arahan || ''; $('#fin').innerHTML = '';
+    const body = $('#body'); body.innerHTML = '';
+    G.main[id] = (G.main[id] || 0) + 1; save();
+    const g = gen;
+    const api = {
+      say(h) { if (g === gen) $('#say').innerHTML = h; },
+      betul(el, h) { tone([660, 880], .09); if (el) anim(el, [{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 300 }); if (h !== undefined) api.say('✅ ' + h); },
+      salah(el, h) { tone([220, 180], .12); if (el) anim(el, [{ transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'none' }], { duration: 300 }); if (h !== undefined) api.say('❌ ' + h); },
+      selesai(skor, h) {
+        if (g !== gen) return; skor = Math.max(0, Math.min(1, +skor || 0));
+        const n = skor >= .999 ? 3 : skor >= .7 ? 2 : skor > 0 ? 1 : 0, xp = Math.round(10 + 20 * skor), was = G.best[a.id] || 0;
+        G.best[a.id] = Math.max(was, n); G.xp += xp; save(); tone([523, 659, 784, 1046], .1);
+        $('#fin').innerHTML = `<div class="done"><div class="big">${stars(n)}</div><p>${h || (n === 3 ? 'Sempurna! Masya-Allah.' : 'Siap! Cuba lagi untuk 3 bintang.')}</p>
+          <p class="hint">+${xp} XP${n > was ? ' · rekod baharu!' : ''}</p><button class="btn go" id="again">🔁 Main lagi</button> <button class="btn alt" id="back2">← Semua aktiviti</button></div>`;
+        $('#again').onclick = () => open(a.id); $('#back2').onclick = home;
+        anim($('#fin .done'), [{ opacity: 0, transform: 'scale(.92)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+        $('#fin').scrollIntoView({ block: 'nearest', behavior: RM() ? 'auto' : 'smooth' });
+        window.__amaliDone = { id: a.id, skor };
+      },
+      toast(t) { const d = document.createElement('div'); d.className = 'tst'; d.textContent = t; $('#toast').appendChild(d); setTimeout(() => d.remove(), 2600); },
+      shuffle, S, H, anim, esc,
+    };
+    try { ctl = a.mula(body, api) || null; } catch (e) { console.error(e); body.innerHTML = '<p class="hint">Aktiviti ini gagal dimuat.</p>'; }
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  $('#back').onclick = home;
+  $('#mute').onclick = () => { G.mute = !G.mute; save(); $('#mute').textContent = G.mute ? '🔇' : '🔊'; };
+  $('#mute').textContent = G.mute ? '🔇' : '🔊';
+  window.AM = { open, home, get ctl() { return ctl; }, ACTS, G };   // untuk ujian
+  save();
+  const q = new URLSearchParams(location.search).get('a'); q ? open(q) : home();
+})();
+
+</script>
+</body>
+</html>

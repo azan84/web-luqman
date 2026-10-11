@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amali Interaktif PI T1</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eaf2ee; --card:#fbfdfc; --ink:#10302c; --muted:#4f6b66; --line:#c9dbd4;
+  --teal:#0b6b60; --lapis:#1f4e8c; --gold:#b8861b; --ok:#1f8a4c; --no:#c2410c; --chip:#dceae5;
+  --c:var(--teal); --ui:"Lexend",system-ui,sans-serif; --ar:"Amiri","Scheherazade New","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0b1716; --card:#11221f; --ink:#e3f0ec; --muted:#9db8b1; --line:#24403b; --teal:#3fc1ae; --lapis:#7fa8ec; --gold:#e6b84f; --ok:#5fd38d; --no:#ff8a5c; --chip:#1a302c}}
+:root[data-theme="dark"]{--paper:#0b1716; --card:#11221f; --ink:#e3f0ec; --muted:#9db8b1; --line:#24403b; --teal:#3fc1ae; --lapis:#7fa8ec; --gold:#e6b84f; --ok:#5fd38d; --no:#ff8a5c; --chip:#1a302c}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--ui)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.ar{font-family:var(--ar);direction:rtl;unicode-bidi:isolate;font-size:1.6em;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px 60px}
+
+/* Kepala: jalur jubin bintang lapan */
+.band{height:30px;background-color:var(--teal);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cg fill='none' stroke='%23e6c06a' stroke-width='1.2' opacity='.75'%3E%3Crect x='8' y='8' width='14' height='14'/%3E%3Crect x='8' y='8' width='14' height='14' transform='rotate(45 15 15)'/%3E%3Ccircle cx='15' cy='15' r='2.2'/%3E%3C/g%3E%3C/svg%3E");}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 0 8px}
+.top h1{flex:1;min-width:230px;margin:0;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;font-weight:800;letter-spacing:-.01em}
+.top h1 small{display:block;font-size:.92rem;font-weight:400;color:var(--muted);margin-top:6px;letter-spacing:0}
+.pill{font-weight:800;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.icon{width:42px;height:42px;border-radius:50%;border:2px solid var(--line);background:var(--card);cursor:pointer;font-size:1.1rem}
+
+/* Laman utama: kumpulan bidang */
+.bid h2{font-size:1.05rem;margin:26px 0 10px;display:flex;gap:8px;align-items:center;color:var(--muted);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.act{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:4px 12px;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.act::after{content:"";position:absolute;right:-26px;top:-26px;width:70px;height:70px;border:2px solid var(--c);opacity:.25;transform:rotate(45deg)}
+.act:hover{transform:translateY(-2px);border-color:var(--c)}
+.act .ai{grid-row:1/3;font-size:2rem;width:54px;height:54px;display:grid;place-items:center;border-radius:14px;background:color-mix(in srgb,var(--c) 16%,transparent)}
+.act .at small{display:block;color:var(--muted);font-size:.75rem;font-weight:600}
+.act .at b{display:block;font-size:1.02rem;line-height:1.2}
+.act .at span{display:block;color:var(--muted);font-size:.86rem;line-height:1.35;margin-top:3px}
+.act .as{grid-column:2;color:var(--gold);letter-spacing:2px;font-size:.9rem}
+
+/* Pentas aktiviti */
+.sh{display:flex;gap:12px;align-items:center;margin:8px 0 6px}
+.sh .ai{font-size:2.2rem}
+.sh small{color:var(--muted);font-weight:600}
+.sh h2{margin:0;font-size:clamp(1.25rem,2.8vw,1.7rem);line-height:1.15}
+.say{min-height:52px;margin:8px 0 14px;padding:12px 14px;border-radius:14px;background:var(--card);border:2px solid var(--line);border-left:7px solid var(--c);font-size:1.02rem}
+.body{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;min-height:280px}
+.body svg{max-width:100%;height:auto}
+.body svg text{font-family:var(--ui);fill:var(--ink)}
+.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:800;cursor:pointer;background:var(--ink);color:var(--paper);box-shadow:0 4px 0 color-mix(in srgb,var(--ink) 55%,#000)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 55%,#000)}
+.btn.go{background:var(--c);color:#fff;box-shadow:0 4px 0 color-mix(in srgb,var(--c) 55%,#000)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
+.btn[disabled]{opacity:.45;cursor:default}
+/* komponen biasa untuk modul */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:9px 14px;cursor:pointer;font-weight:600;transition:background .2s,border-color .2s}
+.chip:hover{border-color:var(--c)}
+.chip.on{background:var(--c);border-color:var(--c);color:#fff}
+.chip.ok{background:color-mix(in srgb,var(--ok) 18%,var(--card));border-color:var(--ok)}
+.chip.no{background:color-mix(in srgb,var(--no) 14%,var(--card));border-color:var(--no)}
+.chip[disabled]{cursor:default}
+.slot{min-height:46px;border:2px dashed var(--line);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.slot.ok{border-style:solid;border-color:var(--ok)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box{border:2px solid var(--line);border-radius:16px;padding:12px}
+.box h3{margin:0 0 8px;font-size:1rem}
+.meter{height:10px;background:var(--chip);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--c);transition:width .4s}
+.hint{color:var(--muted);font-size:.9rem;margin:6px 0 0}
+.done{margin-top:16px;padding:16px;border-radius:18px;text-align:center;background:color-mix(in srgb,var(--ok) 12%,var(--card));border:2px solid var(--ok)}
+.done .big{font-size:2.2rem;color:var(--gold);letter-spacing:4px}
+.done p{margin:6px 0}
+.back{margin:14px 0 0}
+#toast{position:fixed;right:16px;bottom:16px;z-index:50;display:grid;gap:8px}
+.tst{background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:12px;font-weight:600}
+@media (max-width:600px){.top h1{flex-basis:100%}.grid{grid-template-columns:1fr}.body{padding:12px}.say{font-size:.96rem}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a class="noprint" href="../../studies.html#pendidikan-islam-t1" style="display:inline-block;margin:10px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 14px system-ui;text-decoration:none">← Studies</a>
+<a class="noprint" href="nota.html" style="display:inline-block;margin:10px 0 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 14px system-ui;text-decoration:none">📖 Nota</a>
+<a class="noprint" href="kad-imbas.html" style="display:inline-block;margin:10px 0 0 6px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:700 14px system-ui;text-decoration:none">🎮 Permainan</a>
+
+<div class="band" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="top">
+    <h1>Amali Interaktif<small>Pendidikan Islam Tingkatan 1 · cuba, sentuh dan susun sendiri</small></h1>
+    <span class="pill" id="xp">0 XP</span><button class="icon" id="mute" aria-label="Bunyi">🔊</button>
+  </header>
+  <main id="home"></main>
+  <main id="stage" hidden>
+    <button class="btn alt back" id="back">← Semua aktiviti</button>
+    <div class="sh" id="sh"></div>
+    <div class="say" id="say" aria-live="polite"></div>
+    <div class="body" id="body"></div>
+    <div id="fin"></div>
+  </main>
+</div>
+<div id="toast" aria-live="polite"></div>
+<script>
+const FORM = '1';
+/* ================= Enjin Amali Interaktif (Pendidikan Islam T1 & T3) =================
+   Modul aktiviti memanggil AMALI({...}) sekali. Lihat shared/amali/SPEC.md. */
+'use strict';
+const ACTS = [];
+function AMALI(a) { ACTS.push(a); }
+const NS = 'http://www.w3.org/2000/svg';
+function S(tag, at, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in at || {}) { if (k === 'text') e.textContent = at[k]; else e.setAttribute(k, at[k]); }
+  if (parent) parent.appendChild(e); return e;
+}
+function H(html) { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const anim = (el, kf, o) => (el && el.animate && !RM()) ? el.animate(kf, Object.assign({ duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }, o)) : null;
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const BIDANG = [["Al-Quran", "📖", [1, 2, 3, 4, 5, 6, 7, 8, 9]], ["Hadis", "📜", [10, 11, 12]], ["Akidah", "✨", [13, 14, 15, 16]], ["Ibadat", "🕌", [17, 18, 19, 20, 21, 22, 23]], ["Sirah", "🐪", [24, 25, 26]], ["Akhlak Islamiah", "🤝", [27, 28, 29, 30]]];
+/* Pelajaran 5 · Alif lam syamsiah & qamariah — huruf daripada brief5 (14 + 14) */
+(function () {
+  const SYAM = 'ت ث د ذ ر ز س ش ص ض ط ظ ل ن'.split(' ');
+  const QAM = 'ا ب ج ح خ ع غ ف ق ك م و ه ي'.split(' ');
+  // contoh perkataan daripada buku (baris ARAB: brief5)
+  const WORDS = [['الطَّارِقِ', 's', 'aṭ-ṭāriq'], ['الثَّاقِبُ', 's', 'aṡ-ṡāqib'], ['النَّجْمُ', 's', 'an-najmu'], ['الشَّمْس', 's', 'asy-syams'],
+                 ['الْقَارِعَةُ', 'q', 'al-qāri‘ah'], ['الْغَفُورُ', 'q', 'al-ghafūr']];
+  AMALI({
+    id: 'syamsiah-qamariah', pel: 5, tajuk: 'Matahari atau Bulan?', ikon: '☀️', warna: '#d9480f',
+    ringkas: 'Lam disorok (syamsiah) atau lam jelas (qamariah)?',
+    arahan: 'Lihat huruf selepas <b>ال</b>. Pilih ☀️ <b>Syamsiah</b> (lam tidak disebut, huruf selepasnya bersabdu) atau 🌙 <b>Qamariah</b> (lam disebut jelas, bersukun).',
+    mula(el, api) {
+      const qs = api.shuffle(SYAM).slice(0, 5).map(h => ({ h, k: 's' })).concat(api.shuffle(QAM).slice(0, 5).map(h => ({ h, k: 'q' })));
+      const rounds = api.shuffle(qs).concat(api.shuffle(WORDS).slice(0, 4).map(w => ({ w: w[0], k: w[1], r: w[2] })));
+      let i = 0, ok = 0, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="sqn"></b><div class="meter" style="flex:1;max-width:260px"><i id="sqm"></i></div></div>
+        <div id="sqw" class="ar" style="font-size:4.2rem;text-align:center;margin:18px 0 6px;min-height:1.6em"></div>
+        <p id="sqr" class="hint" style="text-align:center;min-height:1.4em"></p>
+        <div class="row" style="justify-content:center;gap:14px;margin-top:10px">
+          <button class="btn go" id="sqS" style="--c:#e8590c;font-size:1.15rem">☀️ Syamsiah</button>
+          <button class="btn go" id="sqQ" style="--c:#364fc7;font-size:1.15rem">🌙 Qamariah</button></div>
+        <div class="cols" style="margin-top:18px"><div class="box"><h3>☀️ Syamsiah ditemui</h3><div class="chips ar" id="sqbS" style="font-size:1.3rem"></div></div>
+          <div class="box"><h3>🌙 Qamariah ditemui</h3><div class="chips ar" id="sqbQ" style="font-size:1.3rem"></div></div></div>`;
+      const $ = s => el.querySelector(s);
+      const show = () => {
+        const r = rounds[i];
+        $('#sqn').textContent = `Soalan ${i + 1}/${rounds.length}`; $('#sqm').style.width = (100 * i / rounds.length) + '%';
+        $('#sqw').textContent = r.w || ('ال' + r.h); $('#sqr').textContent = r.w ? 'Perkataan daripada buku teks' : 'Huruf selepas alif lam: ' + r.h;
+        api.anim($('#sqw'), [{ opacity: 0, transform: 'scale(.7)' }, { opacity: 1, transform: 'none' }], { duration: 350 });
+        lock = false;
+      };
+      const pick = k => {
+        if (lock || i >= rounds.length) return; lock = true;
+        const r = rounds[i], right = k === r.k, nm = r.k === 's' ? 'Syamsiah' : 'Qamariah';
+        // tunjuk bacaan: syamsiah → huruf selepas lam bersabdu; qamariah → lam bersukun
+        if (!r.w) $('#sqw').textContent = r.k === 's' ? 'ال' + r.h + 'ّ' : 'الْ' + r.h;
+        $('#sqr').textContent = r.k === 's' ? '☀️ Syamsiah: lam tidak disebut, ' + (r.w ? 'huruf selepasnya bersabdu' : r.h + ' dibaca bersabdu') + (r.r ? ' · ' + r.r : '')
+                                            : '🌙 Qamariah: lam disebut jelas (bersukun)' + (r.r ? ' · ' + r.r : '');
+        if (right) { ok++; api.betul($('#sqw'), 'Betul! ' + nm + '.'); } else api.salah($('#sqw'), 'Belum tepat, ini ' + nm + '.');
+        const b = document.createElement('span'); b.className = 'chip ' + (right ? 'ok' : 'no'); b.textContent = r.w || r.h;
+        $(r.k === 's' ? '#sqbS' : '#sqbQ').appendChild(b);
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#sqm').style.width = '100%'; api.selesai(ok / rounds.length, `${ok}/${rounds.length} betul. ` + (ok === rounds.length ? 'Kamu kenal semua huruf matahari dan bulan!' : 'Ulang untuk hafal 14 huruf syamsiah.')); } }, 1100);
+      };
+      $('#sqS').onclick = () => pick('s'); $('#sqQ').onclick = () => pick('q');
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return; if (!lock) pick(rounds[i].k); setTimeout(go, 1200); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 5 · Peta Makhraj (rongga mulut / halkum) & Meter Fawatih (1/2/6 harakat) — fakta daripada brief5 */
+(function () {
+  /* ---------- Peta Makhraj ---------- */
+  const MULUT = ['ا', 'و', 'ي'];            // huruf rongga mulut (brief5)
+  const HALKUM = ['ء', 'ه', 'ع', 'ح', 'غ', 'خ']; // huruf halkum (brief5)
+  AMALI({
+    id: 'peta-makhraj', pel: 5, tajuk: 'Peta Makhraj', ikon: '👄', warna: '#c2255c',
+    ringkas: 'Hantar setiap huruf ke tempat keluarnya: rongga mulut atau halkum.',
+    arahan: 'Makhraj huruf ialah <b>tempat keluar</b> huruf ketika menyebutnya. Tekan satu huruf, kemudian tekan tempat keluarnya pada kepala: <b>rongga mulut</b> atau <b>halkum</b>.',
+    mula(el, api) {
+      const letters = api.shuffle(MULUT.map(h => ({ h, z: 'm' })).concat(HALKUM.map(h => ({ h, z: 'h' }))));
+      let sel = null, done = 0, ok = 0, tries = 0;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="pmn">0/9 huruf</b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="pmm"></i></div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;margin-top:10px">
+          <div id="pmsv" style="flex:1 1 300px;max-width:440px;margin:0 auto"></div>
+          <div style="flex:1 1 240px">
+            <h3 style="margin:4px 0 8px;font-size:1rem">Huruf untuk dihantar</h3>
+            <div class="chips ar" id="pmc" style="font-size:1.7rem"></div>
+            <p class="hint" id="pmh">Pilih satu huruf dahulu.</p>
+            <div class="row" style="gap:10px;margin-top:10px;flex-wrap:wrap">
+              <button class="btn go" id="pmBm" style="--c:#c2255c;min-height:44px">👄 Rongga mulut</button>
+              <button class="btn go" id="pmBh" style="--c:#1f4e8c;min-height:44px">🔻 Halkum</button></div>
+          </div></div>`;
+      const $ = s => el.querySelector(s);
+      // kepala pandangan sisi (menghadap kanan)
+      const sv = api.S('svg', { viewBox: '0 0 320 320', role: 'img', 'aria-label': 'Kepala pandangan sisi: rongga mulut dan halkum' }, $('#pmsv'));
+      api.S('path', { d: 'M70 300 C62 250 40 200 44 140 C48 70 100 26 170 26 C228 26 262 62 266 104 L290 150 C294 158 288 162 278 162 L272 164 C276 172 272 176 266 178 C272 184 270 190 262 192 C268 202 262 212 252 214 L248 236 C246 250 232 256 214 254 L196 252 L198 300 Z',
+        fill: 'color-mix(in srgb, var(--gold) 14%, var(--card))', stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-linejoin': 'round' }, sv);
+      api.S('circle', { cx: 216, cy: 92, r: 6, fill: 'var(--ink)' }, sv); // mata
+      api.S('path', { d: 'M196 70 Q214 60 232 66', fill: 'none', stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-linecap': 'round' }, sv); // kening
+      // zon rongga mulut
+      const zm = api.S('path', { d: 'M262 176 C240 166 196 160 150 166 C132 170 126 186 132 198 C170 206 220 204 262 190 Z', fill: 'color-mix(in srgb, #c2255c 22%, transparent)',
+        stroke: '#c2255c', 'stroke-width': 3, style: 'cursor:pointer' }, sv);
+      api.S('path', { d: 'M248 196 C214 204 170 206 142 200', fill: 'none', stroke: '#e64980', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: .55, 'pointer-events': 'none' }, sv); // lidah
+      // zon halkum (kerongkong)
+      const zh = api.S('path', { d: 'M124 200 C118 232 120 264 126 300 L188 300 C182 262 178 232 178 204 Z', fill: 'color-mix(in srgb, var(--lapis) 22%, transparent)',
+        stroke: 'var(--lapis)', 'stroke-width': 3, style: 'cursor:pointer' }, sv);
+      api.S('text', { x: 196, y: 150, 'font-size': 15, 'font-weight': 700, 'text-anchor': 'middle', text: 'Rongga mulut', 'pointer-events': 'none' }, sv);
+      api.S('text', { x: 82, y: 228, 'font-size': 15, 'font-weight': 700, 'text-anchor': 'middle', text: 'Halkum', 'pointer-events': 'none' }, sv);
+      api.S('path', { d: 'M98 234 L124 246', stroke: 'var(--ink)', 'stroke-width': 2 }, sv);
+      const gM = api.S('g', {}, sv), gH = api.S('g', {}, sv);
+      const posM = [[236, 184], [204, 182], [172, 182]], posH = [[140, 226], [164, 226], [140, 252], [164, 252], [141, 278], [166, 278]];
+      let nM = 0, nH = 0;
+      const glow = z => api.anim(z, [{ opacity: 1 }, { opacity: .35 }, { opacity: 1 }], { duration: 500 });
+
+      letters.forEach((L, i) => {
+        const b = document.createElement('button'); b.className = 'chip'; b.textContent = L.h; b.style.minWidth = '50px'; b.style.minHeight = '48px';
+        b.onclick = () => { if (b.disabled) return; el.querySelectorAll('#pmc .chip').forEach(c => c.classList.remove('on')); b.classList.add('on'); sel = { L, b };
+          $('#pmh').textContent = `Huruf ${L.h} dipilih. Di manakah tempat keluarnya?`; };
+        L.b = b; $('#pmc').appendChild(b);
+      });
+      const place = z => {
+        if (!sel) { api.say('Pilih satu <b>huruf</b> dahulu, kemudian tekan tempat keluarnya.'); return; }
+        const { L, b } = sel; tries++;
+        const nm = L.z === 'm' ? 'rongga mulut' : 'halkum';
+        if (z !== L.z) {
+          api.salah(z === 'm' ? zm : zh, `Belum tepat. <span class="ar">${L.h}</span> keluar dari <b>${nm}</b>. ` + (L.z === 'm' ? 'Huruf rongga mulut: ا و ي.' : 'Huruf halkum (kerongkong): ء ه ع ح غ خ.'));
+          b.classList.add('no'); return;
+        }
+        if (!b.classList.contains('no')) ok++;
+        b.classList.remove('on', 'no'); b.classList.add('ok'); b.disabled = true; sel = null; done++;
+        const p = L.z === 'm' ? posM[nM++] : posH[nH++];
+        const t = api.S('text', { x: p[0], y: p[1], 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 20, 'font-weight': 700, style: 'font-family:var(--ar);fill:' + (L.z === 'm' ? '#a61e4d' : 'var(--lapis)'), text: L.h }, L.z === 'm' ? gM : gH);
+        api.anim(t, [{ opacity: 0, transform: 'translateY(-30px)' }, { opacity: 1, transform: 'none' }], { duration: 500 });
+        glow(L.z === 'm' ? zm : zh);
+        api.betul(b, `Betul! <span class="ar">${L.h}</span> keluar dari <b>${nm}</b>.`);
+        $('#pmn').textContent = `${done}/9 huruf`; $('#pmm').style.width = (100 * done / 9) + '%';
+        $('#pmh').textContent = done < 9 ? 'Pilih huruf seterusnya.' : 'Semua huruf sudah sampai ke makhrajnya!';
+        if (done === 9) setTimeout(() => api.selesai(ok / 9, `${ok}/9 betul pada cubaan pertama. Rongga mulut: <span class="ar" style="white-space:nowrap">ا و ي</span> · Halkum: <span class="ar" style="white-space:nowrap">ء ه ع ح غ خ</span>.`), 600);
+      };
+      zm.addEventListener('click', () => place('m')); zh.addEventListener('click', () => place('h'));
+      $('#pmBm').onclick = () => place('m'); $('#pmBh').onclick = () => place('h');
+      return { jawab() { let k = 0; const go = () => { if (k >= letters.length) return; const L = letters[k++]; L.b.click(); (L.z === 'm' ? $('#pmBm') : $('#pmBh')).click(); setTimeout(go, 250); }; go(); } };
+    },
+  });
+
+  /* ---------- Meter Fawatih ---------- */
+  const KADAR = { 'ا': [1], 'ح': [2], 'ي': [2], 'ط': [2], 'ه': [2], 'ر': [2], 'ن': [6], 'ق': [6], 'ص': [6], 'ع': [4, 6], 'س': [6], 'ل': [6], 'ك': [6], 'م': [6] };
+  AMALI({
+    id: 'meter-fawatih', pel: 5, tajuk: 'Meter Fawatih', ikon: '🥁', warna: '#5f3dc4',
+    ringkas: 'Ketuk rentak 1, 2 atau 6 harakat bagi setiap huruf fawatih as-suwar.',
+    arahan: 'Fawatih as-suwar ialah huruf muqatta’ah pada permulaan surah. Ketuk <b>🥁</b> mengikut kadar harakat huruf itu, kemudian tekan <b>Hantar</b>.',
+    mula(el, api) {
+      const two = api.shuffle(['ح', 'ي', 'ط', 'ه', 'ر']).slice(0, 3), six = api.shuffle(['ن', 'ق', 'ص', 'س', 'ل', 'ك', 'م']).slice(0, 3);
+      const rounds = api.shuffle(['ا'].concat(two, six)).map(h => ({ h }))
+        .concat('ك ه ي ع ص'.split(' ').map(h => ({ h, w: 'كهيعص' }))); // finale daripada contoh buku: كهيعص
+      let i = 0, n = 0, ok = 0, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="mfn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="mfm"></i></div></div>
+        <p class="hint" id="mfw" style="text-align:center;min-height:1.4em;margin-top:10px"></p>
+        <div id="mfL" class="ar" style="font-size:4.4rem;text-align:center;line-height:1.3;min-height:1.3em"></div>
+        <div id="mfd" style="display:flex;justify-content:center;gap:8px;margin:8px 0 14px;flex-wrap:wrap"></div>
+        <div class="row" style="justify-content:center;gap:12px;flex-wrap:wrap">
+          <button class="btn alt" id="mfx" style="min-height:48px">↺ Padam</button>
+          <button class="btn go" id="mft" style="--c:#5f3dc4;font-size:2rem;width:80px;height:80px;padding:0;border-radius:50%">🥁</button>
+          <button class="btn go" id="mfs" style="--c:var(--ok);min-height:48px">Hantar ✔</button></div>
+        <div class="cols" style="margin-top:18px">
+          <div class="box"><h3>1 harakat</h3><div class="chips ar" id="mf1" style="font-size:1.3rem"></div></div>
+          <div class="box"><h3>2 harakat</h3><div class="chips ar" id="mf2" style="font-size:1.3rem"></div></div>
+          <div class="box"><h3>6 harakat</h3><div class="chips ar" id="mf6" style="font-size:1.3rem"></div></div></div>`;
+      const $ = s => el.querySelector(s);
+      const dots = [];
+      for (let k = 0; k < 6; k++) { const d = document.createElement('span'); d.style.cssText = 'width:34px;height:34px;border-radius:50%;border:3px solid var(--line);display:grid;place-items:center;font-weight:800;color:var(--muted)'; d.textContent = k + 1; $('#mfd').appendChild(d); dots.push(d); }
+      const paint = (cnt, col) => dots.forEach((d, k) => { d.style.background = k < cnt ? (col || '#5f3dc4') : 'transparent'; d.style.borderColor = k < cnt ? (col || '#5f3dc4') : 'var(--line)'; d.style.color = k < cnt ? '#fff' : 'var(--muted)'; });
+      const show = () => {
+        const r = rounds[i]; n = 0; paint(0); lock = false;
+        $('#mfn').textContent = `Huruf ${i + 1}/${rounds.length}`; $('#mfm').style.width = (100 * i / rounds.length) + '%';
+        $('#mfw').innerHTML = r.w ? `Pusingan akhir: fawatih <span class="ar" style="font-size:1.5rem">${r.w}</span> (kāf hā yā ‘ain ṣād) — huruf demi huruf` : 'Berapa harakat huruf fawatih ini?';
+        $('#mfL').textContent = r.h;
+        api.anim($('#mfL'), [{ opacity: 0, transform: 'scale(.6)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+      };
+      const tap = () => { if (lock || n >= 6) return; n++; paint(n); api.anim(dots[n - 1], [{ transform: 'scale(1.4)' }, { transform: 'none' }], { duration: 220 }); api.anim($('#mft'), [{ transform: 'scale(.9)' }, { transform: 'none' }], { duration: 150 }); };
+      const send = () => {
+        if (lock) return; if (!n) { api.say('Ketuk 🥁 dahulu mengikut bilangan harakat.'); return; }
+        lock = true; const r = rounds[i], want = KADAR[r.h], right = want.includes(n);
+        const grp = want[0] === 1 ? '<span class="ar" style="white-space:nowrap;font-size:1.2em">ا</span> sahaja dibaca satu harakat' : want[0] === 2 ? '<span class="ar" style="white-space:nowrap;font-size:1.2em">ح ي ط ه ر</span> dibaca dua harakat' : '<span class="ar" style="white-space:nowrap;font-size:1.2em">ن ق ص ع س ل ك م</span> dibaca enam harakat';
+        const extra = r.h === 'ع' ? ' Huruf ع boleh dibaca empat atau enam harakat.' : '';
+        if (right) { ok++; paint(n, 'var(--ok)'); api.betul($('#mfL'), `Betul! <span class="ar">${r.h}</span> = ${n} harakat. (${grp}.)${extra}`); }
+        else { paint(want[want.length - 1], 'var(--no)'); api.salah($('#mfL'), `Kamu ketuk ${n}. <span class="ar">${r.h}</span> sepatutnya ${want.join(' atau ')} harakat — ${grp}.${extra}`); }
+        const c = document.createElement('span'); c.className = 'chip ' + (right ? 'ok' : 'no'); c.textContent = r.h;
+        const box = $('#mf' + want[want.length - 1]); if (!box.textContent.includes(r.h)) box.appendChild(c);
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#mfm').style.width = '100%';
+          api.selesai(ok / rounds.length, `${ok}/${rounds.length} tepat. Fawatih as-suwar terdapat pada 29 surah dan menggunakan 14 huruf.`); } }, 1500);
+      };
+      $('#mft').onclick = tap; $('#mfx').onclick = () => { if (!lock) { n = 0; paint(0); } }; $('#mfs').onclick = send;
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return; if (!lock) { const w = KADAR[rounds[i].h]; for (let k = 0; k < w[0]; k++) tap(); send(); } setTimeout(go, 1600); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 11 · Kebun Ikhlas — kenal pasti ikhlas, riak, sum‘ah, ujub (brief11).
+   Amalan menunjuk-nunjuk sia-sia seperti hujan jatuh ke pasir; amalan ikhlas mendapat ganjaran besar. */
+(function () {
+  const JN = {
+    ikhlas: { n: 'Ikhlas', c: '#2b8a3e', d: 'beramal semata-mata mengharapkan keredaan Allah SWT' },
+    riak: { n: 'Riak', c: '#c92a2a', d: 'melakukan amalan untuk dilihat dan dipuji orang lain' },
+    sumah: { n: 'Sum‘ah', c: '#e67700', d: 'memberitahu manusia amalan yang dilakukan untuk mendapat ganjaran' },
+    ujub: { n: 'Ujub', c: '#862e9c', d: 'bangga dengan amalan dan kelebihan diri sendiri' },
+  };
+  const SEN = [
+    ['Nadia bersedekah, lalu memuat naik gambarnya supaya dipuji.', 'riak'],
+    ['Siti bersolat supaya dipuji oleh guru.', 'riak'],
+    ['Seorang murid memberitahu semua orang tentang amalannya untuk mendapat ganjaran.', 'sumah'],
+    ['Farah berasa bangga dengan ibadat dan kelebihan dirinya.', 'ujub'],
+    ['Haziq tetap membantu ibu walaupun sedang marah, kerana mengharap keredaan Allah SWT.', 'ikhlas'],
+    ['Amir terus melakukan kebaikan walaupun dikritik orang.', 'ikhlas'],
+    ['Seorang pelajar sabar belajar walaupun susah, mengharap pahala akhirat.', 'ikhlas'],
+    ['Aiman menyembunyikan amalan baiknya daripada pengetahuan orang ramai.', 'ikhlas'],
+  ];
+  AMALI({
+    id: 'kebun-ikhlas', pel: 11, tajuk: 'Kebun Ikhlas', ikon: '🌱', warna: '#2b8a3e',
+    ringkas: 'Niat ikhlas menumbuhkan pokok; riak, sum‘ah dan ujub ibarat hujan di atas pasir.',
+    arahan: '“Sesungguhnya setiap amalan berdasarkan niat.” Baca niat setiap watak dan kenal pasti: <b>Ikhlas</b>, <b>Riak</b>, <b>Sum‘ah</b> atau <b>Ujub</b>. Amalan ikhlas menyuburkan pokok kamu!',
+    mula(el, api) {
+      const rounds = api.shuffle(SEN);
+      let i = 0, ok = 0, grow = 0, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="kin"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="kim"></i></div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:8px">
+          <div id="kisv" style="flex:1 1 260px;max-width:360px;margin:0 auto"></div>
+          <div style="flex:1 1 280px;min-width:0">
+            <div id="kic" class="box" style="font-weight:700;font-size:1.08rem;min-height:84px;display:grid;place-items:center;text-align:center"></div>
+            <div id="kib" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"></div></div></div>`;
+      const $ = s => el.querySelector(s);
+      const sv = api.S('svg', { viewBox: '0 0 320 220', role: 'img', 'aria-label': 'Kebun: tanah subur dan pasir' }, $('#kisv'));
+      api.S('rect', { x: 10, y: 160, width: 150, height: 50, rx: 8, fill: '#8d6e4a' }, sv);
+      api.S('rect', { x: 166, y: 160, width: 144, height: 50, rx: 8, fill: '#e9d8a6' }, sv);
+      api.S('text', { x: 85, y: 192, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 800, text: 'Tanah subur', style: 'fill:#fff' }, sv);
+      api.S('text', { x: 238, y: 192, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 800, text: 'Pasir', style: 'fill:#5c4a1a' }, sv);
+      const plant = api.S('g', {}, sv);
+      const cloud = api.S('text', { x: 85, y: 40, 'font-size': 34, 'text-anchor': 'middle', text: '☁️', style: 'transition:transform .5s' }, sv);
+      const rain = api.S('g', {}, sv);
+      const drawPlant = () => {
+        plant.innerHTML = '';
+        const h = 14 + grow * 26;
+        api.S('path', { d: `M85 160 Q82 ${160 - h / 2} 85 ${160 - h}`, stroke: '#2f9e44', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, plant);
+        for (let k = 0; k < Math.min(grow + 1, 5); k++) { const y = 156 - k * 22, s = k % 2 ? 1 : -1;
+          api.S('ellipse', { cx: 85 + s * 15, cy: y - 6, rx: 15, ry: 7, fill: '#40c057', transform: `rotate(${s * -25} ${85 + s * 15} ${y - 6})` }, plant); }
+        if (grow >= 4) ['🍎', '🍎', '🌼'].forEach((f, k) => api.S('text', { x: 64 + k * 22, y: 160 - h + 6 + (k % 2) * 16, 'font-size': 18, 'text-anchor': 'middle', text: f }, plant));
+      };
+      drawPlant();
+      const hujan = onSand => {
+        cloud.style.transform = `translateX(${onSand ? 153 : 0}px)`;
+        setTimeout(() => { for (let k = 0; k < 10; k++) { const x = (onSand ? 238 : 85) - 40 + Math.random() * 80, d = api.S('rect', { x, y: 52, width: 3, height: 12, rx: 1.5, fill: '#4dabf7' }, rain);
+          const a = api.anim(d, [{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(96px)', opacity: .2 }], { duration: 600, delay: k * 45, fill: 'forwards' }); setTimeout(() => d.remove(), 700 + k * 45); } }, 350);
+      };
+      const bt = {};
+      Object.keys(JN).forEach(k => { const b = document.createElement('button'); b.className = 'btn go'; b.style.cssText = `--c:${JN[k].c};min-height:50px`; b.textContent = JN[k].n; b.onclick = () => pick(k); bt[k] = b; $('#kib').appendChild(b); });
+      const show = () => { lock = false;
+        $('#kin').textContent = `Niat ${i + 1}/${rounds.length}`; $('#kim').style.width = (100 * i / rounds.length) + '%';
+        $('#kic').textContent = rounds[i][0]; api.anim($('#kic'), [{ opacity: 0 }, { opacity: 1 }], { duration: 300 }); };
+      const pick = k => {
+        if (lock || i >= rounds.length) return; lock = true;
+        const [t, want] = rounds[i], J = JN[want], right = k === want;
+        hujan(want !== 'ikhlas');
+        if (want === 'ikhlas') { grow++; setTimeout(drawPlant, 900); }
+        const kesan = want === 'ikhlas' ? ' Amalan ikhlas mendapat ganjaran besar di sisi Allah SWT — pokok kamu membesar!' : ' Amalan begini sia-sia, seperti hujan jatuh ke atas pasir.';
+        if (right) { ok++; api.betul(bt[k], `<b>${J.n}</b>: ${J.d}.` + kesan); }
+        else api.salah(bt[k], `Sebenarnya <b>${J.n}</b> — ${J.d}.` + kesan);
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#kim').style.width = '100%';
+          api.selesai(ok / rounds.length, `${ok}/${rounds.length} tepat. Tiga musuh ikhlas: <b>riak, sum‘ah dan ujub</b>. Orang ikhlas istiqamah, tidak mengharapkan pujian dan sentiasa mengharap keredaan Allah SWT.`); } }, 1900);
+      };
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return; if (!lock) bt[rounds[i][1]].click(); setTimeout(go, 2000); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 13 · Pilih Jalan Fitrah — larangan & jalan halal; lima ciri Islam agama fitrah (brief13) */
+(function () {
+  const HALAL = {
+    kahwin: 'Perkahwinan',
+    jual: 'Pinjaman, gadaian dan jual beli',
+    minum: 'Minuman halal seperti jus',
+    infak: 'Zakat, sedekah, hadiah, wakaf dan infak',
+  };
+  const LARANG = [
+    ['Zina', 'kahwin', 'Islam melarang zina, tetapi membenarkan perkahwinan untuk menjaga keturunan.'],
+    ['Riba', 'jual', 'Islam melarang riba, tetapi membenarkan pinjaman, gadaian dan jual beli.'],
+    ['Arak', 'minum', 'Islam melarang arak, tetapi membenarkan minuman halal seperti jus untuk menjaga akal.'],
+    ['Judi', 'infak', 'Islam melarang judi, tetapi mewajibkan zakat serta menggalakkan sedekah, hadiah, wakaf dan infak.'],
+    ['Rasuah', 'infak', 'Islam melarang rasuah, tetapi mewajibkan zakat serta menggalakkan sedekah, hadiah, wakaf dan infak.'],
+    ['Mencuri', 'infak', 'Islam melarang mencuri, tetapi mewajibkan zakat serta menggalakkan sedekah, hadiah, wakaf dan infak.'],
+  ];
+  const CIRI = [
+    ['Rabbaniyyah', 'Bersumberkan wahyu Allah SWT, iaitu al-Quran dan hadis'],
+    ['Syumuliyyah', 'Lengkap dan memenuhi semua keperluan hidup manusia'],
+    ['Waqi‘iyyah', 'Sesuai diamalkan di semua tempat dan sepanjang zaman'],
+    ['‘Alamiyyah', 'Sesuai diamalkan oleh semua bangsa dan budaya'],
+    ['Ukhrawiyyah', 'Menjamin kesejahteraan jasmani dan rohani demi kebahagiaan dunia dan akhirat'],
+  ];
+  AMALI({
+    id: 'jalan-fitrah', pel: 13, tajuk: 'Pilih Jalan Fitrah', ikon: '🛣️', warna: '#0b7285',
+    ringkas: 'Setiap jalan larangan ditutup — cari jalan halal yang Islam sediakan.',
+    arahan: 'Islam agama fitrah: setiap larangan ada <b>jalan halal</b> untuk menyalurkan kehendak fitrah. Jalan larangan sudah ditutup ⛔ — pilih jalan halal yang betul.',
+    mula(el, api) {
+      const rounds = api.shuffle(LARANG).map(r => ({ t: 'l', r })).concat(api.shuffle(CIRI).map(r => ({ t: 'c', r })));
+      let i = 0, ok = 0, miss = false, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="jfn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="jfm"></i></div></div>
+        <div id="jfsv" style="max-width:420px;margin:8px auto 0"></div>
+        <div id="jfq" class="box" style="text-align:center;font-weight:800;font-size:1.05rem;min-height:56px;display:grid;place-items:center"></div>
+        <div id="jfo" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:10px"></div>`;
+      const $ = s => el.querySelector(s);
+      const sv = api.S('svg', { viewBox: '0 0 340 150', role: 'img', 'aria-label': 'Persimpangan jalan: jalan larangan dan jalan halal' }, $('#jfsv'));
+      const road = (d, c) => { api.S('path', { d, fill: 'none', stroke: c, 'stroke-width': 26, 'stroke-linecap': 'round' }, sv); api.S('path', { d, fill: 'none', stroke: 'var(--card)', 'stroke-width': 2, 'stroke-dasharray': '8 8' }, sv); };
+      road('M120 82 C160 82 170 34 220 34 L320 34', 'color-mix(in srgb, var(--no) 45%, var(--card))');
+      road('M120 82 C160 82 170 118 220 118 L320 118', 'color-mix(in srgb, var(--ok) 50%, var(--card))');
+      road('M20 82 L124 82', 'color-mix(in srgb, var(--muted) 40%, var(--card))');
+      api.S('text', { x: 236, y: 40, 'font-size': 22, 'text-anchor': 'middle', text: '⛔' }, sv);
+      const lab1 = api.S('text', { x: 262, y: 39, 'font-size': 15, 'font-weight': 800, text: '' }, sv);
+      const lab2 = api.S('text', { x: 222, y: 146, 'font-size': 14, 'font-weight': 800, 'text-anchor': 'middle', text: '' }, sv);
+      api.S('text', { x: 236, y: 124, 'font-size': 20, 'text-anchor': 'middle', text: '✅' }, sv);
+      const walker = api.S('text', { x: 0, y: 0, 'font-size': 24, 'text-anchor': 'middle', 'dominant-baseline': 'central', text: '🎒' }, sv);
+      const put = (x, y) => walker.setAttribute('transform', `translate(${x} ${y})`);
+      put(34, 82);
+      const walk = () => { const t0 = performance.now(), D = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 900;
+        const f = now => { const t = D ? Math.min(1, (now - t0) / D) : 1; // laluan bawah
+          const x = 34 + t * 270, y = x < 120 ? 82 : x < 220 ? 82 + (118 - 82) * (1 - Math.cos(Math.PI * (x - 120) / 100)) / 2 : 118;
+          put(x, y); if (t < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); };
+      const show = () => {
+        lock = false; miss = false; put(34, 82);
+        const R = rounds[i];
+        $('#jfn').textContent = R.t === 'l' ? `Persimpangan ${i + 1}/6` : `Ciri ${i - 5}/5`; $('#jfm').style.width = (100 * i / rounds.length) + '%';
+        $('#jfo').innerHTML = '';
+        if (R.t === 'l') {
+          lab1.textContent = R.r[0]; lab2.textContent = '?';
+          $('#jfq').textContent = `Jalan “${R.r[0]}” ditutup. Apakah jalan halal yang Islam sediakan?`;
+          Object.keys(HALAL).forEach(k => opt(HALAL[k], k === R.r[1]));
+        } else {
+          lab1.textContent = ''; lab2.textContent = 'Islam agama fitrah';
+          $('#jfq').textContent = R.r[1] + '. Ciri apakah ini?';
+          api.shuffle(CIRI).forEach(c => opt(c[0], c === R.r));
+        }
+      };
+      const opt = (t, good) => { const b = document.createElement('button'); b.className = 'chip'; b.style.minHeight = '48px'; b.textContent = t; b.dataset.ok = good ? 1 : 0;
+        b.onclick = () => pick(b, good, t); $('#jfo').appendChild(b); };
+      const pick = (b, good, t) => {
+        if (lock || b.disabled) return; const R = rounds[i];
+        if (!good) { miss = true; b.disabled = true; b.classList.add('no');
+          api.salah(b, R.t === 'l' ? `Bukan jalan itu. ${R.r[2]}` : `${t} bukan maksud itu.`); return; }
+        lock = true; if (!miss) ok++; b.classList.add('ok');
+        if (R.t === 'l') lab2.textContent = HALAL[R.r[1]].length > 22 ? HALAL[R.r[1]].split(',')[0] + ', …' : HALAL[R.r[1]];
+        walk();
+        api.betul(b, R.t === 'l' ? R.r[2] : `<b>${R.r[0]}</b> — ${R.r[1].toLowerCase()}.`);
+        if (i === 5) setTimeout(() => api.say('Bahagian 2: padankan maksud dengan <b>ciri Islam sebagai agama fitrah</b>.'), 1500);
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#jfm').style.width = '100%';
+          api.selesai(ok / rounds.length, `${ok}/${rounds.length} betul pada cubaan pertama. Islam agama yang benar dan diredai Allah SWT (Surah al-Maidah ayat 3).`); } }, 1700);
+      };
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return; if (!lock) { const b = el.querySelector('#jfo [data-ok="1"]'); if (b) b.click(); } setTimeout(go, 1800); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 17 · Timbangan Hukum — lima hukum taklifi, senario & kesan daripada brief17 */
+(function () {
+  const HK = {
+    wajib: { n: 'Wajib', c: '#2b8a3e', buat: 'Pahala', tinggal: 'Berdosa', tilt: -14 },
+    sunat: { n: 'Sunat', c: '#1c7ed6', buat: 'Pahala', tinggal: 'Tidak berdosa', tilt: -9 },
+    harus: { n: 'Harus', c: '#868e96', buat: 'Tidak berdosa', tinggal: 'Tidak berdosa', tilt: 0 },
+    makruh: { n: 'Makruh', c: '#e67700', buat: 'Tidak berdosa', tinggal: 'Pahala', tilt: 0 },
+    haram: { n: 'Haram', c: '#c92a2a', buat: 'Berdosa', tinggal: 'Pahala', tilt: 14 },
+  };
+  const ORDER = ['wajib', 'sunat', 'harus', 'makruh', 'haram'];
+  const SEN = [ // SENARIO brief17
+    ['Murid menunaikan solat fardu.', 'wajib', 'Solat fardu mesti dilakukan.'],
+    ['Fatimah berpuasa setiap Isnin dan Khamis.', 'sunat', 'Puasa Isnin dan Khamis mendapat pahala jika dilakukan.'],
+    ['Murid memberi salam kepada rakan.', 'sunat', 'Memberi salam ialah amalan berpahala.'],
+    ['Maryam bermain bola jaring bersama rakan pada petang hari.', 'harus', 'Aktiviti riadah tidak bercanggah dengan syariat.'],
+    ['Azmi berwuduk sambil berbual dengan rakan.', 'makruh', 'Perbuatan itu mengurangkan kesempurnaan wuduk.'],
+    ['Murid makan petai sebelum solat.', 'makruh', 'Bau yang kuat mengganggu jemaah.'],
+    ['Hafsah keluar rumah tanpa memakai tudung.', 'haram', 'Menutup aurat ialah kewajipan.'],
+    ['Murid berbohong kepada rakan.', 'haram', 'Berbohong ialah perbuatan berdosa.'],
+  ];
+  const ic = t => t === 'Pahala' ? '✨' : t === 'Berdosa' ? '⚠️' : '◯';
+  AMALI({
+    id: 'timbangan-hukum', pel: 17, tajuk: 'Timbangan Hukum', ikon: '⚖️', warna: '#2b8a3e',
+    ringkas: 'Letak setiap perbuatan pada dulang wajib, sunat, harus, makruh atau haram.',
+    arahan: 'Baca kad perbuatan, kemudian letakkan pada <b>dulang hukum</b> yang betul. Timbangan menunjukkan kesannya <b>jika kamu buat</b> perbuatan itu.',
+    mula(el, api) {
+      const rounds = api.shuffle(SEN).map(s => ({ t: s[0], k: s[1], why: s[2] }))
+        .concat(api.shuffle(ORDER).map(k => ({ k, desc: true })));
+      let i = 0, ok = 0, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="thn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="thm"></i></div></div>
+        <div id="thsv" style="max-width:380px;margin:6px auto 0"></div>
+        <div id="thcard" class="box" style="text-align:center;font-weight:700;font-size:1.1rem;min-height:64px;display:grid;place-items:center;border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,var(--card))"></div>
+        <div id="thout" class="row" style="justify-content:center;gap:10px;flex-wrap:wrap;min-height:44px;margin:10px 0"></div>
+        <div id="thtr" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px"></div>`;
+      const $ = s => el.querySelector(s);
+      // timbangan: kiri = pahala, kanan = dosa
+      const sv = api.S('svg', { viewBox: '0 0 340 150', role: 'img', 'aria-label': 'Timbangan pahala dan dosa' }, $('#thsv'));
+      api.S('path', { d: 'M170 40 L170 136 M136 140 L204 140', stroke: 'var(--ink)', 'stroke-width': 6, 'stroke-linecap': 'round' }, sv);
+      const beam = api.S('g', { style: 'transition:transform .7s cubic-bezier(.3,1.4,.5,1);transform-origin:170px 40px' }, sv);
+      api.S('path', { d: 'M60 40 L280 40', stroke: 'var(--ink)', 'stroke-width': 6, 'stroke-linecap': 'round' }, beam);
+      api.S('circle', { cx: 170, cy: 40, r: 8, fill: 'var(--gold)' }, sv);
+      [[60, 'Pahala', 'var(--ok)'], [280, 'Dosa', 'var(--no)']].forEach(([x, t, c]) => {
+        api.S('path', { d: `M${x} 40 L${x - 34} 86 M${x} 40 L${x + 34} 86`, stroke: 'var(--muted)', 'stroke-width': 2 }, beam);
+        api.S('path', { d: `M${x - 44} 86 Q${x} 112 ${x + 44} 86 Z`, fill: c, opacity: .85 }, beam);
+        api.S('text', { x, y: 134, 'text-anchor': 'middle', 'font-size': 16, 'font-weight': 800, text: t, style: 'fill:' + c }, beam);
+      });
+      const tiltTo = d => { beam.style.transform = `rotate(${d}deg)`; };
+      const trays = {};
+      ORDER.forEach(k => {
+        const h = HK[k], b = document.createElement('button');
+        b.className = 'btn go'; b.style.cssText = `--c:${h.c};min-height:56px;border-radius:12px 12px 40px 40px / 12px 12px 26px 26px;font-size:1.02rem`;
+        b.innerHTML = `${h.n}<small style="display:block;font-weight:600;font-size:.72rem;opacity:.9" data-n>0</small>`;
+        b.onclick = () => pick(k); trays[k] = b; $('#thtr').appendChild(b);
+      });
+      const show = () => {
+        const r = rounds[i]; lock = false; tiltTo(0); $('#thout').innerHTML = '';
+        $('#thn').textContent = r.desc ? `Kad kesan ${i - SEN.length + 1}/5` : `Perbuatan ${i + 1}/${SEN.length}`;
+        $('#thm').style.width = (100 * i / rounds.length) + '%';
+        $('#thcard').innerHTML = r.desc ? `<span>Hukum apakah ini?<br>Jika dibuat: ${ic(HK[r.k].buat)} <b>${HK[r.k].buat}</b> · Jika ditinggalkan: ${ic(HK[r.k].tinggal)} <b>${HK[r.k].tinggal}</b></span>` : `<span>${api.esc(r.t)}</span>`;
+        api.anim($('#thcard'), [{ opacity: 0, transform: 'translateY(-14px)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+        if (i === SEN.length) api.say('Pusingan 2: baca <b>kesan</b> hukum (pahala atau dosa), kemudian pilih dulang hukumnya.');
+      };
+      const pick = k => {
+        if (lock || i >= rounds.length) return; lock = true;
+        const r = rounds[i], h = HK[r.k], right = k === r.k;
+        tiltTo(h.tilt);
+        if (!r.desc) $('#thout').innerHTML = `<span class="chip" style="cursor:default">Jika dibuat: ${ic(h.buat)} ${h.buat}</span><span class="chip" style="cursor:default">Jika ditinggalkan: ${ic(h.tinggal)} ${h.tinggal}</span>`;
+        const why = r.desc ? `${h.n}: ${h.buat.toLowerCase()} jika dilakukan, ${h.tinggal.toLowerCase()} jika ditinggalkan.` : `${h.n} — ${api.esc(r.why)}`;
+        if (right) { ok++; api.betul(trays[k], 'Betul! ' + why); const n = trays[k].querySelector('[data-n]'); n.textContent = +n.textContent + 1; }
+        else api.salah(trays[k], `Bukan ${HK[k].n}. Jawapannya <b>${h.n}</b>. ` + (r.desc ? why : api.esc(r.why)));
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#thm').style.width = '100%'; tiltTo(0);
+          api.selesai(ok / rounds.length, `${ok}/${rounds.length} tepat. Ingat <b>WaSuHaMaHa</b>: Wajib, Sunat, Harus, Makruh, Haram.`); } }, 1700);
+      };
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return; if (!lock) trays[rounds[i].k].click(); setTimeout(go, 1800); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 19 · Misi Sertu — kenal pasti jenis najis & simulasi cara menyucikannya (brief19) */
+(function () {
+  const JENIS = {
+    mukh: { n: 'Mukhaffafah', d: 'najis ringan', c: '#f59f00', seq: ['buang', 'renjis'],
+      cara: 'buang najis, kemudian renjis air pada tempat terkena najis' },
+    mutaw: { n: 'Mutawassitah', d: 'najis pertengahan', c: '#e8590c', seq: ['buang', 'basuh'],
+      cara: 'buang najis, kemudian basuh sehingga hilang warna, bau dan rasa' },
+    mugh: { n: 'Mughallazah', d: 'najis berat', c: '#862e9c', seq: ['buang', 'sedia', 'tanah', 'mutlak', 'mutlak', 'mutlak', 'mutlak', 'mutlak', 'mutlak'],
+      cara: 'buang najis, sediakan air tanah dan air mutlak, basuh sekali dengan air tanah dan enam kali dengan air mutlak' },
+  };
+  const ITEMS = [ // SENARIO & KATEGORI brief19
+    ['👕', 'Baju terkena air kencing bayi lelaki bawah dua tahun yang hanya minum susu ibu.', 'mukh', '#f3d66b'],
+    ['🧱', 'Lantai terkena muntah.', 'mutaw', '#b5a35a'],
+    ['🧣', 'Kain terkena darah.', 'mutaw', '#c92a2a'],
+    ['✋', 'Tangan terkena najis anjing.', 'mugh', '#7c5c3b'],
+  ];
+  const ACT = [['buang', '🧻 Buang najis'], ['renjis', '💦 Renjis air'], ['basuh', '🚿 Basuh hingga hilang warna, bau & rasa'],
+    ['sedia', '🪣 Sediakan air tanah & air mutlak'], ['tanah', '🟤 Basuh dengan air tanah'], ['mutlak', '💧 Basuh dengan air mutlak']];
+  AMALI({
+    id: 'misi-sertu', pel: 19, tajuk: 'Misi Sertu', ikon: '🧼', warna: '#862e9c',
+    ringkas: 'Kenal jenis najis, kemudian sucikan dengan cara yang betul — termasuk 7 basuhan sertu.',
+    arahan: 'Langkah 1: pilih <b>jenis najis</b>. Langkah 2: tekan butang tindakan <b>mengikut tertib</b> untuk menyucikannya.',
+    mula(el, api) {
+      const items = ITEMS.slice(0, 3).concat([ITEMS[3]]); // najis berat sebagai misi akhir
+      const order = api.shuffle(items.slice(0, 3)).concat([items[3]]);
+      let i = 0, fase = 'jenis', s = 0, clean = true, perfect = 0, busy = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="msn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="msm"></i></div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;align-items:flex-start">
+          <div style="flex:1 1 240px;max-width:340px;margin:0 auto"><div id="msv"></div>
+            <div id="msw" style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;min-height:30px"></div></div>
+          <div style="flex:1 1 280px;min-width:0">
+            <div id="msc" class="box" style="font-weight:700;font-size:1.05rem;min-height:60px"></div>
+            <h3 id="msh" style="margin:12px 0 6px;font-size:1rem"></h3>
+            <div id="msj" class="chips"></div><div id="msa" class="chips"></div></div></div>`;
+      const $ = s => el.querySelector(s);
+      const sv = api.S('svg', { viewBox: '0 0 300 200', role: 'img', 'aria-label': 'Permukaan yang terkena najis' }, $('#msv'));
+      api.S('rect', { x: 20, y: 20, width: 260, height: 160, rx: 22, fill: 'color-mix(in srgb, var(--lapis) 10%, var(--card))', stroke: 'var(--line)', 'stroke-width': 3 }, sv);
+      const icon = api.S('text', { x: 48, y: 58, 'font-size': 28, 'text-anchor': 'middle' }, sv);
+      const blob = api.S('path', { d: 'M150 62 C188 56 206 84 198 110 C192 140 160 150 134 140 C104 130 98 100 112 80 C120 68 134 64 150 62 Z', style: 'transform-box:fill-box;transform-origin:center;transition:transform .5s,opacity .5s' }, sv);
+      const sifat = api.S('text', { x: 150, y: 172, 'font-size': 15, 'text-anchor': 'middle', 'font-weight': 700 }, sv);
+      const fx = api.S('g', {}, sv);
+      const jb = {}, ab = {};
+      Object.keys(JENIS).forEach(k => { const b = document.createElement('button'); b.className = 'btn go'; b.style.cssText = `--c:${JENIS[k].c};min-height:46px`; b.innerHTML = `${JENIS[k].n} <small style="font-weight:600">· ${JENIS[k].d}</small>`; b.onclick = () => pickJ(k); jb[k] = b; $('#msj').appendChild(b); });
+      ACT.forEach(([k, t]) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = t; b.style.minHeight = '44px'; b.onclick = () => act(k); ab[k] = b; $('#msa').appendChild(b); });
+      const drops = (n, col) => { for (let k = 0; k < n; k++) { const d = api.S('circle', { cx: 110 + Math.random() * 80, cy: 40, r: 5, fill: col }, fx);
+        const a = api.anim(d, [{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${50 + Math.random() * 50}px)`, opacity: 0 }], { duration: 650, delay: k * 60, fill: 'forwards' }); setTimeout(() => d.remove(), 800 + k * 60); } };
+      const show = () => {
+        const it = order[i]; fase = 'jenis'; s = 0; clean = true; busy = false;
+        $('#msn').textContent = `Misi ${i + 1}/${order.length}`; $('#msm').style.width = (100 * i / order.length) + '%';
+        $('#msc').textContent = it[1]; icon.textContent = it[0];
+        blob.setAttribute('fill', it[3]); blob.style.transform = 'none'; blob.style.opacity = 1; sifat.textContent = '';
+        $('#msw').innerHTML = ''; $('#msh').textContent = 'Langkah 1: Apakah jenis najis ini?';
+        $('#msj').style.display = ''; $('#msa').style.display = 'none';
+        Object.values(ab).forEach(b => b.classList.remove('ok'));
+      };
+      const pickJ = k => {
+        if (fase !== 'jenis' || busy) return;
+        const it = order[i], J = JENIS[it[2]];
+        if (k !== it[2]) { clean = false; api.salah(jb[k], `Bukan ${JENIS[k].n}. Ini najis <b>${J.n}</b> (${J.d}).`); return; }
+        api.betul(jb[k], `Betul, najis <b>${J.n}</b> (${J.d}). Sekarang sucikan: tekan tindakan mengikut tertib.`);
+        fase = 'cuci'; $('#msh').textContent = 'Langkah 2: Sucikan mengikut tertib'; $('#msj').style.display = 'none'; $('#msa').style.display = '';
+        if (it[2] === 'mugh') $('#msw').innerHTML = Array.from({ length: 7 }, (_, n) => `<span data-w style="width:30px;height:30px;border-radius:50%;border:3px solid ${n ? 'var(--lapis)' : '#7c5c3b'};display:grid;place-items:center;font-size:.8rem;font-weight:800">${n + 1}</span>`).join('');
+      };
+      const act = k => {
+        if (fase !== 'cuci' || busy) return;
+        const it = order[i], J = JENIS[it[2]], want = J.seq[s];
+        if (k !== want) {
+          clean = false;
+          const why = s === 0 ? 'Mula-mula, <b>buang najis</b> dahulu.' : `Cara najis ${J.n}: ${J.cara}.`;
+          api.salah(ab[k], 'Belum tepat. ' + why); return;
+        }
+        s++;
+        if (k === 'buang') { blob.style.transform = 'scale(.55)'; blob.style.opacity = .55; if (it[2] === 'mutaw') sifat.textContent = 'Masih ada: 🎨 warna · 👃 bau · 👅 rasa'; api.betul(null, 'Najis dibuang. Teruskan.'); }
+        if (k === 'renjis') { drops(10, '#4dabf7'); blob.style.opacity = 0; api.betul(null, 'Direnjis air — najis mukhaffafah sudah suci.'); }
+        if (k === 'basuh') { drops(16, '#4dabf7'); blob.style.opacity = 0; sifat.textContent = 'Warna, bau dan rasa hilang ✔'; api.betul(null, 'Dibasuh hingga hilang warna, bau dan rasa.'); }
+        if (k === 'sedia') api.betul(null, 'Air tanah dan air mutlak sudah disediakan.');
+        if (k === 'tanah' || k === 'mutlak') {
+          const n = s - 3; const dot = $('#msw').querySelectorAll('[data-w]')[n];
+          if (dot) { dot.style.background = k === 'tanah' ? '#7c5c3b' : 'var(--lapis)'; dot.style.color = '#fff'; api.anim(dot, [{ transform: 'scale(1.5)' }, { transform: 'none' }], { duration: 260 }); }
+          drops(6, k === 'tanah' ? '#9c6b3c' : '#4dabf7'); blob.style.opacity = Math.max(0, .55 - .09 * (n + 1));
+          api.betul(null, k === 'tanah' ? 'Basuhan 1: air tanah (sekali sahaja). Kini enam kali air mutlak.' : `Basuhan ${n + 1}/7 dengan air mutlak.`);
+        }
+        if (s === J.seq.length) {
+          busy = true; if (clean) perfect++;
+          setTimeout(() => {
+            sifat.textContent = '✨ SUCI ✨'; api.say(`✅ Suci! ${J.n}: ${J.cara}.`);
+            setTimeout(() => { i++; if (i < order.length) show(); else { $('#msm').style.width = '100%';
+              api.selesai(perfect / order.length, `${perfect}/${order.length} misi tanpa silap. Ingat: mukhaffafah → renjis; mutawassitah → hilang warna, bau, rasa; mughallazah → 1 air tanah + 6 air mutlak.`); } }, 1300);
+          }, 300);
+        }
+      };
+      show();
+      return { jawab() { const go = () => { if (i >= order.length) return;
+        if (!busy) { const it = order[i]; if (fase === 'jenis') jb[it[2]].click(); else ab[JENIS[it[2]].seq[s]].click(); }
+        setTimeout(go, 330); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 21 · Simulasi Wuduk (tertib, rukun vs sunat) & Sah atau Batal? — fakta daripada brief21 */
+(function () {
+  /* figura ringkas berpakaian labuh; zon anggota boleh ditekan */
+  function figura(api, host, onTap) {
+    const sv = api.S('svg', { viewBox: '0 0 240 400', role: 'img', 'aria-label': 'Figura murid untuk simulasi wuduk' }, host);
+    const Z = {}, skin = 'color-mix(in srgb, var(--gold) 30%, var(--card))';
+    const aura = api.S('ellipse', { cx: 120, cy: 210, rx: 112, ry: 196, fill: 'none', stroke: '#4dabf7', 'stroke-width': 10, opacity: 0, 'stroke-dasharray': '2 14', 'stroke-linecap': 'round' }, sv);
+    const z = (k, tag, at) => { const e = api.S(tag, Object.assign({ fill: skin, stroke: 'var(--ink)', 'stroke-width': 2.5, style: 'cursor:pointer;transition:fill .3s' }, at), sv);
+      (Z[k] = Z[k] || []).push(e); e.addEventListener('click', () => onTap(k)); return e; };
+    // jubah & badan
+    api.S('path', { d: 'M78 128 Q120 116 162 128 L182 352 Q120 364 58 352 Z', fill: 'color-mix(in srgb, var(--teal) 30%, var(--card))', stroke: 'var(--ink)', 'stroke-width': 2.5 }, sv);
+    api.S('rect', { x: 108, y: 106, width: 24, height: 22, fill: skin, stroke: 'var(--ink)', 'stroke-width': 2.5 }, sv);
+    // lengan baju (atas siku)
+    api.S('path', { d: 'M80 132 L54 210 L72 214 L94 150 Z M160 132 L186 210 L168 214 L146 150 Z', fill: 'color-mix(in srgb, var(--teal) 30%, var(--card))', stroke: 'var(--ink)', 'stroke-width': 2.5 }, sv);
+    z('lengan', 'path', { d: 'M54 210 L72 214 L64 276 L46 274 Z' }); z('lengan', 'path', { d: 'M186 210 L168 214 L176 276 L194 274 Z' });
+    z('tangan', 'ellipse', { cx: 55, cy: 290, rx: 13, ry: 17 }); z('tangan', 'ellipse', { cx: 185, cy: 290, rx: 13, ry: 17 });
+    z('kaki', 'path', { d: 'M84 352 L104 354 L106 384 L76 386 Q70 378 84 372 Z' }); z('kaki', 'path', { d: 'M156 352 L136 354 L134 384 L164 386 Q170 378 156 372 Z' });
+    // kepala
+    z('telinga', 'ellipse', { cx: 78, cy: 74, rx: 8, ry: 13 }); z('telinga', 'ellipse', { cx: 162, cy: 74, rx: 8, ry: 13 });
+    z('muka', 'ellipse', { cx: 120, cy: 76, rx: 40, ry: 44 });
+    z('kepala', 'path', { d: 'M80 64 Q80 24 120 24 Q160 24 160 64 Q140 46 120 46 Q100 46 80 64 Z', fill: 'color-mix(in srgb, var(--ink) 70%, var(--card))' });
+    api.S('circle', { cx: 105, cy: 70, r: 3.5, fill: 'var(--ink)', 'pointer-events': 'none' }, sv); api.S('circle', { cx: 135, cy: 70, r: 3.5, fill: 'var(--ink)', 'pointer-events': 'none' }, sv);
+    z('hidung', 'path', { d: 'M120 74 L112 92 L128 92 Z', 'stroke-width': 2 });
+    z('mulut', 'path', { d: 'M106 102 Q120 114 134 102 Z', fill: '#e8a0a0', 'stroke-width': 2 });
+    z('hati', 'path', { d: 'M120 190 C100 176 100 158 112 158 C117 158 120 162 120 166 C120 162 123 158 128 158 C140 158 140 176 120 190 Z', fill: '#e64980', 'stroke-width': 2 });
+    const orig = {}; for (const k in Z) orig[k] = Z[k].map(e => e.getAttribute('fill'));
+    return {
+      sv, aura,
+      wet(k, c) { (Z[k] || []).forEach(e => { e.setAttribute('fill', c || '#74c0fc'); api.anim(e, [{ opacity: .4 }, { opacity: 1 }], { duration: 450 }); });
+        const e = (Z[k] || [])[0]; if (!e) return; const b = e.getBBox(); const d = api.S('text', { x: b.x + b.width / 2, y: b.y, 'text-anchor': 'middle', 'font-size': 22, text: '💧', 'pointer-events': 'none' }, sv);
+        const a = api.anim(d, [{ transform: 'translateY(-26px)', opacity: 0 }, { opacity: 1, offset: .3 }, { transform: 'translateY(10px)', opacity: 0 }], { duration: 800, fill: 'forwards' });
+        setTimeout(() => d.remove(), a ? 820 : 600); },
+      reset() { for (const k in Z) Z[k].forEach((e, i) => e.setAttribute('fill', orig[k][i])); },
+    };
+  }
+
+  const STEPS = [ // TERTIB wuduk brief21
+    ['basmalah', 'Membaca basmalah', 's'],
+    ['tangan', 'Basuh kedua-dua tangan', 's'],
+    ['mulut', 'Berkumur-kumur', 's'],
+    ['hidung', 'Istinshak — memasukkan air ke hidung', 's'],
+    ['hidung', 'Istinthar — mengeluarkan air dari hidung', 's'],
+    ['hati', 'Niat ketika air terkena sebahagian muka (tempat niat di dalam hati)', 'r'],
+    ['muka', 'Basuh muka — dari tempat tumbuh rambut hingga bawah dagu, anak telinga ke anak telinga', 'r'],
+    ['lengan', 'Basuh kedua-dua tangan hingga siku', 'r'],
+    ['kepala', 'Sapu kepala (rukun: sebahagian kepala; sunat: seluruh kepala)', 'r'],
+    ['telinga', 'Sapu telinga', 's'],
+    ['kaki', 'Basuh kedua-dua kaki hingga buku lali', 'r'],
+    ['doa', 'Membaca doa', 's'],
+  ];
+  const PARTS = [['basmalah', '🗣️ Basmalah'], ['tangan', '✋ Tapak tangan'], ['mulut', '👄 Mulut'], ['hidung', '👃 Hidung'], ['hati', '❤️ Niat (hati)'], ['muka', '🙂 Muka'],
+    ['lengan', '💪 Tangan hingga siku'], ['kepala', '🧢 Kepala'], ['telinga', '👂 Telinga'], ['kaki', '🦶 Kaki'], ['doa', '🤲 Doa']];
+
+  AMALI({
+    id: 'simulasi-wuduk', pel: 21, tajuk: 'Simulasi Wuduk', ikon: '💧', warna: '#1c7ed6',
+    ringkas: 'Basuh anggota mengikut tertib; kenal pasti rukun dan sunat wuduk.',
+    arahan: 'Berwuduk mengikut <b>tertib</b>: tekan anggota pada figura (atau butang di bawahnya) mengikut urutan, bermula dengan amalan sunat sebelum wuduk. Langkah <b style="color:var(--gold)">RUKUN</b> dan <b style="color:var(--lapis)">SUNAT</b> akan ditanda.',
+    mula(el, api) {
+      let i = 0, ok = 0, miss = false, busy = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="wdn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="wdm"></i></div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px">
+          <div id="wdf" style="flex:1 1 220px;max-width:280px;margin:0 auto"></div>
+          <div style="flex:1 1 280px;min-width:0">
+            <div class="chips" id="wdb"></div>
+            <h3 style="margin:14px 0 6px;font-size:1rem">Langkah wuduk kamu</h3>
+            <ol id="wdl" style="margin:0;padding-left:1.4em;display:grid;gap:4px"></ol></div></div>`;
+      const $ = s => el.querySelector(s);
+      const fig = figura(api, $('#wdf'), k => tap(k));
+      const btn = {};
+      PARTS.forEach(([k, t]) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = t; b.style.minHeight = '44px'; b.onclick = () => tap(k); btn[k] = b; $('#wdb').appendChild(b); });
+      const upd = () => { $('#wdn').textContent = `Langkah ${Math.min(i + 1, 12)}/12`; $('#wdm').style.width = (100 * i / 12) + '%'; };
+      const tap = k => {
+        if (busy || i >= STEPS.length) return;
+        const [want, nama, jenis] = STEPS[i];
+        if (k !== want) {
+          miss = true;
+          const hint = i === 0 ? 'Mulakan dengan amalan sunat sebelum wuduk: <b>membaca basmalah</b>.' : `Selepas “${STEPS[i - 1][1].split(' —')[0].split(' (')[0]}”, langkah seterusnya ialah <b>${nama.split(' —')[0].split(' (')[0]}</b>.`;
+          api.salah(btn[k], 'Belum ikut tertib. ' + hint); return;
+        }
+        if (!miss) ok++; miss = false; busy = true;
+        if (k !== 'basmalah' && k !== 'doa' && k !== 'hati') fig.wet(k); else if (k === 'hati') fig.wet('hati', '#f783ac');
+        btn[k].classList.add('ok');
+        const tag = jenis === 'r' ? '<b style="color:var(--gold)">RUKUN</b>' : '<b style="color:var(--lapis)">SUNAT</b>';
+        $('#wdl').insertAdjacentHTML('beforeend', `<li>${api.esc(nama)} · ${tag}</li>`);
+        api.betul(null, `${tag} — ${api.esc(nama)}.` + (k === 'lengan' ? ' Sunat mendahulukan anggota kanan.' : ''));
+        i++; upd();
+        setTimeout(() => {
+          busy = false;
+          if (i === STEPS.length) {
+            fig.aura.setAttribute('opacity', .9); api.anim(fig.aura, [{ opacity: 0 }, { opacity: .9 }], { duration: 700 });
+            $('#wdl').insertAdjacentHTML('beforeend', `<li><b>Tertib</b> — rukun keenam: semua rukun dibuat mengikut urutan · <b style="color:var(--gold)">RUKUN</b></li>`);
+            api.selesai(ok / 12, `${ok}/12 langkah betul pada cubaan pertama. 6 rukun wuduk: <b>Niat, Muka, Tangan, Kepala, Kaki, Tertib</b>. Ingat: jangan membazir air walaupun di sungai yang mengalir.`);
+          }
+        }, 450);
+      };
+      upd();
+      return { jawab() { const go = () => { if (i >= STEPS.length) return; if (!busy) tap(STEPS[i][0]); setTimeout(go, 520); }; go(); } };
+    },
+  });
+
+  const KES = [ // SENARIO & fakta pembatal brief21
+    ['Faris tertidur dalam keadaan duduk rapat di lantai.', 0, 'Punggung tetap pada lantai, jadi wuduk tidak batal.'],
+    ['Faris tidur terlentang selepas berwuduk.', 1, 'Tidur dengan cara tidak tetap punggung ke lantai membatalkan wuduk.'],
+    ['Sara tersentuh kulit lelaki bukan mahram.', 1, 'Bersentuhan kulit antara lelaki dengan perempuan bukan mahram membatalkan wuduk.'],
+    ['Seorang murid bersentuhan kulit dengan mahramnya.', 0, 'Sentuhan kulit dengan mahram tidak membatalkan wuduk.'],
+    ['Nabil menyentuh kemaluannya dengan tapak tangan.', 1, 'Menyentuh kemaluan dengan tapak tangan atau perut jari membatalkan wuduk.'],
+    ['Keluar sesuatu dari qubul atau dubur.', 1, 'Apa-apa yang keluar dari qubul atau dubur membatalkan wuduk.'],
+    ['Seorang murid pitam selepas berwuduk.', 1, 'Hilang akal kerana pitam, mabuk, gila atau sakit membatalkan wuduk.'],
+    ['Ali membasuh muka empat kali.', 0, 'Tidak batal, tetapi makruh kerana membasuh melebihi tiga kali.'],
+    ['Murid mengelap anggota wuduk selepas berwuduk.', 0, 'Tidak batal, tetapi makruh mengelap anggota wuduk.'],
+  ];
+  AMALI({
+    id: 'sah-batal-wuduk', pel: 21, tajuk: 'Wuduk: Batal atau Kekal?', ikon: '✨', warna: '#0b7285',
+    ringkas: 'Wuduk kamu masih berseri atau sudah batal? Nilai 9 situasi.',
+    arahan: 'Wuduk bermaksud <b>bersih, elok dan berseri</b>. Baca setiap situasi: adakah wuduk <b>kekal</b> atau <b>batal</b>?',
+    mula(el, api) {
+      const rounds = api.shuffle(KES);
+      let i = 0, ok = 0, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="sbn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="sbm"></i></div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:8px">
+          <div id="sbf" style="flex:0 1 190px;margin:0 auto"></div>
+          <div style="flex:1 1 260px;min-width:0">
+            <div id="sbc" class="box" style="font-weight:700;font-size:1.1rem;min-height:80px;display:grid;place-items:center;text-align:center"></div>
+            <div class="row" style="justify-content:center;gap:12px;margin-top:12px;flex-wrap:wrap">
+              <button class="btn go" id="sbK" style="--c:var(--ok);min-height:52px;min-width:130px">✨ Kekal</button>
+              <button class="btn go" id="sbB" style="--c:var(--no);min-height:52px;min-width:130px">💨 Batal</button></div>
+            <div class="chips" id="sbh" style="margin-top:14px"></div></div></div>`;
+      const $ = s => el.querySelector(s);
+      const fig = figura(api, $('#sbf'), () => {});
+      fig.sv.style.pointerEvents = 'none';
+      const glow = on => { fig.aura.setAttribute('opacity', on ? .9 : .15); fig.aura.setAttribute('stroke', on ? '#4dabf7' : 'var(--muted)'); fig.sv.style.filter = on ? 'none' : 'grayscale(.8)'; };
+      const show = () => {
+        lock = false; glow(true);
+        $('#sbn').textContent = `Situasi ${i + 1}/${rounds.length}`; $('#sbm').style.width = (100 * i / rounds.length) + '%';
+        $('#sbc').textContent = rounds[i][0];
+        api.anim($('#sbc'), [{ opacity: 0, transform: 'translateX(20px)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+      };
+      const pick = b => {
+        if (lock || i >= rounds.length) return; lock = true;
+        const r = rounds[i], right = b === r[1];
+        glow(!r[1]);
+        if (right) { ok++; api.betul($('#sbc'), (r[1] ? '<b>Batal.</b> ' : '<b>Kekal.</b> ') + r[2]); } else api.salah($('#sbc'), (r[1] ? 'Sebenarnya <b>batal</b>. ' : 'Sebenarnya wuduk <b>kekal</b>. ') + r[2]);
+        $('#sbh').insertAdjacentHTML('beforeend', `<span class="chip ${right ? 'ok' : 'no'}" style="cursor:default;padding:6px 10px" title="${r[1] ? 'Batal' : 'Kekal'}">${i + 1} ${r[1] ? '💨' : '✨'}</span>`);
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#sbm').style.width = '100%';
+          api.selesai(ok / rounds.length, `${ok}/${rounds.length} tepat. Pembatal wuduk: keluar sesuatu dari qubul/dubur, tidur tidak tetap punggung, hilang akal, sentuh bukan mahram, sentuh kemaluan atau lingkaran dubur dengan tapak tangan/perut jari.`); } }, 1600);
+      };
+      $('#sbK').onclick = () => pick(0); $('#sbB').onclick = () => pick(1);
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return; if (!lock) pick(rounds[i][1]); setTimeout(go, 1700); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 23 · Rukun Solat Bergerak — 13 rukun mengikut tertib (brief23); figura garis sopan bergerak mengikut postur */
+(function () {
+  // postur pandangan sisi (menghadap kanan); lantai y=220
+  const P = {
+    berdiri: { head: [130, 40], neck: [130, 62], hip: [130, 130], knee: [131, 175], ankle: [130, 216], toe: [148, 220], elbow: [131, 98], hand: [134, 130] },
+    takbir: { head: [130, 40], neck: [130, 62], hip: [130, 130], knee: [131, 175], ankle: [130, 216], toe: [148, 220], elbow: [150, 90], hand: [158, 56] },
+    qiyam: { head: [130, 40], neck: [130, 62], hip: [130, 130], knee: [131, 175], ankle: [130, 216], toe: [148, 220], elbow: [142, 106], hand: [150, 92] },
+    rukuk: { head: [214, 120], neck: [192, 126], hip: [124, 128], knee: [128, 174], ankle: [124, 216], toe: [142, 220], elbow: [166, 150], hand: [136, 170] },
+    sujud: { head: [212, 204], neck: [190, 190], hip: [122, 148], knee: [150, 214], ankle: [100, 215], toe: [86, 220], elbow: [176, 212], hand: [196, 218] },
+    duduk: { head: [124, 106], neck: [122, 128], hip: [118, 196], knee: [170, 212], ankle: [112, 214], toe: [96, 220], elbow: [138, 170], hand: [164, 196] },
+  };
+  const R = [ // TERTIB rukun solat (brief23); jenis ikut warna rajah “Roda Rukun Solat” buku teks (hlm. 133): qalbi = biru, qauli = hijau, fi‘li = merah jambu (termasuk tertib)
+    ['Niat', 'berdiri', 'qalbi'],
+    ['Berdiri bagi yang mampu', 'berdiri', 'fi‘li'],
+    ['Takbiratulihram', 'takbir', 'qauli'],
+    ['Membaca Surah al-Fatihah', 'qiyam', 'qauli'],
+    ['Rukuk serta tamakninah', 'rukuk', 'fi‘li'],
+    ['Iktidal serta tamakninah', 'berdiri', 'fi‘li'],
+    ['Sujud serta tamakninah', 'sujud', 'fi‘li'],
+    ['Duduk antara dua sujud serta tamakninah', 'duduk', 'fi‘li'],
+    ['Duduk tahiyat akhir', 'duduk', 'fi‘li'],
+    ['Membaca tahiyat akhir', 'duduk', 'qauli'],
+    ['Selawat kepada Nabi SAW dalam tahiyat akhir', 'duduk', 'qauli'],
+    ['Salam pertama', 'duduk', 'qauli'],
+    ['Tertib', null, 'fi‘li'],
+  ];
+  const WARNA = { qalbi: '#e64980', qauli: '#1c7ed6', 'fi‘li': '#2b8a3e' };
+  const NAMA = { qalbi: 'Rukun qalbi (dalam hati)', qauli: 'Rukun qauli (dilafazkan, didengar telinga sendiri)', 'fi‘li': 'Rukun fi‘li (perbuatan)' };
+  AMALI({
+    id: 'rukun-solat', pel: 23, tajuk: 'Rukun Solat Bergerak', ikon: '🕌', warna: '#2f9e44',
+    ringkas: 'Susun 13 rukun solat mengikut tertib dan lihat figura bergerak.',
+    arahan: 'Solat bermula dengan takbiratulihram dan berakhir dengan salam. Tekan <b>13 rukun solat</b> mengikut tertib — figura akan bergerak mengikut rukun yang kamu pilih.',
+    mula(el, api) {
+      let i = 0, ok = 0, miss = false, busy = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="rsn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="rsm"></i></div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px">
+          <div style="flex:1 1 260px;max-width:400px;margin:0 auto"><div id="rsf"></div>
+            <p id="rsl" style="text-align:center;font-weight:800;margin:4px 0;min-height:1.5em"></p></div>
+          <div style="flex:1 1 280px;min-width:0"><h3 style="margin:0 0 6px;font-size:1rem">Pilih rukun seterusnya</h3><div class="chips" id="rsp"></div></div></div>
+        <h3 style="margin:16px 0 6px;font-size:1rem">Tertib solat kamu</h3>
+        <ol id="rso" style="margin:0;padding-left:1.6em;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:4px 16px"></ol>`;
+      const $ = s => el.querySelector(s);
+      const sv = api.S('svg', { viewBox: '0 0 260 240', role: 'img', 'aria-label': 'Figura garis menunjukkan postur solat' }, $('#rsf'));
+      api.S('rect', { x: 50, y: 220, width: 190, height: 9, rx: 3, fill: 'color-mix(in srgb, var(--gold) 55%, var(--card))' }, sv); // sejadah
+      api.S('text', { x: 236, y: 30, 'text-anchor': 'end', 'font-size': 14, 'font-weight': 700, text: 'Kiblat →', style: 'fill:var(--muted)' }, sv);
+      const cloth = 'color-mix(in srgb, var(--teal) 60%, var(--card))', skin = 'color-mix(in srgb, var(--gold) 40%, var(--card))';
+      const L = (w, c) => api.S('line', { stroke: c || cloth, 'stroke-width': w, 'stroke-linecap': 'round' }, sv);
+      const legU = L(13), legL = L(12), foot = L(8, 'var(--ink)'), torso = L(20), armU = L(10), armL = L(9);
+      const hand = api.S('circle', { r: 5.5, fill: skin }, sv);
+      const head = api.S('circle', { r: 17, fill: skin, stroke: 'var(--ink)', 'stroke-width': 2 }, sv);
+      const cap = api.S('path', { fill: 'var(--ink)' }, sv), eye = api.S('circle', { r: 2.6, fill: 'var(--ink)' }, sv), eye2 = api.S('circle', { r: 2.6, fill: 'var(--ink)' }, sv);
+      const heart = api.S('text', { 'font-size': 20, 'text-anchor': 'middle', text: '❤', style: 'fill:#e64980;transform-box:fill-box;transform-origin:center', opacity: 0 }, sv);
+      let cur = JSON.parse(JSON.stringify(P.berdiri));
+      const draw = p => {
+        const ln = (e, a, b) => { e.setAttribute('x1', a[0]); e.setAttribute('y1', a[1]); e.setAttribute('x2', b[0]); e.setAttribute('y2', b[1]); };
+        ln(legU, p.hip, p.knee); ln(legL, p.knee, p.ankle); ln(foot, p.ankle, p.toe); ln(torso, p.neck, p.hip); ln(armU, p.neck, p.elbow); ln(armL, p.elbow, p.hand);
+        hand.setAttribute('cx', p.hand[0]); hand.setAttribute('cy', p.hand[1]);
+        head.setAttribute('cx', p.head[0]); head.setAttribute('cy', p.head[1]);
+        const ang = Math.atan2(p.head[1] - p.neck[1], p.head[0] - p.neck[0]); // arah kepala dari leher
+        const ux = Math.cos(ang), uy = Math.sin(ang), fx = -uy, fy = ux; // f = arah muka (kanan)
+        const cx = p.head[0], cy = p.head[1];
+        cap.setAttribute('d', `M${cx - 17 * fx + 4 * ux} ${cy - 17 * fy + 4 * uy} A17 17 0 0 1 ${cx + 17 * fx + 4 * ux} ${cy + 17 * fy + 4 * uy} Z`);
+        // salam: muka menoleh ke kanan (ke arah pemerhati) → dua mata kelihatan
+        eye.setAttribute('cx', p.turn ? cx - 6 : cx + 9 * fx + 3 * ux); eye.setAttribute('cy', p.turn ? cy + 3 : cy + 9 * fy + 3 * uy);
+        eye2.setAttribute('cx', cx + 6); eye2.setAttribute('cy', cy + 3); eye2.setAttribute('opacity', p.turn ? 1 : 0);
+        heart.setAttribute('x', (p.neck[0] + p.hip[0]) / 2 + 2); heart.setAttribute('y', (p.neck[1] + p.hip[1]) / 2 - 8);
+      };
+      const goTo = (name, turn) => {
+        const to = Object.assign(JSON.parse(JSON.stringify(P[name])), { turn });
+        const from = cur, t0 = performance.now(), D = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 520;
+        const step = now => { const t = D ? Math.min(1, (now - t0) / D) : 1, e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2, p = { turn };
+          for (const k in P.berdiri) p[k] = [from[k][0] + (to[k][0] - from[k][0]) * e, from[k][1] + (to[k][1] - from[k][1]) * e];
+          draw(p); if (t < 1) requestAnimationFrame(step); else cur = to; };
+        requestAnimationFrame(step);
+      };
+      draw(cur);
+      const cards = api.shuffle(R.map((r, k) => ({ k, r })));
+      cards.forEach(c => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = c.r[0]; b.style.minHeight = '44px'; b.onclick = () => pick(c.k, b); c.b = b; $('#rsp').appendChild(b); });
+      const upd = () => { $('#rsn').textContent = `Rukun ${Math.min(i + 1, 13)}/13`; $('#rsm').style.width = (100 * i / 13) + '%'; };
+      const pick = (k, b) => {
+        if (busy || i >= R.length || b.disabled) return;
+        if (k !== i) {
+          miss = true;
+          api.salah(b, i === 0 ? 'Belum lagi. Rukun pertama ialah <b>niat</b> di dalam hati.' : `Belum ikut tertib. Selepas <b>${R[i - 1][0]}</b> ialah <b>${R[i][0]}</b>.`);
+          b.classList.add('no'); setTimeout(() => b.classList.remove('no'), 700); return;
+        }
+        if (!miss) ok++; miss = false; busy = true;
+        const [nm, pose, jenis] = R[i];
+        b.disabled = true; b.classList.add('ok'); setTimeout(() => { b.style.display = 'none'; }, 350);
+        if (pose) goTo(pose, i === 11);
+        heart.setAttribute('opacity', i === 0 ? 1 : 0); if (i === 0) api.anim(heart, [{ transform: 'scale(.4)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 500, fill: 'none' });
+        $('#rsl').innerHTML = `<span style="color:${WARNA[jenis]}">${api.esc(nm)}</span>` + (i === 11 ? ' → menoleh ke kanan' : '');
+        $('#rso').insertAdjacentHTML('beforeend', `<li>${api.esc(nm)} <small style="color:${WARNA[jenis]};font-weight:800">· ${jenis}</small></li>`);
+        api.betul(null, `${api.esc(nm)} — ${NAMA[jenis]}.` + (i === 12 ? ' Semua 13 rukun wajib dilakukan mengikut tertib.' : '') + (i === 6 ? ' Tujuh anggota sujud: dahi, dua tapak tangan, dua lutut dan dua hujung jari kaki.' : ''));
+        i++; upd();
+        setTimeout(() => { busy = false;
+          if (i === R.length) api.selesai(ok / 13, `${ok}/13 rukun betul pada cubaan pertama. Meninggalkan satu rukun membatalkan solat — semua 13 rukun wajib mengikut tertib.`); }, 560);
+      };
+      upd();
+      return { jawab() { const go = () => { if (i >= R.length) return; if (!busy) { const c = cards.find(x => x.k === i); pick(c.k, c.b); } setTimeout(go, 620); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 24 · Perjalanan Hidup Nabi Muhammad SAW — garis masa umur & peristiwa (brief24). Tiada lukisan nabi/malaikat. */
+(function () {
+  const EV = [ // [umur, peristiwa, catatan]
+    ['2', 'Dipelihara oleh Halimah al-Saadiah di perkampungan Bani Saad', 'Halimah al-Saadiah ialah ibu susuan baginda.'],
+    ['2–4', 'Dada baginda dibelah oleh Malaikat Jibril', 'Berlaku ketika baginda berumur 2 hingga 4 tahun.'],
+    ['6', 'Ibu baginda, Aminah, wafat di Abwa’', 'Ketika pulang dari Madinah ke Mekah. Baginda kemudian dipelihara datuknya, Abdul Muttalib, dan selepas itu Abu Talib.'],
+    ['12', 'Mengikut Abu Talib ke Syam', 'Buhaira al-Rahib menasihati supaya baginda dibawa pulang ke Mekah.'],
+    ['20', 'Menyaksikan Hilful Fudul', 'Hilful Fudul ialah perjanjian membela orang yang teraniaya.'],
+    ['25', 'Berniaga ke Syam membawa barangan Saidatina Khadijah RA, kemudian berkahwin dengannya', 'Dibantu Maisarah. Ketika berniaga, baginda menunaikan amanah dan memperoleh kepercayaan masyarakat.'],
+    ['35', 'Menyelesaikan pertikaian peletakan Hajar al-Aswad', 'Baginda menghamparkan rida’; ketua kabilah memegang penjurunya bersama-sama.'],
+    ['40', 'Menerima wahyu pertama di Gua Hira’', 'Wahyu pertama diturunkan oleh Malaikat Jibril pada bulan Ramadan.'],
+    ['51', 'Peristiwa Israk dan Mikraj', 'Dari Masjidil Haram ke Masjidil Aqsa, hingga Sidratul Muntaha; menerima kefarduan solat lima waktu.'],
+    ['53', 'Hijrah ke Madinah bersama Saidina Abu Bakar al-Siddiq RA', '13 tahun selepas kerasulan. Di Madinah baginda membina Masjid Nabawi dan menggubal Piagam Madinah.'],
+  ];
+  AMALI({
+    id: 'garis-masa-nabi', pel: 24, tajuk: 'Jejak Hidup Rasulullah SAW', ikon: '🐪', warna: '#e67700',
+    ringkas: 'Bawa unta menyusuri garis masa: padankan umur Nabi SAW dengan peristiwanya.',
+    arahan: 'Unta berhenti di setiap <b>umur</b> Nabi Muhammad SAW. Pilih <b>peristiwa yang berlaku</b> pada umur itu untuk meneruskan perjalanan.',
+    mula(el, api) {
+      let i = 0, ok = 0, miss = false, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="gmn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="gmm"></i></div></div>
+        <div id="gmsv" style="max-width:640px;margin:8px auto 0"></div>
+        <div class="box" style="margin-top:8px;text-align:center"><div class="hint" style="margin:0">Lahir 12 Rabiulawal, Tahun Gajah, di Mekah</div>
+          <div id="gmq" style="font-size:1.25rem;font-weight:800;margin-top:4px"></div></div>
+        <div id="gmo" style="display:grid;gap:8px;margin-top:10px"></div>
+        <p id="gmc" class="hint" style="min-height:1.4em"></p>`;
+      const $ = s => el.querySelector(s);
+      // jalan berliku: 10 hentian dalam 2 baris
+      const sv = api.S('svg', { viewBox: '0 0 340 170', role: 'img', 'aria-label': 'Garis masa perjalanan hidup Nabi Muhammad SAW' }, $('#gmsv'));
+      const pts = EV.map((_, k) => k < 5 ? [34 + k * 68, 46] : [306 - (k - 5) * 68, 128]);
+      api.S('path', { d: `M${pts[0][0]} ${pts[0][1]} L${pts[4][0]} ${pts[4][1]} C330 46 330 128 ${pts[5][0]} ${pts[5][1]} L${pts[9][0]} ${pts[9][1]}`, fill: 'none', stroke: 'color-mix(in srgb, var(--gold) 55%, var(--card))', 'stroke-width': 16, 'stroke-linecap': 'round' }, sv);
+      api.S('path', { d: `M${pts[0][0]} ${pts[0][1]} L${pts[4][0]} ${pts[4][1]} C330 46 330 128 ${pts[5][0]} ${pts[5][1]} L${pts[9][0]} ${pts[9][1]}`, fill: 'none', stroke: 'var(--card)', 'stroke-width': 2, 'stroke-dasharray': '6 8' }, sv);
+      const nodes = pts.map((p, k) => { const g = api.S('g', {}, sv);
+        api.S('circle', { cx: p[0], cy: p[1], r: 15, fill: 'var(--card)', stroke: 'var(--muted)', 'stroke-width': 3 }, g);
+        api.S('text', { x: p[0], y: p[1] + (k < 5 ? -24 : 34), 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, text: EV[k][0] + ' th' }, g); return g; });
+      const camel = api.S('text', { 'font-size': 26, 'text-anchor': 'middle', 'dominant-baseline': 'central', text: '🐪', style: 'transition:transform .7s ease' }, sv);
+      camel.setAttribute('x', 0); camel.setAttribute('y', 0);
+      const moveCamel = k => { camel.style.transform = `translate(${pts[k][0]}px, ${pts[k][1] - 2}px)`; };
+      moveCamel(0);
+      const show = () => {
+        lock = false; miss = false;
+        const e = EV[i];
+        $('#gmn').textContent = `Hentian ${i + 1}/${EV.length}`; $('#gmm').style.width = (100 * i / EV.length) + '%';
+        $('#gmq').textContent = `Umur ${e[0]} tahun: apakah yang berlaku?`;
+        nodes[i].querySelector('circle').setAttribute('stroke', 'var(--c)');
+        const others = api.shuffle(EV.filter((_, k) => k !== i)).slice(0, 2);
+        $('#gmo').innerHTML = '';
+        api.shuffle([e].concat(others)).forEach(o => { const b = document.createElement('button'); b.className = 'chip'; b.style.cssText = 'text-align:left;min-height:48px'; b.textContent = o[1];
+          b.onclick = () => pick(o, b); b.dataset.ok = o === e ? 1 : 0; $('#gmo').appendChild(b); });
+      };
+      const pick = (o, b) => {
+        if (lock) return; const e = EV[i];
+        if (o !== e) { miss = true; b.classList.add('no'); b.disabled = true; api.salah(b, `Itu berlaku ketika umur <b>${o[0]} tahun</b>, bukan ${e[0]} tahun.`); return; }
+        lock = true; if (!miss) ok++;
+        b.classList.add('ok');
+        const c = nodes[i].querySelector('circle'); c.setAttribute('fill', 'var(--ok)'); c.setAttribute('stroke', 'var(--ok)');
+        api.betul(b, `Umur ${e[0]} tahun — ${api.esc(e[1])}.`); $('#gmc').textContent = e[2];
+        setTimeout(() => { i++; if (i < EV.length) { moveCamel(i); show(); } else { $('#gmm').style.width = '100%';
+          api.selesai(ok / EV.length, `${ok}/${EV.length} hentian betul pada cubaan pertama. Baginda wafat pada 12 Rabiulawal tahun 11 Hijrah di Madinah. Tanda cinta kepada baginda: ikut sunnah dan berselawat apabila mendengar nama baginda.`); } }, 1500);
+      };
+      show();
+      return { jawab() { const go = () => { if (i >= EV.length) return; if (!lock) { const b = el.querySelector('#gmo [data-ok="1"]'); if (b) b.click(); } setTimeout(go, 1600); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 26 · Empat Khulafa’ ar-Rasyidin — urutan, gelaran & sumbangan (brief26). Tiada lukisan sahabat; guna tiang/ikon objek. */
+(function () {
+  const K = [
+    { n: 'Abu Bakar al-Siddiq RA', p: '11H–13H', c: '#2b8a3e' },
+    { n: 'Umar bin al-Khattab RA', p: '13H–23H', c: '#1c7ed6' },
+    { n: 'Uthman bin Affan RA', p: '23H–35H', c: '#ae3ec9' },
+    { n: 'Ali bin Abu Talib RA', p: '35H–40H', c: '#e8590c' },
+  ];
+  const CARDS = [ // [teks, indeks khalifah, nota]
+    ['Gelaran al-Siddiq', 0, 'Abu Bakar RA juga digelar al-Atiq.'],
+    ['Gelaran al-Faruq', 1, 'Umar RA digelar al-Faruq.'],
+    ['Gelaran Zun Nurain', 2, 'Kerana berkahwin dengan dua puteri Nabi SAW, Ruqayyah dan Ummu Kalthum.'],
+    ['Gelaran Abu Turab', 3, 'Ali RA berkahwin dengan Fatimah al-Zahra RA.'],
+    ['Mengarahkan Zaid bin Thabit menghimpunkan al-Quran selepas Perang Yamamah', 0, 'Ramai penghafaz al-Quran syahid dalam Perang Yamamah.'],
+    ['Meneruskan penghantaran tentera Usamah bin Zaid ke Syam', 0, 'Abu Bakar RA juga membentuk 11 pasukan tentera menghadapi pemberontak.'],
+    ['Menubuhkan Majlis Syura', 1, 'Umar RA juga membahagikan wilayah dan menubuhkan jabatan tentera, polis dan percukaian.'],
+    ['Mengasaskan takwim Islam', 1, 'Umar RA juga menetapkan wang sara hidup rakyat.'],
+    ['Menubuhkan Baitulmal', 1, 'Umar RA juga memperkenalkan jizyah dan kharaj.'],
+    ['Membentuk jawatankuasa penyalinan al-Quran — Mushaf Uthmani', 2, 'Ayat al-Quran disalin semula dan dinamakan Mushaf Uthmani.'],
+    ['Membina tentera laut', 2, 'Uthman RA juga memperkenalkan azan kedua Jumaat.'],
+    ['Membina markas tentera di sempadan Syria', 3, 'Ali RA juga mengekalkan kestabilan serta keharmonian negara.'],
+  ];
+  AMALI({
+    id: 'empat-khalifah', pel: 26, tajuk: 'Tiang Empat Khalifah', ikon: '🏛️', warna: '#1c7ed6',
+    ringkas: 'Dirikan tiang Khulafa’ ar-Rasyidin mengikut urutan, kemudian padankan gelaran dan sumbangan.',
+    arahan: 'Khulafa’ ar-Rasyidin memerintah dari Madinah kira-kira 29 tahun. <b>Bahagian 1:</b> dirikan empat tiang mengikut <b>urutan khalifah</b>.',
+    mula(el, api) {
+      const cards = api.shuffle(CARDS.slice(0, 4)).concat(api.shuffle(CARDS.slice(4)));
+      let fase = 0, nTiang = 0, i = 0, ok = 0, miss = false, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="kkn"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="kkm"></i></div></div>
+        <div id="kkt" style="max-width:600px;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:12px;align-items:end"></div>
+        <div id="kkc" class="box" style="margin-top:12px;text-align:center;font-weight:800;font-size:1.08rem;min-height:56px;display:grid;place-items:center"></div>
+        <div id="kko" class="chips" style="justify-content:center;margin-top:10px"></div>
+        <p id="kkh" class="hint" style="text-align:center;min-height:1.4em"></p>`;
+      const $ = s => el.querySelector(s);
+      const T = K.map((k, j) => { const d = document.createElement('button');
+        d.style.cssText = `border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink);min-width:0`;
+        d.innerHTML = `<div data-g style="display:flex;flex-direction:column-reverse;gap:3px;min-height:40px;align-items:center"></div>
+          <div data-col style="width:72%;height:24px;border-radius:6px 6px 0 0;background:var(--chip);border:2px dashed var(--line);transition:height .6s cubic-bezier(.3,1.4,.5,1),background .3s"></div>
+          <div style="width:96%;height:10px;border-radius:3px;background:var(--line)"></div>
+          <b data-nm style="font-size:.78rem;line-height:1.15;text-align:center;min-height:2.3em;overflow-wrap:anywhere">?</b><small data-p style="color:var(--muted);font-size:.72rem"></small>`;
+        d.onclick = () => fase === 1 && pickK(j, d); $('#kkt').appendChild(d); return d; });
+      const raise = (slot, j) => { const t = T[slot], col = t.querySelector('[data-col]');
+        col.style.height = '110px'; col.style.background = K[j].c; col.style.border = '2px solid ' + K[j].c;
+        t.querySelector('[data-nm]').textContent = K[j].n.replace(/ (bin|al-).*/, '') + ' RA'; t.querySelector('[data-p]').textContent = K[j].p; };
+      const order = api.shuffle([0, 1, 2, 3]), ob = {};
+      const showOrder = () => {
+        $('#kkn').textContent = `Tiang ${nTiang + 1}/4`; $('#kkm').style.width = (100 * nTiang / 16) + '%';
+        $('#kkc').textContent = nTiang === 0 ? 'Siapakah khalifah pertama?' : `Siapakah khalifah ke-${nTiang + 1}?`;
+      };
+      order.forEach(j => { const b = document.createElement('button'); b.className = 'btn alt'; b.style.minHeight = '46px'; b.textContent = K[j].n; ob[j] = b;
+        b.onclick = () => { if (fase !== 0 || b.disabled) return;
+          if (j !== nTiang) { miss = true; api.salah(b, `Belum. ${K[j].n} ialah khalifah ke-${j + 1} (${K[j].p}).`); return; }
+          if (!miss) ok++; miss = false; b.disabled = true; b.style.display = 'none'; raise(nTiang, j);
+          api.betul(T[nTiang], `Betul! Khalifah ke-${j + 1}: <b>${K[j].n}</b>, ${K[j].p}.`); nTiang++;
+          if (nTiang < 4) showOrder(); else setTimeout(startCards, 900); };
+        $('#kko').appendChild(b); });
+      const startCards = () => { fase = 1; $('#kko').innerHTML = ''; T.forEach(t => t.style.outline = 'none');
+        api.say('<b>Bahagian 2:</b> baca kad, kemudian tekan <b>tiang khalifah</b> yang betul untuk meletakkan permata 💎 padanya.'); showCard(); };
+      const showCard = () => { lock = false; miss = false;
+        $('#kkn').textContent = `Kad ${i + 1}/${cards.length}`; $('#kkm').style.width = (100 * (4 + i) / 16) + '%';
+        $('#kkc').textContent = cards[i][0]; $('#kkh').textContent = 'Tekan tiang khalifah di atas.';
+        api.anim($('#kkc'), [{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { duration: 300 }); };
+      const pickK = (j, d) => {
+        if (lock || i >= cards.length) return; const c = cards[i];
+        if (j !== c[1]) { miss = true; api.salah(d, `Bukan ${K[j].n}. Cuba tiang lain.`); return; }
+        lock = true; if (!miss) ok++;
+        const g = document.createElement('span'); g.textContent = '💎'; g.title = c[0]; g.style.fontSize = '1.05rem'; d.querySelector('[data-g]').appendChild(g);
+        api.anim(g, [{ transform: 'translateY(-30px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 400 });
+        api.betul(d, `${K[j].n}: ${api.esc(c[0])}.`); $('#kkh').textContent = c[2];
+        setTimeout(() => { i++; if (i < cards.length) showCard(); else { $('#kkm').style.width = '100%';
+          api.selesai(ok / 16, `${ok}/16 betul pada cubaan pertama. Pengajaran: contohi semangat sahabat, berani menegakkan kebenaran dan taat kepada pemimpin Islam.`); } }, 1400);
+      };
+      showOrder();
+      return { jawab() { const go = () => { if (fase === 0) { if (ob[nTiang]) ob[nTiang].click(); setTimeout(go, 300); return; }
+        if (i >= cards.length) return; if (!lock) pickK(cards[i][1], T[cards[i][1]]); setTimeout(go, 1500); }; go(); } };
+    },
+  });
+})();
+
+/* Pelajaran 28 · Misi Amanah — pilih tindakan terbaik; kesan menunaikan/mengkhianati amanah (brief28) */
+(function () {
+  const ZON = {
+    diri: ['🧍 Amanah terhadap diri', 'Tidak amanah terhadap diri menyebabkan hilang kepercayaan orang ramai, menjejaskan iman dan tidak diredai Allah SWT.'],
+    keluarga: ['🏠 Amanah terhadap keluarga', 'Tidak amanah terhadap keluarga mencemarkan nama baik keluarga dan merenggangkan hubungan kekeluargaan.'],
+    masyarakat: ['🏘️ Amanah terhadap masyarakat', 'Tidak amanah terhadap masyarakat menyebabkan masyarakat tidak harmoni dan keselesaan awam terganggu.'],
+    umum: ['🤝 Amanah: harta, kehormatan & kerahsiaan', 'Iman seseorang tidak sempurna jika tidak memelihara amanah; orang yang mengkhianati amanah tergolong dalam kalangan orang munafik.'],
+  };
+  const SEN = [ // SENARIO brief28: [situasi, zon, tindakan terbaik, sebab, [pilihan salah]]
+    ['Rakan berkongsi rahsia peribadi dan meminta kamu menyimpannya.', 'umum', 'Pelihara rahsia itu', 'Kerahsiaan ialah amanah.', ['Ceritakan kepada rakan lain', 'Kongsikan di media sosial']],
+    ['Ibu meminta kamu pulang selepas kelas tambahan, tetapi rakan mengajak ke kedai.', 'keluarga', 'Pulang terus ke rumah', 'Taat kepada ibu bapa ialah amanah keluarga.', ['Ikut rakan ke kedai dahulu', 'Ke kedai, kemudian beri alasan kepada ibu']],
+    ['Kamu tergoda untuk menggunakan akaun permainan rakan tanpa izinnya.', 'umum', 'Jangan gunakan akaun itu', 'Harta benda orang lain ialah amanah.', ['Guna sekejap sahaja', 'Guna kerana rakan tidak akan tahu']],
+    ['Bendahari kelas menggunakan wang kelas untuk membeli snek sendiri.', 'umum', 'Wang itu wajib dipulangkan', 'Wang kelas ialah amanah.', ['Biarkan kerana jumlahnya kecil', 'Kongsi snek itu bersama-sama']],
+    ['Seorang murid mahu menyalin kerja rumah orang lain.', 'diri', 'Buat sendiri dengan bersungguh-sungguh', 'Amanah terhadap diri menuntut bersungguh-sungguh dan rajin.', ['Salin kerana lebih cepat', 'Salin separuh sahaja']],
+    ['Kamu melihat sampah di kawasan sekolah.', 'masyarakat', 'Kutip dan jaga kebersihan', 'Menjaga kebersihan awam ialah amanah terhadap masyarakat.', ['Biarkan, itu kerja orang lain', 'Tendang ke tepi longkang']],
+    ['Rakan yang pernah menipu kamu kini menyerahkan barangnya untuk dijaga.', 'umum', 'Tetap jaga barang itu dengan baik', '“Tunaikanlah amanah kepada orang yang memberi kamu amanah dan jangan khianati orang yang mengkhianatimu.”', ['Balas dendam: sorokkan barang itu', 'Tolak dan sindir dia']],
+    ['Kamu ketua pasukan dan perlu memilih ahli pasukan.', 'umum', 'Pilih secara adil', 'Allah SWT menyuruh menunaikan amanah dan menghukum dengan adil (Surah al-Nisa’ ayat 58).', ['Pilih kawan rapat sahaja', 'Pilih sesiapa yang memberi hadiah']],
+  ];
+  AMALI({
+    id: 'misi-amanah', pel: 28, tajuk: 'Misi Amanah', ikon: '🤝', warna: '#5c940d',
+    ringkas: 'Pilih tindakan paling amanah dalam 8 situasi dan bina meter kepercayaan.',
+    arahan: 'Amanah bermaksud <b>tunai janji</b>. Pilih tindakan terbaik bagi setiap situasi. Orang amanah <b>mudah dipercayai dan disenangi</b> — penuhkan meter kepercayaan!',
+    mula(el, api) {
+      const rounds = api.shuffle(SEN);
+      let i = 0, ok = 0, lock = false;
+      el.innerHTML = `<div class="row" style="justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="man"></b><div class="meter" style="flex:1;min-width:140px;max-width:260px"><i id="mam"></i></div></div>
+        <div class="box" style="margin-top:10px"><div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap"><b>🤝 Meter kepercayaan</b><span id="mav" style="font-weight:800">0%</span></div>
+          <div style="height:22px;border-radius:99px;background:var(--chip);overflow:hidden;margin-top:6px"><div id="mab" style="height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--ok));transition:width .6s"></div></div></div>
+        <p id="maz" style="margin:12px 0 4px;font-weight:700;color:var(--muted)"></p>
+        <div id="mac" class="box" style="font-weight:800;font-size:1.1rem;border-color:var(--c)"></div>
+        <div id="mao" style="display:grid;gap:8px;margin-top:10px"></div>
+        <p id="mak" class="hint" style="min-height:1.4em"></p>`;
+      const $ = s => el.querySelector(s);
+      const show = () => { lock = false; const r = rounds[i];
+        $('#man').textContent = `Situasi ${i + 1}/${rounds.length}`; $('#mam').style.width = (100 * i / rounds.length) + '%';
+        $('#maz').textContent = ZON[r[1]][0]; $('#mac').textContent = r[0]; $('#mak').textContent = '';
+        $('#mao').innerHTML = '';
+        api.shuffle([[r[2], 1]].concat(r[4].map(t => [t, 0]))).forEach(([t, g]) => { const b = document.createElement('button'); b.className = 'chip'; b.style.cssText = 'text-align:left;min-height:48px'; b.textContent = t; b.dataset.ok = g; b.onclick = () => pick(b, g); $('#mao').appendChild(b); });
+        api.anim($('#mac'), [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 300 }); };
+      const pick = (b, g) => {
+        if (lock) return; lock = true; const r = rounds[i];
+        el.querySelectorAll('#mao .chip').forEach(c => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('ok'); });
+        if (g) { ok++; api.betul(b, `Amanah! ${r[3]}`); $('#mak').textContent = 'Orang amanah mudah dipercayai dan disenangi.'; }
+        else { b.classList.add('no'); api.salah(b, `Itu mengkhianati amanah. Tindakan terbaik: <b>${r[2]}</b>. ${r[3]}`); $('#mak').textContent = ZON[r[1]][1]; }
+        const v = Math.round(100 * ok / rounds.length); $('#mab').style.width = v + '%'; $('#mav').textContent = v + '%';
+        setTimeout(() => { i++; if (i < rounds.length) show(); else { $('#mam').style.width = '100%';
+          api.selesai(ok / rounds.length, `Meter kepercayaan ${v}%. Contohi Umar bin Abdul Aziz: lilin kerajaan untuk urusan rasmi, lilin sendiri untuk urusan peribadi.`); } }, 2000);
+      };
+      show();
+      return { jawab() { const go = () => { if (i >= rounds.length) return; if (!lock) { const b = el.querySelector('#mao [data-ok="1"]'); if (b) b.click(); } setTimeout(go, 2100); }; go(); } };
+    },
+  });
+})();
+
+/* ================= Aplikasi Amali Interaktif ================= */
+(function () {
+  const $ = s => document.querySelector(s);
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'pi' + FORM + 'amali';
+  const G = Object.assign({ xp: 0, best: {}, main: {}, mute: false }, store.get(KEY, {}));
+  const save = () => { store.set(KEY, G); $('#xp').textContent = G.xp + ' XP'; };
+  ACTS.sort((a, b) => a.pel - b.pel || String(a.id).localeCompare(b.id));
+  const BID = BIDANG.map(([nama, ikon, pels]) => [nama, ikon, ACTS.filter(a => pels.includes(a.pel))]).filter(b => b[2].length);
+  const stars = n => '★'.repeat(n) + '☆'.repeat(3 - n);
+
+  /* bunyi kecil (WebAudio), boleh dibisukan */
+  let AC = null;
+  function tone(fs, d) { if (G.mute) return; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); const t = AC.currentTime;
+    fs.forEach((f, i) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.value = f; o.connect(g); g.connect(AC.destination);
+      g.gain.setValueAtTime(.0001, t + i * d); g.gain.exponentialRampToValueAtTime(.18, t + i * d + .02); g.gain.exponentialRampToValueAtTime(.0001, t + i * d + d * 1.6);
+      o.start(t + i * d); o.stop(t + i * d + d * 1.7); }); } catch (e) {} }
+
+  function home() {
+    cur = null; history.replaceState(null, '', location.pathname);
+    $('#stage').hidden = true; $('#home').hidden = false;
+    $('#home').innerHTML = BID.map(([nama, ikon, acts]) => `<section class="bid"><h2><span aria-hidden="true">${ikon}</span> ${esc(nama)}</h2><div class="grid">${acts.map(a =>
+      `<button class="act" data-id="${esc(a.id)}" style="--c:${a.warna || 'var(--teal)'}"><span class="ai" aria-hidden="true">${a.ikon}</span>
+       <span class="at"><small>Pelajaran ${a.pel}</small><b>${esc(a.tajuk)}</b><span>${esc(a.ringkas || '')}</span></span>
+       <span class="as" aria-label="${G.best[a.id] || 0} bintang">${stars(G.best[a.id] || 0)}</span></button>`).join('')}</div></section>`).join('');
+    $('#home').querySelectorAll('.act').forEach(b => b.onclick = () => open(b.dataset.id));
+    if (!RM()) $('#home').querySelectorAll('.act').forEach((b, i) => anim(b, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { delay: Math.min(i * 30, 500), duration: 380 }));
+  }
+  let cur = null, ctl = null, gen = 0;
+  function open(id) {
+    const a = ACTS.find(x => x.id === id); if (!a) return home();
+    cur = a; gen++; history.replaceState(null, '', '?a=' + encodeURIComponent(id));
+    $('#home').hidden = true; $('#stage').hidden = false;
+    document.documentElement.style.setProperty('--c', a.warna || 'var(--teal)');
+    $('#sh').innerHTML = `<span class="ai" aria-hidden="true">${a.ikon}</span><div><small>Pelajaran ${a.pel}</small><h2>${esc(a.tajuk)}</h2></div>`;
+    $('#say').innerHTML = a.arahan || ''; $('#fin').innerHTML = '';
+    const body = $('#body'); body.innerHTML = '';
+    G.main[id] = (G.main[id] || 0) + 1; save();
+    const g = gen;
+    const api = {
+      say(h) { if (g === gen) $('#say').innerHTML = h; },
+      betul(el, h) { tone([660, 880], .09); if (el) anim(el, [{ transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 300 }); if (h !== undefined) api.say('✅ ' + h); },
+      salah(el, h) { tone([220, 180], .12); if (el) anim(el, [{ transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'none' }], { duration: 300 }); if (h !== undefined) api.say('❌ ' + h); },
+      selesai(skor, h) {
+        if (g !== gen) return; skor = Math.max(0, Math.min(1, +skor || 0));
+        const n = skor >= .999 ? 3 : skor >= .7 ? 2 : skor > 0 ? 1 : 0, xp = Math.round(10 + 20 * skor), was = G.best[a.id] || 0;
+        G.best[a.id] = Math.max(was, n); G.xp += xp; save(); tone([523, 659, 784, 1046], .1);
+        $('#fin').innerHTML = `<div class="done"><div class="big">${stars(n)}</div><p>${h || (n === 3 ? 'Sempurna! Masya-Allah.' : 'Siap! Cuba lagi untuk 3 bintang.')}</p>
+          <p class="hint">+${xp} XP${n > was ? ' · rekod baharu!' : ''}</p><button class="btn go" id="again">🔁 Main lagi</button> <button class="btn alt" id="back2">← Semua aktiviti</button></div>`;
+        $('#again').onclick = () => open(a.id); $('#back2').onclick = home;
+        anim($('#fin .done'), [{ opacity: 0, transform: 'scale(.92)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+        $('#fin').scrollIntoView({ block: 'nearest', behavior: RM() ? 'auto' : 'smooth' });
+        window.__amaliDone = { id: a.id, skor };
+      },
+      toast(t) { const d = document.createElement('div'); d.className = 'tst'; d.textContent = t; $('#toast').appendChild(d); setTimeout(() => d.remove(), 2600); },
+      shuffle, S, H, anim, esc,
+    };
+    try { ctl = a.mula(body, api) || null; } catch (e) { console.error(e); body.innerHTML = '<p class="hint">Aktiviti ini gagal dimuat.</p>'; }
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  $('#back').onclick = home;
+  $('#mute').onclick = () => { G.mute = !G.mute; save(); $('#mute').textContent = G.mute ? '🔇' : '🔊'; };
+  $('#mute').textContent = G.mute ? '🔇' : '🔊';
+  window.AM = { open, home, get ctl() { return ctl; }, ACTS, G };   // untuk ujian
+  save();
+  const q = new URLSearchParams(location.search).get('a'); q ? open(q) : home();
+})();
+
+</script>
+</body>
+</html>

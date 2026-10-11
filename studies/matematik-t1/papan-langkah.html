@@ -133,13 +133,29 @@ sup{font-size:.6em}
   .viz{min-height:0}
   .viz svg{max-height:240px}
 }
+/* ===== Darjah 1 (body.kid): gambar dahulu, huruf besar, pilih jawapan dengan butang, dengar arahan ===== */
+.spk{flex:none;margin-left:auto;border:2px solid var(--line);background:var(--sheet);border-radius:50%;width:46px;height:46px;font-size:1.3rem;cursor:pointer}
+.picks{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 10px}
+.picks:empty{display:none}
+.pk{min-width:64px;padding:10px 18px;border-radius:16px;border:3px solid var(--c);background:var(--sheet);font:1.9rem/1 var(--hand);cursor:pointer;box-shadow:0 4px 0 color-mix(in srgb,var(--c) 45%,transparent)}
+.pk:active{transform:translateY(3px);box-shadow:none}
+.pk.no{border-color:var(--pen);opacity:.5;animation:shake .35s}
+.kid .work{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.kid .viz{order:2;min-height:340px}
+.kid .viz svg{max-height:440px}
+.kid .line{font-size:2.1rem;min-height:56px}
+.kid .fly{font-size:2.1rem}
+.kid .soalan{font-size:1.3rem}
+.kid .say p{font-size:1.2rem}
+.kid .tk input{font-size:1.8rem;width:2.6em}
+.kid .tk.pick input{pointer-events:none}
+.burst{position:fixed;z-index:60;pointer-events:none;font-size:2rem}
+@media (max-width:860px){.kid .viz{order:-1}.kid .viz svg{max-height:300px}.kid .line{font-size:1.8rem}.pk{font-size:1.6rem}}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 @media print{.rail,.bar,.ctrl,.types,#toast,.top .xp{display:none}.layout{display:block}}
 </style>
 </head>
-<body>
-<a class="noprint" href="../../studies.html#matematik-t1" style="display:inline-block;margin:10px 16px 0;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);font:700 14px system-ui;text-decoration:none">← Studies</a>
-
+<body class="">
 <div class="wrap">
   <header class="top">
     <h1>Papan Langkah Matematik<small>Tingkatan 1 · KSSM · tengok cara selesaikan, kemudian cuba sendiri</small></h1>
@@ -165,7 +181,8 @@ sup{font-size:.6em}
         <div class="viz" id="viz" aria-hidden="true"></div>
       </div>
       <div class="dock">
-        <div class="say" aria-live="polite"><span class="k" id="stepNo">Mula</span><p id="say"></p></div>
+        <div class="say" aria-live="polite"><span class="k" id="stepNo">Mula</span><p id="say"></p><button class="spk" id="spk" type="button" aria-label="Dengar arahan" hidden>🔊</button></div>
+        <div class="picks" id="picks" role="group" aria-label="Pilih jawapan"></div>
         <div class="ctrl" id="ctrl"></div>
       </div>
       <div id="end"></div>
@@ -174,7 +191,7 @@ sup{font-size:.6em}
 </div>
 <div id="toast" aria-live="polite"></div>
 <script>
-const FORM = 1;
+const FORM = '1';
 /* ================= Enjin Papan Langkah (dikongsi Matematik T1 & T3) =================
    Modul bab memanggil BAB({...}). Setiap jenis soalan ada gen(aras, R) -> P:
    P = { soalan: html, langkah: [{kata, baris:[token...], lukis?}], jawapan: html,
@@ -3892,7 +3909,7 @@ function accepts(tok, input) {
     P = mod.jenis[jenis].gen(aras, RNG(seed)); P.bab = mod.bab;
     history.replaceState(null, '', `?bab=${mod.bab}&jenis=${jenis}&seed=${seed}${mode === 'cuba' ? '&mod=cuba' : ''}`);
     rail(); head();
-    $('#soalan').innerHTML = P.soalan; $('#end').innerHTML = ''; hints = 0;
+    $('#soalan').innerHTML = P.soalan; $('#end').innerHTML = ''; $('#picks').innerHTML = ''; hints = 0; hush();
     $('#board').innerHTML = ''; $('#board').classList.remove('fin'); k = -1; draw(-1);
     if (mode === 'tunjuk') showCtrl(); else practice();
   }
@@ -3907,7 +3924,7 @@ function accepts(tok, input) {
 
   /* ---------- Baris & morf token ---------- */
   function tokHTML(t, ask) {
-    if (ask && t.tanya !== undefined) return `<span class="tk ask"><input aria-label="Isi jawapan" autocomplete="off" inputmode="text" size="${Math.max(2, plain(t.t).length + 1)}"></span>`;
+    if (ask && t.tanya !== undefined) return `<span class="tk ask${t.pilih ? ' pick' : ''}"><input${t.pilih ? ' readonly tabindex="-1"' : ''} aria-label="Isi jawapan" autocomplete="off" inputmode="text" size="${Math.max(2, plain(t.t).length + 1)}"></span>`;
     return `<span class="tk${t.c ? ' ' + t.c : ''}">${t.t}</span>`;
   }
   const toks = line => line.map(t => typeof t === 'object' ? t : T(t));
@@ -3945,7 +3962,24 @@ function accepts(tok, input) {
     const st = P.langkah[i];
     $('#stepNo').textContent = i < 0 ? 'Mula' : `Langkah ${i + 1}/${P.langkah.length}`;
     $('#say').innerHTML = i < 0 ? (P.mula || 'Tekan <b>Langkah seterusnya</b> untuk lihat cara selesaikan.') : st.kata;
+    if (KID && i >= 0) speak($('#say').textContent);
   }
+  /* ---------- Dengar (Darjah 1): baca arahan dengan suara pelayar (ms/id jika ada) ---------- */
+  const KID = document.body.classList.contains('kid'), TTS = 'speechSynthesis' in window;
+  let voice = null, talk = KID && store.get(KEY + 'suara', true);
+  function pickVoice() { const v = TTS ? speechSynthesis.getVoices() : []; voice = v.find(x => /^ms/i.test(x.lang)) || v.find(x => /^id/i.test(x.lang)) || null; }
+  if (TTS) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+  function hush() { if (TTS) try { speechSynthesis.cancel(); } catch (e) {} }
+  function speak(t, force) {
+    if (!TTS || (!talk && !force)) return; hush();
+    const u = new SpeechSynthesisUtterance(String(t).replace(/[−]/g, ' tolak ').replace(/\+/g, ' tambah ').replace(/=/g, ' sama dengan '));
+    if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = 'ms-MY';
+    u.rate = .9; try { speechSynthesis.speak(u); } catch (e) {}
+  }
+  if (KID && TTS) { const b = $('#spk'); b.hidden = false; b.setAttribute('aria-pressed', talk);
+    b.onclick = () => { talk = !talk; store.set(KEY + 'suara', talk); b.setAttribute('aria-pressed', talk); b.textContent = talk ? '🔊' : '🔈';
+      if (talk) speak($('#soalan').textContent + '. ' + $('#say').textContent, true); else hush(); };
+    b.textContent = talk ? '🔊' : '🔈'; }
 
   /* ---------- Mod Tunjuk cara ---------- */
   function showCtrl() {
@@ -4003,12 +4037,27 @@ function accepts(tok, input) {
     $('#stepNo').textContent = `Baris ${li + 1}`;
     const inp = el.querySelector('input');
     if (!inp) { $('#say').innerHTML = st.kata; setTimeout(nextLine, RM() ? 0 : 700); return; }
-    $('#say').textContent = 'Apakah yang patut ditulis dalam petak?';
+    $('#say').textContent = KID ? 'Pilih jawapan yang betul.' : 'Apakah yang patut ditulis dalam petak?';
+    if (KID) speak(st.kata.replace(/<[^>]*>/g, ' '));
+    picks(el);
     el.querySelectorAll('input').forEach(x => x.onkeydown = e => { if (e.key === 'Enter') check(); });
-    setTimeout(() => inp.focus({ preventScroll: true }), 300);
+    if (!inp.readOnly) setTimeout(() => inp.focus({ preventScroll: true }), 300);
+  }
+  function picks(el) {
+    const box = $('#picks'); box.innerHTML = '';
+    const tok = [...el.querySelectorAll('.tk.pick')].find(s => !s.querySelector('input').value);
+    if (!tok) return;
+    tok._t.pilih.forEach(v => { const b = document.createElement('button'); b.className = 'pk'; b.type = 'button'; b.textContent = v;
+      b.onclick = () => { tok.querySelector('input').value = v;
+        if (!accepts(tok._t, v)) { b.classList.add('no'); b.disabled = true; tok.querySelector('input').value = ''; hints += .5;
+          $('#say').innerHTML = '❌ Cuba lagi. ' + P.langkah[li].kata; if (KID) speak('Cuba lagi'); return; }
+        const rest = [...el.querySelectorAll('.tk.pick')].some(s => !s.querySelector('input').value);
+        if (rest) picks(el); else check(); };
+      box.appendChild(b); });
+    anim(box, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
   }
   function fill(given) {
-    const el = lastLine(); if (!el) return;
+    const el = lastLine(); if (!el) return; $('#picks').innerHTML = '';
     el.querySelectorAll('.tk.ask').forEach(s => { s.classList.remove('ask'); s.innerHTML = s._t.t; s.classList.add(given ? 'pen' : 'ans');
       anim(s, [{ transform: 'scale(1.5)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.5,.5,1)' }); });
     if (given) $('#say').innerHTML = P.langkah[li].kata;
@@ -4032,9 +4081,18 @@ function accepts(tok, input) {
       <button class="btn go" id="again">🎲 Soalan seterusnya</button> <button class="btn alt" id="watch">👀 Tengok cara</button></div>`;
     $('#again').onclick = () => { seed = Date.now() % 1e9; open(); };
     $('#watch').onclick = () => { mode = 'tunjuk'; open(); };
+    if (KID) { speak(clean ? 'Hebat! Betul semua!' : 'Bagus! Siap!'); burst(); }
     rail(); anim($('#end .done'), [{ transform: 'scale(.9)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 420, easing: 'cubic-bezier(.3,1.5,.5,1)' });
   }
 
+  function burst() {
+    if (RM()) return; const r = $('#end').getBoundingClientRect();
+    for (let i = 0; i < 14; i++) { const d = document.createElement('div'); d.className = 'burst'; d.textContent = ['⭐', '🌟', '✨', '🎈'][i % 4];
+      d.style.left = (r.left + r.width / 2) + 'px'; d.style.top = Math.min(r.top + 20, innerHeight - 60) + 'px'; document.body.appendChild(d);
+      const a = (i / 14) * Math.PI * 2, R = 90 + (i % 3) * 40;
+      d.animate([{ transform: 'translate(0,0) scale(.4)', opacity: 1 }, { transform: `translate(${Math.cos(a) * R}px,${Math.sin(a) * R - 40}px) scale(1.2)`, opacity: 0 }],
+        { duration: 1100, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' }).onfinish = () => d.remove(); }
+  }
   /* ---------- Kawalan ---------- */
   $('#mode').querySelectorAll('button').forEach(b => b.onclick = () => { mode = b.dataset.m; open(); });
   $('#aras').querySelectorAll('button').forEach(b => b.onclick = () => { aras = +b.dataset.a; seed = Date.now() % 1e9; open(); });
