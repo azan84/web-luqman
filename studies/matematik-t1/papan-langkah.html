@@ -18,9 +18,9 @@
   --c:#1d4ed8;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#0f1724; --sheet:#141f30; --grid:#1f2d44; --grid2:#2a3c5a; --ink:#e6edf7; --muted:#9fb0c9; --line:#2a3a55;
+  --paper:#0f1724; --sheet:#141f30; --grid:#263a58; --grid2:#34507a; --ink:#e6edf7; --muted:#9fb0c9; --line:#2a3a55;
   --pen:#ff6b6b; --mark:#ffd43b; --ok:#69db7c; --blue:#74a7ff; --rail:#e6edf7; --chip:#1c2a40}}
-:root[data-theme="dark"]{--paper:#0f1724; --sheet:#141f30; --grid:#1f2d44; --grid2:#2a3c5a; --ink:#e6edf7; --muted:#9fb0c9; --line:#2a3a55;
+:root[data-theme="dark"]{--paper:#0f1724; --sheet:#141f30; --grid:#263a58; --grid2:#34507a; --ink:#e6edf7; --muted:#9fb0c9; --line:#2a3a55;
   --pen:#ff6b6b; --mark:#ffd43b; --ok:#69db7c; --blue:#74a7ff; --rail:#e6edf7; --chip:#1c2a40}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -80,6 +80,8 @@ button,input{font:inherit;color:inherit}
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(90deg,transparent 40px,var(--pen) 40px,var(--pen) 42px,transparent 42px);
   background-size:22px 22px,22px 22px,100% 100%;background-position:-1px -1px,-1px -1px,0 0;overflow:hidden}
 .line{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:.28em;min-height:44px;font:1.65rem/1.25 var(--hand);padding:4px 0}
+.line{transition:opacity .35s}
+.board:not(.fin) .line:not(.cur){opacity:.55}   /* fokus pada baris semasa; semua jelas semula di akhir */
 .line .no{position:absolute;left:-44px;width:30px;text-align:right;font:700 .78rem var(--ui);color:var(--muted)}
 .line.cur .no{color:var(--pen)}
 .tk{display:inline-block;padding:0 .08em;border-radius:5px;white-space:nowrap;position:relative}
@@ -2219,7 +2221,7 @@ function accepts(tok, input) {
     return {
       soalan: lv === 1 ? `Dalam rajah, ${deg(vals[0])} dan ${v} ialah sudut <b>${nm}</b>. Cari nilai ${v}.`
         : lv === 2 ? `Dalam rajah, ${lab[0]} dan ${lab[1]} ialah sudut <b>${nm}</b>. Cari nilai ${v}.`
-        : `Dalam rajah, ${S_ === 180 ? 'AOB ialah garis lurus' : 'semua sudut bertemu di titik O'}. Cari nilai ${v}.`,
+        : `Dalam rajah, ${S_ === 180 ? 'AOB ialah garis lurus' : 'semua sudut bertemu di titik O'} dengan sudut <b>${lab.join(', ')}</b>. Cari nilai ${v}.`,
       mula: 'Kenal pasti jumlah sudut (90°, 180° atau 360°), bentuk persamaan, kemudian selesaikan.',
       langkah, jawapan: `${v} = ${x0}${needsNum(sp) ? '' : '°'}`,
       lukis(svg, k) {
@@ -3873,6 +3875,8 @@ function accepts(tok, input) {
   function rail() {
     $('#rail').innerHTML = MODS.map(m => `<button class="ch" data-b="${m.bab}" aria-current="${m === mod}" style="--c:${m.warna}">
       <span class="tick"></span><span class="nm"><b>Bab ${m.bab}</b>${m.tajuk}<br><span class="st" aria-label="${starsOf(m.bab)} bintang">${'★'.repeat(starsOf(m.bab))}${'☆'.repeat(3 - starsOf(m.bab))}</span></span></button>`).join('');
+    const cur = $('#rail .ch[aria-current="true"]'), rl = $('#rail');   // telefon: bab semasa kelihatan dalam jalur
+    if (cur && rl.scrollWidth > rl.clientWidth + 4) rl.scrollLeft = cur.offsetLeft - rl.offsetLeft - (rl.clientWidth - cur.offsetWidth) / 2;
     $('#rail').querySelectorAll('.ch').forEach(b => b.onclick = () => { mod = MODS.find(m => String(m.bab) === b.dataset.b); jenis = 0; seed = Date.now() % 1e9; open(); });
   }
   function head() {
@@ -3889,7 +3893,7 @@ function accepts(tok, input) {
     history.replaceState(null, '', `?bab=${mod.bab}&jenis=${jenis}&seed=${seed}${mode === 'cuba' ? '&mod=cuba' : ''}`);
     rail(); head();
     $('#soalan').innerHTML = P.soalan; $('#end').innerHTML = ''; hints = 0;
-    $('#board').innerHTML = ''; k = -1; draw(-1);
+    $('#board').innerHTML = ''; $('#board').classList.remove('fin'); k = -1; draw(-1);
     if (mode === 'tunjuk') showCtrl(); else practice();
   }
 
@@ -3955,6 +3959,7 @@ function accepts(tok, input) {
   function sync() {
     const n = P.langkah.length;
     $('#back').disabled = k < 0; $('#next').disabled = k >= n - 1; $('#pr').style.width = (100 * (k + 1) / n) + '%';
+    $('#board').classList.toggle('fin', k >= n - 1);
     if (k >= n - 1) finishShow();
   }
   function lastLine() { const ls = $('#board').querySelectorAll('.line'); return ls[ls.length - 1] || null; }
@@ -4020,7 +4025,7 @@ function accepts(tok, input) {
     const clean = hints < 1, gain = 20 + (clean ? 10 : 0);
     G.solved[mod.bab] = (G.solved[mod.bab] || 0) + 1; if (clean) G.clean[mod.bab] = (G.clean[mod.bab] || 0) + 1;
     G.xp += gain; save();
-    $('#ctrl').innerHTML = ''; $('#stepNo').textContent = 'Siap';
+    $('#ctrl').innerHTML = ''; $('#stepNo').textContent = 'Siap'; $('#board').classList.add('fin');
     $('#say').innerHTML = clean ? '🎯 Tepat tanpa petunjuk!' : 'Siap! Cuba lagi tanpa petunjuk untuk bonus.';
     $('#end').innerHTML = `<div class="done">🏆 Selesai! Jawapan: <b>${P.jawapan}</b> · <b>+${gain} XP</b>
       <p class="hint">Bab ${mod.bab}: ${'★'.repeat(starsOf(mod.bab))}${'☆'.repeat(3 - starsOf(mod.bab))} (${G.solved[mod.bab]} soalan diselesaikan)</p>
