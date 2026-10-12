@@ -1,0 +1,1235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Darjah 2</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eef3f8; --card:#ffffff; --ink:#1c2740; --muted:#5a6884; --line:#cfd9e6; --rule:#d3e3f5; --margin:#e5484d;
+  --ok:#1f9d55; --no:#e0592a; --gold:#f2b705; --c:#1971c2; --c2:color-mix(in srgb,var(--c) 14%,var(--card));
+  --ui:"Andika","Comic Neue",system-ui,sans-serif; --hd:"Fredoka","Andika",system-ui,sans-serif; --ar:"Amiri","Scheherazade New","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#14241f; --card:#1b2f29; --ink:#eef5ef; --muted:#a9bfb6; --line:#2f4a41; --rule:#25403a; --margin:#ff7b7f; --ok:#6fdc97; --no:#ff9466; --gold:#ffd23f}}
+:root[data-theme="dark"]{--paper:#14241f; --card:#1b2f29; --ink:#eef5ef; --muted:#a9bfb6; --line:#2f4a41; --rule:#25403a; --margin:#ff7b7f; --ok:#6fdc97; --no:#ff9466; --gold:#ffd23f}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:19px/1.6 var(--ui)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+.ar{font-family:var(--ar);direction:rtl;unicode-bidi:isolate;font-size:1.5em;line-height:1.7}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 70px}
+[hidden]{display:none!important}
+
+/* Kulit buku latihan */
+.cover{background:var(--c);color:#fff;padding:44px 0 26px;position:relative;overflow:hidden}
+.cover::after{content:"";position:absolute;inset:auto 0 0 0;height:10px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 14px,transparent 14px 28px)}
+.cover .wrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding-bottom:0}
+.label{background:#fff;color:#1c2740;border-radius:14px;padding:12px 18px 10px;min-width:260px;flex:1;max-width:520px;box-shadow:0 6px 0 rgba(0,0,0,.18);position:relative}
+.label h1{margin:0;font:700 clamp(1.6rem,4.6vw,2.4rem)/1.05 var(--hd);color:var(--c)}
+.label .ln{display:flex;gap:8px;align-items:baseline;margin-top:6px;font-size:.92rem;color:#5a6884}
+.label input{flex:1;min-width:0;border:0;border-bottom:2px dotted #aab6c8;background:transparent;font:700 1.05rem var(--hd);color:#1c2740;padding:0 4px}
+.label input:focus{outline:none;border-bottom-color:var(--c)}
+.tools{display:flex;gap:10px;margin-left:auto}
+.pill{font:700 1.05rem var(--hd);background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.icon{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.6);background:rgba(255,255,255,.18);cursor:pointer;font-size:1.25rem;color:#fff}
+
+/* Laman utama */
+.tema h2{font:600 1.05rem var(--hd);color:var(--muted);margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+.tema h2::after{content:"";flex:1;height:2px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.ut{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 16px;cursor:pointer;transition:transform .18s,border-color .18s;min-height:96px}
+.ut:hover{transform:translateY(-3px);border-color:var(--uc,var(--c))}
+.ut .no{grid-row:1/3;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:2rem;background:color-mix(in srgb,var(--uc,var(--c)) 16%,var(--card));position:relative}
+.ut .no small{position:absolute;right:-4px;bottom:-4px;background:var(--uc,var(--c));color:#fff;font:700 .8rem var(--hd);border-radius:99px;padding:1px 7px;border:2px solid var(--card)}
+.ut b{font:600 1.08rem/1.2 var(--hd)}
+.ut .st{color:var(--gold);letter-spacing:2px;font-size:1.05rem}
+.ut .st i{font-style:normal;color:var(--line)}
+.ut .st span{font:600 .78rem var(--ui);color:var(--muted);letter-spacing:0;margin-left:6px}
+.mix{margin:22px 0 0;display:flex;gap:12px;flex-wrap:wrap}
+
+/* Unit */
+.uh{display:flex;align-items:center;gap:12px;margin:18px 0 10px;flex-wrap:wrap}
+.uh .big{font-size:2.6rem;line-height:1}
+.uh small{display:block;color:var(--muted);font-weight:700}
+.uh h2{margin:0;font:700 clamp(1.35rem,3.6vw,1.9rem)/1.15 var(--hd)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.tab{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:8px 18px;font:600 1.02rem var(--hd);cursor:pointer;min-height:48px}
+.tab.on{background:var(--c);border-color:var(--c);color:#fff}
+
+/* Kertas bergaris (kad belajar & soalan) */
+.page{background-color:var(--card);background-image:linear-gradient(90deg,transparent 46px,color-mix(in srgb,var(--margin) 55%,transparent) 46px,color-mix(in srgb,var(--margin) 55%,transparent) 48px,transparent 48px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 35px);border:2px solid var(--line);border-radius:22px;padding:22px 22px 22px 64px;min-height:300px;position:relative}
+.card .ik{font-size:4rem;line-height:1.1;margin:0 0 6px}
+.card .ik svg{width:min(320px,100%);height:auto;display:block}
+.card h3{margin:0 0 8px;font:700 1.5rem/1.2 var(--hd);color:var(--c)}
+.card p{margin:0 0 10px;font-size:1.18rem}
+.card ul{margin:6px 0 10px;padding-left:22px}
+.card li{margin:4px 0;font-size:1.12rem}
+.card .chipz{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.card .chipz span{background:var(--c2);border:2px solid color-mix(in srgb,var(--c) 40%,var(--line));border-radius:12px;padding:4px 12px;font-weight:700}
+.card .eg{border-left:5px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));padding:8px 12px;border-radius:0 12px 12px 0;margin:8px 0}
+.spk{position:absolute;right:14px;top:14px;width:50px;height:50px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.3rem;cursor:pointer}
+.nav{display:flex;align-items:center;gap:10px;margin-top:14px;justify-content:space-between}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--c);transform:scale(1.25)}
+.btn{border:0;border-radius:16px;padding:12px 20px;font:700 1.05rem var(--hd);cursor:pointer;background:var(--ink);color:var(--paper);box-shadow:0 5px 0 color-mix(in srgb,var(--ink) 55%,#000);min-height:52px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 55%,#000)}
+.btn.go{background:var(--c);color:#fff;box-shadow:0 5px 0 color-mix(in srgb,var(--c) 55%,#000)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.btn[disabled]{opacity:.4;cursor:default}
+
+/* Soalan */
+.qbar{display:flex;gap:6px;margin:0 0 12px}
+.qbar i{flex:1;height:10px;border-radius:99px;background:var(--line)}
+.qbar i.ok{background:var(--ok)} .qbar i.no{background:var(--no)} .qbar i.on{background:var(--c)}
+.qs{font:600 1.3rem/1.35 var(--hd);margin:0 0 6px;padding-right:56px}
+.qs .gap{display:inline-block;min-width:70px;border-bottom:3px solid var(--c);text-align:center}
+.qik{font-size:3.4rem;line-height:1.1;margin:4px 0 8px}
+.qik svg{width:min(300px,100%);height:auto}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.opt,.chip{border:3px solid var(--line);background:var(--card);border-radius:16px;padding:12px 16px;cursor:pointer;font:600 1.12rem/1.3 var(--ui);text-align:left;min-height:56px;transition:border-color .15s,background .15s}
+.opt:hover,.chip:hover{border-color:var(--c)}
+.chip{text-align:center;padding:10px 14px;min-height:50px}
+:is(.opt,.chip,.bin,.slot).on{background:var(--c2);border-color:var(--c)}
+:is(.opt,.chip,.bin,.slot,.now).ok{background:color-mix(in srgb,var(--ok) 18%,var(--card));border-color:var(--ok)}
+:is(.opt,.chip,.bin,.slot,.now).no{background:color-mix(in srgb,var(--no) 16%,var(--card));border-color:var(--no)}
+.opt[disabled],.chip[disabled]{cursor:default}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.col{display:grid;gap:10px;align-content:start}
+.slots{display:grid;gap:8px;margin:12px 0}
+.slot{min-height:52px;border:3px dashed var(--line);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:10px;font-weight:700}
+.slot b{font:700 1.1rem var(--hd);color:var(--c);min-width:24px}
+.slot.ok{border-style:solid}
+.pool{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.line{min-height:62px;border-bottom:3px solid var(--c);display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;padding:6px 0;margin:10px 0;font:700 1.35rem var(--hd)}
+.line span{background:var(--c2);border-radius:10px;padding:2px 10px}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.bin{border:3px solid var(--line);border-radius:16px;padding:10px;min-height:96px;background:var(--card);cursor:pointer;text-align:left}
+.bin b{display:block;font:700 1.05rem var(--hd);color:var(--c);margin-bottom:6px}
+.bin span{display:inline-block;margin:3px;padding:2px 10px;border-radius:10px;background:var(--c2);font-weight:700;font-size:.95rem}
+.now{font:700 1.5rem var(--hd);text-align:center;margin:10px 0;padding:12px;border-radius:16px;background:var(--c2)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:14px;font-size:1.08rem;display:none}
+.fb.show{display:block}
+.fb.ok{border:2px solid var(--ok)} .fb.no{border:2px solid var(--no)}
+.next{margin-top:12px}
+
+/* Hasil: cop guru */
+.res{text-align:center;padding:24px 10px;overflow:hidden}
+.stamp{display:inline-block;font:700 2.4rem/1 var(--hd);color:var(--margin);border:5px solid var(--margin);border-radius:18px;padding:12px 26px;transform:rotate(-8deg);letter-spacing:.04em;margin:12px 0 6px}
+.res .stars{font-size:3rem;color:var(--gold);letter-spacing:6px}
+.res .stars i{font-style:normal;color:var(--line)}
+.res p{margin:6px 0;font-size:1.1rem}
+
+/* Amali (modul aktiviti tersuai) */
+.alist{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.say{min-height:54px;margin:4px 0 12px;padding:12px 14px;border-radius:14px;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--c);font-size:1.08rem}
+.abody{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;min-height:260px}
+.abody svg{max-width:100%;height:auto}
+.abody svg text{font-family:var(--ui);fill:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.box{border:2px solid var(--line);border-radius:16px;padding:12px}
+.hint{color:var(--muted);font-size:.95rem;margin:6px 0 0}
+.meter{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--c);transition:width .4s}
+.back{margin:16px 0 0}
+#toast{position:fixed;right:16px;bottom:16px;z-index:50;display:grid;gap:8px}
+.tst{background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:12px;font-weight:700}
+@media (max-width:600px){
+  body{font-size:18px}
+  .label{min-width:0;flex-basis:100%}
+  .tools{margin-left:0}
+  .grid,.alist{grid-template-columns:1fr}
+  .page{padding:18px 14px 18px 40px;background-image:linear-gradient(90deg,transparent 26px,color-mix(in srgb,var(--margin) 55%,transparent) 26px,color-mix(in srgb,var(--margin) 55%,transparent) 28px,transparent 28px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 35px)}
+  .opts{grid-template-columns:1fr}
+  .card .ik{font-size:3.2rem}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="cover">
+<a href="../../studies.html#d2-english" style="position:absolute;z-index:5;left:12px;top:8px;padding:4px 12px;border-radius:999px;border:2px solid rgba(255,255,255,.7);background:rgba(0,0,0,.18);color:#fff;font:700 14px system-ui;text-decoration:none">← Studies</a>
+
+  <div class="wrap">
+    <div class="label">
+      <h1>🔤 English</h1>
+      <div class="ln"><span>Name:</span><input id="nama" maxlength="24" autocomplete="off" aria-label="Name:"><span>Year 2</span></div>
+    </div>
+    <div class="tools"><span class="pill" id="xp">⭐ 0</span><button class="icon" id="mute" aria-label="Bunyi dan suara">🔊</button></div>
+  </div>
+</header>
+<div class="wrap">
+  <main id="home"></main>
+  <main id="unit" hidden>
+    <button class="btn alt back" id="back">◀ All units</button>
+    <div class="uh" id="uh"></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <section id="pane"></section>
+  </main>
+</div>
+<div id="toast" aria-live="polite"></div>
+<script>
+const SUBJ = {"nama": "English", "ikon": "🔤", "warna": "#1971c2", "lang": "en-GB", "ui": "en", "unit": "Unit", "kod": "english"};
+/* ================= Enjin "Belajar Ceria" Darjah 2 =================
+   Setiap modul unit memanggil UNIT({...}) sekali. Lihat shared/d2/SPEC.md. */
+'use strict';
+const UNITS = [];
+function UNIT(u) { UNITS.push(u); }
+const NS = 'http://www.w3.org/2000/svg';
+function S(tag, at, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in at || {}) { if (k === 'text') e.textContent = at[k]; else e.setAttribute(k, at[k]); }
+  if (parent) parent.appendChild(e); return e;
+}
+function H(html) { const t = document.createElement('template'); t.innerHTML = String(html).trim(); return t.content.firstElementChild; }
+const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const anim = (el, kf, o) => (el && el.animate && !RM()) ? el.animate(kf, Object.assign({ duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }, o)) : null;
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+/* teks untuk dibaca kuat: buang tag, buang teks Arab/Jawi (.ar) dan emoji */
+function plain(h) {
+  const d = document.createElement('div'); d.innerHTML = String(h || '');
+  d.querySelectorAll('.ar,.nospeak,svg').forEach(e => e.remove());
+  return d.textContent.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, ' ').replace(/_{2,}/g, ' kosong ').replace(/\s+/g, ' ').trim();
+}
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+  const stack = (a, b) => `<span style="display:inline-flex;flex-direction:column;align-items:center;line-height:1">${a}<span>${b}</span></span>`;
+
+  UNIT({
+    n: 0, label: 'R', tajuk: 'Year 1 Revision', tema: 'Warm-up', ikon: '👋', warna: '#1971c2',
+    belajar: [
+      { ikon: '👋', tajuk: 'Hello, Super Friends!',
+        teks: ['Meet the four Super Friends: <b>Thunder</b>, <b>Flash</b>, <b>Misty</b> and <b>Whisper</b>.',
+               'They are in every Year 2 story.'],
+        contoh: ['"Hello! What\'s your name?" — "I\'m Thunder."', '"How old are you?" — "I\'m seven."'] },
+      { ikon: '🔢', tajuk: 'Numbers 1 to 10',
+        teks: ['Let\'s count!' + m('nombor')],
+        chips: ['1 one', '2 two', '3 three', '4 four', '5 five', '6 six', '7 seven', '8 eight', '9 nine', '10 ten'] },
+      { ikon: '🎨', tajuk: 'Colours',
+        teks: ['What colour is it?' + m('warna')],
+        chips: ['🔴 red', '🔵 blue', '🟢 green', '🟡 yellow', '🟠 orange', '🌸 pink', '🟣 purple', '⚫ black', '⚪ white', '🟤 brown'] },
+      { ikon: '✏️', tajuk: 'At school',
+        teks: ['Things in the classroom' + m('bilik darjah') + ':'],
+        chips: ['✏️ pencil' + m('pensel'), '🖊️ pen' + m('pen'), '📕 book' + m('buku'), '🎒 bag' + m('beg')],
+        contoh: ['"What\'s this?" — "It\'s a pencil."', '"Is it a pen?" — "No, it isn\'t."', 'Open your book, please.'] },
+      { ikon: '🪁', tajuk: 'Let\'s play! Toys',
+        teks: ['Toys' + m('mainan') + ' are fun!'],
+        chips: ['🪁 kite' + m('layang-layang'), '⚽ ball' + m('bola'), '🚲 bike' + m('basikal'), '🚗 car' + m('kereta'), '🚂 train' + m('kereta api'), '🪆 doll' + m('anak patung'), '👾 monster' + m('raksasa')],
+        contoh: ['"What\'s her favourite toy?" — "It\'s <b>a</b> new kite."', 'It\'s <b>an</b> ugly monster.'] },
+      { ikon: '🦎', tajuk: 'Pet show: in, on, under',
+        teks: ['Where is the lizard?'],
+        chips: ['in' + m('di dalam'), 'on' + m('di atas'), 'under' + m('di bawah')],
+        contoh: ['The lizard is <b>on</b> the bag.', 'The lizard is <b>under</b> the bag.'] },
+      { ikon: '🐕', tajuk: 'I like … / I don\'t like …',
+        teks: ['Animals' + m('haiwan') + ':'],
+        chips: ['🐕 dogs', '🕷️ spiders', '🐈 cat', '🐇 rabbit', '🐁 mouse', '🐸 frog', '🐍 snake'],
+        contoh: ['👍 I like dogs.', '👎 I don\'t like spiders.'] },
+      { ikon: '🥪', tajuk: 'Lunchtime! Food',
+        teks: ['Food' + m('makanan') + ' for lunch:'],
+        chips: ['🥪 sandwich', '🧀 cheese' + m('keju'), '🍕 pizza', '🍎 apple' + m('epal'), '🍌 banana' + m('pisang'), '🍐 pear' + m('pir'), '🍦 ice cream', '🎂 cake' + m('kek')],
+        contoh: ['I\'ve got a sandwich.', '"Have we got any cheese?" — "Yes, we have."'] },
+      { ikon: '📖', tajuk: 'Year 1 stories',
+        teks: ['Every story has a good lesson.'],
+        senarai: ['<b>Meet the Super Friends</b> — Making friends', '<b>Watch out, Flash!</b> — Helping each other',
+                  '<b>The go-kart race</b> — Fair play', '<b>The spider</b> — Being brave', '<b>The pizza</b> — Waiting your turn'] },
+      { ikon: '🎵', tajuk: 'Sounds and songs',
+        teks: ['Letter sounds: <b>a</b>, <b>e</b>, <b>i</b>, <b>o</b>.'],
+        chips: ['a: cat, bag', 'e: pen, red', 'i: six, pink', 'o: dog, frog'],
+        contoh: ['Sing! 🎶 "A, B, C, D, E, F, G …"'] },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which number do you hear?', sebut: 'seven', ikon: '👂', p: ['7', '6', '9'], a: 0, kenapa: 'Seven is 7.' },
+      { j: 'pilih', s: 'Listen. Which colour do you hear?', sebut: 'green', ikon: '👂', p: ['🟢', '🔴', '🔵'], a: 0, kenapa: 'Green is like grass and leaves.' },
+      { j: 'pilih', s: 'Listen. Which toy do you hear?', sebut: 'kite', ikon: '👂', p: ['🪁', '🚲', '🚂'], a: 0, kenapa: 'A kite flies in the sky.' },
+      { j: 'pilih', s: 'Listen. Which animal do you hear?', sebut: 'lizard', ikon: '👂', p: ['🦎', '🕷️', '🐸'], a: 0, kenapa: 'This is a lizard: 🦎.' },
+      { j: 'pilih', s: 'Listen. Which food do you hear?', sebut: 'sandwich', ikon: '👂', p: ['🥪', '🍕', '🧀'], a: 0, kenapa: 'This is a sandwich: 🥪.' },
+      { j: 'pilih', s: '"What\'s your name?"', ikon: '🙂', p: ['I\'m Thunder.', 'I\'m seven.', 'It\'s a pencil.'], a: 0, kenapa: 'We say our name: I\'m Thunder.' },
+      { j: 'pilih', s: '"How old are you?" (7)', ikon: '🎂', p: ['I\'m seven.', 'I\'m Misty.', 'It\'s a kite.'], a: 0, kenapa: 'We say our age: I\'m seven.' },
+      { j: 'pilih', s: 'It\'s ___ ugly monster.', ikon: '👾', p: ['an', 'a'], a: 0, kenapa: 'Ugly starts with u, so we say "an ugly monster".' },
+      { j: 'pilih', s: 'It\'s ___ new kite.', ikon: '🪁', p: ['a', 'an'], a: 0, kenapa: 'New starts with n, so we say "a new kite".' },
+      { j: 'pilih', s: 'The lizard is ___ the bag.', ikon: stack('🦎', '🎒'), p: ['on', 'in', 'under'], a: 0, kenapa: 'The lizard is on top of the bag.' },
+      { j: 'pilih', s: 'This is a pencil. "Is it a pen?"', ikon: '✏️', p: ['No, it isn\'t.', 'Yes, it is.'], a: 0, kenapa: 'It is a pencil, not a pen.' },
+      { j: 'pilih', s: '"Have we got any cheese?" (yes)', ikon: '🧀', p: ['Yes, we have.', 'No, we haven\'t.'], a: 0, kenapa: 'Yes, we have got cheese.' },
+      { j: 'pilih', s: 'Which lesson goes with the story "The pizza"?', ikon: '🍕', p: ['Waiting your turn', 'Being brave', 'Fair play'], a: 0, kenapa: '"The pizza" is about waiting your turn.' },
+      { j: 'bs', s: 'The four Super Friends are Thunder, Flash, Misty and Whisper.', ikon: '🦸', a: true, kenapa: 'Yes! Thunder, Flash, Misty and Whisper.' },
+      { j: 'bs', s: 'The story "The spider" is about being brave.', ikon: '🕷️', a: true, kenapa: '"The spider" is about being brave.' },
+      { j: 'bs', s: 'A lizard is food.', ikon: '🦎', a: false, kenapa: 'A lizard is an animal.' },
+      { j: 'padan', s: 'Match the number and the word.', pasangan: [['3', 'three'], ['5', 'five'], ['8', 'eight'], ['10', 'ten']] },
+      { j: 'padan', s: 'Match the colour and the word.', pasangan: [['🔴', 'red'], ['🔵', 'blue'], ['🟡', 'yellow'], ['🟢', 'green'], ['⚫', 'black']] },
+      { j: 'kumpul', s: 'School, toys, animals or food?', kumpulan: [['✏️ School', ['pencil', 'pen', 'book']], ['🪁 Toys', ['kite', 'ball', 'doll']], ['🐾 Animals', ['lizard', 'dog', 'spider']], ['🥪 Food', ['sandwich', 'cheese', 'pizza']]] },
+      { j: 'susun', s: 'Count! Put the numbers in order.', item: ['six', 'seven', 'eight', 'nine', 'ten'] },
+      { j: 'eja', s: 'Listen and spell.', ikon: '✏️', kata: 'pencil' },
+      { j: 'eja', s: 'Listen and spell.', ikon: '7️⃣', kata: 'seven' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: stack('🎒', '🦎'), kata: ['The', 'lizard', 'is', 'under', 'the', 'bag.'] },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🥪', kata: ['I\'ve', 'got', 'a', 'sandwich.'] },
+    ],
+    amali: [{
+      id: 'where-is-it', tajuk: 'Where is it? In, on, under', ikon: '🎒',
+      arahan: '🔊 Listen! Tap the place: <b>in</b>, <b>on</b> or <b>under</b> the bag.',
+      mula(el, api) {
+        const PL = ['in', 'on', 'under'];
+        const AN = api.shuffle([['🦎', 'lizard'], ['🕷️', 'spider'], ['🐈', 'cat'], ['🐁', 'mouse'], ['🐸', 'frog'], ['🐕', 'dog']]);
+        const R = api.shuffle(AN.map((a, i) => [a, PL[i % 3]]));
+        el.innerHTML = `<style>
+          .wi-wrap{position:relative;width:min(260px,100%);margin:0 auto}
+          .wi-z{position:absolute;left:8%;width:84%;background:transparent;border:3px dashed transparent;border-radius:16px;cursor:pointer}
+          .wi-z:hover,.wi-z:focus-visible{border-color:var(--c)}
+          .wi-z.no{border-color:var(--no)} .wi-z.ok{border-color:var(--ok)}
+          .wi-top{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+        </style>
+        <div class="wi-top"><button class="btn alt" id="wiAg">🔊 Listen again</button><span class="hint" id="wiPg"></span></div>
+        <div class="wi-wrap"><svg viewBox="0 0 240 300" role="img" aria-label="A bag"></svg>
+          <button class="wi-z" data-p="on" aria-label="on the bag" style="top:4%;height:26%"></button>
+          <button class="wi-z" data-p="in" aria-label="in the bag" style="top:30%;height:44%"></button>
+          <button class="wi-z" data-p="under" aria-label="under the bag" style="top:74%;height:25%"></button></div>`;
+        const svg = el.querySelector('svg'), S = api.S;
+        S('line', { x1: 10, y1: 292, x2: 230, y2: 292, stroke: 'var(--line)', 'stroke-width': 4, 'stroke-linecap': 'round' }, svg);
+        S('ellipse', { cx: 120, cy: 236, rx: 52, ry: 6, fill: 'var(--line)' }, svg);
+        S('path', { d: 'M78 120 L78 80 M162 120 L162 80', stroke: '#9c3a0a', 'stroke-width': 8, 'stroke-linecap': 'round' }, svg);
+        S('rect', { x: 66, y: 92, width: 108, height: 130, rx: 24, fill: '#e8590c' }, svg);
+        S('line', { x1: 80, y1: 112, x2: 160, y2: 112, stroke: '#ffd8a8', 'stroke-width': 3, 'stroke-dasharray': '6 5' }, svg);
+        S('rect', { x: 84, y: 146, width: 72, height: 14, rx: 6, fill: '#5c1d03' }, svg);
+        const front = S('rect', { x: 80, y: 156, width: 80, height: 54, rx: 12, fill: '#fd7e14', stroke: '#9c3a0a', 'stroke-width': 2 }, svg);
+        const pet = S('text', { x: 120, y: 0, 'text-anchor': 'middle', style: 'font-size:50px', opacity: 0 });
+        const Y = { on: 92, in: 174, under: 284 };
+        const Z = {}; el.querySelectorAll('.wi-z').forEach(b => { Z[b.dataset.p] = b; b.onclick = () => tap(b.dataset.p); });
+        const pg = el.querySelector('#wiPg');
+        let k = 0, miss = 0, busy = false;
+        const line = () => `The ${R[k][0][1]} is ${R[k][1]} the bag.`;
+        function next() {
+          busy = false; pet.setAttribute('opacity', 0); Object.values(Z).forEach(b => b.classList.remove('ok', 'no'));
+          pg.textContent = `${k + 1} / ${R.length}`; api.say(`🔊 <b>Listen!</b> Where is the ${R[k][0][0]}?`); api.speak(line());
+        }
+        function tap(p) {
+          if (busy || k >= R.length) return;
+          const [a, want] = R[k];
+          if (p !== want) { miss++; Z[p].classList.add('no'); api.salah(Z[p], `Listen again: "${line()}"`); api.speak(line()); return; }
+          busy = true; Z[p].classList.add('ok');
+          pet.textContent = a[0]; pet.setAttribute('y', Y[p]);
+          if (p === 'in') svg.insertBefore(pet, front); else svg.appendChild(pet);
+          pet.setAttribute('opacity', 1); api.anim(pet, [{ opacity: 0 }, { opacity: 1 }], { duration: 300 });
+          api.betul(Z[p], `${a[0]} The ${a[1]} is <b>${p}</b> the bag.`);
+          setTimeout(() => { k++; if (k < R.length) next(); else api.selesai(Math.max(0, 1 - miss * .12), 'Well done! You know in, on and under!'); }, 900);
+        }
+        el.querySelector('#wiAg').onclick = () => k < R.length && api.speak(line());
+        next();
+        return { jawab() { const go = () => { if (k >= R.length) return; if (!busy) tap(R[k][1]); setTimeout(go, 150); }; go(); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+
+  UNIT({
+    n: 5, tajuk: 'Free time', tema: 'Free time', ikon: '🗓️', warna: '#1971c2',
+    belajar: [
+      { ikon: '🗓️', tajuk: 'This week',
+        teks: ['The Super Friends look at the <b>This week</b> board.', 'Monday to Friday: 🏫 School. Saturday: ⚽ Football match. Sunday: 🏞️ Trip to the lake.'],
+        contoh: '🎶 "Hurray, hurray! School on Monday, …"' },
+      { ikon: '📅', tajuk: 'Seven days in a week',
+        teks: ['There are <b>7</b> days in a week' + m('minggu') + '.'],
+        senarai: ['Monday' + m('Isnin'), 'Tuesday' + m('Selasa'), 'Wednesday' + m('Rabu'), 'Thursday' + m('Khamis'),
+                  'Friday' + m('Jumaat'), 'Saturday' + m('Sabtu'), 'Sunday' + m('Ahad')],
+        contoh: '🎉 <b>Saturday</b> and <b>Sunday</b> are the weekend' + m('hujung minggu') + '. No school!' },
+      { ikon: '🏊', tajuk: 'Free-time activities (1)',
+        teks: ['What do you do in your free time?'],
+        chips: ['🏊 go swimming' + m('berenang'), '⚽ play football' + m('bola sepak'), '🎮 play computer games', '🙈 play hide-and-seek' + m('sorok-sorok'),
+                '🎤 sing' + m('menyanyi'), '📺 watch TV' + m('menonton TV'), '🎹 play the piano'] },
+      { ikon: '🚲', tajuk: 'Free-time activities (2)',
+        teks: ['More things we do:'],
+        chips: ['🚲 ride my bike' + m('menunggang basikal'), '🧸 play with toys' + m('mainan'), '👫 play with friends' + m('kawan'),
+                '📚 read books' + m('membaca buku'), '😴 sleep' + m('tidur'), '🏸 do sport' + m('bersukan')] },
+      { ikon: '🐘', tajuk: 'I … on Mondays',
+        teks: ['I go swimming <b>on</b> Monday<b>s</b>.', 'On Mondays = every Monday.'],
+        contoh: ['I play football on Saturdays.', '"I watch TV on Sundays. What about you?"'] },
+      { ikon: '📺', tajuk: 'Do you … at the weekend?',
+        teks: ['Ask a friend about the weekend.'],
+        contoh: ['"Do you watch TV at the weekend?"', '👍 "Yes, I do."  👎 "No, I don\'t."'] },
+      { ikon: '🎶', tajuk: 'Song: It\'s a busy, busy week',
+        teks: ['"It\'s a busy, busy, busy, busy, busy, busy, busy week …"'],
+        senarai: ['Mondays: 🏊 swimming', 'Tuesdays: 🏐 play ball', 'Wednesdays and Thursdays: 🎮 computer games',
+                  'Fridays: ⚽ football', 'Saturdays: 🎤 sing', 'Sundays: 🙈 hide-and-seek'] },
+      { ikon: '🐇', tajuk: 'Story: We\'re lost!',
+        teks: ['The Super Friends are in the forest. "Where\'s the lake?" "We\'re lost!"' + m('sesat')],
+        senarai: ['Whisper can talk to animals. "Rabbit, we\'re lost. Where\'s the lake?"', 'Rabbit: "Come with me." 🏞️',
+                  'Thunder: "Here you are, rabbit." 🥕', 'The rabbit falls. "Now, I\'m lost!"'],
+        contoh: '💛 Ask for help when you need it.' },
+      { ikon: '🦆', tajuk: 'Sound: u',
+        teks: ['Say <b>u</b> … <b>u</b> … like in m<b>u</b>d!'],
+        chips: ['mum' + m('emak'), 'jumps' + m('melompat'), 'mud' + m('lumpur'), 'ducks' + m('itik')],
+        contoh: 'Mum jumps in the mud with the ducks.' },
+      { ikon: '🍎', tajuk: 'I\'m healthy!',
+        teks: ['For a healthy' + m('sihat') + ' life:'],
+        chips: ['😄 Have fun', '🥗 Eat healthy food', '🤸 Keep fit', '🏸 Do sport', '📖 Learn new things', '😴 Sleep'],
+        contoh: 'Watching TV late at night is <b>unhealthy</b>.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which day do you hear?', sebut: 'Wednesday', ikon: '👂', p: ['Wednesday', 'Tuesday', 'Thursday'], a: 0, kenapa: 'You heard Wednesday.' },
+      { j: 'pilih', s: 'Listen. What does the child do?', sebut: 'I play football on Saturdays.', ikon: '👂', p: ['⚽', '🏊', '📺'], a: 0, kenapa: 'I play football on Saturdays.' },
+      { j: 'pilih', s: 'Listen. Which picture?', sebut: 'Do you watch TV at the weekend?', ikon: '👂', p: ['📺', '🎮', '🚲'], a: 0, kenapa: 'Watch TV: 📺.' },
+      { j: 'pilih', s: 'What day comes after Monday?', ikon: '📅', p: ['Tuesday', 'Sunday', 'Friday'], a: 0, kenapa: 'Monday, Tuesday, Wednesday …' },
+      { j: 'pilih', s: 'How many days are there in a week?', ikon: '🗓️', p: ['Seven', 'Five', 'Ten'], a: 0, kenapa: 'There are seven days in a week.' },
+      { j: 'pilih', s: 'I go swimming ___ Mondays.', ikon: '🏊', p: ['on', 'in', 'at'], a: 0, kenapa: 'We say "on Mondays".' },
+      { j: 'pilih', s: '"Do you watch TV at the weekend?" 👍', ikon: '📺', p: ['Yes, I do.', 'No, I don\'t.', 'Yes, it is.'], a: 0, kenapa: 'Thumbs up: Yes, I do.' },
+      { j: 'pilih', s: '"Do you play computer games at the weekend?" 👎', ikon: '🎮', p: ['No, I don\'t.', 'Yes, I do.', 'No, it isn\'t.'], a: 0, kenapa: 'Thumbs down: No, I don\'t.' },
+      { j: 'pilih', s: 'Story: What are the Super Friends looking for?', ikon: '🌲', p: ['The lake', 'The school', 'The rabbit'], a: 0, kenapa: '"Where\'s the lake?" They are lost.' },
+      { j: 'pilih', s: 'Story: Which animal helps them?', ikon: '🗺️', p: ['A rabbit', 'A duck', 'A cat'], a: 0, kenapa: 'The rabbit says "Come with me."' },
+      { j: 'pilih', s: 'Song: What do they do on Sundays?', ikon: '🎶', p: ['Play hide-and-seek', 'Go swimming', 'Sing'], a: 0, kenapa: 'On Sundays: hide-and-seek.' },
+      { j: 'pilih', s: 'Which word does NOT have the u sound?', ikon: '🦆', p: ['cat', 'mum', 'mud', 'ducks'], a: 0, kenapa: 'Mum, mud and ducks have the u sound. Cat has a.' },
+      { j: 'bs', s: 'Saturday and Sunday are the weekend.', ikon: '🎉', a: true, kenapa: 'Yes! Saturday and Sunday are the weekend.' },
+      { j: 'bs', s: 'At the end of the story, the rabbit is lost.', ikon: '🐇', a: true, kenapa: 'The rabbit says "Now, I\'m lost."' },
+      { j: 'bs', s: 'Watching TV late at night is healthy.', ikon: '🌙', a: false, kenapa: 'It is unhealthy. We need to sleep.' },
+      { j: 'susun', s: 'Put the days in order.', item: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] },
+      { j: 'susun', s: 'Put the story in order.', item: ['"We\'re lost."', '"Come with me."', '"Here you are, rabbit."', '"Now, I\'m lost."'] },
+      { j: 'kumpul', s: 'School day or the weekend?', kumpulan: [['🏫 School day', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']], ['🎉 Weekend', ['Saturday', 'Sunday']]] },
+      { j: 'kumpul', s: 'Healthy or unhealthy?', kumpulan: [['💪 Healthy', ['💧 drinking water', '🍎 eating fruit', '🏸 playing badminton', '😴 sleeping at 8:00']], ['🚫 Unhealthy', ['🍬 sweets and a fizzy drink', '📺 TV late at night', '🕛 awake at 12:00']]] },
+      { j: 'padan', s: 'Match the words and the pictures.', pasangan: [['go swimming', '🏊'], ['play football', '⚽'], ['watch TV', '📺'], ['ride my bike', '🚲'], ['play the piano', '🎹'], ['read books', '📚']] },
+      { j: 'eja', s: 'Listen and spell the day.', ikon: '📅', kata: 'Wednesday' },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🦆', kata: 'ducks' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🏊', kata: ['I', 'go', 'swimming', 'on', 'Mondays.'] },
+      { j: 'ayat', s: 'Make the question.', ikon: '📺', kata: ['Do', 'you', 'watch', 'TV', 'at', 'the', 'weekend?'] },
+    ],
+    amali: [{
+      id: 'busy-week', tajuk: 'My busy week planner', ikon: '📅',
+      arahan: '🔊 Listen! What do they do on each day? Tap the right picture. (Like the song "It\'s a busy, busy week")',
+      mula(el, api) {
+        const ACT = [['🏊', 'go swimming'], ['🏐', 'play ball'], ['🎮', 'play computer games'], ['⚽', 'play football'],
+                     ['🎤', 'sing'], ['🙈', 'play hide-and-seek'], ['📺', 'watch TV'], ['🚲', 'ride my bike']];
+        const W = [['Monday', 0], ['Tuesday', 1], ['Wednesday', 2], ['Thursday', 2], ['Friday', 3], ['Saturday', 4], ['Sunday', 5]];
+        el.innerHTML = `<style>
+          .bw-week{display:grid;gap:6px;margin-bottom:12px}
+          .bw-row{display:grid;grid-template-columns:minmax(92px,120px) 1fr;gap:8px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:6px 10px;min-height:46px}
+          .bw-row b{font-family:var(--hd)} .bw-row.cur{border-color:var(--c);background:var(--c2)} .bw-row.ok{border-color:var(--ok)}
+          .bw-row span{font-size:.95rem;min-width:0}
+          .bw-pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+          .bw-pal .chip{font-size:1rem;min-height:48px;padding:6px 10px}
+        </style>
+        <div class="row" style="justify-content:center;margin-bottom:10px"><button class="btn alt" id="bwAg">🔊 Listen again</button></div>
+        <div class="bw-week">${W.map(w => `<div class="bw-row"><b>${w[0]}</b><span></span></div>`).join('')}</div>
+        <div class="bw-pal">${ACT.map((a, i) => `<button class="chip" data-i="${i}">${a[0]} ${a[1]}</button>`).join('')}</div>`;
+        const rows = [...el.querySelectorAll('.bw-row')], chips = [...el.querySelectorAll('.bw-pal .chip')];
+        let k = 0, miss = 0;
+        const line = () => `On ${W[k][0]}s I ${ACT[W[k][1]][1]}.`;
+        function next() {
+          rows.forEach((r, i) => r.classList.toggle('cur', i === k));
+          api.say(`🔊 On <b>${W[k][0]}s</b> I ___ .`); api.speak(line());
+        }
+        function tap(i, b) {
+          if (k >= W.length) return;
+          if (i !== W[k][1]) { miss++; api.salah(b, `Listen again: "${line()}"`); api.speak(line()); return; }
+          const a = ACT[i], r = rows[k];
+          r.classList.remove('cur'); r.classList.add('ok'); r.querySelector('span').innerHTML = `${a[0]} I ${api.esc(a[1])} on ${W[k][0]}s.`;
+          api.betul(r, `${a[0]} I ${api.esc(a[1])} on <b>${W[k][0]}s</b>.`);
+          k++;
+          if (k < W.length) setTimeout(() => k < W.length && next(), 700);
+          else api.selesai(Math.max(0, 1 - miss * .1), 'It\'s a busy, busy week!');
+        }
+        chips.forEach(b => b.onclick = () => tap(+b.dataset.i, b));
+        el.querySelector('#bwAg').onclick = () => k < W.length && api.speak(line());
+        next();
+        return { jawab() { while (k < W.length) chips[W[k][1]].click(); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+
+  UNIT({
+    n: 6, tajuk: 'The old house', tema: 'The home', ikon: '🏚️', warna: '#7048e8',
+    belajar: [
+      { ikon: '🗺️', tajuk: 'The old house map',
+        teks: ['The Super Friends find an old map of a house.', 'There are 8 places on the map.'],
+        chips: ['🛁 bathroom' + m('bilik air'), '🛏️ bedroom' + m('bilik tidur'), '🛋️ living room' + m('ruang tamu'), '🚪 hall' + m('ruang masuk'),
+                '🍽️ dining room' + m('ruang makan'), '🍳 kitchen' + m('dapur'), '🪜 stairs' + m('tangga'), '📦 cellar' + m('bilik bawah tanah')],
+        contoh: '🎶 "Let\'s go to the old house, … Down the stairs, Open the door, Aagh!"' },
+      { ikon: '🏠', tajuk: 'Where do you …?',
+        teks: ['We sleep in the <b>bedroom</b>. We cook in the <b>kitchen</b>.', 'The <b>cellar</b> is under the house, down the stairs.'],
+        contoh: 'Table and chairs? It\'s a dining room. 🍽️' },
+      { ikon: '👾', tajuk: 'There\'s … / There are …',
+        teks: ['One thing: <b>There\'s a</b> monster. 👾', 'More things: <b>There are</b> four cats. 🐈🐈🐈🐈'],
+        contoh: 'There are three bedrooms.' },
+      { ikon: '✈️', tajuk: 'Is there …? Are there any …?',
+        teks: ['Ask about a place.'],
+        contoh: ['"Is there a plane?" — "Yes, there is." / "No, there isn\'t."', '"Are there any rats?" — "Yes, there are." / "No, there aren\'t."',
+                 '"How many cars are there?" — "There are four cars."'] },
+      { ikon: '🎶', tajuk: 'Song: In my little house',
+        teks: ['"Come on, come on and see me, In my little house."'],
+        senarai: ['🐈 a cat in the living room', '🕷️ a spider in the kitchen', '🐊 seven crocodiles in the bathroom',
+                  '🐍 a snake in the cellar', '🦎 a lizard in my bedroom', '🐅 lots of tigers in the garden' + m('taman')] },
+      { ikon: '🏚️', tajuk: 'Story: At the house',
+        teks: ['Misty can become invisible. She is not scared' + m('takut') + '.'],
+        senarai: ['Misty: "There\'s the old house. Let\'s go in. Wait for me here."', '"The stairs to the cellar! How many are there?"',
+                  '"It\'s cold here. What\'s this?" 🐈‍⬛ "Yuck! Big spiders!" "Wow! Big rats!"', 'Misty comes out: "Here I am." The friends: "Aagh!" "Help!"'],
+        contoh: '💛 Look after your friends.' },
+      { ikon: '🎩', tajuk: 'Sound: h',
+        teks: ['Say <b>h</b> … <b>h</b> … like in <b>h</b>at!'],
+        chips: ['Harry', 'hall', 'hats' + m('topi'), 'hat', 'help' + m('tolong')],
+        contoh: 'Harry\'s hall is full of hats.' },
+      { ikon: '🌍', tajuk: 'Habitats',
+        teks: ['A habitat is where animals live.'],
+        chips: ['❄️ polar region' + m('kawasan kutub'), '🌊 ocean' + m('lautan'), '🌴 jungle' + m('hutan'), '🏜️ desert' + m('padang pasir'), '⛰️ mountains' + m('gunung')],
+        contoh: ['You find sand in the desert. You find coral in the ocean.', 'The polar regions are white and blue.'] },
+      { ikon: '🐅', tajuk: 'Animals and habitats',
+        teks: ['You find tigers in the jungle.'],
+        chips: ['🐅 tiger' + m('harimau'), '🦜 parrot' + m('kakak tua'), '🐪 camel' + m('unta'), '🐐 goat' + m('kambing'),
+                '🐻‍❄️ polar bear' + m('beruang kutub'), '🦈 shark' + m('ikan yu'), 'jellyfish' + m('obor-obor'), '🐧 penguin'],
+        contoh: 'Camels live in the desert. Polar bears live in the polar regions.' },
+      { ikon: '✍️', tajuk: 'My house',
+        teks: ['Write about your house.'],
+        contoh: '"I live in a nice house. There are three bedrooms, a kitchen, a dining room, a living room and hall. There isn\'t a cellar. I like my house."' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which room do you hear?', sebut: 'bathroom', ikon: '👂', p: ['🛁', '🛏️', '🍳'], a: 0, kenapa: 'Bathroom: 🛁.' },
+      { j: 'pilih', s: 'Listen. Which picture?', sebut: 'There are four cats.', ikon: '👂', p: ['🐈🐈🐈🐈', '🐈', '🐈🐈🐈'], a: 0, kenapa: 'There are four cats: 🐈🐈🐈🐈.' },
+      { j: 'pilih', s: 'Listen. Which picture?', sebut: 'There\'s a monster.', ikon: '👂', p: ['👾', '👾👾👾', '🐈'], a: 0, kenapa: 'There\'s a monster: one monster.' },
+      { j: 'pilih', s: 'Look and listen. Answer the question.', sebut: 'Is there a plane?', ikon: '✈️', p: ['Yes, there is.', 'Yes, there are.', 'No, there aren\'t.'], a: 0, kenapa: 'One plane: Yes, there is.' },
+      { j: 'pilih', s: 'Where do you sleep?', ikon: '😴', p: ['In the bedroom', 'In the kitchen', 'In the cellar'], a: 0, kenapa: 'We sleep in the bedroom.' },
+      { j: 'pilih', s: 'Which room is under the house, down the stairs?', ikon: '🪜', p: ['The cellar', 'The bedroom', 'The bathroom'], a: 0, kenapa: 'The cellar is down the stairs.' },
+      { j: 'pilih', s: 'There ___ three bedrooms.', ikon: '🛏️🛏️🛏️', p: ['are', 'is'], a: 0, kenapa: 'More than one: there are.' },
+      { j: 'pilih', s: '"Are there any rats?" ❌', ikon: '🐀', p: ['No, there aren\'t.', 'Yes, there are.', 'No, there isn\'t.'], a: 0, kenapa: 'No rats: No, there aren\'t.' },
+      { j: 'pilih', s: '"How many cars are there?"', ikon: '🚗🚗🚗🚗', p: ['There are four cars.', 'There\'s a car.', 'There are four cats.'], a: 0, kenapa: 'Count: 1, 2, 3, 4 cars.' },
+      { j: 'pilih', s: 'Song: Where is the lizard?', ikon: '🦎', p: ['In the bedroom', 'In the kitchen', 'In the garden'], a: 0, kenapa: 'There\'s a lizard in my bedroom.' },
+      { j: 'pilih', s: 'Which word has a different sound?', ikon: '🎩', p: ['shoe', 'hat', 'help'], a: 0, kenapa: 'Hat and help start with h. Shoe is different.' },
+      { j: 'bs', s: 'Misty is scared of the old house.', ikon: '🏚️', a: false, kenapa: 'Misty is not scared. She goes in.' },
+      { j: 'bs', s: 'Harry\'s hall is full of hats.', ikon: '🎩', a: true, kenapa: 'Yes! Harry\'s hall is full of hats.' },
+      { j: 'bs', s: 'You find coral in the ocean.', ikon: '🌊', a: true, kenapa: 'Coral is in the ocean.' },
+      { j: 'padan', s: 'Match the room and the picture.', pasangan: [['bathroom', '🛁'], ['bedroom', '🛏️'], ['kitchen', '🍳'], ['living room', '🛋️'], ['dining room', '🍽️']] },
+      { j: 'padan', s: 'Where do they live?', pasangan: [['🐅 tiger', 'jungle'], ['🐪 camel', 'desert'], ['🐻‍❄️ polar bear', 'polar region'], ['🦈 shark', 'ocean']] },
+      { j: 'kumpul', s: 'There\'s … or There are …?', kumpulan: [['1️⃣ There\'s …', ['a monster', 'a plane', 'a park']], ['🔢 There are …', ['four cats', 'seven cars', 'five trains']]] },
+      { j: 'kumpul', s: 'Song: Which room?', kumpulan: [['🛋️ Living room', ['🐈 a cat']], ['🍳 Kitchen', ['🕷️ a spider']], ['🛁 Bathroom', ['🐊 seven crocodiles']], ['📦 Cellar', ['🐍 a snake']]] },
+      { j: 'susun', s: 'Put the story in order.', item: ['"There\'s the old house."', '"The stairs to the cellar!"', '"Wow! Big rats!"', '"Here I am."'] },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🍳', kata: 'kitchen' },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🛏️', kata: 'bedroom' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🐈🐈🐈🐈', kata: ['There', 'are', 'four', 'cats.'] },
+      { j: 'ayat', s: 'Make the question.', ikon: '✈️', kata: ['Is', 'there', 'a', 'plane?'] },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🎩', kata: ['Harry\'s', 'hall', 'is', 'full', 'of', 'hats.'] },
+    ],
+    amali: [{
+      id: 'little-house', tajuk: 'In my little house', ikon: '🏚️',
+      arahan: '🔊 Listen! Where is the animal? Tap the room. (Like the song "In my little house")',
+      mula(el, api) {
+        const RM = [['bedroom', '🛏️', 2], ['bathroom', '🛁', 2], ['living room', '🛋️', 1], ['hall', '🚪', 1], ['dining room', '🍽️', 1],
+                    ['kitchen', '🍳', 1], ['cellar', '📦', 4], ['garden', '🌳', 4]];
+        const X = api.shuffle([['There\'s a cat in the living room.', '🐈', 'living room'], ['There\'s a spider in the kitchen.', '🕷️', 'kitchen'],
+          ['There are seven crocodiles in the bathroom.', '🐊×7', 'bathroom'], ['There\'s a snake in the cellar.', '🐍', 'cellar'],
+          ['There\'s a lizard in the bedroom.', '🦎', 'bedroom'], ['There are lots of tigers in the garden.', '🐅🐅🐅', 'garden']]);
+        el.innerHTML = `<style>
+          .lh-h{max-width:460px;margin:0 auto}
+          .lh-roof{height:56px;background:#8f3f1f;clip-path:polygon(50% 0,100% 100%,0 100%)}
+          .lh-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;background:#b9895b;padding:6px;border-radius:0 0 10px 10px}
+          .lh-r{border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;min-height:86px;padding:4px 2px;cursor:pointer;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;font:700 .85rem/1.15 var(--ui);text-align:center}
+          .lh-r .e{font-size:1.35rem} .lh-r .w{font-size:1.25rem;min-height:1.4em}
+          .lh-r.cel{background:color-mix(in srgb,var(--ink) 14%,var(--card))}
+          .lh-r.gar{background:color-mix(in srgb,var(--ok) 20%,var(--card));margin-top:8px}
+          .lh-r.no{border-color:var(--no)} .lh-r.ok{border-color:var(--ok)}
+        </style>
+        <div class="row" style="justify-content:center;margin-bottom:10px;gap:10px;align-items:center"><button class="btn alt" id="lhAg">🔊 Listen again</button><span class="hint" id="lhPg"></span></div>
+        <div class="lh-h"><div class="lh-roof"></div><div class="lh-g">${RM.slice(0, 7).map(r => `<button class="lh-r${r[0] === 'cellar' ? ' cel' : ''}" data-r="${r[0]}" style="grid-column:span ${r[2]}"><span class="e">${r[1]}</span>${r[0]}<span class="w"></span></button>`).join('')}</div>
+          <button class="lh-r gar" data-r="garden" style="width:100%"><span class="e">🌳</span>garden<span class="w"></span></button></div>`;
+        const B = {}; el.querySelectorAll('.lh-r').forEach(b => { B[b.dataset.r] = b; b.onclick = () => tap(b.dataset.r); });
+        const pg = el.querySelector('#lhPg');
+        let k = 0, miss = 0;
+        function next() { pg.textContent = `${k + 1} / ${X.length}`; api.say('🔊 <b>Listen!</b> Which room?'); api.speak(X[k][0]); }
+        function tap(r) {
+          if (k >= X.length) return;
+          const b = B[r];
+          if (r !== X[k][2]) { miss++; b.classList.add('no'); setTimeout(() => b.classList.remove('no'), 600); api.salah(b, `Listen again: "${X[k][0]}"`); api.speak(X[k][0]); return; }
+          b.classList.add('ok'); b.querySelector('.w').textContent = X[k][1];
+          api.betul(b, `${X[k][1]} ${api.esc(X[k][0])}`);
+          k++;
+          if (k < X.length) setTimeout(() => k < X.length && next(), 800);
+          else api.selesai(Math.max(0, 1 - miss * .12), 'Come on, come on and see me, in my little house!');
+        }
+        el.querySelector('#lhAg').onclick = () => k < X.length && api.speak(X[k][0]);
+        next();
+        return { jawab() { while (k < X.length) tap(X[k][2]); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  /* Small clothes pictures (viewBox 0 0 60 60), used on cards, questions and the dress-up game. */
+  const K = 'stroke="#1c2740" stroke-width="1.6" stroke-linejoin="round"';
+  const IC = {
+    jeans: `<path d="M15 8H45L48 54H35L30 22L25 54H12Z" fill="#3b6fb6" ${K}/><path d="M30 9V22M17 14H43" stroke="#a5d8ff" stroke-width="1.4" fill="none"/>`,
+    trousers: `<path d="M15 8H45L48 54H35L30 22L25 54H12Z" fill="#8d6e63" ${K}/>`,
+    sweater: `<path d="M20 9H40L54 20V50H46V28H44V54H16V28H14V50H6V20Z" fill="#9c36b5" ${K}/><path d="M16 50H44M24 9Q30 15 36 9" stroke="#e599f7" stroke-width="1.6" fill="none"/>`,
+    jacket: `<path d="M20 9H40L54 20V50H46V28H44V54H16V28H14V50H6V20Z" fill="#2f9e44" ${K}/><path d="M30 12V54M24 9L30 16L36 9" stroke="#1c2740" stroke-width="1.6" fill="none"/>`,
+    skirt: `<path d="M20 12H40L50 50H10Z" fill="#f06595" ${K}/><path d="M20 17H40" stroke="#fff" stroke-width="2"/>`,
+    shorts: `<path d="M14 12H46L48 40H34L30 26L26 40H12Z" fill="#f59f00" ${K}/>`,
+    cap: `<path d="M14 38A16 16 0 0 1 46 38Z" fill="#1971c2" ${K}/><path d="M40 34L57 37V42L40 40Z" fill="#1971c2" ${K}/><circle cx="30" cy="22" r="2" fill="#fff"/>`,
+    shoes: `<path d="M5 44Q5 32 15 32L22 36Q30 38 30 44V48H5Z" fill="#a0522d" ${K}/><path d="M30 44Q30 32 40 32L47 36Q55 38 55 44V48H30Z" fill="#a0522d" ${K}/>`,
+    socks: `<path d="M14 8H26V36L34 40Q38 48 30 50L16 47Q12 45 14 38Z" fill="#fff" ${K}/><path d="M34 8H46V36L54 40Q58 48 50 50L36 47Q32 45 34 38Z" fill="#fff" ${K}/><path d="M14 14H26M34 14H46" stroke="#e03131" stroke-width="3"/>`,
+    tshirt: `<path d="M20 10H40L54 20L48 28L44 25V54H16V25L12 28L6 20Z" fill="#e03131" ${K}/><path d="M24 10Q30 16 36 10" stroke="#fff" stroke-width="1.6" fill="none"/>`,
+    hat: `<ellipse cx="30" cy="42" rx="26" ry="7" fill="#e67700" ${K}/><path d="M17 41V22Q30 14 43 22V41Z" fill="#f08c00" ${K}/><path d="M17 34H43" stroke="#e03131" stroke-width="4"/>`,
+  };
+  const NAME = { jeans: 'jeans', trousers: 'trousers', sweater: 'sweater', jacket: 'jacket', skirt: 'skirt', shorts: 'shorts', cap: 'cap', shoes: 'shoes', socks: 'socks', tshirt: 'T-shirt', hat: 'hat' };
+  const one = k => `<svg viewBox="0 0 60 60" width="96" height="96" role="img" aria-label="${NAME[k]}">${IC[k]}</svg>`;
+  /* Picture grid with numbers like the book page (p.82). */
+  const grid = (ks, n0) => `<svg viewBox="0 0 ${ks.length * 64} 86" role="img" aria-label="clothes" style="max-width:calc(100% - 58px)">${ks.map((k, i) =>
+    `<g transform="translate(${i * 64 + 2},0)"><circle cx="9" cy="9" r="9" fill="#ffd43b"/><text x="9" y="13.5" font-size="12" font-weight="700" text-anchor="middle" fill="#1c2740">${n0 + i}</text>
+     <g transform="translate(2,4)">${IC[k]}</g><text x="32" y="80" font-size="12.5" font-weight="700" text-anchor="middle" fill="currentColor">${NAME[k]}</text></g>`).join('')}</svg>`;
+  const ms = t => ` <small class="nospeak" style="font-weight:400">(${t})</small>`;
+
+  UNIT({
+    n: 7, tajuk: 'Get dressed!', tema: 'Clothes', ikon: '👕', warna: '#d6336c',
+    belajar: [
+      { ikon: '🛏️', tajuk: 'Time for school, Whisper!',
+        teks: ['Look at Whisper\'s bedroom. His mum calls him. It\'s time for school!',
+          'Whisper must <b>get dressed</b>' + ms('memakai pakaian') + '.'],
+        contoh: '🎵 "Put on your T-shirt. …<br>Come on Whisper, Time for school!"' },
+      { ikon: grid(['jeans', 'sweater', 'jacket', 'skirt', 'shorts'], 1), tajuk: 'Clothes words (1)',
+        teks: ['<b>Clothes</b>' + ms('pakaian') + ' — say the words.'],
+        chips: ['1 jeans' + ms('seluar jeans'), '2 sweater' + ms('baju sejuk'), '3 jacket' + ms('jaket'),
+          '4 skirt' + ms('skirt'), '5 shorts' + ms('seluar pendek')] },
+      { ikon: grid(['cap', 'shoes', 'socks', 'tshirt', 'trousers'], 6), tajuk: 'Clothes words (2)',
+        teks: ['More clothes words.'],
+        chips: ['6 cap' + ms('topi'), '7 shoes' + ms('kasut'), '8 socks' + ms('stokin'), '9 T-shirt' + ms('baju-T'),
+          '10 trousers' + ms('seluar panjang'), '🎩 hat' + ms('topi'), '⛑️ helmet' + ms('topi keledar'), '👟 trainers' + ms('kasut sukan')] },
+      { ikon: '🛍️', tajuk: 'Do you like this hat?',
+        teks: ['<b>this</b> = one thing ☝️' + ms('ini, satu'), '<b>these</b> = more than one ✌️' + ms('ini, banyak')],
+        contoh: ['Do you like <b>this</b> hat? — Yes, I do. 👍', 'Do you like <b>these</b> shoes? — No, I don\'t. 👎',
+          'This hat is pink. These socks are red.'] },
+      { ikon: '👀', tajuk: 'What is she wearing?',
+        teks: ['Say what people are <b>wearing</b>' + ms('memakai') + '.', 'Name + \'s wearing + colour + clothes.'],
+        contoh: ['Olivia\'s wearing a red sweater.', 'Is he wearing a blue T-shirt? — Yes, he is.', 'Is she wearing brown shoes? — No, she isn\'t.'] },
+      { ikon: '🧢', tajuk: 'Story: The cap',
+        teks: ['It is Favourite Clothes Day at school.'],
+        senarai: ['Whisper: "My cap isn\'t here." 😟', 'He sees Gary. "Look! Gary\'s wearing my cap."',
+          '"Stop! That\'s my cap, Gary." Gary: "No, it\'s my cap."', 'Whisper asks a seagull: "Get my cap, please." The seagull takes the cap. 🐦',
+          'At home, Whisper sees his blue cap under the chair. "Oh no! That\'s my cap!"', 'He gives Gary his cap back.'] },
+      { ikon: '🙏', tajuk: 'Saying sorry',
+        teks: ['Whisper made a mistake. It was Gary\'s cap!', 'He says <b>sorry</b>' + ms('maaf') + '.'],
+        contoh: 'Whisper: "I\'m very sorry, Gary."<br>Gary: "It\'s OK."' },
+      { ikon: '🕷️', tajuk: 'Sounds: sp and st',
+        teks: ['Say it fast!'],
+        chips: ['<b>sp</b> — spiders', '<b>st</b> — stop', '<b>st</b> — stairs'],
+        contoh: 'Six <b>sp</b>iders <b>st</b>op for sandwiches on the <b>st</b>airs. 🥪' },
+      { ikon: '🐱', tajuk: 'Song: I\'m a cool, cool cat',
+        teks: ['Two cats sing about cool clothes: shoes, jackets, socks, shorts, T-shirts, sweaters and skirts.'],
+        contoh: '🎵 "I\'m a cool, cool cat. Meow, meow, meow!"' },
+      { ikon: '🐑', tajuk: 'Materials: cotton, leather, wool',
+        senarai: ['🌱 <b>Cotton</b> comes from plants. Cotton is <b>cool</b>. You can wear cotton shorts and T-shirts.',
+          '🐄 <b>Leather</b> comes from cows. Leather is <b>strong</b>. You can wear leather shoes and jackets.',
+          '🐑 <b>Wool</b> comes from sheep. Wool is <b>warm</b>. You can wear woollen sweaters and socks.'],
+        contoh: 'material' + ms('bahan') + ' · cotton' + ms('kapas') + ' · leather' + ms('kulit') + ' · wool' + ms('bulu biri-biri') },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which one is it?', sebut: 'cap', p: ['🧢', '👟', '🧦'], a: 0, kenapa: 'A cap 🧢 goes on your head.' },
+      { j: 'pilih', s: 'Listen. Which one is it?', sebut: 'socks', p: ['🧦', '👖', '🧥'], a: 0, kenapa: 'Socks 🧦 go on your feet.' },
+      { j: 'pilih', s: 'Listen. Which one is it?', sebut: 'shorts', p: ['🩳', '👕', '🧢'], a: 0, kenapa: 'These are shorts 🩳.' },
+      { j: 'pilih', s: 'Listen and choose.', sebut: 'Put on your T-shirt.', p: ['👕', '👖', '🧦'], a: 0, kenapa: 'Put on your T-shirt 👕.' },
+      { j: 'pilih', s: 'One hat 🎩. Do you like ___ hat?', p: ['this', 'these'], a: 0, kenapa: 'One thing: this. Do you like this hat?' },
+      { j: 'pilih', s: 'Two shoes 👞👞. Do you like ___ shoes?', p: ['these', 'this'], a: 0, kenapa: 'More than one: these. Do you like these shoes?' },
+      { j: 'pilih', s: '"Do you like these shoes?" Say no. 👎', p: ['No, I don\'t.', 'Yes, I do.', 'No, she isn\'t.'], a: 0, kenapa: 'Do you like …? — No, I don\'t.' },
+      { j: 'pilih', s: 'Olivia\'s ___ a red sweater.', p: ['wearing', 'like', 'these'], a: 0, kenapa: 'Olivia\'s wearing a red sweater.' },
+      { j: 'pilih', s: '"Is she wearing brown shoes?" 👎', p: ['No, she isn\'t.', 'Yes, he is.', 'No, I don\'t.'], a: 0, kenapa: 'Is she wearing …? — No, she isn\'t.' },
+      { j: 'pilih', s: 'Story: Which animal helps Whisper?', p: ['A seagull 🐦', 'A cat 🐱', 'A spider 🕷️'], a: 0, kenapa: 'A seagull gets the cap for Whisper.' },
+      { j: 'pilih', s: 'Story: Where is Whisper\'s cap at the end?', ikon: '🏠', p: ['Under the chair at home', 'On Gary\'s head', 'At school'], a: 0, kenapa: 'At home, Whisper sees his blue cap under the chair.' },
+      { j: 'bs', s: 'The cap on Gary\'s head is Whisper\'s cap.', ikon: '🧢', a: false, kenapa: 'It was Gary\'s cap. Whisper\'s cap was at home.' },
+      { j: 'bs', s: 'At the end, Whisper says: "I\'m very sorry, Gary."', ikon: '🙏', a: true, kenapa: 'Whisper says sorry. Gary says: "It\'s OK."' },
+      { j: 'pilih', s: 'Which word starts with st?', ikon: '🕷️', p: ['stairs', 'spiders', 'six'], a: 0, kenapa: 'st — stairs, stop. sp — spiders.' },
+      { j: 'padan', s: 'Match the picture and the word.', pasangan: [['👖', 'jeans'], ['🧥', 'jacket'], ['🩳', 'shorts'], ['🧢', 'cap'], ['🧦', 'socks'], ['👕', 'T-shirt']] },
+      { j: 'padan', s: 'Where does it come from?', pasangan: [['cotton', '🌱 plants'], ['leather', '🐄 cows'], ['wool', '🐑 sheep']] },
+      { j: 'kumpul', s: 'Do you like this … or these …?', kumpulan: [['☝️ this', ['hat', 'T-shirt', 'skirt', 'jacket']], ['✌️ these', ['shoes', 'socks', 'trainers', 'jeans']]] },
+      { j: 'kumpul', s: 'Cool, strong or warm?', kumpulan: [['😎 cool', ['cotton shorts', 'cotton T-shirt']], ['💪 strong', ['leather belt', 'leather shoes', 'leather bag']], ['🔥 warm', ['woolly hat', 'woollen socks']]] },
+      { j: 'eja', s: 'Spell the word.', ikon: one('socks'), kata: 'socks' },
+      { j: 'eja', s: 'Spell the word.', ikon: one('jacket'), kata: 'jacket' },
+      { j: 'eja', s: 'Spell the word.', ikon: one('sweater'), kata: 'sweater' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🎩', kata: ['Do', 'you', 'like', 'this', 'hat?'] },
+      { j: 'ayat', s: 'Make the sentence.', ikon: one('sweater'), kata: ['Olivia\'s', 'wearing', 'a', 'red', 'sweater.'] },
+      { j: 'susun', s: 'Put the story in order.', ikon: '🧢', item: ['My cap isn\'t here!', 'Gary\'s wearing my cap.', 'The seagull gets the cap.', 'The cap is under the chair!', 'I\'m very sorry, Gary.'] },
+    ],
+    amali: [{
+      id: 'dress-whisper', tajuk: 'Dress Whisper for school', ikon: '👕',
+      arahan: 'Listen: "Put on your …". Tap the right clothes.',
+      mula(el, api) {
+        const SK = '#f1c27d', L = 'stroke="#1c2740" stroke-width="2" stroke-linejoin="round"';
+        const ON = {   // clothes drawn on the boy (viewBox 0 0 200 262)
+          tshirt: `<path d="M72 80H128L148 100L136 112L128 104V146H72V104L64 112L52 100Z" fill="#e03131" ${L}/>`,
+          jeans: `<path d="M72 144H128L126 222H104L100 166L96 222H74Z" fill="#3b6fb6" ${L}/><path d="M100 146V166" stroke="#a5d8ff" stroke-width="2"/>`,
+          socks: `<rect x="77" y="212" width="18" height="22" fill="#fff" ${L}/><rect x="105" y="212" width="18" height="22" fill="#fff" ${L}/><path d="M77 218H95M105 218H123" stroke="#e03131" stroke-width="4"/>`,
+          shoes: `<rect x="66" y="228" width="32" height="18" rx="8" fill="#a0522d" ${L}/><rect x="102" y="228" width="32" height="18" rx="8" fill="#a0522d" ${L}/>`,
+          jacket: `<path d="M72 80H95V150H72ZM128 80H105V150H128ZM72 82L52 98L50 146H68L72 110ZM128 82L148 98L150 146H132L128 110Z" fill="#2f9e44" ${L}/>`,
+          cap: `<path d="M73 40A27 25 0 0 1 127 40Z" fill="#1971c2" ${L}/><path d="M118 36L150 40V46L120 44Z" fill="#1971c2" ${L}/>`,
+        };
+        const ORDER = ['tshirt', 'jeans', 'socks', 'shoes', 'jacket', 'cap'];
+        const WARD = api.shuffle(['tshirt', 'jeans', 'socks', 'shoes', 'jacket', 'cap', 'skirt', 'sweater', 'shorts', 'hat']);
+        el.innerHTML = `<div class="cols" style="align-items:start">
+          <div class="box" style="text-align:center"><svg viewBox="0 0 200 262" style="width:min(240px,100%)" role="img" aria-label="Whisper">
+            <circle cx="61" cy="146" r="9" fill="${SK}" ${L}/><circle cx="139" cy="146" r="9" fill="${SK}" ${L}/>
+            <rect x="52" y="82" width="18" height="60" rx="9" fill="${SK}" ${L}/><rect x="130" y="82" width="18" height="60" rx="9" fill="${SK}" ${L}/>
+            <rect x="76" y="140" width="20" height="90" rx="6" fill="${SK}" ${L}/><rect x="104" y="140" width="20" height="90" rx="6" fill="${SK}" ${L}/>
+            <rect x="72" y="78" width="56" height="68" rx="10" fill="#e9ecef" ${L}/><rect x="92" y="68" width="16" height="12" fill="${SK}"/>
+            <circle cx="100" cy="46" r="26" fill="${SK}" ${L}/><path d="M74 42Q78 16 100 18Q124 16 126 42Q114 28 100 30Q84 28 74 42Z" fill="#5c3d2e"/>
+            <circle cx="91" cy="48" r="3" fill="#1c2740"/><circle cx="109" cy="48" r="3" fill="#1c2740"/><path d="M92 58Q100 64 108 58" stroke="#1c2740" stroke-width="2" fill="none"/>
+            <g id="wr"></g></svg></div>
+          <div class="box"><b>Wardrobe</b><div class="chips" id="wd" style="margin-top:8px"></div>
+            <div class="row" style="margin-top:12px"><button class="btn alt" id="ag">🔊 Again</button></div><p class="hint" id="pg"></p></div></div>`;
+        const wr = el.querySelector('#wr'), wd = el.querySelector('#wd'), pg = el.querySelector('#pg');
+        let step = 0, miss = 0;
+        const line = () => `Put on your ${NAME[ORDER[step]]}.`;
+        const ask = () => { pg.textContent = `Clothes on: ${step} / ${ORDER.length}`; if (step < ORDER.length) { api.say(`🔊 "<b>${line()}</b>"`); api.speak(line()); } };
+        const bs = WARD.map(k => {
+          const b = api.H(`<button class="chip" style="display:grid;justify-items:center;gap:2px;width:96px;padding:8px 4px"><svg viewBox="0 0 60 60" width="52" height="52" aria-hidden="true">${IC[k]}</svg><span>${NAME[k]}</span></button>`);
+          b.dataset.k = k; b.onclick = () => tap(b); wd.appendChild(b); return b;
+        });
+        function tap(b) {
+          if (step >= ORDER.length || b.disabled) return;
+          const want = ORDER[step];
+          if (b.dataset.k !== want) { miss++; api.salah(b, `That is the ${NAME[b.dataset.k]}. Listen again: "${line()}"`); api.speak(line()); return; }
+          const g = api.S('g', {}, wr); g.innerHTML = ON[want];
+          api.anim(g, [{ opacity: 0, transform: 'translateY(-14px)' }, { opacity: 1, transform: 'none' }], { duration: 380 });
+          b.disabled = true; b.classList.add('ok'); step++;
+          api.betul(b, `Good! Whisper is wearing his ${NAME[want]}.`);
+          if (step === ORDER.length) { pg.textContent = `Clothes on: ${step} / ${ORDER.length}`; api.speak('Come on Whisper, time for school!');
+            api.selesai(Math.max(0, 1 - miss * .1), '🎒 Come on Whisper, time for school!'); }
+          else setTimeout(ask, 900);
+        }
+        el.querySelector('#ag').onclick = () => step < ORDER.length && api.speak(line());
+        ask();
+        return { jawab() { ORDER.forEach(k => tap(bs.find(b => b.dataset.k === k))); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  const ms = t => ` <small class="nospeak" style="font-weight:400">(${t})</small>`;
+  /* Robot body (viewBox 0 0 220 262). Each part is one group; used on the card and in the build game. */
+  const L = 'stroke="#1c2740" stroke-width="2" stroke-linejoin="round"';
+  const PART = {
+    head: `<line x1="110" y1="12" x2="110" y2="2" stroke="#1c2740" stroke-width="2"/><circle cx="110" cy="4" r="4" fill="#f03e3e"/><rect x="82" y="12" width="56" height="50" rx="10" fill="#74c0fc" ${L}/><circle cx="98" cy="32" r="6" fill="#fff" ${L}/><circle cx="122" cy="32" r="6" fill="#fff" ${L}/><circle cx="98" cy="32" r="2.5" fill="#1c2740"/><circle cx="122" cy="32" r="2.5" fill="#1c2740"/><rect x="98" y="46" width="24" height="6" rx="3" fill="#1c2740"/>`,
+    arm: `<rect x="52" y="74" width="18" height="62" rx="8" fill="#ced4da" ${L}/><rect x="150" y="74" width="18" height="62" rx="8" fill="#ced4da" ${L}/>`,
+    hand: `<circle cx="61" cy="146" r="11" fill="#ffa94d" ${L}/><circle cx="159" cy="146" r="11" fill="#ffa94d" ${L}/>`,
+    fingers: `<path d="M53 153L50 166M61 157V170M69 153L72 166M151 153L148 166M159 157V170M167 153L170 166" stroke="#e8590c" stroke-width="4" stroke-linecap="round"/>`,
+    leg: `<rect x="84" y="150" width="20" height="88" rx="6" fill="#ced4da" ${L}/><rect x="116" y="150" width="20" height="88" rx="6" fill="#ced4da" ${L}/>`,
+    knee: `<circle cx="94" cy="195" r="9" fill="#fcc419" ${L}/><circle cx="126" cy="195" r="9" fill="#fcc419" ${L}/>`,
+    foot: `<rect x="74" y="234" width="34" height="14" rx="6" fill="#5f3dc4" ${L}/><rect x="112" y="234" width="34" height="14" rx="6" fill="#5f3dc4" ${L}/>`,
+    toes: `<g fill="#b197fc" ${L}><circle cx="80" cy="253" r="4.5"/><circle cx="91" cy="253" r="4.5"/><circle cx="102" cy="253" r="4.5"/><circle cx="118" cy="253" r="4.5"/><circle cx="129" cy="253" r="4.5"/><circle cx="140" cy="253" r="4.5"/></g>`,
+  };
+  const BODY = `<rect x="75" y="66" width="70" height="86" rx="10" fill="#a5d8ff" ${L}/><rect x="90" y="80" width="40" height="26" rx="5" fill="#fff" ${L}/><circle cx="100" cy="93" r="4" fill="#40c057"/><circle cx="120" cy="93" r="4" fill="#fab005"/><rect x="100" y="60" width="20" height="8" fill="#868e96"/>`;
+  const ORDER = ['head', 'arm', 'hand', 'fingers', 'leg', 'knee', 'foot', 'toes'];
+  /* Labelled robot for the body-words card. */
+  const LAB = [['head', 1, 150, 30, 196, 30], ['arm', 2, 52, 100, 24, 100], ['fingers', 3, 72, 166, 24, 176], ['hand', 4, 150, 146, 196, 146],
+    ['knee', 5, 135, 195, 196, 195], ['leg', 6, 84, 215, 24, 215], ['toes', 7, 144, 253, 196, 253], ['foot', 8, 76, 241, 24, 246]];
+  const robotCard = `<svg viewBox="0 0 220 266" role="img" aria-label="robot body parts" style="max-width:calc(100% - 58px);width:260px">${BODY}${ORDER.map(k => PART[k]).join('')}
+    ${LAB.map(([w, n, x1, y1, x2, y2]) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 2"/><circle cx="${x2}" cy="${y2}" r="10" fill="#ffd43b" stroke="#1c2740"/><text x="${x2}" y="${y2 + 4.5}" font-size="13" font-weight="700" text-anchor="middle" fill="#1c2740">${n}</text>`).join('')}</svg>`;
+
+  UNIT({
+    n: 8, tajuk: 'The robot', tema: 'The body', ikon: '🤖', warna: '#5f3dc4',
+    belajar: [
+      { ikon: '📦', tajuk: 'Let\'s make a robot!',
+        teks: ['The Super Friends are in the garden. They have got a box: <b>ROBOT KIT</b>.', 'Let\'s make a <b>robot</b>' + ms('robot') + '!'],
+        contoh: '🎵 "Let\'s make a robot! Here\'s the head. …<br>Thank you! Off it goes."' },
+      { ikon: robotCard, tajuk: 'My body',
+        teks: ['<b>body</b>' + ms('badan') + ' — say the words.'],
+        chips: ['1 head' + ms('kepala'), '2 arm' + ms('lengan'), '3 fingers' + ms('jari-jari'), '4 hand' + ms('tangan'),
+          '5 knee' + ms('lutut'), '6 leg' + ms('kaki'), '7 toes' + ms('jari kaki'), '8 foot' + ms('tapak kaki')] },
+      { ikon: '🦶', tajuk: 'One foot, two feet',
+        teks: ['One <b>foot</b> 🦶 → two <b>feet</b> 🦶🦶' + ms('kaki-kaki'), 'One leg → two legs. One arm → eight arms!'],
+        chips: ['tail' + ms('ekor'), 'ears' + ms('telinga'), 'wings' + ms('sayap'), 'right' + ms('kanan'), 'left' + ms('kiri')] },
+      { ikon: '🤸', tajuk: 'I can … / I can\'t …',
+        teks: ['<b>can</b> 👍' + ms('boleh') + ' &nbsp; <b>can\'t</b> 👎' + ms('tidak boleh')],
+        contoh: ['I <b>can</b> stand on one leg.', 'I <b>can\'t</b> touch my toes.', 'She <b>can</b> skip. He <b>can\'t</b> skip.'],
+        senarai: ['Thunder: "I can\'t touch my toes."', 'Whisper: "I can\'t skip."', 'Flash: "I can\'t stand on one leg."',
+          'Misty: "I can touch my toes. I can skip. I can stand on one leg." 🌟'] },
+      { ikon: '🏊', tajuk: 'Can you swim?',
+        teks: ['Ask a friend: <b>Can you …?</b>'],
+        chips: ['🎾 play tennis', '🎹 play the piano', '🏇 ride a horse', '🚲 ride a bike', '🏊 swim', '💃 dance'],
+        contoh: ['Can you swim? — Yes, I can. 👍', 'Can you dance? — No, I can\'t. 👎'] },
+      { ikon: '🐦', tajuk: 'Song: Can you guess who we are?',
+        senarai: ['🐦 Bella Bird can sing.', '🐬 Dan Dolphin can swim.', '🦘 Kate Kangaroo can jump up high.',
+          '🐆 Charlie Cheetah can run.', '🦎 Larry Lizard can dance.', '🐞 Lucy Ladybird can crawl and fly.'],
+        contoh: '🎵 "Can you guess who we are?" — "It\'s Bella Bird. She can sing."' },
+      { ikon: '🤖', tajuk: 'Story: The problem',
+        senarai: ['Thunder: "Give me the right leg and the left arm." "Here\'s the head."', '"Batteries! We haven\'t got batteries." Flash runs super fast and gets them. 🔋',
+          '"Robot, can you speak?" Robot: "Nac I sey." 😕', '"We\'ve got a problem. It can\'t speak." Misty: "Let me try something."',
+          'Robot: "Yes, I can." Friends: "Well done, Misty!" 🎉'],
+        contoh: 'The friends work together. That is <b>teamwork</b>!' },
+      { ikon: '🔁', tajuk: 'Robot talk: backwards!',
+        teks: ['The robot says words backwards. Read them the right way!'],
+        chips: ['koob → book', 'smra → arms', 'toof → foot', 'ekib → bike', 'miws → swim'],
+        contoh: '"Nac I sey" → "Yes, I can"' },
+      { ikon: '🏎️', tajuk: 'Sound: g',
+        teks: ['Say it fast!'],
+        chips: ['<b>G</b>reg', '<b>g</b>ot', 'bi<b>g</b>', 'ba<b>g</b>', '<b>g</b>reen', '<b>g</b>o-kart'],
+        contoh: '<b>G</b>reg\'s <b>g</b>ot a bi<b>g</b> ba<b>g</b> and a <b>g</b>reen <b>g</b>o-kart.' },
+      { ikon: '🦴', tajuk: 'The skeleton',
+        teks: ['Humans and some animals have got <b>skeletons</b>' + ms('rangka') + '.', 'The skeleton has got lots of <b>bones</b>' + ms('tulang') + '. They are <b>strong</b>.'],
+        contoh: ['The skeleton helps us to swim, walk, run, sit and stand.', 'Animals with skeletons: 🐊 crocodile, 🐒 monkey, 🦒 giraffe, 🐸 frog, 🐀 rat'] },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which one is it?', sebut: 'foot', p: ['🦶', '🦵', '✋'], a: 0, kenapa: 'This is a foot 🦶.' },
+      { j: 'pilih', s: 'Listen. Which one is it?', sebut: 'hand', p: ['✋', '🦶', '👂'], a: 0, kenapa: 'This is a hand ✋.' },
+      { j: 'pilih', s: 'Listen and choose.', sebut: 'Can you ride a horse?', p: ['🏇', '🎾', '🎹'], a: 0, kenapa: 'Ride a horse 🏇.' },
+      { j: 'pilih', s: 'Listen and choose.', sebut: 'She can swim.', p: ['🏊', '🚲', '💃'], a: 0, kenapa: 'She can swim 🏊.' },
+      { j: 'pilih', s: 'One foot, two ___.', ikon: '🦶🦶', p: ['feet', 'foot', 'foots'], a: 0, kenapa: 'One foot, two feet.' },
+      { j: 'pilih', s: 'I ___ stand on one leg. 👍', p: ['can', 'can\'t'], a: 0, kenapa: '👍 = can. I can stand on one leg.' },
+      { j: 'pilih', s: 'He ___ skip. 👎', p: ['can\'t', 'can'], a: 0, kenapa: '👎 = can\'t. He can\'t skip.' },
+      { j: 'pilih', s: '"Can you swim?" 👍', ikon: '🏊', p: ['Yes, I can.', 'No, I can\'t.', 'Yes, I do.'], a: 0, kenapa: 'Can you …? — Yes, I can.' },
+      { j: 'pilih', s: 'Story: What haven\'t the friends got?', ikon: '🤖', p: ['Batteries', 'A head', 'A right leg'], a: 0, kenapa: '"Batteries! We haven\'t got batteries."' },
+      { j: 'pilih', s: 'Story: What is the problem?', ikon: '😕', p: ['The robot can\'t speak.', 'The robot can\'t run.', 'The robot has no head.'], a: 0, kenapa: 'The robot says "Nac I sey". It can\'t speak.' },
+      { j: 'pilih', s: 'Story: Who fixes the robot?', p: ['Misty', 'Flash', 'Thunder'], a: 0, kenapa: 'Misty says "Let me try something." Well done, Misty!' },
+      { j: 'pilih', s: 'Which word starts with the g sound?', ikon: '🏎️', p: ['go-kart', 'robot', 'arm'], a: 0, kenapa: 'g — Greg, green, go-kart.' },
+      { j: 'bs', s: 'Lucy Ladybird can crawl and fly.', ikon: '🐞', a: true, kenapa: 'Lucy Ladybird can crawl and fly.' },
+      { j: 'bs', s: 'Flash fixes the robot.', ikon: '🤖', a: false, kenapa: 'Flash gets the batteries. Misty fixes the robot.' },
+      { j: 'bs', s: 'The skeleton has got lots of bones. They are strong.', ikon: '🦴', a: true, kenapa: 'Bones are strong. The skeleton helps us to move.' },
+      { j: 'padan', s: 'Match the picture and the word.', pasangan: [['🦶', 'foot'], ['🦵', 'leg'], ['✋', 'hand'], ['💪', 'arm'], ['👂', 'ears']] },
+      { j: 'padan', s: 'Robot talk! Match the backwards word.', pasangan: [['koob', 'book'], ['smra', 'arms'], ['toof', 'foot'], ['ekib', 'bike'], ['miws', 'swim']] },
+      { j: 'kumpul', s: 'One or more than one?', kumpulan: [['☝️ one', ['foot', 'leg', 'head', 'hand']], ['✌️ more than one', ['feet', 'toes', 'fingers', 'legs']]] },
+      { j: 'eja', s: 'Spell the word.', ikon: '🦵', kata: 'knee' },
+      { j: 'eja', s: 'Spell the word.', ikon: '🖐️', kata: 'fingers' },
+      { j: 'eja', s: 'Spell the word.', ikon: '🤖', kata: 'robot' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🧍', kata: ['I', 'can', 'stand', 'on', 'one', 'leg.'] },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🦴', kata: ['The', 'skeleton', 'has', 'got', 'lots', 'of', 'bones.'] },
+      { j: 'susun', s: 'Put the story in order.', ikon: '🤖', item: ['Here\'s the right leg.', 'We haven\'t got batteries!', 'Robot, can you speak?', 'Let me try something.', 'Well done, Misty!'] },
+    ],
+    amali: [{
+      id: 'build-robot', tajuk: 'Build the robot', ikon: '🔧',
+      arahan: 'Listen: "Here\'s the …" Tap the right body part.',
+      mula(el, api) {
+        el.innerHTML = `<div class="cols" style="align-items:start">
+          <div class="box" style="text-align:center"><svg viewBox="0 0 220 262" style="width:min(230px,100%)" role="img" aria-label="robot">${BODY}<g id="pt"></g></svg></div>
+          <div class="box"><b>Robot kit 📦</b><div class="chips" id="kt" style="margin-top:8px"></div>
+            <div class="row" style="margin-top:12px"><button class="btn alt" id="ag">🔊 Again</button></div><p class="hint" id="pg"></p></div></div>`;
+        const pt = el.querySelector('#pt'), kt = el.querySelector('#kt'), pg = el.querySelector('#pg'), rob = el.querySelector('svg');
+        /* ghost outline of every part, so the child sees where it goes */
+        const G = {};
+        ORDER.forEach(k => { const g = api.S('g', { opacity: .15 }, pt); g.innerHTML = PART[k]; G[k] = g; });
+        let step = 0, miss = 0;
+        const here = k => (k === 'fingers' || k === 'toes' ? 'Here are the ' : 'Here\'s the ') + k + '.';
+        const line = () => here(ORDER[step]);
+        const ask = () => { pg.textContent = `Parts: ${step} / ${ORDER.length}`; if (step < ORDER.length) { api.say(`🔊 "<b>${line()}</b>"`); api.speak(line()); } };
+        const bs = api.shuffle(ORDER).map(k => {
+          const b = api.H(`<button class="chip" style="width:110px">${k}</button>`); b.dataset.k = k; b.onclick = () => tap(b); kt.appendChild(b); return b;
+        });
+        function tap(b) {
+          if (step >= ORDER.length || b.disabled) return;
+          const want = ORDER[step];
+          if (b.dataset.k !== want) { miss++; api.salah(b, `That is "${b.dataset.k}". Listen again: "${line()}"`); api.speak(line()); return; }
+          G[want].setAttribute('opacity', 1);
+          api.anim(G[want], [{ transform: 'translateY(-10px)' }, { transform: 'none' }], { duration: 320 });
+          b.disabled = true; b.classList.add('ok'); step++;
+          api.betul(b, 'Good! ' + here(want));
+          if (step === ORDER.length) {
+            pg.textContent = `Parts: ${step} / ${ORDER.length}`; api.speak('Thank you! Off it goes.');
+            api.anim(rob, [{ transform: 'none' }, { transform: 'translateX(18px) rotate(4deg)' }, { transform: 'translateX(-18px) rotate(-4deg)' }, { transform: 'none' }], { duration: 900, fill: 'none' });
+            api.selesai(Math.max(0, 1 - miss * .1), '🤖 Thank you! Off it goes.');
+          } else setTimeout(ask, 800);
+        }
+        el.querySelector('#ag').onclick = () => step < ORDER.length && api.speak(line());
+        ask();
+        return { jawab() { ORDER.forEach(k => tap(bs.find(b => b.dataset.k === k))); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  const ms = t => ` <small class="nospeak" style="font-weight:400">(${t})</small>`;
+
+  UNIT({
+    n: 9, tajuk: 'At the beach', tema: 'Holidays', ikon: '🏖️', warna: '#0c8599',
+    belajar: [
+      { ikon: '🏖️', tajuk: 'Holiday at the beach!',
+        teks: ['The Super Friends are at the <b>beach</b>' + ms('pantai') + '. There is a big green hill.', 'It\'s a <b>holiday</b>' + ms('cuti') + '!'],
+        contoh: '🎵 "Eat ice cream, Yum, yum. Take photos, Click, click.<br>Catch fish, Splish, splash. Make castles, Dig, dig. …<br>Play in the sun, It\'s lots of fun!"' },
+      { ikon: '<span style="font-size:2.5rem">🎣🎨🍦📷</span>', tajuk: 'Holiday fun (1)',
+        teks: ['What can you do on holiday?'],
+        chips: ['🎣 catch a fish' + ms('tangkap ikan'), '🎨 paint a picture' + ms('melukis gambar'), '🍦 eat ice cream' + ms('makan aiskrim'), '📷 take a photo' + ms('ambil gambar')] },
+      { ikon: '<span style="font-size:2.5rem">🎧🐚📖🏰</span>', tajuk: 'Holiday fun (2)',
+        teks: ['More things to do!'],
+        chips: ['🎧 listen to music' + ms('dengar muzik'), '🐚 look for shells' + ms('cari kulit kerang'), '📖 read a book' + ms('baca buku'), '🏰 make a sandcastle' + ms('buat istana pasir')] },
+      { ikon: '🙋', tajuk: 'Let\'s …!',
+        teks: ['<b>Let\'s</b>' + ms('jom') + ' + an action. Your friend can say:'],
+        chips: ['👍 Good idea.', '🤔 I\'m not sure.', '🙅 Sorry, I don\'t want to.'],
+        contoh: ['Let\'s listen to music. — Good idea.', 'Let\'s paint a picture. — I\'m not sure.', 'Let\'s look for shells. — Sorry, I don\'t want to.'] },
+      { ikon: '🎵', tajuk: 'Song: Let\'s go to the beach',
+        teks: ['Let\'s look for shells, play in the sand, run hand in hand …', 'Let\'s take a photo, catch a fish, swim in the sea, 1, 2, 3!'],
+        contoh: '🎵 "Let\'s go to the beach." … Happy holiday, for you and me.' },
+      { ikon: '👜', tajuk: 'Where\'s …? Where are …?',
+        teks: ['One thing: <b>Where\'s</b> the …? → <b>It\'s</b> in …', 'More than one: <b>Where are</b> the …? → <b>They\'re</b> in …'],
+        contoh: ['Where\'s the blue book? — It\'s in the green bag.', 'Where are the orange books? — They\'re in the black bag.', 'Where\'s the shell? — It\'s <b>on</b> the sandcastle.'] },
+      { ikon: '⛰️', tajuk: 'Story: The top of the hill',
+        senarai: ['Flash: "A race? Yes! Let\'s go." She runs super fast. 🏃‍♀️', 'Misty: "I can walk up the hill, but I can\'t run!" Thunder: "Just wait and see."',
+          'A big rock is on the path. Flash: "Oh no! We can\'t get to the top of the hill." 🪨', 'Thunder: "Let me try." He lifts the rock. 💪',
+          'Flash: "No. Let\'s go together. That\'s more fun!" All four walk up hand in hand.'],
+        contoh: 'Flash does not want to win alone. That is <b>modesty</b>' + ms('rendah diri') + '.' },
+      { ikon: '🪥', tajuk: 'Sounds: ee and ea',
+        teks: ['<b>ee</b> and <b>ea</b> make the same long sound.'],
+        chips: ['k<b>ee</b>ps', 't<b>ee</b>th', 'ch<b>ee</b>se', 'J<b>ea</b>n', 'cl<b>ea</b>n', 'r<b>ea</b>lly', 'b<b>ea</b>ch', 's<b>ea</b>'],
+        contoh: 'J<b>ea</b>n k<b>ee</b>ps her t<b>ee</b>th r<b>ea</b>lly cl<b>ea</b>n.' },
+      { ikon: '🌦️', tajuk: 'Holiday weather',
+        teks: ['What\'s the <b>weather</b>' + ms('cuaca') + ' like?'],
+        chips: ['☀️ sunny' + ms('cerah'), '🥵 hot' + ms('panas'), '🥶 cold' + ms('sejuk'), '🌨️ snowing' + ms('salji turun'), '🌧️ raining' + ms('hujan'), '☁️ cloudy' + ms('mendung')],
+        contoh: 'It\'s sunny and hot.' },
+      { ikon: '🌍', tajuk: 'Around the world',
+        senarai: ['It\'s hot and sunny in Mexico. ☀️', 'It\'s cold and snowing in Scotland. 🌨️', 'It\'s raining in Japan. 🌧️', 'It\'s cloudy in Italy. ☁️'],
+        contoh: ['Australia: 🦘 kangaroos and 🐨 koalas.', 'Canada: lakes, big forests, high mountains and 🐋 whales.', 'The UK: Tower Bridge in England, bagpipes in Scotland.'] },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which one is it?', sebut: 'take a photo', p: ['📷', '🎣', '🎨'], a: 0, kenapa: 'Take a photo 📷. Click, click!' },
+      { j: 'pilih', s: 'Listen. Which one is it?', sebut: 'look for shells', p: ['🐚', '🍦', '📖'], a: 0, kenapa: 'Look for shells 🐚.' },
+      { j: 'pilih', s: 'Listen. Which one is it?', sebut: 'make a sandcastle', p: ['🏰', '🎧', '🎣'], a: 0, kenapa: 'Make a sandcastle 🏰. Dig, dig!' },
+      { j: 'pilih', s: 'Listen. What\'s the weather like?', sebut: 'It\'s raining.', p: ['🌧️', '☀️', '☁️'], a: 0, kenapa: 'It\'s raining 🌧️.' },
+      { j: 'pilih', s: '___ play the guitar. 🎸', p: ['Let\'s', 'Where\'s', 'Can'], a: 0, kenapa: 'Let\'s + action: Let\'s play the guitar.' },
+      { j: 'pilih', s: '"Let\'s take a photo." Say yes! 👍', ikon: '📷', p: ['Good idea.', 'Sorry, I don\'t want to.', 'I\'m not sure.'], a: 0, kenapa: '"Good idea." means yes.' },
+      { j: 'pilih', s: '"Let\'s look for shells." Say no. 🙅', ikon: '🐚', p: ['Sorry, I don\'t want to.', 'Good idea.', 'Yes, I can.'], a: 0, kenapa: 'Say no nicely: "Sorry, I don\'t want to."' },
+      { j: 'pilih', s: 'Where ___ the blue book? 📘', p: ['is', 'are'], a: 0, kenapa: 'One book: Where is (Where\'s) the blue book?' },
+      { j: 'pilih', s: 'Where ___ the orange books? 📙📙', p: ['are', 'is'], a: 0, kenapa: 'More than one: Where are the orange books?' },
+      { j: 'pilih', s: 'Where\'s the shell?', ikon: '🏰🐚', p: ['It\'s on the sandcastle.', 'They\'re in the toy box.', 'It\'s in the green bag.'], a: 0, kenapa: 'The shell is on the sandcastle.' },
+      { j: 'pilih', s: 'Story: Who moves the big rock?', ikon: '🪨', p: ['Thunder', 'Flash', 'Whisper'], a: 0, kenapa: 'Thunder: "Let me try." He lifts the rock.' },
+      { j: 'pilih', s: 'Story: Who wins the race?', ikon: '⛰️', p: ['All the Super Friends', 'Flash', 'Thunder'], a: 0, kenapa: '"Let\'s go together. That\'s more fun!"' },
+      { j: 'pilih', s: 'Which word has a different sound?', p: ['pet', 'cheese', 'beach'], a: 0, kenapa: 'cheese and beach have the long ee sound. pet does not.' },
+      { j: 'pilih', s: 'Where do you find koalas?', ikon: '🐨', p: ['In Australia', 'In Canada', 'In the UK'], a: 0, kenapa: 'Koalas are in Australia.' },
+      { j: 'bs', s: 'Flash wants a race.', ikon: '🏃‍♀️', a: true, kenapa: 'Flash: "A race? Yes! Let\'s go."' },
+      { j: 'bs', s: 'It\'s cold and snowing in Mexico.', ikon: '🌨️', a: false, kenapa: 'It\'s hot and sunny in Mexico. It\'s cold and snowing in Scotland.' },
+      { j: 'padan', s: 'Match the picture and the words.', pasangan: [['🎣', 'catch a fish'], ['🎨', 'paint a picture'], ['🍦', 'eat ice cream'], ['📖', 'read a book'], ['🎧', 'listen to music']] },
+      { j: 'padan', s: 'Match the weather.', pasangan: [['☀️', 'sunny'], ['🌧️', 'raining'], ['☁️', 'cloudy'], ['🌨️', 'snowing']] },
+      { j: 'kumpul', s: 'ee or ea?', kumpulan: [['ee', ['keeps', 'teeth', 'cheese']], ['ea', ['Jean', 'clean', 'really', 'beach', 'sea']]] },
+      { j: 'kumpul', s: 'Which country?', kumpulan: [['Australia', ['kangaroo', 'koala']], ['Canada', ['whales', 'lakes']], ['the UK', ['Tower Bridge', 'bagpipes']]] },
+      { j: 'eja', s: 'Spell the word.', ikon: '🐚', kata: 'shells' },
+      { j: 'eja', s: 'Spell the word.', ikon: '☀️', kata: 'sunny' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '📘👜', kata: ['Where\'s', 'the', 'blue', 'book?'] },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🏰', kata: ['Let\'s', 'make', 'a', 'sandcastle.'] },
+    ],
+    amali: [{
+      id: 'holiday-weather', tajuk: 'Holiday weather', ikon: '🌦️',
+      arahan: 'Read about each place. Tap the right weather.',
+      mula(el, api) {
+        const W = [['☀️', 'sunny and hot'], ['🌨️', 'cold and snowing'], ['🌧️', 'raining'], ['☁️', 'cloudy']];
+        const P = [
+          ['Mexico', 0, 'It\'s hot and sunny in Mexico.'], ['Scotland', 1, 'It\'s cold and snowing in Scotland.'],
+          ['Japan', 2, 'It\'s raining in Japan.'], ['Italy', 3, 'It\'s cloudy in Italy.'],
+          ['Daisy\'s postcard', 1, '"My holiday is great. It\'s snowing. It\'s very cold but it\'s fun."'],
+          ['Dylan\'s postcard', 0, '"It\'s hot here. Very hot. It\'s sunny. I\'m very brown."'],
+          ['Andrea\'s postcard', 2, '"It\'s raining here but it\'s very beautiful. See you soon."'],
+        ];
+        el.innerHTML = `<div id="tl" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px"></div>
+          <div class="box" style="margin-top:14px"><p id="qq" style="margin:0 0 8px;font-weight:700"></p><div class="chips" id="wx"></div><p class="hint" id="pg"></p></div>`;
+        const tl = el.querySelector('#tl'), wx = el.querySelector('#wx'), qq = el.querySelector('#qq'), pg = el.querySelector('#pg');
+        const tiles = P.map(p => {
+          const t = api.H(`<div class="box" style="text-align:center;padding:10px"><div style="font:700 1rem var(--hd)">${api.esc(p[0])}</div><div class="sky" style="font-size:2.6rem;line-height:1.3;min-height:3.4rem;color:var(--muted)">?</div></div>`);
+          tl.appendChild(t); return t;
+        });
+        const wb = W.map((w, k) => { const b = api.H(`<button class="chip">${w[0]} ${w[1]}</button>`); b.onclick = () => pick(k, b); wx.appendChild(b); return b; });
+        let i = 0, miss = 0;
+        const ask = () => {
+          tiles.forEach((t, k) => t.style.borderColor = k === i ? 'var(--c)' : '');
+          pg.textContent = `Done: ${i} / ${P.length}`;
+          if (i >= P.length) return;
+          const p = P[i];
+          if (i < 4) { qq.textContent = `What's the weather like in ${p[0]}?`; api.say(`🌍 <b>${api.esc(p[0])}</b>: ${api.esc(p[2])}`); }
+          else { qq.textContent = `${p[0]}: what's the weather like?`; api.say(`💌 <b>${api.esc(p[0])}</b>: ${api.esc(p[2])}`); }
+          api.speak(p[2]);
+        };
+        function pick(k, b) {
+          if (i >= P.length) return;
+          const p = P[i];
+          if (k !== p[1]) { miss++; api.salah(b, `Read again: ${api.esc(p[2])}`); return; }
+          const sky = tiles[i].querySelector('.sky'); sky.textContent = W[k][0]; sky.style.color = '';
+          tiles[i].style.background = 'var(--c2)';
+          api.anim(sky, [{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1.2)', opacity: 1 }, { transform: 'none' }], { duration: 420 });
+          api.betul(b, `Yes! It's ${W[k][1]}.`); i++;
+          if (i === P.length) { ask(); qq.textContent = 'Happy holiday! 🏖️'; api.selesai(Math.max(0, 1 - miss * .1), 'Great! You know the holiday weather. ☀️🌨️🌧️☁️'); }
+          else setTimeout(ask, 900);
+        }
+        ask();
+        return { jawab() { P.forEach(p => pick(p[1], wb[p[1]])); } };
+      },
+    }],
+  });
+})();
+
+/* ================= Aplikasi "Belajar Ceria" Darjah 2 ================= */
+(function () {
+  const $ = s => document.querySelector(s);
+  const EN = SUBJ.ui === 'en';
+  const L = EN ? { betul: '✔ True', salah: '✘ False', next: 'Next ▶', prev: '◀ Back', main: '🎮 Let\'s play!', baca: '📖 Learn', game: '🎮 Play', amali: '🧪 Try it',
+      again: '🔁 Play again', units: 'All units', ok: ['Well done!', 'Correct!', 'Great!', 'Yes!'], no: 'Not quite.', ans: 'Answer:', mix: '🏆 Big challenge (all units)',
+      s3: 'Excellent!', s2: 'Good job!', s1: 'Try again!', score: n => `You got ${n}`, readDone: 'You finished the lesson!', unit: 'Unit', listen: 'Listen' }
+    : { betul: '✔ Betul', salah: '✘ Salah', next: 'Seterusnya ▶', prev: '◀ Kembali', main: '🎮 Jom main!', baca: '📖 Belajar', game: '🎮 Main', amali: '🧪 Amali',
+      again: '🔁 Main lagi', units: 'Semua unit', ok: ['Bagus!', 'Betul!', 'Hebat!', 'Pandai!'], no: 'Belum tepat.', ans: 'Jawapan:', mix: '🏆 Cabaran besar (semua unit)',
+      s3: 'Syabas!', s2: 'Bagus!', s1: 'Cuba lagi!', score: n => `Markah kamu ${n}`, readDone: 'Kamu sudah habis belajar!', unit: SUBJ.unit || 'Unit', listen: 'Dengar' };
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'd2' + SUBJ.kod;
+  const G = Object.assign({ xp: 0, u: {}, cab: 0, mute: false }, store.get(KEY, {}));
+  const UU = n => (G.u[n] = G.u[n] || { baca: 0, main: 0, am: {} });
+  const totalStars = () => Object.values(G.u).reduce((t, x) => t + (x.main || 0) + Object.values(x.am || {}).reduce((a, b) => a + b, 0), 0) + (G.cab || 0);
+  const save = () => { store.set(KEY, G); $('#xp').textContent = '⭐ ' + totalStars(); };
+  UNITS.sort((a, b) => a.n - b.n);
+  const stars = (n, of = 3) => '★'.repeat(n) + '<i>' + '★'.repeat(of - n) + '</i>';
+
+  /* nama murid dikongsi semua subjek */
+  const nm = $('#nama'); try { nm.value = localStorage.getItem('d2nama') || ''; } catch (e) {}
+  nm.oninput = () => { try { localStorage.setItem('d2nama', nm.value); } catch (e) {} };
+
+  /* bunyi + suara */
+  let AC = null;
+  function tone(fs, d) { if (G.mute) return; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); const t = AC.currentTime;
+    fs.forEach((f, i) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = 'triangle'; o.frequency.value = f; o.connect(g); g.connect(AC.destination);
+      g.gain.setValueAtTime(.0001, t + i * d); g.gain.exponentialRampToValueAtTime(.16, t + i * d + .02); g.gain.exponentialRampToValueAtTime(.0001, t + i * d + d * 1.6);
+      o.start(t + i * d); o.stop(t + i * d + d * 1.7); }); } catch (e) {} }
+  let VOICE;
+  function pickVoice() { try { const vs = speechSynthesis.getVoices(), l = SUBJ.lang.slice(0, 2);
+    VOICE = vs.find(v => v.lang.replace('_', '-') === SUBJ.lang) || vs.find(v => v.lang.startsWith(l)) || (l === 'ms' ? vs.find(v => v.lang.startsWith('id')) : null); } catch (e) {} }
+  if (window.speechSynthesis) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+  function speak(h) { if (G.mute || !window.speechSynthesis) return; const t = plain(h); if (!t) return;
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = VOICE ? VOICE.lang : SUBJ.lang; if (VOICE) u.voice = VOICE; u.rate = .88; speechSynthesis.speak(u); } catch (e) {} }
+  const hush = () => { try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {} };
+  const spkBtn = txt => { const b = H('<button class="spk" aria-label="' + L.listen + '">🔊</button>'); b.onclick = () => speak(typeof txt === 'function' ? txt() : txt); return b; };
+  const ikon = i => !i ? '' : (String(i).trim().startsWith('<') ? i : esc(i));
+
+  /* ---------- laman utama ---------- */
+  function home() {
+    hush(); cur = null; history.replaceState(null, '', location.pathname);
+    $('#unit').hidden = true; $('#home').hidden = false;
+    const temas = []; UNITS.forEach(u => { const t = u.tema || ''; let g = temas.find(x => x[0] === t); if (!g) temas.push(g = [t, []]); g[1].push(u); });
+    $('#home').innerHTML = temas.map(([t, us]) => `<section class="tema">${t ? `<h2>${esc(t)}</h2>` : '<h2></h2>'}<div class="grid">${us.map(u => {
+      const x = G.u[u.n] || {}, na = (u.amali || []).length, da = Object.keys(x.am || {}).length;
+      return `<button class="ut" data-n="${u.n}" style="--uc:${u.warna || 'var(--c)'}"><span class="no" aria-hidden="true">${ikon(u.ikon)}<small>${esc(u.label || u.n)}</small></span>
+        <b>${esc(u.tajuk)}</b><span class="st" aria-label="${x.main || 0} / 3">${stars(x.main || 0)}<span>${x.baca ? '📖✓' : ''}${na ? ` 🧪${da}/${na}` : ''}</span></span></button>`; }).join('')}</div></section>`).join('')
+      + `<div class="mix"><button class="btn go" id="cab">${L.mix}</button><span class="st" style="color:var(--gold);font-size:1.4rem;align-self:center">${stars(G.cab || 0)}</span></div>`;
+    $('#home').querySelectorAll('.ut').forEach(b => b.onclick = () => open(+b.dataset.n));
+    $('#cab').onclick = cabaran;
+    if (!RM()) $('#home').querySelectorAll('.ut').forEach((b, i) => anim(b, [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { delay: Math.min(i * 35, 500), duration: 380 }));
+    window.scrollTo({ top: 0 });
+  }
+
+  /* ---------- unit ---------- */
+  let cur = null, gen = 0;
+  function open(n, tabName) {
+    const u = UNITS.find(x => x.n === n); if (!u) return home();
+    hush(); cur = u; history.replaceState(null, '', '?u=' + n);
+    $('#home').hidden = true; $('#unit').hidden = false;
+    document.documentElement.style.setProperty('--uc', u.warna || '');
+    $('#uh').innerHTML = `<span class="big" aria-hidden="true">${ikon(u.ikon)}</span><div><small>${esc(u.labelPenuh || (L.unit + ' ' + (u.label || u.n)))}${u.tema ? ' · ' + esc(u.tema) : ''}</small><h2>${esc(u.tajuk)}</h2></div>`;
+    const tabs = [['baca', L.baca], ['main', L.game]].concat((u.amali || []).length ? [['amali', L.amali]] : []);
+    $('#tabs').innerHTML = tabs.map(([k, t]) => `<button class="tab" role="tab" data-t="${k}">${t}</button>`).join('');
+    $('#tabs').querySelectorAll('.tab').forEach(b => b.onclick = () => tab(b.dataset.t));
+    tab(tabName || (UU(n).baca ? 'main' : 'baca'));
+    window.scrollTo({ top: 0 });
+  }
+  function tab(k) {
+    hush(); gen++;
+    $('#tabs').querySelectorAll('.tab').forEach(b => { b.classList.toggle('on', b.dataset.t === k); b.setAttribute('aria-selected', b.dataset.t === k); });
+    ({ baca, main: () => kuiz(cur.soalan || [], 8, onMain), amali: alist })[k]();
+  }
+
+  /* ---------- Belajar: kad bergaris ---------- */
+  function baca() {
+    const cs = cur.belajar || []; let i = 0; const P = $('#pane');
+    function draw() {
+      const c = cs[i] || {}; hush();
+      const paras = [].concat(c.teks || []).map(p => `<p>${p}</p>`).join('');
+      P.innerHTML = `<article class="page card"><div class="ik" aria-hidden="true">${ikon(c.ikon)}</div><h3>${c.tajuk || ''}</h3>${paras}
+        ${c.senarai ? `<ul>${c.senarai.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
+        ${c.chips ? `<div class="chipz">${c.chips.map(x => `<span>${x}</span>`).join('')}</div>` : ''}
+        ${c.contoh ? `<div class="eg">${[].concat(c.contoh).join('<br>')}</div>` : ''}</article>
+        <div class="nav"><button class="btn alt" id="pv" ${i ? '' : 'disabled'}>${L.prev}</button><div class="dots">${cs.map((_, j) => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div>
+        <button class="btn go" id="nx">${i < cs.length - 1 ? L.next : L.main}</button></div>`;
+      const art = P.querySelector('.page'); art.appendChild(spkBtn(() => [c.tajuk, ...[].concat(c.teks || []), ...(c.senarai || []), ...(c.chips || []), ...[].concat(c.contoh || [])].join('. ')));
+      if (c.svg && typeof c.svg === 'function') { try { c.svg(P.querySelector('.ik'), { S, H, anim }); } catch (e) { console.error(e); } }
+      anim(art, [{ opacity: 0, transform: 'translateX(24px)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+      P.querySelector('#pv').onclick = () => { if (i) { i--; draw(); } };
+      P.querySelector('#nx').onclick = () => { if (i < cs.length - 1) { i++; draw(); } else { UU(cur.n).baca = 1; G.xp += 5; save(); api0.toast(L.readDone); tab('main'); } };
+    }
+    draw();
+  }
+
+  /* ---------- Main: kuiz bercampur ---------- */
+  let Q = null;   // keadaan soalan semasa (untuk ujian)
+  function pickQs(bank, n) {
+    const by = {}; shuffle(bank).forEach(q => (by[q.j] = by[q.j] || []).push(q));
+    const out = [], ks = shuffle(Object.keys(by));
+    while (out.length < n && ks.some(k => by[k].length)) ks.forEach(k => { if (out.length < n && by[k].length) out.push(by[k].shift()); });
+    return shuffle(out);
+  }
+  function kuiz(bank, n, onEnd) {
+    const qs = pickQs(bank, Math.min(n, bank.length)), sc = []; let i = 0; const P = $('#pane'), g = gen;
+    if (!qs.length) { P.innerHTML = '<p class="hint">—</p>'; return; }
+    function show() {
+      if (g !== gen) return;
+      const q = qs[i]; hush();
+      P.innerHTML = `<div class="qbar">${qs.map((_, j) => `<i class="${j < i ? (sc[j] >= 1 ? 'ok' : 'no') : j === i ? 'on' : ''}"></i>`).join('')}</div><article class="page" id="qp"></article>`;
+      const box = P.querySelector('#qp');
+      Q = { q, i, solve: null, done: false };
+      const fin = (s) => {
+        if (Q.done) return; Q.done = true; sc[i] = s;
+        const fb = H(`<div class="fb show ${s >= 1 ? 'ok' : 'no'}"></div>`);
+        fb.innerHTML = (s >= 1 ? '✅ <b>' + L.ok[Math.floor(Math.random() * L.ok.length)] + '</b>' : '💡 <b>' + (s > 0 ? L.ok[0] : L.no) + '</b>') + (q.kenapa ? ' ' + q.kenapa : '');
+        s >= 1 ? tone([660, 880], .09) : tone([300, 240], .12);
+        const nx = H(`<button class="btn go next">${i < qs.length - 1 ? L.next : '🏁'}</button>`);
+        nx.onclick = () => { i++; i < qs.length ? show() : end(); };
+        box.append(fb, nx); anim(fb, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 260 });
+        if (q.kenapa && s < 1) speak(q.kenapa);
+      };
+      (R[q.j] || R.pilih)(q, box, fin);
+      anim(box, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
+      if (q.sebut) setTimeout(() => g === gen && speak(q.sebut), 250);
+    }
+    function end() {
+      const s = sc.reduce((a, b) => a + b, 0) / qs.length, n3 = s >= .9 ? 3 : s >= .6 ? 2 : s > 0 ? 1 : 0;
+      const isNew = onEnd(n3, s); Q = null;
+      const msg = n3 === 3 ? L.s3 : n3 === 2 ? L.s2 : L.s1;
+      P.innerHTML = `<div class="page res"><div class="stamp">${msg}</div><div class="stars">${stars(n3)}</div><p>${L.score(Math.round(s * qs.length) + ' / ' + qs.length)}${isNew ? ' 🎉' : ''}</p>
+        <div class="row" style="justify-content:center;margin-top:12px"><button class="btn go" id="ag">${L.again}</button><button class="btn alt" id="hm">◀ ${L.units}</button></div></div>`;
+      tone(n3 === 3 ? [523, 659, 784, 1046] : [523, 659, 784], .11); speak(msg);
+      anim(P.querySelector('.stamp'), [{ opacity: 0, transform: 'rotate(-30deg) scale(2.2)' }, { opacity: 1, transform: 'rotate(-8deg) scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+      P.querySelector('#ag').onclick = () => kuiz(bank, n, onEnd); P.querySelector('#hm').onclick = home;
+      window.__d2Done = { skor: s, n3 };
+    }
+    show();
+  }
+  function onMain(n3, s) { const x = UU(cur.n), was = x.main || 0; x.main = Math.max(was, n3); G.xp += Math.round(10 + 20 * s); save(); return n3 > was; }
+  function cabaran() {
+    gen++; cur = { n: -1, tajuk: L.mix }; history.replaceState(null, '', '?cabaran');
+    $('#home').hidden = true; $('#unit').hidden = false; $('#tabs').innerHTML = '';
+    $('#uh').innerHTML = `<span class="big">🏆</span><div><small>Darjah 2 · ${esc(SUBJ.nama)}</small><h2>${L.mix.replace(/^\S+\s/, '')}</h2></div>`;
+    kuiz(UNITS.flatMap(u => u.soalan || []), 12, (n3) => { const was = G.cab || 0; G.cab = Math.max(was, n3); save(); return n3 > was; });
+  }
+
+  /* ---------- penyampai jenis soalan ---------- */
+  const qhead = (q, box) => {
+    const s = esc(q.s || '').replace(/_{3,}/g, '<span class="gap">&nbsp;</span>');
+    box.insertAdjacentHTML('beforeend', `<p class="qs">${q.html ? q.s : s}</p>${q.ikon ? `<div class="qik" aria-hidden="true">${ikon(q.ikon)}</div>` : ''}`);
+    box.appendChild(spkBtn(() => q.sebut || q.s));
+  };
+  const btn = (t, cls = 'opt') => H(`<button class="${cls}">${t}</button>`);
+  const shake = el => anim(el, [{ transform: 'translateX(-7px)' }, { transform: 'translateX(7px)' }, { transform: 'none' }], { duration: 280, fill: 'none' });
+  const pop = el => anim(el, [{ transform: 'scale(1.1)' }, { transform: 'none' }], { duration: 260, fill: 'none' });
+  const R = {
+    pilih(q, box, fin) {
+      qhead(q, box); const o = H('<div class="opts"></div>'); box.appendChild(o);
+      const bs = shuffle(q.p.map((t, k) => [t, k])).map(([t, k]) => { const b = btn(q.htmlP ? t : esc(t)); b.dataset.k = k; o.appendChild(b); return b; });
+      const pickK = k => { const b = bs.find(x => +x.dataset.k === k); bs.forEach(x => x.disabled = true);
+        if (k === q.a) { b.classList.add('ok'); pop(b); fin(1); } else { b.classList.add('no'); shake(b); bs.find(x => +x.dataset.k === q.a).classList.add('ok'); fin(0); } };
+      bs.forEach(b => b.onclick = () => pickK(+b.dataset.k));
+      Q.solve = () => pickK(q.a);
+    },
+    bs(q, box, fin) { R.pilih(Object.assign({}, q, { p: [L.betul, L.salah], a: q.a ? 0 : 1 }), box, fin); },
+    padan(q, box, fin) {
+      qhead(q, box); const w = H('<div class="two"><div class="col"></div><div class="col"></div></div>'); box.appendChild(w);
+      const [cl, cr] = w.children; let sel = null, left = q.pasangan.length, miss = 0;
+      const A = shuffle(q.pasangan.map((p, k) => [p[0], k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; cl.appendChild(b); return b; });
+      const B = shuffle(q.pasangan.map((p, k) => [p[1], k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; cr.appendChild(b); return b; });
+      const tryPair = (a, b) => { if (a.dataset.k === b.dataset.k) { [a, b].forEach(x => { x.classList.remove('on'); x.classList.add('ok'); x.disabled = true; pop(x); }); tone([700], .06); if (!--left) fin(miss ? .5 : 1); }
+        else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } sel = null; A.forEach(x => x.classList.remove('on')); };
+      A.forEach(a => a.onclick = () => { A.forEach(x => x.classList.remove('on')); sel = a; a.classList.add('on'); speak(a.textContent); });
+      B.forEach(b => b.onclick = () => { if (sel) tryPair(sel, b); else { shake(b); } });
+      Q.solve = () => A.forEach(a => { if (!a.disabled) tryPair(a, B.find(b => b.dataset.k === a.dataset.k)); });
+    },
+    susun(q, box, fin) {
+      qhead(q, box); const sl = H('<div class="slots"></div>'), pool = H('<div class="pool"></div>'); box.append(sl, pool);
+      const slots = q.item.map((_, k) => sl.appendChild(H(`<div class="slot"><b>${k + 1}</b><span></span></div>`)));
+      let nx = 0, miss = 0;
+      const cs = shuffle(q.item.map((t, k) => [t, k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; pool.appendChild(b); return b; });
+      const put = b => { const k = +b.dataset.k;
+        if (q.item[k] === q.item[nx]) { slots[nx].querySelector('span').innerHTML = b.innerHTML; slots[nx].classList.add('ok'); pop(slots[nx]); b.remove(); nx++; tone([600 + nx * 40], .05); if (nx === q.item.length) fin(miss ? .5 : 1); }
+        else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      cs.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < q.item.length) put(cs.find(b => b.isConnected && q.item[+b.dataset.k] === q.item[nx])); };
+    },
+    kumpul(q, box, fin) {
+      qhead(q, box); const items = shuffle(q.kumpulan.flatMap(([g, xs], gi) => xs.map(x => [x, gi])));
+      const now = H('<div class="now"></div>'), bins = H('<div class="bins"></div>'); box.append(now, bins);
+      const bb = q.kumpulan.map(([g]) => { const b = H(`<button class="bin"><b>${q.html ? g : esc(g)}</b></button>`); bins.appendChild(b); return b; });
+      let i = 0, miss = 0;
+      const showNow = () => { now.innerHTML = i < items.length ? (q.html ? items[i][0] : esc(items[i][0])) : '✔'; if (i < items.length) pop(now); };
+      const drop = gi => { if (i >= items.length) return; const [x, g] = items[i];
+        if (g === gi) { bb[gi].insertAdjacentHTML('beforeend', `<span>${q.html ? x : esc(x)}</span>`); pop(bb[gi]); tone([700], .05); i++; showNow(); if (i === items.length) { bb.forEach(b => b.disabled = true); fin(miss ? .5 : 1); } }
+        else { miss++; bb[gi].classList.add('no'); shake(bb[gi]); setTimeout(() => bb[gi].classList.remove('no'), 450); } };
+      bb.forEach((b, gi) => b.onclick = () => drop(gi)); showNow();
+      Q.solve = () => { while (i < items.length) drop(items[i][1]); };
+    },
+    eja(q, box, fin) {
+      qhead(Object.assign({}, q, { sebut: q.sebut || q.kata }), box);
+      const word = q.kata, line = H('<div class="line" aria-live="polite"></div>'), pool = H('<div class="pool"></div>'); box.append(line, pool);
+      let nx = 0, miss = 0; const chars = [...word].filter(c => c !== ' ');
+      const tiles = shuffle(chars.map((c, k) => [c, k])).map(([c]) => { const b = btn(esc(c), 'chip'); b.dataset.c = c; pool.appendChild(b); return b; });
+      const put = b => { if (b.dataset.c.toLowerCase() === chars[nx].toLowerCase()) { line.insertAdjacentHTML('beforeend', `<span>${esc(chars[nx])}</span>`); b.remove(); nx++; tone([600 + nx * 30], .04);
+          if (nx === chars.length) { speak(word); fin(miss ? .5 : 1); } } else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      tiles.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < chars.length) put(tiles.find(b => b.isConnected && b.dataset.c.toLowerCase() === chars[nx].toLowerCase())); };
+    },
+    ayat(q, box, fin) {
+      qhead(q, box); const line = H('<div class="line"></div>'), pool = H('<div class="pool"></div>'); box.append(line, pool);
+      let nx = 0, miss = 0;
+      const ws = shuffle(q.kata.map((w, k) => [w, k])).map(([w]) => { const b = btn(esc(w), 'chip'); b.dataset.w = w; pool.appendChild(b); return b; });
+      const put = b => { if (b.dataset.w === q.kata[nx]) { line.insertAdjacentHTML('beforeend', `<span>${esc(b.dataset.w)}</span>`); b.remove(); nx++; tone([600 + nx * 30], .04);
+          if (nx === q.kata.length) { speak(q.kata.join(' ')); fin(miss ? .5 : 1); } } else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      ws.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < q.kata.length) put(ws.find(b => b.isConnected && b.dataset.w === q.kata[nx])); };
+    },
+  };
+
+  /* ---------- Amali: aktiviti tersuai ---------- */
+  const api0 = { toast(t) { const d = document.createElement('div'); d.className = 'tst'; d.textContent = t; $('#toast').appendChild(d); setTimeout(() => d.remove(), 2600); } };
+  let ctl = null;
+  function alist() {
+    const P = $('#pane'), x = UU(cur.n);
+    P.innerHTML = `<div class="alist">${cur.amali.map((a, k) => `<button class="ut" data-k="${k}"><span class="no" aria-hidden="true">${ikon(a.ikon)}</span><b>${esc(a.tajuk)}</b><span class="st">${stars(x.am[a.id] || 0)}</span></button>`).join('')}</div>`;
+    P.querySelectorAll('.ut').forEach(b => b.onclick = () => runAmali(cur.amali[+b.dataset.k]));
+    if (cur.amali.length === 1 && !x.am[cur.amali[0].id]) runAmali(cur.amali[0]);
+  }
+  function runAmali(a) {
+    gen++; const g = gen, P = $('#pane'), u = cur; hush();
+    P.innerHTML = `<div class="say" aria-live="polite"></div><div class="abody"></div><div id="afin"></div>`;
+    const say = P.querySelector('.say'), body = P.querySelector('.abody');
+    const api = {
+      say(h) { if (g === gen) say.innerHTML = h; },
+      betul(el, h) { tone([660, 880], .09); if (el) pop(el); if (h !== undefined) api.say('✅ ' + h); },
+      salah(el, h) { tone([300, 240], .12); if (el) shake(el); if (h !== undefined) api.say('💡 ' + h); },
+      selesai(skor, h) {
+        if (g !== gen) return; skor = Math.max(0, Math.min(1, +skor || 0));
+        const n = skor >= .999 ? 3 : skor >= .7 ? 2 : skor > 0 ? 1 : 0, x = UU(u.n), was = x.am[a.id] || 0;
+        x.am[a.id] = Math.max(was, n); G.xp += Math.round(10 + 20 * skor); save();
+        const msg = n === 3 ? L.s3 : n === 2 ? L.s2 : L.s1; tone([523, 659, 784, 1046], .1); speak(h || msg);
+        P.querySelector('#afin').innerHTML = `<div class="res"><div class="stamp">${msg}</div><div class="stars">${stars(n)}</div>${h ? `<p>${h}</p>` : ''}
+          <div class="row" style="justify-content:center"><button class="btn go" id="ag">${L.again}</button><button class="btn alt" id="bk">◀ ${L.amali.replace(/^\S+\s/, '')}</button></div></div>`;
+        P.querySelector('#ag').onclick = () => runAmali(a); P.querySelector('#bk').onclick = () => tab('amali');
+        anim(P.querySelector('.stamp'), [{ opacity: 0, transform: 'rotate(-30deg) scale(2.2)' }, { opacity: 1, transform: 'rotate(-8deg) scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+        P.querySelector('#afin').scrollIntoView({ block: 'nearest', behavior: RM() ? 'auto' : 'smooth' });
+        window.__amaliDone = { id: a.id, skor };
+      },
+      toast: api0.toast, speak, shuffle, S, H, anim, esc,
+    };
+    api.say(a.arahan || '');
+    try { ctl = a.mula(body, api) || null; } catch (e) { console.error(e); body.innerHTML = '<p class="hint">Aktiviti ini gagal dimuat.</p>'; }
+  }
+
+  $('#back').onclick = home;
+  $('#mute').onclick = () => { G.mute = !G.mute; if (G.mute) hush(); save(); $('#mute').textContent = G.mute ? '🔇' : '🔊'; };
+  $('#mute').textContent = G.mute ? '🔇' : '🔊';
+  window.D2 = { open, home, tab, cabaran, runAmali, kuizAll: () => { gen++; kuiz(cur.soalan || [], 999, () => false); }, get Q() { return Q; }, get ctl() { return ctl; }, get cur() { return cur; }, UNITS, G, R };   // untuk ujian
+  save();
+  const sp = new URLSearchParams(location.search);
+  sp.has('cabaran') ? cabaran() : sp.get('u') ? open(+sp.get('u')) : home();
+})();
+
+</script>
+</body>
+</html>

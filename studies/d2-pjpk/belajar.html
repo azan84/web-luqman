@@ -1,0 +1,1923 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PJ & Kesihatan Darjah 2</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eef3f8; --card:#ffffff; --ink:#1c2740; --muted:#5a6884; --line:#cfd9e6; --rule:#d3e3f5; --margin:#e5484d;
+  --ok:#1f9d55; --no:#e0592a; --gold:#f2b705; --c:#e8590c; --c2:color-mix(in srgb,var(--c) 14%,var(--card));
+  --ui:"Andika","Comic Neue",system-ui,sans-serif; --hd:"Fredoka","Andika",system-ui,sans-serif; --ar:"Amiri","Scheherazade New","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#14241f; --card:#1b2f29; --ink:#eef5ef; --muted:#a9bfb6; --line:#2f4a41; --rule:#25403a; --margin:#ff7b7f; --ok:#6fdc97; --no:#ff9466; --gold:#ffd23f}}
+:root[data-theme="dark"]{--paper:#14241f; --card:#1b2f29; --ink:#eef5ef; --muted:#a9bfb6; --line:#2f4a41; --rule:#25403a; --margin:#ff7b7f; --ok:#6fdc97; --no:#ff9466; --gold:#ffd23f}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:19px/1.6 var(--ui)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+.ar{font-family:var(--ar);direction:rtl;unicode-bidi:isolate;font-size:1.5em;line-height:1.7}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 70px}
+[hidden]{display:none!important}
+
+/* Kulit buku latihan */
+.cover{background:var(--c);color:#fff;padding:44px 0 26px;position:relative;overflow:hidden}
+.cover::after{content:"";position:absolute;inset:auto 0 0 0;height:10px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 14px,transparent 14px 28px)}
+.cover .wrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding-bottom:0}
+.label{background:#fff;color:#1c2740;border-radius:14px;padding:12px 18px 10px;min-width:260px;flex:1;max-width:520px;box-shadow:0 6px 0 rgba(0,0,0,.18);position:relative}
+.label h1{margin:0;font:700 clamp(1.6rem,4.6vw,2.4rem)/1.05 var(--hd);color:var(--c)}
+.label .ln{display:flex;gap:8px;align-items:baseline;margin-top:6px;font-size:.92rem;color:#5a6884}
+.label input{flex:1;min-width:0;border:0;border-bottom:2px dotted #aab6c8;background:transparent;font:700 1.05rem var(--hd);color:#1c2740;padding:0 4px}
+.label input:focus{outline:none;border-bottom-color:var(--c)}
+.tools{display:flex;gap:10px;margin-left:auto}
+.pill{font:700 1.05rem var(--hd);background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.icon{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.6);background:rgba(255,255,255,.18);cursor:pointer;font-size:1.25rem;color:#fff}
+
+/* Laman utama */
+.tema h2{font:600 1.05rem var(--hd);color:var(--muted);margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+.tema h2::after{content:"";flex:1;height:2px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.ut{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 16px;cursor:pointer;transition:transform .18s,border-color .18s;min-height:96px}
+.ut:hover{transform:translateY(-3px);border-color:var(--uc,var(--c))}
+.ut .no{grid-row:1/3;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:2rem;background:color-mix(in srgb,var(--uc,var(--c)) 16%,var(--card));position:relative}
+.ut .no small{position:absolute;right:-4px;bottom:-4px;background:var(--uc,var(--c));color:#fff;font:700 .8rem var(--hd);border-radius:99px;padding:1px 7px;border:2px solid var(--card)}
+.ut b{font:600 1.08rem/1.2 var(--hd)}
+.ut .st{color:var(--gold);letter-spacing:2px;font-size:1.05rem}
+.ut .st i{font-style:normal;color:var(--line)}
+.ut .st span{font:600 .78rem var(--ui);color:var(--muted);letter-spacing:0;margin-left:6px}
+.mix{margin:22px 0 0;display:flex;gap:12px;flex-wrap:wrap}
+
+/* Unit */
+.uh{display:flex;align-items:center;gap:12px;margin:18px 0 10px;flex-wrap:wrap}
+.uh .big{font-size:2.6rem;line-height:1}
+.uh small{display:block;color:var(--muted);font-weight:700}
+.uh h2{margin:0;font:700 clamp(1.35rem,3.6vw,1.9rem)/1.15 var(--hd)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.tab{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:8px 18px;font:600 1.02rem var(--hd);cursor:pointer;min-height:48px}
+.tab.on{background:var(--c);border-color:var(--c);color:#fff}
+
+/* Kertas bergaris (kad belajar & soalan) */
+.page{background-color:var(--card);background-image:linear-gradient(90deg,transparent 46px,color-mix(in srgb,var(--margin) 55%,transparent) 46px,color-mix(in srgb,var(--margin) 55%,transparent) 48px,transparent 48px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 35px);border:2px solid var(--line);border-radius:22px;padding:22px 22px 22px 64px;min-height:300px;position:relative}
+.card .ik{font-size:4rem;line-height:1.1;margin:0 0 6px}
+.card .ik svg{width:min(320px,100%);height:auto;display:block}
+.card h3{margin:0 0 8px;font:700 1.5rem/1.2 var(--hd);color:var(--c)}
+.card p{margin:0 0 10px;font-size:1.18rem}
+.card ul{margin:6px 0 10px;padding-left:22px}
+.card li{margin:4px 0;font-size:1.12rem}
+.card .chipz{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.card .chipz span{background:var(--c2);border:2px solid color-mix(in srgb,var(--c) 40%,var(--line));border-radius:12px;padding:4px 12px;font-weight:700}
+.card .eg{border-left:5px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));padding:8px 12px;border-radius:0 12px 12px 0;margin:8px 0}
+.spk{position:absolute;right:14px;top:14px;width:50px;height:50px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.3rem;cursor:pointer}
+.nav{display:flex;align-items:center;gap:10px;margin-top:14px;justify-content:space-between}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--c);transform:scale(1.25)}
+.btn{border:0;border-radius:16px;padding:12px 20px;font:700 1.05rem var(--hd);cursor:pointer;background:var(--ink);color:var(--paper);box-shadow:0 5px 0 color-mix(in srgb,var(--ink) 55%,#000);min-height:52px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 55%,#000)}
+.btn.go{background:var(--c);color:#fff;box-shadow:0 5px 0 color-mix(in srgb,var(--c) 55%,#000)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.btn[disabled]{opacity:.4;cursor:default}
+
+/* Soalan */
+.qbar{display:flex;gap:6px;margin:0 0 12px}
+.qbar i{flex:1;height:10px;border-radius:99px;background:var(--line)}
+.qbar i.ok{background:var(--ok)} .qbar i.no{background:var(--no)} .qbar i.on{background:var(--c)}
+.qs{font:600 1.3rem/1.35 var(--hd);margin:0 0 6px;padding-right:56px}
+.qs .gap{display:inline-block;min-width:70px;border-bottom:3px solid var(--c);text-align:center}
+.qik{font-size:3.4rem;line-height:1.1;margin:4px 0 8px}
+.qik svg{width:min(300px,100%);height:auto}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.opt,.chip{border:3px solid var(--line);background:var(--card);border-radius:16px;padding:12px 16px;cursor:pointer;font:600 1.12rem/1.3 var(--ui);text-align:left;min-height:56px;transition:border-color .15s,background .15s}
+.opt:hover,.chip:hover{border-color:var(--c)}
+.chip{text-align:center;padding:10px 14px;min-height:50px}
+:is(.opt,.chip,.bin,.slot).on{background:var(--c2);border-color:var(--c)}
+:is(.opt,.chip,.bin,.slot,.now).ok{background:color-mix(in srgb,var(--ok) 18%,var(--card));border-color:var(--ok)}
+:is(.opt,.chip,.bin,.slot,.now).no{background:color-mix(in srgb,var(--no) 16%,var(--card));border-color:var(--no)}
+.opt[disabled],.chip[disabled]{cursor:default}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.col{display:grid;gap:10px;align-content:start}
+.slots{display:grid;gap:8px;margin:12px 0}
+.slot{min-height:52px;border:3px dashed var(--line);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:10px;font-weight:700}
+.slot b{font:700 1.1rem var(--hd);color:var(--c);min-width:24px}
+.slot.ok{border-style:solid}
+.pool{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.line{min-height:62px;border-bottom:3px solid var(--c);display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;padding:6px 0;margin:10px 0;font:700 1.35rem var(--hd)}
+.line span{background:var(--c2);border-radius:10px;padding:2px 10px}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.bin{border:3px solid var(--line);border-radius:16px;padding:10px;min-height:96px;background:var(--card);cursor:pointer;text-align:left}
+.bin b{display:block;font:700 1.05rem var(--hd);color:var(--c);margin-bottom:6px}
+.bin span{display:inline-block;margin:3px;padding:2px 10px;border-radius:10px;background:var(--c2);font-weight:700;font-size:.95rem}
+.now{font:700 1.5rem var(--hd);text-align:center;margin:10px 0;padding:12px;border-radius:16px;background:var(--c2)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:14px;font-size:1.08rem;display:none}
+.fb.show{display:block}
+.fb.ok{border:2px solid var(--ok)} .fb.no{border:2px solid var(--no)}
+.next{margin-top:12px}
+
+/* Hasil: cop guru */
+.res{text-align:center;padding:24px 10px;overflow:hidden}
+.stamp{display:inline-block;font:700 2.4rem/1 var(--hd);color:var(--margin);border:5px solid var(--margin);border-radius:18px;padding:12px 26px;transform:rotate(-8deg);letter-spacing:.04em;margin:12px 0 6px}
+.res .stars{font-size:3rem;color:var(--gold);letter-spacing:6px}
+.res .stars i{font-style:normal;color:var(--line)}
+.res p{margin:6px 0;font-size:1.1rem}
+
+/* Amali (modul aktiviti tersuai) */
+.alist{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.say{min-height:54px;margin:4px 0 12px;padding:12px 14px;border-radius:14px;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--c);font-size:1.08rem}
+.abody{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;min-height:260px}
+.abody svg{max-width:100%;height:auto}
+.abody svg text{font-family:var(--ui);fill:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.box{border:2px solid var(--line);border-radius:16px;padding:12px}
+.hint{color:var(--muted);font-size:.95rem;margin:6px 0 0}
+.meter{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--c);transition:width .4s}
+.back{margin:16px 0 0}
+#toast{position:fixed;right:16px;bottom:16px;z-index:50;display:grid;gap:8px}
+.tst{background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:12px;font-weight:700}
+@media (max-width:600px){
+  body{font-size:18px}
+  .label{min-width:0;flex-basis:100%}
+  .tools{margin-left:0}
+  .grid,.alist{grid-template-columns:1fr}
+  .page{padding:18px 14px 18px 40px;background-image:linear-gradient(90deg,transparent 26px,color-mix(in srgb,var(--margin) 55%,transparent) 26px,color-mix(in srgb,var(--margin) 55%,transparent) 28px,transparent 28px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 35px)}
+  .opts{grid-template-columns:1fr}
+  .card .ik{font-size:3.2rem}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="cover">
+<a href="../../studies.html#d2-pjpk" style="position:absolute;z-index:5;left:12px;top:8px;padding:4px 12px;border-radius:999px;border:2px solid rgba(255,255,255,.7);background:rgba(0,0,0,.18);color:#fff;font:700 14px system-ui;text-decoration:none">← Studies</a>
+
+  <div class="wrap">
+    <div class="label">
+      <h1>⚽ PJ & Kesihatan</h1>
+      <div class="ln"><span>Nama:</span><input id="nama" maxlength="24" autocomplete="off" aria-label="Nama:"><span>Darjah 2</span></div>
+    </div>
+    <div class="tools"><span class="pill" id="xp">⭐ 0</span><button class="icon" id="mute" aria-label="Bunyi dan suara">🔊</button></div>
+  </div>
+</header>
+<div class="wrap">
+  <main id="home"></main>
+  <main id="unit" hidden>
+    <button class="btn alt back" id="back">◀ Semua unit</button>
+    <div class="uh" id="uh"></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <section id="pane"></section>
+  </main>
+</div>
+<div id="toast" aria-live="polite"></div>
+<script>
+const SUBJ = {"nama": "PJ & Kesihatan", "ikon": "⚽", "warna": "#e8590c", "lang": "ms-MY", "ui": "ms", "unit": "Unit", "kod": "pjpk"};
+/* ================= Enjin "Belajar Ceria" Darjah 2 =================
+   Setiap modul unit memanggil UNIT({...}) sekali. Lihat shared/d2/SPEC.md. */
+'use strict';
+const UNITS = [];
+function UNIT(u) { UNITS.push(u); }
+const NS = 'http://www.w3.org/2000/svg';
+function S(tag, at, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in at || {}) { if (k === 'text') e.textContent = at[k]; else e.setAttribute(k, at[k]); }
+  if (parent) parent.appendChild(e); return e;
+}
+function H(html) { const t = document.createElement('template'); t.innerHTML = String(html).trim(); return t.content.firstElementChild; }
+const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const anim = (el, kf, o) => (el && el.animate && !RM()) ? el.animate(kf, Object.assign({ duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }, o)) : null;
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+/* teks untuk dibaca kuat: buang tag, buang teks Arab/Jawi (.ar) dan emoji */
+function plain(h) {
+  const d = document.createElement('div'); d.innerHTML = String(h || '');
+  d.querySelectorAll('.ar,.nospeak,svg').forEach(e => e.remove());
+  return d.textContent.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, ' ').replace(/_{2,}/g, ' kosong ').replace(/\s+/g, ' ').trim();
+}
+
+(() => {
+  // --- lukisan orang lidi ringkas (kotak 100×100, tanah y≈96) ---
+  const sv = (w, h, s, vb) => `<svg viewBox="${vb || '0 0 ' + w + ' ' + h}" xmlns="http://www.w3.org/2000/svg" style="width:min(${w}px,calc(100% - 58px))">${s}</svg>`;
+  const fg = (p, x = 0, y = 0, k = 1, c = 'currentColor') => `<g transform="translate(${x} ${y}) scale(${k})" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">${p.slice(1).map(l => `<polyline points="${l}"/>`).join('')}<circle cx="${p[0][0]}" cy="${p[0][1]}" r="9" fill="${c}" stroke="none"/></g>`;
+  const tx = (x, y, t, z = 13, o = '') => `<text x="${x}" y="${y}" font-size="${z}" text-anchor="middle" fill="currentColor" ${o}>${t}</text>`;
+  const P = {
+    diri: [[50, 14], '32,52 50,30 68,52', '50,24 50,62', '40,96 50,62 60,96'],
+    depa: [[50, 14], '14,32 50,32 86,32', '50,24 50,62', '42,96 50,62 58,96'],
+    rangkak: [[84, 50], '80,94 74,60 68,94', '74,58 34,58', '30,94 34,58 14,94'],
+    susup: [[88, 80], '96,94 78,86 70,94', '78,86 30,88', '30,88 6,94'],
+    lompat: [[56, 10], '34,30 52,22 72,10', '52,20 48,52', '24,64 34,74 48,52 66,64 70,80'],
+    lari: [[58, 14], '36,46 42,34 54,30 66,40 76,32', '56,24 48,58', '26,86 36,76 48,58 66,62 62,82'],
+    ulat: [[86, 74], '84,94 80,80', '80,80 52,40 22,80', '22,80 18,94'],
+  };
+  P.kanggaru = [[50, 14], '40,36 36,46 50,32 64,46 60,36', '50,24 50,58', '40,80 50,58 60,80'];
+  const lantai = (w, y) => `<line x1="4" y1="${y}" x2="${w - 4}" y2="${y}" stroke="currentColor" stroke-width="3" opacity=".35"/>`;
+
+  // gambar kad
+  const gRuang = sv(320, 130, `
+    <rect x="6" y="8" width="180" height="114" rx="12" fill="#69db7c" opacity=".35"/>
+    ${fg(P.lari, 30, 46, .55)}${fg(P.lari, 110, 40, .6)}
+    ${tx(96, 26, 'Ruang luas', 15, 'font-weight="700"')}
+    <ellipse cx="258" cy="108" rx="50" ry="12" fill="none" stroke="#f08c00" stroke-width="5"/>
+    ${fg(P.diri, 222, 40, .6)}${fg(P.diri, 242, 38, .62)}${fg(P.diri, 262, 40, .6)}
+    ${tx(258, 26, 'Ruang sempit', 15, 'font-weight="700"')}`);
+  const gImbang = sv(320, 130, `
+    <rect x="70" y="92" width="180" height="12" rx="4" fill="#c08457"/><rect x="86" y="104" width="10" height="22" fill="#9c6644"/><rect x="224" y="104" width="10" height="22" fill="#9c6644"/>
+    ${fg(P.depa, 120, 2, .9)}${lantai(320, 126)}${tx(270, 40, 'tangan', 13)}${tx(270, 56, 'didepakan', 13)}`);
+  const kon = (x, y) => `<polygon points="${x - 10},${y} ${x + 10},${y} ${x},${y - 26}" fill="#f76707"/>`;
+  const palang = (x1, x2, y) => `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#fab005" stroke-width="6" stroke-linecap="round"/>`;
+  const gRendah = sv(320, 130, `
+    ${kon(30, 120)}${kon(140, 120)}${palang(30, 140, 86)}${fg(P.rangkak, 36, 90, .32)}${tx(85, 22, 'Merangkak', 14, 'font-weight="700"')}
+    ${kon(190, 120)}${kon(300, 120)}${palang(190, 300, 98)}${fg(P.susup, 200, 88, .42)}${tx(245, 22, 'Menyusup', 14, 'font-weight="700"')}
+    ${tx(245, 40, '(rendahkan badan)', 12)}${lantai(320, 122)}`);
+  const gTempo = sv(320, 140, `
+    ${lantai(320, 120)}
+    ${fg(P.ulat, 6, 70, .5)}${tx(40, 18, 'Perlahan', 14, 'font-weight="700"')}${tx(40, 136, '🐛 Ulat', 13)}
+    ${fg(P.kanggaru, 128, 26, .7)}<path d="M120 112 Q140 70 162 112 Q182 70 204 112" fill="none" stroke="var(--c)" stroke-width="2.5" stroke-dasharray="4 4"/>${tx(162, 18, 'Sederhana', 14, 'font-weight="700"')}${tx(162, 136, '🦘 Kanggaru', 13)}
+    ${fg(P.lari, 244, 50, .7)}${tx(280, 18, 'Laju', 14, 'font-weight="700"')}${tx(280, 136, '🐎 Kuda', 13)}`);
+
+  UNIT({
+    n: 1, tajuk: 'Cabaran Ruang', tema: 'Pendidikan Jasmani', ikon: '🛼',
+    belajar: [
+      { ikon: '🛼', tajuk: 'Pertunjukan kasut roda',
+        teks: ['Zarith dan rakan-rakan menyaksikan <b>pertunjukan kasut roda</b>.', 'Peserta meluncur di sekeliling kon, mencangkung dan melompat atas palang, dari MULA ke TAMAT.'],
+        chips: ['🪖 Topi keledar', '🦵 Pelapik lutut', '💪 Pelapik siku'],
+        contoh: 'Peserta memakai topi keledar dan pelapik supaya selamat.' },
+      { ikon: gRuang, tajuk: 'Ruang luas dan ruang sempit',
+        teks: ['Kamu boleh bergerak di dalam ruang yang <b>luas</b> dan <b>sempit</b>.', 'Ruang luas: kawasan besar seperti padang.', 'Ruang sempit: kawasan kecil seperti di dalam gelung.'] },
+      { ikon: '🏁', tajuk: 'Laluan Teroka Ruang',
+        teks: ['Cuba bergerak dalam ruang yang ditetapkan seperti Zarith dan rakan-rakan.'],
+        senarai: ['🟢 MULA', '⬇️ Turun tangga', '⬆️ Naik tangga', '🪵 Mengimbang di atas bangku', '🐾 Merangkak di bawah halangan', '🔻 Menyusup atau melompat', '🏁 TAMAT'] },
+      { ikon: gImbang, tajuk: 'Mengimbang di atas bangku',
+        teks: ['Berjalan di atas bangku tanpa jatuh.', '<b>Depakan tangan</b> supaya badan seimbang.'] },
+      { ikon: gRendah, tajuk: 'Merangkak dan menyusup',
+        teks: ['Merangkak: bergerak dengan tangan dan lutut.', 'Menyusup: bergerak meniarap di bawah halangan.'],
+        contoh: '"Saya perlu rendahkan badan untuk bergerak lancar."' },
+      { ikon: '🙋‍♀️', tajuk: 'Menyusup atau melompat?',
+        teks: ['Di halangan terakhir, kamu boleh pilih: <b>menyusup</b> atau <b>melompat</b>.', 'Seorang murid berkata: "Saya tak nak menyusup, saya nak melompat."'],
+        contoh: 'Cikgu berpesan: "Zarith, berhati-hati ketika melakukan aktiviti."' },
+      { ikon: '🥁', tajuk: 'Bergerak ikut tempo',
+        teks: ['Kamu boleh bergerak pada pelbagai kelajuan.', 'Cikgu mengetuk <b>tamborin</b> untuk memberi tempo.'],
+        chips: ['🐢 Perlahan', '🚶 Sederhana', '⚡ Laju'],
+        contoh: 'Cikgu: "Jika tempo perlahan bergerak perlahan." Murid: "Tempo laju bergerak dengan pantas."' },
+      { ikon: gTempo, tajuk: 'Tiga stesen haiwan',
+        senarai: ['<b>Stesen 1 — Perlahan:</b> 🐛 ulat beluncas. Tangan dan kaki di tanah.', '<b>Stesen 2 — Sederhana:</b> 🦘 kanggaru. Melompat dengan dua kaki.', '<b>Stesen 3 — Laju:</b> 🐎 kuda. Berlari laju, lutut diangkat.'],
+        contoh: '"Aktiviti mencabar tetapi seronok."' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Apakah yang disaksikan oleh Zarith dan rakan-rakan?', ikon: '🛼', p: ['Pertunjukan kasut roda', 'Pertunjukan sarkas', 'Kejohanan renang'], a: 0, kenapa: 'Zarith dan rakan-rakan menyaksikan pertunjukan kasut roda.' },
+      { j: 'pilih', s: 'Apakah yang dipakai peserta kasut roda untuk melindungi kepala?', ikon: '🪖', p: ['Topi keledar', 'Topi renang', 'Cermin mata'], a: 0, kenapa: 'Peserta memakai topi keledar, pelapik siku dan pelapik lutut.' },
+      { j: 'pilih', s: 'Kita boleh bergerak di dalam ruang yang luas dan ___.', ikon: '⭕', p: ['sempit', 'gelap', 'basah'], a: 0, kenapa: 'Kamu boleh bergerak di dalam ruang yang luas dan sempit.' },
+      { j: 'pilih', s: 'Apakah pergerakan pertama selepas papan MULA?', ikon: '🟢', p: ['Turun tangga', 'Merangkak', 'Melompat'], a: 0, kenapa: 'Laluan bermula dengan turun tangga, kemudian naik tangga.' },
+      { j: 'pilih', s: 'Apakah yang dilakukan di atas bangku?', ikon: gImbang, p: ['Mengimbang', 'Menyusup', 'Berlari laju'], a: 0, kenapa: 'Di atas bangku, kita mengimbang dengan tangan didepakan.' },
+      { j: 'pilih', s: 'Untuk menyusup dengan lancar, saya perlu ___ badan.', ikon: '🔻', p: ['rendahkan', 'tinggikan', 'pusingkan'], a: 0, kenapa: '"Saya perlu rendahkan badan untuk bergerak lancar."' },
+      { j: 'pilih', s: 'Di halangan terakhir, apakah dua pilihan pergerakan?', ikon: '🚧', p: ['Menyusup atau melompat', 'Berenang atau berguling', 'Duduk atau baring'], a: 0, kenapa: 'Murid boleh menyusup atau melompat halangan itu.' },
+      { j: 'pilih', s: 'Alat apakah yang diketuk cikgu untuk memberi tempo?', ikon: '🎵', p: ['Tamborin', 'Wisel', 'Bola'], a: 0, kenapa: 'Cikgu mengetuk tamborin untuk memberi tempo.' },
+      { j: 'pilih', s: 'Haiwan apakah di Stesen 2 (Sederhana)?', ikon: '2️⃣', p: ['Kanggaru', 'Kuda', 'Ulat beluncas'], a: 0, kenapa: 'Stesen 2 bertempo sederhana — melompat seperti kanggaru.' },
+      { j: 'pilih', s: 'Tempo laju, kita bergerak dengan ___.', ikon: '⚡', p: ['pantas', 'perlahan', 'berhenti'], a: 0, kenapa: '"Tempo laju bergerak dengan pantas."' },
+      { j: 'bs', s: 'Kita boleh bergerak pada pelbagai kelajuan.', ikon: '🏃', a: true, kenapa: 'Kita boleh bergerak perlahan, sederhana atau laju.' },
+      { j: 'bs', s: 'Jika tempo perlahan, kita bergerak dengan laju.', ikon: '🐢', a: false, kenapa: 'Jika tempo perlahan, kita bergerak perlahan.' },
+      { j: 'bs', s: 'Stesen 1 ialah stesen bertempo laju.', ikon: '🐛', a: false, kenapa: 'Stesen 1 bertempo perlahan, seperti ulat beluncas.' },
+      { j: 'bs', s: 'Cikgu berpesan supaya kita berhati-hati ketika melakukan aktiviti.', ikon: '🧑‍🏫', a: true, kenapa: 'Cikgu berkata: "Zarith, berhati-hati ketika melakukan aktiviti."' },
+      { j: 'susun', s: 'Susun Laluan Teroka Ruang dari MULA ke TAMAT.', item: ['Turun tangga', 'Naik tangga', 'Mengimbang di atas bangku', 'Merangkak di bawah halangan', 'Menyusup atau melompat'] },
+      { j: 'susun', s: 'Susun stesen dari perlahan ke laju.', item: ['🐛 Ulat beluncas', '🦘 Kanggaru', '🐎 Kuda'] },
+      { j: 'padan', s: 'Padankan haiwan dengan tempo.', pasangan: [['🐛 Ulat beluncas', 'Perlahan'], ['🦘 Kanggaru', 'Sederhana'], ['🐎 Kuda', 'Laju']] },
+      { j: 'kumpul', s: 'Asingkan mengikut aktiviti.', kumpulan: [['🏁 Teroka Ruang', ['Bangku', 'Tangga', 'Halangan kon']], ['🥁 Bergerak Ikut Tempo', ['Tamborin', 'Ulat beluncas', 'Kuda']]] },
+      { j: 'kumpul', s: 'Apakah kelajuan setiap stesen?', kumpulan: [['🐢 Perlahan', ['Stesen 1', 'Tangan dan kaki di tanah']], ['🦘 Sederhana', ['Stesen 2', 'Lompat dua kaki']], ['⚡ Laju', ['Stesen 3', 'Lutut diangkat tinggi']]] },
+      { j: 'eja', s: 'Eja nama alat yang diketuk cikgu.', ikon: '🥁', kata: 'tamborin' },
+      { j: 'eja', s: 'Eja perkataan untuk kelajuan bunyi yang kita ikut.', ikon: '🎵', kata: 'tempo' },
+      { j: 'ayat', s: 'Bina ayat yang diucapkan murid.', kata: ['Tempo', 'laju', 'bergerak', 'dengan', 'pantas.'] },
+    ],
+    amali: [{
+      id: 'laluan-zarith', tajuk: 'Laluan Halangan Zarith', ikon: '🏁',
+      arahan: 'Bantu Zarith dari MULA ke TAMAT. Pilih pergerakan yang betul untuk setiap halangan.',
+      mula(el, api) {
+        const ST = [
+          { x: 52, nama: 'Tangga (turun)', ok: ['Turun tangga'], pose: 'diri', why: 'Mula-mula, turun tangga.' },
+          { x: 100, nama: 'Tangga (naik)', ok: ['Naik tangga'], pose: 'diri', why: 'Selepas turun, naik tangga pula.' },
+          { x: 150, nama: 'Bangku', ok: ['Mengimbang'], pose: 'depa', y: -12, why: 'Di atas bangku, mengimbang dengan tangan didepakan.' },
+          { x: 202, nama: 'Halangan rendah', ok: ['Merangkak'], pose: 'rangkak', why: 'Merangkak di bawah halangan.' },
+          { x: 256, nama: 'Kon dan palang', ok: ['Menyusup', 'Melompat'], pose: null, why: 'Boleh menyusup (rendahkan badan) atau melompat.' },
+        ];
+        const MV = api.shuffle(['Turun tangga', 'Naik tangga', 'Mengimbang', 'Merangkak', 'Menyusup', 'Melompat']);
+        const tangga = (x, naik) => { let s = ''; for (let i = 0; i < 4; i++) { const h = naik ? (i + 1) * 7 : (4 - i) * 7; s += `<rect x="${x + i * 9}" y="${122 - h}" width="9" height="${h}" fill="#adb5bd"/>`; } return s; };
+        el.innerHTML = `<div style="max-width:640px;margin:0 auto">${sv(320, 100, `
+          <rect x="0" y="122" width="320" height="28" fill="#69db7c" opacity=".35"/>
+          <rect x="0" y="58" width="28" height="14" rx="3" fill="#2f9e44"/><text x="14" y="68" font-size="8" text-anchor="middle" style="fill:#fff" font-weight="700">MULA</text>
+          <rect x="292" y="58" width="28" height="14" rx="3" fill="#e03131"/><text x="306" y="68" font-size="8" text-anchor="middle" style="fill:#fff" font-weight="700">TAMAT</text>
+          <line x1="13" y1="72" x2="13" y2="122" stroke="#868e96" stroke-width="2"/><line x1="306" y1="72" x2="307" y2="122" stroke="#868e96" stroke-width="2"/>
+          ${tangga(38, false)}${tangga(86, true)}
+          <rect x="132" y="110" width="40" height="5" fill="#c08457"/><rect x="136" y="115" width="4" height="7" fill="#9c6644"/><rect x="164" y="115" width="4" height="7" fill="#9c6644"/>
+          ${kon(190, 122)}${kon(216, 122)}<line x1="190" y1="100" x2="216" y2="100" stroke="#fab005" stroke-width="4"/>
+          ${kon(244, 122)}${kon(270, 122)}<line x1="244" y1="104" x2="270" y2="104" stroke="#fab005" stroke-width="4"/>
+          ${ST.map((s, i) => `<circle class="dot" data-i="${i}" cx="${s.x}" cy="140" r="6" fill="var(--line)"/>${tx(s.x, 143.5, i + 1, 9)}`).join('')}
+          <g id="zr" style="transition:transform .7s ease">${fg(P.diri, 0, 0, .36, 'var(--c)')}</g>`, '0 50 320 100').replace(/style="width:[^"]*"/, 'style="width:100%"')}</div>
+          <p class="now" id="nw"></p><div class="opts" id="op"></div><div class="meter" style="margin-top:12px"><i id="mt"></i></div>`;
+        const zr = el.querySelector('#zr'), nw = el.querySelector('#nw'), op = el.querySelector('#op'), mt = el.querySelector('#mt');
+        let k = 0, miss = 0;
+        const place = (x, y, pose) => { zr.innerHTML = fg(P[pose], 0, 0, .36, 'var(--c)'); zr.style.transform = `translate(${x - 18}px, ${87 + (y || 0)}px)`; };
+        place(13, 0, 'diri');
+        const show = () => { nw.textContent = k < ST.length ? `Halangan ${k + 1}: ${ST[k].nama}` : '🏁 TAMAT!'; mt.style.width = (k / ST.length * 100) + '%'; el.querySelectorAll('.dot').forEach((d, i) => d.setAttribute('fill', i < k ? 'var(--ok)' : i === k ? 'var(--gold)' : 'var(--line)')); };
+        const bs = MV.map(m => { const b = api.H(`<button class="opt">${m}</button>`); b.onclick = () => pick(m, b); op.appendChild(b); return b; });
+        function pick(m, b) {
+          if (k >= ST.length) return;
+          const s = ST[k];
+          if (!s.ok.includes(m)) { miss++; api.salah(b, 'Belum betul. Lihat halangan itu sekali lagi.'); return; }
+          const pose = s.pose || (m === 'Menyusup' ? 'susup' : 'lompat');
+          place(s.x, (s.y || 0) + (pose === 'lompat' ? -30 : pose === 'susup' ? 4 : 0), pose);
+          api.betul(b, s.why); k++; show();
+          if (k === ST.length) setTimeout(() => { place(307, 0, 'diri'); api.selesai(Math.max(0, 1 - miss * .15), 'Hebat! Zarith sampai ke TAMAT dengan selamat.'); }, 700);
+        }
+        show();
+        return { jawab() { ST.forEach(s => bs[MV.indexOf(s.ok[0])].click()); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // --- lukisan orang lidi ringkas (kotak 100×100, tanah y≈96) ---
+  const sv = (w, h, s) => `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:min(${w}px,calc(100% - 58px))">${s}</svg>`;
+  const fg = (p, x = 0, y = 0, k = 1, c = 'currentColor') => `<g transform="translate(${x} ${y}) scale(${k})" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">${p.slice(1).map(l => `<polyline points="${l}"/>`).join('')}<circle cx="${p[0][0]}" cy="${p[0][1]}" r="9" fill="${c}" stroke="none"/></g>`;
+  const tx = (x, y, t, z = 13, o = '') => `<text x="${x}" y="${y}" font-size="${z}" text-anchor="middle" fill="currentColor" ${o}>${t}</text>`;
+  const ln = (w, y) => `<line x1="2" y1="${y}" x2="${w - 2}" y2="${y}" stroke="currentColor" stroke-width="3" opacity=".3"/>`;
+  const arc = d => `<path d="${d}" fill="none" stroke="var(--c)" stroke-width="3" stroke-dasharray="5 4"/>`;
+  const P = {
+    jalan: [[52, 14], '40,54 46,34 50,30 58,50', '50,24 50,62', '36,95 50,62 62,95'],
+    kilas: [[50, 14], '42,56 34,42 50,30 66,42 58,56', '50,24 50,62', '40,95 50,62 60,95'],
+    skip: [[50, 12], '34,40 46,28 62,20', '50,22 50,56', '50,88 50,56 66,64 60,78'],
+    bangau: [[50, 14], '12,32 50,32 88,32', '50,24 50,62', '50,96 50,62 70,70 58,84'],
+    lari: [[58, 14], '36,46 42,34 54,30 66,40 76,32', '56,24 48,58', '26,86 36,76 48,58 66,62 62,82'],
+    ayun: [[50, 14], '22,40 50,30', '50,24 50,62', '50,96 50,62 84,78'],
+    congklang: [[50, 12], '34,44 50,28 68,40', '50,22 50,56', '28,84 38,72 50,56 70,64 76,84'],
+    imbang: [[22, 44], '30,48 26,70', '30,48 62,52', '62,52 62,96', '62,52 96,40'],
+    lompat: [[56, 10], '34,30 52,22 72,10', '52,20 48,52', '24,64 34,74 48,52 66,64 70,80'],
+    // lompat jauh berdiri
+    j1: [[40, 40], '18,72 44,50 22,78', '44,50 52,74', '40,96 64,84 52,74'],
+    j2: [[64, 24], '90,8 60,34 92,16', '60,32 46,62', '36,96 46,62'],
+    j3: [[56, 22], '84,26 54,34 86,36', '52,32 44,58', '74,62 44,58 72,72'],
+    j4: [[56, 44], '86,58 52,56 86,66', '52,54 40,76', '40,96 62,84 40,76'],
+  };
+  const gLompat = sv(320, 128, `${ln(320, 110)}
+    ${fg(P.j1, 0, 14, .8)}${fg(P.j2, 78, 10, .8)}${fg(P.j3, 160, -2, .8)}${fg(P.j4, 240, 14, .8)}
+    ${arc('M70 96 Q170 0 270 96')}
+    ${tx(40, 124, '1 Cangkung', 11)}${tx(118, 124, '2 Hayun', 11)}${tx(200, 124, '3 Udara', 11)}${tx(280, 124, '4 Mendarat', 11)}`);
+  const bola = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="currentColor" stroke-width="3"/>`;
+  const gTitik = sv(320, 130, `
+    ${bola(150, 64, 50)}
+    <circle cx="150" cy="22" r="6" fill="#adb5bd"/><circle cx="150" cy="64" r="8" fill="#e03131"/><circle cx="150" cy="106" r="6" fill="#adb5bd"/>
+    <text x="214" y="27" font-size="15" fill="currentColor">Atas</text><text x="214" y="70" font-size="15" font-weight="700" fill="#e03131">Tengah ✔</text><text x="214" y="111" font-size="15" fill="currentColor">Bawah</text>
+    <line x1="160" y1="22" x2="210" y2="22" stroke="currentColor" stroke-width="1.5" opacity=".5"/><line x1="160" y1="64" x2="210" y2="64" stroke="currentColor" stroke-width="1.5" opacity=".5"/><line x1="160" y1="106" x2="210" y2="106" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+    <path d="M30 40 L30 58 Q30 74 60 74 L96 74 Q104 74 100 62 L90 54 L48 54 L48 40 Z" fill="var(--c)"/>
+    ${tx(60, 98, 'kaki', 13)}`);
+  const gRangkai = sv(320, 112, `${ln(320, 98)}
+    ${[['jalan', 'Berjalan'], ['kilas', 'Mengilas'], ['skip', 'Berskip'], ['bangau', 'Dirian bangau']].map((x, i) => fg(P[x[0]], 6 + i * 80, 14, .7) + tx(40 + i * 80, 110, x[1], 11)).join('')}`);
+
+  UNIT({
+    n: 2, tajuk: 'Mari Bersenam', tema: 'Pendidikan Jasmani', ikon: '🤸',
+    belajar: [
+      { ikon: '🏞️', tajuk: 'Bersenam di taman rekreasi',
+        teks: ['Julita dan keluarga bersenam di <b>taman rekreasi</b>.', 'Mereka melihat ramai orang melakukan pelbagai pergerakan.'],
+        chips: ['🚶 Berjalan', '🏃 Berlari', '🦘 Melompat', '🤸 Mengimbang'] },
+      { ikon: '🏃', tajuk: 'Pergerakan lokomotor',
+        teks: ['Pergerakan <b>lokomotor</b> ialah pergerakan yang bergerak <b>dari satu tempat ke satu tempat yang lain</b>.'],
+        chips: ['Berjalan', 'Berlari', 'Mencongklang', 'Melonjak', 'Berskip', 'Melompat', 'Menggelongsor', 'Lompat sebelah kaki'] },
+      { ikon: '🧍', tajuk: 'Pergerakan bukan lokomotor',
+        teks: ['Pergerakan <b>bukan lokomotor</b> ialah pergerakan yang <b>tidak melibatkan perubahan tempat</b>.'],
+        chips: ['Membongkok', 'Meregang', 'Mengilas', 'Menarik', 'Memusing', 'Menolak', 'Mengayun', 'Meringkuk', 'Membuai'] },
+      { ikon: gLompat, tajuk: 'Lompat jauh berdiri',
+        teks: ['Ganesan melakukan ujian lompat jauh berdiri.', 'Cikgu: "Ingat, lompat dan mendarat dengan <b>kedua-dua belah kaki</b>."', 'Hayun tangan untuk melompat lebih jauh.'],
+        contoh: '⚠️ Keselamatan: <b>Fleksi lutut</b> (bengkokkan lutut) ketika mendarat untuk mengelakkan kecederaan.' },
+      { ikon: '🪢', tajuk: 'Lompat Riang',
+        teks: ['Ganesan dan rakan-rakan sering bermain <b>lompat tali</b> pada waktu petang.', 'Dua rakan memutar tali panjang: "Ayun tali bersama-sama."'] },
+      { ikon: gRangkai, tajuk: 'Rangkaian pergerakan',
+        teks: ['<b>Morgan</b> membuat rangkaian pergerakan bukan lokomotor.', '<b>Magdeline</b> menggabungkan pergerakan lokomotor dan bukan lokomotor menjadi satu rangkaian.'],
+        contoh: 'Rangkaian Magdeline bermula: berjalan → mengilas → berskip → dirian bangau → …' },
+      { ikon: '🤾', tajuk: 'Lambung, tangkap dan golek',
+        teks: ['Luruskan tangan ke atas untuk menangkap objek yang dilambung tinggi.', 'Hendak gerakkan objek lebih jauh? Gunakan <b>upaya yang lebih kuat</b>.'],
+        contoh: '"Kita perlu bekerjasama untuk berjaya." Rita menang Golek Tepat. Ani: "Tahniah Rita!" Rita: "Terima kasih, Ani."' },
+      { ikon: gTitik, tajuk: 'Tendang dan titik kontak',
+        teks: ['Tendang bola dengan bahagian <b>dalam</b>, <b>luar</b> dan <b>kekura</b> kaki.', 'Untuk tendangan leret yang tepat, titik kontak pada <b>bahagian tengah bola</b>.'],
+        chips: ['🥇 Emas 5 mata', '🥈 Perak 4 mata', '🥉 Gangsa 3 mata'] },
+      { ikon: '⛹️', tajuk: 'Pesanan cikgu',
+        senarai: ['🥅 Menyerkap: perlahankan kelajuan ketika menyerkap bola.', '🎈 Voli belon: pastikan titik kontak betul ketika memukul.', '🏏 Pukul dan Lari: pastikan alat pemukul selamat digunakan.', '🏀 Kelecek tangan: guna kedua-dua belah tangan.', '⚽ Kelecek kaki: pastikan bola rapat pada kaki.'] },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Pergerakan lokomotor ialah pergerakan yang ___.', ikon: '🏃', p: ['bergerak dari satu tempat ke tempat lain', 'tidak berpindah tempat', 'dibuat sambil tidur'], a: 0, kenapa: 'Lokomotor bergerak dari satu tempat ke satu tempat yang lain.' },
+      { j: 'pilih', s: 'Pergerakan manakah bukan lokomotor?', ikon: '🧍', p: ['Membongkok', 'Berlari', 'Berskip'], a: 0, kenapa: 'Membongkok tidak melibatkan perubahan tempat.' },
+      { j: 'pilih', s: 'Dalam lompat jauh berdiri, lompat dan mendarat dengan ___.', ikon: gLompat, p: ['kedua-dua belah kaki', 'sebelah kaki', 'tangan'], a: 0, kenapa: 'Cikgu: "Lompat dan mendarat dengan kedua-dua belah kaki."' },
+      { j: 'pilih', s: 'Kenapa kita fleksi lutut ketika mendarat?', ikon: '🦵', p: ['Mengelakkan kecederaan', 'Supaya nampak tinggi', 'Supaya cepat penat'], a: 0, kenapa: 'Fleksi lutut ketika mendarat untuk mengelakkan kecederaan.' },
+      { j: 'pilih', s: 'Bagaimanakah menangkap objek yang dilambung tinggi?', ikon: '🙌', p: ['Luruskan tangan ke atas', 'Tutup mata', 'Duduk di lantai'], a: 0, kenapa: 'Luruskan tangan ke atas untuk menangkap objek yang tinggi.' },
+      { j: 'pilih', s: 'Untuk menggerakkan objek lebih jauh, gunakan upaya yang lebih ___.', ikon: '💪', p: ['kuat', 'lemah', 'perlahan'], a: 0, kenapa: 'Objek bergerak lebih jauh dengan upaya yang lebih kuat.' },
+      { j: 'pilih', s: 'Di manakah titik kontak untuk tendangan leret yang tepat?', ikon: '⚽', p: ['Bahagian tengah bola', 'Bahagian atas bola', 'Bahagian bawah bola'], a: 0, kenapa: 'Titik kontak pada bahagian tengah bola untuk tendangan leret.' },
+      { j: 'pilih', s: 'Dalam Jaringan Emas, sasaran EMAS bernilai ___ mata.', ikon: '🥇', p: ['5', '4', '3'], a: 0, kenapa: 'Emas 5 mata, Perak 4 mata, Gangsa 3 mata.' },
+      { j: 'pilih', s: 'Dalam Pukul dan Lari, bola diletakkan di atas ___.', ikon: '🏏', p: ['tee', 'kerusi', 'gelung'], a: 0, kenapa: 'Bola diletakkan di atas tee dan dipukul.' },
+      { j: 'pilih', s: 'Apakah pesanan cikgu ketika mengelecek dengan kaki?', ikon: '⚽', p: ['Pastikan bola rapat pada kaki', 'Tendang bola sejauh-jauhnya', 'Pegang bola dengan tangan'], a: 0, kenapa: 'Cikgu: "Pastikan bola rapat pada kaki."' },
+      { j: 'bs', s: 'Mengilas ialah pergerakan lokomotor.', ikon: '🔄', a: false, kenapa: 'Mengilas ialah pergerakan bukan lokomotor.' },
+      { j: 'bs', s: 'Hazziq mengelecek bola dengan sebelah tangan sahaja.', ikon: '🏀', a: false, kenapa: 'Hazziq menggunakan kedua-dua belah tangan untuk mengelecek.' },
+      { j: 'bs', s: 'Ketika menyerkap bola, perlahankan kelajuan bola.', ikon: '🥅', a: true, kenapa: 'Cikgu: "Perlahankan kelajuan ketika menyerkap bola."' },
+      { j: 'bs', s: 'Kita perlu pastikan alat pemukul selamat untuk digunakan.', ikon: '🏏', a: true, kenapa: 'Itu pesanan keselamatan dalam permainan Pukul dan Lari.' },
+      { j: 'kumpul', s: 'Asingkan pergerakan ini.', kumpulan: [['🏃 Lokomotor', ['Berjalan', 'Berlari', 'Mencongklang', 'Berskip', 'Menggelongsor', 'Melonjak']], ['🧍 Bukan lokomotor', ['Membongkok', 'Meregang', 'Mengilas', 'Meringkuk', 'Membuai', 'Memusing']]] },
+      { j: 'susun', s: 'Susun langkah lompat jauh berdiri.', item: ['Bengkokkan lutut, hayun tangan ke belakang', 'Hayun tangan ke depan, lonjak badan', 'Badan di udara', 'Mendarat dengan lutut dibengkokkan'] },
+      { j: 'susun', s: 'Susun cara bermain Pukul dan Lari.', item: ['Pukul bola di atas tee', 'Lari ke arah skital', 'Kembali ke tempat asal'] },
+      { j: 'padan', s: 'Padankan kemahiran dengan pesanan cikgu.', pasangan: [['Menyerkap', 'Perlahankan kelajuan bola'], ['Kelecek kaki', 'Bola rapat pada kaki'], ['Tendangan leret', 'Titik kontak tengah bola'], ['Tangkap objek tinggi', 'Luruskan tangan ke atas']] },
+      { j: 'padan', s: 'Padankan watak dengan aktivitinya.', pasangan: [['Ganesan', 'Lompat jauh berdiri'], ['Morgan', 'Rangkaian bukan lokomotor'], ['Magdeline', 'Rangkaian gabungan'], ['Hazziq', 'Kelecek dengan tangan']] },
+      { j: 'eja', s: 'Eja jenis pergerakan yang berpindah tempat.', ikon: '🏃', kata: 'lokomotor' },
+      { j: 'ayat', s: 'Bina ayat keselamatan.', kata: ['Fleksi', 'lutut', 'ketika', 'mendarat.'] },
+    ],
+    amali: [{
+      id: 'rangkaian-magdeline', tajuk: 'Rangkaian Magdeline', ikon: '🤸',
+      arahan: 'Ikut gerakan bersama-sama! Kemudian tekan: lokomotor atau bukan lokomotor?',
+      mula(el, api) {
+        const M = [['jalan', 'Berjalan', 1], ['kilas', 'Mengilas', 0], ['skip', 'Berskip', 1], ['bangau', 'Dirian bangau', 0], ['lari', 'Berlari', 1],
+          ['ayun', 'Mengayun', 0], ['congklang', 'Mencongklang', 1], ['imbang', 'Mengimbang', 0], ['lompat', 'Melompat', 1]];
+        let k = 0, miss = 0, beat = 0;
+        el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="no"></b><span class="hint" id="kira"></span></div>
+          <div style="display:grid;place-items:center;min-height:190px"><div id="fg" style="width:min(190px,60vw)"></div><div class="now" id="nm" style="width:100%"></div></div>
+          <div class="two"><button class="opt" id="b1">🏃 Lokomotor<br><small>berpindah tempat</small></button><button class="opt" id="b0">🧍 Bukan lokomotor<br><small>tidak berpindah tempat</small></button></div>
+          <div class="meter" style="margin-top:12px"><i id="mt"></i></div>`;
+        const fgEl = el.querySelector('#fg'), nm = el.querySelector('#nm'), no = el.querySelector('#no'), kira = el.querySelector('#kira'), mt = el.querySelector('#mt');
+        const b = [el.querySelector('#b0'), el.querySelector('#b1')];
+        const show = () => {
+          const m = M[k]; no.textContent = `Gerakan ${k + 1} / ${M.length}`; nm.textContent = m[1]; mt.style.width = (k / M.length * 100) + '%';
+          fgEl.innerHTML = `<svg viewBox="-10 0 120 106" xmlns="http://www.w3.org/2000/svg">${m[0] === 'ayun' ? '<rect x="12" y="20" width="8" height="78" fill="#adb5bd"/>' : ''}${ln(100, 100)}${fg(P[m[0]], 0, 2, 1, 'var(--c)')}</svg>`;
+          api.speak(m[1]);
+        };
+        const tick = setInterval(() => {
+          if (!el.isConnected) return clearInterval(tick);
+          beat = beat % 4 + 1; kira.textContent = `Ikut kiraan: ${'●'.repeat(beat)}${'○'.repeat(4 - beat)} ${beat}`;
+          api.anim(fgEl, [{ transform: 'translateY(0)' }, { transform: `translateY(${M[k] && M[k][2] ? -10 : -4}px)` }, { transform: 'translateY(0)' }], { duration: 500 });
+        }, 700);
+        b.forEach((btn, v) => btn.onclick = () => {
+          if (k >= M.length) return;
+          const m = M[k];
+          if (m[2] !== v) { miss++; api.salah(btn, `${m[1]} ${m[2] ? 'membuat kita berpindah tempat' : 'tidak membuat kita berpindah tempat'}. Cuba lagi!`); return; }
+          api.betul(btn, `${m[1]} ialah pergerakan ${m[2] ? 'lokomotor' : 'bukan lokomotor'}.`); k++;
+          if (k === M.length) { mt.style.width = '100%'; clearInterval(tick); api.selesai(Math.max(0, 1 - miss * .12), 'Syabas! Kamu sudah melakukan rangkaian gabungan Magdeline.'); }
+          else show();
+        });
+        show();
+        return { jawab() { M.forEach(m => b[m[2]].click()); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  const sv = (w, h, s) => `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:min(${w}px,calc(100% - 58px))">${s}</svg>`;
+  const fg = (p, x = 0, y = 0, k = 1, c = 'currentColor') => `<g transform="translate(${x} ${y}) scale(${k})" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">${p.slice(1).map(l => `<polyline points="${l}"/>`).join('')}<circle cx="${p[0][0]}" cy="${p[0][1]}" r="9" fill="${c}" stroke="none"/></g>`;
+  const tx = (x, y, t, z = 13, o = '') => `<text x="${x}" y="${y}" font-size="${z}" text-anchor="middle" fill="currentColor" ${o}>${t}</text>`;
+  const P = {
+    a: [[50, 14], '30,2 50,30 70,2', '50,24 50,62', '40,96 50,62 60,96'],
+    b: [[50, 14], '30,50 50,30 70,50', '50,24 50,62', '50,96 50,62 70,64 62,82'],
+    c: [[50, 14], '30,2 50,30 70,50', '50,24 50,62', '30,82 38,64 50,62 50,96'],
+  };
+  const gHari = sv(320, 120, `
+    <rect x="20" y="4" width="280" height="22" rx="4" fill="var(--c)"/><text x="160" y="20" font-size="11.5" text-anchor="middle" style="fill:#fff" font-weight="700">SENAMROBIK HARI SUKAN NEGARA</text>
+    ${[0, 1, 2, 3, 4].map(i => fg(i % 2 ? P.c : P.a, 14 + i * 60, 36, .78)).join('')}
+    <line x1="4" y1="114" x2="316" y2="114" stroke="currentColor" stroke-width="3" opacity=".3"/>`);
+  const dram = (x, y, r) => `<ellipse cx="${x}" cy="${y + r * .9}" rx="${r}" ry="${r * .35}" fill="#c92a2a"/><rect x="${x - r}" y="${y}" width="${r * 2}" height="${r * .9}" fill="#e03131"/><ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r * .35}" fill="#fff4e6" stroke="#c92a2a" stroke-width="3"/>`;
+  const gTempo = sv(320, 120, `
+    ${dram(44, 40, 30)}
+    <line x1="64" y1="6" x2="48" y2="34" stroke="#9c6644" stroke-width="5" stroke-linecap="round"/>
+    ${tx(130, 46, '🐢', 30)}${tx(130, 76, 'Perlahan', 14, 'font-weight="700"')}
+    ${tx(210, 46, '🚶', 30)}${tx(210, 76, 'Sederhana', 14, 'font-weight="700"')}
+    ${tx(288, 46, '⚡', 30)}${tx(288, 76, 'Laju', 14, 'font-weight="700"')}
+    ${tx(44, 112, 'Dram cikgu', 12)}`);
+  const gProp = sv(320, 120, `
+    <path d="M20 60 Q50 20 80 60 T 90 90" fill="#74c0fc" opacity=".8"/><rect x="18" y="56" width="70" height="40" rx="6" fill="#74c0fc"/>${tx(53, 114, '1 Kain', 13, 'font-weight="700"')}
+    <ellipse cx="160" cy="62" rx="40" ry="40" fill="none" stroke="#f08c00" stroke-width="7"/>${tx(160, 114, '2 Gelung', 13, 'font-weight="700"')}
+    <line x1="240" y1="96" x2="252" y2="26" stroke="#9c6644" stroke-width="5" stroke-linecap="round"/><path d="M252 26 C300 10 230 60 290 50 S 270 90 306 84" fill="none" stroke="#e64980" stroke-width="5" stroke-linecap="round"/>${tx(270, 114, '3 Reben', 13, 'font-weight="700"')}`);
+
+  UNIT({
+    n: 3, tajuk: 'Senamrobik', tema: 'Pendidikan Jasmani', ikon: '💃',
+    belajar: [
+      { ikon: gHari, tajuk: 'Senamrobik Hari Sukan Negara',
+        teks: ['Sekolah Amin mengadakan senamrobik bersempena dengan <b>Hari Sukan Negara</b>.', 'Semua murid dan guru melakukan senamrobik di <b>dataran sekolah</b>.'] },
+      { ikon: '🥁', tajuk: 'Mari Bergerak Berirama',
+        teks: ['<b>Cikgu Chong</b> mengajar pergerakan berirama.', 'Murid melakukan pergerakan lokomotor dan bukan lokomotor mengikut <b>tempo muzik</b>.'],
+        contoh: 'Cikgu Chong memukul dram: "Bergerak lokomotor ikut tempo."' },
+      { ikon: gTempo, tajuk: 'Tempo menentukan kelajuan',
+        teks: ['Tempo muzik ada tiga: <b>perlahan</b>, <b>sederhana</b> dan <b>laju</b>.', 'Tempo muzik laju, kita bergerak pantas.', 'Tempo muzik perlahan, kita bergerak lambat.'] },
+      { ikon: '🔢', tajuk: 'Empat stesen',
+        senarai: ['<b>Stesen 1:</b> membuai di atas tilam, memusing tangan.', '<b>Stesen 2:</b> mengilas, meregang.', '<b>Stesen 3:</b> dua murid bergerak bersama di dalam satu gelung.', '<b>Stesen 4:</b> melompat melepasi kayu.'],
+        contoh: 'Bezakan kelajuan pergerakan mengikut tempo.' },
+      { ikon: '🔀', tajuk: 'Lokomotor atau bukan?',
+        teks: ['<b>Lokomotor:</b> bergerak berpindah tempat, seperti berjalan dan mencongklang.', '<b>Bukan lokomotor:</b> bergerak tanpa berpindah tempat, seperti membongkok dan meregang.'] },
+      { ikon: gProp, tajuk: 'Kami Kreatif: prop',
+        teks: ['Mari cipta rangkaian pergerakan lokomotor dan bukan lokomotor dengan <b>prop</b> mengikut tempo muzik.'],
+        chips: ['Kumpulan 1: kain', 'Kumpulan 2: gelung', 'Kumpulan 3: reben'],
+        contoh: 'Kamu juga boleh guna alatan lain sebagai prop secara kreatif!' },
+      { ikon: '🎭', tajuk: 'Cipta dan persembahkan',
+        senarai: ['Pilih prop: kain, gelung atau reben.', 'Cipta rangkaian lokomotor dan bukan lokomotor.', 'Bergerak mengikut tempo muzik.', 'Persembahkan. Rakan kenal pasti pergerakan lokomotor dan bukan lokomotor.'],
+        contoh: '🌟 Kreativiti pergerakan mengikut tempo diberi keutamaan.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Sekolah Amin mengadakan senamrobik bersempena dengan ___.', ikon: '🇲🇾', p: ['Hari Sukan Negara', 'Hari Guru', 'Hari Kanak-kanak'], a: 0, kenapa: 'Senamrobik itu bersempena dengan Hari Sukan Negara.' },
+      { j: 'pilih', s: 'Di manakah murid dan guru melakukan senamrobik?', ikon: '🏫', p: ['Di dataran sekolah', 'Di kolam renang', 'Di dalam kelas'], a: 0, kenapa: 'Mereka bersenamrobik di dataran sekolah.' },
+      { j: 'pilih', s: 'Siapakah guru yang mengajar pergerakan berirama?', ikon: '🧑‍🏫', p: ['Cikgu Chong', 'Cikgu Nora', 'Cikgu Amin'], a: 0, kenapa: 'Cikgu Chong mengajar pergerakan berirama.' },
+      { j: 'pilih', s: 'Alat apakah yang dipukul oleh Cikgu Chong?', ikon: '🎵', p: ['Dram', 'Wisel', 'Loceng'], a: 0, kenapa: 'Cikgu Chong memukul dram mengikut tempo.' },
+      { j: 'pilih', s: 'Berapakah stesen dalam aktiviti Mari Bergerak Berirama?', ikon: '🔢', p: ['4', '3', '6'], a: 0, kenapa: 'Ada 4 stesen.' },
+      { j: 'pilih', s: 'Tempo muzik laju, kita bergerak ___.', ikon: '⚡', p: ['pantas', 'lambat', 'berhenti'], a: 0, kenapa: 'Tempo laju, kita bergerak pantas.' },
+      { j: 'pilih', s: 'Apakah prop Kumpulan 3?', ikon: '🎀', p: ['Reben', 'Kain', 'Gelung'], a: 0, kenapa: 'Kumpulan 1 kain, Kumpulan 2 gelung, Kumpulan 3 reben.' },
+      { j: 'pilih', s: 'Apakah yang diutamakan ketika mencipta pergerakan mengikut tempo?', ikon: '🌟', p: ['Kreativiti', 'Bergerak paling laju', 'Diam sahaja'], a: 0, kenapa: 'Kreativiti pergerakan mengikut tempo diberi keutamaan.' },
+      { j: 'bs', s: 'Kain, gelung rotan dan reben boleh digunakan sebagai prop.', ikon: '🎀', a: true, kenapa: 'Ketiga-tiga benda itu boleh menjadi prop dalam persembahan.' },
+      { j: 'bs', s: 'Tempo muzik perlahan, kita perlu bergerak pantas.', ikon: '🐢', a: false, kenapa: 'Tempo perlahan, kita bergerak lambat.' },
+      { j: 'bs', s: 'Berjalan dan mencongklang ialah pergerakan lokomotor.', ikon: '🚶', a: true, kenapa: 'Berjalan dan mencongklang membuat kita berpindah tempat.' },
+      { j: 'bs', s: 'Membongkok ialah pergerakan lokomotor.', ikon: '🙇', a: false, kenapa: 'Membongkok tidak berpindah tempat, jadi ia bukan lokomotor.' },
+      { j: 'bs', s: 'Kita boleh menggunakan alatan lain sebagai prop secara kreatif.', ikon: '🎨', a: true, kenapa: 'Guru menggalakkan murid menggunakan alatan lain secara kreatif.' },
+      { j: 'padan', s: 'Padankan kumpulan dengan prop.', pasangan: [['Kumpulan 1', '🧣 Kain'], ['Kumpulan 2', '⭕ Gelung'], ['Kumpulan 3', '🎀 Reben']] },
+      { j: 'kumpul', s: 'Pergerakan di stesen: lokomotor atau bukan?', kumpulan: [['🏃 Lokomotor', ['Melompat melepasi kayu', 'Berjalan', 'Mencongklang']], ['🧍 Bukan lokomotor', ['Membuai', 'Memusing tangan', 'Mengilas', 'Meregang']]] },
+      { j: 'susun', s: 'Susun tempo dari perlahan ke laju.', item: ['🐢 Perlahan', '🚶 Sederhana', '⚡ Laju'] },
+      { j: 'susun', s: 'Susun langkah Kami Kreatif.', item: ['Pilih prop', 'Cipta rangkaian pergerakan', 'Bergerak ikut tempo muzik', 'Persembahkan'] },
+      { j: 'eja', s: 'Eja prop Kumpulan 3.', ikon: '🎀', kata: 'reben' },
+      { j: 'ayat', s: 'Bina ayat Cikgu Chong.', kata: ['Bergerak', 'lokomotor', 'ikut', 'tempo.'] },
+    ],
+    amali: [{
+      id: 'ikut-tempo-dram', tajuk: 'Dengar Dram, Ikut Tempo', ikon: '🥁',
+      arahan: 'Lihat dan dengar pukulan dram. Tempo apakah ini? Kemudian menari ikut tempo!',
+      mula(el, api) {
+        const T = [['Perlahan', 1100, '🐢', 'Tempo perlahan — bergerak perlahan.'], ['Sederhana', 650, '🚶', 'Tempo sederhana — bergerak sederhana.'], ['Laju', 300, '⚡', 'Tempo laju — bergerak pantas.']];
+        const R = api.shuffle([0, 1, 2, 0, 1, 2]);
+        let k = 0, miss = 0, beat = 0, dance = 0, timer = null, ac = null, lock = false;
+        el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="no"></b><span class="hint">Bunyi 🔊 boleh dimatikan di atas</span></div>
+          <div class="cols" style="align-items:center;margin:8px 0">
+            <div style="text-align:center"><svg viewBox="0 0 120 110" style="width:min(170px,50vw)"><g id="dr">${dram(60, 44, 46)}</g><line id="st" x1="96" y1="4" x2="70" y2="40" stroke="#9c6644" stroke-width="7" stroke-linecap="round"/></svg>
+              <div class="row" id="lamp" style="justify-content:center;gap:6px"></div></div>
+            <div style="text-align:center"><svg viewBox="0 -4 100 104" style="width:min(150px,44vw)"><g id="fg"></g></svg></div></div>
+          <div class="opts" id="op"></div><div class="meter" style="margin-top:12px"><i id="mt"></i></div>`;
+        const dr = el.querySelector('#dr'), stk = el.querySelector('#st'), fgEl = el.querySelector('#fg'), lamp = el.querySelector('#lamp'), op = el.querySelector('#op'), no = el.querySelector('#no'), mt = el.querySelector('#mt');
+        lamp.innerHTML = '<i class="chip" style="min-height:0;padding:2px 10px">●</i>'.repeat(4);
+        const L = [...lamp.children];
+        const bunyi = () => {
+          try { if (window.D2 && D2.G && D2.G.mute) return; ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+            const o = ac.createOscillator(), g = ac.createGain(); o.type = 'triangle'; o.frequency.value = 110; g.gain.setValueAtTime(.5, ac.currentTime); g.gain.exponentialRampToValueAtTime(.001, ac.currentTime + .18); o.connect(g).connect(ac.destination); o.start(); o.stop(ac.currentTime + .2); } catch (e) { /* tiada bunyi */ }
+        };
+        const poses = [P.a, P.b, P.c, P.b];
+        const go = ms => {
+          clearInterval(timer);
+          timer = setInterval(() => {
+            if (!el.isConnected) return clearInterval(timer);
+            beat = (beat + 1) % 4; L.forEach((x, i) => x.classList.toggle('on', i === beat));
+            api.anim(dr, [{ transform: 'translateY(0)' }, { transform: 'translateY(4px)' }, { transform: 'translateY(0)' }], { duration: Math.min(260, ms * .8) });
+            api.anim(stk, [{ transform: 'rotate(0)' }, { transform: 'translate(-6px,8px)' }, { transform: 'rotate(0)' }], { duration: Math.min(260, ms * .8) });
+            if (dance) { fgEl.innerHTML = fg(poses[beat], 0, 0, 1, 'var(--c)'); }
+            bunyi();
+          }, ms);
+        };
+        const show = () => { no.textContent = `Pusingan ${k + 1} / ${R.length}`; mt.style.width = (k / R.length * 100) + '%'; dance = 0; fgEl.innerHTML = fg(P.a, 0, 0, 1, 'var(--line)'); go(T[R[k]][1]); };
+        const bs = T.map((t, i) => { const b = api.H(`<button class="opt">${t[2]} ${t[0]}</button>`); b.onclick = () => pick(i, b); op.appendChild(b); return b; });
+        function pick(i, b) {
+          if (k >= R.length || lock) return;
+          if (R[k] !== i) { miss++; api.salah(b, 'Dengar sekali lagi. Laju atau perlahan pukulan dram itu?'); return; }
+          api.betul(b, T[i][3] + ' Jom menari!'); dance = 1; fgEl.innerHTML = fg(P.b, 0, 0, 1, 'var(--c)'); k++;
+          if (k === R.length) { mt.style.width = '100%'; setTimeout(() => clearInterval(timer), 2500); api.selesai(Math.max(0, 1 - miss * .15), 'Hebat! Kamu bergerak mengikut tempo muzik.'); }
+          else { lock = true; setTimeout(() => { lock = false; if (k < R.length && el.isConnected) show(); }, 1800); }
+        }
+        show();
+        return { async jawab() { for (const r of R) { while (lock) await new Promise(f => setTimeout(f, 100)); bs[r].click(); } } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  const sv = (w, h, s) => `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:min(${w}px,calc(100% - 58px))">${s}</svg>`;
+  const fg = (p, x = 0, y = 0, k = 1, c = 'currentColor') => `<g transform="translate(${x} ${y}) scale(${k})" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">${p.slice(1).map(l => `<polyline points="${l}"/>`).join('')}<circle cx="${p[0][0]}" cy="${p[0][1]}" r="9" fill="${c}" stroke="none"/></g>`;
+  const tx = (x, y, t, z = 13, o = '') => `<text x="${x}" y="${y}" font-size="${z}" text-anchor="middle" fill="currentColor" ${o}>${t}</text>`;
+  const tilam = (x, y, w) => `<rect x="${x}" y="${y}" width="${w}" height="7" rx="3" fill="#4dabf7" opacity=".75"/>`;
+  const dot = (x, y) => `<circle cx="${x}" cy="${y}" r="5" fill="#e03131"/>`;
+  // guling depan (straddle) — 6 langkah mengikut buku
+  const G = [
+    [[50, 14], '30,0 50,30 70,0', '50,24 50,60', '28,96 50,60 72,96'],
+    [[80, 70], '66,62 70,94', '40,56 68,62', '28,96 40,56 52,96'],
+    [[64, 84], '56,64 62,96', '34,46 56,64', '22,96 34,46 44,96'],
+    [[70, 84], '60,92 80,96', '58,92 54,58', '34,26 54,58 72,24'],
+    [[62, 60], '60,72 74,80', '50,64 38,72 36,86 46,95 62,94', '62,94 78,82 72,68'],
+    [[52, 22], '84,44 52,36 86,52', '52,32 50,64', '18,96 50,64 82,96'],
+  ];
+  const GL = ['Berdiri, kaki dibuka, tangan ke atas', 'Bongkokkan badan ke hadapan', 'Letak kedua-dua tangan di atas tilam', 'Dagu ke dada, belakang bahu sentuh tilam', 'Gulingkan badan', 'Mendarat dengan kaki dibuka'];
+  const gGuling = sv(320, 252, `${[0, 1, 2, 3, 4, 5].map(i => {
+    const x = (i % 3) * 107, y = Math.floor(i / 3) * 126;
+    return `${tilam(x + 4, y + 98, 98)}${fg(G[i], x + 10, y + 4, .86)}<circle cx="${x + 14}" cy="${y + 14}" r="11" fill="var(--c)"/><text x="${x + 14}" y="${y + 19}" font-size="13" text-anchor="middle" style="fill:#fff" font-weight="700">${i + 1}</text>`;
+  }).join('')}${tx(160, 248, 'Rapatkan dagu ke dada!', 13, 'font-weight="700"')}`);
+  const gImbang = sv(320, 140, `
+    ${fg([[50, 14], '30,40 50,30 70,22', '50,24 46,60', '50,96 46,60 70,66 62,82'], 2, 8, .9)}<path d="M64 26 C90 10 76 50 104 40" fill="none" stroke="#e64980" stroke-width="4"/>${dot(47, 95)}
+    ${fg([[50, 14], '32,52 50,30 68,52', '50,24 50,62', '40,96 50,62 60,96'], 112, 8, .9)}${dot(148, 95)}${dot(166, 95)}
+    ${tilam(212, 98, 104)}${fg([[50, 86], '32,96 38,76 50,70 62,76 68,96', '50,70 50,40', '44,4 50,40 56,4'], 214, 4, .92)}${dot(244, 96)}${dot(276, 96)}${dot(260, 94)}
+    <line x1="2" y1="102" x2="206" y2="102" stroke="currentColor" stroke-width="3" opacity=".3"/>
+    ${tx(50, 122, '1 tapak', 13, 'font-weight="700"')}${tx(50, 137, 'dinamik', 12)}
+    ${tx(157, 122, '2 tapak', 13, 'font-weight="700"')}${tx(157, 137, 'statik', 12)}
+    ${tx(262, 122, '3 tapak', 13, 'font-weight="700"')}${tx(262, 137, 'songsang', 12)}`);
+  const gArah = sv(320, 130, `
+    ${tx(70, 70, '🐊', 46)}<line x1="14" y1="100" x2="126" y2="100" stroke="var(--c)" stroke-width="5" marker-end="url(#ah)"/>${tx(70, 124, 'Mendatar', 15, 'font-weight="700"')}
+    ${tx(220, 80, '🦒', 56)}<line x1="280" y1="110" x2="280" y2="16" stroke="var(--c)" stroke-width="5" marker-end="url(#ah)"/>${tx(220, 124, 'Menegak', 15, 'font-weight="700"')}
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--c)"/></marker></defs>`);
+
+  UNIT({
+    n: 4, tajuk: 'Sarkas', tema: 'Pendidikan Jasmani', ikon: '🎪',
+    belajar: [
+      { ikon: '🎪', tajuk: 'Pertunjukan sarkas',
+        teks: ['Pada hari Ahad yang lalu, Amin sekeluarga menyaksikan <b>pertunjukan sarkas</b>.', 'Mereka melihat haiwan melakukan pelbagai aksi.'],
+        chips: ['🐯 Harimau lompat gelung api', '🐻 Beruang naik basikal', '🐘 Gajah imbang atas tong', '🤡 Pelawak berguling'] },
+      { ikon: '🐘', tajuk: 'Gerak Ria: bergerak seperti haiwan',
+        teks: ['Lakukan <b>regangan</b> dahulu. Pilih aksi haiwan.', 'Bergerak ke papan tanda yang cikgu sebut: <b>AIR</b>, <b>MAKANAN</b> atau <b>TIDUR</b>.', 'Cikgu sebut "Tidur"? Berkumpul di kawasan gelung!'],
+        contoh: 'Murid yang meniru gajah: "Sukar nak bergerak kerana badan saya besar."' },
+      { ikon: gArah, tajuk: 'Mendatar dan menegak',
+        teks: ['Ali dan rakan-rakan bermain di taman permainan.', 'Haiwan seperti <b>buaya</b> bergerak secara <b>mendatar</b>. <b>Zirafah</b> bergerak secara <b>menegak</b>.'],
+        senarai: ['🪜 Memanjat tangga — seperti zirafah', '🦧 Bergayut pada palang — seperti orang utan', '🐊 Merangkak dalam terowong — seperti buaya', '🕷️ Memanjat jaring — seperti labah-labah'],
+        contoh: '"Saya perlu sesuaikan pergerakan mengikut halangan."' },
+      { ikon: gImbang, tajuk: 'Imbangan statik dan dinamik',
+        teks: ['<b>Imbangan statik</b>: diam, tidak bergerak. <b>Imbangan dinamik</b>: sambil bergerak.', '<b>Tapak sokongan</b> ialah bahagian badan yang menyokong badan (titik merah).'],
+        contoh: '"Saya buat satu tapak sokongan imbangan dinamik." "Mudahnya buat imbangan dua tapak sokongan statik ini."' },
+      { ikon: '🙃', tajuk: 'Stabilnya Saya: imbangan songsang',
+        teks: ['Murid melakukan <b>imbangan songsang</b> dengan <b>tiga tapak sokongan</b>.', 'Cikgu menyokong badan murid supaya selamat.'],
+        senarai: ['👕 Pakai pakaian yang sesuai.', '🔥 Panaskan badan dahulu.', '🧑‍🏫 Cikgu membantu dan menyokong.'] },
+      { ikon: '🏖️', tajuk: 'Seronoknya guling sisi',
+        teks: ['Abang dan adik berguling di atas pasir Pulau Manukan.', 'Abang: "Adik, guling secara berterusan."', 'Bahagian belakang badan menyentuh tikar terlebih dahulu.'],
+        contoh: '⚠️ Keselamatan: pastikan kawasan dilapik dengan tikar sebelum berguling.' },
+      { ikon: gGuling, tajuk: 'Guling depan (straddle)',
+        teks: ['Cikgu mengajar Faradiba. Faradiba: "Saya boleh lakukannya."', 'Cikgu: "<b>Rapatkan dagu ke dada.</b>" "Pastikan <b>bahagian belakang bahu</b> menyentuh tilam."'] },
+      { ikon: '🔙', tajuk: 'Guling belakang (straddle)',
+        teks: ['Faradiba belajar guling belakang langkah demi langkah (ansur maju), dibantu cikgu.'],
+        senarai: ['Kaki rapat pada badan.', 'Tangan menolak badan dan membantu gulingan.', '<b>Bulatkan badan</b> semasa berguling.'] },
+      { ikon: '📣', tajuk: 'Formasi gulingan',
+        teks: ['Tiga stesen tilam: guling hadapan, guling sisi, guling belakang.', 'Cikgu: "Kamu guling selepas cikgu bunyikan <b>wisel</b>."'],
+        contoh: '"Kami seronok dapat melakukan gulingan dengan yakinnya."' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Bilakah Amin sekeluarga menyaksikan pertunjukan sarkas?', ikon: '🎪', p: ['Hari Ahad yang lalu', 'Hari Sukan Negara', 'Waktu rehat'], a: 0, kenapa: 'Mereka menonton sarkas pada hari Ahad yang lalu.' },
+      { j: 'pilih', s: 'Apakah tiga papan tanda dalam Gerak Ria?', ikon: '🪧', p: ['AIR, MAKANAN, TIDUR', 'MULA, TAMAT, REHAT', 'EMAS, PERAK, GANGSA'], a: 0, kenapa: 'Papan tanda di padang ialah AIR, MAKANAN dan TIDUR.' },
+      { j: 'pilih', s: 'Cikgu sebut "Tidur". Ke manakah murid berkumpul?', ikon: '😴', p: ['Kawasan gelung', 'Kolam renang', 'Bilik guru'], a: 0, kenapa: 'Apabila cikgu sebut "Tidur", murid berkumpul di kawasan gelung.' },
+      { j: 'pilih', s: 'Apakah yang dilakukan sebelum aktiviti Gerak Ria?', ikon: '🙆', p: ['Regangan', 'Makan', 'Tidur'], a: 0, kenapa: 'Lakukan regangan sebelum melaksanakan aktiviti.' },
+      { j: 'pilih', s: 'Haiwan manakah bergerak secara mendatar?', ikon: '↔️', p: ['Buaya', 'Zirafah', 'Burung'], a: 0, kenapa: 'Buaya bergerak secara mendatar; zirafah menegak.' },
+      { j: 'pilih', s: 'Imbangan sambil bergerak dipanggil imbangan ___.', ikon: '🎀', p: ['dinamik', 'statik', 'songsang'], a: 0, kenapa: 'Imbangan dinamik dibuat sambil bergerak.' },
+      { j: 'pilih', s: 'Imbangan songsang dalam buku dibuat dengan berapa tapak sokongan?', ikon: '🙃', p: ['Tiga', 'Satu', 'Lima'], a: 0, kenapa: 'Murid melakukan imbangan songsang dengan tiga tapak sokongan.' },
+      { j: 'pilih', s: 'Semasa guling depan, rapatkan dagu ke ___.', ikon: gGuling, p: ['dada', 'lutut', 'siling'], a: 0, kenapa: 'Cikgu: "Rapatkan dagu ke dada."' },
+      { j: 'pilih', s: 'Semasa guling depan, bahagian manakah menyentuh tilam?', ikon: '🤸', p: ['Belakang bahu', 'Atas kepala', 'Dahi'], a: 0, kenapa: 'Pastikan bahagian belakang bahu menyentuh tilam.' },
+      { j: 'pilih', s: 'Dalam Formasi Gulingan, bilakah kamu boleh berguling?', ikon: '📣', p: ['Selepas cikgu bunyikan wisel', 'Bila-bila masa', 'Sebelum cikgu datang'], a: 0, kenapa: 'Cikgu: "Kamu guling selepas cikgu bunyikan wisel."' },
+      { j: 'pilih', s: 'Apakah fungsi tangan dalam guling belakang?', ikon: '🙌', p: ['Menolak badan dan membantu gulingan', 'Menutup mata', 'Memegang reben'], a: 0, kenapa: 'Tangan digunakan untuk menolak badan dan membantu gulingan.' },
+      { j: 'bs', s: 'Guling sisi boleh dibuat di atas lantai keras tanpa tikar.', ikon: '🚫', a: false, kenapa: 'Kawasan mesti dilapik dengan tikar untuk menyerap hentakan.' },
+      { j: 'bs', s: 'Kita mesti memakai pakaian yang sesuai ketika imbangan songsang.', ikon: '👕', a: true, kenapa: '"Saya mesti memakai pakaian yang sesuai."' },
+      { j: 'bs', s: 'Imbangan statik ialah imbangan sambil bergerak.', ikon: '🧍', a: false, kenapa: 'Imbangan statik ialah imbangan yang diam, tidak bergerak.' },
+      { j: 'bs', s: 'Bulatkan badan semasa berguling.', ikon: '⚪', a: true, kenapa: 'Badan yang bulat membantu kita berguling dengan baik.' },
+      { j: 'susun', s: 'Susun langkah guling depan (straddle).', item: GL },
+      { j: 'kumpul', s: 'Mendatar atau menegak?', kumpulan: [['↔️ Mendatar', ['🐊 Buaya', 'Merangkak dalam terowong']], ['↕️ Menegak', ['🦒 Zirafah', 'Memanjat tangga']]] },
+      { j: 'padan', s: 'Padankan pergerakan dengan haiwan.', pasangan: [['Memanjat tangga', '🦒 Zirafah'], ['Bergayut pada palang', '🦧 Orang utan'], ['Merangkak dalam terowong', '🐊 Buaya'], ['Memanjat jaring', '🕷️ Labah-labah']] },
+      { j: 'padan', s: 'Padankan imbangan dengan tapak sokongan.', pasangan: [['Dinamik (berlari dengan reben)', '1 tapak sokongan'], ['Statik (berdiri atas paha rakan)', '2 tapak sokongan'], ['Imbangan songsang', '3 tapak sokongan']] },
+      { j: 'eja', s: 'Dirapatkan ke dada semasa guling depan. Eja.', ikon: '🙇', kata: 'dagu' },
+      { j: 'ayat', s: 'Bina ayat pesanan cikgu.', kata: ['Rapatkan', 'dagu', 'ke', 'dada.'] },
+    ],
+    amali: [{
+      id: 'bina-guling-depan', tajuk: 'Bina Guling Depan', ikon: '🤸',
+      arahan: 'Tekan gambar mengikut tertib langkah guling depan (straddle). Kemudian tonton Faradiba berguling!',
+      mula(el, api) {
+        const mini = (i, c) => `<svg viewBox="0 0 106 106" style="width:64px;flex:none" aria-hidden="true">${tilam(2, 98, 102)}${fg(G[i], 4, 0, .92, c || 'currentColor')}</svg>`;
+        el.innerHTML = `<div class="cols"><div><b>Langkah</b><div class="slots" id="sl"></div></div>
+          <div><b id="kh">Kad gambar</b><div class="opts" id="pl" style="grid-template-columns:1fr"></div>
+          <div id="tv" style="display:none;text-align:center"><svg viewBox="0 0 106 106" style="width:min(220px,70vw)"><g id="tg"></g></svg><p class="now" id="tl"></p></div></div></div>`;
+        const sl = el.querySelector('#sl'), pl = el.querySelector('#pl');
+        const S = GL.map((_, i) => { const d = api.H(`<div class="slot"><b>${i + 1}</b><span class="hint">?</span></div>`); sl.appendChild(d); return d; });
+        let k = 0, miss = 0;
+        const bs = api.shuffle([0, 1, 2, 3, 4, 5]).map(i => {
+          const b = api.H(`<button class="opt" style="display:flex;gap:10px;align-items:center;min-height:0;padding:6px 10px">${mini(i)}<span>${GL[i]}</span></button>`);
+          b.dataset.i = i; b.onclick = () => pick(i, b); pl.appendChild(b); return b;
+        });
+        function pick(i, b) {
+          if (k >= 6 || b.disabled) return;
+          if (i !== k) { miss++; api.salah(b, `Belum lagi. Langkah ${k + 1} dahulu: fikir apa yang Faradiba buat ${k ? 'selepas "' + GL[k - 1].toLowerCase() + '"' : 'paling awal'}.`); return; }
+          S[k].innerHTML = `<b>${k + 1}</b>${mini(i, 'var(--c)')}<span>${GL[i]}</span>`; S[k].classList.add('ok');
+          b.disabled = true; b.style.display = 'none'; api.betul(S[k], GL[i] + '.'); k++;
+          if (k === 6) main();
+        }
+        function main() {
+          const tv = el.querySelector('#tv'), tg = el.querySelector('#tg'), tl = el.querySelector('#tl'); tv.style.display = ''; el.querySelector('#kh').textContent = '🎬 Tonton!';
+          api.say('🎬 Tonton Faradiba melakukan guling depan!');
+          let f = 0;
+          const step = () => {
+            if (!el.isConnected) return;
+            tg.innerHTML = tilam(2, 98, 102) + fg(G[f], 4, 0, .92, 'var(--c)'); tl.textContent = `${f + 1}. ${GL[f]}`;
+            api.anim(tg, [{ opacity: .3 }, { opacity: 1 }], { duration: 250 });
+            if (++f < 6) setTimeout(step, 650);
+            else api.selesai(Math.max(0, 1 - miss * .12), 'Syabas! Ingat: dagu ke dada dan belakang bahu menyentuh tilam.');
+          };
+          step();
+        }
+        return { jawab() { for (let s = 0; s < 6; s++) bs.find(b => +b.dataset.i === s).click(); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  const sv = (w, h, s) => `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:min(${w}px,calc(100% - 58px))">${s}</svg>`;
+  const fg = (p, x = 0, y = 0, k = 1, c = 'currentColor') => `<g transform="translate(${x} ${y}) scale(${k})" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">${p.slice(1).map(l => `<polyline points="${l}"/>`).join('')}<circle cx="${p[0][0]}" cy="${p[0][1]}" r="9" fill="${c}" stroke="none"/></g>`;
+  const tx = (x, y, t, z = 13, o = '') => `<text x="${x}" y="${y}" font-size="${z}" text-anchor="middle" fill="currentColor" ${o}>${t}</text>`;
+  const air = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#4dabf7" opacity=".35"/><path d="M${x} ${y}${' q4 -4 8 0 t8 0'.repeat(Math.ceil(w / 16))}" fill="none" stroke="#1c7ed6" stroke-width="2" clip-path="none"/>`;
+  // fasa berdiri selepas apungan lentang (5 gambar buku)
+  const F = [
+    [[12, 52], '22,54 46,60', '22,54 66,56', '66,56 98,58'],
+    [[24, 34], '30,44 44,62', '30,44 58,62', '58,62 92,60'],
+    [[46, 30], '24,56 46,44 70,50', '46,40 46,66', '46,66 70,56 66,80'],
+    [[50, 22], '30,52 50,36 70,52', '50,32 50,64', '42,96 50,64 58,96'],
+    [[50, 12], '84,34 50,28 86,42', '50,22 50,62', '42,96 50,62 58,96'],
+  ];
+  const FL = ['Terapung lentang, tangan di sisi', 'Angkat kepala, bengkokkan badan', 'Bawa lutut ke dada', 'Turunkan kaki ke lantai kolam', 'Berdiri tegak, tangan ke depan'];
+  const gFasa = sv(320, 128, `${[0, 1, 2, 3, 4].map(i => `<g transform="translate(${i * 64} 0)">${air(2, 46, 60, 66)}${fg(F[i], 4, 12, .56)}<circle cx="12" cy="10" r="9" fill="var(--c)"/><text x="12" y="14.5" font-size="12" text-anchor="middle" style="fill:#fff" font-weight="700">${i + 1}</text></g>`).join('')}
+    <line x1="0" y1="112" x2="320" y2="112" stroke="currentColor" stroke-width="3" opacity=".4"/>${tx(160, 126, 'lantai kolam', 11)}`);
+  const gApung = sv(320, 100, `${air(0, 52, 320, 48)}${fg([[34, 50], '46,54 120,60', '46,54 210,56', '210,56 300,52', '210,56 300,60'])}${tx(200, 30, '😌 tenang, bernafas', 15)}`);
+  // perenang (pandangan sisi) memegang papan keribas
+  const swim = (kiri, kanan, c = 'currentColor') => `<g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="6">
+    <rect x="96" y="36" width="26" height="9" rx="3" fill="#ffd43b" stroke="none"/>
+    <polyline points="72,44 98,40" stroke="${c}"/><polyline points="72,44 38,46" stroke="${c}"/>
+    <polyline points="38,46 4,${kiri}" stroke="var(--c)"/><polyline points="38,46 4,${kanan}" stroke="${c}" opacity=".7"/>
+    <circle cx="82" cy="34" r="9" fill="${c}" stroke="none"/></g>`;
+  const gKeribas = sv(320, 100, `${air(0, 40, 320, 60)}
+    <g transform="translate(0 4)">${swim(46, 46)}</g>${tx(64, 92, '1 Kaki lurus', 11)}
+    <g transform="translate(110 4)">${swim(62, 34)}</g>${tx(170, 92, '2 Kiri ke bawah', 11)}
+    <g transform="translate(214 4)">${swim(34, 62)}</g>${tx(272, 92, '3 Kanan ke bawah', 11)}`);
+
+  UNIT({
+    n: 5, tajuk: 'Pantas Berenang', tema: 'Pendidikan Jasmani', ikon: '🏊',
+    belajar: [
+      { ikon: '🏊', tajuk: 'Kejohanan renang',
+        teks: ['Ajmal dan keluarga menyaksikan <b>kejohanan renang</b>.', 'Ramai ibu bapa datang memberikan sokongan kepada para peserta.'] },
+      { ikon: '🚫', tajuk: 'Peraturan kolam renang',
+        senarai: ['🏃 JANGAN BERLARI', '🍔 Tidak dibenarkan membawa makanan & minuman', '🩴 Tidak dibenarkan memakai selipar atau kasut', '👙 Tidak dibenarkan memakai bikini'],
+        contoh: 'Seorang murid menegur rakannya: "Jangan berlari."' },
+      { ikon: '🩱', tajuk: 'Baju renang yang sesuai',
+        teks: ['Baju renang yang sesuai diperbuat daripada <b>bahan sintetik</b> dan <b>kain lycra</b>.', 'Kain ini <b>tidak menyerap klorin</b>.'],
+        chips: ['🧢 Topi renang', '🥽 Cermin mata renang', '🟨 Papan keribas', '🛟 Pelampung'] },
+      { ikon: gApung, tajuk: 'Seronok terapung: apungan lentang',
+        teks: ['Ajmal, Vijaya, Kam Kiat dan rakan-rakan belajar <b>apungan lentang</b>.', 'Yakin dan tenangkan fikiran. <b>Jangan lupa bernafas.</b>', 'Semasa apungan, tiada pergerakan.'] },
+      { ikon: gFasa, tajuk: 'Fasa berdiri selepas apungan',
+        senarai: FL.map((t, i) => `<b>${i + 1}</b> ${t}`) },
+      { ikon: gKeribas, tajuk: 'Aku Seperti Ikan: tendangan keribas',
+        teks: ['Tendangan keribas yang betul membantu kita berenang dengan <b>lebih pantas</b>.'],
+        senarai: ['Kaki lurus ke belakang.', 'Ayun kaki kiri ke bawah.', 'Ayun kaki kanan ke bawah.', 'Gerakkan kedua-dua belah kaki secara <b>berselang-seli</b>.'] },
+      { ikon: '🦵', tajuk: 'Tip tendangan keribas',
+        teks: ['Pastikan <b>lutut tidak terlalu bengkok</b>.', 'Berlatih sambil <b>memegang tepi kolam</b>.'],
+        contoh: '♻️ Kreativiti: cipta alat daripada barangan terpakai untuk menggantikan papan keribas.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Apakah yang disaksikan oleh Ajmal dan keluarga?', ikon: '🏊', p: ['Kejohanan renang', 'Pertunjukan sarkas', 'Pertunjukan kasut roda'], a: 0, kenapa: 'Ajmal dan keluarga menyaksikan kejohanan renang.' },
+      { j: 'pilih', s: 'Apakah peraturan pertama pada papan di kolam renang?', ikon: '🪧', p: ['Jangan berlari', 'Sila bawa makanan', 'Pakai kasut'], a: 0, kenapa: 'Papan peraturan: JANGAN BERLARI.' },
+      { j: 'pilih', s: 'Baju renang yang sesuai diperbuat daripada ___.', ikon: '🩱', p: ['kain lycra', 'kain kapas', 'kertas'], a: 0, kenapa: 'Baju renang yang sesuai daripada bahan sintetik dan kain lycra.' },
+      { j: 'pilih', s: 'Kenapa kain lycra sesuai untuk baju renang?', ikon: '💧', p: ['Tidak menyerap klorin', 'Sangat tebal', 'Berwarna cerah'], a: 0, kenapa: 'Kain lycra tidak menyerap klorin.' },
+      { j: 'pilih', s: 'Semasa apungan lentang, jangan lupa ___.', ikon: gApung, p: ['bernafas', 'berlari', 'makan'], a: 0, kenapa: 'Tenangkan fikiran dan jangan lupa bernafas.' },
+      { j: 'pilih', s: 'Berapakah fasa berdiri selepas apungan lentang dalam buku?', ikon: '🔢', p: ['5', '3', '8'], a: 0, kenapa: 'Ada 5 gambar fasa berdiri.' },
+      { j: 'pilih', s: 'Tendangan keribas yang betul membantu kita berenang dengan lebih ___.', ikon: '🐟', p: ['pantas', 'perlahan', 'dalam'], a: 0, kenapa: 'Tendangan keribas yang betul membantu kita berenang lebih pantas.' },
+      { j: 'pilih', s: 'Apakah langkah pertama tendangan keribas?', ikon: gKeribas, p: ['Kaki lurus ke belakang', 'Ayun kaki kanan ke bawah', 'Lompat ke dalam kolam'], a: 0, kenapa: 'Langkah 1: kaki lurus ke belakang.' },
+      { j: 'pilih', s: 'Di manakah murid berpegang semasa berlatih tendangan keribas?', ikon: '🙌', p: ['Tepi kolam', 'Tangan kawan', 'Pelampung di dinding'], a: 0, kenapa: 'Murid berlatih tendangan dengan memegang tepi kolam.' },
+      { j: 'bs', s: 'Semasa apungan lentang, kita perlu banyak bergerak.', ikon: '🌊', a: false, kenapa: 'Semasa apungan, tiada pergerakan.' },
+      { j: 'bs', s: 'Kita boleh makan roti sambil duduk di tepi kolam.', ikon: '🍞', a: false, kenapa: 'Tidak dibenarkan membawa makanan dan minuman ke kolam.' },
+      { j: 'bs', s: 'Semasa tendangan keribas, lutut tidak terlalu bengkok.', ikon: '🦵', a: true, kenapa: 'Pastikan lutut tidak terlalu bengkok.' },
+      { j: 'bs', s: 'Kita boleh memakai selipar di kawasan kolam renang.', ikon: '🩴', a: false, kenapa: 'Tidak dibenarkan memakai selipar atau kasut.' },
+      { j: 'susun', s: 'Susun fasa berdiri selepas apungan lentang.', item: FL },
+      { j: 'susun', s: 'Susun langkah tendangan keribas.', item: ['Kaki lurus ke belakang', 'Ayun kaki kiri ke bawah', 'Ayun kaki kanan ke bawah', 'Gerak kedua-dua kaki berselang-seli'] },
+      { j: 'kumpul', s: 'Tip ini untuk apa?', kumpulan: [['😌 Apungan lentang', ['Tenangkan fikiran', 'Jangan lupa bernafas', 'Tiada pergerakan']], ['🦵 Tendangan keribas', ['Kaki lurus ke belakang', 'Kaki berselang-seli', 'Lutut tidak terlalu bengkok']]] },
+      { j: 'padan', s: 'Padankan dengan pesanan yang betul.', pasangan: [['🩱 Kain lycra', 'Tidak menyerap klorin'], ['😌 Apungan lentang', 'Jangan lupa bernafas'], ['🦵 Tendangan keribas', 'Lutut tidak terlalu bengkok'], ['🏊 Tepi kolam', 'Jangan berlari']] },
+      { j: 'eja', s: 'Eja nama kain baju renang.', ikon: '🩱', kata: 'lycra' },
+      { j: 'ayat', s: 'Bina ayat peraturan kolam.', kata: ['Jangan', 'berlari', 'di', 'tepi', 'kolam.'] },
+    ],
+    amali: [{
+      id: 'tendangan-keribas', tajuk: 'Tendangan Keribas Berirama', ikon: '🐟',
+      arahan: 'Luruskan kaki dahulu. Kemudian tekan KIRI, KANAN, KIRI, KANAN… berselang-seli supaya kamu sampai ke dinding kolam!',
+      mula(el, api) {
+        const N = 12; let k = 0, last = null, miss = 0, mula = false, kiri = 46, kanan = 46;
+        el.innerHTML = `<svg viewBox="0 0 320 110" style="width:100%;max-width:640px;display:block;margin:0 auto"><rect x="0" y="40" width="320" height="70" fill="#4dabf7" opacity=".35"/>
+            <path d="M0 40 q10 -6 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="#1c7ed6" stroke-width="2"/>
+            <rect x="306" y="10" width="14" height="100" fill="#adb5bd"/><text x="290" y="24" font-size="11" text-anchor="end" fill="currentColor">dinding 🏁</text>
+            <g id="sw" style="transition:transform .35s ease"></g><g id="pc"></g></svg>
+          <button class="btn alt" id="lurus" style="width:100%;margin:8px 0">1️⃣ Luruskan kaki ke belakang</button>
+          <div class="two"><button class="btn go" id="kL" disabled>🦵 KIRI</button><button class="btn go" id="kR" disabled>KANAN 🦵</button></div>
+          <div class="meter" style="margin-top:12px"><i id="mt"></i></div><p class="hint" id="pg"></p>`;
+        const sw = el.querySelector('#sw'), pc = el.querySelector('#pc'), mt = el.querySelector('#mt'), pg = el.querySelector('#pg');
+        const bL = el.querySelector('#kL'), bR = el.querySelector('#kR'), bLu = el.querySelector('#lurus');
+        const draw = () => { sw.innerHTML = swim(kiri, kanan, 'var(--ink)'); sw.style.transform = `translate(${k * 15}px, 4px)`; mt.style.width = (k / N * 100) + '%'; pg.textContent = `Tendangan: ${k} / ${N}`; };
+        const percik = () => { const x = k * 15 + 8; pc.innerHTML = `<g fill="#1c7ed6"><circle cx="${x}" cy="44" r="3"/><circle cx="${x - 7}" cy="38" r="2.5"/><circle cx="${x + 5}" cy="34" r="2"/></g>`; api.anim(pc, [{ opacity: 1 }, { opacity: 0 }], { duration: 450 }); };
+        bLu.onclick = () => { if (mula) return; mula = true; kiri = kanan = 46; draw(); bLu.disabled = true; bL.disabled = bR.disabled = false; api.betul(bLu, 'Kaki lurus ke belakang. Sekarang ayun kaki KIRI ke bawah dahulu!'); };
+        const tendang = (sisi, b) => {
+          if (!mula || k >= N) return;
+          if ((last === null && sisi !== 'L') || sisi === last) {
+            miss++; api.salah(b, last === null ? 'Mula dengan kaki kiri ke bawah.' : 'Berselang-seli! Sekarang guna kaki yang satu lagi.'); return;
+          }
+          last = sisi; k++;
+          if (sisi === 'L') { kiri = 62; kanan = 34; } else { kiri = 34; kanan = 62; }
+          draw(); percik(); api.say(sisi === 'L' ? '⬇️ Kiri ke bawah… sekarang kanan!' : '⬇️ Kanan ke bawah… sekarang kiri!');
+          if (k === N) { bL.disabled = bR.disabled = true; api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Kaki berselang-seli, lutut tidak terlalu bengkok — kamu sampai ke dinding!'); }
+        };
+        bL.onclick = () => tendang('L', bL); bR.onclick = () => tendang('R', bR);
+        draw();
+        return { jawab() { bLu.click(); for (let i = 0; i < N; i++) (i % 2 ? bR : bL).click(); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  const sv = (w, h, s) => `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:min(${w}px,calc(100% - 58px))">${s}</svg>`;
+  const fg = (p, x = 0, y = 0, k = 1, c = 'currentColor') => `<g transform="translate(${x} ${y}) scale(${k})" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">${p.slice(1).map(l => `<polyline points="${l}"/>`).join('')}<circle cx="${p[0][0]}" cy="${p[0][1]}" r="9" fill="${c}" stroke="none"/></g>`;
+  const tx = (x, y, t, z = 13, o = '') => `<text x="${x}" y="${y}" font-size="${z}" text-anchor="middle" fill="currentColor" ${o}>${t}</text>`;
+  const DIRI = [[50, 14], '32,52 50,30 68,52', '50,24 50,62', '40,96 50,62 60,96'];
+  const AH = id => `<defs><marker id="${id}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--c)"/></marker></defs>`;
+  // jam konsep arah
+  const jam = (cx, cy, r, id) => `${AH(id)}<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="currentColor" stroke-width="4"/>
+    ${[[0, -1, '12'], [1, 0, '3'], [0, 1, '6'], [-1, 0, '9']].map(([a, b, t]) => `<line x1="${cx}" y1="${cy}" x2="${cx + a * r * .62}" y2="${cy + b * r * .62}" stroke="var(--c)" stroke-width="5" marker-end="url(#${id})"/>${tx(cx + a * r * .84, cy + b * r * .84 + 5, t, r * .2, 'font-weight="700"')}`).join('')}
+    <circle cx="${cx}" cy="${cy}" r="5" fill="currentColor"/>`;
+  const gJam = sv(320, 170, `${jam(90, 85, 76, 'ahj')}
+    ${tx(250, 30, 'Pukul 12', 14, 'font-weight="700"')}${tx(250, 46, '⬆️ depan', 13)}
+    ${tx(250, 70, 'Pukul 3', 14, 'font-weight="700"')}${tx(250, 86, '➡️ kanan', 13)}
+    ${tx(250, 110, 'Pukul 6', 14, 'font-weight="700"')}${tx(250, 126, '⬇️ belakang', 13)}
+    ${tx(250, 150, 'Pukul 9', 14, 'font-weight="700"')}${tx(250, 166, '⬅️ kiri', 13)}`);
+  const pk = (x, y, n) => `<rect x="${x}" y="${y}" width="44" height="34" fill="none" stroke="currentColor" stroke-width="3"/>${n ? tx(x + 22, y + 23, n, 13) : ''}`;
+  const gTeng = sv(320, 150, `
+    ${pk(138, 112, '1')}${pk(138, 78, '2')}${pk(94, 44, '3')}${pk(138, 44, '4')}${pk(182, 44, '5')}${pk(138, 10, '6')}
+    <ellipse cx="160" cy="88" rx="8" ry="5" fill="var(--c)"/>
+    ${fg([[50, 14], '22,28 50,30 78,28', '50,24 50,62', '50,96 50,62 66,74 60,86'], 236, 46, .9)}
+    <ellipse cx="40" cy="136" rx="8" ry="5" fill="var(--c)"/>${tx(76, 141, '= gundu', 13)}`);
+
+  UNIT({
+    n: 6, tajuk: 'Santai Ria', tema: 'Pendidikan Jasmani', ikon: '🗺️',
+    belajar: [
+      { ikon: '🗺️', tajuk: 'Pertandingan mencari harta karun',
+        teks: ['Belia Taman Bukti menganjurkan pertandingan <b>mencari harta karun</b>.', 'Siew Lan sekeluarga turut menyertai pertandingan itu.'],
+        contoh: 'Kain rentang: "HARI RAMAH MESRA TAMAN BUKTI".' },
+      { ikon: gJam, tajuk: 'Konsep jam',
+        teks: ['Wani dan Hilda menggunakan <b>konsep jam</b> untuk menjejak dan mencari harta karun.', 'Nombor jam menunjukkan arah kita bergerak.'] },
+      { ikon: '📜', tajuk: 'Kertas petunjuk',
+        senarai: ['Bergerak ke arah pukul 12 (20 langkah).', 'Bergerak ke arah pukul 3 (50 langkah).', 'Bergerak ke arah pukul 9 (15 langkah).', 'Cari kotak hitam. ⬛'],
+        contoh: '⚠️ Pastikan kawasan aktiviti selamat.' },
+      { ikon: '🎎', tajuk: 'Kenangan lama',
+        teks: ['Murid Tahun 2 Melur dan Tahun 2 Teratai bermain <b>Galah Panjang</b> dan <b>Teng-teng</b>.', 'Mereka seronok bermain permainan tradisional ini.'] },
+      { ikon: gTeng, tajuk: 'Teng-teng',
+        teks: ['Teng-teng juga dikenali sebagai <b>ketingting</b>.', 'Ada <b>gundu</b> di dalam petak.', '"Saya boleh membaling, melompat, mengimbang, dan membongkok."'],
+        chips: ['Membaling', 'Melompat', 'Mengimbang', 'Membongkok'] },
+      { ikon: '🏃', tajuk: 'Galah Panjang',
+        teks: ['Galah Panjang dimainkan oleh <b>pasukan penyerang</b> dan <b>pasukan bertahan</b> di dalam petak.', 'Kemahiran dalam Galah Panjang:'],
+        chips: ['Berlari', 'Mengelak', 'Mengacah', 'Mengadang', 'Menggelongsor'],
+        contoh: 'Mengacah: berpura-pura bergerak untuk mengelirukan lawan.' },
+      { ikon: '👕', tajuk: 'Sebelum bermain',
+        senarai: ['👕 Pakai pakaian yang sesuai.', '👫 Pilih ahli kumpulan sendiri.', '📏 Patuhi peraturan permainan.'] },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Siapakah yang menganjurkan pertandingan mencari harta karun?', ikon: '🗺️', p: ['Belia Taman Bukti', 'Kelab Gimnastik', 'Cikgu Chong'], a: 0, kenapa: 'Belia Taman Bukti menganjurkan pertandingan itu.' },
+      { j: 'pilih', s: 'Siapakah yang menyertai pertandingan bersama keluarganya?', ikon: '👨‍👩‍👧', p: ['Siew Lan', 'Faradiba', 'Ganesan'], a: 0, kenapa: 'Siew Lan sekeluarga turut menyertai pertandingan itu.' },
+      { j: 'pilih', s: 'Wani dan Hilda menggunakan konsep ___ untuk menjejak.', ikon: '🕛', p: ['jam', 'warna', 'nombor telefon'], a: 0, kenapa: 'Mereka menggunakan konsep jam.' },
+      { j: 'pilih', s: 'Arahan 1: bergerak ke arah pukul 12 sebanyak berapa langkah?', ikon: '📜', p: ['20 langkah', '50 langkah', '15 langkah'], a: 0, kenapa: 'Arahan 1: pukul 12, 20 langkah.' },
+      { j: 'pilih', s: 'Arahan 2: bergerak ke arah pukul 3 sebanyak ___ langkah.', ikon: '👣', p: ['50', '20', '12'], a: 0, kenapa: 'Arahan 2: pukul 3, 50 langkah.' },
+      { j: 'pilih', s: 'Apakah yang perlu dicari pada arahan terakhir?', ikon: '📦', p: ['Kotak hitam', 'Kotak merah', 'Bola emas'], a: 0, kenapa: 'Arahan 4: cari kotak hitam.' },
+      { j: 'pilih', s: 'Pukul 3 menunjukkan arah ke ___.', ikon: gJam, p: ['kanan', 'kiri', 'belakang'], a: 0, kenapa: 'Pukul 3 ialah arah ke kanan.' },
+      { j: 'pilih', s: 'Teng-teng juga dikenali sebagai ___.', ikon: '🦶', p: ['ketingting', 'galah panjang', 'senamrobik'], a: 0, kenapa: 'Teng-teng juga dikenali sebagai ketingting.' },
+      { j: 'pilih', s: 'Kelas manakah yang bermain Galah Panjang dan Teng-teng?', ikon: '🏫', p: ['Tahun 2 Melur dan 2 Teratai', 'Tahun 1 Mawar', 'Tahun 6 Cempaka'], a: 0, kenapa: 'Murid Tahun 2 Melur dan Tahun 2 Teratai bermain bersama.' },
+      { j: 'pilih', s: 'Permainan manakah ada gundu di dalam petak?', ikon: gTeng, p: ['Teng-teng', 'Galah Panjang', 'Voli belon'], a: 0, kenapa: 'Gundu digunakan dalam permainan Teng-teng.' },
+      { j: 'bs', s: 'Pukul 6 bermaksud bergerak ke hadapan.', ikon: '🕕', a: false, kenapa: 'Pukul 6 ialah arah ke belakang. Pukul 12 ke hadapan.' },
+      { j: 'bs', s: 'Murid boleh memilih ahli kumpulan sendiri.', ikon: '👫', a: true, kenapa: 'Cikgu meminta murid memilih ahli kumpulan sendiri.' },
+      { j: 'bs', s: 'Kita perlu mematuhi peraturan permainan.', ikon: '📏', a: true, kenapa: 'Murid mesti mematuhi peraturan permainan.' },
+      { j: 'bs', s: 'Mengacah ialah salah satu kemahiran dalam Galah Panjang.', ikon: '🏃', a: true, kenapa: 'Galah Panjang: mengadang, mengacah, berlari, menggelongsor, mengelak.' },
+      { j: 'kumpul', s: 'Kemahiran ini untuk permainan apa?', kumpulan: [['🏃 Galah Panjang', ['Mengadang', 'Mengacah', 'Mengelak', 'Menggelongsor', 'Berlari']], ['🦶 Teng-teng', ['Membaling', 'Melompat', 'Mengimbang', 'Membongkok']]] },
+      { j: 'padan', s: 'Padankan arah jam.', pasangan: [['Pukul 12', '⬆️ Depan'], ['Pukul 3', '➡️ Kanan'], ['Pukul 6', '⬇️ Belakang'], ['Pukul 9', '⬅️ Kiri']] },
+      { j: 'susun', s: 'Susun arahan kertas petunjuk.', item: ['Pukul 12, 20 langkah', 'Pukul 3, 50 langkah', 'Pukul 9, 15 langkah', 'Cari kotak hitam'] },
+      { j: 'eja', s: 'Teng-teng juga dikenali sebagai…', ikon: '🦶', kata: 'ketingting' },
+      { j: 'ayat', s: 'Bina ayat.', kata: ['Teng-teng', 'juga', 'dikenali', 'sebagai', 'ketingting.'] },
+    ],
+    amali: [{
+      id: 'ikut-arah-jam', tajuk: 'Ikut Arah Jam', ikon: '🧭',
+      arahan: 'Baca kertas petunjuk. Tekan arah jam yang betul. 1 petak = 5 langkah. Cari kotak hitam!',
+      mula(el, api) {
+        const C = 24, W = 12, Hh = 7, D = { 12: [0, -1], 3: [1, 0], 6: [0, 1], 9: [-1, 0] };
+        const R = [
+          { mula: [1, 6], a: [[12, 20], [3, 50], [9, 15]], umpan: [[4, 6], [11, 0]] },
+          { mula: [10, 1], a: [[6, 25], [9, 40], [12, 10]], umpan: [[6, 1], [9, 4]] },
+          { mula: [0, 0], a: [[3, 30], [6, 20], [3, 25]], umpan: [[2, 5], [8, 6]] },
+        ];
+        let r = 0, s = 0, pos, busy = false, miss = 0;
+        el.innerHTML = `<div class="cols" style="align-items:start">
+          <div><svg viewBox="-4 -4 ${W * C + 8} ${Hh * C + 8}" style="width:100%;max-width:560px" id="mp"></svg></div>
+          <div><div class="box" id="kp" style="background:color-mix(in srgb,var(--gold) 12%,var(--card))"></div>
+            <div style="display:grid;grid-template-columns:repeat(3,64px);gap:6px;justify-content:center;margin-top:10px" id="jm"></div></div></div>
+          <div class="meter" style="margin-top:12px"><i id="mt"></i></div>`;
+        const mp = el.querySelector('#mp'), kp = el.querySelector('#kp'), jm = el.querySelector('#jm'), mt = el.querySelector('#mt');
+        const cell = ([x, y]) => [x * C, y * C];
+        const B = {};
+        ['', '12', '', '9', 'o', '3', '', '6', ''].forEach(t => {
+          if (t === 'o') { jm.appendChild(api.H(`<div style="display:grid;place-items:center"><svg viewBox="0 0 64 64" width="60">${jam(32, 32, 28, 'ahm')}</svg></div>`)); return; }
+          if (!t) { jm.appendChild(api.H('<span></span>')); return; }
+          const b = api.H(`<button class="opt" style="text-align:center;padding:6px;min-height:56px;font-family:var(--hd)">${t}</button>`); b.onclick = () => go(+t, b); jm.appendChild(b); B[t] = b;
+        });
+        function lukis() {
+          const g = R[r]; let h = '';
+          for (let y = 0; y < Hh; y++) for (let x = 0; x < W; x++) h += `<rect x="${x * C}" y="${y * C}" width="${C}" height="${C}" fill="${(x + y) % 2 ? '#8ce99a' : '#b2f2bb'}" opacity=".55"/>`;
+          h += g.umpan.map((u, i) => { const [x, y] = cell(u); return `<rect x="${x + 5}" y="${y + 5}" width="14" height="14" rx="2" fill="${i ? '#1c7ed6' : '#e03131'}"/>`; }).join('');
+          const [sx, sy] = cell(g.mula); h += `<text x="${sx + 12}" y="${sy + 17}" font-size="13" text-anchor="middle">🚩</text>`;
+          h += `<g id="wk" style="transition:transform .11s linear">${fg(DIRI, 3, 1, .22, 'var(--c)')}</g><g id="kh"></g>`;
+          mp.innerHTML = h; pos = g.mula.slice(); s = 0; letak(); kertas();
+        }
+        const letak = () => { const [x, y] = cell(pos); mp.querySelector('#wk').style.transform = `translate(${x}px, ${y}px)`; };
+        function kertas() {
+          const g = R[r];
+          kp.innerHTML = `<b>📜 Petunjuk ${r + 1} / ${R.length}</b><ol style="margin:6px 0 0;padding-left:22px">${g.a.map((a, i) => `<li style="${i === s ? 'font-weight:700;color:var(--c)' : i < s ? 'opacity:.55;text-decoration:line-through' : ''}">Bergerak ke arah pukul ${a[0]} (${a[1]} langkah)</li>`).join('')}<li style="${s === 3 ? 'font-weight:700;color:var(--c)' : ''}">Cari kotak hitam ⬛</li></ol>`;
+          mt.style.width = ((r * 4 + s) / (R.length * 4) * 100) + '%';
+        }
+        function go(arah, b) {
+          if (busy || s >= 3) return;
+          const [ja, lk] = R[r].a[s];
+          if (arah !== ja) { miss++; api.salah(b, `Bukan pukul ${arah}. Petunjuk berkata pukul ${ja}. Ingat: 12 depan, 3 kanan, 6 belakang, 9 kiri.`); return; }
+          api.betul(b); busy = true; let n = lk / 5;
+          api.say(`👣 Pukul ${ja}: ${lk} langkah = ${n} petak. Kira bersama!`);
+          let c = 0;
+          const jalan = () => {
+            if (!el.isConnected) return;
+            pos[0] += D[ja][0]; pos[1] += D[ja][1]; c++; letak(); api.say(`👣 ${c * 5} langkah…`);
+            if (c < n) return setTimeout(jalan, 120);
+            busy = false; s++; kertas();
+            if (s === 3) { const [x, y] = cell(pos); const kh = mp.querySelector('#kh'); kh.innerHTML = `<rect x="${x + 3}" y="${y + 3}" width="18" height="18" rx="2" fill="#111" stroke="var(--gold)" stroke-width="2" style="cursor:pointer"/>`; api.anim(kh, [{ opacity: 0 }, { opacity: 1 }], { duration: 300 }); kh.onclick = buka; api.say('⬛ Kamu sampai! Tekan kotak hitam.'); }
+          };
+          setTimeout(jalan, 120);
+        }
+        function buka() {
+          if (s !== 3) return;
+          s = 4; const kh = mp.querySelector('#kh'); const [x, y] = cell(pos);
+          kh.innerHTML = `<text x="${x + 12}" y="${y + 18}" font-size="18" text-anchor="middle">💎</text>`; api.betul(null, 'Harta karun dijumpai!');
+          r++;
+          if (r === R.length) { mt.style.width = '100%'; api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Kamu pandai menjejak menggunakan konsep jam.'); }
+          else { busy = true; setTimeout(() => { busy = false; if (el.isConnected) lukis(); }, 1100); }
+        }
+        lukis();
+        const tunggu = () => new Promise(f => setTimeout(f, 60));
+        return { async jawab() {
+          for (let i = r; i < R.length; i++) {
+            while (busy || r !== i) await tunggu();
+            for (const [ja] of R[i].a) { while (busy) await tunggu(); B[ja].click(); await tunggu(); }
+            while (busy || s !== 3) await tunggu();
+            mp.querySelector('#kh').dispatchEvent(new MouseEvent('click', { bubbles: true }));
+          }
+        } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Rajah orang lidi ringkas (garisan ikut warna teks — cantik dalam tema cerah & gelap)
+  const L = p => `<polyline points="${p.map(x => x.join(',')).join(' ')}"/>`;
+  const fig = (dx, h, parts) => `<g transform="translate(${dx},0)"><circle cx="${h[0]}" cy="${h[1]}" r="7"/>${parts.map(L).join('')}</g>`;
+  const svg = (w, h, inner, txt = '') => `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" style="max-width:calc(100% - 56px)"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${inner}</g><g fill="currentColor" stroke="none" font-size="11" font-weight="700" text-anchor="middle" font-family="sans-serif">${txt}</g></svg>`;
+  const t = (x, y, s) => `<text x="${x}" y="${y}">${s}</text>`;
+  const ground = (x1, x2, y = 104) => `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke-width="2" opacity=".45"/>`;
+
+  // Memanaskan badan: melompat, mencongklang, melompat sebelah kaki
+  const PANAS = svg(300, 122,
+    fig(10, [40, 14], [[[40, 21], [40, 54]], [[26, 4], [40, 28], [54, 4]], [[32, 86], [34, 72], [40, 54], [46, 72], [48, 86]]]) + ground(10, 90) +
+    fig(110, [46, 18], [[[44, 25], [38, 58]], [[26, 42], [42, 31], [58, 40]], [[54, 98], [50, 80], [38, 58], [30, 78], [20, 90]]]) + ground(110, 190) +
+    fig(210, [40, 14], [[[40, 21], [40, 54]], [[26, 40], [40, 28], [54, 40]], [[40, 54], [40, 90]], [[40, 54], [50, 70], [40, 76]]]) + ground(210, 290),
+    t(50, 119, 'Melompat') + t(150, 119, 'Mencongklang') + t(250, 119, 'Sebelah kaki'));
+
+  // Menyejukkan badan: 4 regangan
+  const SEJUK = svg(320, 122,
+    fig(0, [40, 22], [[[40, 29], [40, 62]], [[24, 4], [32, 32], [48, 32], [56, 4]], [[33, 100], [40, 62], [47, 100]]]) +
+    fig(80, [38, 22], [[[38, 29], [38, 62]], [[38, 34], [56, 62]], [[38, 34], [52, 64]], [[10, 100], [38, 62], [58, 74], [60, 100]]]) +
+    fig(160, [36, 21], [[[40, 29], [40, 62]], [[40, 31], [56, 12], [44, 6]], [[40, 31], [48, 22], [54, 14]], [[33, 100], [40, 62], [47, 100]]]) +
+    fig(240, [66, 52], [[[30, 62], [58, 54]], [[56, 55], [78, 64]], [[24, 100], [30, 62], [36, 100]]]) + ground(0, 320),
+    t(40, 119, 'Tangan ke atas') + t(120, 119, 'Lunge') + t(200, 119, 'Tarik siku') + t(280, 119, 'Bongkok'));
+
+  const NADI = svg(270, 112,
+    `<rect x="8" y="50" width="104" height="24" rx="12"/><circle cx="124" cy="62" r="15"/>` +
+    `<rect x="60" y="10" width="34" height="22" rx="9"/><path d="M70 32 v18 M84 32 v18" stroke-width="7"/>` +
+    `<circle cx="215" cy="28" r="17"/><path d="M207 45 v22 M223 45 v22 M178 96 Q215 64 252 96"/>` +
+    `<rect x="242" y="44" width="20" height="28" rx="8"/><path d="M242 52 h-16 M242 63 h-16" stroke-width="7"/>` +
+    `<circle cx="77" cy="62" r="4" fill="#e03131" stroke="none"/><circle cx="220" cy="58" r="4" fill="#e03131" stroke="none"/>`,
+    t(66, 98, 'Pergelangan tangan') + t(215, 109, 'Leher'));
+
+  UNIT({
+    n: 7, tajuk: 'Semangat Membara', tema: 'Pendidikan Jasmani', ikon: '🔥', warna: '#e8590c',
+    belajar: [
+      { ikon: '⚽', tajuk: 'Perlawanan persahabatan',
+        teks: ['Pasukan bola sepak <b>Sekolah Kebangsaan Bandar</b> akan bermain dengan pasukan <b>Sekolah Kebangsaan Paya Luas</b>.',
+          'Sebelum perlawanan bermula, mereka melakukan aktiviti <b>memanaskan badan</b>.'] },
+      { ikon: '🌡️', tajuk: 'Mari Panaskan Badan',
+        teks: ['Lakukan aktiviti memanaskan badan <b>sebelum</b> bersukan.', 'Ia meningkatkan suhu badan, pernafasan, dan kadar nadi.',
+          'Memanaskan badan juga mengurangkan risiko kecederaan.'],
+        chips: ['🌡️ Suhu badan ⬆', '😮‍💨 Pernafasan ⬆', '❤️ Kadar nadi ⬆'] },
+      { ikon: PANAS, tajuk: 'Tiga aktiviti memanaskan badan',
+        teks: ['Dalam buku, murid memanaskan badan dengan tiga aktiviti ini.'],
+        chips: ['Melompat', 'Mencongklang', 'Melompat sebelah kaki'],
+        contoh: 'Murid berbaju merah mencongklang dan berkata: suhu badan, pernafasan, dan kadar nadi meningkat!' },
+      { ikon: NADI, tajuk: 'Rasa kadar nadi kamu',
+        teks: ['Letak <b>dua jari</b> di <b>pergelangan tangan</b> atau <b>leher</b>.',
+          'Rasa perubahan kadar nadi <b>sebelum, semasa, dan selepas</b> aktiviti.'] },
+      { ikon: '💧', tajuk: 'Minum air',
+        teks: ['Minum air <b>sebelum, semasa, dan selepas</b> melakukan aktiviti.', 'Ini mengelakkan badan mengalami <b>kekurangan air</b>.'] },
+      { ikon: SEJUK, tajuk: 'Mari Sejukkan Badan',
+        teks: ['Aktiviti menyejukkan badan dilakukan <b>selepas</b> aktiviti fizikal.', 'Buat regangan <b>mengikut kemampuan</b> kamu.'],
+        contoh: 'Murid perempuan: "Suhu badan, pernafasan, dan kadar nadi <b>menurun</b> selepas aktiviti." Cikgu: "Ya, betul."' },
+      { ikon: '👕', tajuk: 'Pakaian yang sesuai',
+        teks: ['Pakai pakaian yang sesuai semasa melakukan aktiviti.', 'Pakaian yang sesuai <b>melancarkan pergerakan</b>.'] },
+      { ikon: '🍚', tajuk: 'Makanan untuk tenaga dan pertumbuhan',
+        senarai: ['🍗 Daging, 🐟 ikan, dan 🫘 soya membantu <b>pertumbuhan fizikal</b>.', '🍚 Nasi dan 🍞 roti memberikan <b>tenaga</b>.'] },
+      { ikon: '🔁', tajuk: 'Ingat urutannya',
+        senarai: ['1️⃣ Memanaskan badan', '2️⃣ Bersukan (cth. bermain bola sepak)', '3️⃣ Menyejukkan badan'],
+        contoh: 'Jangan lupa minum air sebelum, semasa, dan selepas aktiviti!' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Apakah yang dilakukan pasukan bola sepak sebelum perlawanan?', ikon: '⚽', p: ['Memanaskan badan', 'Tidur sebentar', 'Makan banyak'], a: 0, kenapa: 'Sebelum perlawanan, mereka melakukan aktiviti memanaskan badan.' },
+      { j: 'pilih', s: 'SK Bandar bermain dengan pasukan sekolah mana?', ikon: '🏫', p: ['SK Paya Luas', 'SK Taman Ria', 'SK Bukit Indah'], a: 0, kenapa: 'Perlawanan persahabatan itu dengan Sekolah Kebangsaan Paya Luas.' },
+      { j: 'pilih', s: 'Berapakah jari yang digunakan untuk merasa kadar nadi?', ikon: '✌️', p: ['Dua jari', 'Satu jari', 'Lima jari'], a: 0, kenapa: 'Letak dua jari di pergelangan tangan atau leher.' },
+      { j: 'pilih', s: 'Di manakah kita boleh rasa kadar nadi?', ikon: '❤️', p: ['Pergelangan tangan atau leher', 'Hujung kaki', 'Rambut'], a: 0, kenapa: 'Kadar nadi dirasa di pergelangan tangan atau leher.' },
+      { j: 'pilih', s: 'Bilakah aktiviti menyejukkan badan dilakukan?', ikon: '🧘', p: ['Selepas aktiviti fizikal', 'Sebelum aktiviti fizikal', 'Semasa tidur'], a: 0, kenapa: 'Aktiviti menyejukkan badan dilakukan selepas aktiviti fizikal.' },
+      { j: 'pilih', s: 'Kita minum air supaya badan tidak ___.', ikon: '💧', p: ['kekurangan air', 'terlalu kuat', 'mengantuk'], a: 0, kenapa: 'Minum air mengelakkan badan mengalami kekurangan air.' },
+      { j: 'pilih', s: 'Mengapakah kita pakai pakaian yang sesuai?', ikon: '👕', p: ['Melancarkan pergerakan', 'Supaya nampak mahal', 'Supaya cepat penat'], a: 0, kenapa: 'Pakaian yang sesuai melancarkan pergerakan.' },
+      { j: 'pilih', s: 'Regangan dilakukan mengikut ___ kamu.', ikon: '🙆', p: ['kemampuan', 'kawan', 'warna baju'], a: 0, kenapa: 'Lakukan regangan mengikut kemampuan.' },
+      { j: 'bs', s: 'Memanaskan badan dapat mengurangkan risiko kecederaan.', ikon: '🩹', a: true, kenapa: 'Betul. Aktiviti memanaskan badan mengurangkan risiko kecederaan.' },
+      { j: 'bs', s: 'Kadar nadi menurun ketika kita berlari.', ikon: '🏃', a: false, kenapa: 'Kadar nadi meningkat ketika melakukan aktiviti.' },
+      { j: 'bs', s: 'Selepas aktiviti, suhu badan, pernafasan, dan kadar nadi menurun.', ikon: '🌡️', a: true, kenapa: 'Ya, betul. Semuanya menurun selepas aktiviti.' },
+      { j: 'bs', s: 'Kita hanya perlu minum air selepas aktiviti sahaja.', ikon: '🥤', a: false, kenapa: 'Minum air sebelum, semasa, dan selepas aktiviti.' },
+      { j: 'kumpul', s: 'Aktiviti manakah yang meningkatkan kadar nadi?', kumpulan: [['❤️⬆ Kadar nadi naik', ['🏃 Berlari', '🏊 Berenang', '🚴 Berbasikal']], ['😴 Tidak naik', ['🛌 Tidur', '🪑 Duduk di kerusi']]] },
+      { j: 'kumpul', s: 'Makanan ini memberi apa?', kumpulan: [['⚡ Tenaga', ['🍚 Nasi', '🍞 Roti']], ['📏 Pertumbuhan fizikal', ['🍗 Daging', '🐟 Ikan', '🫘 Soya']]] },
+      { j: 'kumpul', s: 'Memanaskan atau menyejukkan badan?', kumpulan: [['🔥 Memanaskan badan', ['Melompat', 'Mencongklang', 'Melompat sebelah kaki']], ['❄️ Menyejukkan badan', ['Regangan tangan ke atas', 'Bongkok ke depan']]] },
+      { j: 'susun', s: 'Susun sesi bola sepak yang betul.', item: ['Memanaskan badan', 'Bermain bola sepak', 'Menyejukkan badan'] },
+      { j: 'susun', s: 'Bilakah kita rasa kadar nadi? Susun.', item: ['Sebelum aktiviti', 'Semasa aktiviti', 'Selepas aktiviti'] },
+      { j: 'padan', s: 'Padankan.', pasangan: [['🌡️ Memanaskan badan', 'Nadi meningkat'], ['❄️ Menyejukkan badan', 'Nadi menurun'], ['💧 Minum air', 'Elak kekurangan air']] },
+      { j: 'padan', s: 'Padankan makanan dengan kegunaannya.', pasangan: [['🍚 Nasi', 'Memberi tenaga'], ['🐟 Ikan', 'Membantu pertumbuhan'], ['👕 Pakaian sesuai', 'Melancarkan pergerakan']] },
+      { j: 'eja', s: 'Eja nama ukuran denyutan jantung: kadar ___.', ikon: '❤️', kata: 'nadi' },
+      { j: 'eja', s: 'Eja aktiviti selepas bersukan.', ikon: '🙆', kata: 'regangan' },
+      { j: 'ayat', s: 'Bina ayat.', kata: ['Minum', 'air', 'sebelum,', 'semasa,', 'dan', 'selepas', 'aktiviti.'] },
+    ],
+    amali: [{
+      id: 'kira-nadi', tajuk: 'Kira Nadi Saya', ikon: '❤️',
+      arahan: 'Rasa nadi kamu selama 15 saat. Tekan ❤️ setiap kali kamu rasa denyutan.',
+      mula(el, api) {
+        let tick = 1000, timer = null, miss = 0, busyF = false;
+        const busy = () => busyF;
+        const R = [];   // bilangan nadi: sebelum, semasa, selepas
+        const FASA = [
+          { n: 'Sebelum aktiviti', buat: '🧍 Duduk diam dahulu.', ik: '🧍' },
+          { n: 'Semasa aktiviti', buat: '🔥 Panaskan badan! Melompat, mencongklang, atau melompat sebelah kaki — kemudian kira terus.', ik: '🦘' },
+          { n: 'Selepas aktiviti', buat: '❄️ Buat regangan perlahan-lahan ikut kemampuan, kemudian kira.', ik: '🙆' },
+        ];
+        let f = -1;
+        el.innerHTML = `<div id="st"></div>`;
+        const st = el.querySelector('#st');
+        const live = () => el.isConnected;
+        // Langkah 1: di mana letak jari
+        function langkah1() {
+          st.innerHTML = `<p><b>Langkah 1:</b> Di mana kamu letak <b>dua jari</b> untuk rasa nadi?</p><div class="opts" id="o"></div>`;
+          const o = st.querySelector('#o');
+          [['✋ Pergelangan tangan atau leher', 1], ['🦶 Tapak kaki', 0], ['👂 Telinga', 0]].forEach(([x, ok]) => {
+            const b = api.H(`<button class="opt">${x}</button>`); o.appendChild(b);
+            b.onclick = () => { if (ok) { b.classList.add('ok'); api.betul(b, 'Betul! Dua jari di pergelangan tangan atau leher.'); setTimeout(fasa, tick > 100 ? 900 : 20); } else { miss++; b.classList.add('no'); api.salah(b, 'Cuba lagi. Nadi dirasa di pergelangan tangan atau leher.'); } };
+          });
+        }
+        function fasa() {
+          if (!live()) return;
+          f++; if (f >= FASA.length) return tamat();
+          const F = FASA[f]; let c = 0, s = 15;
+          st.innerHTML = `<div class="row" style="justify-content:space-between"><b style="font-size:1.2rem">${F.ik} ${F.n}</b><span class="chip" id="sec">⏱️ 15 s</span></div>
+            <p>${F.buat}</p><div class="meter"><i id="mt"></i></div>
+            <div style="text-align:center;margin:14px 0"><button class="btn go" id="go">▶ Mula 15 saat</button></div>
+            <div style="text-align:center"><button class="opt" id="hb" style="font-size:3.4rem;min-width:140px;text-align:center" disabled>❤️</button><div style="font:700 1.6rem var(--hd)" id="cn">0</div></div>`;
+          const hb = st.querySelector('#hb'), cn = st.querySelector('#cn'), mt = st.querySelector('#mt'), sec = st.querySelector('#sec'), go = st.querySelector('#go');
+          hb.onclick = () => { c++; cn.textContent = c; api.anim(hb, [{ transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 180 }); };
+          go.onclick = () => {
+            go.disabled = true; hb.disabled = false; api.say('Kira nadi kamu... tekan ❤️ setiap denyutan!');
+            timer = setInterval(() => {
+              if (!live()) return clearInterval(timer);
+              s--; sec.textContent = `⏱️ ${s} s`; mt.style.width = ((15 - s) / 15 * 100) + '%';
+              if (s <= 0) { clearInterval(timer); hb.disabled = true; R.push(c); api.say(`${F.n}: <b>${c}</b> denyutan dalam 15 saat.`); setTimeout(fasa, tick > 100 ? 1300 : 20); }
+            }, tick);
+          };
+        }
+        function tamat() {
+          const mx = Math.max(1, ...R);
+          st.innerHTML = `<p><b>Keputusan nadi kamu (15 saat):</b></p>${FASA.map((F, i) => `<div class="row" style="margin:6px 0"><span style="min-width:150px">${F.ik} ${F.n}</span><div class="meter" style="flex:1;min-width:100px"><i style="width:${R[i] / mx * 100}%"></i></div><b>${R[i]}</b></div>`).join('')}
+            <p style="margin-top:14px"><b>Soalan:</b> Apakah yang berlaku kepada kadar nadi?</p><div id="q"></div>`;
+          const qb = st.querySelector('#q');
+          const Q = [['Semasa aktiviti, kadar nadi…', 0], ['Selepas aktiviti dan regangan, kadar nadi…', 1]];
+          let k = 0; busyF = false;
+          const ask = () => {
+            busyF = false;
+            if (k >= Q.length) return qb.innerHTML = '<p>✅ Kedua-dua jawapan betul!</p>', api.selesai(Math.max(0, 1 - miss * .2), 'Hebat! Kadar nadi meningkat semasa aktiviti dan menurun selepas aktiviti.');
+            qb.innerHTML = `<p>${Q[k][0]}</p><div class="opts"></div>`;
+            const o = qb.querySelector('.opts');
+            ['⬆ Meningkat', '⬇ Menurun'].forEach((x, i) => { const b = api.H(`<button class="opt">${x}</button>`); o.appendChild(b);
+              b.onclick = () => { if (busyF) return; if (i === Q[k][1]) { busyF = true; api.betul(b, i ? 'Ya, betul! Kadar nadi menurun selepas aktiviti.' : 'Betul! Kadar nadi meningkat ketika melakukan aktiviti.'); k++; setTimeout(ask, tick > 100 ? 700 : 20); } else { miss++; api.salah(b, 'Cuba lagi.'); } }; });
+          };
+          ask();
+        }
+        langkah1();
+        return {
+          jawab() {
+            tick = 25;
+            const C = [16, 28, 20];
+            st.querySelector('.opt').click();
+            const iv = setInterval(() => {
+              if (!live() || window.__amaliDone) return clearInterval(iv);
+              const go = st.querySelector('#go');
+              if (go && !go.disabled) { go.click(); const hb = st.querySelector('#hb'); for (let i = 0; i < C[f]; i++) hb.click(); return; }
+              const q = st.querySelector('#q p'), os = st.querySelectorAll('#q .opt');
+              if (q && os.length && !busy()) os[/Selepas/.test(q.textContent) ? 1 : 0].click();
+            }, 60);
+          },
+        };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Rajah orang lidi ringkas (garisan ikut warna teks)
+  const L = p => `<polyline points="${p.map(x => x.join(',')).join(' ')}"/>`;
+  const fig = (dx, h, parts) => `<g transform="translate(${dx},0)"><circle cx="${h[0]}" cy="${h[1]}" r="7"/>${parts.map(L).join('')}</g>`;
+  const svg = (w, h, inner, txt = '') => `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" style="max-width:calc(100% - 56px)"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${inner}</g><g fill="currentColor" stroke="none" font-size="11" font-weight="700" text-anchor="middle" font-family="sans-serif">${txt}</g></svg>`;
+  const t = (x, y, s) => `<text x="${x}" y="${y}">${s}</text>`;
+  const ground = (x1, x2, y = 102) => `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke-width="2" opacity=".45"/>`;
+
+  const STATIK = svg(300, 132,
+    fig(0, [12, 92], [[[19, 95], [54, 95], [88, 95]], [[54, 95], [66, 56]], [[24, 94], [46, 78], [62, 66]]]) +
+    fig(100, [24, 34], [[[30, 41], [42, 64]], [[22, 101], [42, 64], [62, 101]], [[32, 46], [56, 96]], [[32, 46], [18, 8]]]) +
+    fig(200, [18, 62], [[[22, 70], [46, 99], [88, 99]], [[24, 74], [24, 99]]]) + ground(0, 300),
+    t(50, 117, 'Otot paha') + t(150, 117, 'Otot tangan') + t(150, 130, '&amp; pinggang') + t(250, 117, 'Otot tangan'));
+
+  const PARC = svg(300, 132,
+    fig(0, [18, 66], [[[86, 96], [64, 100], [58, 86], [26, 74]], [[28, 76], [28, 100]]]) +
+    fig(100, [44, 32], [[[40, 100], [54, 82], [34, 70], [42, 40]], [[42, 46], [74, 46]]]) +
+    fig(200, [50, 14], [[[50, 21], [50, 56]], [[50, 28], [38, 42], [48, 54]], [[50, 28], [62, 42], [52, 54]], [[44, 92], [50, 56], [56, 92]], [[40, 100], [44, 92]], [[60, 100], [56, 92]]]) + ground(0, 300),
+    t(50, 117, 'Tekan tubi') + t(50, 130, 'ubah suai') + t(150, 117, 'Separa') + t(150, 130, 'cangkung') + t(250, 117, 'Jengkit') + t(250, 130, 'setempat'));
+
+  const GAYUT = svg(200, 122,
+    `<path d="M20 112 V8 H180 V112"/>` +
+    fig(40, [60, 26], [[[48, 8], [53, 34], [60, 34], [67, 34], [72, 8]], [[60, 33], [60, 68]], [[52, 100], [60, 68], [68, 100]]]) +
+    `<path d="M91 24 a9 9 0 0 1 18 0 z" fill="currentColor"/>`,
+    '');
+
+  UNIT({
+    n: 8, tajuk: 'Larian Cergas', tema: 'Pendidikan Jasmani', ikon: '🏃', warna: '#1971c2',
+    belajar: [
+      { ikon: '🏁', tajuk: 'Larian Cergas di Sekolah Amin',
+        teks: ['Sekolah Amin menganjurkan Larian Cergas bersama <b>Kementerian Kesihatan Malaysia (KKM)</b>.', 'Ramai murid dan ibu bapa menyertainya.'],
+        contoh: 'Sepanduk: "RAKYAT SIHAT, LARIAN CERGAS"' },
+      { ikon: '❤️', tajuk: 'Jom Berlari',
+        teks: ['Azmi menyertai pertandingan <b>merentas desa</b>.', 'Pernafasan lebih perlahan <b>sebelum</b> berlari.',
+          'Semakin cepat degupan jantung, semakin <b>tinggi</b> kadar nadi.'],
+        senarai: ['🔥 Panaskan badan sebelum berlari — elak kecederaan.', '❄️ Sejukkan badan selepas berlari — kurangkan kelesuan.'] },
+      { ikon: STATIK, tajuk: 'Regangan statik',
+        teks: ['Regangan statik dan regangan dinamik meningkatkan <b>kelenturan</b>.', 'Regangan statik ditahan diam selama <b>10 hingga 20 saat</b>.'],
+        contoh: 'Kenal pasti bahagian otot yang diregang!' },
+      { ikon: '🤸', tajuk: 'Regangan dinamik',
+        teks: ['Regangan dinamik dilakukan sambil bergerak.'],
+        senarai: ['Berdiri, turun ke posisi melutut — <b>otot paha</b>', 'Tangan di lantai, kaki diayun ke atas silih berganti — <b>otot tangan dan pinggang</b>',
+          'Bongkok ke depan, sentuh hujung kaki — <b>otot pinggang</b>'] },
+      { ikon: PARC, tajuk: 'Stesen parcourse',
+        teks: ['Ramu dan rakan-rakan bersenam di stesen <b>parcourse</b>.', 'Aktiviti ini meningkatkan <b>daya tahan dan kekuatan otot</b>.'],
+        senarai: ['Ringkuk tubi separa — otot abdomen', 'Jengkit setempat — otot betis', 'Tekan tubi ubah suai — otot bahu',
+          'Separa cangkung — otot paha', '<i>Hamstring curl</i> — otot paha', 'Lentik belakang ubah suai — otot belakang'] },
+      { ikon: '💪', tajuk: 'Otot lain yang turut bekerja',
+        senarai: ['Tekan tubi ubah suai: otot tangan dan otot dada', 'Ringkuk tubi separa: otot paha', 'Separa cangkung: otot pinggang',
+          '<i>Hamstring curl</i>: otot punggung', 'Lentik belakang ubah suai: otot lengan dan otot pinggang'],
+        contoh: '<i>Hamstring curl</i> dan lentik belakang ubah suai dibuat di atas <b>bangku</b>.' },
+      { ikon: GAYUT, tajuk: 'Mari Bergayut',
+        teks: ['Karim menyertai kem motivasi. Dia bergayut dan meniti pada palang.', '<b>Daya tahan dan kekuatan otot</b> membantu kita bergayut dan meniti.'],
+        chips: ['⛑️ Topi keledar', '🦺 Abah-abah keselamatan'],
+        contoh: 'Karim: "Saya yakin boleh." Rakan: "Ayuh, cepat, kamu boleh!"' },
+      { ikon: '⚖️', tajuk: 'Timbang dan Ukur',
+        teks: ['Murid Tahun 2 Biru mengukur <b>tinggi</b> dan <b>berat badan</b>.', 'Maklumat dicatat dalam buku rekod penilaian.'],
+        contoh: 'KKM: Bersenam selama <b>30 minit</b>, <b>tiga kali seminggu</b> boleh menjadikan badan cergas.' },
+      { ikon: '🩺', tajuk: 'Cergas Sihat',
+        teks: ['Selepas merentas desa, Muthu cepat penat dan kakinya sakit. Berat badannya tidak ideal.',
+          'Muthu sakit lutut semasa berlari dan berjalan. Dia berjumpa doktor.'],
+        contoh: 'Doktor: "Kamu perlu <b>bersenam</b> dan <b>menjaga pemakanan</b>." Muthu: "Baiklah, doktor."' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Larian Cergas dianjurkan bersama siapa?', ikon: '🏁', p: ['Kementerian Kesihatan Malaysia', 'Bomba', 'Kedai sukan'], a: 0, kenapa: 'Larian Cergas dianjurkan dengan kerjasama KKM.' },
+      { j: 'pilih', s: 'Azmi menyertai pertandingan apa?', ikon: '🏃', p: ['Merentas desa', 'Renang', 'Bola sepak'], a: 0, kenapa: 'Azmi menyertai pertandingan merentas desa.' },
+      { j: 'pilih', s: 'Semakin cepat degupan jantung, kadar nadi semakin ___.', ikon: '❤️', p: ['tinggi', 'rendah', 'hilang'], a: 0, kenapa: 'Semakin cepat degupan jantung, semakin tinggi kadar nadi.' },
+      { j: 'pilih', s: 'Regangan statik dan dinamik meningkatkan ___.', ikon: '🤸', p: ['kelenturan', 'berat badan', 'tinggi badan'], a: 0, kenapa: 'Regangan statik dan regangan dinamik meningkatkan kelenturan.' },
+      { j: 'pilih', s: 'Berapa lamakah regangan dilakukan?', ikon: '⏱️', p: ['10 hingga 20 saat', '1 jam', '2 saat'], a: 0, kenapa: 'Regangan dilakukan dalam jangka masa 10 hingga 20 saat.' },
+      { j: 'pilih', s: 'Jengkit setempat melatih otot apa?', ikon: '🦶', p: ['Otot betis', 'Otot bahu', 'Otot dada'], a: 0, kenapa: 'Jengkit setempat melatih otot betis.' },
+      { j: 'pilih', s: 'Ringkuk tubi separa melatih otot utama apa?', ikon: '🧘', p: ['Otot abdomen', 'Otot betis', 'Otot lengan'], a: 0, kenapa: 'Ringkuk tubi separa melatih otot abdomen.' },
+      { j: 'pilih', s: 'Apa yang dipakai Karim untuk keselamatan semasa bergayut?', ikon: '⛑️', p: ['Topi keledar dan abah-abah', 'Kasut tumit tinggi', 'Cermin mata hitam'], a: 0, kenapa: 'Karim memakai topi keledar dan abah-abah keselamatan.' },
+      { j: 'pilih', s: 'Menurut KKM, bersenam 30 minit berapa kali seminggu?', ikon: '📅', p: ['Tiga kali', 'Sekali', 'Sepuluh kali'], a: 0, kenapa: 'Bersenam selama 30 minit, tiga kali seminggu boleh menjadikan badan cergas.' },
+      { j: 'pilih', s: 'Apakah nasihat doktor kepada Muthu?', ikon: '🩺', p: ['Bersenam dan menjaga pemakanan', 'Tidur sepanjang hari', 'Makan lebih banyak'], a: 0, kenapa: 'Doktor menasihati Muthu supaya bersenam dan menjaga pemakanan.' },
+      { j: 'bs', s: 'Pernafasan lebih perlahan sebelum berlari.', ikon: '😮‍💨', a: true, kenapa: 'Betul. Pernafasan lebih perlahan sebelum berlari.' },
+      { j: 'bs', s: 'Muthu mengadu sakit kepala semasa berlari.', ikon: '🤕', a: false, kenapa: 'Muthu mengadu sakit lutut semasa berlari dan berjalan.' },
+      { j: 'bs', s: 'Kita menyejukkan badan selepas berlari untuk mengurangkan kelesuan.', ikon: '❄️', a: true, kenapa: 'Betul. Menyejukkan badan mengurangkan kelesuan.' },
+      { j: 'bs', s: 'Daya tahan dan kekuatan otot membantu kita bergayut dan meniti.', ikon: '💪', a: true, kenapa: 'Betul, seperti Karim di kem motivasi.' },
+      { j: 'padan', s: 'Padankan lakuan dengan otot utamanya.', pasangan: [['Jengkit setempat', 'Otot betis'], ['Ringkuk tubi separa', 'Otot abdomen'], ['Tekan tubi ubah suai', 'Otot bahu'], ['Lentik belakang ubah suai', 'Otot belakang']] },
+      { j: 'padan', s: 'Padankan regangan dinamik dengan otot.', pasangan: [['Turun ke posisi melutut', 'Otot paha'], ['Bongkok sentuh hujung kaki', 'Otot pinggang'], ['Kaki diayun ke atas', 'Otot tangan dan pinggang']] },
+      { j: 'kumpul', s: 'Kadar nadi Azmi: sebelum atau selepas berlari?', kumpulan: [['🧍 Sebelum berlari', ['Pernafasan perlahan', 'Kadar nadi rendah']], ['🏃 Selepas berlari', ['Degupan jantung cepat', 'Kadar nadi tinggi']]] },
+      { j: 'kumpul', s: 'Apa yang Muthu alami? Apa nasihat doktor?', kumpulan: [['😣 Masalah Muthu', ['Cepat penat', 'Kaki sakit', 'Sakit lutut']], ['🩺 Nasihat doktor', ['Bersenam', 'Menjaga pemakanan']]] },
+      { j: 'susun', s: 'Susun sesi larian merentas desa.', item: ['Memanaskan badan', 'Berlari merentas desa', 'Menyejukkan badan'] },
+      { j: 'eja', s: 'Dengar dan eja: regangan meningkatkan kelenturan.', sebut: 'kelenturan', ikon: '🤸', kata: 'kelenturan' },
+      { j: 'eja', s: 'Jengkit setempat melatih otot apa?', ikon: '🦵', kata: 'betis' },
+      { j: 'ayat', s: 'Bina nasihat doktor.', kata: ['Kamu', 'perlu', 'bersenam', 'dan', 'menjaga', 'pemakanan.'] },
+    ],
+    amali: [{
+      id: 'cabaran-15-saat', tajuk: 'Cabaran 15 Saat', ikon: '⏱️',
+      arahan: 'Pilih satu lakuan. Lakukan bersama rakan selama 15 saat dan tekan ➕ setiap kali kamu buat satu lakuan.',
+      mula(el, api) {
+        let tick = 1000, miss = 0, busy = false;
+        const X = [
+          ['🧘', 'Ringkuk tubi separa', 'Otot abdomen'], ['💪', 'Tekan tubi', null], ['🤲', 'Tekan tubi ubah suai', 'Otot bahu'],
+          ['🦵', 'Hamstring curl', 'Otot paha'], ['🤸', 'Lentik belakang ubah suai', 'Otot belakang'],
+        ];
+        const OT = ['Otot abdomen', 'Otot bahu', 'Otot paha', 'Otot belakang', 'Otot betis'];
+        const R = X.map(() => null);
+        el.innerHTML = `<div class="box" style="margin-bottom:12px"><b>📋 Jenis Lakuan / Bilangan Lakuan (15 saat)</b><div class="opts" id="ls"></div></div><div id="pn"></div>`;
+        const ls = el.querySelector('#ls'), pn = el.querySelector('#pn');
+        const btn = X.map((x, i) => { const b = api.H(`<button class="opt"></button>`); b.onclick = () => buka(i); ls.appendChild(b); return b; });
+        const lukis = () => X.forEach((x, i) => { btn[i].innerHTML = `${x[0]} ${x[1]} — <b>${R[i] === null ? '?' : R[i]}</b>`; btn[i].classList.toggle('ok', R[i] !== null); });
+        function buka(i) {
+          if (busy || R[i] !== null) return;
+          busy = true; btn.forEach(b => b.classList.remove('on')); btn[i].classList.add('on');
+          let c = 0, s = 15;
+          pn.innerHTML = `<div class="box"><div class="row" style="justify-content:space-between"><b style="font-size:1.15rem">${X[i][0]} ${X[i][1]}</b><span class="chip" id="sec">⏱️ 15 s</span></div>
+            <div class="meter" style="margin:10px 0"><i id="mt"></i></div>
+            <div class="row" style="justify-content:center"><button class="btn go" id="go">▶ Mula</button><button class="btn" id="pl" disabled>➕ 1</button><b id="cn" style="font:700 2rem var(--hd);min-width:48px;text-align:center">0</b></div><div id="oq"></div></div>`;
+          const go = pn.querySelector('#go'), pl = pn.querySelector('#pl'), cn = pn.querySelector('#cn'), sec = pn.querySelector('#sec'), mt = pn.querySelector('#mt');
+          pl.onclick = () => { c++; cn.textContent = c; api.anim(cn, [{ transform: 'scale(1.4)' }, { transform: 'scale(1)' }], { duration: 160 }); };
+          go.onclick = () => {
+            go.disabled = true; pl.disabled = false; api.say('Mula! Tekan ➕ setiap lakuan.');
+            const iv = setInterval(() => {
+              if (!el.isConnected) return clearInterval(iv);
+              s--; sec.textContent = `⏱️ ${s} s`; mt.style.width = ((15 - s) / 15 * 100) + '%';
+              if (s > 0) return;
+              clearInterval(iv); pl.disabled = true; R[i] = c; lukis(); api.say(`Masa tamat! ${X[i][1]}: <b>${c}</b> kali.`);
+              if (X[i][2]) tanyaOtot(i); else { busy = false; semak(); }
+            }, tick);
+          };
+        }
+        function tanyaOtot(i) {
+          const oq = pn.querySelector('#oq');
+          oq.innerHTML = `<p><b>Otot utama</b> yang bekerja semasa ${X[i][1]}?</p><div class="opts"></div>`;
+          const o = oq.querySelector('.opts');
+          OT.slice(0, 4).forEach(nm => {
+            const b = api.H(`<button class="opt" data-o="${nm}">💪 ${nm}</button>`); o.appendChild(b);
+            b.onclick = () => {
+              if (b.disabled) return;
+              if (nm === X[i][2]) { b.classList.add('ok'); o.querySelectorAll('.opt').forEach(x => x.disabled = true); api.betul(b, `Betul! ${X[i][1]} melatih ${nm.toLowerCase()}.`); busy = false; semak(); }
+              else { miss++; b.classList.add('no'); api.salah(b, 'Cuba lagi.'); }
+            };
+          });
+        }
+        function semak() { if (R.every(r => r !== null)) api.selesai(Math.max(0, 1 - miss * .15), 'Hebat! Kamu sudah mencatat semua lakuan dalam 15 saat.'); }
+        lukis();
+        return {
+          jawab() {
+            tick = 20;
+            let i = 0;
+            const iv = setInterval(() => {
+              if (!el.isConnected || window.__amaliDone) return clearInterval(iv);
+              if (busy) {
+                const go = pn.querySelector('#go');
+                if (go && !go.disabled) { go.click(); for (let k = 0; k < 8 + i; k++) pn.querySelector('#pl').click(); return; }
+                const ok = pn.querySelector(`#oq .opt[data-o="${X[i - 1][2]}"]`);
+                if (ok && !ok.disabled) ok.click();
+                return;
+              }
+              if (i < X.length) btn[i++].click();
+            }, 50);
+          },
+        };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Rajah postur betul / salah (orang lidi, ikut warna teks)
+  const L = p => `<polyline points="${p.map(x => x.join(',')).join(' ')}"/>`;
+  const fig = (dx, h, parts, extra = '') => `<g transform="translate(${dx},0)"><circle cx="${h[0]}" cy="${h[1]}" r="7"/>${parts.map(L).join('')}${extra}</g>`;
+  const t = (x, y, s, c) => `<text x="${x}" y="${y}"${c ? ` fill="${c}"` : ''}>${s}</text>`;
+  const kerusi = `<path d="M14 70 H52 V28 M16 70 V102 M50 70 V102" stroke-width="3" opacity=".6"/>`;
+  const kotak = (x, y) => `<rect x="${x}" y="${y}" width="22" height="18" rx="2" stroke-width="3"/>`;
+  const POSTUR = `<svg viewBox="0 0 320 136" xmlns="http://www.w3.org/2000/svg" role="img" style="max-width:calc(100% - 56px)"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">` +
+    fig(0, [44, 22], [[[44, 29], [44, 66], [16, 66], [16, 100]], [[44, 36], [30, 56]]], kerusi) +
+    fig(80, [22, 42], [[[46, 66], [38, 50], [28, 46]], [[46, 66], [18, 68], [18, 100]], [[34, 50], [24, 62]]], kerusi) +
+    fig(160, [34, 36], [[[24, 100], [40, 84], [22, 74], [30, 44]], [[30, 50], [48, 84]]], kotak(44, 82)) +
+    fig(240, [64, 66], [[[20, 100], [26, 62], [30, 100]], [[26, 62], [56, 64]], [[54, 65], [60, 84]]], kotak(50, 84)) +
+    `<line x1="0" y1="102" x2="320" y2="102" stroke-width="2" opacity=".45"/></g>` +
+    `<g stroke="none" font-size="12" font-weight="700" text-anchor="middle" font-family="sans-serif">` +
+    t(40, 118, '✓ Betul', '#2f9e44') + t(120, 118, '✗ Salah', '#e03131') + t(200, 118, '✓ Betul', '#2f9e44') + t(280, 118, '✗ Salah', '#e03131') +
+    `</g><g fill="currentColor" stroke="none" font-size="10" text-anchor="middle" font-family="sans-serif">` + t(80, 131, 'Cara duduk') + t(240, 131, 'Cara mengangkat barang') + `</g></svg>`;
+
+  UNIT({
+    n: 9, tajuk: 'Hari yang Ceria', tema: 'Pendidikan Kesihatan', ikon: '😊', warna: '#c2255c',
+    belajar: [
+      { ikon: POSTUR, tajuk: 'Postur, rehat, dan tidur',
+        teks: ['<b>Postur</b> ialah bentuk tubuh semasa duduk, berdiri, berjalan, dan mengangkat barang.',
+          '<b>Rehat</b> ialah berhenti sementara daripada aktiviti fizikal dan mental. <b>Tidur</b> ialah melelapkan mata dan merehatkan badan.'],
+        contoh: 'Duduk tegak dan bersandar. Angkat barang dengan membengkokkan lutut, belakang tegak.' },
+      { ikon: '🛌', tajuk: 'Sihat Selalu',
+        teks: ['Jaga postur yang betul, rehat, dan tidur yang cukup untuk pertumbuhan fizikal yang sihat.'],
+        senarai: ['Postur betul: mengelakkan kecederaan, badan lebih sihat, hidup lebih cergas, tumbesaran sempurna.',
+          'Rehat dan tidur: melancarkan penghadaman, membina dan membaiki sel-sel yang rosak.',
+          'Rehat dan tidur: meningkatkan keupayaan untuk belajar, merehatkan fizikal dan mental.'] },
+      { ikon: '🤗', tajuk: 'Jaga Diri: jenis sentuhan',
+        senarai: ['🟢 <b>Sentuhan selamat</b> membuatkan kamu gembira, selesa, dan positif.',
+          '🔴 <b>Sentuhan tidak selamat</b> membuatkan kamu marah, sedih, dan keliru.',
+          '🟡 <b>Sentuhan tidak selesa</b> mungkin selamat tetapi tidak disenangi.'] },
+      { ikon: '✋', tajuk: 'Berani katakan TIDAK',
+        teks: ['Jika sentuhan tidak selamat atau tidak selesa, katakan <b>TIDAK</b> dan beri alasan.', 'Kemudian pergi kepada orang dewasa yang kamu percayai, seperti emak.'],
+        contoh: ['Ida: "TIDAK boleh sentuh saya."', 'Rani: "Cukuplah Ina, saya rasa tidak selesa."', '"Nak pinjam boleh, tapi jangan sentuh paha saya."'] },
+      { ikon: '🚭', tajuk: 'Jauhkan Diri: tembakau, alkohol, dadah',
+        senarai: ['<b>Tembakau</b> menyebabkan ketagihan: rokok, cerut, rokok paip, shisha. Bahaya: penyakit jantung, strok, kanser paru-paru.',
+          '<b>Alkohol</b> ialah minuman keras yang memabukkan: bir, wain, brandi, wiski. Bahaya: kerosakan otak.',
+          '<b>Dadah</b> menyebabkan khayal dan ketagihan: heroin, morfin, ganja. Bahaya: membawa maut.'],
+        contoh: '"Adik pernah merokok?" — "<b>TIDAK</b>. Merokok membahayakan kesihatan."' },
+      { ikon: '💭', tajuk: 'Perasaan bimbang dan cemburu',
+        teks: ['Ibu Hazim melahirkan adik. Hazim cemburu. Ayah: "Ibu dan ayah tetap sayang Hazim walaupun ada adik."',
+          'Abang Devan masuk asrama. Devan bimbang. Abang: "Jangan risau, cuti sekolah abang akan balik semula."'],
+        contoh: 'Hazim: "Saya mesti gembira dapat bermain dengan adik nanti."' },
+      { ikon: '🙏', tajuk: 'Bersyukur dan kasih sayang',
+        teks: ['<b>Bersyukur</b> ialah menzahirkan terima kasih kepada Tuhan.', '<b>Kasih sayang</b> ialah perasaan belas kasihan, timbang rasa, dan simpati.'],
+        senarai: ['👩 Ibu bapa: membantu ibu mencuci kereta', '👦 Ahli keluarga: mengajar adik membuat kerja sekolah', '🧑‍🏫 Guru: membantu guru menyimpan peralatan sukan',
+          '🧑‍🦽 Rakan: menolak kerusi roda rakan'],
+        contoh: 'Rashid sekeluarga bergotong-royong membersihkan kawasan rumah setiap hujung minggu.' },
+      { ikon: '🦠', tajuk: 'Penyakit berjangkit',
+        teks: ['<b>Penyakit tangan, kaki dan mulut</b>: disebabkan oleh virus. Ada rasa sakit di mulut dan ruam di kaki, tangan, dan punggung.',
+          '<b>Konjunktivitis</b>: radang pada bahagian putih mata. Mata merah, berair, gatal, dan pedih.'],
+        senarai: ['Elak bersentuhan dengan rakan yang sakit', 'Makan makanan berkhasiat supaya cepat pulih', 'Tutup mulut semasa batuk atau bersin',
+          'Elak sentuh muka dengan tangan yang tidak dibasuh', 'Berehat di rumah dan elak bergaul dengan orang lain', 'Kerap basuh tangan dengan sabun dan air'] },
+      { ikon: '🛡️', tajuk: 'Pastikan Selamat',
+        senarai: ['Beritahu keluarga ke mana kamu pergi.', 'Elak aktiviti berbahaya, seperti mandi sungai.',
+          'Jangan dekati dan jangan ikut orang yang tidak dikenali.', 'Jangan benarkan orang asing masuk ke rumah.'],
+        contoh: '"Marilah naik kereta abang." — "<b>Tidak</b>, terima kasih."' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Postur ialah bentuk tubuh semasa ___.', ikon: '🧍', p: ['duduk, berdiri, berjalan', 'makan dan minum', 'membaca buku'], a: 0, kenapa: 'Postur ialah bentuk tubuh semasa duduk, berdiri, berjalan, dan mengangkat barang.' },
+      { j: 'pilih', s: 'Cara mengangkat barang yang betul ialah…', ikon: '📦', p: ['Bengkokkan lutut, belakang tegak', 'Kaki lurus, badan membongkok', 'Angkat dengan satu jari'], a: 0, kenapa: 'Bengkokkan lutut dan pastikan belakang tegak.' },
+      { j: 'pilih', s: 'Sentuhan selamat membuatkan kamu rasa…', ikon: '🟢', p: ['Gembira, selesa, dan positif', 'Marah, sedih, dan keliru', 'Takut dan malu'], a: 0, kenapa: 'Sentuhan selamat membuatkan kamu gembira, selesa, dan positif.' },
+      { j: 'pilih', s: 'Lelaki itu mahu mengurut kaki Ida. Apa kata Ida?', ikon: '✋', p: ['"TIDAK boleh sentuh saya."', '"Baiklah, boleh."', 'Ida diam sahaja.'], a: 0, kenapa: 'Ida berani berkata TIDAK.' },
+      { j: 'pilih', s: 'Kawan mengajak kamu mencuba dadah. Apa jawapan kamu?', ikon: '🙅', p: ['"TIDAK, kerana dadah membawa maut."', '"Boleh, sedikit sahaja."', '"Nanti saya fikir."'], a: 0, kenapa: 'Katakan TIDAK. Dadah membawa maut.' },
+      { j: 'pilih', s: 'Mengapakah Hazim rasa cemburu?', ikon: '👶', p: ['Ibunya melahirkan adik', 'Dia kalah sukaneka', 'Abangnya masuk asrama'], a: 0, kenapa: 'Ibu Hazim baru melahirkan anak perempuan.' },
+      { j: 'pilih', s: 'Bersyukur ialah menzahirkan terima kasih kepada ___.', ikon: '🙏', p: ['Tuhan', 'kedai', 'televisyen'], a: 0, kenapa: 'Bersyukur ialah menzahirkan terima kasih kepada Tuhan.' },
+      { j: 'pilih', s: 'Konjunktivitis ialah radang pada bahagian…', ikon: '👁️', p: ['putih mata', 'hujung jari', 'lutut'], a: 0, kenapa: 'Konjunktivitis ialah radang pada bahagian putih mata.' },
+      { j: 'pilih', s: 'Penyakit tangan, kaki dan mulut disebabkan oleh…', ikon: '🦠', p: ['virus', 'hujan', 'gula-gula'], a: 0, kenapa: 'Penyakit tangan, kaki dan mulut disebabkan oleh virus.' },
+      { j: 'pilih', s: 'Orang yang tidak dikenali menawarkan aiskrim. Apa kamu buat?', ikon: '🍦', p: ['Kata "Tak nak" dan jangan dekati', 'Ambil dan ikut dia', 'Beri dia alamat rumah'], a: 0, kenapa: 'Jangan dekati orang yang tidak kita kenali.' },
+      { j: 'bs', s: 'Sentuhan tidak selesa mungkin selamat tetapi tidak disenangi.', ikon: '🟡', a: true, kenapa: 'Betul. Kita boleh berkata, "Cukuplah, saya rasa tidak selesa."' },
+      { j: 'bs', s: 'Asap rokok tidak mengganggu orang lain.', ikon: '🚬', a: false, kenapa: 'Asap rokok mengganggu orang lain.' },
+      { j: 'bs', s: 'Kita perlu beritahu keluarga ke mana kita pergi.', ikon: '🏠', a: true, kenapa: 'Contoh: "Ibu, saya dan Karim hendak ke kedai Muthu sebentar."' },
+      { j: 'bs', s: 'Tutup mulut semasa batuk atau bersin membantu mencegah penyakit merebak.', ikon: '🤧', a: true, kenapa: 'Ini salah satu cara menjaga kebersihan diri.' },
+      { j: 'kumpul', s: 'Tembakau, alkohol, atau dadah?', kumpulan: [['🚬 Tembakau', ['Rokok', 'Cerut', 'Shisha']], ['🍺 Alkohol', ['Bir', 'Wain', 'Wiski']], ['💊 Dadah', ['Heroin', 'Morfin', 'Ganja']]] },
+      { j: 'kumpul', s: 'Tanda penyakit apa?', kumpulan: [['✋🦶👄 Tangan, kaki dan mulut', ['Luka di mulut', 'Ruam di tangan', 'Kegatalan di kaki']], ['👁️ Konjunktivitis', ['Mata berair', 'Mata merah', 'Menggosok mata']]] },
+      { j: 'kumpul', s: 'Postur betul atau salah?', kumpulan: [['✅ Betul', ['Duduk tegak bersandar', 'Berdiri tegak', 'Tidur di atas katil']], ['❌ Salah', ['Duduk membongkok', 'Angkat barang dengan kaki lurus', 'Tidur di lantai']]] },
+      { j: 'padan', s: 'Padankan sentuhan dengan perasaannya.', pasangan: [['🟢 Selamat', 'Gembira dan selesa'], ['🔴 Tidak selamat', 'Marah, sedih, keliru'], ['🟡 Tidak selesa', 'Tidak disenangi']] },
+      { j: 'padan', s: 'Padankan bahaya.', pasangan: [['🚬 Tembakau', 'Kanser paru-paru'], ['🍺 Alkohol', 'Kerosakan otak'], ['💊 Dadah', 'Bebanan kepada keluarga']] },
+      { j: 'susun', s: 'Ada sentuhan tidak selamat. Susun tindakan kamu.', item: ['Katakan TIDAK', 'Beri alasan', 'Pergi kepada orang dewasa yang dipercayai'] },
+      { j: 'eja', s: 'Apa yang kamu katakan jika diajak merokok?', ikon: '🙅', kata: 'tidak' },
+      { j: 'ayat', s: 'Bina ayat.', kata: ['Kerap', 'basuh', 'tangan', 'dengan', 'sabun', 'dan', 'air.'] },
+    ],
+    amali: [{
+      id: 'sentuhan-tidak', tajuk: 'Sentuhan: Berani Kata TIDAK', ikon: '✋',
+      arahan: 'Baca setiap situasi. Pilih jenis sentuhan, kemudian latih berkata TIDAK dengan kuat.',
+      mula(el, api) {
+        const J = [['🟢', 'Selamat'], ['🟡', 'Tidak selesa'], ['🔴', 'Tidak selamat']];
+        const X0 = [
+          { ik: '👩‍👧', s: 'Ibu memeluk kamu. Kamu rasa gembira dan selesa.', j: 0, info: 'Sentuhan selamat membuatkan kamu gembira, selesa, dan positif.' },
+          { ik: '🛝', s: 'Di taman permainan, seorang lelaki dewasa berkata: "Ida sakit kaki, boleh saya urut?"', j: 2, kata: 'TIDAK boleh sentuh saya.', lain: ['Baiklah, boleh.', '(Diam sahaja)'] },
+          { ik: '🛒', s: 'Di pasar raya, seorang lelaki berkata: "Ikut abang jalan-jalan nak tak?"', j: 2, kata: 'TIDAK mengapa, emak saya sedang menunggu di sana.', lain: ['Jom, saya ikut.', '(Diam sahaja)'] },
+          { ik: '🫂', s: 'Ina memeluk Rani lama sekali: "Rani, lamanya tak berjumpa." Rani rasa tidak selesa.', j: 1, kata: 'Cukuplah Ina, saya rasa tidak selesa.', lain: ['(Diam sahaja)', 'Peluk lagi lama!'] },
+          { ik: '📚', s: 'Kawan menyentuh paha kamu sambil berkata: "Pinjam buku kamu, tolonglah."', j: 1, kata: 'Nak pinjam boleh, tapi jangan sentuh paha saya.', lain: ['(Diam sahaja)', 'Tak apa, sentuhlah.'] },
+        ];
+        let k = 0, miss = 0;
+        const X = api.shuffle(X0);
+        el.innerHTML = `<div class="meter" style="margin-bottom:12px"><i id="mt"></i></div><div id="sc"></div>`;
+        const sc = el.querySelector('#sc'), mt = el.querySelector('#mt');
+        function papar() {
+          mt.style.width = (k / X.length * 100) + '%';
+          if (k >= X.length) { sc.innerHTML = '<p style="font-size:1.2rem;text-align:center">🦸 Kamu berani berkata <b>TIDAK</b>!</p>'; return api.selesai(Math.max(0, 1 - miss * .12), 'Syabas! Ingat: katakan TIDAK dan pergi kepada orang dewasa yang kamu percayai.'); }
+          const x = X[k];
+          sc.innerHTML = `<div class="box"><div style="font-size:3rem;text-align:center">${x.ik}</div><p style="font-size:1.15rem">${api.esc(x.s)}</p><p><b>Sentuhan ini…</b></p><div class="opts" id="o1"></div><div id="s2"></div></div>`;
+          const o1 = sc.querySelector('#o1');
+          J.forEach((jj, i) => { const b = api.H(`<button class="opt" data-j="${i}">${jj[0]} ${jj[1]}</button>`); o1.appendChild(b);
+            b.onclick = () => {
+              if (b.disabled) return;
+              if (i !== x.j) { miss++; b.classList.add('no'); return api.salah(b, 'Fikir semula: apa perasaan dalam situasi ini?'); }
+              b.classList.add('ok'); o1.querySelectorAll('.opt').forEach(y => y.disabled = true);
+              if (x.j === 0) { api.betul(b, x.info); return langkah(); }
+              api.betul(b, i === 2 ? 'Betul. Sentuhan tidak selamat membuatkan kita marah, sedih, dan keliru.' : 'Betul. Sentuhan tidak selesa mungkin selamat tetapi tidak disenangi.');
+              kata(x);
+            }; });
+        }
+        function kata(x) {
+          const s2 = sc.querySelector('#s2');
+          s2.innerHTML = `<p style="margin-top:12px"><b>Apa yang patut kamu katakan?</b></p><div class="opts" id="o2"></div>`;
+          const o2 = s2.querySelector('#o2');
+          api.shuffle([x.kata, ...x.lain]).forEach(t => { const b = api.H(`<button class="opt">🗨️ ${api.esc(t)}</button>`); b.dataset.ok = t === x.kata ? 1 : 0; o2.appendChild(b);
+            b.onclick = () => {
+              if (b.disabled) return;
+              if (t !== x.kata) { miss++; b.classList.add('no'); return api.salah(b, 'Kamu berhak berkata TIDAK. Cuba lagi.'); }
+              b.classList.add('ok'); o2.querySelectorAll('.opt').forEach(y => y.disabled = true); api.betul(b, 'Bagus! Sekarang sebut dengan kuat dan yakin.');
+              const sb = api.H(`<div style="text-align:center;margin-top:12px"><button class="btn go" id="sb">🗣️ Sebut kuat: "${api.esc(x.kata)}"</button></div>`); s2.appendChild(sb);
+              sb.querySelector('#sb').onclick = () => { api.speak(x.kata); api.anim(sb, [{ transform: 'scale(1.08)' }, { transform: 'scale(1)' }], { duration: 300 }); langkah(); };
+            }; });
+        }
+        function langkah() {
+          const s2 = sc.querySelector('#s2');
+          if (s2.querySelector('#nx')) return;
+          const n = api.H(`<div style="text-align:center;margin-top:12px"><button class="btn" id="nx">Seterusnya ▶</button></div>`); s2.appendChild(n);
+          n.querySelector('#nx').onclick = () => { k++; papar(); };
+        }
+        papar();
+        return {
+          jawab() {
+            const iv = setInterval(() => {
+              if (!el.isConnected || window.__amaliDone) return clearInterval(iv);
+              const nx = sc.querySelector('#nx'); if (nx) return nx.click();
+              const sb = sc.querySelector('#sb'); if (sb) return sb.click();
+              const o2 = sc.querySelector('#o2 .opt[data-ok="1"]'); if (o2 && !o2.disabled) return o2.click();
+              const o1 = sc.querySelector(`#o1 .opt[data-j="${X[k].j}"]`); if (o1 && !o1.disabled) o1.click();
+            }, 60);
+          },
+        };
+      },
+    }],
+  });
+})();
+
+(() => {
+  UNIT({
+    n: 10, tajuk: 'Bahaya Menanti', tema: 'Pendidikan Kesihatan', ikon: '🍱', warna: '#2b8a3e',
+    belajar: [
+      { ikon: '🏫', tajuk: 'Maisarah tertanya-tanya',
+        teks: ['Maisarah sering melihat rakan-rakannya membeli makanan dan minuman di <b>luar kawasan sekolah</b>.', 'Adakah amalan ini baik? Mari kita fikirkan.'],
+        contoh: 'Mereka membeli aiskrim daripada penjual bermotosikal dan minuman dalam plastik di gerai tepi jalan.' },
+      { ikon: '⏰', tajuk: 'Patuhi Waktu Makan',
+        teks: ['Makan dan minum pada <b>waktu yang betul</b>.', 'Ambil kuantiti makanan dan minuman <b>mengikut keperluan</b>.'],
+        chips: ['🌅 Sarapan pagi', '☕ Minum pagi', '🌞 Makan tengah hari', '🍪 Minum petang', '🌙 Makan malam'],
+        contoh: 'Maklumat pemakanan sihat: portal http://nutrition.moh.gov.my' },
+      { ikon: '🍳', tajuk: 'Contoh menu: pagi dan tengah hari',
+        senarai: ['🌅 <b>Sarapan pagi</b>: roti dan segelas susu; bijirin dan susu; mi goreng dan air coklat.',
+          '🌞 <b>Makan tengah hari</b>: nasi dengan sayur dan ikan atau ayam, buah tembikai, dan minuman.'] },
+      { ikon: '🌙', tajuk: 'Contoh menu: petang dan malam',
+        senarai: ['🍪 <b>Minum petang</b>: biskut dan susu; kuih dan jus oren; kuih bom dan donut dengan teh atau kopi.',
+          '🌙 <b>Makan malam</b>: nasi, ikan bakar, sayur, dan oren; atau pau dengan salad, sup, dan jus oren.'] },
+      { ikon: '🥤', tajuk: 'Badan Sihat dan Menarik',
+        teks: ['Rakan bertanya: "Maisarah, kenapa kamu makan kuih sahaja?" Maisarah: "Saya tidak mahu jadi obes atau gemuk."'],
+        chips: ['🍟 Makanan berlemak', '🧋 Minuman manis', '🥤 Minuman berkarbonat'],
+        contoh: 'Makanan dan minuman ini <b>boleh menggemukkan</b>.' },
+      { ikon: '🥗', tajuk: 'Cara elak jadi gemuk',
+        senarai: ['🍽️ Makan secara <b>sederhana</b> ikut keperluan kita.', '🏃 Jangan lupa <b>bersenam</b> juga.', '✅ Amalkan <b>tabiat pemakanan yang sihat</b>.'] },
+      { ikon: '📺', tajuk: 'Jangan Terpengaruh',
+        teks: ['Daniel: "Ada mi segera baharu yang diiklankan di televisyen, nampak sedap." Mahendran: "Mari kita cuba makan."',
+          'Chee Keong: "Nanti, kita jangan mudah terpengaruh dengan iklan, makanan itu <b>tidak semestinya berkhasiat</b>."'],
+        contoh: 'Jangan mudah terpengaruh dengan rakan dan iklan media massa.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Di manakah rakan Maisarah membeli makanan?', ikon: '🏫', p: ['Di luar kawasan sekolah', 'Di kantin sekolah', 'Di rumah'], a: 0, kenapa: 'Mereka membeli makanan dan minuman di luar kawasan sekolah.' },
+      { j: 'pilih', s: 'Kuantiti makanan diambil mengikut ___.', ikon: '🍽️', p: ['keperluan', 'iklan', 'kawan'], a: 0, kenapa: 'Ambil kuantiti makanan dan minuman mengikut keperluan.' },
+      { j: 'pilih', s: 'Roti dan segelas susu ialah contoh menu…', ikon: '🍞🥛', p: ['Sarapan pagi', 'Makan malam', 'Makan tengah hari'], a: 0, kenapa: 'Roti dan susu ialah contoh sarapan pagi.' },
+      { j: 'pilih', s: 'Nasi, ikan bakar, sayur, dan oren ialah contoh menu…', ikon: '🍚🐟', p: ['Makan malam', 'Sarapan pagi', 'Minum petang'], a: 0, kenapa: 'Ini contoh menu makan malam dalam buku.' },
+      { j: 'pilih', s: 'Biskut dan susu ialah contoh menu…', ikon: '🍪🥛', p: ['Minum petang', 'Makan tengah hari', 'Makan malam'], a: 0, kenapa: 'Biskut dan susu ialah contoh minum petang.' },
+      { j: 'pilih', s: 'Mengapakah Maisarah makan kuih sahaja?', ikon: '🍡', p: ['Tidak mahu jadi obes atau gemuk', 'Tiada wang', 'Tidak suka nasi'], a: 0, kenapa: 'Maisarah berkata: "Saya tidak mahu jadi obes atau gemuk."' },
+      { j: 'pilih', s: 'Makanan apakah yang diiklankan di televisyen?', ikon: '📺', p: ['Mi segera baharu', 'Buah tembikai', 'Sayur bayam'], a: 0, kenapa: 'Daniel melihat iklan mi segera baharu.' },
+      { j: 'pilih', s: 'Siapakah yang berkata, "Jangan mudah terpengaruh dengan iklan"?', ikon: '🗣️', p: ['Chee Keong', 'Daniel', 'Mahendran'], a: 0, kenapa: 'Chee Keong menasihati rakan-rakannya.' },
+      { j: 'pilih', s: 'Siapakah yang berkata, "Mari kita cuba makan"?', ikon: '🍜', p: ['Mahendran', 'Chee Keong', 'Maisarah'], a: 0, kenapa: 'Mahendran mahu mencuba mi segera itu.' },
+      { j: 'bs', s: 'Minuman berkarbonat tidak menggemukkan.', ikon: '🥤', a: false, kenapa: 'Makanan berlemak, minuman manis dan berkarbonat boleh menggemukkan.' },
+      { j: 'bs', s: 'Makanan dalam iklan tidak semestinya berkhasiat.', ikon: '📺', a: true, kenapa: 'Betul, kata Chee Keong. Jangan mudah terpengaruh.' },
+      { j: 'bs', s: 'Bersenam membantu kita elak jadi gemuk.', ikon: '🏃', a: true, kenapa: 'Makan secara sederhana dan jangan lupa bersenam.' },
+      { j: 'bs', s: 'Kita patut makan sebanyak-banyaknya setiap kali makan.', ikon: '🍔', a: false, kenapa: 'Makan secara sederhana mengikut keperluan.' },
+      { j: 'susun', s: 'Susun lima waktu makan.', item: ['Sarapan pagi', 'Minum pagi', 'Makan tengah hari', 'Minum petang', 'Makan malam'] },
+      { j: 'kumpul', s: 'Apa yang boleh menggemukkan? Apa yang membantu?', kumpulan: [['⚠️ Boleh menggemukkan', ['Makanan berlemak', 'Minuman manis', 'Minuman berkarbonat']], ['💚 Membantu kita sihat', ['Makan secara sederhana', 'Bersenam']]] },
+      { j: 'kumpul', s: 'Menu ini untuk waktu bila?', kumpulan: [['🌅 Sarapan pagi', ['Bijirin dan susu', 'Mi goreng dan air coklat']], ['🍪 Minum petang', ['Kuih dan jus oren', 'Kuih bom dan donut']], ['🌙 Makan malam', ['Nasi, ikan bakar, sayur', 'Pau, salad, dan sup']]] },
+      { j: 'padan', s: 'Padankan watak dengan katanya.', pasangan: [['Daniel', 'Iklan mi segera nampak sedap'], ['Mahendran', 'Mari kita cuba makan'], ['Chee Keong', 'Jangan mudah terpengaruh']] },
+      { j: 'padan', s: 'Padankan menu dengan waktu makan.', pasangan: [['🍞 Roti dan susu', 'Sarapan pagi'], ['🍉 Nasi, lauk, tembikai', 'Makan tengah hari'], ['🍪 Biskut dan susu', 'Minum petang'], ['🍲 Pau, salad, sup', 'Makan malam']] },
+      { j: 'eja', s: 'Makan secara ___ ikut keperluan.', ikon: '🍽️', kata: 'sederhana' },
+      { j: 'eja', s: 'Makanan yang baik untuk badan ialah makanan ___.', ikon: '🥦', kata: 'berkhasiat' },
+      { j: 'ayat', s: 'Bina ayat.', kata: ['Jangan', 'mudah', 'terpengaruh', 'dengan', 'iklan.'] },
+    ],
+    amali: [{
+      id: 'pinggan-waktu-makan', tajuk: 'Hidangan Ikut Waktu', ikon: '🍽️',
+      arahan: 'Tekan satu menu, kemudian tekan pinggan waktu makan yang betul.',
+      mula(el, api) {
+        const W = [['🌅', 'Sarapan pagi'], ['🌞', 'Makan tengah hari'], ['🍪', 'Minum petang'], ['🌙', 'Makan malam']];
+        const M = api.shuffle([
+          ['🍞🥛', 'Roti dan segelas susu', 0], ['🥣🥛', 'Bijirin dan susu', 0], ['🍝🍫', 'Mi goreng dan air coklat', 0],
+          ['🍚🥬🍗', 'Nasi, sayur, ayam, tembikai', 1],
+          ['🍪🥛', 'Biskut dan susu', 2], ['🍡🍊', 'Kuih dan jus oren', 2],
+          ['🍚🐟🍊', 'Nasi, ikan bakar, sayur, oren', 3], ['🥟🥗🍲', 'Pau, salad, sup, jus oren', 3],
+        ]);
+        let sel = null, done = 0, miss = 0, fasa2 = false;
+        el.innerHTML = `<div class="bins" id="pg" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div><p class="hint" id="pr"></p><div class="pool" id="ml"></div><div id="f2"></div>`;
+        const pg = el.querySelector('#pg'), ml = el.querySelector('#ml'), pr = el.querySelector('#pr'), f2 = el.querySelector('#f2');
+        const prog = () => pr.textContent = `Hidangan siap: ${done} / ${M.length}`;
+        const pb = W.map((w, k) => { const b = api.H(`<button class="bin" style="display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start"><b>${w[0]} ${w[1]}</b><div style="font-size:2rem;line-height:1">🍽️</div><div class="isi"></div></button>`); b.onclick = () => letak(k, b); pg.appendChild(b); return b; });
+        const mb = M.map(m => { const b = api.H(`<button class="chip">${m[0]} ${api.esc(m[1])}</button>`); b.onclick = () => { if (b.disabled) return; mb.forEach(x => x.classList.remove('on')); b.classList.add('on'); sel = m; api.say(`${m[0]} <b>${api.esc(m[1])}</b> — waktu makan apa?`); }; ml.appendChild(b); return b; });
+        function letak(k, b) {
+          if (fasa2) return;
+          if (!sel) return api.say('Pilih satu menu dahulu.');
+          const i = M.indexOf(sel), x = mb[i];
+          if (sel[2] === k) {
+            x.remove(); b.querySelector('.isi').appendChild(api.H(`<span>${sel[0]} ${api.esc(sel[1])}</span>`)); api.betul(b, `${sel[1]} — contoh menu ${W[k][1].toLowerCase()}.`);
+            sel = null; done++; prog(); if (done === M.length) amaran();
+          } else { miss++; api.salah(b, `Cuba lagi. Fikir: ${api.esc(sel[1])} sesuai untuk waktu bila?`); }
+        }
+        function amaran() {
+          fasa2 = true;
+          api.say('Bagus! Semua pinggan sudah penuh. Sekarang, cari <b>3</b> benda yang <b>boleh menggemukkan</b>.');
+          const C = api.shuffle([['🍟 Makanan berlemak', 1], ['🧋 Minuman manis', 1], ['🥤 Minuman berkarbonat', 1], ['🍽️ Makan secara sederhana', 0], ['🏃 Bersenam', 0]]);
+          f2.innerHTML = `<div class="box" style="margin-top:12px"><b>⚠️ Amaran Maisarah: apa yang boleh menggemukkan?</b><div class="chips" style="margin-top:10px" id="ch"></div></div>`;
+          let got = 0;
+          C.forEach(c => { const b = api.H(`<button class="chip" data-g="${c[1]}">${c[0]}</button>`); f2.querySelector('#ch').appendChild(b);
+            b.onclick = () => {
+              if (b.disabled) return;
+              if (c[1]) { b.disabled = true; b.classList.add('ok'); got++; api.betul(b, `Ya, ${c[0].slice(3).toLowerCase()} boleh menggemukkan.`);
+                if (got === 3) api.selesai(Math.max(0, 1 - miss * .1), 'Syabas! Makan ikut waktu, ambil mengikut keperluan, dan kurangkan makanan berlemak serta minuman manis dan berkarbonat.'); }
+              else { miss++; b.classList.add('no'); api.salah(b, 'Itu cara untuk elak jadi gemuk. Cari yang lain.'); }
+            }; });
+        }
+        prog();
+        return {
+          jawab() {
+            M.slice().forEach(m => { mb[M.indexOf(m)].click(); pb[m[2]].click(); });
+            f2.querySelectorAll('.chip[data-g="1"]').forEach(b => b.click());
+          },
+        };
+      },
+    }],
+  });
+})();
+
+(() => {
+  UNIT({
+    n: 11, tajuk: 'Awas, Berhati-hati', tema: 'Pendidikan Kesihatan', ikon: '🚑', warna: '#e03131',
+    belajar: [
+      { ikon: '🪜', tajuk: 'Anjali membantu rakan',
+        teks: ['Rakan Anjali terjatuh ketika menuruni tangga.', 'Anjali <b>membantu</b> rakannya dan <b>memberitahu guru</b>.'],
+        contoh: 'Jika rakan cedera, bantu dia dan beritahu orang dewasa dengan segera.' },
+      { ikon: '⚠️', tajuk: 'Malang Tidak Berbau',
+        teks: ['Kemalangan dan kecederaan boleh berlaku di tiga tempat ini.'],
+        chips: ['🏠 Rumah', '🏫 Sekolah', '🛝 Tempat awam'] },
+      { ikon: '🏠', tajuk: 'Kemalangan di rumah',
+        teks: ['Air panas tumpah. Adik kecil <b>melecur</b> di lengan. Kakak segera membantu.'],
+        contoh: '"Ibu, adik terjatuh dari katil dan tangannya cedera." Ibu: "Mari kita hantar adik ke <b>hospital</b>."' },
+      { ikon: '🏫', tajuk: 'Kemalangan di sekolah',
+        teks: ['Seorang murid jatuh di padang. Lututnya berdarah. Rakan-rakan membantu.'],
+        contoh: '"Cikgu, Bilik Sains terbakar." Cikgu: "Saya akan telefon <b>bomba</b>."' },
+      { ikon: '🛝', tajuk: 'Kemalangan di tempat awam',
+        teks: ['Di taman permainan, seorang budak jatuh dari gelongsor. Seorang lagi terkena buaian.'],
+        contoh: '"Tolong, ada orang tersepit di eskalator!" Lelaki dewasa: "Telefon <b>bomba</b>. Mari kita bantu dia."' },
+      { ikon: '📞', tajuk: 'Bantuan Segera',
+        teks: ['Pilih pihak yang betul untuk mendapatkan bantuan.', 'Minta bantuan dengan <b>segera</b>.'],
+        chips: ['🚑 Hospital / ambulans', '🚒 Bomba', '🚓 Polis', '🧑‍🏫 Guru'],
+        contoh: 'Fikirkan: apakah yang akan terjadi jika tidak meminta bantuan dengan segera?' },
+      { ikon: '🎭', tajuk: 'Jom berlakon!',
+        teks: ['Lakonkan satu kemalangan yang sering terjadi di sekolah, rumah, atau tempat awam.', 'Tunjukkan cara meminta bantuan yang sesuai.'] },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Rakan Anjali terjatuh ketika…', ikon: '🪜', p: ['Menuruni tangga', 'Berenang', 'Menaiki bas'], a: 0, kenapa: 'Rakan Anjali terjatuh ketika menuruni tangga.' },
+      { j: 'pilih', s: 'Apakah yang Anjali lakukan?', ikon: '🤝', p: ['Membantu rakan dan memberitahu guru', 'Ketawa dan pergi', 'Diam sahaja'], a: 0, kenapa: 'Anjali membantu rakannya dan memberitahu guru.' },
+      { j: 'pilih', s: 'Adik terjatuh dari katil. Tangannya cedera. Ibu membawa adik ke…', ikon: '🛏️', p: ['Hospital', 'Pasar raya', 'Taman permainan'], a: 0, kenapa: 'Ibu berkata: "Mari kita hantar adik ke hospital."' },
+      { j: 'pilih', s: 'Bilik Sains terbakar. Cikgu menelefon…', ikon: '🔥', p: ['Bomba', 'Kedai', 'Sekolah lain'], a: 0, kenapa: 'Cikgu berkata: "Saya akan telefon bomba."' },
+      { j: 'pilih', s: 'Ada orang tersepit di eskalator. Telefon siapa?', ikon: '🛗', p: ['Bomba', 'Posmen', 'Tukang masak'], a: 0, kenapa: 'Lelaki dewasa itu berkata: "Telefon bomba."' },
+      { j: 'pilih', s: 'Di manakah orang itu tersepit?', ikon: '😣', p: ['Di eskalator', 'Di pintu kereta', 'Di tingkap'], a: 0, kenapa: 'Orang itu tersepit di eskalator.' },
+      { j: 'pilih', s: 'Adik kecil terkena air panas. Kulitnya ___.', ikon: '♨️', p: ['melecur', 'basah sahaja', 'sejuk'], a: 0, kenapa: 'Adik melecur di lengan kerana air panas tumpah.' },
+      { j: 'bs', s: 'Jika rakan cedera, kita patut diam sahaja.', ikon: '🤕', a: false, kenapa: 'Bantu rakan dan beritahu guru atau orang dewasa.' },
+      { j: 'bs', s: 'Kemalangan boleh berlaku di rumah, sekolah, dan tempat awam.', ikon: '⚠️', a: true, kenapa: 'Malang tidak berbau. Kemalangan boleh berlaku di mana-mana.' },
+      { j: 'bs', s: 'Kita perlu meminta bantuan dengan segera apabila berlaku kemalangan.', ikon: '📞', a: true, kenapa: 'Minta bantuan segera daripada pihak yang betul.' },
+      { j: 'bs', s: 'Bilik yang terbakar dalam cerita ialah bilik darjah.', ikon: '🏫', a: false, kenapa: 'Yang terbakar ialah Bilik Sains.' },
+      { j: 'kumpul', s: 'Di manakah kemalangan ini berlaku?', kumpulan: [['🏠 Rumah', ['Air panas tumpah', 'Jatuh dari katil']], ['🏫 Sekolah', ['Jatuh di padang', 'Bilik Sains terbakar']], ['🛝 Tempat awam', ['Jatuh dari gelongsor', 'Terkena buaian', 'Tersepit di eskalator']]] },
+      { j: 'padan', s: 'Siapa boleh bantu? Padankan.', pasangan: [['🛏️ Adik cedera tangan', '🚑 Hospital'], ['🔥 Bilik Sains terbakar', '🚒 Bomba'], ['🪜 Rakan jatuh di tangga', '🧑‍🏫 Guru']] },
+      { j: 'padan', s: 'Padankan kata-kata dengan orangnya.', pasangan: [['Ibu', '"Mari kita hantar adik ke hospital."'], ['Cikgu', '"Saya akan telefon bomba."'], ['Lelaki dewasa', '"Mari kita bantu dia."']] },
+      { j: 'susun', s: 'Susun cerita Anjali.', item: ['Rakan terjatuh di tangga', 'Anjali membantu rakannya', 'Anjali memberitahu guru', 'Guru datang membantu'] },
+      { j: 'susun', s: 'Bilik Sains terbakar! Susun tindakannya.', item: ['Nampak Bilik Sains terbakar', 'Beritahu cikgu', 'Cikgu telefon bomba'] },
+      { j: 'eja', s: 'Siapakah yang dihubungi jika berlaku kebakaran?', ikon: '🚒', kata: 'bomba' },
+      { j: 'eja', s: 'Tangga bergerak dipanggil…', ikon: '🛗', kata: 'eskalator' },
+      { j: 'ayat', s: 'Bina ayat.', kata: ['Anjali', 'membantu', 'rakannya', 'dan', 'memberitahu', 'guru.'] },
+    ],
+    amali: [{
+      id: 'siapa-boleh-bantu', tajuk: 'Siapa Boleh Bantu?', ikon: '📞',
+      arahan: 'Baca setiap kemalangan. Pilih tindakan dan pihak yang betul untuk membantu.',
+      mula(el, api) {
+        const X = api.shuffle([
+          { ik: '🔥🧪', s: 'Di sekolah: Bilik Sains terbakar!', step: [
+            ['Siapakah yang kamu beritahu dahulu?', [['🧑‍🏫 Cikgu', 1], ['🙈 Sorok sahaja', 0], ['🤐 Tiada sesiapa', 0]], '"Cikgu, Bilik Sains terbakar."'],
+            ['Cikgu akan telefon siapa?', [['🚒 Bomba', 1], ['🏪 Kedai', 0], ['🚑 Hospital', 0]], 'Cikgu: "Saya akan telefon bomba."']], datang: '🚒' },
+          { ik: '🛏️🤕', s: 'Di rumah: adik terjatuh dari katil dan tangannya cedera.', step: [
+            ['Siapakah yang kamu beritahu?', [['👩 Ibu', 1], ['🐱 Kucing', 0], ['🤐 Tiada sesiapa', 0]], '"Ibu, adik terjatuh dari katil dan tangannya cedera."'],
+            ['Ibu membawa adik ke mana?', [['🏥 Hospital', 1], ['🛒 Pasar raya', 0], ['🛝 Taman permainan', 0]], 'Ibu: "Mari kita hantar adik ke hospital."']], datang: '🏥' },
+          { ik: '🛗😣', s: 'Di tempat awam: ada orang tersepit di eskalator!', step: [
+            ['Apa kamu buat?', [['🗣️ Jerit "Tolong!"', 1], ['🤐 Diam sahaja', 0], ['📱 Main telefon', 0]], '"Tolong, ada orang tersepit di eskalator!"'],
+            ['Telefon siapa?', [['🚒 Bomba', 1], ['🍕 Kedai makan', 0], ['🧑‍🏫 Cikgu', 0]], 'Lelaki dewasa: "Telefon bomba. Mari kita bantu dia."']], datang: '🚒' },
+          { ik: '🪜🤕', s: 'Di sekolah: rakan kamu terjatuh ketika menuruni tangga.', step: [
+            ['Apa kamu buat?', [['🤝 Bantu rakan dan beritahu guru', 1], ['😆 Ketawa', 0], ['🏃 Tinggalkan rakan', 0]], 'Seperti Anjali: bantu rakan dan beritahu guru.']], datang: '🧑‍🏫' },
+        ]);
+        let k = 0, s = 0, miss = 0;
+        el.innerHTML = `<div class="meter" style="margin-bottom:12px"><i id="mt"></i></div><div id="sc"></div>`;
+        const sc = el.querySelector('#sc'), mt = el.querySelector('#mt');
+        function papar() {
+          mt.style.width = (k / X.length * 100) + '%';
+          if (k >= X.length) { sc.innerHTML = '<p style="font-size:1.2rem;text-align:center">🦸 Kamu wira cilik! Bantuan sampai dengan segera.</p>'; return api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Ingat: bantu dan minta bantuan dengan segera daripada pihak yang betul.'); }
+          const x = X[k]; s = 0;
+          sc.innerHTML = `<div class="box"><div style="font-size:3rem;text-align:center">${x.ik}</div><p style="font-size:1.15rem;text-align:center"><b>${api.esc(x.s)}</b></p><div id="st"></div></div>`;
+          langkah();
+        }
+        function langkah() {
+          const x = X[k], st = sc.querySelector('#st'), L = x.step[s];
+          const d = api.H(`<div><p style="margin-top:10px"><b>${s + 1}. ${L[0]}</b></p><div class="opts"></div></div>`); st.appendChild(d);
+          const o = d.querySelector('.opts');
+          api.shuffle(L[1]).forEach(([t, ok]) => { const b = api.H(`<button class="opt" data-ok="${ok}">${t}</button>`); o.appendChild(b);
+            b.onclick = () => {
+              if (b.disabled) return;
+              if (!ok) { miss++; b.classList.add('no'); return api.salah(b, 'Cuba lagi. Siapa yang boleh membantu?'); }
+              b.classList.add('ok'); o.querySelectorAll('.opt').forEach(y => y.disabled = true); api.betul(b, L[2]);
+              s++;
+              if (s < x.step.length) return langkah();
+              const r = api.H(`<div style="margin-top:12px;overflow:hidden;border-radius:14px;background:var(--c2);padding:8px 12px"><div style="font-size:2.6rem;display:inline-block" class="dt">${x.datang}</div> <b>Bantuan sampai!</b></div>`); st.appendChild(r);
+              api.anim(r.querySelector('.dt'), [{ transform: 'translateX(-120px)' }, { transform: 'none' }], { duration: 600 });
+              const n = api.H(`<div style="text-align:center;margin-top:12px"><button class="btn" id="nx">Seterusnya ▶</button></div>`); st.appendChild(n);
+              n.querySelector('#nx').onclick = () => { k++; papar(); };
+            }; });
+        }
+        papar();
+        return {
+          jawab() {
+            const iv = setInterval(() => {
+              if (!el.isConnected || window.__amaliDone) return clearInterval(iv);
+              const nx = sc.querySelector('#nx'); if (nx) return nx.click();
+              const b = [...sc.querySelectorAll('.opt[data-ok="1"]')].find(y => !y.disabled); if (b) b.click();
+            }, 60);
+          },
+        };
+      },
+    }],
+  });
+})();
+
+/* ================= Aplikasi "Belajar Ceria" Darjah 2 ================= */
+(function () {
+  const $ = s => document.querySelector(s);
+  const EN = SUBJ.ui === 'en';
+  const L = EN ? { betul: '✔ True', salah: '✘ False', next: 'Next ▶', prev: '◀ Back', main: '🎮 Let\'s play!', baca: '📖 Learn', game: '🎮 Play', amali: '🧪 Try it',
+      again: '🔁 Play again', units: 'All units', ok: ['Well done!', 'Correct!', 'Great!', 'Yes!'], no: 'Not quite.', ans: 'Answer:', mix: '🏆 Big challenge (all units)',
+      s3: 'Excellent!', s2: 'Good job!', s1: 'Try again!', score: n => `You got ${n}`, readDone: 'You finished the lesson!', unit: 'Unit', listen: 'Listen' }
+    : { betul: '✔ Betul', salah: '✘ Salah', next: 'Seterusnya ▶', prev: '◀ Kembali', main: '🎮 Jom main!', baca: '📖 Belajar', game: '🎮 Main', amali: '🧪 Amali',
+      again: '🔁 Main lagi', units: 'Semua unit', ok: ['Bagus!', 'Betul!', 'Hebat!', 'Pandai!'], no: 'Belum tepat.', ans: 'Jawapan:', mix: '🏆 Cabaran besar (semua unit)',
+      s3: 'Syabas!', s2: 'Bagus!', s1: 'Cuba lagi!', score: n => `Markah kamu ${n}`, readDone: 'Kamu sudah habis belajar!', unit: SUBJ.unit || 'Unit', listen: 'Dengar' };
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'd2' + SUBJ.kod;
+  const G = Object.assign({ xp: 0, u: {}, cab: 0, mute: false }, store.get(KEY, {}));
+  const UU = n => (G.u[n] = G.u[n] || { baca: 0, main: 0, am: {} });
+  const totalStars = () => Object.values(G.u).reduce((t, x) => t + (x.main || 0) + Object.values(x.am || {}).reduce((a, b) => a + b, 0), 0) + (G.cab || 0);
+  const save = () => { store.set(KEY, G); $('#xp').textContent = '⭐ ' + totalStars(); };
+  UNITS.sort((a, b) => a.n - b.n);
+  const stars = (n, of = 3) => '★'.repeat(n) + '<i>' + '★'.repeat(of - n) + '</i>';
+
+  /* nama murid dikongsi semua subjek */
+  const nm = $('#nama'); try { nm.value = localStorage.getItem('d2nama') || ''; } catch (e) {}
+  nm.oninput = () => { try { localStorage.setItem('d2nama', nm.value); } catch (e) {} };
+
+  /* bunyi + suara */
+  let AC = null;
+  function tone(fs, d) { if (G.mute) return; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); const t = AC.currentTime;
+    fs.forEach((f, i) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = 'triangle'; o.frequency.value = f; o.connect(g); g.connect(AC.destination);
+      g.gain.setValueAtTime(.0001, t + i * d); g.gain.exponentialRampToValueAtTime(.16, t + i * d + .02); g.gain.exponentialRampToValueAtTime(.0001, t + i * d + d * 1.6);
+      o.start(t + i * d); o.stop(t + i * d + d * 1.7); }); } catch (e) {} }
+  let VOICE;
+  function pickVoice() { try { const vs = speechSynthesis.getVoices(), l = SUBJ.lang.slice(0, 2);
+    VOICE = vs.find(v => v.lang.replace('_', '-') === SUBJ.lang) || vs.find(v => v.lang.startsWith(l)) || (l === 'ms' ? vs.find(v => v.lang.startsWith('id')) : null); } catch (e) {} }
+  if (window.speechSynthesis) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+  function speak(h) { if (G.mute || !window.speechSynthesis) return; const t = plain(h); if (!t) return;
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = VOICE ? VOICE.lang : SUBJ.lang; if (VOICE) u.voice = VOICE; u.rate = .88; speechSynthesis.speak(u); } catch (e) {} }
+  const hush = () => { try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {} };
+  const spkBtn = txt => { const b = H('<button class="spk" aria-label="' + L.listen + '">🔊</button>'); b.onclick = () => speak(typeof txt === 'function' ? txt() : txt); return b; };
+  const ikon = i => !i ? '' : (String(i).trim().startsWith('<') ? i : esc(i));
+
+  /* ---------- laman utama ---------- */
+  function home() {
+    hush(); cur = null; history.replaceState(null, '', location.pathname);
+    $('#unit').hidden = true; $('#home').hidden = false;
+    const temas = []; UNITS.forEach(u => { const t = u.tema || ''; let g = temas.find(x => x[0] === t); if (!g) temas.push(g = [t, []]); g[1].push(u); });
+    $('#home').innerHTML = temas.map(([t, us]) => `<section class="tema">${t ? `<h2>${esc(t)}</h2>` : '<h2></h2>'}<div class="grid">${us.map(u => {
+      const x = G.u[u.n] || {}, na = (u.amali || []).length, da = Object.keys(x.am || {}).length;
+      return `<button class="ut" data-n="${u.n}" style="--uc:${u.warna || 'var(--c)'}"><span class="no" aria-hidden="true">${ikon(u.ikon)}<small>${esc(u.label || u.n)}</small></span>
+        <b>${esc(u.tajuk)}</b><span class="st" aria-label="${x.main || 0} / 3">${stars(x.main || 0)}<span>${x.baca ? '📖✓' : ''}${na ? ` 🧪${da}/${na}` : ''}</span></span></button>`; }).join('')}</div></section>`).join('')
+      + `<div class="mix"><button class="btn go" id="cab">${L.mix}</button><span class="st" style="color:var(--gold);font-size:1.4rem;align-self:center">${stars(G.cab || 0)}</span></div>`;
+    $('#home').querySelectorAll('.ut').forEach(b => b.onclick = () => open(+b.dataset.n));
+    $('#cab').onclick = cabaran;
+    if (!RM()) $('#home').querySelectorAll('.ut').forEach((b, i) => anim(b, [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { delay: Math.min(i * 35, 500), duration: 380 }));
+    window.scrollTo({ top: 0 });
+  }
+
+  /* ---------- unit ---------- */
+  let cur = null, gen = 0;
+  function open(n, tabName) {
+    const u = UNITS.find(x => x.n === n); if (!u) return home();
+    hush(); cur = u; history.replaceState(null, '', '?u=' + n);
+    $('#home').hidden = true; $('#unit').hidden = false;
+    document.documentElement.style.setProperty('--uc', u.warna || '');
+    $('#uh').innerHTML = `<span class="big" aria-hidden="true">${ikon(u.ikon)}</span><div><small>${esc(u.labelPenuh || (L.unit + ' ' + (u.label || u.n)))}${u.tema ? ' · ' + esc(u.tema) : ''}</small><h2>${esc(u.tajuk)}</h2></div>`;
+    const tabs = [['baca', L.baca], ['main', L.game]].concat((u.amali || []).length ? [['amali', L.amali]] : []);
+    $('#tabs').innerHTML = tabs.map(([k, t]) => `<button class="tab" role="tab" data-t="${k}">${t}</button>`).join('');
+    $('#tabs').querySelectorAll('.tab').forEach(b => b.onclick = () => tab(b.dataset.t));
+    tab(tabName || (UU(n).baca ? 'main' : 'baca'));
+    window.scrollTo({ top: 0 });
+  }
+  function tab(k) {
+    hush(); gen++;
+    $('#tabs').querySelectorAll('.tab').forEach(b => { b.classList.toggle('on', b.dataset.t === k); b.setAttribute('aria-selected', b.dataset.t === k); });
+    ({ baca, main: () => kuiz(cur.soalan || [], 8, onMain), amali: alist })[k]();
+  }
+
+  /* ---------- Belajar: kad bergaris ---------- */
+  function baca() {
+    const cs = cur.belajar || []; let i = 0; const P = $('#pane');
+    function draw() {
+      const c = cs[i] || {}; hush();
+      const paras = [].concat(c.teks || []).map(p => `<p>${p}</p>`).join('');
+      P.innerHTML = `<article class="page card"><div class="ik" aria-hidden="true">${ikon(c.ikon)}</div><h3>${c.tajuk || ''}</h3>${paras}
+        ${c.senarai ? `<ul>${c.senarai.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
+        ${c.chips ? `<div class="chipz">${c.chips.map(x => `<span>${x}</span>`).join('')}</div>` : ''}
+        ${c.contoh ? `<div class="eg">${[].concat(c.contoh).join('<br>')}</div>` : ''}</article>
+        <div class="nav"><button class="btn alt" id="pv" ${i ? '' : 'disabled'}>${L.prev}</button><div class="dots">${cs.map((_, j) => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div>
+        <button class="btn go" id="nx">${i < cs.length - 1 ? L.next : L.main}</button></div>`;
+      const art = P.querySelector('.page'); art.appendChild(spkBtn(() => [c.tajuk, ...[].concat(c.teks || []), ...(c.senarai || []), ...(c.chips || []), ...[].concat(c.contoh || [])].join('. ')));
+      if (c.svg && typeof c.svg === 'function') { try { c.svg(P.querySelector('.ik'), { S, H, anim }); } catch (e) { console.error(e); } }
+      anim(art, [{ opacity: 0, transform: 'translateX(24px)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+      P.querySelector('#pv').onclick = () => { if (i) { i--; draw(); } };
+      P.querySelector('#nx').onclick = () => { if (i < cs.length - 1) { i++; draw(); } else { UU(cur.n).baca = 1; G.xp += 5; save(); api0.toast(L.readDone); tab('main'); } };
+    }
+    draw();
+  }
+
+  /* ---------- Main: kuiz bercampur ---------- */
+  let Q = null;   // keadaan soalan semasa (untuk ujian)
+  function pickQs(bank, n) {
+    const by = {}; shuffle(bank).forEach(q => (by[q.j] = by[q.j] || []).push(q));
+    const out = [], ks = shuffle(Object.keys(by));
+    while (out.length < n && ks.some(k => by[k].length)) ks.forEach(k => { if (out.length < n && by[k].length) out.push(by[k].shift()); });
+    return shuffle(out);
+  }
+  function kuiz(bank, n, onEnd) {
+    const qs = pickQs(bank, Math.min(n, bank.length)), sc = []; let i = 0; const P = $('#pane'), g = gen;
+    if (!qs.length) { P.innerHTML = '<p class="hint">—</p>'; return; }
+    function show() {
+      if (g !== gen) return;
+      const q = qs[i]; hush();
+      P.innerHTML = `<div class="qbar">${qs.map((_, j) => `<i class="${j < i ? (sc[j] >= 1 ? 'ok' : 'no') : j === i ? 'on' : ''}"></i>`).join('')}</div><article class="page" id="qp"></article>`;
+      const box = P.querySelector('#qp');
+      Q = { q, i, solve: null, done: false };
+      const fin = (s) => {
+        if (Q.done) return; Q.done = true; sc[i] = s;
+        const fb = H(`<div class="fb show ${s >= 1 ? 'ok' : 'no'}"></div>`);
+        fb.innerHTML = (s >= 1 ? '✅ <b>' + L.ok[Math.floor(Math.random() * L.ok.length)] + '</b>' : '💡 <b>' + (s > 0 ? L.ok[0] : L.no) + '</b>') + (q.kenapa ? ' ' + q.kenapa : '');
+        s >= 1 ? tone([660, 880], .09) : tone([300, 240], .12);
+        const nx = H(`<button class="btn go next">${i < qs.length - 1 ? L.next : '🏁'}</button>`);
+        nx.onclick = () => { i++; i < qs.length ? show() : end(); };
+        box.append(fb, nx); anim(fb, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 260 });
+        if (q.kenapa && s < 1) speak(q.kenapa);
+      };
+      (R[q.j] || R.pilih)(q, box, fin);
+      anim(box, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
+      if (q.sebut) setTimeout(() => g === gen && speak(q.sebut), 250);
+    }
+    function end() {
+      const s = sc.reduce((a, b) => a + b, 0) / qs.length, n3 = s >= .9 ? 3 : s >= .6 ? 2 : s > 0 ? 1 : 0;
+      const isNew = onEnd(n3, s); Q = null;
+      const msg = n3 === 3 ? L.s3 : n3 === 2 ? L.s2 : L.s1;
+      P.innerHTML = `<div class="page res"><div class="stamp">${msg}</div><div class="stars">${stars(n3)}</div><p>${L.score(Math.round(s * qs.length) + ' / ' + qs.length)}${isNew ? ' 🎉' : ''}</p>
+        <div class="row" style="justify-content:center;margin-top:12px"><button class="btn go" id="ag">${L.again}</button><button class="btn alt" id="hm">◀ ${L.units}</button></div></div>`;
+      tone(n3 === 3 ? [523, 659, 784, 1046] : [523, 659, 784], .11); speak(msg);
+      anim(P.querySelector('.stamp'), [{ opacity: 0, transform: 'rotate(-30deg) scale(2.2)' }, { opacity: 1, transform: 'rotate(-8deg) scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+      P.querySelector('#ag').onclick = () => kuiz(bank, n, onEnd); P.querySelector('#hm').onclick = home;
+      window.__d2Done = { skor: s, n3 };
+    }
+    show();
+  }
+  function onMain(n3, s) { const x = UU(cur.n), was = x.main || 0; x.main = Math.max(was, n3); G.xp += Math.round(10 + 20 * s); save(); return n3 > was; }
+  function cabaran() {
+    gen++; cur = { n: -1, tajuk: L.mix }; history.replaceState(null, '', '?cabaran');
+    $('#home').hidden = true; $('#unit').hidden = false; $('#tabs').innerHTML = '';
+    $('#uh').innerHTML = `<span class="big">🏆</span><div><small>Darjah 2 · ${esc(SUBJ.nama)}</small><h2>${L.mix.replace(/^\S+\s/, '')}</h2></div>`;
+    kuiz(UNITS.flatMap(u => u.soalan || []), 12, (n3) => { const was = G.cab || 0; G.cab = Math.max(was, n3); save(); return n3 > was; });
+  }
+
+  /* ---------- penyampai jenis soalan ---------- */
+  const qhead = (q, box) => {
+    const s = esc(q.s || '').replace(/_{3,}/g, '<span class="gap">&nbsp;</span>');
+    box.insertAdjacentHTML('beforeend', `<p class="qs">${q.html ? q.s : s}</p>${q.ikon ? `<div class="qik" aria-hidden="true">${ikon(q.ikon)}</div>` : ''}`);
+    box.appendChild(spkBtn(() => q.sebut || q.s));
+  };
+  const btn = (t, cls = 'opt') => H(`<button class="${cls}">${t}</button>`);
+  const shake = el => anim(el, [{ transform: 'translateX(-7px)' }, { transform: 'translateX(7px)' }, { transform: 'none' }], { duration: 280, fill: 'none' });
+  const pop = el => anim(el, [{ transform: 'scale(1.1)' }, { transform: 'none' }], { duration: 260, fill: 'none' });
+  const R = {
+    pilih(q, box, fin) {
+      qhead(q, box); const o = H('<div class="opts"></div>'); box.appendChild(o);
+      const bs = shuffle(q.p.map((t, k) => [t, k])).map(([t, k]) => { const b = btn(q.htmlP ? t : esc(t)); b.dataset.k = k; o.appendChild(b); return b; });
+      const pickK = k => { const b = bs.find(x => +x.dataset.k === k); bs.forEach(x => x.disabled = true);
+        if (k === q.a) { b.classList.add('ok'); pop(b); fin(1); } else { b.classList.add('no'); shake(b); bs.find(x => +x.dataset.k === q.a).classList.add('ok'); fin(0); } };
+      bs.forEach(b => b.onclick = () => pickK(+b.dataset.k));
+      Q.solve = () => pickK(q.a);
+    },
+    bs(q, box, fin) { R.pilih(Object.assign({}, q, { p: [L.betul, L.salah], a: q.a ? 0 : 1 }), box, fin); },
+    padan(q, box, fin) {
+      qhead(q, box); const w = H('<div class="two"><div class="col"></div><div class="col"></div></div>'); box.appendChild(w);
+      const [cl, cr] = w.children; let sel = null, left = q.pasangan.length, miss = 0;
+      const A = shuffle(q.pasangan.map((p, k) => [p[0], k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; cl.appendChild(b); return b; });
+      const B = shuffle(q.pasangan.map((p, k) => [p[1], k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; cr.appendChild(b); return b; });
+      const tryPair = (a, b) => { if (a.dataset.k === b.dataset.k) { [a, b].forEach(x => { x.classList.remove('on'); x.classList.add('ok'); x.disabled = true; pop(x); }); tone([700], .06); if (!--left) fin(miss ? .5 : 1); }
+        else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } sel = null; A.forEach(x => x.classList.remove('on')); };
+      A.forEach(a => a.onclick = () => { A.forEach(x => x.classList.remove('on')); sel = a; a.classList.add('on'); speak(a.textContent); });
+      B.forEach(b => b.onclick = () => { if (sel) tryPair(sel, b); else { shake(b); } });
+      Q.solve = () => A.forEach(a => { if (!a.disabled) tryPair(a, B.find(b => b.dataset.k === a.dataset.k)); });
+    },
+    susun(q, box, fin) {
+      qhead(q, box); const sl = H('<div class="slots"></div>'), pool = H('<div class="pool"></div>'); box.append(sl, pool);
+      const slots = q.item.map((_, k) => sl.appendChild(H(`<div class="slot"><b>${k + 1}</b><span></span></div>`)));
+      let nx = 0, miss = 0;
+      const cs = shuffle(q.item.map((t, k) => [t, k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; pool.appendChild(b); return b; });
+      const put = b => { const k = +b.dataset.k;
+        if (q.item[k] === q.item[nx]) { slots[nx].querySelector('span').innerHTML = b.innerHTML; slots[nx].classList.add('ok'); pop(slots[nx]); b.remove(); nx++; tone([600 + nx * 40], .05); if (nx === q.item.length) fin(miss ? .5 : 1); }
+        else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      cs.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < q.item.length) put(cs.find(b => b.isConnected && q.item[+b.dataset.k] === q.item[nx])); };
+    },
+    kumpul(q, box, fin) {
+      qhead(q, box); const items = shuffle(q.kumpulan.flatMap(([g, xs], gi) => xs.map(x => [x, gi])));
+      const now = H('<div class="now"></div>'), bins = H('<div class="bins"></div>'); box.append(now, bins);
+      const bb = q.kumpulan.map(([g]) => { const b = H(`<button class="bin"><b>${q.html ? g : esc(g)}</b></button>`); bins.appendChild(b); return b; });
+      let i = 0, miss = 0;
+      const showNow = () => { now.innerHTML = i < items.length ? (q.html ? items[i][0] : esc(items[i][0])) : '✔'; if (i < items.length) pop(now); };
+      const drop = gi => { if (i >= items.length) return; const [x, g] = items[i];
+        if (g === gi) { bb[gi].insertAdjacentHTML('beforeend', `<span>${q.html ? x : esc(x)}</span>`); pop(bb[gi]); tone([700], .05); i++; showNow(); if (i === items.length) { bb.forEach(b => b.disabled = true); fin(miss ? .5 : 1); } }
+        else { miss++; bb[gi].classList.add('no'); shake(bb[gi]); setTimeout(() => bb[gi].classList.remove('no'), 450); } };
+      bb.forEach((b, gi) => b.onclick = () => drop(gi)); showNow();
+      Q.solve = () => { while (i < items.length) drop(items[i][1]); };
+    },
+    eja(q, box, fin) {
+      qhead(Object.assign({}, q, { sebut: q.sebut || q.kata }), box);
+      const word = q.kata, line = H('<div class="line" aria-live="polite"></div>'), pool = H('<div class="pool"></div>'); box.append(line, pool);
+      let nx = 0, miss = 0; const chars = [...word].filter(c => c !== ' ');
+      const tiles = shuffle(chars.map((c, k) => [c, k])).map(([c]) => { const b = btn(esc(c), 'chip'); b.dataset.c = c; pool.appendChild(b); return b; });
+      const put = b => { if (b.dataset.c.toLowerCase() === chars[nx].toLowerCase()) { line.insertAdjacentHTML('beforeend', `<span>${esc(chars[nx])}</span>`); b.remove(); nx++; tone([600 + nx * 30], .04);
+          if (nx === chars.length) { speak(word); fin(miss ? .5 : 1); } } else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      tiles.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < chars.length) put(tiles.find(b => b.isConnected && b.dataset.c.toLowerCase() === chars[nx].toLowerCase())); };
+    },
+    ayat(q, box, fin) {
+      qhead(q, box); const line = H('<div class="line"></div>'), pool = H('<div class="pool"></div>'); box.append(line, pool);
+      let nx = 0, miss = 0;
+      const ws = shuffle(q.kata.map((w, k) => [w, k])).map(([w]) => { const b = btn(esc(w), 'chip'); b.dataset.w = w; pool.appendChild(b); return b; });
+      const put = b => { if (b.dataset.w === q.kata[nx]) { line.insertAdjacentHTML('beforeend', `<span>${esc(b.dataset.w)}</span>`); b.remove(); nx++; tone([600 + nx * 30], .04);
+          if (nx === q.kata.length) { speak(q.kata.join(' ')); fin(miss ? .5 : 1); } } else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      ws.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < q.kata.length) put(ws.find(b => b.isConnected && b.dataset.w === q.kata[nx])); };
+    },
+  };
+
+  /* ---------- Amali: aktiviti tersuai ---------- */
+  const api0 = { toast(t) { const d = document.createElement('div'); d.className = 'tst'; d.textContent = t; $('#toast').appendChild(d); setTimeout(() => d.remove(), 2600); } };
+  let ctl = null;
+  function alist() {
+    const P = $('#pane'), x = UU(cur.n);
+    P.innerHTML = `<div class="alist">${cur.amali.map((a, k) => `<button class="ut" data-k="${k}"><span class="no" aria-hidden="true">${ikon(a.ikon)}</span><b>${esc(a.tajuk)}</b><span class="st">${stars(x.am[a.id] || 0)}</span></button>`).join('')}</div>`;
+    P.querySelectorAll('.ut').forEach(b => b.onclick = () => runAmali(cur.amali[+b.dataset.k]));
+    if (cur.amali.length === 1 && !x.am[cur.amali[0].id]) runAmali(cur.amali[0]);
+  }
+  function runAmali(a) {
+    gen++; const g = gen, P = $('#pane'), u = cur; hush();
+    P.innerHTML = `<div class="say" aria-live="polite"></div><div class="abody"></div><div id="afin"></div>`;
+    const say = P.querySelector('.say'), body = P.querySelector('.abody');
+    const api = {
+      say(h) { if (g === gen) say.innerHTML = h; },
+      betul(el, h) { tone([660, 880], .09); if (el) pop(el); if (h !== undefined) api.say('✅ ' + h); },
+      salah(el, h) { tone([300, 240], .12); if (el) shake(el); if (h !== undefined) api.say('💡 ' + h); },
+      selesai(skor, h) {
+        if (g !== gen) return; skor = Math.max(0, Math.min(1, +skor || 0));
+        const n = skor >= .999 ? 3 : skor >= .7 ? 2 : skor > 0 ? 1 : 0, x = UU(u.n), was = x.am[a.id] || 0;
+        x.am[a.id] = Math.max(was, n); G.xp += Math.round(10 + 20 * skor); save();
+        const msg = n === 3 ? L.s3 : n === 2 ? L.s2 : L.s1; tone([523, 659, 784, 1046], .1); speak(h || msg);
+        P.querySelector('#afin').innerHTML = `<div class="res"><div class="stamp">${msg}</div><div class="stars">${stars(n)}</div>${h ? `<p>${h}</p>` : ''}
+          <div class="row" style="justify-content:center"><button class="btn go" id="ag">${L.again}</button><button class="btn alt" id="bk">◀ ${L.amali.replace(/^\S+\s/, '')}</button></div></div>`;
+        P.querySelector('#ag').onclick = () => runAmali(a); P.querySelector('#bk').onclick = () => tab('amali');
+        anim(P.querySelector('.stamp'), [{ opacity: 0, transform: 'rotate(-30deg) scale(2.2)' }, { opacity: 1, transform: 'rotate(-8deg) scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+        P.querySelector('#afin').scrollIntoView({ block: 'nearest', behavior: RM() ? 'auto' : 'smooth' });
+        window.__amaliDone = { id: a.id, skor };
+      },
+      toast: api0.toast, speak, shuffle, S, H, anim, esc,
+    };
+    api.say(a.arahan || '');
+    try { ctl = a.mula(body, api) || null; } catch (e) { console.error(e); body.innerHTML = '<p class="hint">Aktiviti ini gagal dimuat.</p>'; }
+  }
+
+  $('#back').onclick = home;
+  $('#mute').onclick = () => { G.mute = !G.mute; if (G.mute) hush(); save(); $('#mute').textContent = G.mute ? '🔇' : '🔊'; };
+  $('#mute').textContent = G.mute ? '🔇' : '🔊';
+  window.D2 = { open, home, tab, cabaran, runAmali, kuizAll: () => { gen++; kuiz(cur.soalan || [], 999, () => false); }, get Q() { return Q; }, get ctl() { return ctl; }, get cur() { return cur; }, UNITS, G, R };   // untuk ujian
+  save();
+  const sp = new URLSearchParams(location.search);
+  sp.has('cabaran') ? cabaran() : sp.get('u') ? open(+sp.get('u')) : home();
+})();
+
+</script>
+</body>
+</html>
