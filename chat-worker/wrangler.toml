@@ -1,0 +1,26 @@
+name = "luqman-study-chat"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ALLOWED_ORIGINS = "https://luqman.biomechemical.com"
+ALLOW_LOCALHOST = "false"
+
+# Per-visitor and site-wide caps (Origin can be spoofed outside browsers).
+[[ratelimits]]
+name = "CHAT_LIMITER"
+namespace_id = "4301"
+simple = { limit = 8, period = 60 }
+
+[[ratelimits]]
+name = "GLOBAL_LIMITER"
+namespace_id = "4302"
+simple = { limit = 40, period = 60 }
+
+# Run next to the Anthropic API: some Cloudflare edge egress IPs get 403 "Request not allowed".
+[placement]
+region = "aws:us-east-1"
+
+[observability]
+enabled = true

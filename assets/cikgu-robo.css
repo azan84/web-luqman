@@ -1,0 +1,205 @@
+/* "Cikgu Robo" study-helper widget — self-contained so it works on the main pages
+   (styles.css) and on the standalone study pages. Dark by default like the site;
+   light when the page sets data-theme="light". */
+#cikgu-robo {
+  --cr-bg: #161d3a;
+  --cr-bg-sunk: #0f1530;
+  --cr-ink: #eef0ff;
+  --cr-ink-2: #cdd1ee;
+  --cr-ink-3: #9aa1c8;
+  --cr-line: rgba(232, 236, 255, 0.12);
+  --cr-accent: #8b6dff;
+  --cr-accent-2: #22d3ee;
+  --cr-accent-ink: #ffffff;
+  --cr-accent-soft: rgba(139, 109, 255, 0.18);
+  --cr-link: #7dd3fc;
+  --cr-focus: #facc15;
+  --cr-error: #fda4af;
+  --cr-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.35);
+  font-family: 'Nunito', 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--cr-ink);
+  -webkit-font-smoothing: antialiased;
+}
+:root[data-theme="light"] #cikgu-robo {
+  --cr-bg: #ffffff;
+  --cr-bg-sunk: #f4f1ff;
+  --cr-ink: #1b1640;
+  --cr-ink-2: #3a355f;
+  --cr-ink-3: #635e86;
+  --cr-line: rgba(27, 22, 64, 0.12);
+  --cr-accent: #6d4aff;
+  --cr-accent-2: #0891b2;
+  --cr-accent-soft: rgba(109, 74, 255, 0.10);
+  --cr-link: #5b34f0;
+  --cr-focus: #d97706;
+  --cr-error: #be123c;
+  --cr-shadow: 0 24px 48px -16px rgba(27, 22, 64, 0.28), 0 2px 8px rgba(27, 22, 64, 0.08);
+}
+
+#cikgu-robo *, #cikgu-robo *::before, #cikgu-robo *::after { box-sizing: border-box; }
+/* Everything is scoped under #cikgu-robo so host-page rules can't override the widget. */
+#cikgu-robo p, #cikgu-robo ul, #cikgu-robo ol, #cikgu-robo form { margin: 0; }
+#cikgu-robo .cr-bot { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* Launcher — bottom-left, because the study pages use bottom-right and bottom-centre. */
+#cikgu-robo .cr-launcher {
+  position: fixed; left: 18px; bottom: 18px; z-index: 9990;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 18px 6px 6px; border: 0; border-radius: 999px;
+  background: linear-gradient(135deg, #7c5cff, #22b8e6); color: #fff;
+  font-family: inherit; font-size: 15px; font-weight: 800; line-height: 1; letter-spacing: 0.01em;
+  box-shadow: var(--cr-shadow), 0 0 0 3px rgba(255, 255, 255, 0.12) inset; cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms;
+}
+#cikgu-robo .cr-launcher:hover { transform: translateY(-3px) scale(1.03); }
+#cikgu-robo .cr-launcher:focus-visible { outline: 3px solid var(--cr-focus); outline-offset: 3px; }
+#cikgu-robo .cr-launcher-bot {
+  width: 50px; height: 50px; flex: none; padding: 3px 3px 5px;
+  border-radius: 50%; background: rgba(255, 255, 255, 0.18);
+  animation: cr-bob 3.2s ease-in-out infinite;
+}
+#cikgu-robo .cr-launcher-label { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25); }
+#cikgu-robo.cr-open .cr-launcher { opacity: 0; pointer-events: none; visibility: hidden; transform: scale(0.9); }
+
+#cikgu-robo .cr-eyes { transform-box: fill-box; transform-origin: center; animation: cr-blink 4.5s infinite; }
+#cikgu-robo .cr-bulb { animation: cr-glow 2.4s ease-in-out infinite; }
+#cikgu-robo.cr-busy .cr-avatar .cr-bulb { animation-duration: 0.6s; }
+@keyframes cr-bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-3px) rotate(-4deg); } }
+@keyframes cr-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes cr-glow { 0%, 100% { fill: #facc15; } 50% { fill: #f472b6; } }
+
+/* Panel */
+#cikgu-robo .cr-panel {
+  position: fixed; left: 18px; bottom: 18px; z-index: 9991;
+  width: 400px; height: min(640px, calc(100vh - 36px)); height: min(640px, calc(100dvh - 36px));
+  display: flex; flex-direction: column;
+  background: var(--cr-bg); border: 1px solid var(--cr-line); border-radius: 22px;
+  box-shadow: var(--cr-shadow); overflow: hidden;
+  opacity: 0; transform: translateY(12px) scale(0.98); transform-origin: bottom left;
+  pointer-events: none; visibility: hidden;
+  transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1), transform 220ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 220ms;
+}
+#cikgu-robo.cr-open .cr-panel {
+  opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+  transition-delay: 0s;
+}
+
+#cikgu-robo .cr-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 12px 12px 14px; border-bottom: 1px solid var(--cr-line);
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.22), rgba(34, 211, 238, 0.14));
+}
+#cikgu-robo .cr-avatar {
+  flex: none; width: 46px; height: 46px; padding: 3px 3px 5px; border-radius: 50%;
+  background: linear-gradient(135deg, #7c5cff, #22b8e6);
+}
+#cikgu-robo .cr-head-text { flex: 1; min-width: 0; }
+#cikgu-robo .cr-title {
+  margin: 0; font-family: inherit; font-size: 18px; font-weight: 800; line-height: 1.2; color: var(--cr-ink);
+}
+#cikgu-robo .cr-sub { margin: 2px 0 0; font-size: 12.5px; line-height: 1.35; color: var(--cr-ink-3); }
+#cikgu-robo .cr-icon-btn {
+  flex: none; width: 34px; height: 34px; display: grid; place-items: center;
+  border: 0; border-radius: 10px; background: transparent; color: var(--cr-ink-3); cursor: pointer;
+}
+#cikgu-robo .cr-icon-btn:hover { background: var(--cr-accent-soft); color: var(--cr-ink); }
+#cikgu-robo .cr-icon-btn:focus-visible { outline: 2px solid var(--cr-focus); outline-offset: 1px; }
+#cikgu-robo .cr-icon-btn svg { width: 18px; height: 18px; }
+#cikgu-robo .cr-icon-btn:disabled { opacity: 0.35; cursor: default; background: transparent; }
+
+#cikgu-robo .cr-log {
+  flex: 1; overflow-y: auto; overscroll-behavior: contain;
+  padding: 16px 14px; display: flex; flex-direction: column; gap: 14px;
+  scroll-behavior: smooth;
+}
+
+#cikgu-robo .cr-row { display: flex; gap: 8px; align-items: flex-start; }
+#cikgu-robo .cr-row-user { justify-content: flex-end; }
+#cikgu-robo .cr-mini {
+  flex: none; width: 30px; height: 30px; padding: 2px 2px 3px; margin-top: 2px; border-radius: 50%;
+  background: linear-gradient(135deg, #7c5cff, #22b8e6);
+}
+#cikgu-robo .cr-msg { max-width: 86%; font-size: 15px; line-height: 1.6; overflow-wrap: anywhere; }
+#cikgu-robo .cr-msg p { margin: 0 0 8px; }
+#cikgu-robo .cr-msg p:last-child, #cikgu-robo .cr-msg ul:last-child, #cikgu-robo .cr-msg ol:last-child { margin-bottom: 0; }
+#cikgu-robo .cr-msg ul, #cikgu-robo .cr-msg ol { margin: 0 0 8px; padding-left: 22px; }
+#cikgu-robo .cr-msg li { margin: 3px 0; }
+#cikgu-robo .cr-msg a { color: var(--cr-link); text-decoration: underline; text-underline-offset: 2px; font-weight: 700; }
+#cikgu-robo .cr-msg strong { font-weight: 800; color: var(--cr-ink); }
+#cikgu-robo .cr-msg-user {
+  padding: 10px 14px; border-radius: 18px 18px 5px 18px;
+  background: linear-gradient(135deg, #7c5cff, #6a4cf0); color: #fff; white-space: pre-wrap;
+}
+#cikgu-robo .cr-msg-bot {
+  padding: 10px 14px; border-radius: 5px 18px 18px 18px;
+  background: var(--cr-bg-sunk); color: var(--cr-ink-2); border: 1px solid var(--cr-line);
+}
+#cikgu-robo .cr-msg-bot.cr-error, #cikgu-robo .cr-note { color: var(--cr-error); }
+#cikgu-robo .cr-note { display: block; margin-top: 6px; font-size: 13px; }
+
+#cikgu-robo .cr-typing { display: inline-flex; gap: 5px; padding: 6px 2px; }
+#cikgu-robo .cr-typing span:not(.cr-sr) {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--cr-accent-2);
+  animation: cr-dot 1.2s infinite ease-in-out;
+}
+#cikgu-robo .cr-typing span:nth-child(3) { animation-delay: 0.15s; }
+#cikgu-robo .cr-typing span:nth-child(4) { animation-delay: 0.3s; }
+@keyframes cr-dot { 0%, 80%, 100% { opacity: 0.3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+
+#cikgu-robo .cr-hello { display: flex; gap: 12px; align-items: flex-start; }
+#cikgu-robo .cr-hello-bot {
+  flex: none; width: 64px; height: 64px; padding: 4px 4px 6px; border-radius: 50%;
+  background: linear-gradient(135deg, #7c5cff, #22b8e6);
+}
+#cikgu-robo .cr-intro { color: var(--cr-ink-2); font-size: 15px; line-height: 1.55; margin: 0; }
+#cikgu-robo .cr-intro strong { color: var(--cr-ink); font-size: 16px; }
+#cikgu-robo .cr-en { color: var(--cr-ink-3); }
+#cikgu-robo .cr-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+#cikgu-robo .cr-chip {
+  border: 1px solid var(--cr-line); background: var(--cr-bg-sunk); color: var(--cr-ink);
+  border-radius: 999px; padding: 8px 13px; font-family: inherit; font-size: 13px; font-weight: 700; line-height: 1.25;
+  cursor: pointer; text-align: left;
+}
+#cikgu-robo .cr-chip:hover { border-color: var(--cr-accent); color: var(--cr-link); }
+#cikgu-robo .cr-chip:focus-visible { outline: 2px solid var(--cr-focus); outline-offset: 1px; }
+
+#cikgu-robo .cr-form {
+  display: flex; align-items: flex-end; gap: 8px;
+  padding: 12px; border-top: 1px solid var(--cr-line); background: var(--cr-bg);
+}
+#cikgu-robo .cr-input {
+  flex: 1; min-height: 46px; max-height: 120px; resize: none; margin: 0;
+  padding: 12px 14px; border: 1px solid var(--cr-line); border-radius: 16px;
+  background: var(--cr-bg-sunk); color: var(--cr-ink);
+  font-family: inherit; font-size: 15px; font-weight: 500; line-height: 1.4;
+}
+#cikgu-robo .cr-input::placeholder { color: var(--cr-ink-3); }
+#cikgu-robo .cr-input:focus { outline: none; border-color: var(--cr-accent); box-shadow: 0 0 0 3px var(--cr-accent-soft); }
+#cikgu-robo .cr-send {
+  flex: none; width: 46px; height: 46px; display: grid; place-items: center;
+  border: 0; border-radius: 16px; background: linear-gradient(135deg, #7c5cff, #22b8e6); color: #fff; cursor: pointer;
+}
+#cikgu-robo .cr-send:disabled { opacity: 0.4; cursor: default; }
+#cikgu-robo .cr-send:focus-visible { outline: 3px solid var(--cr-focus); outline-offset: 2px; }
+#cikgu-robo .cr-send svg { width: 20px; height: 20px; }
+#cikgu-robo .cr-foot { margin: 0; padding: 0 14px 10px; font-size: 11.5px; color: var(--cr-ink-3); text-align: center; background: var(--cr-bg); }
+
+#cikgu-robo .cr-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 520px) {
+  #cikgu-robo .cr-launcher { left: 12px; bottom: 12px; padding: 5px; }
+  #cikgu-robo .cr-launcher-label { display: none; }
+  #cikgu-robo .cr-panel {
+    left: 0; bottom: 0; width: 100%; height: 100%; height: 100dvh;
+    border-radius: 0; border: 0;
+  }
+  #cikgu-robo .cr-input { font-size: 16px; } /* avoid iOS zoom on focus */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #cikgu-robo .cr-launcher, #cikgu-robo .cr-panel { transition: none; }
+  #cikgu-robo .cr-log { scroll-behavior: auto; }
+  #cikgu-robo .cr-launcher-bot, #cikgu-robo .cr-eyes, #cikgu-robo .cr-bulb, #cikgu-robo .cr-typing span { animation: none; }
+}
+
+@media print { #cikgu-robo { display: none; } }
