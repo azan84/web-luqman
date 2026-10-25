@@ -5,7 +5,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import KNOWLEDGE from "./knowledge.js";
 
-const MODEL = "claude-sonnet-5-5";
+const MODEL = "claude-haiku-5-5";
 const MAX_TURNS = 12; // most recent messages sent to the model
 const MAX_MESSAGE_CHARS = 1500;
 const MAX_OUTPUT_TOKENS = 4000; // includes any thinking

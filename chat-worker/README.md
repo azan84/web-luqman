@@ -2,7 +2,7 @@
 
 The robot button (bottom-left) on the main pages and every study page (`assets/cikgu-robo.js` +
 `assets/cikgu-robo.css`) talks to this Cloudflare Worker, which holds the Anthropic API key and tutors
-with Claude (`claude-sonnet-5-5`, low effort, adaptive thinking): any school subject, KSSR/KSSM level,
+with Claude (`claude-haiku-5-5`, low effort, adaptive thinking): any school subject, KSSR/KSSM level,
 friendly step-by-step explanations in BM or English, with links to the site's own notes and games.
 
 Live endpoint: `https://luqman-study-chat.azan-sapardi.workers.dev/chat`
@@ -44,7 +44,7 @@ The widget automatically uses the local worker when the page is served from `loc
   Questions are capped at 1,500 characters, history at 12 messages, replies at 4,000 tokens.
 - Child-safety rules live in the system prompt in `src/index.js`: no personal details, kind replies and a
   trusted adult / Talian Kasih 15999 / 999 for anyone upset or unsafe, homework help that teaches the method.
-- The ~21k-token instructions + site map are prompt-cached: roughly $0.01 per answer while warm, ~$0.05 for
+- The ~27k-token instructions + site map are prompt-cached: well under $0.001 per answer while warm, ~$0.004 for
   the first question after 5 idle minutes. Set a monthly spend limit in the Anthropic Console as a backstop.
 - The Worker runs in `aws:us-east-1` (`[placement]`), because some Cloudflare edge locations get
   403 "Request not allowed" from the Anthropic API.
