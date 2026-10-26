@@ -314,7 +314,7 @@ function accepts(tok, input) {
 
   /* ================= 1. Bilang objek (bingkai sepuluh) ================= */
   function bilang(lv, R) {
-    let n; do n = lv === 1 ? R.int(2, 10) : lv === 2 ? R.int(11, 20) : R.int(21, 50); while (lv > 1 && n % 10 === 0 && R.chance(.7));
+    let n; do n = lv === 1 ? R.int(2, 10) : lv === 2 ? R.int(11, 20) : R.int(21, 50); while (lv > 1 && n % 10 === 0);
     const [e, nama] = R.pick(OBJ), t = Math.floor(n / 10), o = n % 10, nf = Math.ceil(n / 10);
     // susun atur bingkai
     const cell = lv === 1 ? 46 : lv === 2 ? 36 : 32;
@@ -331,11 +331,11 @@ function accepts(tok, input) {
         sx: 26 + (sc % 9) * 39 + R.int(-6, 6), sy: 46 + Math.floor(sc / 9) * 42 + R.int(-5, 5) });
     }
     const esz = lv === 1 ? 32 : lv === 2 ? 28 : 24;
-    const pilih = pil(R, n, R.shuffle([n + 1, n - 1, n + 10, n - 10, terbalik(n)]), 3);
+    const pilih = pil(R, n, R.shuffle(lv === 1 ? [n + 1, n - 1, n + 2, n - 2] : [n + 1, n - 1, n + 10, n - 10, terbalik(n)]), lv === 1 ? 3 : 4);
     let langkah;
     if (lv === 1) langkah = [
       { kata: 'Susun dalam bingkai sepuluh. Satu petak, satu objek.' },
-      { kata: 'Bilang satu demi satu. Jangan langkau!', baris: [T(n > 3 ? `1, 2, 3, … ${n}` : [...Array(n).keys()].map(i => i + 1).join(', '), { id: 'b' })] },
+      { kata: 'Bilang satu demi satu. Jangan langkau!', baris: [T(n > 3 ? `1, 2, 3, … ${n}` : [...Array(n).keys()].map(i => i + 1).join(', '), { id: 'b', h: 1 })] },
       { kata: 'Nombor terakhir yang dibilang ialah jumlahnya.', baris: [T('Ada', { id: 'a' }), ASK(n, n, { id: 'n', c: 'box', pilih })] },
     ];
     else {
@@ -343,8 +343,8 @@ function accepts(tok, input) {
       const p10 = pil(R, t * 10, [t, t * 10 + 10, t * 10 - 10], 3);
       langkah = [
         { kata: 'Susun dalam bingkai sepuluh. Satu petak, satu objek.' },
-        { kata: 'Satu bingkai penuh ada 10.', baris: [...tens.flatMap((v, i) => [T('10', { id: 'p' + i }), '+']), ...(o ? [T(o, { id: 'o' })] : [])].filter((x, i, a) => !(i === a.length - 1 && x === '+')) },
-        { kata: 'Bingkai penuh ialah puluh. Yang lain ialah sa.', baris: [ASK(t * 10, t * 10, { id: 't', pilih: p10 }), ...(o ? ['+', T(o, { id: 'o' })] : [])] },
+        { kata: 'Satu bingkai penuh ada 10.', baris: [...tens.flatMap((v, i) => [T('10', { id: 'p' + i }), '+']), ...(o ? [T(o, { id: 'o', h: 1 })] : [])].filter((x, i, a) => !(i === a.length - 1 && x === '+')) },
+        { kata: 'Bingkai penuh ialah puluh. Yang lain ialah sa.', soal: 'Bingkai penuh ialah puluh. Objek yang lain ialah sa. Isi puluh dahulu, kemudian sa.', baris: [ASK(t * 10, t * 10, { id: 't', pilih: p10, bebas: t === 1 }), '+', ASK(o, o, { id: 'o', pilih: pil(R, o, R.shuffle([o + 1, o - 1, o + 2, 10 - o]).filter(v => v > 0), 3) })] },
         { kata: 'Gabung puluh dan sa.', baris: [T(t * 10, { id: 't' }), ...(o ? ['+', T(o, { id: 'o' })] : []), '=', ASK(n, n, { id: 'n', c: 'box', pilih })] },
       ];
     }
@@ -354,22 +354,22 @@ function accepts(tok, input) {
       mula: 'Bilang dengan teliti. Bingkai sepuluh membantu kita!',
       langkah,
       jawapan: `${n} (${kata(n)})`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
-        const done = k >= L - 1;
-        tx(svg, 180, 26, k < 0 ? `Berapa ${nama}?` : done ? `${n} · ${kata(n)}` : lv > 1 && k >= 1 ? `${t} puluh ${o ? 'dan ' + o + ' sa' : ''}` : 'Bingkai sepuluh', done ? 22 : 18, { fill: done ? 'var(--c)' : 'var(--ink)' });
+        const done = !q && k >= L - 1;
+        tx(svg, 180, 26, k < 0 ? `Berapa ${nama}?` : done ? `${n} · ${kata(n)}` : q ? 'Bilang dengan teliti!' : lv > 1 && k >= 1 ? `${t} puluh ${o ? 'dan ' + o + ' sa' : ''}` : 'Bingkai sepuluh', done ? 22 : 18, { fill: done ? 'var(--c)' : 'var(--ink)' });
         if (k >= 0) frames.forEach((f, i) => {
-          const full = (i + 1) * 10 <= n, hot = lv > 1 && k >= 1 && full;
+          const full = (i + 1) * 10 <= n, hot = lv > 1 && k >= 1 && full && !(q && k === 2);
           S('rect', { x: f.x - 3, y: f.y - 3, width: fw + 6, height: fh + 6, rx: 8, fill: hot ? 'color-mix(in srgb,var(--c) 20%,transparent)' : 'none', stroke: hot ? 'var(--c)' : 'var(--ink)', 'stroke-width': hot ? 3 : 2 }, svg);
           for (let c = 1; c < 5; c++) S('line', { x1: f.x + c * cell, y1: f.y, x2: f.x + c * cell, y2: f.y + fh, stroke: 'var(--muted)', 'stroke-width': 1.5 }, svg);
           S('line', { x1: f.x, y1: f.y + cell, x2: f.x + fw, y2: f.y + cell, stroke: 'var(--muted)', 'stroke-width': 1.5 }, svg);
-          if (hot) { const lb = tx(svg, lv === 3 ? f.x + fw / 2 : f.x + fw + 24, lv === 3 ? f.y - 7 : f.y + fh / 2 + 7, '10', lv === 3 ? 14 : 20, { fill: 'var(--c)' }); if (k === 1) pop(lb, 200 + i * 150); }
+          if (hot) { const lb = tx(svg, lv === 3 ? f.x + fw / 2 : f.x + fw + 24, lv === 3 ? f.y - 7 : f.y + fh / 2 + 7, '10', lv === 3 ? 14 : 20, { fill: 'var(--c)', 'data-ok': 1 }); if (k === 1) pop(lb, 200 + i * 150); }
         });
         items.forEach((it, i) => {
           const x = k < 0 ? it.sx : it.x, y = k < 0 ? it.sy : it.y;
           const el = emo(svg, x, y, e, esz);
           if (k === 0) anim(el, [{ transform: `translate(${it.sx - it.x}px,${it.sy - it.y}px)` }, { transform: 'none' }], { duration: 700, delay: i * 18 });
-          const cnt = lv === 1 ? k >= 1 : k >= 1 && i >= t * 10;
+          const cnt = !q && (lv === 1 ? k >= 1 : k >= 2 && i >= t * 10);
           if (cnt) {
             const lb = tx(svg, x + cell * .32, y - cell * .22, String(lv === 1 ? i + 1 : i - t * 10 + 1), 14, { fill: 'var(--pen)', stroke: 'var(--sheet)', 'stroke-width': 3, 'paint-order': 'stroke' });
             if (k === 1 || (lv > 1 && k === 2)) pop(lb, i % 10 * 90);
@@ -397,17 +397,17 @@ function accepts(tok, input) {
       soalan: `Apakah nilai digit <b>${d}</b> dalam nombor <b>${n}</b>?`,
       mula: 'Rod = 10 (satu puluh). Kiub kecil = 1 (satu sa).',
       langkah: [
-        { kata: 'Wakilkan nombor dengan bongkah: rod dan kiub.', baris: [T(n, { id: 'n' }), '=', T(`${t} puluh`, { id: 'tp' }), T(`${o} sa`, { id: 'os' })] },
+        { kata: 'Wakilkan nombor dengan bongkah: rod dan kiub.', baris: [T(n, { id: 'n' }), '=', T(`${t} puluh`, { id: 'tp', h: 1 }), T(`${o} sa`, { id: 'os', h: 1 })] },
         { kata: `Lihat petak. Digit ${d} di tempat puluh atau sa?`, baris: [T(`digit ${d}:`, { id: 'd' }), T('tempat', { id: 'w' }), ASK(tempat, tempat, { id: 'p', pilih: p1 })] },
-        { kata: puluh ? `Bilang rod: 10, 20, 30 …` : 'Bilang kiub kecil satu demi satu.', baris: [T(puluh ? `${t} rod` : `${o} kiub`, { id: 'r' }), '=', T(puluh ? `${t} puluh` : `${o} sa`, { id: 'v' })] },
-        { kata: puluh ? `Ingat: digit ${d} di tempat puluh bukan ${d} sahaja!` : 'Digit di tempat sa bernilai dirinya sendiri.', baris: [T(`nilai digit ${d}`, { id: 'd' }), '=', ASK(val, val, { id: 'v', c: 'box', pilih: p2 })] },
+        { tunjuk: true, kata: puluh ? `Bilang rod: 10, 20, 30 …` : 'Bilang kiub kecil satu demi satu.', baris: [T(puluh ? `${t} rod` : `${o} kiub`, { id: 'r' }), '=', T(puluh ? `${t} puluh` : `${o} sa`, { id: 'v' })] },
+        { kata: puluh ? `Ingat: digit ${d} di tempat puluh bukan ${d} sahaja!` : 'Digit di tempat sa bernilai dirinya sendiri.', soal: 'Ingat nilai satu rod dan nilai satu kiub. Bilang dengan teliti.', baris: [T(`nilai digit ${d}`, { id: 'd' }), '=', ASK(val, val, { id: 'v', c: 'box', pilih: p2, bebas: !puluh })] },
         { kata: `Jadi ${n} = ${t * 10} + ${o}.`, baris: [T(n, { id: 'n' }), '=', T(t * 10, { id: 'tp' }), '+', T(o, { id: 'os' })] },
       ],
       jawapan: `${val}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
-        // jadual nilai tempat
-        const hiT = k >= 1 && puluh, hiO = k >= 1 && !puluh;
+        // jadual nilai tempat (mod Cuba: lajur jawapan tidak disorot semasa ditanya)
+        const hiT = k >= 1 && puluh && !(q && k === 1), hiO = k >= 1 && !puluh && !(q && k === 1);
         [[100, 'Puluh', hiT, t], [262, 'Sa', hiO, o]].forEach(([cx, nm, hi, dg], i) => {
           S('rect', { x: cx - (i ? 70 : 90), y: 10, width: i ? 140 : 180, height: 86, rx: 10, fill: hi ? 'color-mix(in srgb,var(--c) 22%,transparent)' : 'color-mix(in srgb,var(--blue) 8%,transparent)', stroke: hi ? 'var(--c)' : 'var(--muted)', 'stroke-width': hi ? 3 : 1.5 }, svg);
           tx(svg, cx, 32, nm, 16, { fill: 'var(--muted)' });
@@ -417,9 +417,9 @@ function accepts(tok, input) {
         if (k < 0) { tx(svg, 180, 200, `${n}`, 64, { fill: 'var(--c)' }); tx(svg, 180, 245, kata(n), 18, { fill: 'var(--muted)' }); return; }
         const top = 134, u = 12;
         const dimT = k >= 2 && !puluh, dimO = k >= 2 && puluh;
-        bongkah(svg, 180, top, t, o, u, { pop: k === 0, lab: k >= 2 && puluh, dimT, dimO });
+        bongkah(svg, 180, top, t, o, u, { pop: k === 0, lab: k >= 2 && puluh && !q, dimT, dimO });
         // label bawah
-        const lab = k >= 3 ? `nilai digit ${d} = ${val}` : k >= 2 ? (puluh ? `${t} rod = ${t * 10}` : `${o} kiub = ${o}`) : `${t} rod dan ${o} kiub`;
+        const lab = q ? (k >= 2 ? (puluh ? `${t} rod` : `${o} kiub`) : `${t} rod dan ${o} kiub`) : k >= 3 ? `nilai digit ${d} = ${val}` : k >= 2 ? (puluh ? `${t} rod = ${t * 10}` : `${o} kiub = ${o}`) : `${t} rod dan ${o} kiub`;
         const L2 = tx(svg, 180, 286, k >= 4 ? `${n} = ${t * 10} + ${o}` : lab, 18, { fill: k >= 3 ? 'var(--c)' : 'var(--ink)' });
         if (k >= 2) pop(L2);
       },
@@ -460,9 +460,10 @@ function accepts(tok, input) {
       soalan, langkah,
       mula: lv === 1 ? 'Padankan satu dengan satu. Yang tinggal menunjukkan lebih.' : 'Nombor yang ada lebih banyak puluh ialah lebih besar.',
       jawapan: `${a} ${jwp} daripada ${b}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
-        const done = k >= L - 1;
+        const done = k >= L - 1 && !q;
+        if (q && lv === 1 && k >= 2) k = 1;   // mod Cuba: garis padanan sahaja, murid cari sendiri yang tiada pasangan
         if (lv === 1) {
           const gap = 30, x0 = 186 - (Math.max(a, b) - 1) * gap / 2, yA = 110, yB = 200, m = Math.min(a, b);
           tx(svg, 180, 30, done ? `${a} ${jwp} daripada ${b}` : `${A[1]} dan ${B[1]}`, 20, { fill: done ? 'var(--c)' : 'var(--ink)' });
@@ -489,7 +490,7 @@ function accepts(tok, input) {
           bongkah(svg, 190, y + 18, t, o, 9, { pop: k < 1, dimO: cmpT && !cmpO, dimT: cmpO, lab: false });
           if (cmpT) {
             const mine = cmpO ? o : t, other = cmpO ? (i ? oa : ob) : (i ? ta : tb);
-            const lb = tx(svg, 318, y + 70, cmpO ? `${o} sa` : `${t} puluh`, 17, { fill: mine > other ? 'var(--ok)' : mine === other ? 'var(--muted)' : 'var(--pen)' });
+            const lb = tx(svg, 318, y + 70, cmpO ? `${o} sa` : `${t} puluh`, 17, { fill: q ? 'var(--ink)' : mine > other ? 'var(--ok)' : mine === other ? 'var(--muted)' : 'var(--pen)' });
             if (k === 1 || (cmpO && k === 2)) pop(lb, i * 250);
           }
         });
@@ -525,13 +526,14 @@ function accepts(tok, input) {
       langkah: [
         { kata: `Lihat nombor pada batu. Nombor ${up ? 'makin besar' : 'makin kecil'}.`, baris: seq.map((v, i) => T(i === miss ? '?' : v, { id: 's' + i, c: i === miss ? 'pen' : '' })) },
         { kata: `Dari ${seq[pi]} ke ${seq[pi + 1]}, katak lompat berapa?`, baris: [T(seq[pi], { id: 'x' }), T('→', { id: 'ar' }), T(seq[pi + 1], { id: 'y' }), T('lompat', { id: 'w' }), ASK(lomp, lomp, { id: 'd', pilih: p1 })] },
-        { kata: `Pola ${up ? 'menaik' : 'menurun'}: ${up ? 'tambah' : 'tolak'} ${d} setiap kali.`, baris: [T(up ? `tambah ${d}` : `tolak ${d}`, { id: 'd', c: 'pen' }), T('setiap lompatan', { id: 'w' })] },
+        { tunjuk: true, kata: `Pola ${up ? 'menaik' : 'menurun'}: ${up ? 'tambah' : 'tolak'} ${d} setiap kali.`, baris: [T(up ? `tambah ${d}` : `tolak ${d}`, { id: 'd', c: 'pen' }), T('setiap lompatan', { id: 'w' })] },
         { kata: `Cari nombor yang hilang selepas ${prev}.`, baris: [T(prev, { id: 'x' }), T(up ? `+ ${d}` : `${MINUS} ${d}`, { id: 'd', c: 'pen' }), '=', ASK(ans, ans, { id: 'y', c: 'box', pilih: p2 })] },
       ],
       jawapan: `${ans}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
-        const X = i => 40 + i * 70, Y = 200;
+        const X = i => 40 + i * 70, Y = 200, soal1 = q && k === 1;   // mod Cuba langkah 2: lengkung tanpa label lompatan
+        if (q && k >= 3) k = 2;
         tx(svg, 180, 30, k >= 3 ? `Nombor hilang: ${ans}` : k >= 2 ? `${up ? 'Tambah' : 'Tolak'} ${d} setiap lompatan` : 'Lompat sama jauh', 19, { fill: k >= 3 ? 'var(--c)' : 'var(--ink)' });
         // air kolam
         S('rect', { x: 6, y: Y + 6, width: 348, height: 60, rx: 22, fill: 'color-mix(in srgb,var(--blue) 18%,transparent)' }, svg);
@@ -547,7 +549,7 @@ function accepts(tok, input) {
           const hidden = (i === miss - 1 || i === miss) && k < 3 && k !== 2;
           const pth = S('path', { d: `M${X(i) + 6} ${Y - 2} Q${(X(i) + X(i + 1)) / 2} ${Y - 70} ${X(i + 1) - 6} ${Y - 2}`, fill: 'none', stroke: (i === miss - 1 && k >= 3) ? 'var(--pen)' : 'var(--c)', 'stroke-width': 3, 'stroke-dasharray': hidden ? '5 5' : 'none', 'marker-end': '' }, svg);
           anim(pth, [{ strokeDashoffset: 200, opacity: 0 }, { opacity: 1 }], { duration: 500, delay: i * 120 });
-          tx(svg, (X(i) + X(i + 1)) / 2, Y - 44, (up ? '+' : MINUS) + d, 16, { fill: 'var(--pen)' });
+          tx(svg, (X(i) + X(i + 1)) / 2, Y - 44, soal1 ? '?' : (up ? '+' : MINUS) + d, 16, { fill: 'var(--pen)' });
         });
         // katak
         const at = k < 1 ? 0 : k === 1 ? pi + 1 : k === 2 ? miss - 1 : miss;
@@ -568,12 +570,13 @@ function accepts(tok, input) {
       langkah: [
         { kata: `${n} terletak di antara dua puluh: ${L} dan ${U}.`, baris: [T(L, { id: 'L' }), T('…', { id: 'g1' }), T(n, { id: 'n' }), T('…', { id: 'g2' }), T(U, { id: 'U' })] },
         { kata: `Puncak bukit ialah ${L + 5}, di tengah-tengah.`, baris: [T('tengah', { id: 'w' }), '=', T(L + 5, { id: 'm' })] },
-        { kata: o === 5 ? 'Digit sa 5: bundarkan ke atas. Ingat!' : `Digit sa ${o}. ${o > 5 ? 'Lebih' : 'Kurang'} daripada 5?`, baris: [T(`digit sa = ${o}`, { id: 'o' })] },
-        { kata: 'Bola bergolek ke puluh yang terdekat.', baris: [T(n, { id: 'n' }), T('→', { id: 'ar', c: 'pen' }), ASK(ans, ans, { id: 'a', c: 'box', pilih })] },
+        { kata: o === 5 ? 'Digit sa 5: bundarkan ke atas. Ingat!' : `Digit sa ${o}. ${o > 5 ? 'Lebih' : 'Kurang'} daripada 5?`, soal: 'Lihat digit sa. 5 atau lebih: ke atas. Kurang daripada 5: ke bawah.', baris: [T(`digit sa = ${o}`, { id: 'o' })] },
+        { kata: 'Bola bergolek ke puluh yang terdekat.', baris: [T(n, { id: 'n' }), T('→', { id: 'ar', c: 'pen' }), ASK(ans, ans, { id: 'a', c: 'box', pilih, bebas: 1 })] },
       ],
       jawapan: `${ans}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q && k >= 3) k = 2;
         const X = v => 40 + (v - L) * 28, base = 236, h = 120;
         const Yh = v => base - h * (1 - Math.abs(v - (L + 5)) / 5);
         tx(svg, 180, 28, k >= 3 ? `${n} dibundarkan ke ${ans}` : `Bundarkan ${n}`, 20, { fill: k >= 3 ? 'var(--c)' : 'var(--ink)' });
@@ -584,7 +587,7 @@ function accepts(tok, input) {
         for (let v = L; v <= U; v++) {
           const big = v === L || v === U, hl = v === L + 5 && k >= 1;
           S('line', { x1: X(v), y1: base - (big ? 10 : 6), x2: X(v), y2: base + (big ? 10 : 6), stroke: 'var(--ink)', 'stroke-width': big ? 3 : 2 }, svg);
-          if (big || v === n || hl) tx(svg, X(v), base + 32, String(v), big ? 20 : 15, { fill: v === n ? 'var(--pen)' : hl ? 'var(--ok)' : big && k >= 0 ? 'var(--c)' : 'var(--ink)' });
+          if (big || v === n || hl) tx(svg, X(v), base + 32, String(v), big ? 20 : 15, { 'data-ok': big ? 1 : null, fill: v === n ? 'var(--pen)' : hl ? 'var(--ok)' : big && k >= 0 ? 'var(--c)' : 'var(--ink)' });
         }
         if (k >= 1) tx(svg, X(L + 5), Yh(L + 5) - 10, 'puncak', 14, { fill: 'var(--ok)' });
         // bola
@@ -592,7 +595,7 @@ function accepts(tok, input) {
         const ball = emo(svg, bx, by, '⚽', 26);
         if (k >= 3) anim(ball, [{ transform: `translate(${X(n) - bx}px,${Yh(n) - 14 - by}px) rotate(0deg)` }, { transform: 'none' }], { duration: 850, easing: 'ease-in' });
         if (k === 1) pop(ball);
-        if (k >= 2) tx(svg, 180, 286, o >= 5 ? `digit sa ${o}: 5 atau lebih → ke atas` : `digit sa ${o}: kurang daripada 5 → ke bawah`, 15, { fill: 'var(--pen)' });
+        if (k >= 2 && !q) tx(svg, 180, 286, o >= 5 ? `digit sa ${o}: 5 atau lebih → ke atas` : `digit sa ${o}: kurang daripada 5 → ke bawah`, 15, { fill: 'var(--pen)' });
       },
       uji: () => { // puluh yang jaraknya paling kecil; seri (5) ke atas
         let best = null; for (let m = 0; m <= 100; m += 10) { const dd = Math.abs(n - m); if (best === null || dd < Math.abs(n - best) || (dd === Math.abs(n - best) && m > best)) best = m; }
@@ -601,11 +604,115 @@ function accepts(tok, input) {
     };
   }
 
+
+  /* ================= 5. Kereta api nombor (susunan nombor menaik / menurun) ================= */
+  function keretaApi(lv, R) {
+    let d, up = R.chance(lv === 1 ? .8 : .5), s0;
+    if (lv === 1) { d = 1; s0 = up ? R.int(1, 15) : R.int(6, 20); }
+    else if (lv === 2) { d = 1; s0 = up ? R.int(20, 95) : R.int(25, 100); }
+    else { d = R.pick([2, 5, 10]); s0 = up ? R.int(1, 100 - 4 * d) : R.int(4 * d, 100); if (d > 1 && d !== 2) s0 = Math.max(d, Math.round(s0 / d) * d); }
+    const sg = up ? 1 : -1, seq = [0, 1, 2, 3, 4].map(i => s0 + sg * d * i);
+    if (seq.some(v => v < 0 || v > 100)) return keretaApi(lv, R);
+    const miss = R.int(lv === 1 ? 3 : 1, 4), ans = seq[miss], prev = seq[miss - 1];
+    const arah = up ? 'menaik' : 'menurun';
+    const p2 = pil(R, ans, R.shuffle([ans + 1, ans - 1, ans + 2, ans - 2, ans + sg * d, ans - sg * d, terbalik(ans), ans + 10, ans - 10, ans + 3, ans - 3]).filter(v => v > 0 && v <= 100 && (!seq.includes(v) || v === ans)), 4);
+    const WARNA = ['#ff6b6b', '#ffa94d', '#51cf66', '#4dabf7', '#cc5de8'];
+    return {
+      soalan: `Kereta api nombor tiba: <b>${seq.map((v, i) => (i === miss ? '?' : v)).join(', ')}</b>. Nombor apakah pada gerabak kosong?`,
+      mula: 'Baca nombor gerabak dari kiri ke kanan. Cari polanya.',
+      langkah: [
+        { kata: 'Kereta api datang! Baca nombor pada setiap gerabak.' },
+        { kata: 'Nombor makin besar atau makin kecil?', soal: 'Bandingkan dua gerabak bernombor yang bersebelahan.', baris: [T('susunan', { id: 'w' }), ASK(arah, arah, { id: 'a', pilih: R.shuffle(['menaik', 'menurun']) })] },
+        { kata: `Setiap gerabak ${up ? 'tambah' : 'tolak'} ${d}.`, tunjuk: true, baris: [T(arah, { id: 'a' }), T(up ? `+${d}` : `${MINUS}${d}`, { id: 'd', c: 'pen' })] },
+        { kata: `Gerabak kosong datang selepas ${prev}.`, soal: `Gerabak kosong datang selepas ${prev}. Ikut pola yang sama.`,
+          baris: [T(prev, { id: 'x' }), T('→', { id: 'ar' }), ASK(ans, ans, { id: 'n', c: 'box', pilih: p2 })] },
+      ],
+      jawapan: `${ans}`,
+      lukis(svg, k, P, q) {
+        svg.innerHTML = '';
+        const show = k >= 3 && !q, X = i => 92 + i * 56, Y = 176;
+        tx(svg, 180, 30, show ? `Gerabak hilang: ${ans}` : k >= 2 && !q ? `Pola ${arah}: ${up ? '+' : MINUS}${d}` : '🚂 Kereta api nombor', 19, { fill: show ? 'var(--c)' : 'var(--ink)' });
+        S('line', { x1: 6, y1: Y + 36, x2: 354, y2: Y + 36, stroke: 'var(--muted)', 'stroke-width': 4 }, svg);
+        for (let x = 12; x < 354; x += 22) S('rect', { x, y: Y + 34, width: 12, height: 8, rx: 2, fill: 'var(--muted)', opacity: .5 }, svg);
+        const train = S('g', {}, svg);
+        emo(train, 38, Y + 2, '🚂', 46);
+        seq.forEach((v, i) => {
+          const g = S('g', {}, train), x = X(i), hole = i === miss && !show;
+          S('rect', { x: x - 24, y: Y - 24, width: 48, height: 46, rx: 8, fill: hole ? 'var(--sheet)' : WARNA[i], stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-dasharray': hole ? '5 4' : 'none' }, g);
+          S('circle', { cx: x - 12, cy: Y + 28, r: 7, fill: 'var(--ink)' }, g); S('circle', { cx: x + 12, cy: Y + 28, r: 7, fill: 'var(--ink)' }, g);
+          const t = tx(g, x, Y + 7, hole ? '?' : String(v), v >= 100 ? 16 : 20, { fill: hole ? 'var(--pen)' : '#1b2a41', style: hole ? '' : 'fill:#1b2a41' });
+          if (i === miss && show) pop(t, 150);
+          if (k >= 2 && !q && i > 0) tx(svg, X(i) - 28, Y - 40, (up ? '+' : MINUS) + d, 14, { fill: 'var(--pen)' });
+        });
+        if (k <= 0) anim(train, [{ transform: 'translateX(380px)' }, { transform: 'none' }], { duration: 1400, easing: 'cubic-bezier(.2,.7,.3,1)' });
+        const asap = emo(svg, 30, Y - 50, '💨', 26);
+        anim(asap, [{ opacity: 0, transform: 'translate(0,10px)' }, { opacity: .9, transform: 'translate(-20px,-16px)' }, { opacity: 0, transform: 'translate(-40px,-30px)' }], { duration: 1600, iterations: 2, fill: 'none' });
+        if (k >= 1 && !(q && k === 1)) tx(svg, 180, 270, up ? 'menaik: makin besar →' : 'menurun: makin kecil →', 16, { fill: 'var(--muted)' });
+      },
+      uji: () => { const f = seq.slice(); f[miss] = ans; for (let i = 1; i < 5; i++) if (f[i] - f[i - 1] !== sg * d) return false; return ans >= 0 && ans <= 100 && p2.includes(ans); },
+    };
+  }
+
+  /* ================= 6. Guli di bawah cawan (kombinasi nombor) ================= */
+  function guli(lv, R) {
+    const n = lv === 1 ? R.int(3, 6) : lv === 2 ? R.int(7, 10) : R.int(11, 20);
+    let h; do h = R.int(1, Math.min(lv === 3 ? 9 : n - 1, n - 1)); while (n - h < 1 || h === n - h);
+    const v = n - h, nama = R.pick(['Ali', 'Siti', 'Mei Ling', 'Ravi', 'Aina', 'Kumar']);
+    const pilih = pil(R, h, R.shuffle([h + 1, h - 1, v, n, h + 2]).filter(x => x > 0), lv === 1 ? 3 : 4);
+    const WG = ['#ff6b6b', '#4dabf7', '#51cf66', '#fcc419', '#cc5de8'];
+    // guli yang nampak di kiri, guli yang disorok berkumpul di kanan (di bawah cawan)
+    const pos = i => i < v ? [36 + (i % 6) * 32, 96 + Math.floor(i / 6) * 34] : [262 + ((i - v) % 3) * 30, 96 + Math.floor((i - v) / 3) * 34];
+    const hRows = Math.ceil(h / 3);
+    return {
+      soalan: `${nama} ada <b>${n}</b> guli. Sebahagian disorok di bawah cawan. Berapa guli di bawah cawan?`,
+      mula: 'Bilang guli yang nampak. Berapa lagi untuk jadi semua?',
+      langkah: [
+        { kata: `Mula-mula semua ${n} guli kelihatan.` },
+        { kata: 'Cawan menutup sebahagian guli!' },
+        { kata: 'Bilang guli yang masih nampak.', baris: [T('nampak', { id: 'w' }), '=', ASK(v, v, { id: 'v', pilih: pil(R, v, R.shuffle([v + 1, v - 1, v + 2]).filter(x => x > 0), 3) })] },
+        { kata: `${v} dan berapa lagi menjadi ${n}?`, soal: `Kira terus dari ${v} hingga ${n}. Berapa kali kamu bilang?`,
+          baris: [T(n, { id: 'n' }), '=', T(v, { id: 'v' }), '+', ASK(h, h, { id: 'h', c: 'box', pilih })] },
+      ],
+      jawapan: `${h} guli`,
+      lukis(svg, k, P, q) {
+        svg.innerHTML = '';
+        const open = k < 1 || (k >= 3 && !q);
+        tx(svg, 180, 30, k < 1 ? `${n} guli` : open ? `${v} + ${h} = ${n}` : 'Berapa di bawah cawan?', 19, { fill: open && k >= 3 ? 'var(--c)' : 'var(--ink)' });
+        // ikatan nombor
+        const bond = (x, y, t, col) => { S('circle', { cx: x, cy: y, r: 20, fill: 'var(--sheet)', stroke: col, 'stroke-width': 3 }, svg); tx(svg, x, y + 6, t, 17, { fill: col }); };
+        if (k >= 2) {
+          S('line', { x1: 180, y1: 238, x2: 130, y2: 270, stroke: 'var(--muted)', 'stroke-width': 2.5 }, svg); S('line', { x1: 180, y1: 238, x2: 230, y2: 270, stroke: 'var(--muted)', 'stroke-width': 2.5 }, svg);
+          bond(180, 226, String(n), 'var(--c)'); bond(116, 270, q && k === 2 ? '?' : String(v), 'var(--blue)'); bond(244, 270, open ? String(h) : '?', 'var(--pen)');
+        }
+        for (let i = 0; i < n; i++) {
+          const [x, y] = pos(i), hid = i >= v;
+          const c = S('circle', { cx: x, cy: y, r: 12, fill: WG[i % 5], stroke: 'var(--ink)', 'stroke-width': 1.5 }, svg);
+          S('circle', { cx: x - 4, cy: y - 4, r: 3.5, fill: '#fff', opacity: .7 }, svg);
+          if (k < 0) pop(c, i * 60);
+          if (hid && open && k >= 3) pop(c, (i - v) * 120 + 300);
+        }
+        if (!open) { // cawan menutup guli di hujung
+          const cx = 292, w = 112, top = 70, bot = 96 + (hRows - 1) * 34 + 22;
+          const cup = S('g', {}, svg);
+          S('path', { d: `M${cx - w / 2} ${bot} L${cx - w / 2 + 10} ${top} L${cx + w / 2 - 10} ${top} L${cx + w / 2} ${bot} Z`, fill: '#e64980', stroke: 'var(--ink)', 'stroke-width': 2.5, 'stroke-linejoin': 'round' }, cup);
+          S('rect', { x: cx - w / 2 - 4, y: bot - 6, width: w + 8, height: 8, rx: 4, fill: '#c2255c' }, cup);
+          tx(cup, cx, (top + bot) / 2 + 6, '?', 24, { fill: '#fff', style: 'fill:#fff' });
+          if (k === 1) anim(cup, [{ transform: 'translateY(-120px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 700, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+        } else if (k >= 3) {
+          const lift = emo(svg, 300, 70, '🥤', 34); anim(lift, [{ transform: 'translate(-100px,60px)' }, { transform: 'none' }], { duration: 700 });
+        }
+      },
+      uji: () => { let c = v; let steps = 0; while (c < n) { c++; steps++; } return steps === h && v + h === n && h > 0 && v > 0; },
+    };
+  }
+
   BAB({ bab: 1, tajuk: 'Nombor hingga 100', ikon: '🔢', warna: '#4dabf7', jenis: [
     { nama: 'Bilang objek', gen: bilang },
     { nama: 'Nilai tempat & digit', gen: nilaiTempat },
     { nama: 'Lebih atau kurang', gen: lebihKurang },
     { nama: 'Pola nombor & bundar', gen: polaBundar },
+    { nama: '🚂 Kereta api nombor', gen: keretaApi },
+    { nama: '🫙 Guli di bawah cawan', gen: guli },
   ] });
 })();
 
@@ -653,7 +760,8 @@ function accepts(tok, input) {
       S('line', { x1: X(v), y1: y - (big ? 8 : 5), x2: X(v), y2: y + (big ? 8 : 5), stroke: 'var(--ink)', 'stroke-width': big ? 2 : 1 }, svg);
       if (big) {
         const hot = (o.hot || []).includes(v);
-        tx(svg, X(v), y + 28, v, { 'font-size': hot ? 17 : 14, 'font-weight': hot ? 800 : 600, fill: hot ? 'var(--pen)' : 'var(--ink)', style: hot ? 'fill:var(--pen)' : '' });
+        const rahsia = (o.sorok || []).includes(v);   // mod Cuba: nombor tempat katak mendarat disorok
+        tx(svg, X(v), y + 28, rahsia ? '?' : v, { 'data-ok': hot ? null : 1, 'font-size': hot ? 17 : 14, 'font-weight': hot ? 800 : 600, fill: hot ? 'var(--pen)' : 'var(--ink)', style: hot ? 'fill:var(--pen)' : '' });
       }
     }
     (o.jumps || []).forEach((j, n) => {
@@ -663,7 +771,7 @@ function accepts(tok, input) {
       if (j[4]) { const len = p.getTotalLength ? p.getTotalLength() : 60; p.setAttribute('stroke-dasharray', len); anim(p, [{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: 300, delay: j[4] }); }
     });
     if (o.katak !== undefined) {
-      const f = em(svg, X(o.katak), y - 20, '🐸', 30);
+      const f = em(svg, X(o.katak), y - 20, '🐸', 30);   // katak
       if (o.dari !== undefined && o.dari !== o.katak) fly(f, X(o.dari) - X(o.katak), 0, 0);
       else pop(f);
     }
@@ -707,7 +815,7 @@ function accepts(tok, input) {
     const [ch, o] = R.pick(OBJ), nm = R.pick(NAMA);
     let a, b;
     if (lv === 1) { a = R.int(1, 6); b = R.int(1, Math.min(9, 10 - a)); if (a + b < 3) b = 2; }
-    else if (lv === 2) { a = R.int(6, 9); b = R.int(11 - a, 9); }
+    else if (lv === 2) { a = R.int(6, 9); do b = R.int(11 - a, 9); while (b - (10 - a) === 10 - a && b < 9); }
     else { const u = R.int(2, 9); a = R.int(2, 8) * 10 + u; b = R.int(11 - u, 9); if (a + b > 99) a -= 10; }
     const sum = a + b;
     const soalan = R.chance(.5) || lv === 3
@@ -719,10 +827,11 @@ function accepts(tok, input) {
       langkah = [
         { kata: `Bilang kumpulan pertama. Ada ${a}.`, baris: [T(a, { id: 'a' })] },
         { kata: `Ada ${b} lagi. Kita tambah.`, baris: [T(a, { id: 'a' }), '+', T(b, { id: 'b' })] },
-        { kata: 'Kumpul semua. Bilang 1, 2, 3 … hingga habis.', baris: [T(a, { id: 'a' }), '+', T(b, { id: 'b' }), '=', ASKn(R, sum, [sum + 1, sum - 1, a, b, sum + 2], { id: 's', c: 'box' })] },
+        { kata: 'Kumpul semua. Bilang 1, 2, 3 … hingga habis.', soal: 'Kumpul semua. Bilang satu demi satu hingga habis.', baris: [T(a, { id: 'a' }), '+', T(b, { id: 'b' }), '=', ASKn(R, sum, [sum + 1, sum - 1, a, b, sum + 2], { id: 's', c: 'box' })] },
       ];
-      lukis = (svg, k) => {
+      lukis = (svg, k, P, q) => {
         clear(svg);
+        if (q && k >= 2) k = 1;   // mod Cuba: dua kumpulan, murid kumpul & bilang sendiri
         if (k < 2) {
           cap(svg, k < 0 ? `${a} ${o} dan ${b} ${o}` : k === 0 ? `Bilang: ${a}` : `${a} tambah ${b}`);
           cell(svg, 14, 44, 156, 150, soft('var(--c)')); cell(svg, 190, 44, 156, 150, k >= 1 ? soft('var(--blue)') : 'none');
@@ -748,13 +857,14 @@ function accepts(tok, input) {
       mula = 'Buat sepuluh dahulu. Sepuluh mudah ditambah!';
       langkah = [
         { kata: `Isi ${a} ke dalam bingkai sepuluh. ${b} di bawah.`, baris: [T(a, { id: 'a' }), '+', T(b, { id: 'b' })] },
-        { kata: `${a} perlu ${need} lagi untuk jadi 10.`, baris: [T(a, { id: 'a' }), '+', T(need, { id: 'n', c: 'pen' }), '+', T(r, { id: 'r' })] },
+        { kata: `${a} perlu ${need} lagi untuk jadi 10.`, baris: [T(a, { id: 'a' }), '+', T(need, { id: 'n', c: 'pen' }), '+', T(r, { id: 'r', h: 1 })] },
         { kata: `Bingkai atas penuh = 10. Berapa tinggal di bawah?`, baris: [T(10, { id: 'a' }), '+', ASKn(R, r, [r + 1, r - 1, b, need], { id: 'r' })] },
-        { kata: `10 dan ${r} ialah ${sum}.`, baris: [T(a, { id: 'a0' }), '+', T(b, { id: 'b0' }), '=', ASKn(R, sum, [sum + 1, sum - 1, sum + 10, 10 + b], { id: 's', c: 'box' })] },
+        { kata: `10 dan ${r} ialah ${sum}.`, soal: 'Bingkai atas penuh: 10. Tambah yang di bawah.', baris: [T(a, { id: 'a0' }), '+', T(b, { id: 'b0' }), '=', ASKn(R, sum, [sum + 1, sum - 1, sum + 10, 10 + b], { id: 's', c: 'box' })] },
       ];
-      lukis = (svg, k) => {
+      lukis = (svg, k, P, q) => {
         clear(svg);
-        cap(svg, k < 1 ? `${a} + ${b}` : k === 1 ? `Pindah ${need} ke atas` : k === 2 ? `10 dan ${r}` : `${a} + ${b} = ${sum}`);
+        const hideR = q && k === 2; if (q && k >= 3) k = 2;   // mod Cuba langkah 3: baki di bawah belum disebut
+        cap(svg, k < 1 ? `${a} + ${b}` : k === 1 ? `Pindah ${need} ke atas` : k === 2 ? `10 dan ${hideR ? '?' : r}` : `${a} + ${b} = ${sum}`);
         const F = [[70, 44], [70, 156]], cw = 44;
         F.forEach(([x, y]) => { for (let i = 0; i < 10; i++) cell(svg, x + (i % 5) * cw, y + Math.floor(i / 5) * cw, cw, cw); });
         const at = (f, i) => [F[f][0] + (i % 5) * cw + cw / 2, F[f][1] + Math.floor(i / 5) * cw + cw / 2];
@@ -767,7 +877,7 @@ function accepts(tok, input) {
           if (k === 0) pop(e, 600 + j * 60);
         }
         tx(svg, 40, 94, k >= 2 ? 10 : a, { 'font-size': 26, 'font-weight': 800, fill: k >= 2 ? 'var(--ok)' : 'var(--ink)', style: k >= 2 ? 'fill:var(--ok)' : '' });
-        tx(svg, 40, 206, k >= 1 ? r : b, { 'font-size': 26, 'font-weight': 800 });
+        tx(svg, 40, 206, k >= 1 ? (hideR || (q && k === 1) ? '?' : r) : b, { 'font-size': 26, 'font-weight': 800 });
         if (k >= 2) { tx(svg, 320, 94, '✔', { 'font-size': 26, fill: 'var(--ok)', style: 'fill:var(--ok)' }); }
         if (k >= 3) tx(svg, 180, 284, `10 + ${r} = ${sum}`, { 'font-size': 24, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' });
       };
@@ -776,18 +886,19 @@ function accepts(tok, input) {
       mula = 'Guna garis nombor. Lompat ke puluh dahulu.';
       langkah = [
         { kata: `Katak mula di ${a}. Ia perlu lompat ${b} kali.`, baris: [T(a, { id: 'a' }), '+', T(b, { id: 'b' })] },
-        { kata: `Lompat ${d} dahulu, sampai ${ten}.`, baris: [T(a, { id: 'a' }), '+', T(d, { id: 'd', c: 'pen' }), '=', ASKn(R, ten, [ten - 10, ten + 1, ten - 1, ten + 10], { id: 't' })] },
+        { kata: `Lompat ${d} dahulu, sampai ${ten}.`, soal: `Lompat ${d} dahulu. Katak sampai di nombor puluh yang mana?`, baris: [T(a, { id: 'a' }), '+', T(d, { id: 'd', c: 'pen' }), '=', ASKn(R, ten, [ten - 10, ten + 1, ten - 1, ten + 10], { id: 't' })] },
         { kata: `${b} pecah jadi ${d} dan ${r}. Lompat ${r} lagi.`, baris: [T(ten, { id: 't' }), '+', T(r, { id: 'r', c: 'pen' }), '=', ASKn(R, sum, [sum - 10, sum + 1, sum - 1, sum + 10, rev(sum)], { id: 's', c: 'box' })] },
       ];
-      lukis = (svg, k) => {
+      lukis = (svg, k, P, q) => {
         clear(svg);
-        cap(svg, k < 0 ? `${a} + ${b} = ?` : k === 0 ? `Mula di ${a}` : k === 1 ? `${a} + ${d} = ${ten}` : `${ten} + ${r} = ${sum}`);
+        // mod Cuba: lompatan dilukis, tetapi katak belum mendarat & nombor sasaran tidak disorot
+        cap(svg, k < 0 ? `${a} + ${b} = ?` : k === 0 ? `Mula di ${a}` : k === 1 ? `${a} + ${d} = ${q ? '?' : ten}` : `${ten} + ${r} = ${q ? '?' : sum}`);
         const jumps = [];
         if (k >= 1) for (let i = 0; i < d; i++) jumps.push([a + i, a + i + 1, 'var(--c)', '+1', k === 1 ? i * 160 : 0]);
         if (k >= 2) for (let i = 0; i < r; i++) jumps.push([ten + i, ten + i + 1, 'var(--blue)', '+1', i * 160]);
-        garis(svg, a - 1, sum + 1, { jumps, katak: k < 1 ? a : k === 1 ? ten : sum, dari: k === 1 ? a : k === 2 ? ten : undefined, hot: k >= 1 ? (k >= 2 ? [a, ten, sum] : [a, ten]) : [a] });
+        garis(svg, a - 1, sum + 1, { sorok: q ? [k === 1 ? ten : sum] : [], jumps, katak: k < 1 ? a : k === 1 ? (q ? a : ten) : (q ? ten : sum), dari: q ? undefined : k === 1 ? a : k === 2 ? ten : undefined, hot: k >= 1 ? (k >= 2 ? (q ? [a, ten] : [a, ten, sum]) : (q ? [a] : [a, ten])) : [a] });
         em(svg, 60, 92, ch, 40); em(svg, 300, 92, ch, 40);
-        tx(svg, 180, 104, k >= 2 ? `${a} + ${b} = ${sum}` : `${a} + ${b} = ?`, { 'font-size': 32, 'font-weight': 800, fill: k >= 2 ? 'var(--ok)' : 'var(--ink)', style: k >= 2 ? 'fill:var(--ok)' : '' });
+        tx(svg, 180, 104, k >= 2 && !q ? `${a} + ${b} = ${sum}` : `${a} + ${b} = ?`, { 'font-size': 32, 'font-weight': 800, fill: k >= 2 ? 'var(--ok)' : 'var(--ink)', style: k >= 2 ? 'fill:var(--ok)' : '' });
         if (k >= 1) tx(svg, 180, 272, `lompat ${d}` + (k >= 2 ? ` + lompat ${r} = lompat ${b}` : ''), { 'font-size': 16, fill: 'var(--muted)', style: 'fill:var(--muted)' });
       };
     }
@@ -801,8 +912,8 @@ function accepts(tok, input) {
   function tolak(lv, R) {
     const [ch, o, verb] = R.pick(OBJ);
     let a, b;
-    if (lv === 1) { a = R.int(3, 10); b = R.int(1, a - 1); }
-    else if (lv === 2) { a = R.int(11, 20); b = R.int(2, 9); }
+    if (lv === 1) { a = R.int(3, 10); do b = R.int(1, a - 1); while (a - b === b && a > 3); }
+    else if (lv === 2) { a = R.int(11, 20); do b = R.int(2, 9); while (a - b === b); }
     else { const u = R.int(1, 8); a = R.int(2, 9) * 10 + u; b = R.int(u + 1, 9); }
     const r = a - b;
     const soalan = `Ada <b>${a}</b> ${o}. <b>${b}</b> ${o} ${verb}. Berapa ${o} yang tinggal?`;
@@ -814,10 +925,10 @@ function accepts(tok, input) {
         { kata: `Pangkah ${b} yang ${verb}.`, baris: [T(a, { id: 'a' }), MINUS, T(b, { id: 'b', c: 'pen' })] },
         { kata: 'Bilang yang tidak dipangkah. Itulah baki.', baris: [T(a, { id: 'a' }), MINUS, T(b, { id: 'b' }), '=', ASKn(R, r, [r + 1, r - 1, a + b <= 100 ? a + b : r + 2, b], { id: 'r', c: 'box' })] },
       ];
-      if (lv === 2) langkah.splice(2, 0, { kata: `Jangan bilang yang dipangkah. Mula semula dari 1.`, baris: [T(a, { id: 'a' }), MINUS, T(b, { id: 'b' }), '=', T('?', { id: 'r', c: 'dim' })] });
-      lukis = (svg, k) => {
+      if (lv === 2) langkah.splice(2, 0, { tunjuk: true, kata: `Jangan bilang yang dipangkah. Mula semula dari 1.`, baris: [T(a, { id: 'a' }), MINUS, T(b, { id: 'b' }), '=', T('?', { id: 'r', c: 'dim' })] });
+      lukis = (svg, k, P, q) => {
         clear(svg);
-        const last = langkah.length - 1;
+        const last = q ? 99 : langkah.length - 1;   // mod Cuba: baki tidak dibilang untuk murid
         cap(svg, k < 0 ? `${a} ${o}` : k === 0 ? `Semua: ${a}` : k === 1 ? `Keluarkan ${b}` : k < last ? 'Bilang yang tinggal…' : `Tinggal ${r}`);
         const rows = Math.ceil(a / 10), y0 = rows > 1 ? 104 : 140, dx = 30;
         S('rect', { x: 14, y: y0 - 46, width: 332, height: rows * 70 + 26, rx: 14, fill: soft('var(--c)') }, svg);
@@ -827,7 +938,7 @@ function accepts(tok, input) {
           if (k < 0) continue;
           if (k === 0) { pop(e, i * 50); tx(svg, x, y - 24, i + 1, { 'font-size': 14 }); }
           if (gone) { e.setAttribute('opacity', .35); const g = pangkah(svg, x - 11, y - 11, 22, 22); if (k === 1) pop(g, (i - r) * 160); }
-          else if (k >= 2) { const t = tx(svg, x, y - 24, i + 1, { 'font-size': 14, fill: 'var(--ok)', style: 'fill:var(--ok)' }); if (k === 2) pop(t, i * 90); }
+          else if (k >= 2 && !q) { const t = tx(svg, x, y - 24, i + 1, { 'font-size': 14, fill: 'var(--ok)', style: 'fill:var(--ok)' }); if (k === 2) pop(t, i * 90); }
         }
         if (k >= 1) tx(svg, 180, 270, k >= last ? `${a} − ${b} = ${r}` : `${a} − ${b} = ?`, { 'font-size': 30, 'font-weight': 800, fill: k >= last ? 'var(--ok)' : 'var(--ink)', style: k >= last ? 'fill:var(--ok)' : '' });
       };
@@ -836,18 +947,18 @@ function accepts(tok, input) {
       mula = 'Guna garis nombor. Tolak bermaksud lompat ke kiri.';
       langkah = [
         { kata: `Katak mula di ${a}. Ia lompat undur ${b} kali.`, baris: [T(a, { id: 'a' }), MINUS, T(b, { id: 'b' })] },
-        { kata: `Undur ${d} dahulu, sampai ${ten}.`, baris: [T(a, { id: 'a' }), MINUS, T(d, { id: 'd', c: 'pen' }), '=', ASKn(R, ten, [ten + 10, ten - 1, ten + 1, ten - 10], { id: 't' })] },
+        { kata: `Undur ${d} dahulu, sampai ${ten}.`, soal: `Undur ${d} dahulu. Katak sampai di nombor puluh yang mana?`, baris: [T(a, { id: 'a' }), MINUS, T(d, { id: 'd', c: 'pen' }), '=', ASKn(R, ten, [ten + 10, ten - 1, ten + 1, ten - 10], { id: 't' })] },
         { kata: `${b} pecah jadi ${d} dan ${e2}. Undur ${e2} lagi.`, baris: [T(ten, { id: 't' }), MINUS, T(e2, { id: 'e', c: 'pen' }), '=', ASKn(R, r, [r + 10, r + 1, r - 1, a + b <= 100 ? a + b : r - 10, (ten + (b - d)) % 100], { id: 'r', c: 'box' })] },
       ];
-      lukis = (svg, k) => {
+      lukis = (svg, k, P, q) => {
         clear(svg);
-        cap(svg, k < 0 ? `${a} − ${b} = ?` : k === 0 ? `Mula di ${a}` : k === 1 ? `${a} − ${d} = ${ten}` : `${ten} − ${e2} = ${r}`);
+        cap(svg, k < 0 ? `${a} − ${b} = ?` : k === 0 ? `Mula di ${a}` : k === 1 ? `${a} − ${d} = ${q ? '?' : ten}` : `${ten} − ${e2} = ${q ? '?' : r}`);
         const jumps = [];
         if (k >= 1) for (let i = 0; i < d; i++) jumps.push([a - i, a - i - 1, 'var(--c)', '−1', k === 1 ? i * 160 : 0]);
         if (k >= 2) for (let i = 0; i < e2; i++) jumps.push([ten - i, ten - i - 1, 'var(--blue)', '−1', i * 160]);
-        garis(svg, r - 1, a + 1, { jumps, katak: k < 1 ? a : k === 1 ? ten : r, dari: k === 1 ? a : k === 2 ? ten : undefined, hot: k < 1 ? [a] : k === 1 ? [a, ten] : [a, ten, r] });
+        garis(svg, r - 1, a + 1, { sorok: q ? [k === 1 ? ten : r] : [], jumps, katak: k < 1 ? a : k === 1 ? (q ? a : ten) : (q ? ten : r), dari: q ? undefined : k === 1 ? a : k === 2 ? ten : undefined, hot: k < 1 ? [a] : k === 1 ? (q ? [a] : [a, ten]) : (q ? [a, ten] : [a, ten, r]) });
         em(svg, 60, 92, ch, 40); em(svg, 300, 92, ch, 40);
-        tx(svg, 180, 104, k >= 2 ? `${a} − ${b} = ${r}` : `${a} − ${b} = ?`, { 'font-size': 32, 'font-weight': 800, fill: k >= 2 ? 'var(--ok)' : 'var(--ink)', style: k >= 2 ? 'fill:var(--ok)' : '' });
+        tx(svg, 180, 104, k >= 2 && !q ? `${a} − ${b} = ${r}` : `${a} − ${b} = ?`, { 'font-size': 32, 'font-weight': 800, fill: k >= 2 ? 'var(--ok)' : 'var(--ink)', style: k >= 2 ? 'fill:var(--ok)' : '' });
         if (k >= 1) tx(svg, 180, 272, `undur ${d}` + (k >= 2 ? ` + undur ${e2} = undur ${b}` : ''), { 'font-size': 16, fill: 'var(--muted)', style: 'fill:var(--muted)' });
       };
     }
@@ -865,8 +976,8 @@ function accepts(tok, input) {
       if (lv === 1) { A = R.int(11, 88); B = R.int(1, 9); }
       else { A = R.int(21, 89); B = R.int(11, 78); }
       const a1 = A % 10, b1 = B % 10, ok = op === '+'
-        ? A + B <= 99 && (lv === 3 ? a1 + b1 >= 10 : a1 + b1 <= 9) && (lv < 3 || b1 > 0)
-        : A > B && (lv === 3 ? a1 < b1 : a1 >= b1) && A - B >= (lv === 1 ? 10 : 1) && Math.floor(A / 10) > Math.floor(B / 10);
+        ? A + B <= 99 && (lv === 3 ? a1 + b1 >= 10 : a1 + b1 <= 9) && b1 > 0 && a1 > 0
+        : A > B && (lv === 3 ? a1 < b1 : a1 >= b1) && A - B >= (lv === 1 ? 10 : 1) && Math.floor(A / 10) > Math.floor(B / 10) && b1 > 0 && (a1 < b1 ? a1 + 10 : a1) - b1 !== b1 && (a1 < b1 ? a1 + 10 : a1) - b1 !== Math.floor(B / 10) && (a1 < b1 ? a1 + 10 : a1) - b1 !== Math.floor(A / 10) - (a1 < b1 ? 1 : 0);
       if (ok) break;
     }
     const a1 = A % 10, b1 = B % 10, ta = Math.floor(A / 10), tb = Math.floor(B / 10);
@@ -886,19 +997,20 @@ function accepts(tok, input) {
       ];
       if (carry) langkah.push({ kata: `${s1} sa terlalu banyak! 10 sa tukar jadi 1 puluh.`, baris: [T(s1, { id: 'y' }), '=', T('1 puluh', { id: 'c', c: 'pen' }), '+', T(`${r1} sa`, { id: 'r1' })] });
       langkah.push({ kata: carry ? `Tambah puluh. Jangan lupa 1 puluh baharu!` : `Tambah puluh pula: ${ta} + ${tb}.`, baris: [T('puluh:', { id: 'l' }), T(`${ta} + ${tb}` + (carry ? '' : ''), { id: 'x' }), ...(carry ? [T('+ 1', { id: 'c', c: 'pen' })] : []), '=', T(st, { id: 'y' })] });
-      langkah.push({ kata: `${st} puluh dan ${r1} sa ialah ${ans}.`, baris: [T(A, { id: 'A' }), '+', T(B, { id: 'B' }), '=', ASKn(R, ans, [carry ? ans - 10 : ans + 10, ans + 1, ans - 1, rev(ans), carry ? (ta + tb) * 10 + s1 % 10 : ans - 10], { id: 's', c: 'box' })] });
+      langkah.push({ kata: `${st} puluh dan ${r1} sa ialah ${ans}.`, soal: 'Gabung puluh dan sa menjadi satu nombor.', baris: [T(A, { id: 'A' }), '+', T(B, { id: 'B' }), '=', ASKn(R, ans, [carry ? ans - 10 : ans + 10, ans + 1, ans - 1, rev(ans), carry ? (ta + tb) * 10 + s1 % 10 : ans - 10], { id: 's', c: 'box' })] });
     } else {
       const ua = borrow ? a1 + 10 : a1, r1 = ua - b1, tA = borrow ? ta - 1 : ta, st = tA - tb;
       langkah = [{ kata: `${A} = ${ta} puluh ${a1} sa. Keluarkan ` + (tb ? `${tb} puluh ${b1} sa.` : `${b1} sa.`), baris: [T(A, { id: 'A' }), MINUS, T(B, { id: 'B' })] }];
       if (borrow) langkah.push({ kata: `${a1} sa tidak cukup untuk tolak ${b1}. Pecahkan 1 puluh jadi 10 sa.`, baris: [T(pz(tA), { id: 'p', c: 'pen' }), T(`${ua} sa`, { id: 'q', c: 'pen' })] });
       langkah.push({ kata: borrow ? `Sekarang tolak sa: ${ua} − ${b1}. Bukan ${b1} − ${a1}!` : `Tolak sa dahulu: ${a1} − ${b1}.`, baris: [T('sa:', { id: 'l' }), T(`${ua} − ${b1}`, { id: 'x' }), '=', ASKn(R, r1, [r1 + 1, r1 - 1, Math.abs(a1 - b1), r1 + 10 <= 19 ? r1 + 2 : r1 - 2], { id: 'y' })] });
       langkah.push({ kata: borrow ? `Tolak puluh: tinggal ${tA} puluh, tolak ${tb}.` : `Tolak puluh pula: ${ta} − ${tb}.`, baris: [T('puluh:', { id: 'l' }), T(`${tA} − ${tb}`, { id: 'x' }), '=', T(st, { id: 'y' })] });
-      langkah.push({ kata: `${st} puluh dan ${r1} sa ialah ${ans}.`, baris: [T(A, { id: 'A' }), MINUS, T(B, { id: 'B' }), '=', ASKn(R, ans, [ans + 10, ans + 1, ans - 1, borrow ? (ta - tb) * 10 + (b1 - a1) : rev(ans), ans - 10], { id: 's', c: 'box' })] });
+      langkah.push({ kata: `${st} puluh dan ${r1} sa ialah ${ans}.`, soal: 'Gabung puluh dan sa menjadi satu nombor.', baris: [T(A, { id: 'A' }), MINUS, T(B, { id: 'B' }), '=', ASKn(R, ans, [ans + 10, ans + 1, ans - 1, borrow ? (ta - tb) * 10 + (b1 - a1) : rev(ans), ans - 10], { id: 's', c: 'box' })] });
     }
     const n = langkah.length;
-    const lukis = (svg, k) => {
+    const lukis = (svg, k, P, q) => {
       clear(svg);
-      const name = k < 0 ? '' : (langkah[k].baris[0].t || '');
+      const name = k < 0 ? '' : (langkah[k].baris[0].t || '');   // lajur disorot ikut langkah semasa
+      if (q) k = k - 1;   // mod Cuba: tunjuk keadaan sebelum langkah ini dikira
       const hl = name === 'sa:' ? 'sa' : name === 'puluh:' ? 'puluh' : '';
       tikar(svg, hl);
       const Y = [40, 128, 222];
@@ -913,7 +1025,7 @@ function accepts(tok, input) {
           if (doneT) { for (let i = 0; i < ta + tb; i++) rods.push({ col: ROD, pop: name === 'puluh:' }); }
           const nc = carried ? s1 - 10 : s1, cubes = [];
           for (let i = 0; i < nc; i++) cubes.push({ col: CUB, pop: k === 1 });
-          if (carry && k === 2) { S('rect', { x: PX - 5, y: Y[2] - 5, width: 22, height: 74, rx: 8, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 2, 'stroke-dasharray': '5 4' }, svg); tx(svg, 180, 298, '10 sa → 1 puluh', { 'font-size': 15, fill: 'var(--pen)', style: 'fill:var(--pen)' }); }
+          if (carry && k === 2) { S('rect', { x: PX - 5, y: Y[2] - 5, width: 22, height: 74, rx: 8, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 2, 'stroke-dasharray': '5 4' }, svg); tx(svg, 180, 290, '10 sa → 1 puluh', { 'font-size': 15, fill: 'var(--pen)', style: 'fill:var(--pen)' }); }
           barisBlok(svg, Y[2], rods, cubes, k === n - 1 ? ans : '=');
           if (!doneT && carried) { /* rod baharu sudah dilukis */ }
         }
@@ -953,7 +1065,7 @@ function accepts(tok, input) {
     let s, n, start, sign;
     if (lv === 1) { s = R.pick([2, 4, 5]); n = R.int(3, 4); start = 0; sign = 1; }
     else if (lv === 2) { s = R.pick([2, 4, 5, 10]); n = R.int(3, s === 10 ? 5 : 5); start = 0; sign = 1; }
-    else { s = R.pick([2, 4, 5, 10]); n = R.int(3, 4); const e = s * R.int(0, Math.floor((100 - n * s) / s)); start = e + n * s; sign = -1; }
+    else { s = R.pick([2, 4, 5, 10]); n = R.int(3, 4); let e; do e = s * R.int(0, Math.floor((100 - n * s) / s)); while (e === s); start = e + n * s; sign = -1; }
     const pts = [start]; for (let i = 1; i <= n; i++) pts.push(pts[i - 1] + sign * s);
     const ans = pts[n], oS = sign > 0 ? '+' : MINUS;
     const soalan = lv === 1 ? `Ada <b>${n}</b> pinggan. Setiap pinggan ada <b>${s}</b> ${o}. Berapa jumlah ${o}?`
@@ -966,15 +1078,18 @@ function accepts(tok, input) {
     for (let i = first; i <= n; i++) {
       const prev = pts[i - 1], cur = pts[i], last = i === n;
       const cands = [cur + s, cur - s, cur + 1, cur - 1].filter(c => c >= 0);
-      const v = last ? ASKn(R, cur, cands, { id: 'v', c: 'box' }) : (lv === 3 && i === 1) ? ASKn(R, cur, cands, { id: 'v' }) : T(cur, { id: 'v' });
+      // setiap jumlah kecil dikira oleh murid sendiri (tiada nombor percuma pada papan)
+      const v = ASKn(R, cur, cands, { id: 'v', c: last ? 'box' : '', bebas: cur === s || cur === n });
       const lhs = (sign > 0 && i === 2) ? [T(s, { id: 'p' }), '+', T(s, { id: 'q' })] : [T(prev, { id: 'p' }), oS, T(s, { id: 'q', c: 'pen' })];
-      langkah.push({ kata: last ? (sign > 0 ? `Lompat terakhir. Bilang: ${pts.slice(1).join(', ')}.` : `Lompat terakhir! ${start} jadi ${cur}.`) : `${prev} ${oS} ${s} = ${cur}. Teruskan.`, baris: [...lhs, '=', v] });
+      langkah.push({ kata: last ? (sign > 0 ? `Lompat terakhir. Bilang: ${pts.slice(1).join(', ')}.` : `Lompat terakhir! ${start} jadi ${cur}.`) : `${prev} ${oS} ${s} = ${cur}. Teruskan.`,
+        soal: sign > 0 ? `Bilang loncat ${s} dari ${prev}.` : `Undur ${s} dari ${prev}.`, baris: [...lhs, '=', v] });
     }
-    const lukis = (svg, k) => {
+    const lukis = (svg, k, P, q) => {
       clear(svg);
       const reached = k < 0 ? 0 : Math.min(n, k + (sign > 0 ? 1 : 0));   // bilangan kumpulan / lompatan sudah dikira
+      const tgt = q && k >= 1 ? reached : -1;   // mod Cuba: titik/pinggan yang sedang ditanya belum diberi nombor
       if (lv === 1) {
-        cap(svg, k < 0 ? `${n} pinggan, ${s} setiap satu` : `Bilang loncat ${s}: ${pts.slice(1, reached + 1).join(', ')}`);
+        cap(svg, k < 0 ? `${n} pinggan, ${s} setiap satu` : `Bilang loncat ${s}: ${pts.slice(1, reached + 1).map((v, i) => (i + 1 === tgt ? '?' : v)).join(', ')}`);
         const gw = 340 / n;
         for (let g = 0; g < n; g++) {
           const cx = 10 + gw * g + gw / 2, lit = g < reached;
@@ -985,24 +1100,24 @@ function accepts(tok, input) {
             const e = em(svg, cx + (col - (inRow - 1) / 2) * 26, 150 + (row - (Math.ceil(s / per) - 1) / 2) * 30, ch, 24);
             if (k < 0) pop(e, (g * s + i) * 40);
           }
-          if (lit) { const t = tx(svg, cx, 230, pts[g + 1], { 'font-size': 28, 'font-weight': 800, fill: 'var(--pen)', style: 'fill:var(--pen)' }); if (g === reached - 1) pop(t); }
+          if (lit) { const t = tx(svg, cx, 230, g + 1 === tgt ? '?' : pts[g + 1], { 'font-size': 28, 'font-weight': 800, fill: 'var(--pen)', style: 'fill:var(--pen)' }); if (g === reached - 1) pop(t); }
         }
-        if (k === langkah.length - 1) tx(svg, 180, 276, Array(n).fill(s).join(' + ') + ' = ' + ans, { 'font-size': 22, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' });
+        if (k === langkah.length - 1 && !q) tx(svg, 180, 276, Array(n).fill(s).join(' + ') + ' = ' + ans, { 'font-size': 22, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' });
         return;
       }
       const lo = Math.min(start, ans), hi = Math.max(start, ans);
-      cap(svg, k < 0 ? `Mula di ${start}` : reached ? `${pts.slice(0, reached + 1).join(' → ')}` : `Mula di ${start}`);
+      cap(svg, k < 0 ? `Mula di ${start}` : reached ? `${pts.slice(0, reached + 1).map((v, i) => (i === tgt ? '?' : v)).join(' → ')}` : `Mula di ${start}`);
       const jumps = [];
       for (let i = 0; i < reached; i++) jumps.push([pts[i], pts[i + 1], i % 2 ? 'var(--blue)' : 'var(--c)', `${oS}${s}`, i === reached - 1 ? 1 : 0]);
       const hx = i => 180 + (i - (n - 1) / 2) * 38;
       tx(svg, hx(0) - 34, 92, 'kali:', { 'font-size': 14, 'text-anchor': 'end', fill: 'var(--muted)', style: 'fill:var(--muted)' });
       for (let i = 0; i < n; i++) {
         const done = i < reached, c = S('circle', { cx: hx(i), cy: 86, r: 15, fill: done ? (i % 2 ? 'var(--blue)' : 'var(--c)') : 'none', stroke: 'var(--muted)', 'stroke-width': done ? 0 : 2 }, svg);
-        tx(svg, hx(i), 92, i + 1, { 'font-size': 15, fill: done ? '#fff' : 'var(--muted)', style: done ? 'fill:#fff' : 'fill:var(--muted)' });
+        tx(svg, hx(i), 92, i + 1, { 'data-ok': 1, 'font-size': 15, fill: done ? '#fff' : 'var(--muted)', style: done ? 'fill:#fff' : 'fill:var(--muted)' });
         if (done && i === reached - 1) pop(c);
       }
-      garis(svg, lo, hi, { jumps, lab: s, katak: pts[reached], dari: reached ? pts[reached - 1] : undefined, hot: pts.slice(0, reached + 1), y: 190 });
-      if (k === langkah.length - 1) tx(svg, 180, 270, `Katak di ${ans}!`, { 'font-size': 22, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' });
+      garis(svg, lo, hi, { sorok: tgt >= 0 ? [pts[reached]] : [], jumps, lab: s, katak: tgt >= 0 ? pts[reached - 1] : pts[reached], dari: tgt < 0 && reached ? pts[reached - 1] : undefined, hot: pts.slice(0, tgt >= 0 ? reached : reached + 1), y: 190 });
+      if (k === langkah.length - 1 && !q) tx(svg, 180, 270, `Katak di ${ans}!`, { 'font-size': 22, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' });
     };
     return {
       soalan, mula, langkah, jawapan: String(ans), lukis,
@@ -1012,11 +1127,133 @@ function accepts(tok, input) {
     };
   }
 
+
+  /* =================== 5. Baling dadu (tambah cepat) =================== */
+  const PIP = { 1: [[0, 0]], 2: [[-1, -1], [1, 1]], 3: [[-1, -1], [0, 0], [1, 1]], 4: [[-1, -1], [1, -1], [-1, 1], [1, 1]], 5: [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]], 6: [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]] };
+  function dadu1(svg, cx, cy, v, z, col, roll) {
+    const g = S('g', {}, svg), h = z / 2;
+    S('rect', { x: cx - h + 3, y: cy - h + 4, width: z, height: z, rx: z * .2, fill: '#000', opacity: .15 }, g);
+    S('rect', { x: cx - h, y: cy - h, width: z, height: z, rx: z * .2, fill: col, stroke: 'var(--ink)', 'stroke-width': 2.5 }, g);
+    PIP[v].forEach(([x, y]) => S('circle', { cx: cx + x * z * .27, cy: cy + y * z * .27, r: z * .09, fill: '#1b2a41' }, g));
+    g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
+    if (roll) anim(g, [{ transform: 'translate(-90px,-70px) rotate(-540deg) scale(.5)' }, { transform: 'translate(0,-20px) rotate(-60deg)', offset: .75 }, { transform: 'none' }], { duration: 1100, delay: roll - 1, easing: 'cubic-bezier(.3,.8,.4,1)' });
+    return g;
+  }
+  function dadu(lv, R) {
+    const n = lv === 2 ? 3 : 2, d = []; for (let i = 0; i < n; i++) d.push(R.int(1, 6));
+    const puluh = lv === 3 ? R.int(2, 8) * 10 : 0;   // aras 3: kad puluh + satu dadu
+    if (lv === 3) d.length = 1;
+    const sum = puluh + d.reduce((a, b) => a + b, 0), nama = R.pick(NAMA);
+    const COL = ['#ffffff', '#ffe066', '#a5d8ff'];
+    const askD = (v, i) => ASK(String(v), v, { id: 'd' + i, bebas: v === n, pilih: R.shuffle([v, ...R.shuffle([v + 1, v - 1, v + 2, v - 2, 7 - v].filter((x, j, a) => x >= 1 && x <= 6 && x !== v && a.indexOf(x) === j)).slice(0, 2)]) });   // dadu hanya 1–6
+    const langkah = [{ kata: lv === 3 ? 'Ambil satu kad puluh dan baling satu dadu!' : `Baling ${n} biji dadu!` }];
+    if (lv < 3) {
+      const line = []; d.forEach((v, i) => { if (i) line.push('+'); line.push(askD(v, i)); });
+      langkah.push({ kata: 'Bilang titik pada setiap dadu.', baris: line });
+      langkah.push({ kata: `Tambah semua titik: ${d.join(' + ')} = ${sum}.`, soal: 'Tambah semua titik. Mula dengan nombor yang besar, kemudian bilang terus.',
+        baris: [...d.map((v, i) => [i ? '+' : null, T(v, { id: 'd' + i })]).flat().filter(Boolean), '=', ASKn(R, sum, [sum + 1, sum - 1, sum + 2, d[0] * (d[1] || 1)], { id: 's', c: 'box', bebas: sum === n })] });
+    } else {
+      langkah.push({ kata: 'Bilang titik dadu. Itulah sa.', baris: [T(puluh, { id: 'p' }), '+', askD(d[0], 0)] });
+      langkah.push({ kata: `${puluh / 10} puluh dan ${d[0]} sa ialah ${sum}.`, soal: 'Gabung puluh dan sa.', baris: [T(puluh, { id: 'p' }), '+', T(d[0], { id: 'd0' }), '=', ASKn(R, sum, [sum + 1, sum - 1, sum + 10, sum - 10, puluh / 10 + d[0]], { id: 's', c: 'box' })] });
+    }
+    return {
+      soalan: lv === 3 ? `${nama} dapat kad <b>${puluh}</b> dan baling dadu. Berapa jumlahnya?` : `${nama} baling ${n} biji dadu. Berapa jumlah titik?`,
+      mula: 'Bilang titik dadu, kemudian tambah.',
+      langkah,
+      jawapan: String(sum),
+      lukis(svg, k, P, q) {
+        clear(svg);
+        const showN = !q ? k >= 1 : k >= 2, showS = !q && k >= 2;
+        cap(svg, k < 0 ? 'Sedia… baling!' : showS ? `Jumlah: ${sum}` : 'Bilang titik!');
+        const X = lv === 3 ? [110, 250] : n === 2 ? [110, 250] : [70, 180, 290];
+        if (lv === 3) {
+          const g = S('g', {}, svg);
+          S('rect', { x: X[0] - 46, y: 82, width: 92, height: 120, rx: 12, fill: 'var(--c)', stroke: 'var(--ink)', 'stroke-width': 2.5 }, g);
+          tx(g, X[0], 158, puluh, { 'font-size': 44, 'font-weight': 900, fill: '#fff', style: 'fill:#fff', 'data-ok': 1 });
+          tx(g, X[0], 188, `${puluh / 10} puluh`, { 'font-size': 14, fill: '#fff', style: 'fill:#fff', 'data-ok': 1 });
+          if (k <= 0) pop(g);
+        }
+        d.forEach((v, i) => {
+          const x = lv === 3 ? X[1] : X[i];
+          dadu1(svg, x, 142, v, n === 3 ? 76 : 92, COL[i], k <= 0 ? 1 + i * 180 : 0);
+          if (showN) { const t = tx(svg, x, 222, v, { 'font-size': 28, 'font-weight': 800, fill: 'var(--pen)', style: 'fill:var(--pen)' }); if (k === 1) pop(t, i * 200); }
+          if (i && lv < 3) tx(svg, (X[i - 1] + x) / 2, 150, '+', { 'font-size': 30, fill: 'var(--muted)', style: 'fill:var(--muted)' });
+        });
+        if (lv === 3) tx(svg, 180, 150, '+', { 'font-size': 30, fill: 'var(--muted)', style: 'fill:var(--muted)' });
+        if (showS) pop(tx(svg, 180, 272, `= ${sum}`, { 'font-size': 34, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' }));
+      },
+      uji: () => { let c = puluh; d.forEach(v => { c += PIP[v].length; }); return c === sum && sum <= 100; },
+    };
+  }
+
+  /* =================== 6. Bas sekolah (cerita tambah dan tolak) =================== */
+  function bas(lv, R) {
+    let a, turun = 0, naik = 0;
+    if (lv === 1) { a = R.int(2, 6); naik = R.int(1, 9 - a); }
+    else if (lv === 2) { a = R.int(8, 15); do turun = R.int(2, 7); while (a - turun === turun); }
+    else { a = R.int(8, 14); do { turun = R.int(2, 6); naik = R.int(2, 6); } while (turun === naik || a - turun === turun || a - turun === naik || a + naik > 16 || a - turun + naik === turun || a - turun + naik === naik || a - turun + naik === a); }
+    const b1 = a - turun + (lv === 1 ? naik : 0), akhir = a - turun + naik;
+    const langkah = [{ kata: `Bas sekolah ada ${a} murid.`, baris: [T(a, { id: 'a' })] }];
+    const opPick = R.shuffle(['tambah', 'tolak']);
+    if (lv === 1 || lv === 2) {
+      const op = lv === 1 ? 'tambah' : 'tolak', v = lv === 1 ? naik : turun, r = lv === 1 ? a + naik : a - turun;
+      langkah.push({ kata: lv === 1 ? 'Murid naik bas: bilangan bertambah.' : 'Murid turun bas: bilangan berkurang.', soal: `${v} murid ${lv === 1 ? 'naik' : 'turun'}. Tambah atau tolak?`,
+        baris: [T(a, { id: 'a' }), ASK(op, op, { id: 'op', pilih: opPick }), T(v, { id: 'v' })] });
+      langkah.push({ kata: `${a} ${lv === 1 ? '+' : MINUS} ${v} = ${r}.`, soal: 'Kira berapa murid dalam bas sekarang.',
+        baris: [T(a, { id: 'a' }), lv === 1 ? '+' : MINUS, T(v, { id: 'v' }), '=', ASKn(R, r, [r + 1, r - 1, lv === 1 ? Math.abs(a - v) : a + v, r + 10 <= 100 ? r + 10 : r - 2], { id: 'r', c: 'box' })] });
+    } else {
+      const m = a - turun;
+      langkah.push({ kata: `Di perhentian pertama, ${turun} murid turun.`, soal: `${turun} murid turun. Berapa tinggal?`, baris: [T(a, { id: 'a' }), MINUS, T(turun, { id: 't' }), '=', ASKn(R, m, [m + 1, m - 1, a + turun], { id: 'm' })] });
+      langkah.push({ kata: `Kemudian ${naik} murid naik.`, soal: `${naik} murid naik pula. Berapa semuanya sekarang?`, baris: [T(m, { id: 'm' }), '+', T(naik, { id: 'n' }), '=', ASKn(R, akhir, [akhir + 1, akhir - 1, m - naik, a + naik], { id: 'r', c: 'box' })] });
+    }
+    const L = langkah.length;
+    return {
+      soalan: lv === 1 ? `Bas sekolah ada <b>${a}</b> murid. <b>${naik}</b> murid lagi naik. Berapa murid dalam bas?`
+        : lv === 2 ? `Bas sekolah ada <b>${a}</b> murid. <b>${turun}</b> murid turun di rumah mereka. Berapa murid tinggal dalam bas?`
+          : `Bas ada <b>${a}</b> murid. <b>${turun}</b> turun, kemudian <b>${naik}</b> naik. Berapa murid dalam bas sekarang?`,
+      mula: 'Naik bas = tambah. Turun bas = tolak.',
+      langkah,
+      jawapan: `${akhir} murid`,
+      lukis(svg, k, P, q) {
+        clear(svg);
+        const fase = k < 1 ? 0 : lv < 3 ? 1 : k === 1 ? 1 : 2, selesai = !q && k >= L - 1;
+        // bilangan murid dalam bas mengikut fasa
+        const dalam = fase === 0 ? a : lv === 1 ? a + naik : lv === 2 ? a - turun : fase === 1 ? a - turun : akhir;
+        cap(svg, selesai ? `${dalam} murid dalam bas` : fase === 0 ? `${a} murid dalam bas` : q ? 'Berapa murid dalam bas?' : `${dalam} murid dalam bas`);
+        const bus = S('g', {}, svg);
+        S('rect', { x: 18, y: 70, width: 300, height: 120, rx: 22, fill: '#fcc419', stroke: 'var(--ink)', 'stroke-width': 3 }, bus);
+        S('rect', { x: 290, y: 92, width: 22, height: 70, rx: 6, fill: '#a5d8ff', stroke: 'var(--ink)', 'stroke-width': 2 }, bus);
+        S('rect', { x: 18, y: 160, width: 300, height: 12, fill: '#f08c00' }, bus);
+        [70, 260].forEach(x => { S('circle', { cx: x, cy: 194, r: 18, fill: '#343a40' }, bus); S('circle', { cx: x, cy: 194, r: 7, fill: '#adb5bd' }, bus); });
+        tx(bus, 160, 186, 'BAS SEKOLAH', { 'font-size': 14, 'font-weight': 900, fill: '#1b2a41', style: 'fill:#1b2a41' });
+        // murid: tempat duduk 2 baris × 8
+        const seat = i => [44 + (i % 8) * 31, 96 + Math.floor(i / 8) * 34];
+        const KID = ['🧒', '👧', '👦'];
+        const keluar = lv === 2 || (lv === 3 && fase >= 1) ? turun : 0, masuk = lv === 1 && fase >= 1 ? naik : lv === 3 && fase >= 2 ? naik : 0;
+        const total = a + (masuk || 0);
+        for (let i = 0; i < total; i++) {
+          const [x, y] = seat(i), out = fase >= 1 && i >= a - keluar && i < a, nw = i >= a;
+          if (out && fase >= 2) continue;   // yang sudah turun tidak lagi dalam bas
+          const e = em(bus, x, y, KID[i % 3], 24);
+          if (out) { e.setAttribute('opacity', .3); if (q || k === 1) anim(e, [{ transform: 'none', opacity: 1 }, { transform: 'translate(0,120px)', opacity: .3 }], { duration: 900, delay: (i - a + keluar) * 120 }); }
+          if (nw && (q || k === L - 1 || (lv === 1 && k === 1))) anim(e, [{ transform: 'translate(80px,130px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 900, delay: (i - a) * 140 });
+        }
+        if (fase === 1 && keluar) tx(svg, 120, 236, `${keluar} turun ⬇`, { 'font-size': 17, fill: 'var(--pen)', style: 'fill:var(--pen)' });
+        if (masuk) tx(svg, 250, 236, `${masuk} naik ⬆`, { 'font-size': 17, fill: 'var(--ok)', style: 'fill:var(--ok)' });
+        if (k <= 0) anim(bus, [{ transform: 'translateX(-360px)' }, { transform: 'none' }], { duration: 1200, easing: 'cubic-bezier(.2,.7,.3,1)' });
+        if (selesai) pop(tx(svg, 180, 280, `${dalam} murid`, { 'font-size': 26, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' }));
+      },
+      uji: () => { let c = a; for (let i = 0; i < turun; i++) c--; for (let i = 0; i < naik; i++) c++; return c === akhir && akhir >= 0 && b1 >= 0; },
+    };
+  }
+
   BAB({ bab: 2, tajuk: 'Tambah dan Tolak', ikon: '➕', warna: '#51cf66', jenis: [
     { nama: 'Tambah', gen: tambah },
     { nama: 'Tolak: tinggal berapa?', gen: tolak },
     { nama: 'Puluh dan sa', gen: puluhSa },
     { nama: 'Tambah berulang & tolak berturut-turut', gen: berulang },
+    { nama: '🎲 Baling dadu', gen: dadu },
+    { nama: '🚌 Bas sekolah', gen: bas },
   ] });
 })();
 
@@ -1027,6 +1264,7 @@ function accepts(tok, input) {
   const NAMA_BUDAK = ['Ali', 'Siti', 'Mei Ling', 'Ravi', 'Aina', 'Kumar', 'Nurul', 'Hafiz', 'Su Yin', 'Devi'];
   const SEMUA = ['satu perdua', 'satu perempat', 'dua perempat', 'tiga perempat'];
   const tx = (p, x, y, t, sz, o) => S('text', Object.assign({ x, y, 'text-anchor': 'middle', 'font-size': sz || 16, 'font-weight': 700, fill: 'var(--ink)', text: t }, o || {}), p);
+  const emo = (p, x, y, ch, sz) => S('text', { x, y: y + (sz || 24) * .35, 'text-anchor': 'middle', 'font-size': sz || 24, text: ch }, p);
   const pop = (el, d) => { anim(el, [{ opacity: 0, transform: 'scale(.3)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: d || 0, easing: 'cubic-bezier(.3,1.5,.5,1)' }); if (el) { el.style.transformBox = 'fill-box'; el.style.transformOrigin = 'center'; } return el; };
   // pengganggu: semua nama lain kecuali yang sama nilai (1/2 = 2/4)
   const pilNama = (R, nm) => R.shuffle(SEMUA.filter(x => x === nm || NILAI[x] !== NILAI[nm]));
@@ -1108,7 +1346,7 @@ function accepts(tok, input) {
     const langkah = [
       { kata: 'Semak dahulu: semua bahagian sama besar?', baris: [T('sama besar ✓', { id: 'sb' })] },
       { kata: 'Bilang semua bahagian.', baris: [ASK(p, p, { id: 'p', pilih: R.shuffle([2, 3, 4]) }), T('bahagian sama besar', { id: 'w' })] },
-      { kata: 'Bilang bahagian yang berlorek pula.', baris: [T(s, { id: 's' }), T('daripada', { id: 'w' }), T(p, { id: 'p' })] },
+      { kata: 'Bilang bahagian yang berlorek pula.', baris: [ASK(s, s, { id: 's', pilih: R.shuffle([1, 2, 3]) }), T('daripada', { id: 'w' }), T(p, { id: 'p' })] },
       { kata: 'Pecahan apakah ini? Pilih namanya.', baris: [T(frac(s, p), { id: 'f' }), '=', ASK(nm, nm, { id: 'nm', c: 'box', pilih: pilNama(R, nm) })] },
     ];
     if (s === 2 && p === 4) langkah.push({ kata: 'Dua perempat sama besar dengan satu perdua!', baris: [T(frac(2, 4), { id: 'f' }), '=', T(frac(1, 2), { id: 'h', c: 'pen' })] });
@@ -1118,10 +1356,12 @@ function accepts(tok, input) {
       mula: 'Pecahan ialah bahagian yang <b>sama besar</b> daripada satu benda.',
       langkah,
       jawapan: nm,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
-        tx(svg, 180, 32, k >= 3 ? `${nm}` : k >= 2 ? `${s} daripada ${p} berlorek` : k >= 1 ? `${p} bahagian sama besar` : `${e} ${benda}`, 20, { fill: k >= 3 ? 'var(--c)' : 'var(--ink)' });
-        lukisBentuk(svg, bentuk, regs, on, { num: k === 1 ? 'semua' : k === 2 ? 'lorek' : null, popOn: k < 0 ? 140 : 0 });
+        const noNum = q && k === 2;   // mod Cuba: murid bilang sendiri bahagian berlorek
+        if (q) k = k - 1;   // mod Cuba: keadaan sebelum langkah ini (tiada nombor bilangan untuk soalan semasa)
+        tx(svg, 180, 32, q && k >= 2 ? 'Pecahan apakah ini?' : k >= 3 ? `${nm}` : k >= 2 ? `${s} daripada ${p} berlorek` : k >= 1 ? `${p} bahagian sama besar` : `${e} ${benda}`, 20, { fill: k >= 3 ? 'var(--c)' : 'var(--ink)' });
+        lukisBentuk(svg, bentuk, regs, on, { num: noNum ? null : k === 1 ? 'semua' : k === 2 ? 'lorek' : null, popOn: k < 0 ? 140 : 0 });
         if (k === 0) { const t = tx(svg, 316, 92, '✓', 40, { fill: 'var(--ok)' }); pop(t); }
         if (k >= 3) {
           const fx = 316, fy = 220; S('rect', { x: fx - 26, y: fy - 52, width: 52, height: 82, rx: 10, fill: 'var(--sheet)', stroke: 'var(--c)', 'stroke-width': 2.5 }, svg);
@@ -1157,13 +1397,14 @@ function accepts(tok, input) {
       mula: 'Pecahan mesti dibahagi kepada bahagian yang <b>sama besar</b>.',
       langkah: [
         { kata: 'Lihat ketiga-tiga gambar: A, B dan C.' },
-        { kata: 'Bahagian mesti sama besar. Yang tidak sama, buang!', baris: [T(`${tak.huruf}: tidak sama besar ✗`, { id: 'x1', c: 'dim' })] },
-        { kata: 'Bilang bahagian berlorek pada gambar yang tinggal.', baris: [T(`${salah.huruf}: ${NAMA[`${salah.s}/${salah.p}`]} ✗`, { id: 'x2', c: 'dim' })] },
+        { kata: 'Bahagian mesti sama besar. Yang tidak sama, buang!', soal: 'Cari gambar yang bahagiannya tidak sama besar.', baris: [T('tidak sama besar:', { id: 'x1' }), ASK(tak.huruf, tak.huruf, { id: 't1', pilih: ['A', 'B', 'C'] })] },
+        { tunjuk: true, kata: 'Bilang bahagian berlorek pada gambar yang tinggal.', baris: [T(`${salah.huruf}: ${NAMA[`${salah.s}/${salah.p}`]} ✗`, { id: 'x2', c: 'dim' })] },
         { kata: `Gambar mana ${nm}?`, baris: [T(frac(s, p), { id: 'f' }), '=', T(nm, { id: 'n' }), '→', ASK(jwp, jwp, { id: 'j', c: 'box', pilih: ['A', 'B', 'C'] })] },
       ],
       jawapan: `${jwp}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q) k = k === 3 ? 1 : k - 1;   // mod Cuba: hanya gambar yang sudah dijawab dipangkah
         tx(svg, 180, 34, `Cari ${nm}`, 20, { fill: 'var(--c)' });
         opsi.forEach((o, i) => {
           const out = (k >= 1 && o === tak) || (k >= 2 && o === salah), win = k >= 3 && o.betul;
@@ -1193,13 +1434,13 @@ function accepts(tok, input) {
     const on = pilihLorek(R, p, s, false, !bulat && (p === 2 || gaya === 'jalur')), [e, benda] = BENDA[bentuk];
     const kerja = bulat ? 'Potong' : 'Lipat';
     const langkah = [
-      { kata: `${kerja} ${benda} kepada dua bahagian sama besar.`, baris: [T(`${kerja.toLowerCase()} 1 kali`, { id: 'l' }), '→', T('2 bahagian', { id: 'b' })] },
+      { kata: `${kerja} ${benda} kepada dua bahagian sama besar.`, baris: [T(`${kerja.toLowerCase()} 1 kali`, { id: 'l' }), '→', T('2 bahagian', { id: 'b', h: 1 })] },
     ];
-    if (p === 4) langkah.push({ kata: `${kerja} sekali lagi. Setiap bahagian sama besar.`, baris: [T(`${kerja.toLowerCase()} 2 kali`, { id: 'l' }), '→', T('4 bahagian', { id: 'b' })] });
+    if (p === 4) langkah.push({ kata: `${kerja} sekali lagi. Setiap bahagian sama besar.`, baris: [T(`${kerja.toLowerCase()} 2 kali`, { id: 'l' }), '→', T('4 bahagian', { id: 'b', h: 1 })] });
     langkah.push(
       { kata: 'Berapa bahagian sama besar semuanya?', baris: [T(nm, { id: 'n' }), ':', ASK(p, p, { id: 'p', pilih: R.shuffle([2, 3, 4]) }), T('bahagian', { id: 'w' })] },
-      { kata: `Nombor atas: berapa dilorek. Nombor bawah: semua bahagian.`, baris: [T(nm, { id: 'n' }), '=', T(frac(s, p), { id: 'f' })] },
-      { kata: `Lorek berapa bahagian untuk ${nm}?`, baris: [T('lorek', { id: 'w' }), ASK(s, s, { id: 's', c: 'box', pilih: R.shuffle([1, 2, 3, 4]) }), T('bahagian', { id: 'b' })] },
+      { tunjuk: true, kata: `Nombor atas: berapa dilorek. Nombor bawah: semua bahagian.`, baris: [T(nm, { id: 'n' }), '=', T(frac(s, p), { id: 'f' })] },
+      { kata: `Lorek berapa bahagian untuk ${nm}?`, baris: [T('lorek', { id: 'w' }), ASK(s, s, { id: 's', c: 'box', pilih: R.shuffle(p === 2 ? [1, 2] : [1, 2, 3, 4]) }), T('bahagian', { id: 'b' })] },
     );
     const L = langkah.length, nLip = p === 4 ? 2 : 1;
     return {
@@ -1207,11 +1448,12 @@ function accepts(tok, input) {
       mula: `${kerja} dahulu supaya semua bahagian sama besar.`,
       langkah,
       jawapan: `${s} bahagian (${frac(s, p)})`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q) k = k - 1;   // mod Cuba: tiada nombor pada bahagian, tiada lorek sebelum dijawab
         const folds = k < 0 ? 0 : Math.min(k + 1, nLip), parts = folds === 0 ? 1 : folds === 1 ? 2 : 4;
         const shade = k >= L - 2 ? (k >= L - 1 ? s : 0) : 0;
-        tx(svg, 180, 32, k >= L - 1 ? `${nm} dilorek` : k >= nLip ? `${p} bahagian sama besar` : parts > 1 ? `${parts} bahagian` : `${e} ${benda}`, 20, { fill: k >= L - 1 ? 'var(--c)' : 'var(--ink)' });
+        tx(svg, 180, 32, k >= L - 1 ? `${nm} dilorek` : q && k >= 0 ? `${kerja} dan bilang bahagian` : k >= nLip ? `${p} bahagian sama besar` : parts > 1 ? `${parts} bahagian` : `${e} ${benda}`, 20, { fill: k >= L - 1 ? 'var(--c)' : 'var(--ink)' });
         const shown = parts === 1 ? kawasan(bulat ? 'kek' : 'roti', 180, 160, 180, 2, true, 'jalur') : parts === 2 && p === 4 ? kawasan(bulat ? 'kek' : 'roti', 180, 160, 180, 2, true, 'jalur') : regs;
         const lit = shade ? on : new Set();
         const g = lukisBentuk(svg, bulat ? 'kek' : 'kertas', shown, lit, { num: k === nLip ? 'semua' : null, popOn: k === L - 1 ? 300 : 0 });
@@ -1235,10 +1477,70 @@ function accepts(tok, input) {
     };
   }
 
+
+  /* ================= 4. Kongsi sama rata (bahagi kepada rakan) ================= */
+  function kongsi(lv, R) {
+    const p = lv === 1 ? 2 : 4, s = lv === 3 ? R.pick([2, 3]) : 1;
+    const bentuk = R.pick(lv === 1 ? ['pizza', 'kek', 'roti'] : ['pizza', 'kek', 'roti', 'coklat']);
+    const gaya = bentuk === 'roti' ? R.pick(['grid', 'jalur']) : 'jalur';
+    const regs = kawasan(bentuk, 180, 156, 170, p, true, gaya), [e, benda] = BENDA[bentuk];
+    const orang = R.shuffle(NAMA_BUDAK).slice(0, p), muka = ['🧒', '👧', '👦', '🧒🏽'];
+    const pilihan = R.shuffle(orang).slice(0, s), nm = NAMA[`${s}/${p}`];
+    const owner = regs.map((_, i) => i), WARNA = ['#ff8787', '#74c0fc', '#8ce99a', '#ffd43b'];
+    const langkah = [
+      { kata: `${orang.join(', ')} mahu kongsi ${benda} sama rata.` },
+      { kata: 'Berapa orang berkongsi?', soal: 'Bilang kawan-kawan di sekeliling.', baris: [T('kawan'), '=', ASK(p, p, { id: 'p', pilih: R.shuffle([2, 3, 4]) })] },
+      { kata: `Potong ${benda} kepada ${p} bahagian sama besar. Seorang satu bahagian.` },
+      lv < 3 ? { kata: `Satu bahagian daripada ${p} ialah ${nm}.`, soal: 'Setiap orang dapat satu bahagian. Bilang semua bahagian.', baris: [T('setiap orang'), '=', ASK(nm, nm, { id: 'nm', c: 'box', pilih: pilNama(R, nm) })] }
+        : { kata: `${pilihan.join(' dan ')} dapat ${s} daripada ${p} bahagian: ${nm}.`, soal: `Bilang bahagian ${pilihan.join(' dan ')}. Ada berapa bahagian semuanya?`, baris: [T(pilihan.join(' + ')), '=', ASK(nm, nm, { id: 'nm', c: 'box', pilih: pilNama(R, nm) })] },
+    ];
+    const L = langkah.length;
+    return {
+      soalan: lv < 3 ? `${e} ${orang.join(', ')} kongsi ${benda} sama rata. Berapakah bahagian setiap orang?`
+        : `${e} ${orang.join(', ')} kongsi ${benda} sama rata. Berapakah bahagian <b>${pilihan.join(' dan ')}</b> bersama-sama?`,
+      mula: 'Kongsi sama rata: setiap bahagian <b>sama besar</b>.',
+      langkah,
+      jawapan: nm,
+      lukis(svg, k, P, q) {
+        svg.innerHTML = '';
+        const cut = k >= 2, done = k >= L - 1 && !q;
+        tx(svg, 180, 26, done ? (lv < 3 ? `Setiap orang: ${nm}` : `${pilihan.join(' + ')}: ${nm}`) : cut ? `${p} bahagian sama besar` : `Kongsi ${benda}`, 19, { fill: done ? 'var(--c)' : 'var(--ink)' });
+        const isB = bentuk === 'pizza' || bentuk === 'kek';
+        const base = bentuk === 'pizza' ? '#ffe8a3' : bentuk === 'kek' ? '#ffe3ec' : bentuk === 'roti' ? '#f6d7a7' : '#eedfcc';
+        if (!cut) { // benda masih utuh
+          if (isB) S('circle', { cx: 180, cy: 156, r: 85, fill: base, stroke: 'var(--ink)', 'stroke-width': 2.5 }, svg);
+          else { const w = bentuk === 'coklat' ? 221 : 170, h = bentuk === 'coklat' ? 136 : 170; S('rect', { x: 180 - w / 2, y: 156 - h / 2, width: w, height: h, rx: 6, fill: base, stroke: 'var(--ink)', 'stroke-width': 2.5 }, svg); }
+          emo(svg, 180, 156, e, 44);
+        } else {
+          regs.forEach((pts, i) => {
+            const mine = lv === 3 ? done && pilihan.includes(orang[i]) : done;   // bahagian milik kawan yang disebut
+            const pth = S('path', { d: d_(pts), fill: mine ? WARNA[owner[i]] : base, stroke: 'var(--ink)', 'stroke-width': 2.5, 'stroke-linejoin': 'round' }, svg);
+            if (k === 2) anim(pth, [{ transform: 'scale(.92)' }, { transform: 'none' }], { duration: 500, delay: i * 120 });
+            if (mine && lv < 3) { const [x, y] = pusat(pts), c = isB ? [180 + (pts[Math.floor(pts.length / 2)][0] - 180) * .55, 156 + (pts[Math.floor(pts.length / 2)][1] - 156) * .55] : [x, y]; pop(emo(svg, c[0], c[1], muka[i], 26), i * 150); }
+          });
+          if (bentuk === 'pizza') S('circle', { cx: 180, cy: 156, r: 85, fill: 'none', stroke: '#d9480f', 'stroke-width': 5, opacity: .8 }, svg);
+          if (k === 2) emo(svg, 300, 70, '🔪', 30);
+        }
+        // kawan di sekeliling
+        // setiap kawan duduk di sebelah bahagiannya sendiri (ikut pusat kawasan)
+        const side = regs.map(pts => pusat(pts)), P4 = [];
+        [0, 1].forEach(sd => { const ids = side.map((c, i) => [c, i]).filter(([c]) => (c[0] >= 180) === !!sd).sort((u, v) => u[0][1] - v[0][1] || u[1] - v[1]);
+          ids.forEach(([, i], j) => { P4[i] = [sd ? 320 : 40, ids.length === 1 ? 156 : j ? 222 : 96]; }); });
+        orang.forEach((o, i) => { const [x, y] = P4[i], hot = lv === 3 && done && pilihan.includes(o);
+          if (hot) S('circle', { cx: x, cy: y - 4, r: 26, fill: 'color-mix(in srgb,var(--ok) 25%,transparent)' }, svg);
+          const f = emo(svg, x, y - 6, muka[i], 32); if (k < 0) pop(f, i * 160);
+          tx(svg, x, y + 30, o, 14, { fill: 'var(--muted)' }); });
+        if (k === 1 && !q) orang.forEach((o, i) => { const [x, y] = P4[i]; pop(tx(svg, x + 22, y - 26, String(i + 1), 14, { fill: 'var(--pen)' }), i * 160); });
+      },
+      uji: () => samaBesar(regs) && regs.length === p && orang.length === p && Math.abs(s / regs.length - NILAI[nm]) < 1e-9,
+    };
+  }
+
   BAB({ bab: 3, tajuk: 'Pecahan', ikon: '🍕', warna: '#ff922b', jenis: [
     { nama: 'Kenal pecahan', gen: kenal },
     { nama: 'Bahagian sama besar', gen: manaSatu },
     { nama: 'Lipat dan lorek', gen: lipat },
+    { nama: '🍕 Kongsi sama rata', gen: kongsi },
   ] });
 })();
 
@@ -1270,13 +1572,14 @@ function accepts(tok, input) {
     S('circle', { cx: x, cy: y + 2, r, fill: '#000', opacity: .15 }, e);
     S('circle', { cx: x, cy: y, r, fill: k.f, stroke: '#868e96', 'stroke-width': 2.5 }, e);
     S('circle', { cx: x, cy: y, r: r - 5, fill: 'none', stroke: '#adb5bd', 'stroke-width': 1.2, 'stroke-dasharray': '2 3' }, e);
+    e.setAttribute('data-ok', 1);
     S('text', { x, y: y + 1, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, style: 'fill:' + DARK, text: v }, e);
     S('text', { x, y: y + 17, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 600, style: 'fill:' + DARK, text: 'sen' }, e);
     return e;
   }
   function nota(g, x, y, v, w, h) {
     w = w || 96; h = h || 50;
-    const e = S('g', {}, g), c = NOTA[v];
+    const e = S('g', { 'data-ok': 1 }, g), c = NOTA[v];
     S('rect', { x: x - w / 2 + 2, y: y - h / 2 + 3, width: w, height: h, rx: 6, fill: '#000', opacity: .15 }, e);
     S('rect', { x: x - w / 2, y: y - h / 2, width: w, height: h, rx: 6, fill: c, stroke: DARK, 'stroke-width': 1.5 }, e);
     S('rect', { x: x - w / 2 + 4, y: y - h / 2 + 4, width: w - 8, height: h - 8, rx: 4, fill: 'none', stroke: '#fff', opacity: .55, 'stroke-width': 1.2 }, e);
@@ -1322,8 +1625,8 @@ function accepts(tok, input) {
           if (jum(a) > 100 || (lv > 1 && new Set(a).size < 2)) continue;
         } else {
           if (lv === 1) a = R.chance(.5) ? Array(R.int(2, 5)).fill(100) : [500].concat(Array(R.int(1, 4)).fill(100));
-          else { const n = lv === 2 ? R.int(2, 4) : R.int(3, 5); a = []; for (let i = 0; i < n; i++) a.push(R.pick(lv === 2 ? [100, 500, 1000] : [100, 500, 1000, 1000, 5000])); }
-          if (jum(a) > 10000 || (lv > 1 && new Set(a).size < 2) || (lv === 3 && !a.includes(5000) && !a.includes(1000))) continue;
+          else { const n = lv === 2 ? R.int(2, 3) : R.int(3, 5); a = []; for (let i = 0; i < n; i++) a.push(R.pick(lv === 2 ? [100, 500, 100] : [100, 100, 500, 500, 1000])); }
+          if (jum(a) > 1000 || (lv > 1 && new Set(a).size < 2) || (lv === 3 && a.length < 4)) continue;   // Darjah 1: dalam lingkungan RM10
         }
         break;
       }
@@ -1331,17 +1634,17 @@ function accepts(tok, input) {
       const run = []; s.reduce((t, v) => { run.push(t + v); return t + v; }, 0);
       const tot = run[n - 1], L = v => lab(v, kertas), num = v => (kertas ? rm(v) : String(v));
       const sama = new Set(s).size === 1, step = kertas ? 100 : 5;
-      const salah = [tot + step, tot - step, tot + 10 * step / (kertas ? 1 : 1), tot - 10 * (kertas ? 100 : 1), tot + (kertas ? 500 : 10), tot - (kertas ? 500 : 10)].filter(v => v > 0 && v !== tot);
+      const salah = [tot + step, tot - step, tot + 10 * step / (kertas ? 1 : 1), tot - 10 * (kertas ? 100 : 1), tot + (kertas ? 500 : 10), tot - (kertas ? 500 : 10)].filter(v => v > 0 && v !== tot && v <= (kertas ? 1000 : 100));
       const langkah = [
         { kata: sama ? `Semua ${nm(s[0])}. Ada ${n} keping.` : 'Susun wang. Nilai paling besar dahulu.',
           baris: s.flatMap((v, i) => (i ? [T('+', { id: 'p' + i }), T(num(v), { id: 'v' + i })] : [T(num(v), { id: 'v' + i })])).concat(kertas ? [] : [T('sen', { id: 'u' })]) },
-        { kata: `Kira terus: ${run.map(num).join(', ')}.`,
+        { kata: `Kira terus: ${run.map(num).join(', ')}.`, soal: 'Kira terus: mula dengan nilai paling besar, kemudian tambah satu demi satu.',
           baris: run.flatMap((v, i) => {
             const tk = (n >= 3 && i === n - 2) ? ASK(num(v), kertas ? rm(v) : v, { id: 'r' + i, pilih: opsi(R, kertas ? rm(v) : v, [v + step, v + 10 * (kertas ? 100 : 1), Math.max(step, v - step)].filter(x => x !== v).map(x => (kertas ? rm(x) : x))) })
-              : T(num(v), { id: 'r' + i, c: i === n - 1 ? 'pen' : '' });
+              : T(num(v), { id: 'r' + i, c: i === n - 1 ? 'pen' : '', h: i === n - 1 });
             return i ? [T('→', { id: 'a' + i }), tk] : [tk];
           }) },
-        { kata: 'Nombor terakhir ialah jumlah nilai wang.',
+        { kata: 'Nombor terakhir ialah jumlah nilai wang.', soal: 'Jumlah nilai wang ialah nombor terakhir yang kamu kira.',
           baris: [T('Jumlah', { id: 'j' }), '=', ASK(L(tot), L(tot), { id: 'tot', c: 'box', pilih: opsi(R, L(tot), salah.map(L)) })] },
       ];
       return {
@@ -1349,18 +1652,19 @@ function accepts(tok, input) {
         mula: kertas ? 'Wang kertas: lihat nombor RM pada setiap keping.' : 'Duit syiling: lihat nombor sen pada setiap syiling.',
         langkah,
         jawapan: L(tot),
-        lukis(svg, k) {
+        lukis(svg, k, _P, q) {
           svg.innerHTML = '';
           tajuk(svg, `Wang ${nama} ${kertas ? '💵' : '🪙'}`);
+          const nb = q ? n - (k === 1 ? 2 : 1) : n;   // mod Cuba: jumlah terkumpul yang ditanya belum ditunjuk
           const arr = k < 0 ? asal : s;
           S('rect', { x: 14, y: kertas ? 44 : 84, width: 332, height: kertas ? 180 : 110, rx: 18, fill: 'color-mix(in srgb,var(--c) 14%,transparent)' }, svg);
           const P = kertas ? baris(n, 3, 110, n > 3 ? 92 : 118, 92) : baris(n, 5, 70, 150, 0);
           arr.forEach((v, i) => { const e = item(svg, P[i][0], P[i][1], v); if (k === 0) pop(e, i * 120); });
-          if (k >= 1) run.forEach((v, i) => {
+          if (k >= 1) run.forEach((v, i) => { if (i >= nb) return;
             const [x, y] = P[i], b = bulat(svg, x, y - (kertas ? 42 : 52), num(v), i === n - 1 && k >= 2 ? 'var(--ok)' : 'var(--c)', i === n - 1 && k >= 2 ? '#fff' : DARK);
             if (k === 1) pop(b, i * 300);
           });
-          if (k >= 2) panel(svg, `Jumlah: ${L(tot)}`);
+          if (k >= 2 && !q) panel(svg, `Jumlah: ${L(tot)}`);
           else if (k < 0) S('text', { x: 180, y: 262, 'text-anchor': 'middle', 'font-size': 16, fill: 'var(--muted)', text: `${n} keping ${kertas ? 'wang kertas' : 'duit syiling'}` }, svg);
         },
         uji: () => { // kira semula dengan gelung kiraan setiap jenis
@@ -1373,10 +1677,10 @@ function accepts(tok, input) {
   }
 
   /* ---------- 3. Tukar wang ---------- */
-  const TK1 = [[10, [], 5], [20, [], 10], [20, [], 5], [100, [], 50], [500, [], 100], [1000, [], 500], [10000, [], 5000]];
-  const TK2 = [[50, [], 10], [100, [], 20], [100, [], 10], [50, [], 5], [1000, [], 100], [5000, [], 1000], [10000, [], 1000], [10000, [], 5000]];
-  const TK3 = [[100, [50], 10], [100, [50, 20], 10], [100, [20, 20], 20], [50, [20], 10], [50, [20, 20], 5], [100, [50, 10], 20],
-    [1000, [500], 100], [5000, [1000, 1000], 500], [10000, [5000], 1000], [10000, [5000, 1000], 1000], [5000, [1000], 1000]];
+  const TK1 = [[10, [], 5], [20, [], 10], [20, [], 5], [100, [], 50], [500, [], 100], [1000, [], 500]];
+  const TK2 = [[50, [], 10], [100, [], 20], [100, [], 10], [50, [], 5], [1000, [], 100], [500, [], 100]];
+  const TK3 = [[100, [20], 10], [100, [50, 20], 10], [100, [20, 20], 20], [50, [20], 10], [50, [20, 20], 5], [100, [50, 10], 20],
+    [1000, [500, 100], 100], [1000, [100, 100], 100], [1000, [500, 100, 100], 100], [500, [100, 100], 100], [100, [50, 10], 10], [50, [10, 10], 5]];   // baki ≠ kepingan yang diletak; dalam lingkungan RM10
   function tukar(lv, R) {
     const [big, parts, small] = R.pick(lv === 1 ? TK1 : lv === 2 ? TK2 : TK3), nama = R.pick(NAMA);
     const ps = jum(parts), rem = big - ps, n = rem / small;
@@ -1400,16 +1704,17 @@ function accepts(tok, input) {
     const tunjuk = seq.length > 4 ? [seq[0], seq[1], '…', seq[n - 1]] : seq;
     langkah.push({ kata: `Kira ${smL}: ${tunjuk.map(v => (v === '…' ? v : isKoin(small) ? v : rm(v))).join(', ')}.` });
     langkah.push({ kata: `Bilang keping ${smL} yang kita letak.`,
-      baris: [T(parts.length ? remL : bigL, { id: parts.length ? 'rem' : 'b' }), '=', ASK(String(n), n, { id: 'n', c: 'box', pilih: pilihN }), T('keping', { id: 'kp' }), T(smL, { id: 'sm' })] });
+      soal: `Bilang keping ${smL} yang mengisi palang.`, baris: [T(parts.length ? remL : bigL, { id: parts.length ? 'rem' : 'b' }), '=', ASK(String(n), n, { id: 'n', c: 'box', pilih: pilihN, bebas: smL.replace(/\D/g, '') === String(n) || bigL.replace(/\D/g, '') === String(n) }), T('keping', { id: 'kp' }), T(smL, { id: 'sm' })] });
     return {
       soalan: parts.length ? `${bigL} = ${parts.map(nm).join(' + ')} + berapa keping ${smL}?`
         : `${nama} mahu tukar ${bigL} dengan ${smL}. Berapa keping ${smL}?`,
       mula: 'Tukar wang: nilai mesti sama. Isi sehingga penuh.',
       langkah,
       jawapan: `${n} keping ${smL}`,
-      lukis(svg, k) {
+      lukis(svg, k, _P, q) {
         svg.innerHTML = '';
         const nL = langkah.length, fillK = nL - 2;
+        if (q && k >= nL - 1) k = nL - 2;   // mod Cuba: kepingan diisi tanpa nombor; murid bilang sendiri
         // wang besar
         const big1 = item(svg, 70, 62, big);
         S('text', { x: 140, y: 70, 'font-size': 26, 'font-weight': 800, fill: 'var(--ink)', text: '=' }, svg);
@@ -1428,7 +1733,7 @@ function accepts(tok, input) {
         const show = k >= fillK ? n : 0;
         for (let i = 0; i < show; i++) {
           const r = S('rect', { x: x + 1, y: Y + 2, width: small * u - 2, height: H - 4, rx: 4, fill: 'var(--c)', stroke: DARK, 'stroke-width': 1 }, svg);
-          S('text', { x: x + small * u / 2, y: Y + 21, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, style: 'fill:' + DARK, text: i + 1 }, svg);
+          if (!q) S('text', { x: x + small * u / 2, y: Y + 21, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, style: 'fill:' + DARK, text: i + 1 }, svg);
           if (k === fillK) anim(r, [{ opacity: 0 }, { opacity: 1 }], { duration: 250, delay: i * 180 });
           x += small * u;
         }
@@ -1439,7 +1744,7 @@ function accepts(tok, input) {
         all.forEach((v, i) => {
           const e = item(svg, P[i][0], P[i][1], v, true);
           const isPart = i < (k >= 1 ? parts.length : 0);
-          if (!isPart) {
+          if (!isPart && !q) {
             const b = bulat(svg, P[i][0] + (isKoin(v) ? 24 : 28), P[i][1] - (isKoin(v) ? 26 : 18), i - (k >= 1 ? parts.length : 0) + 1);
             if (k === fillK) { pop(e, (i - parts.length) * 180); pop(b, (i - parts.length) * 180); }
           } else if (k === 1) pop(e, i * 200);
@@ -1459,42 +1764,44 @@ function accepts(tok, input) {
   const BERI = ['Ibu', 'Ayah', 'Nenek', 'Datuk', 'Kakak', 'Abang'];
   function belanja(lv, R) {
     const kertas = lv === 1 ? true : R.chance(.5);
-    const pool = kertas ? (lv === 1 ? [100, 100, 500] : lv === 2 ? [100, 500, 1000] : [100, 500, 1000, 1000, 5000]) : [5, 10, 20, 50];
-    const max = kertas ? (lv === 1 ? 1000 : lv === 2 ? 5000 : 10000) : 100;
+    const pool = kertas ? (lv === 1 ? [100, 100, 500] : [100, 100, 500]) : [5, 10, 20, 50];
+    const max = kertas ? 1000 : 100;   // Darjah 1: dalam lingkungan RM10
     const mod = lv === 3 ? 'dua' : R.pick(['terima', 'belanja']);
     let ada, dapat, guna;
     for (let t = 0; t < 300; t++) {
       ada = []; dapat = []; guna = [];
       const na = R.int(2, 3); for (let i = 0; i < na; i++) ada.push(R.pick(pool));
       if (mod !== 'belanja') { const nd = R.int(1, 2); for (let i = 0; i < nd; i++) dapat.push(R.pick(pool)); }
+      ada.sort((a, b) => b - a); dapat.sort((a, b) => b - a);   // susun dahulu supaya indeks 'guna' kekal tepat
       const semua = ada.concat(dapat).map((v, i) => [v, i]);
       if (mod !== 'terima') { const sh = R.shuffle(semua); guna = sh.slice(0, R.int(1, Math.min(2, sh.length - 1))).map(p => p[1]); }
       const A = jum(ada), D = jum(dapat), G = jum(guna.map(i => semua[i][0]));
       if (A + D > max || (kertas && A + D < 300) || (!kertas && A + D < 25)) continue;
       if (mod !== 'terima' && A + D - G <= 0) continue;
+      const Bx = A + D - G; if (Bx === G || Bx === A || (mod !== 'belanja' && Bx === D) || (mod === 'dua' && (A + D === G || A + D === D))) continue;
       break;
     }
     ada.sort((a, b) => b - a); dapat.sort((a, b) => b - a);
     const semua = ada.concat(dapat), A = jum(ada), D = jum(dapat), G = jum(guna.map(i => semua[i])), B = A + D - G;
     const L = v => lab(v, kertas), nama = R.pick(NAMA), beri = R.pick(BERI), [ikon, barang] = R.pick(BELI);
     const st = kertas ? 100 : 5, ten = kertas ? 1000 : 10;
-    const dis = (v, ext) => opsi(R, L(v), [v + st, v - st, v + ten, v - ten].concat(ext || []).filter(x => x > 0 && x !== v).map(L));
+    const dis = (v, ext) => opsi(R, L(v), [v + st, v - st, v + ten, v - ten].concat(ext || []).filter(x => x > 0 && x !== v && x <= max).map(L));
     const langkah = [{ kata: 'Kira wang yang ada dahulu.', baris: [T(ada.map(nm).join(' + '), { id: 'adaS' }), '=', T(L(A), { id: 'A' })] }];
     let soalan;
     if (mod === 'terima') {
       soalan = `${nama} ada ${L(A)}. ${beri} beri ${L(D)}. Berapakah jumlah wang ${nama}?`;
       langkah.push({ kata: `${nama} terima ${L(D)}. Terima bermakna tambah.`, baris: [T(L(A), { id: 'A' }), T('+', { id: 'op', c: 'pen' }), T(L(D), { id: 'D', c: 'pen' })] });
-      langkah.push({ kata: 'Kira semua wang bersama-sama.', baris: [T(L(A), { id: 'A' }), T('+', { id: 'op' }), T(L(D), { id: 'D' }), '=', ASK(L(B), L(B), { id: 'B', c: 'box', pilih: dis(B, [A, D]) })] });
+      langkah.push({ kata: 'Kira semua wang bersama-sama.', baris: [T(L(A), { id: 'A' }), T('+', { id: 'op' }), T(L(D), { id: 'D' }), '=', ASK(L(B), L(B), { id: 'B', c: 'box', bebas: semua.includes(B), pilih: dis(B, [A, D]) })] });
     } else if (mod === 'belanja') {
       soalan = `${nama} ada ${L(A)}. Dia belanja ${L(G)} untuk ${barang}. Berapakah baki wangnya?`;
       langkah.push({ kata: `Belanja ${L(G)}. Belanja bermakna tolak.`, baris: [T(L(A), { id: 'A' }), T(MINUS, { id: 'op', c: 'pen' }), T(L(G), { id: 'G', c: 'pen' })] });
-      langkah.push({ kata: 'Baki ialah wang yang tinggal.', baris: [T(L(A), { id: 'A' }), T(MINUS, { id: 'op' }), T(L(G), { id: 'G' }), '=', ASK(L(B), L(B), { id: 'B', c: 'box', pilih: dis(B, [A + G]) })] });
+      langkah.push({ kata: 'Baki ialah wang yang tinggal.', baris: [T(L(A), { id: 'A' }), T(MINUS, { id: 'op' }), T(L(G), { id: 'G' }), '=', ASK(L(B), L(B), { id: 'B', c: 'box', bebas: semua.includes(B), pilih: dis(B, [A + G]) })] });
     } else {
       const AD = A + D;
       soalan = `${nama} ada ${L(A)}. ${beri} beri ${L(D)}. Dia belanja ${L(G)}. Berapakah bakinya?`;
       langkah.push({ kata: `Terima ${L(D)}: tambah dahulu.`, baris: [T(L(A), { id: 'A' }), T('+', { c: 'pen' }), T(L(D), { c: 'pen' }), '=', ASK(L(AD), L(AD), { id: 'AD', pilih: dis(AD) })] });
       langkah.push({ kata: `Belanja ${L(G)} untuk ${barang}: tolak pula.`, baris: [T(L(AD), { id: 'AD' }), T(MINUS, { id: 'op', c: 'pen' }), T(L(G), { id: 'G', c: 'pen' })] });
-      langkah.push({ kata: 'Kira wang yang tinggal. Itulah baki.', baris: [T(L(AD), { id: 'AD' }), T(MINUS, { id: 'op' }), T(L(G), { id: 'G' }), '=', ASK(L(B), L(B), { id: 'B', c: 'box', pilih: dis(B, [AD + G, AD]) })] });
+      langkah.push({ kata: 'Kira wang yang tinggal. Itulah baki.', baris: [T(L(AD), { id: 'AD' }), T(MINUS, { id: 'op' }), T(L(G), { id: 'G' }), '=', ASK(L(B), L(B), { id: 'B', c: 'box', bebas: semua.includes(B), pilih: dis(B, [AD + G, AD]) })] });
     }
     const nL = langkah.length, kD = mod === 'belanja' ? 99 : 1, kG = mod === 'terima' ? 99 : mod === 'belanja' ? 1 : 2;
     return {
@@ -1502,9 +1809,10 @@ function accepts(tok, input) {
       mula: 'Terima wang: jumlah bertambah. Belanja wang: wang berkurang.',
       langkah,
       jawapan: L(B),
-      lukis(svg, k) {
+      lukis(svg, k, _P, q) {
         svg.innerHTML = '';
         tajuk(svg, `Wang ${nama} 👛`);
+        const kAsk = q ? k : 99;   // mod Cuba: sel jadual yang sedang ditanya kekal '?'
         const vis = ada.concat(k >= kD ? dapat : []);
         const P = kertas ? baris(vis.length, 3, 108, vis.length > 3 ? 72 : 100, 74) : baris(vis.length, 5, 70, 110, 0);
         vis.forEach((v, i) => {
@@ -1540,7 +1848,7 @@ function accepts(tok, input) {
           S('text', { x: x + cw / 2, y: Y + 21, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 800, fill: 'var(--ink)', text: h }, svg);
           S('rect', { x, y: Y + 30, width: cw, height: 40, fill: last && k >= kk ? 'color-mix(in srgb,var(--ok) 25%,var(--sheet))' : 'var(--sheet)', stroke: 'var(--ink)', 'stroke-width': 1.2 }, svg);
           const sg = h === 'Terima' ? '+' : h === 'Belanja' ? MINUS : '';
-          if (k >= kk) { const t = S('text', { x: x + cw / 2, y: Y + 57, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: h === 'Belanja' ? 'var(--pen)' : last ? 'var(--ok)' : 'var(--ink)', text: (sg ? sg + ' ' : '') + L(v) }, svg); if (k === kk) pop(t); }
+          if (k >= kk && !(q && kk >= kAsk)) { const t = S('text', { x: x + cw / 2, y: Y + 57, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: h === 'Belanja' ? 'var(--pen)' : last ? 'var(--ok)' : 'var(--ink)', text: (sg ? sg + ' ' : '') + L(v) }, svg); if (k === kk) pop(t); }
           else S('text', { x: x + cw / 2, y: Y + 57, 'text-anchor': 'middle', 'font-size': 19, fill: 'var(--muted)', text: '?' }, svg);
         });
       },
@@ -1551,11 +1859,73 @@ function accepts(tok, input) {
     };
   }
 
+
+  /* ---------- 5. Kedai mainan: cukup atau tidak? ---------- */
+  const MAINAN = [['🧸', 'patung beruang'], ['🪀', 'yoyo'], ['🚗', 'kereta mainan'], ['🪁', 'layang-layang'], ['⚽', 'bola'], ['🎨', 'set warna'], ['🧩', 'teka-teki'], ['🎈', 'belon']];
+  function kedai(lv, R) {
+    const kertas = lv >= 2, nama = R.pick(NAMA), [ik, brg] = R.pick(MAINAN);
+    let a, tot, harga, cukup;
+    for (let t = 0; t < 300; t++) {
+      const n = R.int(2, lv === 1 ? 4 : 3); a = [];
+      for (let i = 0; i < n; i++) a.push(R.pick(kertas ? [100, 500, 100] : [10, 20, 50, 5]));
+      tot = jum(a); if (kertas ? tot > 1000 || tot < 300 : tot > 100 || tot < 20) continue;
+      cukup = lv === 3 ? true : R.chance(.5);
+      const st = kertas ? 100 : 5;
+      harga = cukup ? tot - st * R.int(1, Math.max(1, Math.floor(tot / st / 2))) : tot + st * R.int(1, kertas ? 5 : 6);
+      if (harga <= 0 || harga === tot || (lv === 3 && tot - harga === harga)) continue;
+      break;
+    }
+    const L = v => lab(v, kertas), s = a.slice().sort((x, y) => y - x), baki = tot - harga;
+    const salah = [tot + (kertas ? 100 : 5), tot - (kertas ? 100 : 5), tot + (kertas ? 200 : 10), tot - (kertas ? 500 : 10)].filter(v => v > 0 && v !== tot && v !== harga && v <= (kertas ? 1000 : 100));
+    const jw = cukup ? 'cukup' : 'tidak cukup';
+    const langkah = [
+      { kata: `${nama} mahu beli ${brg}. Lihat tanda harga.` },
+      { kata: 'Kira wang dalam dompet dahulu.', soal: 'Kira wang dalam dompet. Mula dengan nilai paling besar.', baris: [T('dompet', { id: 'w' }), '=', ASK(L(tot), L(tot), { id: 't', pilih: opsi(R, L(tot), salah.map(L), 4) })] },
+      { kata: cukup ? 'Wang lebih atau sama dengan harga: cukup!' : 'Wang kurang daripada harga: tidak cukup.', soal: 'Bandingkan wang dalam dompet dengan harga.',
+        baris: [T(L(tot), { id: 't' }), T('dan', { id: 'dn' }), T(L(harga), { id: 'h' }), '→', ASK(jw, jw, { id: 'c', c: lv === 3 ? '' : 'box', pilih: ['cukup', 'tidak cukup'] })] },
+    ];
+    if (lv === 3) langkah.push({ kata: `Baki = ${L(tot)} − ${L(harga)} = ${L(baki)}.`, soal: 'Baki ialah wang yang tinggal selepas membayar. Tolak.',
+      baris: [T(L(tot), { id: 't' }), MINUS, T(L(harga), { id: 'h' }), '=', ASK(L(baki), L(baki), { id: 'b', c: 'box', pilih: opsi(R, L(baki), [baki + 100, baki - 100, baki + 200, harga].filter(v => v > 0 && v !== baki && v <= 1000).map(L), 4) })] });
+    const nL = langkah.length;
+    return {
+      soalan: lv === 3 ? `${nama} beli ${brg} berharga <b>${L(harga)}</b>. Berapakah baki wangnya?` : `${nama} mahu beli ${brg} berharga <b>${L(harga)}</b>. Cukupkah wangnya?`,
+      mula: 'Kira wang, kemudian bandingkan dengan harga.',
+      langkah,
+      jawapan: lv === 3 ? L(baki) : jw,
+      lukis(svg, k, _P, q) {
+        svg.innerHTML = '';
+        tajuk(svg, '🏪 Kedai Mainan');
+        // rak & barang dengan tanda harga
+        S('rect', { x: 196, y: 40, width: 154, height: 132, rx: 12, fill: 'color-mix(in srgb,var(--c) 18%,transparent)', stroke: 'var(--ink)', 'stroke-width': 2 }, svg);
+        const it = S('text', { x: 273, y: 112, 'text-anchor': 'middle', 'font-size': 58, text: ik }, svg);
+        if (k <= 0) anim(it, [{ transform: 'translateY(-14px)' }, { transform: 'none' }, { transform: 'translateY(-8px)' }, { transform: 'none' }], { duration: 900, fill: 'none' });
+        const tag = S('g', {}, svg);
+        S('path', { d: 'M222 136 L314 136 L326 152 L314 168 L222 168 Z', fill: '#fff3bf', stroke: '#e67700', 'stroke-width': 2 }, tag);
+        S('text', { x: 268, y: 158, 'text-anchor': 'middle', 'font-size': 18, 'font-weight': 800, style: 'fill:' + DARK, text: L(harga) }, tag);
+        // dompet
+        S('rect', { x: 10, y: 40, width: 178, height: 186, rx: 14, fill: 'color-mix(in srgb,var(--blue) 12%,transparent)', stroke: 'var(--ink)', 'stroke-width': 2 }, svg);
+        S('text', { x: 99, y: 60, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 700, fill: 'var(--muted)', text: '👛 dompet' }, svg);
+        const Pp = kertas ? baris(s.length, 2, 82, 96, 52, 99) : baris(s.length, 2, 74, 100, 70, 99);
+        s.forEach((v, i) => { const e = kertas ? nota(svg, Pp[i][0], Pp[i][1], v, 70, 40) : koin(svg, Pp[i][0], Pp[i][1], v); if (k < 0) pop(e, i * 150); });
+        const showT = k >= 1 && !(q && k === 1);
+        S('text', { x: 99, y: 214, 'text-anchor': 'middle', 'font-size': 18, 'font-weight': 800, fill: 'var(--ink)', text: showT ? `Ada ${L(tot)}` : 'Ada ?' }, svg);
+        if (k >= 2 && !(q && k === 2)) {
+          const g = S('g', {}, svg), ok = cukup;
+          S('rect', { x: 60, y: 240, width: 240, height: 44, rx: 22, fill: ok ? 'var(--ok)' : 'var(--pen)' }, g);
+          S('text', { x: 180, y: 269, 'text-anchor': 'middle', 'font-size': 20, 'font-weight': 800, style: 'fill:#fff', text: ok ? (lv === 3 && k >= 3 && !q ? `✅ Baki ${L(baki)}` : '✅ Cukup!') : '❌ Tidak cukup' }, g);
+          pop(g);
+        } else if (k >= 1) S('text', { x: 180, y: 268, 'text-anchor': 'middle', 'font-size': 18, 'font-weight': 700, fill: 'var(--muted)', text: 'Cukupkah? 🤔' }, svg);
+      },
+      uji: () => { let t = 0; a.forEach(v => { t += v; }); return t === tot && (t >= harga) === cukup && (lv < 3 || t - harga === baki) && a.every(v => !!(KOIN[v] || NOTA[v])); },
+    };
+  }
+
   BAB({ bab: 4, tajuk: 'Wang', ikon: '🪙', warna: '#fcc419', jenis: [
     { nama: 'Kira duit syiling', gen: kira(false) },
     { nama: 'Kira wang kertas', gen: kira(true) },
     { nama: 'Tukar wang', gen: tukar },
     { nama: 'Terima & belanja', gen: belanja },
+    { nama: '🏪 Kedai mainan', gen: kedai },
   ] });
 })();
 
@@ -1592,8 +1962,8 @@ function accepts(tok, input) {
       S('line', { x1: cx + (r - (big ? 10 : 5)) * Math.sin(a), y1: cy - (r - (big ? 10 : 5)) * Math.cos(a), x2: cx + (r - 2) * Math.sin(a), y2: cy - (r - 2) * Math.cos(a), stroke: 'var(--ink)', 'stroke-width': big ? 2.5 : 1 }, svg);
     }
     for (let i = 1; i <= 12; i++) {
-      const a = i * 30 * Math.PI / 180, hot = (o.hot === 'm' && i === (m / 5 || 12)) || (o.hot === 'h' && i === o.nomH);
-      S('text', { x: cx + (r - 26) * Math.sin(a), y: cy - (r - 26) * Math.cos(a) + 7, 'text-anchor': 'middle', 'font-size': hot ? 22 : 19, 'font-weight': 800, fill: hot ? 'var(--pen)' : 'var(--ink)', text: i }, svg);
+      const a = i * 30 * Math.PI / 180, hot = (o.hot === 'm' && o.nomM !== false && i === (m / 5 || 12)) || (o.hot === 'h' && i === o.nomH);
+      S('text', { x: cx + (r - 26) * Math.sin(a), y: cy - (r - 26) * Math.cos(a) + 7, 'text-anchor': 'middle', 'font-size': hot ? 22 : 19, 'font-weight': 800, fill: hot ? 'var(--pen)' : 'var(--ink)', text: i, 'data-ok': hot ? null : 1 }, svg);
     }
     const ah = (h % 12) * 30 + m / 2, am = m * 6;
     const tangan = (ang, len, w, col, hot, dari) => {
@@ -1624,21 +1994,23 @@ function accepts(tok, input) {
       soalan: `Jam menunjukkan waktu ${nama} ${buat}. Pukul berapakah itu?`,
       mula: 'Jarum pendek = jarum jam. Jarum panjang = jarum minit.',
       langkah: [
-        { kata: `Lihat jarum pendek dahulu. ${kataH}`, baris: [T('jarum jam', { id: 'jj' }), '→', ASK(String(h), h, { id: 'h', pilih: opsi(R, h, [h1, h0, hh(h + 6)]) })] },
-        { kata: kataM, baris: [T('jarum minit', { id: 'jm' }), '→', T(MW[m], { id: 'm', c: 'pen' })] },
-        { kata: 'Gabungkan kedua-duanya. Sebut waktu itu.', baris: [ASK(ans, ans, { id: 'ans', c: 'box', pilih: opsi(R, ans, calon.filter(c => c !== ans)) })] },
+        { kata: `Lihat jarum pendek dahulu. ${kataH}`, soal: m === 0 ? 'Lihat jarum pendek. Ia tunjuk tepat ke angka mana?' : m === 45 ? 'Lihat jarum pendek. Ia hampir sampai angka seterusnya, tetapi belum sampai!' : 'Lihat jarum pendek. Ia sudah lepas satu angka. Ambil angka yang sudah dilepasi.',
+          baris: [T('jarum jam', { id: 'jj' }), '→', ASK(String(h), h, { id: 'h', pilih: opsi(R, h, [h1, h0, hh(h + 6)]) })] },
+        { kata: kataM, soal: 'Lihat jarum panjang. Angka 12 = tepat, 3 = suku, 6 = setengah, 9 = tiga suku.', baris: [T('jarum minit', { id: 'jm' }), '→', ASK(MW[m], MW[m], { id: 'm', pilih: lv === 1 ? R.shuffle(['tepat', 'setengah', 'suku']) : R.shuffle(['tepat', 'suku', 'setengah', 'tiga suku']) })] },
+        { kata: 'Gabungkan kedua-duanya. Sebut waktu itu.', soal: m === 0 ? 'Gabungkan: angka jarum pendek. Tepat bermaksud tiada perkataan lain selepas angka.' : 'Gabungkan: angka jarum pendek, kemudian bacaan jarum panjang.', baris: [ASK(ans, ans, { id: 'ans', c: 'box', pilih: opsi(R, ans, calon.filter(c => c !== ans)) })] },
       ],
       jawapan: ans,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
         const cx = 180, cy = 142, r = 108;
-        jam(svg, cx, cy, r, h, m, { hot: k === 0 ? 'h' : k === 1 ? 'm' : '', nomH: m === 45 ? null : h, sektor: k >= 1, dim: k === 0 || k === 1, putar: k < 0 });
+        // mod Cuba: jarum disorot tetapi angka jawapan tidak diwarnakan dan tiada label
+        jam(svg, cx, cy, r, h, m, { hot: k === 0 ? 'h' : k === 1 ? 'm' : '', nomH: m === 45 || q ? null : h, nomM: !q, sektor: k >= 1 && !(q && k === 1), dim: k === 0 || k === 1, putar: k < 0 });
         const ic = S('text', { x: 36, y: 46, 'text-anchor': 'middle', 'font-size': 34, text: ikon }, svg);
         if (k < 0) pop(ic, 500);
         let lbl = '';
-        if (k === 0) lbl = 'jarum pendek → ' + h;
-        if (k === 1) lbl = 'jarum panjang → ' + (m === 0 ? 'tepat' : MW[m] + ' jam');
-        if (k >= 2) lbl = ans;
+        if (q) { /* tiada label semasa ditanya */ } else if (k === 0) lbl = 'jarum pendek → ' + h;
+        if (k === 1 && !q) lbl = 'jarum panjang → ' + (m === 0 ? 'tepat' : MW[m] + ' jam');
+        if (k >= 2 && !q) lbl = ans;
         if (lbl) {
           const g = S('g', {}, svg), w = lbl.length * 10 + 30;
           S('rect', { x: 180 - w / 2, y: 262, width: w, height: 34, rx: 17, fill: k >= 2 ? 'var(--ok)' : k === 0 ? 'var(--blue)' : 'var(--pen)' }, g);
@@ -1718,16 +2090,17 @@ function accepts(tok, input) {
       mula: 'Isnin, Selasa, Rabu, Khamis, Jumaat, Sabtu, Ahad — kemudian Isnin semula.',
       langkah,
       jawapan: sasar,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
         tajuk(svg, 'Hari dalam seminggu');
         const sor = {}, ki = ((kini % 7) + 7) % 7;
+        // mod Cuba: hari yang ditanya tidak disorot dan tiada lompatan yang mendarat padanya
         if (beri && k >= kBeri) sor[(ki + REL[beri] + 7) % 7] = { f: '#7048e8', t: beri, pop: k === kBeri };
-        if (k >= kKini) sor[ki] = { f: 'var(--pen)', t: 'hari ini', pop: k === kKini };
-        if (k >= nL - 1) sor[(ki + REL[tanya] + 7) % 7] = { f: 'var(--ok)', t: tanya, pop: k === nL - 1 };
+        if (k >= kKini && !(q && k === kKini && beri)) sor[ki] = { f: 'var(--pen)', t: 'hari ini', pop: k === kKini };
+        if (k >= nL - 1 && !q) sor[(ki + REL[tanya] + 7) % 7] = { f: 'var(--ok)', t: tanya, pop: k === nL - 1 };
         const pos = roda(svg, ki, sor);
-        if (beri && k === kKini) lompat(svg, pos, (ki + REL[beri] + 7) % 7, -REL[beri], '#7048e8', true);
-        if (k >= kLomp) lompat(svg, pos, ki, REL[tanya], 'var(--ok)', k === kLomp);
+        if (beri && k === kKini && !q) lompat(svg, pos, (ki + REL[beri] + 7) % 7, -REL[beri], '#7048e8', true);
+        if (k >= kLomp && !q) lompat(svg, pos, ki, REL[tanya], 'var(--ok)', k === kLomp);
       },
       uji: () => { // berjalan satu demi satu menggunakan rantai "selepas"
         const next = {}; 'Isnin>Selasa>Rabu>Khamis>Jumaat>Sabtu>Ahad>Isnin'.split('>').reduce((a, b) => { next[a] = b; return b; });
@@ -1767,6 +2140,7 @@ function accepts(tok, input) {
         { kata: jenis === 'selepas' ? `Selepas: gerak ke hadapan ${Math.abs(n)} bulan.` : 'Sebelum: gerak ke belakang 1 bulan.',
           baris: [T(B(mula), { id: 'm' }), T(jenis === 'selepas' ? '→' : '←', { id: 'ar', c: 'pen' }), T(String(Math.abs(n)), { id: 'k', c: 'pen' })] },
         { kata: (mula === 11 && n > 0) || (mula + n > 11) ? 'Selepas Disember, kita mula semula di Januari.' : (mula === 0 && n < 0) ? 'Sebelum Januari ialah Disember tahun lepas.' : 'Kita sampai di bulan ini!',
+          soal: `Gerak ${Math.abs(n)} bulan ${jenis === 'selepas' ? 'ke hadapan' : 'ke belakang'}.` + ((mula + n > 11) || (mula + n < 0) ? ' Ingat: kalendar bersambung semula selepas bulan terakhir.' : ''),
           baris: [T(B(mula), { id: 'm' }), T(jenis === 'selepas' ? '→' : '←', { id: 'ar' }), ASK(sasar, sasar, { id: 's', c: 'box', pilih: opsi(R, sasar, salah) })] },
       ];
     }
@@ -1775,9 +2149,10 @@ function accepts(tok, input) {
       mula: 'Ada 12 bulan dalam setahun, dari Januari hingga Disember.',
       langkah,
       jawapan: sasar,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
         tajuk(svg, 'Bulan dalam setahun 🗓️');
+        if (q && k >= 2) k = 0.5;   // mod Cuba: bulan mula disorot, tiada tanda lawatan
         const pos = i => [8 + (i % 4) * 86, 44 + Math.floor(i / 4) * 72];
         const lawat = [];
         if (jenis === 'ke') { if (k >= 1) for (let i = 0; i < n; i++) lawat.push(i); }
@@ -1789,7 +2164,7 @@ function accepts(tok, input) {
           const g = S('g', {}, svg);
           S('rect', { x, y, width: 84, height: 62, rx: 10, fill: f, stroke: isT || isM ? f : 'var(--ink)', 'stroke-width': 1.6 }, g);
           S('rect', { x, y, width: 84, height: 18, rx: 6, fill: isT || isM ? 'rgba(0,0,0,.18)' : 'var(--c)', opacity: .9 }, g);
-          S('text', { x: x + 42, y: y + 14, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, style: 'fill:#fff', text: i + 1 }, g);
+          if (!(q && jenis === 'ke')) S('text', { x: x + 42, y: y + 14, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, style: 'fill:#fff', text: i + 1, 'data-ok': 1 }, g);
           S('text', { x: x + 42, y: y + 45, 'text-anchor': 'middle', 'font-size': b.length > 8 ? 14 : 16, 'font-weight': 800, fill: isT || isM ? '#fff' : 'var(--ink)', style: isT || isM ? 'fill:#fff' : '', text: b }, g);
           if ((isM && k === 0) || (isT && k === 2)) pop(g);
         });
@@ -1799,7 +2174,7 @@ function accepts(tok, input) {
           if (k === 1) { anim(c, [{ opacity: 0 }, { opacity: 1 }], { duration: 250, delay: j * 160 }); anim(t, [{ opacity: 0 }, { opacity: 1 }], { duration: 250, delay: j * 160 }); }
         });
         const wrap = jenis !== 'ke' && (mula + n > 11 || mula + n < 0);
-        if (wrap && k >= 1) S('text', { x: 180, y: 278, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 700, fill: 'var(--pen)', text: n > 0 ? 'Disember → Januari (tahun baharu)' : 'Januari ← Disember (tahun lepas)' }, svg);
+        if (wrap && k >= 1 && !q) S('text', { x: 180, y: 278, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 700, fill: 'var(--pen)', text: n > 0 ? 'Disember → Januari (tahun baharu)' : 'Januari ← Disember (tahun lepas)' }, svg);
       },
       uji: () => { // bilang dari Januari
         let i = 0, d; const s = 'Januari Februari Mac April Mei Jun Julai Ogos September Oktober November Disember'.split(' ');
@@ -1815,8 +2190,8 @@ function accepts(tok, input) {
   const BUAT = {
     pagi: [['🪥', 'gosok gigi selepas bangun tidur', 'gosok gigi'], ['🥣', 'makan sarapan', 'makan sarapan'], ['🏫', 'pergi ke sekolah', 'ke sekolah'], ['🐓', 'dengar ayam berkokok', 'dengar ayam']],
     'tengah hari': [['🍛', 'makan nasi selepas balik sekolah', 'makan nasi'], ['🧺', 'jemur kain ketika matahari terik', 'jemur kain'], ['🥤', 'minum air sejuk kerana panas terik', 'minum air sejuk']],
-    petang: [['⚽', 'main bola di padang', 'main bola'], ['🪁', 'main layang-layang', 'main layang-layang'], ['🚲', 'naik basikal di taman', 'naik basikal'], ['🍌', 'minum petang dengan pisang goreng', 'minum petang']],
-    malam: [['🛏️', 'tidur di atas katil', 'tidur'], ['📖', 'baca buku sebelum tidur', 'baca buku'], ['⭐', 'lihat bintang di langit', 'lihat bintang'], ['🍽️', 'makan malam bersama keluarga', 'makan malam']],
+    petang: [['⚽', 'main bola di padang', 'main bola'], ['🪁', 'main layang-layang', 'main layang-layang'], ['🚲', 'naik basikal di taman', 'naik basikal'], ['🏸', 'main badminton dengan kawan', 'main badminton']],
+    malam: [['🛏️', 'tidur di atas katil', 'tidur'], ['📖', 'baca buku sebelum tidur', 'baca buku'], ['⭐', 'lihat bintang di langit', 'lihat bintang'], ['🦉', 'dengar burung hantu berbunyi', 'dengar burung hantu']],
   };
   const LANGIT = { pagi: '#a5d8ff', 'tengah hari': '#4dabf7', petang: '#ffc078', malam: '#1c2a4a' };
   const CIRI = { pagi: 'Matahari baru naik. Langit cerah.', 'tengah hari': 'Matahari tinggi di atas kepala.', petang: 'Matahari mula turun. Langit jingga.', malam: 'Langit gelap. Ada bulan dan bintang.' };
@@ -1854,14 +2229,14 @@ function accepts(tok, input) {
       if (w === 'malam') { S('text', { x: x + 40, y: y + 72, 'text-anchor': 'middle', 'font-size': 34, text: '🌙' }, svg); S('text', { x: x + 8, y: y + 40, 'font-size': 14, style: 'fill:#ffe066', text: '✦' }, svg); S('text', { x: x + 60, y: y + 50, 'font-size': 14, style: 'fill:#ffe066', text: '✦' }, svg); }
       else { const sp = { pagi: [x + 20, y + 84], 'tengah hari': [x + 40, y + 48], petang: [x + 60, y + 80] }[w]; S('circle', { cx: sp[0], cy: sp[1], r: 14, fill: '#ffd43b', stroke: '#f59f00', 'stroke-width': 3 }, svg); }
       S('rect', { x: x + 2, y: y + 92, width: 76, height: 16, rx: 6, fill: '#51cf66' }, svg);
-      S('text', { x: x + 40, y: y + 140, 'text-anchor': 'middle', 'font-size': w.length > 6 ? 14 : 16, 'font-weight': 800, fill: 'var(--ink)', text: w }, svg);
+      S('text', { x: x + 40, y: y + 140, 'text-anchor': 'middle', 'font-size': w.length > 6 ? 14 : 16, 'font-weight': 800, fill: 'var(--ink)', text: w, 'data-ok': 1 }, svg);
       S('text', { x: x + 40, y: y + 22, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 800, style: 'fill:' + (w === 'malam' ? '#fff' : DARK), text: i + 1 }, svg);
     });
   }
   function waktu(lv, R) {
     const nama = R.pick(NAMA);
     if (lv < 3) {
-      const w = R.pick(WAKTU), [ikon, buat, pendek] = R.pick(BUAT[w]);
+      const w = R.pick(WAKTU), [ikon, buat, pendek] = R.pick(lv === 2 ? BUAT[w].filter(a => !['minum air sejuk', 'naik basikal', 'ke sekolah', 'baca buku'].includes(a[2])) : BUAT[w]);
       if (lv === 1) {
         return {
           soalan: `${nama} ${buat}. Bilakah waktu itu?`,
@@ -1872,17 +2247,19 @@ function accepts(tok, input) {
             { kata: 'Pilih waktu yang betul.', baris: [T('waktu', { id: 'w' }), '=', ASK(w, w, { id: 'a', c: 'box', pilih: R.shuffle(WAKTU.slice()) })] },
           ],
           jawapan: w,
-          lukis(svg, k) {
+          lukis(svg, k, P, q) {
             svg.innerHTML = '';
             pemandangan(svg, k >= 1 ? w : '', ikon, { gerak: k === 1, popIkon: k === 0 });
             tajuk(svg, k >= 1 ? 'Lihat langit!' : `${nama} ${pendek}`);
-            if (k >= 2) label(svg, w);
+            if (k >= 2 && !q) label(svg, w);
           },
           uji: () => Object.keys(BUAT).filter(x => BUAT[x].some(a => a[0] === ikon)).join() === w,
         };
       }
       // aras 2: aktiviti mana pada waktu ini
-      const lainA = WAKTU.filter(x => x !== w).map(x => R.pick(BUAT[x]));
+      // pengganggu hanya aktiviti yang jelas TIDAK berlaku pada waktu itu (bangun pagi ↔ malam), supaya satu jawapan sahaja betul
+      const PAGI = BUAT.pagi.filter(a => a[2] !== 'ke sekolah'), MALAM = BUAT.malam;
+      const lainA = w === 'pagi' ? R.shuffle(MALAM).slice(0, 2) : w === 'malam' ? R.shuffle(PAGI).slice(0, 2) : [R.pick(PAGI), R.pick(MALAM)];
       const pil = opsi(R, pendek, lainA.map(a => a[2]));
       const emo = t => (t === pendek ? ikon : lainA.find(a => a[2] === t)[0]);
       return {
@@ -1894,8 +2271,9 @@ function accepts(tok, input) {
           { kata: 'Aktiviti mana sesuai dengan waktu ini?', baris: [T(w, { id: 'ww' }), '→', ASK(pendek, pendek, { id: 'a', c: 'box', pilih: pil })] },
         ],
         jawapan: pendek,
-        lukis(svg, k) {
+        lukis(svg, k, P, q) {
           svg.innerHTML = '';
+          if (q && k >= 2) k = 1;   // mod Cuba: pilihan aktiviti dipaparkan, jawapan belum
           pemandangan(svg, k >= 0 ? w : '', k >= 2 ? ikon : '❓', { gerak: k === 0 || k === 1, popIkon: k === 2 });
           tajuk(svg, `Waktu ${w}`);
           if (k === 1) pil.forEach((t, i) => { const x = 180 + (i - (pil.length - 1) / 2) * 90;
@@ -1920,13 +2298,16 @@ function accepts(tok, input) {
         { kata: 'Kita sampai di waktu ini!', baris: [T(WAKTU[dari], { id: 'd' }), T(arah > 0 ? '→' : '←', { id: 'ar' }), ASK(sasar, sasar, { id: 's', c: 'box', pilih: R.shuffle(WAKTU.filter(x => x !== WAKTU[dari])) })] },
       ],
       jawapan: sasar,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
         tajuk(svg, 'Susunan waktu dalam sehari');
-        jalur(svg, dari, ke, k, 2);
+        jalur(svg, dari, ke, q ? Math.min(k, 1) : k, 2);
         const ic = S('text', { x: 12 + dari * 85 + 40, y: 54, 'text-anchor': 'middle', 'font-size': 26, text: ikon }, svg);
         if (k === 0) pop(ic);
-        if (k >= 1) {
+        if (k >= 1 && q) { // mod Cuba: anak panah arah sahaja, tidak menunjuk jawapan
+          const x1 = 12 + dari * 85 + 40;
+          S('text', { x: x1 + (arah > 0 ? 30 : -30), y: 222, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 900, fill: 'var(--pen)', text: arah > 0 ? '➜' : '⬅' }, svg);
+        } else if (k >= 1) {
           const x1 = 12 + dari * 85 + 40, x2 = 12 + ke * 85 + 40, wrap = Math.abs(ke - dari) > 1;
           const d = wrap ? `M${x1} 214 Q180 ${282} ${x2} 214` : `M${x1} 214 Q${(x1 + x2) / 2} 246 ${x2} 214`;
           const p = S('path', { d, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 4, 'stroke-dasharray': '7 6', 'marker-end': '' }, svg);
@@ -1934,9 +2315,57 @@ function accepts(tok, input) {
           if (k === 1) anim(p, [{ opacity: 0 }, { opacity: 1 }], { duration: 600 });
           if (wrap) S('text', { x: 180, y: 264, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: 'var(--pen)', text: dari === 3 ? 'hari esok' : 'malam tadi' }, svg);
         }
-        if (k >= 2) { const g = S('text', { x: 12 + ke * 85 + 40, y: 290, 'text-anchor': 'middle', 'font-size': 26, text: '✅' }, svg); pop(g); }
+        if (k >= 2 && !q) { const g = S('text', { x: 12 + ke * 85 + 40, y: 290, 'text-anchor': 'middle', 'font-size': 26, text: '✅' }, svg); pop(g); }
       },
       uji: () => { const s = 'pagi|tengah hari|petang|malam'.split('|'); return s[(s.indexOf(WAKTU[dari]) + arah + 4) % 4] === sasar && sasar !== WAKTU[dari]; },
+    };
+  }
+
+
+  /* ---------- 5. Jam mana betul? (pilih muka jam) ---------- */
+  function jamKecil(svg, cx, cy, r, h, m, col) {
+    S('circle', { cx, cy, r: r + 4, fill: col || 'var(--c)' }, svg);
+    S('circle', { cx, cy, r, fill: 'var(--sheet)', stroke: DARK, 'stroke-width': 1.5 }, svg);
+    for (let i = 0; i < 12; i++) { const a = i * 30 * Math.PI / 180; S('line', { x1: cx + (r - 7) * Math.sin(a), y1: cy - (r - 7) * Math.cos(a), x2: cx + (r - 2) * Math.sin(a), y2: cy - (r - 2) * Math.cos(a), stroke: 'var(--ink)', 'stroke-width': 2 }, svg); }
+    [12, 3, 6, 9].forEach(i => { const a = i * 30 * Math.PI / 180; S('text', { x: cx + (r - 16) * Math.sin(a), y: cy - (r - 16) * Math.cos(a) + 5, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, fill: 'var(--ink)', text: i, 'data-ok': 1 }, svg); });
+    const hand = (ang, len, w, c) => { const g = S('g', {}, svg); S('line', { x1: cx, y1: cy, x2: cx, y2: cy - len, stroke: c, 'stroke-width': w, 'stroke-linecap': 'round' }, g); g.style.transformOrigin = `${cx}px ${cy}px`; g.style.transform = `rotate(${ang}deg)`; return g; };
+    hand((h % 12) * 30 + m / 2, r * .45, 6, 'var(--blue)'); hand(m * 6, r * .7, 3.5, 'var(--pen)');
+    S('circle', { cx, cy, r: 4.5, fill: DARK }, svg);
+  }
+  function pilihJam(lv, R) {
+    const h = R.int(1, 12), m = lv === 1 ? 0 : lv === 2 ? 30 : R.pick([15, 45]), ans = sebut(h, m), nama = R.pick(NAMA);
+    // pengganggu: jarum jam salah, atau jarum minit salah, atau jarum bertukar
+    const cand = [[hh(h + 1), m], [h, m === 0 ? 30 : m === 30 ? 0 : m === 15 ? 45 : 15], [hh(h - 1), m], [m === 0 ? 12 : hh(h + 3), m === 0 ? (h % 12) * 5 % 60 : m]]
+      .filter(([a, b]) => [0, 15, 30, 45].includes(b) && sebut(a, b) !== ans);
+    const opsiJ = R.shuffle([[h, m, true], ...R.shuffle(cand).slice(0, 2).map(([a, b]) => [a, b, false])]);
+    const HUR = ['A', 'B', 'C'], jwp = HUR[opsiJ.findIndex(o => o[2])];
+    const mNum = { 0: 12, 15: 3, 30: 6, 45: 9 }[m];
+    return {
+      soalan: `${nama} bangun <b>${ans}</b>. Jam manakah betul?`,
+      mula: 'Jarum panjang tunjuk minit. Jarum pendek tunjuk jam.',
+      langkah: [
+        { kata: 'Lihat ketiga-tiga jam: A, B dan C.' },
+        { kata: `${MW[m].charAt(0).toUpperCase() + MW[m].slice(1)}: jarum panjang di angka ${mNum}.`, soal: 'Jarum panjang tunjuk minit. Fikir: tepat, suku, setengah atau tiga suku?',
+          baris: [T('jarum panjang', { id: 'jp' }), '→', ASK(String(mNum), mNum, { id: 'm', bebas: mNum === h, pilih: lv === 1 ? R.shuffle([12, 6, 3]) : R.shuffle([12, 3, 6, 9]) })] },
+        { kata: `Jarum pendek ${m === 45 ? 'hampir sampai ' + hh(h + 1) : m ? 'sudah lepas ' + h : 'tepat di ' + h}.`, soal: 'Sekarang semak jarum pendek pada setiap jam.', baris: [T(ans, { id: 'a' }), '→', ASK(jwp, jwp, { id: 'j', c: 'box', pilih: HUR })] },
+      ],
+      jawapan: `Jam ${jwp}`,
+      lukis(svg, k, P, q) {
+        svg.innerHTML = '';
+        tajuk(svg, `⏰ ${ans}`).setAttribute('data-ok', 1);
+        const X = [62, 180, 298];
+        opsiJ.forEach(([a, b, ok], i) => {
+          const win = ok && k >= 2 && !q, out = !ok && k >= 2 && !q;
+          if (win) S('rect', { x: X[i] - 56, y: 70, width: 112, height: 170, rx: 14, fill: 'color-mix(in srgb,var(--ok) 16%,transparent)', stroke: 'var(--ok)', 'stroke-width': 3 }, svg);
+          const g = S('g', { opacity: out ? .35 : 1 }, svg);
+          jamKecil(g, X[i], 140, 46, a, b, ['#4dabf7', '#ffa94d', '#cc5de8'][i]);
+          S('text', { x: X[i], y: 222, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 800, fill: win ? 'var(--ok)' : 'var(--ink)', text: HUR[i] }, svg);
+          if (out) { const xx = S('text', { x: X[i], y: 160, 'text-anchor': 'middle', 'font-size': 60, 'font-weight': 900, fill: 'var(--pen)', text: '✗' }, svg); pop(xx, i * 120); }
+          if (k < 0) pop(g, i * 160);
+        });
+        if (k >= 1 && !(q && k === 1)) S('text', { x: 180, y: 276, 'text-anchor': 'middle', 'font-size': 16, 'font-weight': 700, fill: 'var(--muted)', text: `jarum panjang mesti di angka ${mNum}` }, svg);
+      },
+      uji: () => { const ok = opsiJ.filter(([a, b]) => { const am = b * 6, ah = (a % 12) * 30 + b / 2; return Math.round(am / 6) % 60 === m && (Math.floor(ah / 30) || 12) === h; }); return ok.length === 1 && HUR[opsiJ.indexOf(ok[0])] === jwp && new Set(opsiJ.map(o => sebut(o[0], o[1]))).size === 3; },
     };
   }
 
@@ -1945,6 +2374,7 @@ function accepts(tok, input) {
     { nama: 'Hari dalam seminggu', gen: hari },
     { nama: 'Bulan dalam setahun', gen: bulan },
     { nama: 'Waktu dalam sehari', gen: waktu },
+    { nama: '⏰ Jam mana betul?', gen: pilihJam },
   ] });
 })();
 
@@ -2014,7 +2444,7 @@ function accepts(tok, input) {
       const g = U.d(svg, x, y, u, i);
       if (opt.hot && i >= opt.hot) { S('rect', { x: x, y: y - 13, width: u, height: 26, rx: 5, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 2.5 }, svg); }
       if (opt.anim) pop(g, i * 70);
-      if (opt.nombor) { const t = tx(svg, x + u / 2, y + 30, String(i + 1), { 'font-size': 14, fill: opt.hot && i >= opt.hot ? 'var(--pen)' : 'var(--c)' }); if (opt.anim2) pop(t, i * 80); }
+      if (opt.nombor) { const t = tx(svg, x + u / 2, y + 30, String(i + 1), { 'data-ok': 1, 'font-size': 14, fill: opt.hot && i >= opt.hot ? 'var(--pen)' : 'var(--c)' }); if (opt.anim2) pop(t, i * 80); }
     });
     return xs.length;
   }
@@ -2035,13 +2465,14 @@ function accepts(tok, input) {
           { kata: `Panjang ${O.n} ialah ${n} ${U.n}.` },
         ],
         jawapan: `${n} ${U.n}`,
-        lukis(svg, k) {
+        lukis(svg, k, P, q) {
           svg.innerHTML = '';
+          if (q && k >= 3) k = 2;
           cap(svg, k < 0 ? `Ukur ${O.n} dengan ${U.n}` : k < 2 ? 'Susun dari hujung kiri' : k === 2 ? 'Bilang!' : `${n} ${U.n}`);
           const yo = 120, yu = 170;
           garisMula(svg, x0, 90, 200);
           O.d(svg, x0, yo, L);
-          if (k >= 0) susun(svg, x0, yu, L, u, U, { hanya: k === 0 ? 1 : undefined, anim: k === 1 || k === 0, nombor: k >= 2, anim2: k === 2 });
+          if (k >= 0) susun(svg, x0, yu, L, u, U, { hanya: k === 0 ? 1 : undefined, anim: k === 1 || k === 0, nombor: k >= 2 && !q, anim2: k === 2 });
           if (k >= 3) { S('path', { d: `M${x0} 92 L${x0} 84 L${x0 + L} 84 L${x0 + L} 92`, fill: 'none', stroke: 'var(--ok)', 'stroke-width': 3 }, svg); pop(chip(svg, 180, 70, `${n} ${U.n}`, 'var(--ok)')); }
           if (k < 0) { tx(svg, 180, 250, 'Unit ukuran:', { fill: 'var(--muted)' }); U.d(svg, 160, 272, 40, 0); }
         },
@@ -2049,7 +2480,7 @@ function accepts(tok, input) {
       };
     }
     // aras 3: dua objek, cari beza
-    let a, b; do { a = R.int(5, 12); b = R.int(3, 10); } while (a - b < 2);
+    let a, b; do { a = R.int(5, 12); b = R.int(3, 10); } while (a - b < 2 || a === 2 * b);
     const O2 = R.pick(OBJ.filter(o => o !== O)), u = Math.min(36, 300 / a), x0 = 30;
     return {
       soalan: `<b>${U1(O.n)}</b> lebih panjang berapa ${U.n} daripada <b>${O2.n}</b>?`,
@@ -2061,14 +2492,15 @@ function accepts(tok, input) {
         { kata: `${U1(O.n)} lebih panjang ${a - b} ${U.n}.` },
       ],
       jawapan: `${a - b} ${U.n}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q && k >= 3) k = 2;
         cap(svg, k < 2 ? 'Ukur dan banding' : `Lebih ${k >= 3 ? a - b + ' ' : ''}${U.n}`);
         garisMula(svg, x0, 50, 280);
         tx(svg, x0 + 4, 52, O.n, { 'text-anchor': 'start', 'font-size': 14, fill: 'var(--muted)' });
         tx(svg, x0 + 4, 162, O2.n, { 'text-anchor': 'start', 'font-size': 14, fill: 'var(--muted)' });
         O.d(svg, x0, 76, a * u); O2.d(svg, x0, 186, b * u);
-        if (k >= 0) susun(svg, x0, 112, a * u, u, U, { nombor: true, anim: k === 0, hot: k >= 2 ? b : 0 });
+        if (k >= 0) susun(svg, x0, 112, a * u, u, U, { nombor: !(q && k === 0), anim: k === 0, hot: k >= 2 ? b : 0 });
         if (k >= 1) susun(svg, x0, 222, b * u, u, U, { nombor: true, anim: k === 1 });
         if (k >= 2) { S('line', { x1: x0 + b * u, y1: 60, x2: x0 + b * u, y2: 260, stroke: 'var(--pen)', 'stroke-width': 2, 'stroke-dasharray': '4 3' }, svg);
           if (k >= 3) pop(chip(svg, x0 + (a + b) * u / 2, 280, `lebih ${a - b}`, 'var(--pen)')); }
@@ -2095,8 +2527,9 @@ function accepts(tok, input) {
           { kata: `Pensel ${want} ${sifat}.` },
         ],
         jawapan: `pensel ${want}`,
-        lukis(svg, k) {
+        lukis(svg, k, P, q) {
           svg.innerHTML = '';
+          if (q && k >= 2) k = 1.5;   // mod Cuba: garis hujung sahaja, tiada kotak "bahagian lebih"
           cap(svg, k < 0 ? 'Dua batang pensel' : k === 0 ? 'Mula pada garisan sama' : 'Banding hujung kanan');
           const off = k < 0 ? [70, 20] : [0, 0];
           if (k >= 0) garisMula(svg, x0, 70, 240);
@@ -2106,8 +2539,8 @@ function accepts(tok, input) {
           if (k >= 1) {
             const lo = Math.min(n1, n2) * u + x0, hi = Math.max(n1, n2) * u + x0;
             [n1, n2].forEach(n => S('line', { x1: x0 + n * u, y1: 70, x2: x0 + n * u, y2: 240, stroke: 'var(--muted)', 'stroke-width': 1.5, 'stroke-dasharray': '3 3' }, svg));
-            const r = S('rect', { x: lo, y: (n1 > n2 ? 110 : 200) - 16, width: hi - lo, height: 32, rx: 6, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 3 }, svg); pop(r);
-            tx(svg, (lo + hi) / 2, 270, 'bahagian lebih', { fill: 'var(--pen)' });
+            if (k !== 1.5) { const r = S('rect', { x: lo, y: (n1 > n2 ? 110 : 200) - 16, width: hi - lo, height: 32, rx: 6, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 3 }, svg); pop(r);
+              tx(svg, (lo + hi) / 2, 270, 'bahagian lebih', { fill: 'var(--pen)' }); }
           }
           if (k >= 3) pop(chip(svg, 180, 50, `${want}: ${sifat}`, 'var(--ok)'));
         },
@@ -2116,13 +2549,13 @@ function accepts(tok, input) {
     }
     if (lv === 2) {
       const [A, B] = R.shuffle(NAMA).slice(0, 2);
-      let a, b; do { a = R.int(3, 12); b = R.int(3, 12); } while (a === b);
+      let a, b; do { a = R.int(3, 10); b = R.int(3, 10); } while (a === b);
       const tinggi = R.chance(.5), sifat = tinggi ? 'lebih tinggi' : 'lebih rendah', want = (tinggi ? a > b : a < b) ? A[0] : B[0];
       const bs = 18;
       const menara = (svg, cx, n, nm, em, nombor, an) => {
         for (let i = 0; i < n; i++) { const r = S('rect', { x: cx - 20, y: 262 - (i + 1) * bs, width: 40, height: bs - 1, rx: 3, fill: i % 2 ? '#4dabf7' : '#fa5252', stroke: 'rgba(0,0,0,.2)' }, svg);
           if (an) pop(r, i * 60);
-          if (nombor) { const t = tx(svg, cx + 34, 262 - i * bs - 4, String(i + 1), { 'font-size': 14, fill: 'var(--c)' }); if (an) pop(t, i * 60); } }
+          if (nombor) { const t = tx(svg, cx + 34, 262 - i * bs - 4, String(i + 1), { 'data-ok': 1, 'font-size': 14, fill: 'var(--c)' }); if (an) pop(t, i * 60); } }
         E(svg, cx - 46, 248, em, 26); tx(svg, cx, 284, nm);
       };
       return {
@@ -2136,15 +2569,15 @@ function accepts(tok, input) {
           { kata: `Menara ${want} ${sifat}.` },
         ],
         jawapan: `menara ${want}`,
-        lukis(svg, k) {
+        lukis(svg, k, P, q) {
           svg.innerHTML = '';
           cap(svg, k < 1 ? 'Menara blok' : k < 3 ? 'Bilang blok' : sifat + '?');
           S('line', { x1: 20, y1: 262, x2: 340, y2: 262, stroke: 'var(--ink)', 'stroke-width': 3 }, svg);
-          menara(svg, 110, a, A[0], A[1], k >= 1, k === 1); menara(svg, 260, b, B[0], B[1], k >= 2, k === 2);
-          if (k >= 3) { const hi = Math.max(a, b), lo = Math.min(a, b);
+          menara(svg, 110, a, A[0], A[1], k >= 1 && !(q && k === 1), k === 1); menara(svg, 260, b, B[0], B[1], k >= 2, k === 2);
+          if (k >= 3 && !q) { const hi = Math.max(a, b), lo = Math.min(a, b);
             S('line', { x1: 60, y1: 262 - lo * bs, x2: 310, y2: 262 - lo * bs, stroke: 'var(--pen)', 'stroke-width': 2, 'stroke-dasharray': '5 4' }, svg);
             const cx = a > b ? 110 : 260; S('rect', { x: cx - 24, y: 262 - hi * bs - 3, width: 48, height: (hi - lo) * bs + 2, rx: 5, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 3 }, svg); }
-          if (k >= 4) pop(chip(svg, a > b === tinggi ? 110 : 260, 48, want + ' ✔', 'var(--ok)'));
+          if (k >= 4 && !q) pop(chip(svg, a > b === tinggi ? 110 : 260, 48, want + ' ✔', 'var(--ok)'));
         },
         uji: () => { const h = { [A[0]]: a * bs, [B[0]]: b * bs }; return tinggi ? h[want] > h[want === A[0] ? B[0] : A[0]] : h[want] < h[want === A[0] ? B[0] : A[0]]; },
       };
@@ -2167,8 +2600,9 @@ function accepts(tok, input) {
         { kata: `Pensel ${want} ${sifat}.` },
       ],
       jawapan: `pensel ${want}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q && k >= 3) k = 2;
         cap(svg, k < 1 ? 'Tiga batang pensel' : 'Ukur dengan blok');
         ns.forEach((n, i) => {
           tx(svg, offs[i], Y[i] - 20, cs[i], { 'text-anchor': 'start', fill: WARNA[cs[i]], 'font-size': 14 });
@@ -2206,7 +2640,7 @@ function accepts(tok, input) {
       for (let i = 0; i < n; i++) { const row = Math.floor(i / 5), col = i % 5, cnt = Math.min(5, n - row * 5);
         const x = ex - cnt * cw / 2 + col * cw, y = ey + 68 - row * cw;
         S('rect', { x, y, width: cw - 2, height: cw - 2, rx: 3, fill: '#fab005', stroke: '#e67700' }, g);
-        if (cnum) tx(g, x + (cw - 2) / 2, y + 15, String(i + 1), { 'font-size': 14, fill: '#1b2a41', style: 'fill:#1b2a41' }); }
+        if (cnum) tx(g, x + (cw - 2) / 2, y + 15, String(i + 1), { 'data-ok': 1, 'font-size': 14, fill: '#1b2a41', style: 'fill:#1b2a41' }); }
       if (it.lab) tx(g, ex, ey + 128, it.lab);
       if (an && tilt) anim(g, [{ transform: `translateY(${-(ey - py)}px)` }, { transform: 'none' }], { duration: 800 });
     });
@@ -2251,16 +2685,16 @@ function accepts(tok, input) {
           { kata: `${U1(A[0])} sama berat dengan ${n} kiub.` },
         ],
         jawapan: `${n} kiub`,
-        lukis(svg, k) {
+        lukis(svg, k, P, q) {
           svg.innerHTML = '';
           const c = k < 1 ? 0 : k === 1 ? half : n;
           cap(svg, k < 2 ? 'Belum seimbang' : 'Seimbang! ⚖️');
-          neraca(svg, { em: A[1], lab: A[0] }, { n: c, lab: k >= 3 ? `${n} kiub` : 'kiub' }, sgnT(n, c), k <= 2 && k >= 0, k >= 3);
+          neraca(svg, { em: A[1], lab: A[0] }, { n: c, lab: k >= 3 && !q ? `${n} kiub` : 'kiub' }, sgnT(n, c), k <= 2 && k >= 0, k >= 3 && !q);
         },
         uji: () => { let c = 0; while (sgnT(n, c) !== 0 && c < 50) c++; return c === n; },
       };
     }
-    let A, B, a, b; do { [A, B] = R.shuffle(BENDA).slice(0, 2); a = Math.min(15, A[2] + R.int(0, 2)); b = Math.min(15, B[2] + R.int(0, 2)); } while (a - b < 2 || b < 2);
+    let A, B, a, b; do { [A, B] = R.shuffle(BENDA).slice(0, 2); a = Math.min(15, A[2] + R.int(0, 2)); b = Math.min(15, B[2] + R.int(0, 2)); } while (a - b < 2 || b < 2 || a === 2 * b);
     return {
       soalan: `<b>${U1(A[0])}</b> lebih berat berapa kiub daripada <b>${B[0]}</b>?`,
       mula: 'Timbang setiap satu dengan kiub, kemudian banding.',
@@ -2271,8 +2705,10 @@ function accepts(tok, input) {
         { kata: `${U1(A[0])} lebih berat ${a - b} kiub.` },
       ],
       jawapan: `${a - b} kiub`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q && k >= 3) k = 2;
+        if (q && k === 0) { cap(svg, `Timbang ${A[0]}`); neraca(svg, { em: A[1], lab: A[0] }, { n: a, lab: 'kiub' }, 0, false, false); return; }
         if (k < 0) { cap(svg, `${A[0]} dan ${B[0]}`); E(svg, 110, 140, A[1], 70); E(svg, 250, 140, B[1], 70); tx(svg, 110, 210, A[0]); tx(svg, 250, 210, B[0]); return; }
         if (k < 2) { const [X, m] = k === 0 ? [A, a] : [B, b]; cap(svg, `Timbang ${X[0]}`); neraca(svg, { em: X[1], lab: X[0] }, { n: m, lab: `${m} kiub` }, 0, false, true); return; }
         cap(svg, k >= 3 ? `Lebih ${a - b} kiub` : 'Banding kiub');
@@ -2316,7 +2752,7 @@ function accepts(tok, input) {
     const g = S('g', {}, S('g', { transform: `translate(${x} ${y}) scale(${sc || 1}) translate(${-x} ${-y})` }, svg));
     S('path', { d: `M${x} ${y} L${x + 24} ${y} L${x + 21} ${y + 24} L${x + 3} ${y + 24} Z`, fill: '#74c0fc', stroke: 'var(--ink)', 'stroke-width': 1.5 }, g);
     S('path', { d: `M${x + 24} ${y + 5} q7 2 0 11`, fill: 'none', stroke: 'var(--ink)', 'stroke-width': 1.5 }, g);
-    if (nombor) tx(g, x + 12, y + 18, String(i + 1), { 'font-size': 14, fill: '#1b2a41', style: 'fill:#1b2a41' });
+    if (nombor) tx(g, x + 12, y + 18, String(i + 1), { 'data-ok': 1, 'font-size': 14, fill: '#1b2a41', style: 'fill:#1b2a41' });
     if (an) pop(g, i * 90);
   }
   const grid = (svg, cx, y0, n, cols, nombor, an, sc) => { sc = sc || 1; const sp = 32 * sc; for (let i = 0; i < n; i++) { const r = Math.floor(i / cols), c = i % cols, cnt = Math.min(cols, n - r * cols);
@@ -2335,11 +2771,12 @@ function accepts(tok, input) {
           { kata: `Isi padu air ialah ${n} cawan.` },
         ],
         jawapan: `${n} cawan`,
-        lukis(svg, k) {
+        lukis(svg, k, P, q) {
           svg.innerHTML = '';
+          if (q && k >= 3) k = 2;
           cap(svg, k < 1 ? `${B} penuh` : k === 1 ? 'Tuang ke cawan' : k === 2 ? 'Bilang cawan' : `${n} cawan air`);
           bekas(svg, B, 80, 200, k >= 1 ? 0 : 0.92, k === 1, 1.45); tx(svg, 80, 230, U1(B), { 'font-size': 17 });
-          if (k >= 1) grid(svg, 252, n > 4 ? 92 : 120, n, 4, k >= 2, k === 1, 1.35);
+          if (k >= 1) grid(svg, 252, n > 4 ? 92 : 120, n, 4, k >= 2 && !q, k === 1, 1.35);
           if (k === 1) S('path', { d: 'M118 70 Q150 44 176 70', fill: 'none', stroke: '#4dabf7', 'stroke-width': 4, 'stroke-dasharray': '6 5' }, svg);
           if (k >= 3) pop(chip(svg, 252, 268, `${n} cawan`, 'var(--ok)'));
         },
@@ -2362,14 +2799,14 @@ function accepts(tok, input) {
       mula: 'Sukat air setiap bekas dengan cawan yang sama saiz.',
       langkah,
       jawapan: want,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
         Bs.forEach((b, i) => {
-          const tuang = k >= i + 1;
+          const tuang = k >= i + 1, rahsia = q && i === 0 && k === 1;   // mod Cuba: cawan bekas pertama dibilang sendiri
           bekas(svg, b, X[i], 132, tuang ? 0 : 0.92, k === i + 1, m === 2 ? 1.15 : .9);
-          const hot = k >= m + 2 && i === iw;
-          tx(svg, X[i], 26, U1(b) + (tuang ? ` · ${ns[i]}` : ''), { fill: hot ? 'var(--ok)' : 'var(--ink)', 'font-size': 16 });
-          if (tuang) grid(svg, X[i], 150, ns[i], cols, true, k === i + 1, m === 2 ? 1.2 : 1);
+          const hot = k >= m + 2 && i === iw && !q;
+          tx(svg, X[i], 26, U1(b) + (tuang && !rahsia ? ` · ${ns[i]}` : ''), { fill: hot ? 'var(--ok)' : 'var(--ink)', 'font-size': 16 });
+          if (tuang) grid(svg, X[i], 150, ns[i], cols, !rahsia, k === i + 1, m === 2 ? 1.2 : 1);
           if (hot) S('rect', { x: X[i] - (m === 2 ? 72 : 54), y: 8, width: m === 2 ? 144 : 108, height: 286, rx: 12, fill: 'none', stroke: 'var(--ok)', 'stroke-width': 3 }, svg);
         });
       },
@@ -2378,11 +2815,64 @@ function accepts(tok, input) {
     };
   }
 
+
+  /* ========== Jenis 5: Langkah besar, langkah kecil (ukur dengan langkah kaki) ========== */
+  function langkahKaki(lv, R) {
+    const TEMPAT = ['karpet', 'koridor', 'tikar', 'laluan taman'], tp = R.pick(TEMPAT);
+    const big = lv === 1 ? 0 : R.int(3, 5), small = lv === 1 ? R.int(3, 8) : big * 2;
+    const nm = R.pick([['Ayah', '🧔'], ['Ibu', '👩'], ['Abang', '🧑']]), adik = [R.pick(['Adik', 'Aina', 'Ravi', 'Mei', 'Kumar', 'Siti']), '🧒'];
+    const W = 300, x0 = 30;
+    const langkah = [{ kata: lv === 1 ? `${adik[0]} berjalan dari hujung ke hujung ${tp}.` : `${nm[0]} dan ${adik[0]} mengukur ${tp} yang sama dengan langkah kaki.` }];
+    if (lv === 1) langkah.push({ kata: 'Bilang tapak kaki satu demi satu.', baris: [T(tp, { id: 't' }), '=', askN(R, small, { id: 'n', c: 'box' }), T('langkah')] });
+    else {
+      const lebih = adik[0], pjg = nm[0];
+      langkah.push({ kata: `Bilang langkah ${nm[0]}.`, baris: [T(nm[0]), '=', askN(R, big, { id: 'a' }), T('langkah')] });
+      langkah.push({ kata: `Bilang langkah ${adik[0]} pula.`, baris: [T(adik[0]), '=', askN(R, small, { id: 'b' }), T('langkah')] });
+      if (lv === 2) langkah.push({ kata: `${adik[0]} perlu lebih banyak langkah.`, soal: 'Banding dua nombor itu. Siapa perlu lebih banyak langkah?', baris: [T('lebih banyak langkah:'), askW(R, lebih, [nm[0], adik[0]], { id: 'w', c: 'box' })] });
+      else langkah.push({ kata: `Langkah ${nm[0]} lebih panjang, jadi bilangannya lebih sedikit.`, soal: 'Lebih sedikit langkah untuk jarak yang sama. Fikir: langkah siapa lebih panjang?', baris: [T('langkah lebih panjang:'), askW(R, pjg, [nm[0], adik[0]], { id: 'w', c: 'box' })] });
+    }
+    const L = langkah.length;
+    const jalan = (svg, y, n, em, warna, nombor, an) => {
+      const u = W / n;
+      for (let i = 0; i < n; i++) {
+        const x = x0 + i * u + u / 2, g = S('g', {}, svg);
+        S('ellipse', { cx: x, cy: y + (i % 2 ? 7 : -7), rx: Math.min(u * .38, 22), ry: 8, fill: warna, opacity: .85 }, g);
+        if (nombor) tx(g, x, y + 30, String(i + 1), { 'font-size': 14, fill: 'var(--pen)' });
+        if (an) pop(g, i * 160);
+      }
+      const w = E(svg, x0 + W - 8, y - 30, em, 30);
+      if (an) anim(w, [{ transform: `translateX(${-W + 16}px)` }, { transform: 'none' }], { duration: n * 160 + 300, easing: 'linear' });
+    };
+    return {
+      soalan: lv === 1 ? `Berapa langkah ${adik[0]} untuk berjalan sepanjang ${tp}?` : lv === 2 ? `${nm[0]} dan ${adik[0]} ukur ${tp}. Siapa perlu lebih banyak langkah?` : `${nm[0]} dan ${adik[0]} ukur ${tp} yang sama. Langkah siapa lebih panjang?`,
+      mula: 'Langkah kaki ialah unit bukan piawai. Mula dari garisan yang sama.',
+      langkah,
+      jawapan: lv === 1 ? `${small} langkah` : lv === 2 ? adik[0] : nm[0],
+      lukis(svg, k, P, q) {
+        svg.innerHTML = '';
+        cap(svg, `Ukur ${tp} dengan langkah 👣`);
+        const rows = lv === 1 ? [[150, small, adik[1], '#ffa94d', 1]] : [[110, big, nm[1], '#4dabf7', 1], [216, small, adik[1], '#ffa94d', 2]];
+        rows.forEach(([y]) => S('rect', { x: x0, y: y - 22, width: W, height: 44, rx: 8, fill: 'color-mix(in srgb,var(--c) 18%,transparent)', stroke: 'var(--muted)', 'stroke-width': 1.5 }, svg));
+        garisMula(svg, x0, 60, 262); garisMula(svg, x0 + W, 60, 262);
+        rows.forEach(([y, n, em, col, kk]) => {
+          if (k < kk - 1) return;
+          const nombor = k >= kk && !(q && k === kk);
+          jalan(svg, y, n, em, col, nombor, k === kk - 1 || k === kk && !q && lv === 1);
+          if (k >= kk && !(q && k === kk) && lv > 1) tx(svg, x0 + W + 4, y + 52, `${n} langkah`, { 'text-anchor': 'end', fill: 'var(--c)' });
+        });
+        if (k >= L - 1 && !q && lv > 1) pop(chip(svg, 180, 288, lv === 2 ? `${adik[0]}: lebih banyak langkah` : `${nm[0]}: langkah lebih panjang`, 'var(--ok)'));
+      },
+      uji: () => { if (lv === 1) { let c = 0; for (let x = 0; x + W / small <= W + .5; x += W / small) c++; return c === small; }
+        return small > big && (W / big) > (W / small) && small === 2 * big; },
+    };
+  }
+
   BAB({ bab: 6, tajuk: 'Panjang, Jisim dan Isi Padu Cecair', ikon: '📏', warna: '#20c997', jenis: [
     { nama: 'Ukur panjang', gen: ukur },
     { nama: 'Banding panjang & tinggi', gen: banding },
     { nama: 'Timbang jisim', gen: jisim },
     { nama: 'Sukat isi padu cecair', gen: cecair },
+    { nama: '👣 Langkah besar, langkah kecil', gen: langkahKaki },
   ] });
 })();
 
@@ -2521,7 +3011,7 @@ function accepts(tok, input) {
   const PETUA = { kubus: 'Semua permukaan segi empat sama, sama besar.', kuboid: 'Ada permukaan yang panjang, tidak sama besar.', piramid: 'Sisi-sisi lurus bertemu di satu puncak.',
     kon: 'Satu tapak bulat dan satu puncak tajam.', silinder: 'Dua permukaan rata bulat, atas dan bawah.', sfera: 'Bulat seperti bola. Boleh bergolek ke semua arah.' };
   const OBJ3 = [['ais kiub', '🧊', 'kubus'], ['dadu', '🎲', 'kubus'], ['kotak', '📦', 'kuboid'], ['bata', '🧱', 'kuboid'], ['tin', '🥫', 'silinder'], ['bateri', '🔋', 'silinder'],
-    ['lilin', '🕯️', 'silinder'], ['bola', '⚽', 'sfera'], ['oren', '🍊', 'sfera'], ['bola keranjang', '🏀', 'sfera'], ['kon aiskrim', '🍦', 'kon']];
+    ['lilin', '🕯️', 'silinder'], ['bola', '⚽', 'sfera'], ['oren', '🍊', 'sfera'], ['bola keranjang', '🏀', 'sfera'], ['aiskrim', '🍦', 'kon']];
   function lihatOpt(b, k) { // pilihan sorotan untuk langkah "lihat permukaan / bucu"
     const o = {};
     if (k >= 0) { o.rata = POLY[b] ? Object.keys(POLY[b]().F).filter(f => POLY[b]().nampak.includes(f)) : (LENG[b].rata.filter(f => f !== 'bawah')); o.lengkung = !POLY[b]; }
@@ -2594,7 +3084,7 @@ function accepts(tok, input) {
     }
     const tinggal = i => calon.filter(x => pk.slice(0, i + 1).every(j => ciri[j].ok(x)));
     const langkah = pk.map((ci, i) => ({ kata: `Petunjuk ${i + 1}: ${ciri[ci].t} Pangkah yang tidak sama.` }));
-    langkah.push({ kata: 'Tinggal satu bentuk sahaja!', baris: [T('saya'), askW(R, b, calon, { id: 'b', c: 'box' })] });
+    langkah.push({ kata: 'Tinggal satu bentuk sahaja!', soal: 'Baca setiap petunjuk. Pangkah dalam kepala bentuk yang tidak sesuai.', baris: [T('saya'), askW(R, b, calon, { id: 'b', c: 'box' })] });
     langkah.push({ kata: `Saya ialah <b>${b}</b>.` });
     const pos = [[95, 102], [265, 102], [95, 226], [265, 226]];
     const SZ = { kubus: 54, kuboid: 40, piramid: 46, kon: 60, silinder: 58, sfera: 64 };
@@ -2603,18 +3093,19 @@ function accepts(tok, input) {
       mula: 'Baca petunjuk satu demi satu. Pangkah bentuk yang tidak sesuai.',
       langkah,
       jawapan: b,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
-        const ada = k < 0 ? calon : tinggal(Math.min(k, pk.length - 1));
+        if (q && k >= pk.length + 1) k = pk.length;
+        const ada = k < 0 || q ? calon : tinggal(Math.min(k, pk.length - 1));   // mod Cuba: murid pangkah sendiri
         calon.forEach((x, i) => {
           const [px, py] = pos[i], keluar = !ada.includes(x);
           solid(svg, x, px, py - 10, SZ[x], { col: WR[i][1], nombor: false, dim: keluar });
-          tx(svg, px, py + 56, x, { fill: keluar ? 'var(--muted)' : 'var(--ink)' });
+          tx(svg, px, py + 56, x, { fill: keluar ? 'var(--muted)' : 'var(--ink)', 'data-ok': 1 });
           if (keluar) { const xg = S('g', {}, svg); S('path', { d: `M${px - 34} ${py - 40} L${px + 34} ${py + 28} M${px + 34} ${py - 40} L${px - 34} ${py + 28}`, stroke: 'var(--pen)', 'stroke-width': 5, 'stroke-linecap': 'round' }, xg);
             const was = k <= 0 ? calon : tinggal(k - 1); if (was.includes(x)) pop(xg); }
           if (k >= pk.length + 1 && x === b) pop(S('rect', { x: px - 70, y: py - 58, width: 140, height: 122, rx: 14, fill: 'none', stroke: 'var(--ok)', 'stroke-width': 4 }, svg));
         });
-        cap(svg, k < 0 ? 'Siapakah saya?' : k < pk.length ? `Petunjuk ${k + 1}` : 'Tinggal satu!', 22);
+        cap(svg, k < 0 || q ? 'Siapakah saya?' : k < pk.length ? `Petunjuk ${k + 1}` : 'Tinggal satu!', 22);
       },
       uji: () => { const m = calon.filter(x => { const c = kiraModel(x); return pk.every(i => [(c.lengkung > 0) === (J.lengkung > 0), c.rata === J.rata, c.bucu === J.bucu][i]); }); return m.length === 1 && m[0] === b; },
     };
@@ -2639,7 +3130,7 @@ function accepts(tok, input) {
     const langkah = [{ kata: `${U1(ob)} berbentuk ${b}. Mari bilang ${nm}.` }];
     G.forEach((x, i) => {
       const last = i === G.length - 1, sum = parts.slice(0, i + 1).join(' + ');
-      langkah.push({ kata: GK[i], baris: last ? (G.length > 1 ? [T(sum, { id: 's' }), '=', askN(R, ans, { id: 'n', c: 'box' })] : [T(nm), '=', askN(R, ans, { id: 'n', c: 'box' })]) : [T(sum, { id: 's' })] });
+      langkah.push({ kata: GK[i], soal: last ? (G.length > 1 ? `Tambah semua kumpulan ${nm}.` : `Bilang ${nm} yang bertanda satu demi satu.`) : GK[i], baris: last ? (G.length > 1 ? [T(sum, { id: 's' }), '=', askN(R, ans, { id: 'n', c: 'box' })] : [T(nm), '=', askN(R, ans, { id: 'n', c: 'box' })]) : [T(sum, { id: 's' })] });
     });
     langkah.push({ kata: `${U1(b)} ada ${ans} ${nm}.` });
     const size = b === 'kuboid' ? 100 : b === 'piramid' ? 112 : b === 'kubus' ? 118 : 128;
@@ -2648,16 +3139,17 @@ function accepts(tok, input) {
       mula: `Bilang ${nm} satu demi satu. Ingat yang tersorok di belakang!`,
       langkah,
       jawapan: `${ans} ${nm}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q && k > G.length) k = G.length;
         const sh = Math.max(0, Math.min(k, G.length));   // bilangan kumpulan ditunjuk
-        const o = { col: wc };
+        const o = { col: wc, nombor: q ? false : undefined };   // mod Cuba: tanda tanpa nombor; murid bilang sendiri
         const ids = G.slice(0, sh).flat(), baru = k >= 1 && k <= G.length ? G[k - 1] : [];
         if (f === 'bucu') { o.bucu = ids; o.baru = { bucu: baru }; }
         if (f === 'sisi') { o.sisi = ids; o.baru = { sisi: baru }; }
         if (f === 'rata') { o.rata = ids; o.baru = { rata: baru }; }
         if (f === 'lengkung' && sh) { o.lengkung = true; o.baru = { lengkung: k === 1 }; }
-        cap(svg, k < 1 ? `${ob} = ${b}` : k <= G.length ? `${nm}: ${parts.slice(0, sh).join(' + ')}` : `${ans} ${nm}`);
+        cap(svg, k < 1 ? `${ob} = ${b}` : q && G.length === 1 ? `Bilang ${nm}` : k <= G.length ? `${nm}: ${parts.slice(0, sh).join(' + ')}` : `${ans} ${nm}`);
         solid(svg, b, 180, 158, size, o);
         if (k > G.length) pop(chip(svg, 180, 290, `${ans} ${nm}`, 'var(--ok)'));
       },
@@ -2692,7 +3184,7 @@ function accepts(tok, input) {
         langkah: [
           { kata: nS ? `Bilang sisi lurus. Ada ${nS} sisi.` : 'Tiada sisi lurus. Garisnya melengkung.' },
           { kata: nS ? `Bilang bucu. Ada ${nS} bucu.` : 'Tiada bucu langsung.' },
-          { kata: PETUA2[t], baris: [T('bentuk 2D'), askW(R, t, lain, { id: 't', c: 'box' })] },
+          { kata: PETUA2[t], soal: 'Bilang sisi lurus dan bucu. Bandingkan panjang sisi.', baris: [T('bentuk 2D'), askW(R, t, lain, { id: 't', c: 'box' })] },
           { kata: `Ini <b>${t}</b>.` },
         ],
         jawapan: t,
@@ -2736,8 +3228,9 @@ function accepts(tok, input) {
         { kata: `Ada ${want} ${t}.` },
       ],
       jawapan: `${want} ${t}`,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q) { cap(svg, `Cari dan bilang ${t}`); it.forEach(o => bentuk2(svg, o.ty, o.x, o.y, o.z, { rot: o.rot, tegak: o.tegak })); return; }   // mod Cuba: murid cari sendiri
         cap(svg, k < 0 ? `Cari ${t}` : k === 0 ? `Tanda ${t}` : k === 1 ? 'Bilang!' : `${want} ${t}`);
         it.forEach(o => bentuk2(svg, o.ty, o.x, o.y, o.z, { rot: o.rot, tegak: o.tegak, dim: k >= 0 && o.ty !== t }));
         if (k >= 0) sasar.forEach((o, i) => { const r = S('circle', { cx: o.x, cy: o.y, r: o.z * .62 + 6, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 3 }, svg); if (k === 0) pop(r, i * 120);
@@ -2761,17 +3254,18 @@ function accepts(tok, input) {
     const kumpulan = Math.floor(nShow / p);
     const draw = (svg, ty, x, y, zz) => lv === 3 ? solid(svg, ty, x, y, zz * K3[ty] * 1.25, { nombor: false, col: W3[ty] }) : bentuk2(svg, ty, x, y, zz, { tegak: false }).g;
     return {
-      soalan: `Apakah bentuk ${lv === 3 ? '3D ' : ''}seterusnya? ${unit.map(U1).join(', ')}, …`,
+      soalan: `${R.pick(ORANG)} susun ${nShow} bentuk ${lv === 3 ? '3D ' : ''}dalam satu pola. Apakah bentuk dalam kotak <b>?</b>`,
       mula: 'Cari bahagian yang berulang-ulang.',
       langkah: [
         { kata: 'Lihat bentuk dari kiri ke kanan.' },
         { kata: `Bahagian berulang ada ${p} bentuk.` },
-        { kata: `Selepas ${shown[nShow - 1]}, bentuk apa datang?`, baris: [T('seterusnya'), askW(R, ans, pilihan, { id: 'a', c: 'box' })] },
+        { kata: `Selepas ${shown[nShow - 1]}, bentuk apa datang?`, soal: 'Cari bahagian yang berulang. Ikut ulangannya untuk cari bentuk seterusnya.', baris: [T('seterusnya'), askW(R, ans, pilihan, { id: 'a', c: 'box' })] },
         { kata: `Bentuk seterusnya ialah <b>${ans}</b>.` },
       ],
       jawapan: ans,
-      lukis(svg, k) {
+      lukis(svg, k, P, q) {
         svg.innerHTML = '';
+        if (q && k >= 2) k = 2;
         cap(svg, k < 1 ? 'Pola bentuk' : k === 1 ? 'Bahagian berulang' : k === 2 ? 'Apa seterusnya?' : ans);
         shown.forEach((ty, i) => { const gg = draw(svg, ty, x0 + i * sp, Y, z); if (k === 0) pop(gg, i * 90); });
         const qx = x0 + nShow * sp;
@@ -2785,10 +3279,51 @@ function accepts(tok, input) {
           if (k === 1) anim(br, [{ opacity: 0 }, { opacity: 1 }], { duration: 400, delay: gi * 200 });
           if (full) tx(svg, (xa + xb) / 2, Y + 62, String(gi + 1), { fill: c, 'font-size': 14 });
         }
-        if (k >= 1) { tx(svg, 180, 228, 'Berulang:', { fill: 'var(--muted)' });
+        if (k >= 1 && !q) { tx(svg, 180, 228, 'Berulang:', { fill: 'var(--muted)' });
           const s2 = 52, xu = 180 - (p - 1) * s2 / 2; unit.forEach((ty, i) => draw(svg, ty, xu + i * s2, 264, 34)); }
       },
       uji: () => { for (let i = p; i < seq.length; i++) if (seq[i] !== seq[i - p]) return false; return ans === unit[nShow % p] && pilihan.includes(ans); },
+    };
+  }
+
+  /* ========== Jenis 5: Robot bentuk (cari bentuk 2D dalam gambar) ========== */
+  function robot(lv, R) {
+    const kepala = R.pick(['segi empat sama', 'bulatan']), butang = R.pick(['bulatan', 'segi empat sama', 'segi tiga']), nB = R.int(lv === 1 ? 1 : 2, lv === 1 ? 2 : 4);
+    const kaki = R.pick(['segi empat tepat', 'segi empat sama']), tapak = lv === 1 ? null : R.pick(['segi tiga', 'bulatan']), antena = R.pick(['segi tiga', 'bulatan']);
+    const items = [];   // {ty, x, y, z, tegak, col, bhg}
+    items.push({ ty: kepala, x: 180, y: 84, z: 64, col: '#74c0fc', bhg: 'kepala' });
+    items.push({ ty: 'bulatan', x: 166, y: 80, z: 12, col: '#fff', bhg: 'mata' }, { ty: 'bulatan', x: 194, y: 80, z: 12, col: '#fff', bhg: 'mata' });
+    items.push({ ty: antena, x: 180, y: 32, z: 18, col: '#ffd43b', bhg: 'antena' });
+    items.push({ ty: 'segi empat tepat', x: 180, y: 162, z: 104, col: '#ffa94d', bhg: 'badan' });
+    for (let i = 0; i < nB; i++) items.push({ ty: butang, x: 180 + (i - (nB - 1) / 2) * 24, y: 162, z: 16, col: '#e64980', bhg: 'butang' });
+    items.push({ ty: 'segi empat tepat', x: 112, y: 160, z: 52, tegak: true, col: '#8ce99a', bhg: 'tangan' }, { ty: 'segi empat tepat', x: 248, y: 160, z: 52, tegak: true, col: '#8ce99a', bhg: 'tangan' });
+    items.push({ ty: kaki, x: 158, y: 228, z: kaki === 'segi empat sama' ? 36 : 48, tegak: true, col: '#b197fc', bhg: 'kaki' }, { ty: kaki, x: 202, y: 228, z: kaki === 'segi empat sama' ? 36 : 48, tegak: true, col: '#b197fc', bhg: 'kaki' });
+    if (tapak) items.push({ ty: tapak, x: 150, y: 266, z: 22, col: '#ced4da', bhg: 'tapak' }, { ty: tapak, x: 210, y: 266, z: 22, col: '#ced4da', bhg: 'tapak' });
+    const ada = B2.filter(t => items.some(o => o.ty === t)), t = R.pick(lv === 3 ? ada : ada.filter(x => items.filter(o => o.ty === x).length <= 6));
+    const want = items.filter(o => o.ty === t).length, nama = R.pick(ORANG);
+    const lainK = B2.filter(x => x !== kepala);
+    const langkah = [
+      { kata: `${nama} bina robot daripada bentuk 2D.` },
+      { kata: `Kepala robot berbentuk ${kepala}.`, soal: kepala === 'bulatan' ? 'Lihat kepala robot. Ada sisi lurus atau tidak?' : 'Lihat kepala robot. Bilang sisi lurus dan bandingkan panjangnya.', baris: [T('kepala'), '=', askW(R, kepala, R.shuffle(lainK).slice(0, 2), { id: 'k' })] },
+      { kata: `Cari setiap ${t}. Jangan lupa yang kecil!`, soal: `Cari setiap ${t}, besar dan kecil. Bilang satu demi satu.`, baris: [T(t), '=', askN(R, want, { id: 'n', c: 'box' })] },
+    ];
+    return {
+      soalan: `🤖 Robot ${nama} dibina daripada bentuk 2D. Berapa <b>${t}</b> pada robot itu?`,
+      mula: 'Cari bentuk satu demi satu: kepala, badan, tangan, kaki dan hiasan.',
+      langkah,
+      jawapan: `${want} ${t}`,
+      lukis(svg, k, P, q) {
+        svg.innerHTML = '';
+        const done = k >= 2 && !q;
+        cap(svg, done ? `${want} ${t}` : '🤖 Robot bentuk');
+        const g = S('g', {}, svg);
+        S('line', { x1: 180, y1: 40, x2: 180, y2: 54, stroke: 'var(--ink)', 'stroke-width': 3 }, g);   // batang antena
+        items.forEach((o, i) => { const sh = bentuk2(g, o.ty, o.x, o.y, o.z, { col: o.col, tegak: o.tegak, dim: done && o.ty !== t }); if (k < 0) pop(sh.g, i * 70); });
+        if (k <= 0) anim(g, [{ transform: 'translateY(0)' }, { transform: 'translateY(-6px)' }, { transform: 'translateY(0)' }], { duration: 700, iterations: 2, fill: 'none' });
+        if (k >= 1 && !(q && k === 1)) S('rect', { x: 140, y: 44, width: 80, height: 80, rx: 12, fill: 'none', stroke: 'var(--pen)', 'stroke-width': 2.5, 'stroke-dasharray': '6 4' }, svg);
+        if (done) items.filter(o => o.ty === t).forEach((o, i) => nomb(svg, o.x + Math.max(10, o.z * .45), o.y - Math.max(10, o.z * .45), i + 1, 'var(--pen)', i * 160));
+      },
+      uji: () => { let c = 0; for (const o of items) if (o.ty === t) c++; return c === want && items.find(o => o.bhg === 'kepala').ty === kepala; },
     };
   }
   const W3 = { kubus: '#1c7ed6', kuboid: '#2f9e44', piramid: '#fab005', kon: '#e03131', silinder: '#7048e8', sfera: '#15aabf' };
@@ -2799,6 +3334,7 @@ function accepts(tok, input) {
     { nama: 'Bilang permukaan, sisi, bucu', gen: bilang },
     { nama: 'Bentuk 2D', gen: bentuk2D },
     { nama: 'Pola bentuk', gen: pola },
+    { nama: '🤖 Robot bentuk', gen: robot },
   ] });
 })();
 
@@ -2876,7 +3412,7 @@ function accepts(tok, input) {
   /* =================== 1. Kumpul data dengan gundal =================== */
   function kumpul(lv, R) {
     const tema = R.pick(TEMA), kinds = R.shuffle(tema.item).slice(0, lv === 1 ? 2 : 3);
-    const n = lv === 1 ? R.int(3, 7) : lv === 2 ? R.int(6, 12) : R.int(11, 17);
+    let n; do n = lv === 1 ? R.int(3, 9) : lv === 2 ? R.int(6, 12) : R.int(11, 17); while (n === 5);
     const others = kinds.slice(1).map(() => lv === 1 ? R.int(3, 6) : lv === 2 ? R.int(3, 6) : R.int(3, 6));
     const [ch, nm] = kinds[0];
     // letak objek pada slot rawak (8 × 4)
@@ -2895,14 +3431,15 @@ function accepts(tok, input) {
       run += g;
       const toks = grp.slice(0, i + 1).map((v, j) => T(v, { id: 'g' + j }));
       const line = []; toks.forEach((t, j) => { if (j) line.push('+'); line.push(t); });
-      langkah.push({ kata: g === 5 ? `Satu ${nm}, satu gundal. Gundal kelima melintang: kumpulan lima!` : `Teruskan: satu ${nm}, satu gundal.`, baris: line });
+      langkah.push({ tunjuk: true, kata: g === 5 ? `Satu ${nm}, satu gundal. Gundal kelima melintang: kumpulan lima!` : `Teruskan: satu ${nm}, satu gundal.`, baris: line });
     });
-    const line = []; grp.forEach((v, j) => { if (j) line.push('+'); line.push(T(v, { id: 'g' + j })); });
+    const line = [T(grp.join(' + '), { id: 'gs', h: 1 })];   // mod Cuba: murid baca gundal sendiri
     const nG = grp.filter(g => g === 5).length;
     line.push('=', ASKn(R, n, [n + 1, n - 1, n + 5, n - 5, n - nG, total], { id: 'n', c: 'box' }));
     langkah.push({ kata: nG ? `Bilang lima-lima dahulu, kemudian satu-satu.` : `Bilang gundal satu-satu.`, baris: line });
-    const lukis = (svg, k) => {
+    const lukis = (svg, k, _P, q) => {
       clear(svg);
+      const fin = !q && k === langkah.length - 1;   // mod Cuba: tiada nombor bilangan pada objek / jadual
       cap(svg, k < 0 ? 'Bilang objek dalam gambar' : `Bilang ${nm}`);
       const done = k < 1 ? 0 : grp.slice(0, k).reduce((a, b) => a + b, 0);
       const prev = k < 2 ? 0 : grp.slice(0, k - 1).reduce((a, b) => a + b, 0);
@@ -2911,7 +3448,7 @@ function accepts(tok, input) {
         if (k >= 0 && tgt) { const c = S('circle', { cx: it.x, cy: it.y, r: 17, fill: idx < done ? soft('var(--ok)') : 'none', stroke: 'var(--c)', 'stroke-width': 2.5 }, svg); if (k === 0) pop(c, idx * 80); }
         const e = em(svg, it.x, it.y, kinds[it.k][0], 26);
         if (k >= 0 && !tgt) e.setAttribute('opacity', .3);
-        if (tgt && idx < done) { const t = tx(svg, it.x + 15, it.y - 13, idx + 1, { 'font-size': 14, fill: 'var(--pen)', style: 'fill:var(--pen)' }); if (idx >= prev) pop(t, (idx - prev) * 140); }
+        if (tgt && idx < done && !q) { const t = tx(svg, it.x + 15, it.y - 13, idx + 1, { 'font-size': 14, fill: 'var(--pen)', style: 'fill:var(--pen)' }); if (idx >= prev) pop(t, (idx - prev) * 140); }
       });
       // jadual gundal
       S('rect', { x: 8, y: 196, width: 344, height: 74, rx: 10, fill: soft('var(--c)'), stroke: 'var(--ink)', 'stroke-width': 1.5 }, svg);
@@ -2919,8 +3456,8 @@ function accepts(tok, input) {
       S('line', { x1: 66, y1: 196, x2: 66, y2: 270, stroke: 'var(--ink)', 'stroke-width': 1.5 }, svg);
       S('line', { x1: 300, y1: 196, x2: 300, y2: 270, stroke: 'var(--ink)', 'stroke-width': 1.5 }, svg);
       const G = gundal(svg, 82, 216, done, { popFrom: k >= 1 && k <= grp.length ? prev : undefined });
-      if (k > grp.length) grp.forEach((g, j) => { if (g === 5) tx(svg, G.gx(j), 264, 5 * (j + 1), { 'font-size': 14, fill: 'var(--blue)', style: 'fill:var(--blue)' }); });
-      if (k === langkah.length - 1) pop(tx(svg, 326, 242, n, { 'font-size': 26, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' }));
+      if (k > grp.length && !q) grp.forEach((g, j) => { if (g === 5) tx(svg, G.gx(j), 264, 5 * (j + 1), { 'font-size': 14, fill: 'var(--blue)', style: 'fill:var(--blue)' }); });
+      if (fin) pop(tx(svg, 326, 242, n, { 'font-size': 26, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' }));
       else tx(svg, 326, 242, '?', { 'font-size': 24, fill: 'var(--muted)', style: 'fill:var(--muted)' });
       tx(svg, 326, 290, 'bilangan', { 'font-size': 14, 'font-weight': 600, fill: 'var(--muted)', style: 'fill:var(--muted)' });
       tx(svg, 183, 290, 'gundal', { 'font-size': 14, 'font-weight': 600, fill: 'var(--muted)', style: 'fill:var(--muted)' });
@@ -2936,7 +3473,7 @@ function accepts(tok, input) {
   /* =================== 2. Baca jadual gundal =================== */
   function jadual(lv, R) {
     const tema = R.pick(TEMA), its = R.shuffle(tema.item).slice(0, 3);
-    const cnt = lv === 1 ? beza(R, 3, 2, 9) : lv === 2 ? beza(R, 3, 6, 15) : beza(R, 3, 5, 14);
+    let cnt; do cnt = lv === 1 ? beza(R, 3, 6, 9) : lv === 2 ? beza(R, 3, 11, 16) : beza(R, 3, 6, 14); while (cnt.includes(5) || cnt.includes(10) && lv > 1 && R.chance(.5));
     const t = R.int(0, 2), [ch, nm] = its[t];
     let u = (t + R.int(1, 2)) % 3; const [ch2, nm2] = its[u];
     const sumOf = g => g.map(String).join(' + ');
@@ -2944,15 +3481,15 @@ function accepts(tok, input) {
     const g1 = kumpul5(cnt[t]), g2 = kumpul5(cnt[u]);
     const askOpts = v => [v + 1, v - 1, v + 5, v - 5, v - Math.floor(v / 5)];
     if (lv < 3) {
-      langkah.push({ kata: `Cari baris ${nm}. Bilang lima-lima, kemudian satu-satu.`, baris: [T(ch, { id: 'e' }), T(sumOf(g1), { id: 's' })] });
-      langkah.push({ kata: `Jadi, ada ${cnt[t]} ${tema.unit} pilih ${nm}.`, baris: [T(sumOf(g1), { id: 's' }), '=', ASKn(R, cnt[t], askOpts(cnt[t]), { id: 'n', c: 'box' })] });
+      langkah.push({ tunjuk: true, kata: `Cari baris ${nm}. Bilang lima-lima, kemudian satu-satu.`, baris: [T(ch, { id: 'e' }), T(sumOf(g1), { id: 's' })] });
+      langkah.push({ kata: `Jadi, ada ${cnt[t]} ${tema.unit} pilih ${nm}.`, soal: `Cari baris ${nm}. Bilang kumpulan lima dahulu, kemudian gundal satu-satu.`, baris: [T(sumOf(g1), { id: 's', h: 1 }), '=', ASKn(R, cnt[t], askOpts(cnt[t]), { id: 'n', c: 'box' })] });
     } else {
-      langkah.push({ kata: `Bilang gundal ${nm} dahulu.`, baris: [T(ch, { id: 'e' }), T(sumOf(g1), { id: 's' }), '=', ASKn(R, cnt[t], askOpts(cnt[t]), { id: 'n' })] });
+      langkah.push({ kata: `Bilang gundal ${nm} dahulu.`, baris: [T(ch, { id: 'e' }), T(sumOf(g1), { id: 's', h: 1 }), '=', ASKn(R, cnt[t], askOpts(cnt[t]), { id: 'n' })] });
       langkah.push({ kata: `Kemudian bilang gundal ${nm2}.`, baris: [T(ch2, { id: 'e2' }), T(sumOf(g2), { id: 's2' }), '=', T(cnt[u], { id: 'n2' })] });
       const tot = cnt[t] + cnt[u];
       langkah.push({ kata: `Jumlah bermaksud tambah: ${cnt[t]} + ${cnt[u]}.`, baris: [T(cnt[t], { id: 'n' }), '+', T(cnt[u], { id: 'n2' }), '=', ASKn(R, tot, [tot + 1, tot - 1, tot + 10, tot - 10, Math.abs(cnt[t] - cnt[u])], { id: 'j', c: 'box' })] });
     }
-    const lukis = (svg, k) => {
+    const lukis = (svg, k, _P, q) => {
       clear(svg);
       cap(svg, tema.tajuk);
       const top = 40, hh = 30, rh = 66;
@@ -2963,6 +3500,7 @@ function accepts(tok, input) {
       const shown = [];
       if (k >= 2 || (lv < 3 && k >= 1)) shown.push(t);
       if (lv === 3 && k >= 2) shown.push(u);
+      if (q && lv < 3) shown.length = 0;   // mod Cuba: lajur Bilangan kekal '?' untuk baris yang ditanya
       const focus = k < 1 ? -1 : lv < 3 ? t : k === 1 ? t : k === 2 ? u : -2;
       its.forEach(([c, n], r) => {
         const y = top + hh + r * rh;
@@ -2972,13 +3510,13 @@ function accepts(tok, input) {
         em(svg, 50, y + 22, c, 24); tx(svg, 50, y + 54, n, { 'font-size': 14 });
         const G = gundal(svg, 104, y + 16, cnt[r], { h: 32 });
         if (hot && focus !== -2) kumpul5(cnt[r]).forEach((g, j) => {
-          const lab = g === 5 ? 5 * (j + 1) : 5 * j + g;
+          const lab = q ? g : g === 5 ? 5 * (j + 1) : 5 * j + g;   // mod Cuba: label setiap kumpulan sahaja, bukan jumlah terkumpul
           const e = tx(svg, G.gx(j, g), y + 62, g === 5 ? lab : '+' + g, { 'font-size': 14, fill: 'var(--blue)', style: 'fill:var(--blue)' }); pop(e, j * 250);
         });
         if (shown.includes(r)) { const e = tx(svg, 317, y + 40, cnt[r], { 'font-size': 24, 'font-weight': 800, fill: 'var(--pen)', style: 'fill:var(--pen)' }); if (r === focus && k === langkah.length - 1) pop(e); }
         else if (hot) tx(svg, 317, y + 40, '?', { 'font-size': 22, fill: 'var(--muted)', style: 'fill:var(--muted)' });
       });
-      if (lv === 3 && k === 3) tx(svg, 180, 292, `${nm} + ${nm2} = ${cnt[t] + cnt[u]}`, { 'font-size': 17, fill: 'var(--ok)', style: 'fill:var(--ok)' });
+      if (lv === 3 && k === 3 && !q) tx(svg, 180, 292, `${nm} + ${nm2} = ${cnt[t] + cnt[u]}`, { 'font-size': 17, fill: 'var(--ok)', style: 'fill:var(--ok)' });
       else {
         S('line', { x1: 100, y1: 276, x2: 100, y2: 294, stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-linecap': 'round' }, svg);
         tx(svg, 126, 291, '= 1', { 'font-size': 15 });
@@ -3009,16 +3547,17 @@ function accepts(tok, input) {
     const names = its.map(x => x[1]);
     const cntTok = r => [T(its[r][0], { id: 'e' + r }), T(cnt[r], { id: 'c' + r })];
     const langkah = [{ kata: `Setiap gambar mewakili 1 ${tema.unit}.` }];
+    const ask = R.int(0, nr - 1);
     if (lv < 3) langkah.push({ kata: 'Bilang gambar dalam setiap baris.', baris: its.map((_, r) => cntTok(r)).flat() });
     else {
-      const ask = R.int(0, nr - 1);
       langkah.push({ kata: `Bilang gambar setiap baris. Berapa ${its[ask][1]}?`, baris: its.map((_, r) => r === ask ? [T(its[r][0], { id: 'e' + r }), ASKn(R, cnt[r], [cnt[r] + 1, cnt[r] - 1, ...cnt.filter((_, i) => i !== r)], { id: 'c' + r })] : cntTok(r)).flat() });
     }
     langkah.push({ kata: banyak ? `Baris paling panjang ialah ${w}.` : `Baris paling pendek ialah ${w}.`, baris: [T(w + ':', { id: 'w' }), ASK(bnm, bnm, { id: 'a', c: 'box', pilih: R.shuffle(names) })] });
-    const lukis = (svg, k) => {
+    const lukis = (svg, k, _P, q) => {
       clear(svg);
       const o = {};
-      if (k >= 1) { o.nums = its.map((_, r) => r); }
+      const k0 = k; if (q && k >= 2) k = 1;   // mod Cuba: tiada sorotan baris jawapan
+      if (k >= 1) { o.nums = its.map((_, r) => r).filter(r => !(q && lv === 3 && k0 === 1 && r === ask)); }
       if (k === 1) { o.popRow = -1; }
       if (k >= 2) { o.hot = [best]; o.dim = false; o.mark = best; o.nums = its.map((_, r) => r).filter(r => r !== best); }
       const P = piktograf(svg, tema, its, cnt, o);
@@ -3042,21 +3581,21 @@ function accepts(tok, input) {
   /* =================== 4. Piktograf: berapa lebih / kurang =================== */
   function lebih(lv, R) {
     const tema = R.pick(TEMA), nr = lv === 3 ? 4 : 3, its = R.shuffle(tema.item).slice(0, nr);
-    const cnt = lv === 1 ? beza(R, nr, 1, 6) : beza(R, nr, 2, 10);
+    let cnt; do cnt = lv === 1 ? beza(R, nr, 1, 6) : beza(R, nr, 2, 10); while (cnt.some(c => cnt.includes(2 * c)));
     let xi = R.int(0, nr - 1), yi; do yi = R.int(0, nr - 1); while (yi === xi);
     if (cnt[xi] < cnt[yi]) [xi, yi] = [yi, xi];
     const a = cnt[xi], b = cnt[yi], d = a - b, [xch, xnm] = its[xi], [ych, ynm] = its[yi];
     const kurang = lv === 3 && R.chance(.5);
     const soalan = kurang ? `Berapa <b>kurang</b> ${ynm} daripada ${xnm}?` : `Berapa <b>lebih</b> ${xnm} daripada ${ynm}?`;
     const langkah = [
-      { kata: `Bilang ${xnm}. Ada ${a}.`, baris: [T(xch, { id: 'ex' }), lv === 3 ? ASKn(R, a, [a + 1, a - 1, b], { id: 'a' }) : T(a, { id: 'a' })] },
+      { kata: `Bilang ${xnm}. Ada ${a}.`, soal: `Bilang gambar ${xnm} satu demi satu.`, baris: [T(xch, { id: 'ex' }), lv === 3 ? ASKn(R, a, [a + 1, a - 1, b], { id: 'a' }) : T(a, { id: 'a' })] },
       { kata: `Bilang ${ynm}. Ada ${b}.`, baris: [T(ych, { id: 'ey' }), T(b, { id: 'b' })] },
       { kata: 'Padankan satu dengan satu. Yang tiada pasangan ialah bezanya.', baris: [T(a, { id: 'a' }), MINUS, T(b, { id: 'b' }), '=', ASKn(R, d, [d + 1, d - 1, a + b, a, b], { id: 'd', c: 'box' })] },
     ];
-    const lukis = (svg, k) => {
+    const lukis = (svg, k, _P, q) => {
       clear(svg);
       if (k < 2) {
-        const o = { hot: k < 0 ? [] : [k === 0 ? xi : yi], dim: false, nums: k < 0 ? [] : k === 0 ? [xi] : [xi, yi], popNum: k === 0 ? xi : yi, popRow: k < 0 ? undefined : k === 0 ? xi : yi };
+        const o = { hot: k < 0 ? [] : [k === 0 ? xi : yi], dim: false, nums: k < 0 || (q && k === 0 && lv === 3) ? [] : k === 0 ? [xi] : [xi, yi], popNum: k === 0 ? xi : yi, popRow: k < 0 ? undefined : k === 0 ? xi : yi };
         piktograf(svg, tema, its, cnt, o);
         return;
       }
@@ -3071,11 +3610,12 @@ function accepts(tok, input) {
         }
       });
       for (let i = 0; i < b; i++) { const l = S('line', { x1: X0 + i * dx, y1: ya + 15, x2: X0 + i * dx, y2: yb - 15, stroke: 'var(--ok)', 'stroke-width': 3, 'stroke-linecap': 'round' }, svg); anim(l, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: i * 120 }); }
-      if (d > 0) {
+      if (d > 0 && !q) {
         const xm = X0 + (b + (d - 1) / 2) * dx;
         const t = tx(svg, xm, ya - 26, `lebih ${d}`, { 'font-size': 17, fill: 'var(--pen)', style: 'fill:var(--pen)' }); pop(t, b * 120 + 200);
         for (let i = b; i < a; i++) S('circle', { cx: X0 + i * dx, cy: yb, r: 11, fill: 'none', stroke: 'var(--muted)', 'stroke-width': 2, 'stroke-dasharray': '4 3' }, svg);
       }
+      if (q) return;   // mod Cuba: murid bilang sendiri yang tiada pasangan
       tx(svg, 180, 256, `${a} − ${b} = ${d}`, { 'font-size': 28, 'font-weight': 800, fill: 'var(--ok)', style: 'fill:var(--ok)' });
       tx(svg, 180, 284, kurang ? `${ynm} kurang ${d} daripada ${xnm}` : `${xnm} lebih ${d} daripada ${ynm}`, { 'font-size': 15, fill: 'var(--muted)', style: 'fill:var(--muted)' });
     };
@@ -3086,11 +3626,44 @@ function accepts(tok, input) {
     };
   }
 
+
+  /* =================== 5. Undian kelas (bina piktograf) =================== */
+  function undi(lv, R) {
+    const tema = R.pick(TEMA.filter(t => t.unit === 'murid')), nr = lv === 1 ? 3 : 4, its = R.shuffle(tema.item).slice(0, nr);
+    const cnt = lv === 1 ? beza(R, 3, 2, 6) : lv === 2 ? beza(R, 4, 2, 8) : beza(R, 4, 3, 9);
+    const ti = R.int(0, nr - 1), [tch, tnm] = its[ti], best = cnt.indexOf(Math.max(...cnt)), tot = cnt.reduce((a, b) => a + b, 0);
+    const names = its.map(x => x[1]), nama = R.pick(['Cikgu Aminah', 'Cikgu Ravi', 'Cikgu Mei', 'Cikgu Farid']);
+    const langkah = [
+      { kata: `Murid mengundi ${tema.tajuk.toLowerCase()}. Setiap undi, satu gambar.` },
+      { kata: `Bilang gambar ${tnm}.`, soal: `Bilang gambar ${tnm} satu demi satu.`, baris: [T(tch, { id: 'e' }), '=', ASKn(R, cnt[ti], [cnt[ti] + 1, cnt[ti] - 1, ...cnt.filter((_, i) => i !== ti)], { id: 'c' })] },
+      lv < 3 ? { kata: `Baris paling panjang: ${names[best]}.`, soal: 'Cari baris yang paling panjang.', baris: [T('paling banyak:'), ASK(names[best], names[best], { id: 'b', c: 'box', pilih: R.shuffle(names.slice()) })] }
+        : { kata: `Jumlah undi: ${cnt.join(' + ')} = ${tot}.`, soal: 'Bilang semua gambar dalam piktograf, atau tambah bilangan setiap baris.', baris: [T('jumlah undi'), '=', ASKn(R, tot, [tot + 1, tot - 1, tot + 2, tot - 10 > 0 ? tot - 10 : tot + 10], { id: 't', c: 'box' })] },
+    ];
+    return {
+      soalan: lv < 3 ? `${nama} buat undian ${tema.tajuk.toLowerCase()}. Berapa murid pilih <b>${tnm}</b>? Yang mana paling banyak?` : `${nama} buat undian ${tema.tajuk.toLowerCase()}. Berapa murid mengundi semuanya?`,
+      mula: 'Piktograf: setiap gambar ialah satu undi.',
+      langkah,
+      jawapan: lv < 3 ? `${cnt[ti]} murid pilih ${tnm}; paling banyak: ${names[best]}` : `${tot} murid`,
+      lukis(svg, k, P, q) {
+        clear(svg);
+        const o = { dim: false };
+        if (k >= 1 && !(q && k === 1)) o.nums = [ti];
+        if (k >= 2 && !q) { if (lv < 3) { o.hot = [best]; o.mark = best; } else o.nums = its.map((_, r) => r); }
+        if (k === 1) { o.hot = [ti]; o.hotCol = 'var(--blue)'; }
+        const P2 = piktograf(svg, tema, its, cnt, o);
+        if (k <= 0) its.forEach((_, r) => { for (let i = 0; i < cnt[r]; i++) { const e = em(svg, P2.x(i), P2.y(r), its[r][0], 22); anim(e, [{ transform: `translate(${200 - P2.x(i)}px,${-P2.y(r) - 30}px)`, opacity: 0 }, { transform: 'none', opacity: 0 }], { duration: 600 + (r * 4 + i) * 90, fill: 'none' }); } });
+        if (k >= 2 && !q && lv === 3) pop(tx(svg, 180, 292, `Jumlah: ${tot} murid`, { 'font-size': 17, fill: 'var(--ok)', style: 'fill:var(--ok)' }));
+      },
+      uji: () => { let t = 0, bi = 0; cnt.forEach((c, r) => { for (let i = 0; i < c; i++) t++; if (c > cnt[bi]) bi = r; }); return t === tot && bi === best && cnt.filter(c => c === cnt[best]).length === 1; },
+    };
+  }
+
   BAB({ bab: 8, tajuk: 'Data', ikon: '📊', warna: '#cc5de8', jenis: [
     { nama: 'Kumpul data: gundal', gen: kumpul },
     { nama: 'Baca jadual gundal', gen: jadual },
     { nama: 'Piktograf: paling banyak?', gen: paling },
     { nama: 'Piktograf: berapa lebih?', gen: lebih },
+    { nama: '🗳️ Undian kelas', gen: undi },
   ] });
 })();
 
@@ -3145,15 +3718,21 @@ function accepts(tok, input) {
   }
 
   /* ---------- Visual ---------- */
-  function draw(step) {
+  /* Darjah 1 (TEKA): dalam mod Cuba, gambar dilukis dalam keadaan "soalan" (q = true): lukis() tidak menunjukkan
+     jawapan langkah itu (tiada nombor bilangan, tiada label jawapan) sehingga murid menjawab dengan betul. */
+  const TEKA = FORM === 'd1';
+  const cue = st => (TEKA && st.soal) || st.kata;          // petunjuk mod Cuba: tidak menyebut jawapan
+  function draw(step, q) {
     const v = $('#viz');
     if (!P.lukis) { v.innerHTML = ''; return; }
     let svg = v.querySelector('svg'); if (!svg) { v.innerHTML = ''; svg = S('svg', { viewBox: P.viewBox || '0 0 360 300' }, v); }
-    try { P.lukis(svg, step, P); } catch (e) { console.error(e); }
+    try { P.lukis(svg, step, P, !!(q && TEKA)); } catch (e) { console.error(e); }
   }
 
   /* ---------- Baris & morf token ---------- */
+  const sorok = (t, ask) => ask && TEKA && t.h && t.tanya === undefined;   // token "h": disorok dalam mod Cuba
   function tokHTML(t, ask) {
+    if (sorok(t, ask)) return `<span class="tk">…</span>`;
     if (ask && t.tanya !== undefined) return `<span class="tk ask${t.pilih ? ' pick' : ''}"><input${t.pilih ? ' readonly tabindex="-1"' : ''} aria-label="Isi jawapan" autocomplete="off" inputmode="text" size="${Math.max(2, (t.pilih ? Math.max(...t.pilih.map(x => plain(String(x)).length)) : plain(t.t).length) + 1)}"></span>`;
     return `<span class="tk${t.c ? ' ' + t.c : ''}">${t.t}</span>`;
   }
@@ -3161,7 +3740,7 @@ function accepts(tok, input) {
   function addLine(i, line, ask) {
     const el = document.createElement('div'); el.className = 'line cur'; el.dataset.i = i;
     el.innerHTML = `<span class="no">${i + 1}</span>` + toks(line).map(t => tokHTML(t, ask)).join('');
-    [...el.querySelectorAll('.tk')].forEach((s, n) => { const t = toks(line)[n]; s.dataset.id = t.id || ''; s.dataset.p = plain(t.t); s._t = t; });
+    [...el.querySelectorAll('.tk')].forEach((s, n) => { const t = toks(line)[n]; s.dataset.id = t.id || ''; s.dataset.p = sorok(t, ask) ? '…' : plain(t.t); s._t = t; });
     $('#board').querySelectorAll('.line.cur').forEach(l => l.classList.remove('cur'));
     $('#board').querySelectorAll('.tk.new').forEach(t => t.classList.remove('new'));
     $('#board').appendChild(el); return el;
@@ -3252,23 +3831,23 @@ function accepts(tok, input) {
   function practice() {
     $('#ctrl').innerHTML = `<button class="btn go" id="check">Semak ✔</button><button class="btn alt" id="hint">💡 Petunjuk</button>
       <button class="btn alt" id="reveal">Tunjuk langkah ini</button><div class="prog"><i id="pr"></i></div>`;
-    $('#check').onclick = check; $('#hint').onclick = () => { hints++; $('#say').innerHTML = P.langkah[li].kata; };
+    $('#check').onclick = check; $('#hint').onclick = () => { hints++; $('#say').innerHTML = cue(P.langkah[li]); };
     $('#reveal').onclick = () => { hints += 2; fill(true); };
     li = -1; $('#stepNo').textContent = 'Cuba'; $('#say').textContent = 'Isi petak kosong pada setiap baris. Tekan Petunjuk jika buntu.';
     nextLine();
   }
   function nextLine() {
     li++;
-    while (li < P.langkah.length && !P.langkah[li].baris) { draw(li); li++; }
+    while (li < P.langkah.length && (!P.langkah[li].baris || (TEKA && P.langkah[li].tunjuk))) { draw(li, true); li++; }
     $('#pr').style.width = (100 * li / P.langkah.length) + '%';
     if (li >= P.langkah.length) return solved();
     const st = P.langkah[li], prev = lastLine(), el = addLine($('#board').querySelectorAll('.line').length, st.baris, true);
-    morph(prev, el); draw(li);
+    morph(prev, el); draw(li, true);
     $('#stepNo').textContent = `Baris ${li + 1}`;
     const inp = el.querySelector('input');
-    if (!inp) { $('#say').innerHTML = st.kata; setTimeout(nextLine, RM() ? 0 : 700); return; }
+    if (!inp) { $('#say').innerHTML = cue(st); setTimeout(nextLine, RM() ? 0 : 700); return; }
     $('#say').textContent = KID ? 'Pilih jawapan yang betul.' : 'Apakah yang patut ditulis dalam petak?';
-    if (KID) speak(st.kata.replace(/<[^>]*>/g, ' '));
+    if (KID) speak(cue(st).replace(/<[^>]*>/g, ' '));
     picks(el);
     el.querySelectorAll('input').forEach(x => x.onkeydown = e => { if (e.key === 'Enter') check(); });
     if (!inp.readOnly) setTimeout(() => inp.focus({ preventScroll: true }), 300);
@@ -3280,7 +3859,7 @@ function accepts(tok, input) {
     tok._t.pilih.forEach(v => { const b = document.createElement('button'); b.className = 'pk'; b.type = 'button'; b.textContent = v;
       b.onclick = () => { tok.querySelector('input').value = v;
         if (!accepts(tok._t, v)) { b.classList.add('no'); b.disabled = true; tok.querySelector('input').value = ''; hints += .5;
-          $('#say').innerHTML = '❌ Cuba lagi. ' + P.langkah[li].kata; if (KID) speak('Cuba lagi'); return; }
+          $('#say').innerHTML = '❌ Cuba lagi. ' + cue(P.langkah[li]); if (KID) speak('Cuba lagi'); return; }
         const rest = [...el.querySelectorAll('.tk.pick')].some(s => !s.querySelector('input').value);
         if (rest) picks(el); else check(); };
       box.appendChild(b); });
@@ -3291,20 +3870,22 @@ function accepts(tok, input) {
     el.querySelectorAll('.tk.ask').forEach(s => { s.classList.remove('ask'); s.innerHTML = s._t.t; s.classList.add(given ? 'pen' : 'ans');
       anim(s, [{ transform: 'scale(1.5)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.5,.5,1)' }); });
     if (given) $('#say').innerHTML = P.langkah[li].kata;
-    setTimeout(nextLine, RM() ? 0 : 650);
+    if (TEKA) { draw(li); if (!given) $('#say').innerHTML = '✅ ' + P.langkah[li].kata; }   // jawapan betul: barulah gambar tunjuk jawapan
+    setTimeout(nextLine, RM() ? 0 : TEKA ? 1100 : 650);
   }
   function check() {
     const el = lastLine(); if (!el) return;
     const asks = [...el.querySelectorAll('.tk.ask')]; let ok = true;
     asks.forEach(s => { const i = s.querySelector('input'); if (accepts(s._t, i.value)) { i.classList.remove('bad'); } else { ok = false; i.classList.remove('bad'); void i.offsetWidth; i.classList.add('bad'); } });
     if (ok) { G.xp += 2; save(); fill(false); }
-    else { hints += .5; $('#say').innerHTML = '❌ Belum tepat. ' + P.langkah[li].kata; }
+    else { hints += .5; $('#say').innerHTML = '❌ Belum tepat. ' + cue(P.langkah[li]); }
   }
   function solved() {
     const clean = hints < 1, gain = 20 + (clean ? 10 : 0);
     G.solved[mod.bab] = (G.solved[mod.bab] || 0) + 1; if (clean) G.clean[mod.bab] = (G.clean[mod.bab] || 0) + 1;
     G.xp += gain; save();
     $('#ctrl').innerHTML = ''; $('#stepNo').textContent = 'Siap'; $('#board').classList.add('fin');
+    if (TEKA) draw(P.langkah.length - 1);
     $('#say').innerHTML = clean ? '🎯 Tepat tanpa petunjuk!' : 'Siap! Cuba lagi tanpa petunjuk untuk bonus.';
     $('#end').innerHTML = `<div class="done">🏆 Selesai! Jawapan: <b>${P.jawapan}</b> · <b>+${gain} XP</b>
       <p class="hint">Bab ${mod.bab}: ${'★'.repeat(starsOf(mod.bab))}${'☆'.repeat(3 - starsOf(mod.bab))} (${G.solved[mod.bab]} soalan diselesaikan)</p>
