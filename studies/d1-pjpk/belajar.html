@@ -324,7 +324,7 @@ function plain(h) {
         teks: ['Tarik upih pinang: "Beratnya."', 'Kasut kayu: "Ringannya kalau buat serentak."'],
         contoh: 'Cikgu: "Kenal pasti aktiviti yang ringan dan berat."' },
       { ikon: '🚪', tajuk: 'Ruang untuk bergerak',
-        teks: ['Berasak-asak di pintu — susah bergerak.', 'Beratur — ada ruang, senang bergerak.'] },
+        teks: ['Uji Saya: di ruang manakah kamu senang bergerak?', 'Berasak-asak di pintu, atau beratur? Mengapa?'] },
     ],
     soalan: [
       { j: 'pilih', s: 'Stesen A ialah ___.', ikon: '🏁', p: ['Bentuk Badan', 'Imbangan', 'Layangan'], a: 0, kenapa: 'Stesen A Bentuk Badan, Stesen B Imbangan.' },
@@ -336,7 +336,7 @@ function plain(h) {
       { j: 'pilih', s: 'Wisel ditiup! Murid masuk ke dalam ___.', ikon: '📣', p: ['gelung', 'kotak', 'kelas'], a: 0, kenapa: 'Dalam permainan pulang ke rumah, murid masuk ke dalam gelung.' },
       { j: 'pilih', s: 'Laluan apakah ini?', ikon: lalSVG(LAL['Zig-zag']), p: ['Zig-zag', 'Spiral', 'Lurus', 'Berlengkok'], a: 0, kenapa: 'Laluan zig-zag tajam ke kiri dan ke kanan.' },
       { j: 'pilih', s: 'Laluan apakah ini?', ikon: lalSVG(LAL['Spiral']), p: ['Spiral', 'Zig-zag', 'Berlengkok', 'Lurus'], a: 0, kenapa: 'Laluan spiral berpusing ke dalam.' },
-      { j: 'pilih', s: 'Ikut tempo untuk kawal ___.', ikon: '🎵', p: ['kelajuan', 'warna', 'suara'], a: 0, kenapa: '"Ikut tempo untuk kawal kelajuan."' },
+      { j: 'pilih', s: 'Ikut tempo untuk kawal ___.', ikon: '🎵', p: ['kelajuan', 'arah laluan', 'aras badan'], a: 0, kenapa: '"Ikut tempo untuk kawal kelajuan."' },
       { j: 'pilih', s: 'Menarik upih pinang terasa ___.', ikon: '🌴', p: ['berat', 'ringan'], a: 0, kenapa: 'Murid berkata "Beratnya."' },
       { j: 'pilih', s: 'Kasut kayu terasa ringan kalau ___.', ikon: '👣', p: ['buat serentak', 'jalan seorang', 'berlari laju'], a: 0, kenapa: '"Ringannya kalau buat serentak."' },
       { j: 'bs', s: 'Kita perlu berhati-hati ketika melakukan aktiviti.', ikon: '⚠️', a: true, kenapa: '"Berhati-hati ketika melakukan aktiviti."' },
@@ -365,7 +365,7 @@ function plain(h) {
           const [a] = R[k]; fase = 'aras'; F.set('berdiri'); el.querySelector('#no').textContent = `Pusingan ${k + 1} / ${R.length}`;
           cg.textContent = `"Aras ${a}!"`; api.speak(`Aras ${a}`);
           ui.innerHTML = '<div class="opts" id="ab" style="grid-template-columns:repeat(3,1fr)"></div>'; const ab = ui.querySelector('#ab');
-          abtn = api.shuffle(AR).map(x => { const b = api.H(`<button class="opt" style="text-align:center" aria-label="aras">${figSVG([[x, 10, 0, 1]], 120, 110).replace('min(192px,calc(100% - 58px))', '90px')}</button>`); b.onclick = () => pickA(x, b); ab.appendChild(b); return [x, b]; });
+          abtn = api.shuffle(AR).map(x => { const b = api.H(`<button class="opt" style="text-align:center" aria-label="Aras ${x}">${figSVG([[x, 10, 0, 1]], 120, 110).replace('min(192px,calc(100% - 58px))', '90px')}</button>`); b.onclick = () => pickA(x, b); ab.appendChild(b); return [x, b]; });
         };
         function pickA(x, b) {
           if (fase !== 'aras') return;
@@ -379,7 +379,7 @@ function plain(h) {
           cg.textContent = `📣 Priiit! "${n} orang dalam gelung!"`; api.speak(`${n} orang dalam gelung!`);
           ui.innerHTML = `<div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center"><div class="pool" id="kp"></div><div id="hp" style="width:130px;height:130px;border-radius:50%;border:8px solid #e8590c;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:2px;font-size:1.6rem;padding:6px"></div></div><button class="btn go" id="sp" style="margin-top:10px">✅ Siap</button>`;
           const kp = ui.querySelector('#kp'), hp = ui.querySelector('#hp');
-          kb = KID.map((e, i) => { const b = api.H(`<button class="chip" style="font-size:1.8rem;padding:4px 10px">${e}</button>`); b.onclick = () => { if (inHoop.has(i)) { inHoop.delete(i); kp.appendChild(b); } else { inHoop.add(i); hp.appendChild(b); } api.anim(b, [{ transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 250 }); }; kp.appendChild(b); return b; });
+          kb = KID.map((e, i) => { const b = api.H(`<button class="chip" style="font-size:1.8rem;padding:4px 10px" aria-label="Murid ${i + 1}">${e}</button>`); b.onclick = () => { if (inHoop.has(i)) { inHoop.delete(i); kp.appendChild(b); } else { inHoop.add(i); hp.appendChild(b); } api.anim(b, [{ transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 250 }); }; kp.appendChild(b); return b; });
           ui.querySelector('#sp').onclick = () => {
             if (fase !== 'gelung') return;
             if (inHoop.size !== n) { miss++; api.salah(hp, `Ada ${inHoop.size} orang dalam gelung. Cikgu minta ${n} orang.`); return; }
@@ -412,14 +412,16 @@ function plain(h) {
           el.querySelector('#no').textContent = `Laluan ${k + 1} / ${R.length}`; el.querySelector('#mt').style.width = (k / R.length * 100) + '%'; run();
           op.innerHTML = ''; btns = api.shuffle(N).map(n => { const b = api.H(`<button class="opt" style="text-align:center">${n}</button>`); b.onclick = () => pick(n, b); op.appendChild(b); return [n, b]; });
         };
+        let lock = false;
         function pick(n, b) {
+          if (lock || k >= R.length) return;
           if (n !== R[k]) { miss++; api.salah(b, 'Bukan itu. Lihat bentuk laluan yang dilukis bola.'); return; }
-          api.betul(b, `Ya! Laluan ${n}.`); k++;
+          api.betul(b, `Ya! Laluan ${n}.`); k++; lock = true;
           if (k === R.length) { el.querySelector('#mt').style.width = '100%'; api.selesai(Math.max(0, 1 - miss * .1), 'Kamu kenal semua laluan: lurus, berlengkok, zig-zag dan spiral!'); }
-          else setTimeout(() => { if (el.isConnected) show(); }, 600);
+          else setTimeout(() => { if (el.isConnected) { lock = false; show(); } }, 600);
         }
         show();
-        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; btns.find(z => z[0] === R[k])[1].click(); setTimeout(go, 700); }; go(); } };
+        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; if (!lock) btns.find(z => z[0] === R[k])[1].click(); setTimeout(go, 700); }; go(); } };
       },
     }, {
       id: 'kereta-api-isyarat', tajuk: 'Kereta Api Isyarat', ikon: '🚂',
@@ -439,17 +441,18 @@ function plain(h) {
         const draw = () => { cells.forEach((c, j) => { const x = j % W, y = Math.floor(j / W); c.textContent = x === pos[0] && y === pos[1] ? '🚂' : x === goal[0] && y === goal[1] ? '⭐' : ''; }); el.querySelector('#no').textContent = `Perjalanan ${lap + 1} / ${LAPS}`; el.querySelector('#pg').textContent = `Isyarat ${i + 1} / ${path.length}`; };
         const signal = () => { const d = path[i]; sg.textContent = `🥫 Tuk-tuk! "Gerak ke ${d}!"`; api.speak(`Gerak ke ${d}`); };
         const B = Object.keys(D).map(d => { const b = api.H(`<button class="btn alt" style="font-size:1.5rem;padding:8px 0" aria-label="${d}">${D[d][2]}</button>`); b.onclick = () => go(d, b); bt.appendChild(b); return [d, b]; });
+        let tunggu = false;
         function go(d, b) {
-          if (lap >= LAPS) return;
+          if (lap >= LAPS || tunggu) return;
           if (d !== path[i]) { miss++; api.salah(b, `Ikut isyarat cikgu: ke ${path[i]}.`); return; }
           pos = [pos[0] + D[d][0], pos[1] + D[d][1]]; i++; draw(); api.anim(cells[pos[1] * W + pos[0]], [{ transform: 'scale(1.4)' }, { transform: 'scale(1)' }], { duration: 300 });
           if (i === path.length) { lap++; api.betul(null, 'Sampai! ⭐');
             if (lap === LAPS) { sg.textContent = '🎉 Kereta api sampai!'; return api.selesai(Math.max(0, 1 - miss * .1), 'Syabas! Kamu memandu kereta api mengikut isyarat.'); }
-            goal = newPath(); setTimeout(() => { if (el.isConnected) { draw(); signal(); } }, 500); }
+            goal = newPath(); tunggu = true; setTimeout(() => { if (el.isConnected) { tunggu = false; draw(); signal(); } }, 500); }
           else { api.betul(b); signal(); }
         }
         draw(); signal();
-        return { jawab() { const g = () => { if (lap >= LAPS || !el.isConnected) return; B.find(z => z[0] === path[i])[1].click(); setTimeout(g, 650); }; g(); } };
+        return { jawab() { const g = () => { if (lap >= LAPS || !el.isConnected) return; if (!tunggu) B.find(z => z[0] === path[i])[1].click(); setTimeout(g, 650); }; g(); } };
       },
     }],
   });
@@ -601,7 +604,7 @@ function plain(h) {
       { j: 'pilih', s: 'Tangan yang tidak membaling digunakan untuk ___.', ikon: '🎯', p: ['membantu balingan', 'menutup mata', 'memegang kon'], a: 0, kenapa: 'Cikgu: Gunakan tangan yang tidak membaling untuk membantu balingan.' },
       { j: 'pilih', s: 'Semasa menendang, kaki sokong berada di ___ bola.', ikon: '⚽', p: ['sebelah', 'atas', 'belakang'], a: 0, kenapa: '"Kaki sokong berada di sebelah bola."' },
       { j: 'pilih', s: 'Kelecek bola dengan bahagian ___ kaki.', ikon: '⚽', p: ['dalam', 'tumit', 'hujung'], a: 0, kenapa: 'Cikgu: Gunakan bahagian dalam kaki. Kaki rapat dengan bola.' },
-      { j: 'pilih', s: 'Selepas lambung bola, apa kamu buat?', ikon: gLam, p: ['🤲 Tangkap', '⚽ Tendang', '🏃 Lari'], a: 0, kenapa: 'Mula → Lambung → Tangkap.' },
+      { j: 'pilih', s: 'Selepas lambung bola, apa kamu buat?', ikon: figSVG([['tinggi']], 120, 110, '<circle cx="60" cy="-2" r="7" fill="#e64980"/><path d="M48 -8 q12 -14 24 0" fill="none" stroke="currentColor" stroke-dasharray="3 3"/>'), p: ['🤲 Tangkap', '⚽ Tendang', '🏃 Lari'], a: 0, kenapa: 'Mula → Lambung → Tangkap.' },
       { j: 'bs', s: 'Mengilas ialah pergerakan lokomotor.', ikon: '🔄', a: false, kenapa: 'Mengilas ialah pergerakan bukan lokomotor. Kita tidak berpindah tapak.' },
       { j: 'bs', s: 'Berlari ialah pergerakan lokomotor.', ikon: '🏃', a: true, kenapa: 'Berlari membuat kita berpindah tempat.' },
       { j: 'bs', s: 'Ikut Irama dimulakan dengan tempo laju.', ikon: '🎵', a: false, kenapa: 'Mulakan dengan tempo perlahan, kemudian sederhana dan laju.' },
@@ -610,7 +613,7 @@ function plain(h) {
       { j: 'susun', s: 'Susun lambung dan tangkap bola.', item: ['Mula: pegang bola', 'Lambung bola ke atas', 'Tangkap bola'] },
       { j: 'susun', s: 'Susun gerakan lagu "Ikan Kekek".', item: ['Sentuh kaki kiri dan kanan', 'Lompat sebelah kaki', 'Kilas badan kiri dan kanan', 'Merangkak bagai harimau'] },
       { j: 'padan', s: 'Padankan kemahiran dengan pesanan cikgu.', pasangan: [['Baling atas kepala', 'Tangan lain bantu balingan'], ['Tangkap bola', 'Jaga kedudukan jari'], ['Tendang bola', 'Kaki sokong di sebelah'], ['Kelecek bola', 'Kaki rapat dengan bola']] },
-      { j: 'eja', s: 'Eja nama gerakan ini.', ikon: figSVG([['lari1']]), kata: 'berlari' },
+      { j: 'eja', s: 'Eja nama benda ini.', ikon: '⚽', kata: 'bola' },
       { j: 'ayat', s: 'Bina ayat.', kata: ['Melompat', 'ialah', 'pergerakan', 'lokomotor.'] },
     ],
     amali: [{
@@ -628,15 +631,16 @@ function plain(h) {
           const ch = api.shuffle([g, ...api.shuffle(GER.filter(x => x !== g)).slice(0, 2)]);
           op.innerHTML = ''; btns = ch.map(c => { const b = api.H(`<button class="opt">${c[0]}</button>`); b.onclick = () => pick(c, b); op.appendChild(b); return [c, b]; });
         };
+        let lock = false;
         function pick(c, b) {
-          const g = R[k]; if (!g) return;
+          const g = R[k]; if (!g || lock) return;
           if (c !== g) { miss++; api.salah(b, 'Bukan. Lihat gerakan itu sekali lagi!'); return; }
           api.betul(b, `${g[0]} — pergerakan <b>${g[1] ? 'lokomotor' : 'bukan lokomotor'}</b>.`); k++;
           if (k === R.length) { mt.style.width = '100%'; clearInterval(tick); F.play([['tinggi', 400, 0, -6], ['berdiri', 400]]); api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Kamu kenal semua gerakan.'); }
-          else setTimeout(show, 500);
+          else { lock = true; setTimeout(() => { if (el.isConnected) { lock = false; show(); } }, 500); }
         }
         show();
-        return { jawab() { const go = () => { if (k >= R.length) return; const x = btns.find(z => z[0] === R[k]); x[1].click(); setTimeout(go, 600); }; go(); } };
+        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; if (!lock) btns.find(z => z[0] === R[k])[1].click(); setTimeout(go, 600); }; go(); } };
       },
     }, {
       id: 'ikan-kekek', tajuk: 'Irama Ikan Kekek', ikon: '🐟',
@@ -665,12 +669,12 @@ function plain(h) {
           api.betul(b, `Betul! Seterusnya: ${V[nx][0]}.`); done++; v = nx; op.innerHTML = '';
           if (v === 3) {
             dance();
-            if (t === 2) { setTimeout(() => api.selesai(Math.max(0, 1 - miss * .1), 'Syabas! Kamu menari ikut irama Ikan Kekek dari perlahan hingga laju.'), 900); return; }
+            if (t === 2) { setTimeout(() => el.isConnected && api.selesai(Math.max(0, 1 - miss * .1), 'Syabas! Kamu menari ikut irama Ikan Kekek dari perlahan hingga laju.'), 900); return; }
             setTimeout(() => { if (!el.isConnected) return; t++; v = 0; api.say(`Tempo <b>${TEMPO[t][0]}</b> pula!`); ask(); }, 1600);
           } else ask();
         }
         ask();
-        return { jawab() { const go = () => { if (done >= TOTAL) return; const nx = (v + 1) % 4, x = btns.find(z => z[0] === nx && z[1].isConnected); if (x) x[1].click(); setTimeout(go, 400); }; go(); } };
+        return { jawab() { const go = () => { if (done >= TOTAL || !el.isConnected) return; const nx = (v + 1) % 4, x = btns.find(z => z[0] === nx && z[1].isConnected); if (x) x[1].click(); setTimeout(go, 400); }; go(); } };
       },
     }, {
       id: 'lambung-tangkap', tajuk: 'Lambung dan Tangkap', ikon: '🤲',
@@ -693,8 +697,8 @@ function plain(h) {
         tk.onclick = () => {
           if (state !== 'udara') return;
           const k = (performance.now() - t0) / DUR;
-          if (k > .6 && by > -10 && by < 16) { state = 'sedia'; cancelAnimationFrame(raf); got++; upd(); b.setAttribute('cy', 0); api.betul(tk, ['Tangkap!', 'Cantik!', 'Jari dan tangan betul!', 'Hebat!', 'Syabas!'][got - 1]);
-            setTimeout(() => { if (!el.isConnected) return; F.set('berdiri'); b.setAttribute('cy', 50); if (got === 5) api.selesai(Math.max(0, 1 - miss * .12), 'Kamu menangkap 5 kali! Mula → Lambung → Tangkap.'); }, 600); }
+          if (k > .6 && by > -10 && by < 16) { state = 'tunggu'; cancelAnimationFrame(raf); got++; upd(); b.setAttribute('cy', 0); api.betul(tk, ['Tangkap!', 'Cantik!', 'Jari dan tangan betul!', 'Hebat!', 'Syabas!'][got - 1]);
+            setTimeout(() => { if (!el.isConnected) return; F.set('berdiri'); b.setAttribute('cy', 50); state = got === 5 ? 'tamat' : 'sedia'; if (got === 5) api.selesai(Math.max(0, 1 - miss * .12), 'Kamu menangkap 5 kali! Mula → Lambung → Tangkap.'); }, 600); }
           else { miss++; api.salah(tk, k < .6 ? 'Terlalu awal! Bola masih naik.' : 'Hampir! Cuba lagi.'); }
         };
         return { jawab() { const go = () => { if (got >= 5 || !el.isConnected) return; if (state === 'sedia') lb.click(); else { const k = (performance.now() - t0) / DUR; if (k > .68 && by > -8 && by < 14) tk.click(); } setTimeout(go, 30); }; go(); } };
@@ -842,9 +846,9 @@ function plain(h) {
     soalan: [
       { j: 'pilih', s: 'Tarian dalam gambar untuk sambutan apa?', ikon: '🎭', p: ['Bulan Kemerdekaan', 'Hari Guru', 'Hari Sukan'], a: 0, kenapa: 'Sambutan Bulan Kemerdekaan, Sekolah Kebangsaan Taman Nilam.' },
       { j: 'pilih', s: 'Watak pertama dalam Pelakon Cilik ialah ___.', ikon: '🎬', p: ['Bunga Berkembang', 'Puteri Bersiram', 'Si Rama-rama'], a: 0, kenapa: 'Bunga Berkembang, kemudian Si Rama-rama dan Puteri Bersiram.' },
-      { j: 'pilih', s: 'Bunga Berkembang bermula dengan badan ___.', ikon: '🌱', p: ['meringkuk', 'berlari', 'melompat'], a: 0, kenapa: 'Kuntum bunga: badan meringkuk.' },
-      { j: 'pilih', s: 'Pada akhir lakonan, bunga menjadi ___.', ikon: '🌺', p: ['layu', 'buah', 'pokok'], a: 0, kenapa: 'Gambar kelima menunjukkan bunga layu.' },
-      { j: 'pilih', s: 'Dalam Si Rama-rama, badan meringkuk menjadi ___.', ikon: '🦋', p: ['kepompong', 'bunga', 'batu'], a: 0, kenapa: 'Ulat menjadi kepompong, kemudian rama-rama keluar.' },
+      { j: 'pilih', s: 'Bunga Berkembang bermula dengan badan ___.', ikon: '🌱', p: ['meringkuk', 'mendepang tangan', 'mengangkat tangan'], a: 0, kenapa: 'Kuntum bunga: badan meringkuk.' },
+      { j: 'pilih', s: 'Pada akhir lakonan, bunga menjadi ___.', ikon: '🌺', p: ['layu', 'kembang besar', 'bergoyang'], a: 0, kenapa: 'Gambar kelima menunjukkan bunga layu.' },
+      { j: 'pilih', s: 'Dalam Si Rama-rama, badan meringkuk menjadi ___.', ikon: '🦋', p: ['kepompong', 'rama-rama', 'ulat'], a: 0, kenapa: 'Ulat menjadi kepompong, kemudian rama-rama keluar.' },
       { j: 'pilih', s: 'Bagaimanakah rama-rama terbang?', ikon: '🦋', p: ['Kepak tangan', 'Merangkak', 'Meringkuk'], a: 0, kenapa: 'Rama-rama terbang: kepak tangan seperti sayap.' },
       { j: 'pilih', s: 'Apakah langkah terakhir Puteri Bersiram?', ikon: '👸', p: ['Sikat rambut', 'Siram air', 'Basuh muka'], a: 0, kenapa: 'Puteri bersiram, basuh muka, lap, kemudian sikat rambut.' },
       { j: 'pilih', s: 'Lakonan Pelakon Cilik diiringi ___.', ikon: '🎭', p: ['irama muzik', 'bunyi wisel', 'bunyi loceng'], a: 0, kenapa: '"Lakonkan pergerakan watak di bawah mengikut irama muzik."' },
@@ -880,7 +884,7 @@ function plain(h) {
           api.betul(b, 'Ya! Teruskan lakonan.'); s++; done++;
           if (s === 4) {
             op.innerHTML = ''; act();
-            if (c === 2) return setTimeout(() => api.selesai(Math.max(0, 1 - miss * .08), 'Tepuk tangan! 👏 Kamu pelakon cilik yang hebat.'), 900);
+            if (c === 2) return setTimeout(() => el.isConnected && api.selesai(Math.max(0, 1 - miss * .08), 'Tepuk tangan! 👏 Kamu pelakon cilik yang hebat.'), 900);
             setTimeout(() => { if (!el.isConnected) return; c++; s = 0; api.say(`Watak seterusnya: <b>${CER[ORD[c]].nama}</b>!`); ask(); }, 1500);
           } else ask();
         }
@@ -1056,7 +1060,7 @@ function plain(h) {
       { j: 'pilih', s: 'Objek lebih stabil jika pusat graviti ___.', ikon: '⚖️', p: ['rendah', 'tinggi'], a: 0, kenapa: 'Objek lebih stabil jika pusat graviti rendah.' },
       { j: 'pilih', s: 'Berapakah tapak sokongan aksi ini?', ikon: figSVG([['beruang']], 120, 110, dots(TAPAK[5][1], 10)), p: ['4', '2', '3', '1'], a: 0, kenapa: 'Dua tangan dan dua kaki: empat tapak sokongan.' },
       { j: 'pilih', s: 'Berapakah tapak sokongan aksi ini?', ikon: figSVG([['kaki1']], 120, 110, dots(TAPAK[0][1], 10)), p: ['1', '2', '3', '4'], a: 0, kenapa: 'Hanya sebelah kaki di lantai: satu tapak sokongan.' },
-      { j: 'pilih', s: 'Kenapa empat tapak lebih stabil daripada satu tapak?', ikon: '🤔', p: ['Tapaknya lebih luas', 'Badannya lebih tinggi', 'Matanya terbuka'], a: 0, kenapa: 'Tapak yang luas membuat badan lebih stabil.' },
+      { j: 'pilih', s: 'Kenapa empat tapak lebih stabil daripada satu tapak?', ikon: '🤔', p: ['Tapaknya lebih luas', 'Badannya lebih tinggi', 'Tapaknya lebih kecil'], a: 0, kenapa: 'Tapak yang luas membuat badan lebih stabil.' },
       { j: 'pilih', s: 'Cuba berguling seperti ___.', ikon: '🤸', p: ['tenggiling', 'kura-kura', 'landak'], a: 0, kenapa: '"Cuba kamu berguling seperti tenggiling."' },
       { j: 'pilih', s: 'Guling balak: badan perlu ___ di atas tilam.', ikon: '🪵', p: ['lurus mendatar', 'bengkok ke atas', 'duduk tegak'], a: 0, kenapa: '"Badan perlu lurus mendatar di atas tilam."' },
       { j: 'pilih', s: 'Supaya mudah berguling, kita ___ badan.', ikon: '⚪', p: ['bulatkan', 'luruskan', 'tegakkan'], a: 0, kenapa: '"Bulatkan badan supaya mudah berguling."' },
@@ -1069,7 +1073,7 @@ function plain(h) {
       { j: 'bs', s: 'Satu tapak sokongan lebih stabil daripada empat tapak.', ikon: '⚖️', a: false, kenapa: 'Empat tapak lebih luas, jadi lebih stabil.' },
       { j: 'susun', s: 'Susun langkah guling hadapan.', item: ['Posisi tuck', 'Mengayun badan', 'Berguling ke hadapan', 'Kembali mencangkung'] },
       { j: 'kumpul', s: 'Berjalan atau melompat?', kumpulan: [['🚶 Berjalan', ['gajah', 'tikus', 'ketam', 'beruang']], ['🦘 Melompat', ['arnab', 'kijang', 'katak']]] },
-      { j: 'padan', s: 'Padankan haiwan dengan aksi.', pasangan: [['Buaya', 'Merangkak meniarap'], ['Katak', 'Melompat'], ['Burung bangau', 'Berdiri sebelah kaki'], ['Beruang', 'Berjalan dengan tangan dan kaki']] },
+      { j: 'padan', s: 'Padankan haiwan dengan aksi.', pasangan: [['Buaya', 'Merangkak meniarap'], ['Katak', 'Melompat'], ['Beruang', 'Berjalan dengan tangan dan kaki']] },
       { j: 'eja', s: 'Eja nama haiwan ini.', ikon: '🐸', kata: 'katak' },
       { j: 'ayat', s: 'Bina ayat.', kata: ['Bulatkan', 'badan', 'supaya', 'mudah', 'berguling.'] },
     ],
@@ -1085,14 +1089,16 @@ function plain(h) {
           const h = R[k]; el.querySelector('#no').textContent = `Haiwan ${k + 1} / ${R.length}`; el.querySelector('#mt').style.width = (k / R.length * 100) + '%'; F.play(h[3]);
           op.innerHTML = ''; btns = api.shuffle([h, ...api.shuffle(HAI.filter(x => x !== h)).slice(0, 2)]).map(x => { const b = api.H(`<button class="opt" style="text-align:center"><span style="font-size:2rem">${x[0]}</span><br>${x[1]}</button>`); b.onclick = () => pick(x, b); op.appendChild(b); return [x, b]; });
         };
+        let lock = false;
         function pick(x, b) {
+          if (lock || k >= R.length) return;
           if (x !== R[k]) { miss++; api.salah(b, 'Bukan. Lihat cara ia bergerak!'); return; }
           api.betul(b, `${x[0]} ${x[2]}!`); k++;
           if (k === R.length) { el.querySelector('#mt').style.width = '100%'; api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Kamu kenal pergerakan haiwan.'); }
-          else setTimeout(() => { if (el.isConnected) show(); }, 600);
+          else { lock = true; setTimeout(() => { if (el.isConnected) { lock = false; show(); } }, 600); }
         }
         show();
-        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; btns.find(z => z[0] === R[k])[1].click(); setTimeout(go, 700); }; go(); } };
+        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; if (!lock) btns.find(z => z[0] === R[k])[1].click(); setTimeout(go, 700); }; go(); } };
       },
     }, {
       id: 'kira-tapak', tajuk: 'Kira Tapak Sokongan', ikon: '🦶',
@@ -1107,17 +1113,18 @@ function plain(h) {
           F.play([[p, 500, 0, 0, -w], [p, 500, 0, 0, w]]);
         };
         const btns = [1, 2, 3, 4].map(n => { const b = api.H(`<button class="opt" style="text-align:center;font-size:1.6rem">${n}</button>`); b.onclick = () => pick(n, b); op.appendChild(b); return b; });
+        let lock2 = false;
         function pick(n, b) {
-          if (k >= R.length) return; const [p, pts] = R[k];
+          if (k >= R.length || lock2) return; const [p, pts] = R[k];
           if (n !== pts.length) { miss++; api.salah(b, 'Kira semula bahagian yang menyentuh lantai.'); return; }
           F.set(p); dg.innerHTML = dots(pts); pts.forEach((_, i) => api.anim(dg.children[i], [{ transform: 'scale(0)', transformOrigin: 'center', transformBox: 'fill-box' }, { transform: 'scale(1)', transformBox: 'fill-box', transformOrigin: 'center' }], { duration: 400, delay: i * 150 }));
           el.querySelector('#st2').textContent = n >= 3 ? '✅ Sangat stabil' : n === 2 ? '🙂 Stabil' : '😬 Bergoyang';
-          api.betul(b, `${n} tapak sokongan. ${n >= 3 ? 'Tapak luas, lebih stabil!' : 'Tapak kecil, kurang stabil.'}`); k++;
-          if (k === R.length) setTimeout(() => api.selesai(Math.max(0, 1 - miss * .12), 'Ingat: tapak yang luas dan pusat graviti yang rendah membuat kita lebih stabil.'), 700);
-          else setTimeout(() => { if (el.isConnected) show(); }, 1500);
+          api.betul(b, `${n} tapak sokongan. ${n >= 3 ? 'Tapak luas, lebih stabil!' : 'Tapak kecil, kurang stabil.'}`); k++; lock2 = true;
+          if (k === R.length) setTimeout(() => el.isConnected && api.selesai(Math.max(0, 1 - miss * .12), 'Ingat: tapak yang luas dan pusat graviti yang rendah membuat kita lebih stabil.'), 700);
+          else setTimeout(() => { if (el.isConnected) { lock2 = false; show(); } }, 1500);
         }
         show();
-        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; btns[R[k][1].length - 1].click(); setTimeout(go, 1700); }; go(); } };
+        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; if (!lock2) btns[R[k][1].length - 1].click(); setTimeout(go, 400); }; go(); } };
       },
     }, {
       id: 'guling-tenggiling', tajuk: 'Guling Tenggiling', ikon: '🔄',
@@ -1138,7 +1145,7 @@ function plain(h) {
           if (i !== k) { miss++; api.salah(b, k === 0 ? 'Mula dengan posisi tuck.' : 'Belum lagi. Apa yang berlaku selepas itu?'); return; }
           b.remove(); slots[k].classList.add('ok'); slots[k].querySelector('span').textContent = L[k][0];
           F.play(L[k][1].map(f => [f[0], f[1], (f[2] || 0) - 20, f[3], f[4]]), k === 1, null); api.betul(slots[k]); k++;
-          if (k === L.length) setTimeout(() => api.selesai(Math.max(0, 1 - miss * .15), '"Bulatkan badan supaya mudah berguling." Hebat, tunas gimnas!'), 1300);
+          if (k === L.length) setTimeout(() => el.isConnected && api.selesai(Math.max(0, 1 - miss * .15), '"Bulatkan badan supaya mudah berguling." Hebat, tunas gimnas!'), 1300);
         }
         return { jawab() { const go = () => { if (k >= L.length || !el.isConnected) return; btns.find(z => z[0] === k)[1].click(); setTimeout(go, 900); }; go(); } };
       },
@@ -1254,25 +1261,23 @@ function plain(h) {
         contoh: 'Hembus nafas melalui hidung atau mulut.' },
       { ikon: gApung, tajuk: 'Apung tiarap dan luncur',
         teks: ['Apung tiarap: badan terapung meniarap.', 'Luncur: badan lurus, tangan ke hadapan.'] },
-      { ikon: '✅', tajuk: 'Selamat di kolam',
-        teks: ['Mandi di pancuran. Turun guna tangga.', 'Jangan berlari atau makan di tepi kolam.'] },
+      { ikon: '✅❌', tajuk: 'Uji Saya: betul atau salah?',
+        teks: ['Lihat gambar kawan-kawan di kolam renang.', 'Tandakan ✓ atau ✗. Bincang dengan cikgu.'] },
     ],
     soalan: [
-      { j: 'pilih', s: 'Bagaimanakah cara masuk ke kolam yang betul?', ikon: '🏊', p: ['🪜 Guna tangga', '🤸 Terjun berguling', '🏃 Lari dan lompat'], a: 0, kenapa: '"Cikgu, beginikah cara masuk ke kolam?" "Ya, betul." — murid turun guna tangga.' },
+      { j: 'pilih', s: 'Bagaimanakah cara masuk ke kolam yang betul?', ikon: '🏊', p: ['🪜 Guna tangga', '🏊 Terjun dari tepi', '🛝 Gelongsor masuk'], a: 0, kenapa: '"Cikgu, beginikah cara masuk ke kolam?" "Ya, betul." — murid turun guna tangga.' },
       { j: 'pilih', s: 'Bobbing ialah lakuan tenggelam ___.', ikon: '🫧', p: ['timbul', 'berlari', 'tidur'], a: 0, kenapa: 'Bobbing ialah lakuan tenggelam timbul di permukaan air.' },
-      { j: 'pilih', s: 'Bilakah kita menghembus nafas semasa bobbing?', ikon: '🫧', p: ['Semasa dalam air', 'Semasa di tepi kolam', 'Semasa makan'], a: 0, kenapa: 'Hembus nafas semasa berada di dalam air.' },
-      { j: 'pilih', s: 'Kita menghembus nafas melalui ___.', ikon: '👃', p: ['hidung atau mulut', 'telinga atau mata', 'tangan atau kaki'], a: 0, kenapa: 'Hembus nafas melalui hidung atau mulut.' },
+      { j: 'pilih', s: 'Bilakah kita menghembus nafas semasa bobbing?', ikon: '🫧', p: ['Semasa dalam air', 'Semasa kepala di atas air', 'Semasa berdiri di tepi'], a: 0, kenapa: 'Hembus nafas semasa berada di dalam air.' },
+      { j: 'bs', s: 'Dalam air, kita hembus nafas melalui hidung atau mulut.', ikon: '👃', a: true, kenapa: 'Hembus nafas melalui hidung atau mulut semasa berada di dalam air.' },
       { j: 'pilih', s: 'Pakaian apakah sesuai di kolam renang?', ikon: '❓', p: ['🩱 Pakaian renang', '👕 Baju-T biasa', '👔 Baju sekolah'], a: 0, kenapa: 'Kita perlu memakai pakaian renang yang sesuai.' },
       { j: 'pilih', s: 'Siapakah yang duduk di kerusi tinggi menjaga kolam?', ikon: '🪑', p: ['Penyelamat', 'Penjual', 'Pemandu'], a: 0, kenapa: 'Penyelamat menjaga keselamatan di kolam renang.' },
       { j: 'pilih', s: 'Apakah kemahiran ini?', ikon: `<svg viewBox="0 30 120 70" xmlns="http://www.w3.org/2000/svg" style="width:200px"><rect x="0" y="60" width="120" height="40" fill="#4dabf7" opacity=".45"/><g transform="translate(5 -22)">${figBits(PZ.meniarap, 'var(--c)')}</g></svg>`, p: ['Apung tiarap', 'Berjalan', 'Berdiri'], a: 0, kenapa: 'Badan terapung meniarap: apung tiarap.' },
       { j: 'pilih', s: 'Di kolam renang, kita patuhi arahan ___.', ikon: '📣', p: ['guru', 'kawan', 'adik'], a: 0, kenapa: '"Patuhi arahan guru."' },
       { j: 'bs', s: 'Murid boleh memakai baju-T biasa untuk berenang.', ikon: '👕', a: false, kenapa: 'Baju-T biasa tidak dibenarkan. Pakai pakaian renang.' },
-      { j: 'bs', s: 'Berlari di tepi kolam renang itu selamat.', ikon: '🏃', a: false, kenapa: 'Berlari di tepi kolam boleh menyebabkan kita jatuh.' },
-      { j: 'bs', s: 'Mandi di pancuran sebelum berenang ialah perbuatan betul.', ikon: '🚿', a: true, kenapa: 'Murid mandi di pancuran sebelum masuk ke kolam.' },
+      { j: 'bs', s: 'Kasut boleh dipakai di kolam renang.', ikon: '👟', a: false, kenapa: 'Simbol larangan: jangan pakai kasut di kolam renang.' },
       { j: 'bs', s: 'Semasa bobbing, tarik nafas ketika kepala di permukaan air.', ikon: '😮', a: true, kenapa: 'Tarik nafas ketika kepala di permukaan air.' },
-      { j: 'kumpul', s: 'Betul atau salah di kolam renang?', kumpulan: [['✅ Betul', ['Guna tangga', 'Mandi di pancuran', 'Pakai topi renang']], ['❌ Salah', ['Berlari di tepi kolam', 'Makan di tepi kolam', 'Pakai baju-T biasa']]] },
+      { j: 'kumpul', s: 'Betul atau salah di kolam renang?', kumpulan: [['✅ Betul', ['Guna tangga', 'Pakai topi renang', 'Patuhi arahan guru']], ['❌ Salah', ['Pakai kasut', 'Bawa haiwan', 'Pakai baju-T biasa']]] },
       { j: 'susun', s: 'Susun langkah bobbing.', item: ['Kepala di atas air: tarik nafas', 'Tenggelam ke dalam air', 'Hembus nafas dalam air', 'Timbul semula'] },
-      { j: 'susun', s: 'Susun aktiviti di kolam renang.', item: ['Pakai pakaian renang', 'Mandi di pancuran', 'Turun guna tangga', 'Berdiri dan berjalan dalam air'] },
       { j: 'padan', s: 'Padankan kemahiran dengan maksudnya.', pasangan: [['Bobbing', 'Tenggelam timbul'], ['Apung tiarap', 'Terapung meniarap'], ['Luncur', 'Badan lurus meluncur'], ['Tangga', 'Cara masuk ke kolam']] },
       { j: 'eja', s: 'Eja tempat kita berenang.', ikon: '🏊', kata: 'kolam' },
       { j: 'ayat', s: 'Bina ayat.', kata: ['Patuhi', 'arahan', 'guru', 'di', 'kolam.'] },
@@ -1296,17 +1301,16 @@ function plain(h) {
           api.betul(b, `${x[1]} — dibenarkan!`);
           if (on === 4) { F.play([['tinggi', 300, 0, -10], ['berdiri', 300]], true); api.selesai(Math.max(0, 1 - miss * .15), 'Kawan lidi sudah siap memakai pakaian renang yang sesuai! 🏊'); }
         }
-        return { jawab() { btns.filter(z => z[0][2]).forEach((z, i) => setTimeout(() => z[1].click(), i * 300)); } };
+        return { jawab() { btns.filter(z => z[0][2]).forEach((z, i) => setTimeout(() => el.isConnected && z[1].click(), i * 300)); } };
       },
     }, {
       id: 'kolam-selamat', tajuk: 'Selamat di Kolam', ikon: '🛟',
       arahan: 'Lihat apa yang kawan lidi buat. Selamat atau tidak selamat?',
       mula(el, api) {
         const S = api.shuffle([
-          ['Berlari di tepi kolam', 0, '🏃', [['lari1', 200, -30], ['lari2', 200, -10], ['lari1', 200, 10], ['lari2', 200, 30], ['lari1', 1, -30]], 'Berlari di tepi kolam boleh menyebabkan kita tergelincir.'],
-          ['Makan sambil berjalan di tepi kolam', 0, '🍔', [['jalan1', 400, -10], ['jalan2', 400, 10], ['jalan1', 1, -10]], 'Jangan makan dan minum di tepi kolam.'],
+          ['Pakai kasut ke kolam', 0, '👟', [['jalan1', 400, -10], ['jalan2', 400, 10], ['jalan1', 1, -10]], 'Simbol larangan: jangan pakai kasut di kolam renang.'],
+          ['Bawa anjing ke kolam', 0, '🐕', [['jalan1', 400, -10], ['jalan2', 400, 10], ['jalan1', 1, -10]], 'Simbol larangan: jangan bawa haiwan ke kolam renang.'],
           ['Turun ke kolam guna tangga', 1, '🪜', [['jalan1', 500, 30, 0], ['jalan2', 500, 30, 18], ['berdiri', 500, 30, 30]], 'Ya! Itu cara masuk ke kolam yang betul.'],
-          ['Mandi di pancuran dahulu', 1, '🚿', [['regang', 500, -20], ['berdiri', 500, -20]], 'Betul! Mandi di pancuran sebelum berenang.'],
           ['Pakai baju-T dan seluar pendek biasa', 0, '👕', [['berdiri', 600, -10], ['berdiri', 600, -10, -2]], 'Pakaian biasa tidak dibenarkan. Pakai pakaian renang.'],
           ['Pakai pakaian renang dan topi renang', 1, '🩱', [['berdiri', 600, -10], ['berdiri', 600, -10, -2]], 'Betul! Pakaian yang sesuai.'],
           ['Ikut arahan guru', 1, '🧑‍🏫', [['tinggi', 500, -10], ['berdiri', 500, -10]], 'Betul! Patuhi arahan guru.'],
@@ -1317,15 +1321,16 @@ function plain(h) {
         sv.innerHTML = '<rect x="-40" y="94" width="110" height="8" fill="#ced4da"/>' + '<rect x="70" y="66" width="70" height="36" fill="#4dabf7" opacity=".45"/>' + `<line x1="70" y1="66" x2="70" y2="102" stroke="#adb5bd" stroke-width="3"/>`;
         const F = Fig(api, sv), b = [el.querySelector('#n'), el.querySelector('#y')];
         const show = () => { const s = S[k]; el.querySelector('#no').textContent = `Situasi ${k + 1} / ${S.length}`; el.querySelector('#nm').textContent = s[0]; el.querySelector('#pr').textContent = s[2]; F.play(s[3]); };
+        let lock = false;
         b.forEach((btn, v) => btn.onclick = () => {
-          if (k >= S.length) return; const s = S[k];
+          if (k >= S.length || lock) return; const s = S[k];
           if (s[1] !== v) { miss++; api.salah(btn, 'Fikir semula. ' + s[4]); return; }
           api.betul(btn, s[4]); k++;
           if (k === S.length) api.selesai(Math.max(0, 1 - miss * .12), 'Syabas! Kamu tahu cara selamat di kolam renang.');
-          else setTimeout(() => { if (el.isConnected) show(); }, 500);
+          else { lock = true; setTimeout(() => { if (el.isConnected) { lock = false; show(); } }, 500); }
         });
         show();
-        return { jawab() { const go = () => { if (k >= S.length || !el.isConnected) return; b[S[k][1]].click(); setTimeout(go, 600); }; go(); } };
+        return { jawab() { const go = () => { if (k >= S.length || !el.isConnected) return; if (!lock) b[S[k][1]].click(); setTimeout(go, 600); }; go(); } };
       },
     }, {
       id: 'bobbing', tajuk: 'Bobbing', ikon: '🫧',
@@ -1383,7 +1388,7 @@ function plain(h) {
     soalan: [
       { j: 'pilih', s: 'Kita bersantai bersama ___.', ikon: '🏖️', p: ['keluarga dan rakan', 'orang tidak dikenali', 'haiwan liar'], a: 0, kenapa: '"Mari bersantai bersama-sama keluarga dan rakan."' },
       { j: 'pilih', s: 'Apakah soalan dalam permainan Datuk Harimau?', ikon: '🐯', p: ['Pukul berapa datuk harimau?', 'Siapa makan nasi saya?', 'Di mana bola saya?'], a: 0, kenapa: 'Murid bertanya: "Pukul berapa datuk harimau?"' },
-      { j: 'pilih', s: 'Congkak dimainkan dengan papan dan ___.', ikon: '🤔', p: ['buah congkak', 'bola', 'pundi kacang'], a: 0, kenapa: 'Congkak ada papan congkak dan buah congkak.' },
+      { j: 'pilih', s: 'Apakah yang dimasukkan ke dalam lubang papan ini?', ikon: gCongkak, p: ['buah congkak', 'bola kecil', 'pundi kacang'], a: 0, kenapa: 'Congkak ada papan congkak dan buah congkak.' },
       { j: 'pilih', s: 'Kenapa bumbung istana pasir dibina begitu?', ikon: '🏰', p: ['Supaya air hujan mudah mengalir', 'Supaya cepat runtuh', 'Supaya burung hinggap'], a: 0, kenapa: '"… supaya air hujan mudah mengalir."' },
       { j: 'pilih', s: 'Istana di pantai dibina dengan ___.', ikon: '🏖️', p: ['pasir', 'kertas', 'kayu'], a: 0, kenapa: 'Mereka membina istana pasir.' },
       { j: 'pilih', s: 'Berapakah rumah besar di hujung papan congkak?', ikon: gCongkak, p: ['2', '4', '7'], a: 0, kenapa: 'Ada satu rumah besar di setiap hujung: 2 rumah.' },
@@ -1393,10 +1398,10 @@ function plain(h) {
       { j: 'bs', s: 'Sampah dibuang ke dalam tong.', ikon: '🗑️', a: true, kenapa: 'Jaga kebersihan: buang sampah ke dalam tong.' },
       { j: 'bs', s: 'Datuk Harimau dimainkan seorang diri.', ikon: '🐯', a: false, kenapa: 'Datuk Harimau dimainkan bersama ramai kawan.' },
       { j: 'bs', s: 'Kita perlu utamakan keselamatan semasa bersantai.', ikon: '⚠️', a: true, kenapa: 'Papan tanda di pantai: "Utamakan Keselamatan".' },
-      { j: 'bs', s: 'Congkak dimainkan dengan bola sepak.', ikon: '⚽', a: false, kenapa: 'Congkak dimainkan dengan papan dan buah congkak.' },
+      { j: 'bs', s: 'Congkak dimainkan sambil berlari.', ikon: '🏃', a: false, kenapa: 'Dua kawan duduk bermain congkak dengan papan dan buah congkak.' },
       { j: 'kumpul', s: 'Permainan bergerak atau duduk?', kumpulan: [['🏃 Bergerak', ['Datuk Harimau', 'Bermain wau']], ['🪑 Duduk', ['Congkak', 'Bina rumah blok']]] },
       { j: 'padan', s: 'Padankan permainan dengan perkara.', pasangan: [['🐯 Datuk Harimau', '"Pukul berapa?"'], ['🟤 Congkak', 'Papan dan buah'], ['🏰 Istana pasir', 'Bumbung runcing'], ['🪁 Wau', 'Terbang di langit']] },
-      { j: 'eja', s: 'Eja nama permainan ini.', ikon: gCongkak, kata: 'congkak' },
+      { j: 'eja', s: 'Eja bahan untuk membina istana ini.', ikon: '🏰🏖️', kata: 'pasir' },
       { j: 'ayat', s: 'Bina ayat.', kata: ['Mari', 'bersantai', 'bersama', 'keluarga.'] },
     ],
     amali: [{
@@ -1444,7 +1449,7 @@ function plain(h) {
         const ask = () => {
           ui.innerHTML = '<div class="opts" id="q" style="width:100%"></div>'; api.say('Mengapakah bumbung istana dibina runcing?');
           const q = ui.querySelector('#q');
-          api.shuffle([['Supaya air hujan mudah mengalir', 1], ['Supaya istana cepat runtuh', 0], ['Supaya air bertakung', 0]]).forEach(([t, ok]) => { const b = api.H(`<button class="opt">${t}</button>`); b.onclick = () => { if (!ok) { miss++; return api.salah(b, 'Ingat apa yang berlaku semasa hujan tadi.'); } fin = true; api.betul(b); api.selesai(Math.max(0, 1 - miss * .15), '"… supaya air hujan mudah mengalir." Kamu arkitek istana pasir yang bijak! 🏰'); }; q.appendChild(b); });
+          api.shuffle([['Supaya air hujan mudah mengalir', 1], ['Supaya istana cepat runtuh', 0], ['Supaya air bertakung', 0]]).forEach(([t, ok]) => { const b = api.H(`<button class="opt">${t}</button>`); b.onclick = () => { if (fin) return; if (!ok) { miss++; return api.salah(b, 'Ingat apa yang berlaku semasa hujan tadi.'); } fin = true; api.betul(b); api.selesai(Math.max(0, 1 - miss * .15), '"… supaya air hujan mudah mengalir." Kamu arkitek istana pasir yang bijak! 🏰'); }; q.appendChild(b); });
         };
         build();
         return { jawab() {
@@ -1607,16 +1612,16 @@ function plain(h) {
       { j: 'pilih', s: 'Semasa berlari, pernafasan menjadi makin ___.', ikon: '🏃', p: ['laju', 'perlahan'], a: 0, kenapa: '"Pernafasan saya makin laju."' },
       { j: 'pilih', s: 'Semasa beraktiviti, denyutan nadi ___.', ikon: '💓', p: ['meningkat', 'berkurang'], a: 0, kenapa: '"Denyutan nadi saya meningkat."' },
       { j: 'pilih', s: 'Minum air ___ aktiviti fizikal.', ikon: '💧', p: ['sebelum, semasa, selepas', 'hanya selepas', 'tidak perlu semasa'], a: 0, kenapa: 'Minum air sebelum, semasa dan selepas melakukan aktiviti fizikal.' },
-      { j: 'pilih', s: 'Kekurangan air boleh menjejaskan ___.', ikon: '🚱', p: ['kesihatan', 'warna baju', 'cuaca'], a: 0, kenapa: 'Kekurangan air menjejaskan aktiviti fizikal dan kesihatan.' },
+      { j: 'bs', s: 'Kekurangan air boleh menjejaskan kesihatan.', ikon: '🚱', a: true, kenapa: 'Kekurangan air menjejaskan aktiviti fizikal dan kesihatan.' },
       { j: 'pilih', s: 'Selepas aktiviti fizikal yang lasak, kita ___ badan.', ikon: '⚽', p: ['sejukkan', 'panaskan', 'basahkan'], a: 0, kenapa: 'Cikgu: Kita mesti melakukan aktiviti menyejukkan badan.' },
-      { j: 'pilih', s: 'Regangan apakah sesuai untuk memanaskan badan?', ikon: '🤸', p: ['Statik dan dinamik', 'Tidur dan baring', 'Makan dan minum'], a: 0, kenapa: 'Regangan statik dan dinamik sesuai untuk memanaskan badan.' },
+      { j: 'pilih', s: 'Regangan apakah sesuai untuk memanaskan badan?', ikon: '🤸', p: ['Statik dan dinamik', 'Lompat dan lari', 'Baling dan tangkap'], a: 0, kenapa: 'Regangan statik dan dinamik sesuai untuk memanaskan badan.' },
       { j: 'pilih', s: 'Apakah pelindung kepala ketika berbasikal?', ikon: '🚲', p: ['⛑️ Topi keledar', '🧢 Topi biasa', '👓 Cermin mata'], a: 0, kenapa: 'Kanak-kanak di taman memakai topi keledar.' },
       { j: 'bs', s: 'Suhu badan meningkat semasa aktiviti fizikal.', ikon: '🌡️', a: true, kenapa: '"Suhu badan saya meningkat."' },
       { j: 'bs', s: 'Kita tidak perlu minum air semasa bersenam.', ikon: '💧', a: false, kenapa: 'Minum air semasa melakukan aktiviti fizikal.' },
       { j: 'bs', s: 'Selepas memanaskan badan, kita bergerak dengan lancar.', ikon: '⚽', a: true, kenapa: '"Saya bergerak lancar setelah memanaskan badan."' },
       { j: 'bs', s: 'Kita boleh terus bermain lasak tanpa memanaskan badan.', ikon: '⚠️', a: false, kenapa: 'Panaskan badan dahulu untuk mengurangkan risiko kecederaan.' },
       { j: 'susun', s: 'Susun sesi senaman.', item: ['Minum air', 'Panaskan badan', 'Aktiviti fizikal', 'Sejukkan badan'] },
-      { j: 'kumpul', s: 'Semasa aktiviti fizikal: meningkat atau berkurang?', kumpulan: [['⬆️ Meningkat', ['Suhu badan', 'Denyutan nadi', 'Kadar pernafasan']], ['⬇️ Berkurang', ['Air dalam badan']]] },
+      { j: 'kumpul', s: 'Sebelum atau selepas aktiviti fizikal?', kumpulan: [['⏮️ Sebelum', ['Panaskan badan', 'Meregang otot']], ['⏭️ Selepas', ['Sejukkan badan', 'Angkat tangan, tarik nafas perlahan']]] },
       { j: 'padan', s: 'Padankan.', pasangan: [['Sebelum aktiviti', 'Panaskan badan'], ['Selepas aktiviti lasak', 'Sejukkan badan'], ['Badan dahaga', 'Minum air'], ['Meregang otot', 'Kurang risiko cedera']] },
       { j: 'eja', s: 'Eja apa yang perlu kita minum.', ikon: '🥤', kata: 'air' },
       { j: 'ayat', s: 'Bina ayat.', kata: ['Minum', 'air', 'sebelum', 'melakukan', 'aktiviti.'] },
@@ -1645,11 +1650,11 @@ function plain(h) {
           buat.add(k);
           if (k === 'air') { F.play([['berdiri', 300], ['regKanan', 300], ['berdiri', 300]], false); set({ air: Math.min(90, M.air + (f === 2 ? 40 : 10)) }); api.betul(b, 'Gluk gluk… minum air. 💧'); }
           if (k === 'panas') { F.play([['regKiri', 400], ['regang', 400], ['regKanan', 400], ['regang', 400]]); set({ nadi: 45, nafas: 45, suhu: 45 }); api.betul(b, 'Regangan statik dan dinamik. Otot sedia!'); }
-          if (k === 'aktiviti') { F.play([['lari1', 220, -20], ['lari2', 220, 0], ['lari1', 220, 20], ['lari2', 220, 0]]); set({ nadi: 90, nafas: 88, suhu: 85, air: 30 }); api.betul(b, 'Nadi, pernafasan dan suhu badan meningkat! Air dalam badan berkurang.'); }
+          if (k === 'aktiviti') { F.play([['lari1', 220, -20], ['lari2', 220, 0], ['lari1', 220, 20], ['lari2', 220, 0]]); set({ nadi: 90, nafas: 88, suhu: 85, air: 30 }); api.betul(b, 'Nadi, pernafasan dan suhu badan meningkat!'); }
           if (k === 'sejuk') { F.play([['tinggi', 700], ['berdiri', 700]]); set({ nadi: 40, nafas: 38, suhu: 40 }); api.betul(b, 'Menyejukkan badan… nadi dan pernafasan kembali perlahan.'); }
           if (P.perlu.every(x => buat.has(x))) {
             f++; buat = new Set();
-            if (f === FASA.length) { nm.textContent = '🏅 Sesi senaman selesai!'; return setTimeout(() => api.selesai(Math.max(0, 1 - miss * .12), 'Badan cergas, otak cerdas! Kamu tahu sesi senaman yang selamat.'), 600); }
+            if (f === FASA.length) { nm.textContent = '🏅 Sesi senaman selesai!'; return setTimeout(() => el.isConnected && api.selesai(Math.max(0, 1 - miss * .12), 'Badan cergas, otak cerdas! Kamu tahu sesi senaman yang selamat.'), 600); }
             setTimeout(() => { if (el.isConnected) nm.textContent = FASA[f].s; }, 300);
           }
         }
@@ -1661,7 +1666,7 @@ function plain(h) {
       mula(el, api) {
         const FS = [['😌 Berehat', 1000, 'berdiri'], ['🏃 Selepas berlari', 480, 'lari1']];
         let fs = 0, hit = 0, beatAt = 0, got = false, iv = 0, miss = 0, fin = false; const NEED = 6;
-        el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="fz"></b><span class="hint" id="sk"></span></div><div class="cols" style="align-items:center"><div id="st"></div><button id="ht" class="opt" style="font-size:5rem;text-align:center;min-height:150px;border-radius:50%;width:170px;height:170px;margin:0 auto;display:grid;place-items:center">❤️</button></div><div id="q"></div>`;
+        el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="fz"></b><span class="hint" id="sk"></span></div><div class="cols" style="align-items:center"><div id="st"></div><button id="ht" aria-label="Jantung berdenyut" class="opt" style="font-size:5rem;text-align:center;min-height:150px;border-radius:50%;width:170px;height:170px;margin:0 auto;display:grid;place-items:center">❤️</button></div><div id="q"></div>`;
         const sv = api.S('svg', { viewBox: '-40 -14 180 116', style: 'width:100%;max-width:260px;height:150px;display:block;margin:0 auto' }, el.querySelector('#st')); sv.innerHTML = GR;
         const F = Fig(api, sv), ht = el.querySelector('#ht'), sk = el.querySelector('#sk');
         const start = () => {
@@ -1829,7 +1834,7 @@ function plain(h) {
       { j: 'kumpul', s: 'Regangan dinamik atau statik?', kumpulan: [['🤸 Dinamik (sebelum)', ['Rotasi bahu', 'Mengayun kaki', 'Mengilas badan']], ['🧘 Statik (selepas)', ['Regang otot betis', 'Regang otot paha', 'Regang otot tengkuk']]] },
       { j: 'padan', s: 'Padankan aktiviti dengan otot.', pasangan: [['Tekan tubi', 'Otot lengan dan bahu'], ['Cangkung separa', 'Otot pinggul dan kaki'], ['Ringkuk tubi', 'Otot abdomen']] },
       { j: 'susun', s: 'Susun sesi latihan.', item: ['Regangan dinamik', 'Aktiviti fizikal', 'Regangan statik'] },
-      { j: 'eja', s: 'Eja organ yang mengepam darah.', ikon: '🩸', kata: 'jantung' },
+      { j: 'eja', s: 'Eja bahagian badan yang menjadi kuat apabila bersenam.', ikon: '💪', kata: 'otot' },
       { j: 'ayat', s: 'Bina ayat.', kata: ['Jantung', 'mengepam', 'darah', 'ke', 'seluruh', 'badan.'] },
     ],
     amali: [{
@@ -1859,7 +1864,7 @@ function plain(h) {
         function tanya() {
           fase = 'tanya'; clearInterval(iv); F.play([['berdiri', 500]], false); api.say('Syabas! Bernafas seperti biasa. Otot apakah yang menjadi kuat?');
           ui.innerHTML = '<div class="opts" id="q"></div>'; const q = ui.querySelector('#q');
-          qb = api.shuffle(EX[e][4]).map(t => { const b = api.H(`<button class="opt">💪 ${t}</button>`); b.onclick = () => { if (t !== EX[e][3]) { miss++; return api.salah(b, 'Fikir bahagian badan yang paling bekerja.'); } api.betul(b, `${t}!`); e++; if (e === EX.length) api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Otot yang kuat mampu mengangkat beban yang lebih berat.'); else setTimeout(() => { if (el.isConnected) start(); }, 700); }; q.appendChild(b); return [t, b]; });
+          qb = api.shuffle(EX[e][4]).map(t => { const b = api.H(`<button class="opt">💪 ${t}</button>`); b.onclick = () => { if (fase !== 'tanya') return; if (t !== EX[e][3]) { miss++; return api.salah(b, 'Fikir bahagian badan yang paling bekerja.'); } api.betul(b, `${t}!`); fase = 'tunggu'; e++; if (e === EX.length) api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Otot yang kuat mampu mengangkat beban yang lebih berat.'); else setTimeout(() => { if (el.isConnected) start(); }, 700); }; q.appendChild(b); return [t, b]; });
         }
         start();
         return { jawab() { const go = () => { if (e >= EX.length || !el.isConnected) return; if (fase === 'kira') { if (!got && performance.now() - beatAt < 200 && beatAt) kb.click(); return setTimeout(go, 40); } const x = qb.find(z => z[0] === EX[e][3]); if (x && x[1].isConnected) x[1].click(); setTimeout(go, 800); }; go(); } };
@@ -1874,8 +1879,8 @@ function plain(h) {
         const sv = api.S('svg', { viewBox: '0 0 200 230', style: 'width:100%;max-width:260px;display:block;margin:0 auto' }, el.querySelector('#st'));
         sv.innerHTML = `<circle cx="100" cy="30" r="24" fill="none" stroke="currentColor" stroke-width="3" opacity=".5"/><rect x="50" y="58" width="100" height="120" rx="30" fill="none" stroke="currentColor" stroke-width="3" opacity=".5"/>
           <path id="lr" d="M100 100 C40 90 20 200 100 210 C180 200 160 90 100 100" fill="none" stroke="#e03131" stroke-width="2" stroke-dasharray="4 4" opacity=".5"/>
-          <g id="pr"><ellipse cx="78" cy="100" rx="17" ry="28" fill="#f783ac" stroke="#c2255c" stroke-width="2"/><ellipse cx="122" cy="100" rx="17" ry="28" fill="#f783ac" stroke="#c2255c" stroke-width="2"/></g>
-          <g id="jt"><path d="M100 150 l-14 -14 a8 8 0 0 1 14 -10 a8 8 0 0 1 14 10 z" fill="#e03131" stroke="#a51111" stroke-width="2"/></g><g id="fx"></g>`;
+          <g id="pr" role="button" tabindex="0" aria-label="Paru-paru"><ellipse cx="78" cy="100" rx="17" ry="28" fill="#f783ac" stroke="#c2255c" stroke-width="2"/><ellipse cx="122" cy="100" rx="17" ry="28" fill="#f783ac" stroke="#c2255c" stroke-width="2"/></g>
+          <g id="jt" role="button" tabindex="0" aria-label="Jantung"><path d="M100 150 l-14 -14 a8 8 0 0 1 14 -10 a8 8 0 0 1 14 10 z" fill="#e03131" stroke="#a51111" stroke-width="2"/></g><g id="fx"></g>`;
         const pr = sv.querySelector('#pr'), jt = sv.querySelector('#jt'), fx = sv.querySelector('#fx'), lr = sv.querySelector('#lr'), L = lr.getTotalLength();
         [pr, jt].forEach(g => { g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center'; });
         const show = () => { el.querySelector('#no').textContent = `Arahan ${k + 1} / ${R.length}`; el.querySelector('#cm').textContent = '📣 ' + R[k][1]; api.speak(R[k][1]); };
@@ -1884,17 +1889,19 @@ function plain(h) {
           if (w === 'paru') { api.anim(pr, [{ transform: 'scale(1)' }, { transform: 'scale(1.2)' }, { transform: 'scale(1)' }], { duration: 900 }); for (let i = 0; i < 6; i++) { const c = api.S('circle', { cx: 70 + (i % 3) * 30, cy: 0, r: 4, fill: '#4dabf7' }, fx); api.anim(c, [{ transform: 'translateY(10px)', opacity: 1 }, { transform: 'translateY(100px)', opacity: 0 }], { duration: 900, delay: i * 80 }); } }
           else { api.anim(jt, [{ transform: 'scale(1)' }, { transform: 'scale(1.35)' }, { transform: 'scale(1)' }, { transform: 'scale(1.35)' }, { transform: 'scale(1)' }], { duration: 900 }); for (let i = 0; i < 8; i++) { const c = api.S('circle', { r: 4, fill: '#e03131' }, fx); const t0 = performance.now() + i * 90; const st = now => { if (!c.isConnected) return; const q = (now - t0) / 1200; if (q < 0) return requestAnimationFrame(st); if (q > 1) return c.remove(); const p = lr.getPointAtLength(L * q); c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); requestAnimationFrame(st); }; requestAnimationFrame(st); } }
         };
+        let lock = false;
         const pick = (w, b) => {
-          if (k >= R.length) return;
+          if (k >= R.length || lock) return;
           if (w !== R[k][0]) { miss++; api.salah(b, w === 'paru' ? 'Paru-paru membekalkan oksigen. Siapa yang mengepam darah?' : 'Jantung mengepam darah. Siapa yang membekalkan oksigen?'); return; }
           effect(w); api.betul(b, w === 'paru' ? 'Paru-paru membekalkan oksigen ke dalam darah!' : 'Jantung mengepam darah ke seluruh badan!'); k++;
-          if (k === R.length) setTimeout(() => api.selesai(Math.max(0, 1 - miss * .12), 'Jantung kuat, badan sihat! ❤️🫁'), 900); else setTimeout(() => { if (el.isConnected) show(); }, 900);
+          lock = true; if (k === R.length) setTimeout(() => el.isConnected && api.selesai(Math.max(0, 1 - miss * .12), 'Jantung kuat, badan sihat! ❤️🫁'), 900); else setTimeout(() => { if (el.isConnected) { lock = false; show(); } }, 900);
         };
         const bp = el.querySelector('#bp'), bj = el.querySelector('#bj');
         bp.onclick = () => pick('paru', bp); bj.onclick = () => pick('jantung', bj); pr.style.cursor = jt.style.cursor = 'pointer';
         pr.addEventListener('click', () => pick('paru', bp)); jt.addEventListener('click', () => pick('jantung', bj));
+        const kbd = (g, w, b) => g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); pick(w, b); } }); kbd(pr, 'paru', bp); kbd(jt, 'jantung', bj);
         show();
-        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; (R[k][0] === 'paru' ? bp : bj).click(); setTimeout(go, 1000); }; go(); } };
+        return { jawab() { const go = () => { if (k >= R.length || !el.isConnected) return; if (!lock) (R[k][0] === 'paru' ? bp : bj).click(); setTimeout(go, 400); }; go(); } };
       },
     }],
   });
@@ -1907,32 +1914,33 @@ function plain(h) {
     n: 9, tajuk: 'Bersih dan Selamat', tema: 'Pendidikan Kesihatan', ikon: '🧼', warna: '#d6336c',
     belajar: [
       { ikon: '🧍', tajuk: 'Oh, Tubuhku!',
-        teks: ['Mari belajar tentang anggota tubuh.', '🎵 "Badan saya bersih, bila sudah mandi…"'],
-        chips: ['rambut', 'mata', 'telinga', 'hidung', 'mulut', 'bibir', 'gigi', 'bahu', 'dada', 'tangan', 'kuku jari', 'kaki', 'kuku kaki'] },
+        teks: ['Mari kenal anggota tubuh.', '🎵 "Badan saya bersih, bila sudah mandi…"'],
+        chips: ['rambut', 'mata', 'telinga', 'hidung', 'mulut', 'gigi', 'tangan', 'kaki'] },
       { ikon: '🙅', tajuk: 'Jangan sentuh!',
-        teks: ['Ada bahagian tubuh yang tidak boleh disentuh oleh orang lain.', 'Payu dara, paha, punggung dan organ genital.'],
-        contoh: 'Hanya untuk kebersihan, kesihatan dan keselamatan. Contoh: ibu merawat luka, doktor memeriksa gigi.' },
+        teks: ['Ada bahagian tubuh yang tidak boleh disentuh orang lain.', 'Payu dara, paha, punggung dan organ genital.'],
+        contoh: 'Boleh disentuh untuk kebersihan, kesihatan dan keselamatan sahaja.' },
       { ikon: '🚿', tajuk: 'Saya bersih',
-        senarai: ['🚿 Mandi untuk bersihkan badan.', '🧼 Cuci organ genital dan tangan selepas ke tandas.', '🧺 Lap badan dengan tuala yang bersih.', '👕 Pakai pakaian yang bersih.', '✂️ Potong kuku tangan dan kaki supaya pendek.'],
-        contoh: 'Jangan berkongsi alatan keperluan diri.' },
+        senarai: ['🚿 Mandi.', '🧼 Selepas ke tandas, cuci organ genital dan tangan.', '🧺 Lap badan dengan tuala bersih.', '👕 Pakai pakaian bersih.', '✂️ Potong kuku supaya pendek.'],
+        contoh: 'Jangan kongsi alatan keperluan diri.' },
       { ikon: lampu(null), tajuk: 'Lampu isyarat sentuhan',
         senarai: ['🟢 Sentuhan selamat', '🟡 Sentuhan tidak selesa', '🔴 Sentuhan tidak selamat'],
-        contoh: 'Rasa tidak selamat? Kata <b>"Jangan sentuh saya!"</b>, lari ke tempat selamat, menjerit dan minta pertolongan.' },
+        contoh: 'Kata <b>"Jangan sentuh saya!"</b> Lari dan jerit minta tolong.' },
       { ikon: '💊', tajuk: 'Ketahui ubat',
-        teks: ['Hisham tersalah ambil ubat batuk! Ambil ubat yang betul, ikut preskripsi doktor.', 'Azizah minum ubat lama abangnya. Jangan ambil ubat orang lain atau ubat luput.'],
-        contoh: 'Simpan ubat di tempat yang betul dan selamat.' },
+        teks: ['Hisham tersalah ambil ubat batuk!', 'Jangan ambil ubat orang lain atau ubat luput.'],
+        contoh: 'Label ubat Damia: 5 ml, 3 kali sehari, selepas makan.' },
       { ikon: '😄😢😠', tajuk: 'Emosi saya',
-        teks: ['Luahkan dan urus emosi dengan baik.', 'Redzuan bertanya dengan sopan: "Bolehkah ayah membeli alat permainan untuk hari lahir Redzuan?"'],
+        teks: ['Luahkan dan urus emosi dengan baik.', 'Redzuan bertanya ayah dengan sopan.'],
+        chips: ['😢 Sedih', '😠 Marah', '😄 Gembira', '😨 Takut', '😳 Malu'],
         contoh: '<b>Keperluan</b>: sesuatu yang diperlukan. <b>Kehendak</b>: sesuatu yang ingin dimiliki.' },
-      { ikon: '👨‍👩‍👧‍👦', tajuk: 'Keluarga dan hormat-menghormati',
-        teks: ['Alicia sekeluarga makan bersama: "Sila makan." "Terima kasih."', 'Selepas makan, mereka bantu-membantu buat kerja rumah.'],
-        contoh: '"Alson, jangan guna telefon bimbit semasa makan!" — "Baik, ibu."' },
       { ikon: '🦠', tajuk: 'Kuman, oh, kuman!',
-        teks: ['Nantha: Kuman ialah organisma kecil yang menyebabkan penyakit.', 'Kuman merebak melalui sentuhan, udara, makanan dan minuman yang kotor.'],
-        senarai: ['🧼 Cuci tangan sebelum dan selepas makan.', '✋ Tutup mulut apabila batuk.', '🚿 Mandi setiap hari.', '🤧 Gunakan sapu tangan apabila bersin.'] },
-      { ikon: '🛑', tajuk: 'Boleh bertindak, jangan buli',
-        teks: ['Ada pencuri? Telefon polis. Orang asing ajak ikut? Lari dan beritahu guru.', 'Dibuli? Kata "Jangan ganggu saya!", beredar, maklumi guru dan beritahu ibu bapa.'],
-        contoh: '<b>Buli</b>: menyakitkan hati seseorang dengan perbuatan dan perkataan.' },
+        teks: ['Kuman ialah organisma kecil yang menyebabkan penyakit.', 'Kuman merebak melalui sentuhan dan udara.'],
+        senarai: ['🧼 Cuci tangan sebelum dan selepas makan.', '✋ Tutup mulut apabila batuk.', '🤧 Guna sapu tangan apabila bersin.'],
+        contoh: 'Hanis diserang cirit-birit kerana keracunan makanan.' },
+      { ikon: '🛑', tajuk: 'Boleh bertindak',
+        teks: ['Ada pencuri? Telefon polis.', 'Dibuli? Kata "Jangan ganggu saya!"', 'Kemudian beritahu guru dan ibu bapa.'] },
+      { ikon: '🚫👊', tajuk: 'Jangan buli',
+        teks: ['Pembuli: rasa sombong, suka mendera.', 'Mangsa buli: rendah diri, sentiasa ketakutan.'],
+        contoh: '<b>Buli</b>: menyakitkan hati orang dengan perbuatan dan perkataan.' },
     ],
     soalan: [
       { j: 'pilih', s: 'Lampu hijau ialah sentuhan ___.', ikon: '🟢', p: ['selamat', 'tidak selesa', 'tidak selamat'], a: 0, kenapa: 'Hijau: sentuhan selamat. Kuning: tidak selesa. Merah: tidak selamat.' },
@@ -1943,7 +1951,7 @@ function plain(h) {
       { j: 'pilih', s: 'Damia minum ubat batuk sebanyak ___.', ikon: '🥄', p: ['5 ml', '3 ml', '10 ml'], a: 0, kenapa: 'Label ubat Damia: 5 ml, 3 kali sehari, selepas makan.' },
       { j: 'pilih', s: 'Kehendak ialah sesuatu yang ___.', ikon: '🛍️', p: ['ingin dimiliki', 'diperlukan', 'dibuang'], a: 0, kenapa: 'Keperluan: sesuatu yang diperlukan. Kehendak: sesuatu yang ingin dimiliki.' },
       { j: 'pilih', s: '"Dikejar anjing di hujung lorong, lari bertempiaran meminta tolong." Emosi apakah ini?', ikon: '❓', p: ['😨 Takut', '😄 Gembira', '😳 Malu'], a: 0, kenapa: 'Dikejar anjing membuat kita takut.' },
-      { j: 'pilih', s: 'Kuman ialah organisma kecil yang menyebabkan ___.', ikon: '🔬', p: ['penyakit', 'kekuatan', 'kegembiraan'], a: 0, kenapa: 'Kuman ialah organisma kecil yang menyebabkan penyakit.' },
+      { j: 'pilih', s: 'Kuman ialah organisma kecil yang menyebabkan ___.', ikon: '🔬', p: ['penyakit', 'tenaga', 'pertumbuhan'], a: 0, kenapa: 'Kuman ialah organisma kecil yang menyebabkan penyakit.' },
       { j: 'pilih', s: 'Hanis diserang cirit-birit kerana ___.', ikon: '🏥', p: ['keracunan makanan', 'terjatuh', 'bermain hujan'], a: 0, kenapa: '"Dia diserang cirit-birit kerana keracunan makanan."' },
       { j: 'pilih', s: 'Ada pencuri di dalam rumah. Apakah tindakan kamu?', ikon: '🏠', p: ['📞 Telefon polis', '🙈 Sorok di bilik', '🏃 Kejar pencuri'], a: 0, kenapa: '"Saya akan telefon polis."' },
       { j: 'bs', s: 'Kita boleh berkongsi berus gigi dengan kawan.', ikon: '🪥', a: false, kenapa: 'Alatan keperluan diri tidak boleh dikongsi.' },
@@ -1953,7 +1961,7 @@ function plain(h) {
       { j: 'kumpul', s: 'Kesan buli kepada siapa?', kumpulan: [['👊 Pembuli', ['Rasa sombong', 'Suka mendera', 'Tindakan disiplin']], ['😢 Mangsa buli', ['Suka bersendirian', 'Rasa rendah diri', 'Sentiasa ketakutan']]] },
       { j: 'susun', s: 'Susun langkah menjaga kebersihan.', item: ['Mandi', 'Lap badan dengan tuala bersih', 'Pakai pakaian bersih'] },
       { j: 'padan', s: 'Padankan deria dengan anggota.', pasangan: [['Mendengar muzik', '👂 Telinga'], ['Membaca buku', '👀 Mata'], ['Menghidu makanan', '👃 Hidung'], ['Mengunyah makanan', '👄 Mulut']] },
-      { j: 'eja', s: 'Eja benda kecil yang menyebabkan penyakit.', ikon: '🔬', kata: 'kuman' },
+      { j: 'eja', s: 'Eja cara membersihkan badan setiap hari.', ikon: '🚿', kata: 'mandi' },
       { j: 'ayat', s: 'Bina ayat.', kata: ['Cuci', 'tangan', 'sebelum', 'dan', 'selepas', 'makan.'] },
     ],
     amali: [{
@@ -1981,7 +1989,7 @@ function plain(h) {
           if (fase !== 'lampu' || k >= S.length) return; const s = S[k];
           if (i !== s[2]) { miss++; api.salah(b, 'Fikir semula. Adakah sentuhan ini untuk kebersihan, kesihatan atau keselamatan?'); return; }
           lb.forEach((x, j) => x.style.opacity = j === i ? 1 : .25); api.betul(b, `Sentuhan ${L[i][1]}.`);
-          if (i === 0) return next();
+          if (i === 0) { fase = 'tunggu'; return next(); }
           fase = 'tindak'; fu.innerHTML = '<div class="now" style="font-size:1.1rem">Apakah tindakan kamu?</div><div class="opts" id="fo"></div>'; const fo = fu.querySelector('#fo');
           fb = api.shuffle([['🙅 Kata "Jangan sentuh saya!"', 1], ['🤐 Diam sahaja', 0], ['🤝 Ikut dia', 0]]).map(([t, ok]) => { const x = api.H(`<button class="opt">${t}</button>`); x.onclick = () => { if (!ok) { miss++; return api.salah(x, 'Jangan teragak-agak. Mesti kata TIDAK!'); } fase = 'x'; api.betul(x, 'Betul! Kemudian lari ke tempat selamat dan minta pertolongan.'); next(); }; fo.appendChild(x); return [ok, x]; });
         }
@@ -2018,7 +2026,7 @@ function plain(h) {
             if (fase !== 'kuman') return;
             if (i !== t[2]) { miss++; return api.salah(b, 'Kuman masih ada! Cuba tindakan lain.'); }
             fase = 'tunggu'; pop(); api.betul(b, `${e} ${n} — kuman lari!`); k++;
-            if (k === SIT.length) setTimeout(() => api.selesai(Math.max(0, 1 - miss * .08), 'Kebersihan diri penting untuk mencegah penyakit! 🧼'), 700);
+            if (k === SIT.length) setTimeout(() => el.isConnected && api.selesai(Math.max(0, 1 - miss * .08), 'Kebersihan diri penting untuk mencegah penyakit! 🧼'), 700);
             else setTimeout(() => { if (el.isConnected) { fase = 'kuman'; round(); } }, 900);
           }; ao.appendChild(b); return b; });
         };
@@ -2030,13 +2038,13 @@ function plain(h) {
       arahan: 'Situasi tidak selamat! Pilih tindakan yang selamat.',
       mula(el, api) {
         const S = api.shuffle([
-          ['🏠🦹', '"Ada pencuri di dalam rumah saya!"', ['📞 Telefon polis', '🏃 Kejar pencuri', '🙈 Diam di dalam almari']],
-          ['🏫🧔', 'Orang tidak dikenali: "Mari saya hantar kamu balik."', ['🏃 Lari masuk ke sekolah, beritahu guru', '🚗 Ikut dia balik', '🍬 Ambil gula-gula dia']],
-          ['⚽🧔', 'Orang tidak dikenali: "Adik, mari ikut saya."', ['🙅 Kata TIDAK, lari ke tempat selamat', '🤝 Ikut dia', '🎁 Tunggu hadiah']],
-          ['👊😢', 'Kawan menolak dan mengganggu kamu.', ['✋ "Jangan ganggu saya!" dan maklumi guru', '👊 Pukul dia semula', '🤐 Diam dan sorok']],
-          ['😈👦', 'Kawan mengajak kamu membuli budak lain.', ['🚶 Beredar dan beritahu ibu bapa', '😂 Ikut membuli', '📱 Rakam dan ketawa']],
-          ['🚪🧔', 'Orang tidak dikenali mengetuk pintu rumah.', ['🚫 Jangan buka pintu', '🚪 Buka pintu cepat', '👋 Ajak dia masuk']],
-          ['🔌💧', 'Tangan kamu basah. Kamu mahu cucuk palam.', ['🧺 Lap tangan dahulu, jangan cucuk', '🔌 Cucuk sahaja', '💦 Basahkan lagi']],
+          ['🏠🦹', '"Ada pencuri di dalam rumah saya!"', ['📞 Telefon polis', '🚪 Buka pintu untuk melihat', '🗣️ Tegur pencuri itu']],
+          ['🏫🧔', 'Orang tidak dikenali: "Mari saya hantar kamu balik."', ['🏃 Lari masuk ke sekolah, beritahu guru', '🚗 Ikut dia kerana dia baik', '⏳ Tunggu dia di pagar']],
+          ['⚽🧔', 'Orang tidak dikenali: "Adik, mari ikut saya."', ['🙅 Kata TIDAK, lari ke tempat selamat', '🤝 Ikut dia sekejap sahaja', '⚽ Main bola dengan dia dahulu']],
+          ['👊😢', 'Kawan menolak dan mengganggu kamu.', ['✋ "Jangan ganggu saya!" dan maklumi guru', '👊 Tolak dia semula', '🤐 Diam dan simpan rahsia']],
+          ['😈👦', 'Kawan mengajak kamu membuli budak lain.', ['🚶 Beredar dan beritahu ibu bapa', '👀 Ikut tengok sahaja', '😂 Ketawa bersama mereka']],
+          ['🚪🧔', 'Orang tidak dikenali mengetuk pintu rumah.', ['🚫 Jangan buka pintu', '🚪 Buka sedikit untuk melihat', '🗣️ Beritahu dia kamu seorang']],
+          ['🔌💧', 'Tangan kamu basah. Kamu mahu cucuk palam.', ['🛑 Jangan cucuk palam dengan tangan basah', '🔌 Cucuk perlahan-lahan', '✋ Cucuk dengan tangan kiri']],
         ]);
         let k = 0, miss = 0, bt = [];
         el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="no"></b><span class="hint">🛡️ Keselamatan diri</span></div><div id="sc" style="font-size:3.6rem;text-align:center"></div><div class="now" id="tx" style="font-size:1.15rem"></div><div class="opts" id="op"></div><div class="meter" style="margin-top:12px"><i id="mt"></i></div>`;
@@ -2047,15 +2055,16 @@ function plain(h) {
           el.querySelector('#tx').textContent = s[1]; op.innerHTML = '';
           bt = api.shuffle(s[2].map((t, i) => [i, t])).map(([i, t]) => { const b = api.H(`<button class="opt">${t}</button>`); b.onclick = () => pick(i, b); op.appendChild(b); return [i, b]; });
         };
+        let lock = false;
         function pick(i, b) {
-          if (k >= S.length) return;
+          if (k >= S.length || lock) return;
           if (i !== 0) { miss++; api.salah(b, 'Itu tidak selamat. Fikir semula!'); return; }
           api.betul(b, 'Tindakan yang bijak dan selamat! 👍'); k++;
           if (k === S.length) { el.querySelector('#mt').style.width = '100%'; api.selesai(Math.max(0, 1 - miss * .1), 'Kamu boleh bertindak dengan bijak. Beritahu guru, ibu bapa atau polis bila tidak selamat.'); }
-          else setTimeout(() => { if (el.isConnected) show(); }, 700);
+          else { lock = true; setTimeout(() => { if (el.isConnected) { lock = false; show(); } }, 700); }
         }
         show();
-        return { jawab() { const go = () => { if (k >= S.length || !el.isConnected) return; bt.find(z => z[0] === 0)[1].click(); setTimeout(go, 800); }; go(); } };
+        return { jawab() { const go = () => { if (k >= S.length || !el.isConnected) return; if (!lock) bt.find(z => z[0] === 0)[1].click(); setTimeout(go, 800); }; go(); } };
       },
     }],
   });
@@ -2096,8 +2105,8 @@ function plain(h) {
     ],
     soalan: [
       { j: 'pilih', s: 'Siapakah ke pasar bersama ibu bapanya?', ikon: '🛒', p: ['Nazriyah', 'Normala', 'Syamimi'], a: 0, kenapa: '"Nazriyah dan ibu bapanya ke pasar untuk membeli makanan."' },
-      { j: 'pilih', s: 'Manakah makanan berkhasiat?', ikon: '❓', p: ['🐟 ikan', '🍩 donat', '🍬 gula-gula'], a: 0, kenapa: 'Ikan ialah makanan berkhasiat.' },
-      { j: 'pilih', s: 'Manakah makanan berkhasiat?', ikon: '🤔', p: ['🌽 jagung', '🍭 gula-gula', '🌭 roti sosej'], a: 0, kenapa: 'Jagung ialah makanan berkhasiat.' },
+      { j: 'pilih', s: 'Manakah makanan berkhasiat?', ikon: '❓', p: ['🐟 ikan', '🍬 gula-gula', '🍩 donat'], a: 0, kenapa: 'Ikan ialah makanan berkhasiat. Dalam permainan, ikan di kaki tangga.' },
+      { j: 'pilih', s: 'Nazriyah memilih makanan berkhasiat di pasar. Apakah yang dia pilih?', ikon: '🛒', p: ['🍅 tomato', '🍩 donat', '🌭 roti sosej'], a: 0, kenapa: 'Tomato ialah salah satu makanan berkhasiat di pasar.' },
       { j: 'pilih', s: 'Sarapan dalam buku ialah roti, jem dan ___.', ikon: '🍞', p: ['susu', 'kopi', 'air tebu'], a: 0, kenapa: 'Contoh sarapan: roti, jem dan susu.' },
       { j: 'pilih', s: 'Makan malam dalam buku ada nasi, sayur dan ___.', ikon: '🌙', p: ['ikan', 'burger', 'kek'], a: 0, kenapa: 'Contoh makan malam: nasi, ikan, sayur dan epal.' },
       { j: 'pilih', s: 'Waktu makan yang pertama setiap hari ialah ___.', ikon: '🌅', p: ['sarapan', 'makan tengah hari', 'makan malam'], a: 0, kenapa: 'Sarapan, makan tengah hari, kemudian makan malam.' },
@@ -2116,7 +2125,7 @@ function plain(h) {
     ],
     amali: [{
       id: 'ular-tangga', tajuk: 'Ular dan Tangga Makanan', ikon: '🎲',
-      arahan: 'Lontar dadu! Di makanan, jawab: berkhasiat atau tidak? Jawapan betul membantu kamu naik tangga dan elak ular.',
+      arahan: 'Lontar dadu! Naik tangga, turun ular. Di setiap makanan, jawab: berkhasiat atau tidak?',
       mula(el, api) {
         let pos = 1, busy = false, miss = 0, rolls = 0, fast = false, done = false, q = null;
         el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="ps"></b><span class="hint" id="rl"></span></div>
@@ -2132,7 +2141,7 @@ function plain(h) {
         bd.innerHTML = html; const pc = bd.querySelector('#pc');
         const place = n => { const [x, y] = ctr(n); pc.style.left = (x / 6) + '%'; pc.style.top = (y / 5) + '%'; el.querySelector('#ps').textContent = `Petak: ${n}`; };
         place(1); el.querySelector('#rl').textContent = 'Lontaran: 0';
-        const wait = ms => new Promise(r => setTimeout(r, fast ? Math.min(ms, 60) : ms));
+        const wait = ms => new Promise(r => setTimeout(r, fast ? Math.min(ms, 15) : ms));
         const ask = (f, ok) => new Promise(res => {
           qq.innerHTML = `<div class="now">${f[1]} ${f[2]} — berkhasiat?</div><div class="two"><button class="opt" style="text-align:center" data-v="1">💪 Berkhasiat</button><button class="opt" style="text-align:center" data-v="0">🚫 Tidak berkhasiat</button></div>`;
           q = { ok, res };
@@ -2143,12 +2152,12 @@ function plain(h) {
           let d = 1; for (let i = 0; i < 8; i++) { d = 1 + Math.floor(Math.random() * 6); dc.textContent = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][d - 1]; await wait(60); }
           api.anim(dc, [{ transform: 'rotate(-20deg) scale(1.3)' }, { transform: 'none' }], { duration: 300 });
           for (let i = 0; i < d && pos < 30; i++) { pos++; place(pos); await wait(180); }
-          if (LAD[pos]) { const f = LAD[pos]; const ok = await ask(f, true); if (ok) { api.say(`${f[1]} ${f[2]} berkhasiat! Naik tangga ke ${f[0]}! 🪜`); pos = f[0]; place(pos); await wait(400); } else api.say(`${f[2]} ialah makanan berkhasiat. Kamu terlepas tangga!`); }
-          else if (SNK[pos]) { const f = SNK[pos]; const ok = await ask(f, false); if (ok) api.say(`Bijak! ${f[2]} tidak berkhasiat — kamu mengelaknya. Ular tidak dapat mematuk! 🐍`); else { api.say(`Alamak! ${f[2]} tidak berkhasiat. Turun ke ${f[0]}…`); pos = f[0]; await wait(300); place(pos); } }
+          if (LAD[pos]) { const f = LAD[pos]; const ok = await ask(f, true); if (!el.isConnected) return; api.say(`${ok ? 'Betul!' : 'Sebenarnya,'} ${f[1]} ${f[2]} berkhasiat. Naik tangga ke ${f[0]}! 🪜`); pos = f[0]; place(pos); await wait(400); }
+          else if (SNK[pos]) { const f = SNK[pos]; const ok = await ask(f, false); if (!el.isConnected) return; api.say(`${ok ? 'Betul!' : 'Sebenarnya,'} ${f[1]} ${f[2]} tidak berkhasiat. Ular! Turun ke ${f[0]}… 🐍`); await wait(300); pos = f[0]; place(pos); }
           if (pos >= 30) { done = true; place(30); return api.selesai(Math.max(0, 1 - miss * .15), `Kamu sampai ke petak 30 dalam ${rolls} lontaran! Pilih makanan berkhasiat setiap hari. 🏆`); }
           busy = false;
         };
-        return { jawab() { fast = true; const go = () => { if (done || !el.isConnected) return; if (q) qq.querySelector(`[data-v="${q.ok ? 1 : 0}"]`).click(); else if (!busy) lt.click(); setTimeout(go, 80); }; go(); } };
+        return { jawab() { fast = true; const go = () => { if (done || !el.isConnected) return; if (q) qq.querySelector(`[data-v="${q.ok ? 1 : 0}"]`).click(); else if (!busy) lt.click(); setTimeout(go, 30); }; go(); } };
       },
     }, {
       id: 'pinggan-sihat', tajuk: 'Isi Pinggan Sihat', ikon: '🍽️',
@@ -2208,13 +2217,13 @@ function plain(h) {
     ],
     soalan: [
       { j: 'pilih', s: 'Siapakah yang ditimpa kemalangan?', ikon: '🏍️', p: ['Sarjit', 'Seng Chong', 'Adilah'], a: 0, kenapa: 'Sarjit ditimpa kemalangan semasa berjalan ke sekolah.' },
-      { j: 'pilih', s: 'Bilakah Sarjit ditimpa kemalangan?', ikon: '🏫', p: ['Semasa berjalan ke sekolah', 'Semasa bermain di rumah', 'Semasa berenang di kolam'], a: 0, kenapa: '"Pada suatu hari, semasa Sarjit berjalan ke sekolah, dia ditimpa kemalangan."' },
+      { j: 'pilih', s: 'Bilakah kemalangan itu berlaku?', ikon: '🏫', p: ['Semasa berjalan ke sekolah', 'Semasa bermain di rumah', 'Semasa berenang di kolam'], a: 0, kenapa: '"Pada suatu hari, semasa Sarjit berjalan ke sekolah, dia ditimpa kemalangan."' },
       { j: 'pilih', s: 'Siapakah yang segera mendapatkan bantuan?', ikon: '🏃', p: ['Seng Chong dan Adilah', 'Sarjit seorang', 'Penunggang motosikal'], a: 0, kenapa: '"Seng Chong dan Adilah segera mendapatkan bantuan."' },
       { j: 'pilih', s: 'Cikgu menghubungi talian kecemasan untuk mendapatkan ___.', ikon: '📞', p: ['🚑 ambulans', '🚌 bas sekolah', '🍔 makanan'], a: 0, kenapa: '"Cikgu akan menghubungi talian kecemasan untuk mendapatkan ambulans."' },
       { j: 'pilih', s: 'Kawan lemas di sungai. Apakah yang dihulurkan oleh budak di tebing?', ikon: '🌊', p: ['batang buluh', 'batu besar', 'kasut'], a: 0, kenapa: 'Budak di tebing menghulurkan batang buluh.' },
       { j: 'pilih', s: 'Saya akan minta bantuan daripada ___.', ikon: '🆘', p: ['👮 polis', '🧑‍🍳 tukang masak', '🧑‍🌾 petani'], a: 0, kenapa: '"Saya akan minta bantuan daripada polis."' },
       { j: 'pilih', s: 'Manakah situasi kecemasan?', ikon: '❓', p: ['🔥 Rumah terbakar', '📖 Membaca buku', '🍽️ Makan bersama'], a: 0, kenapa: 'Rumah terbakar ialah situasi kecemasan.' },
-      { j: 'pilih', s: 'Manakah situasi kecemasan?', ikon: '🤔', p: ['⚡ Kejutan elektrik', '⚽ Bermain bola', '🛏️ Tidur malam'], a: 0, kenapa: 'Terkena kejutan elektrik ialah situasi kecemasan.' },
+      { j: 'pilih', s: 'Situasi manakah memerlukan pertolongan segera?', ikon: '🤔', p: ['⚡ Kejutan elektrik', '⚽ Bermain bola', '🛏️ Tidur malam'], a: 0, kenapa: 'Terkena kejutan elektrik ialah situasi kecemasan.' },
       { j: 'pilih', s: 'Kawan cedera di hadapan sekolah. Siapa kamu beritahu?', ikon: '🏫', p: ['🧑‍🏫 Cikgu', '👶 Adik kecil', '🧑‍🍳 Penjual makanan'], a: 0, kenapa: 'Seng Chong dan Adilah segera memberitahu cikgu.' },
       { j: 'bs', s: 'Kita boleh main-main menelefon talian kecemasan.', ikon: '📞', a: false, kenapa: 'Jangan salah guna nombor panggilan kecemasan.' },
       { j: 'bs', s: 'Rumah terbakar ialah situasi kecemasan.', ikon: '🔥', a: true, kenapa: 'Rumah terbakar memerlukan bantuan segera.' },
@@ -2223,7 +2232,7 @@ function plain(h) {
       { j: 'susun', s: 'Susun cerita Sarjit.', item: ['Sarjit ditimpa kemalangan', 'Seng Chong dan Adilah nampak Sarjit', 'Mereka memberitahu cikgu', 'Cikgu menghubungi talian kecemasan'] },
       { j: 'kumpul', s: 'Kecemasan atau bukan?', kumpulan: [['🚨 Kecemasan', ['Rumah terbakar', 'Kejutan elektrik', 'Kawan lemas', 'Kemalangan jalan raya']], ['🙂 Bukan kecemasan', ['Makan bersama keluarga', 'Membaca buku', 'Bermain congkak']]] },
       { j: 'padan', s: 'Padankan situasi dengan bantuan.', pasangan: [['Pencuri di rumah', '👮 Polis'], ['Kawan cedera di sekolah', '🧑‍🏫 Cikgu'], ['Perlu ke hospital', '🚑 Ambulans']] },
-      { j: 'eja', s: 'Eja kenderaan kecemasan ini.', ikon: '🚑', kata: 'ambulans' },
+      { j: 'eja', s: 'Eja siapa yang boleh kita minta bantuan.', ikon: '👮', kata: 'polis' },
       { j: 'ayat', s: 'Bina ayat.', kata: ['Saya', 'akan', 'menjerit', 'untuk', 'minta', 'pertolongan.'] },
     ],
     amali: [{
@@ -2231,9 +2240,9 @@ function plain(h) {
       arahan: 'Sarjit ditimpa kemalangan di hadapan sekolah. Apa yang perlu kamu lakukan?',
       mula(el, api) {
         const STEP = [
-          ['🤕', '"Aduh, tolong saya!" Sarjit cedera.', [['🏃 Segera dapatkan bantuan cikgu', 1], ['😂 Ketawa dan pergi', 0], ['📷 Ambil gambar sahaja', 0]], 'Seng Chong dan Adilah segera mendapatkan bantuan!'],
-          ['🧑‍🏫', 'Kamu jumpa Cikgu Kamal. Apa kamu kata?', [['"Cikgu, Sarjit kemalangan. Dia cedera."', 1], ['"Cikgu, saya lapar."', 0], ['"Cikgu, saya mahu bermain."', 0]], 'Cikgu Kamal: "Mari kita ke sana, sekarang."'],
-          ['👩‍🏫📞', 'Cikgu Azizah mengambil telefon. Cikgu akan…', [['Hubungi talian kecemasan', 1], ['Membaca buku cerita', 0], ['Menutup pintu pejabat', 0]], 'Cikgu menghubungi talian kecemasan untuk mendapatkan ambulans.'],
+          ['🤕', '"Aduh, tolong saya!" Sarjit cedera.', [['🏃 Segera dapatkan bantuan cikgu', 1], ['🤲 Angkat motosikal sendiri', 0], ['🚶 Bawa Sarjit berjalan ke kelas', 0]], 'Seng Chong dan Adilah segera mendapatkan bantuan!'],
+          ['🧑‍🏫', 'Kamu jumpa Cikgu Kamal. Apa kamu kata?', [['"Cikgu, Sarjit kemalangan. Dia cedera."', 1], ['"Cikgu, nanti saya cerita."', 0], ['"Cikgu, tolong ke sana nanti."', 0]], 'Cikgu Kamal: "Mari kita ke sana, sekarang."'],
+          ['👩‍🏫📞', 'Cikgu Azizah mengambil telefon. Cikgu akan…', [['Hubungi talian kecemasan', 1], ['Telefon ibu Sarjit sahaja', 0], ['Tunggu Sarjit datang ke pejabat', 0]], 'Cikgu menghubungi talian kecemasan untuk mendapatkan ambulans.'],
         ];
         let k = 0, miss = 0, bt = [], fin = false;
         el.innerHTML = `<div id="sc" style="position:relative;height:150px;border-radius:14px;overflow:hidden;background:linear-gradient(#d0ebff 0 55%,#868e96 55%)">
@@ -2245,18 +2254,19 @@ function plain(h) {
           const s = STEP[k]; hp.textContent = s[0]; api.anim(hp, [{ transform: 'scale(.3)' }, { transform: 'scale(1)' }], { duration: 400 }); tx.textContent = s[1]; op.innerHTML = '';
           bt = api.shuffle(s[2]).map(([t, ok]) => { const b = api.H(`<button class="opt">${t}</button>`); b.onclick = () => pick(ok, b); op.appendChild(b); return [ok, b]; });
         };
+        let lock = false;
         function pick(ok, b) {
-          if (fin) return;
+          if (fin || lock) return;
           if (!ok) { miss++; api.salah(b, 'Sarjit perlukan bantuan segera. Fikir semula!'); return; }
           api.betul(b, STEP[k][3]); k++;
-          if (k < STEP.length) return setTimeout(() => { if (el.isConnected) show(); }, 900);
+          if (k < STEP.length) { lock = true; return setTimeout(() => { if (el.isConnected) { lock = false; show(); } }, 900); }
           fin = true; op.innerHTML = ''; tx.textContent = '🚨 Nii-nooo… ambulans datang!';
           api.anim(am, [{ left: '110%' }, { left: '56%' }], { duration: 1600, easing: 'ease-out', fill: 'forwards' });
           api.anim(am, [{ filter: 'drop-shadow(0 0 0 red)' }, { filter: 'drop-shadow(0 0 10px red)' }, { filter: 'drop-shadow(0 0 0 blue)' }, { filter: 'drop-shadow(0 0 10px blue)' }], { duration: 500, iterations: 4, fill: 'none' });
-          setTimeout(() => api.selesai(Math.max(0, 1 - miss * .15), 'Syabas! Kamu segera mendapatkan bantuan. Sarjit dibantu oleh ambulans. 🚑'), 1700);
+          setTimeout(() => el.isConnected && api.selesai(Math.max(0, 1 - miss * .15), 'Syabas! Kamu segera mendapatkan bantuan. Sarjit dibantu oleh ambulans. 🚑'), 1700);
         }
         show();
-        return { jawab() { const go = () => { if (fin || !el.isConnected) return; const x = bt.find(z => z[0] && z[1].isConnected); if (x) x[1].click(); setTimeout(go, 1000); }; go(); } };
+        return { jawab() { const go = () => { if (fin || !el.isConnected) return; const x = bt.find(z => z[0] && z[1].isConnected); if (x && !lock) x[1].click(); setTimeout(go, 1000); }; go(); } };
       },
     }, {
       id: 'kecemasan-atau-bukan', tajuk: 'Kecemasan atau Bukan?', ikon: '🚨',
@@ -2270,16 +2280,17 @@ function plain(h) {
         el.innerHTML = `<div class="row" style="justify-content:space-between"><b id="no"></b><span class="hint" id="sk"></span></div><div id="cd" class="box" style="text-align:center;padding:18px"><div id="em" style="font-size:3.8rem"></div><div class="now" id="tx" style="margin:6px 0 0"></div></div><div class="two"><button class="opt" id="ya" style="text-align:center;font-size:1.3rem">🚨 Kecemasan</button><button class="opt" id="tk" style="text-align:center;font-size:1.3rem">🙂 Bukan</button></div>`;
         const ya = el.querySelector('#ya'), tk = el.querySelector('#tk'), cd = el.querySelector('#cd');
         const show = () => { const s = S[k]; el.querySelector('#no').textContent = `Situasi ${k + 1} / ${S.length}`; el.querySelector('#em').textContent = s[0]; el.querySelector('#tx').textContent = s[1]; cd.style.borderColor = 'var(--line)'; api.anim(cd, [{ transform: 'rotateY(90deg)' }, { transform: 'none' }], { duration: 350 }); };
+        let lock = false;
         const pick = (v, b) => {
-          if (k >= S.length) return; const s = S[k];
+          if (k >= S.length || lock) return; const s = S[k];
           if (v !== s[2]) { miss++; api.salah(b, s[2] ? 'Ini bahaya! Perlu bantuan segera.' : 'Ini aktiviti biasa yang selamat.'); return; }
           cd.style.borderColor = s[2] ? '#e03131' : 'var(--ok)'; api.betul(b, s[2] ? 'Kecemasan! Menjerit minta pertolongan dan menelefon untuk dapatkan bantuan.' : 'Bukan kecemasan. Tiada bahaya.'); k++;
           el.querySelector('#sk').textContent = `${k} / ${S.length}`;
-          if (k === S.length) api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Kamu tahu bila perlu minta bantuan kecemasan.'); else setTimeout(() => { if (el.isConnected) show(); }, 700);
+          if (k === S.length) api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Kamu tahu bila perlu minta bantuan kecemasan.'); else { lock = true; setTimeout(() => { if (el.isConnected) { lock = false; show(); } }, 700); }
         };
         ya.onclick = () => pick(1, ya); tk.onclick = () => pick(0, tk);
         show();
-        return { jawab() { const go = () => { if (k >= S.length || !el.isConnected) return; (S[k][2] ? ya : tk).click(); setTimeout(go, 750); }; go(); } };
+        return { jawab() { const go = () => { if (k >= S.length || !el.isConnected) return; if (!lock) (S[k][2] ? ya : tk).click(); setTimeout(go, 750); }; go(); } };
       },
     }],
   });
