@@ -1,0 +1,329 @@
+(function () { const B = {}; const UKKM_PART = (n, b) => { B[b.id] = b; };
+UKKM_PART(8, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
+  arahan: 'Jawab semua 20 soalan. 18 soalan objektif (pilih A, B, C atau D) dan 2 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
+  soalan: [
+  { // 1 Pola — mudah
+    s: "Dalam jujukan berikut, setiap sebutan ialah separuh daripada sebutan sebelumnya.<br><b>768, 384, 192, 96, …</b><br>Berapakah sebutan ke-8?",
+    en: "In the sequence 768, 384, 192, 96, … each term is half of the previous term. What is the 8th term?",
+    p: ['3', '6', '12', '96'], a: 1, topik: 'Pola & Jujukan', aras: 'mudah',
+    hurai: "Sebutan ke-5 hingga ke-8: 48, 24, 12, <b>6</b>. (Atau 768 ÷ 2⁷ = 6.) 12 ialah sebutan ke-7 (tersilap kira satu); 3 ialah sebutan ke-9; 96 = 768 ÷ 8, membahagi dengan 8 dan bukan membahagi dua sebanyak 7 kali."
+  },
+  { // 2 Persamaan linear — mudah
+    s: "Sebatang pen dan sebuah buku nota berharga RM 7.50 kesemuanya. Buku nota itu RM 2.10 lebih mahal daripada pen. Berapakah harga buku nota itu?",
+    en: "A pen and a notebook cost RM 7.50 altogether. The notebook costs RM 2.10 more than the pen. What is the price of the notebook?",
+    p: ['RM 5.40', 'RM 4.80', 'RM 3.75', 'RM 2.70'], a: 1, topik: 'Persamaan Linear', aras: 'mudah',
+    hurai: "Pen = x, buku nota = x + 2.10. x + (x + 2.10) = 7.50 → 2x = 5.40 → x = 2.70. Buku nota = 2.70 + 2.10 = <b>RM 4.80</b>. (RM 2.70 ialah harga pen; RM 3.75 = 7.50 ÷ 2, bahagi sama rata; RM 5.40 ialah nilai 2x.)"
+  },
+  { // 3 Peratus — mudah
+    s: "Tanda harga sebuah periuk nasi elektrik berbunyi: <b>\"Diskaun 30%! Harga jualan RM 56.\"</b> Berapakah harga asal periuk itu?",
+    en: "A rice cooker's price tag reads: '30% off! Sale price RM 56.' What was the original price?",
+    p: ['RM 72.80', 'RM 80.00', 'RM 86.00', 'RM 186.67'], a: 1, topik: 'Peratus & Matematik Pengguna', aras: 'mudah',
+    hurai: "Harga jualan = 70% harga asal. Harga asal = 56 ÷ 0.70 = <b>RM 80</b>. (RM 72.80 = 56 × 1.30, menambah 30% kepada harga jualan; RM 86 = 56 + 30; RM 186.67 = 56 ÷ 0.30.)"
+  },
+  { // 4 Skala — mudah
+    s: "Sebuah model bas dibina mengikut skala 1 : 50. Panjang model itu ialah 24 cm. Berapakah panjang sebenar bas itu?",
+    en: "A model bus is built to a scale of 1 : 50. The model is 24 cm long. What is the actual length of the bus?",
+    p: ['1.2 m', '12 m', '120 m', '1 200 m'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'mudah',
+    hurai: "Panjang sebenar = 24 × 50 = 1 200 cm = <b>12 m</b>. (1 200 m lupa menukar cm kepada m; 1.2 m dan 120 m ialah ralat penukaran unit, 1 m = 100 cm.)"
+  },
+  { // 5 Data — mudah
+    rajah: '<table><tr><th>Kelas</th><th>Botol plastik dikumpul</th></tr><tr><td>3 Amanah</td><td style="text-align:left">● ● ● ● ●</td></tr><tr><td>3 Bestari</td><td style="text-align:left">● ● ● ◐</td></tr><tr><td>3 Cekal</td><td style="text-align:left">● ● ● ● ● ●</td></tr><tr><td>3 Dedikasi</td><td style="text-align:left">● ● ● ● ◐</td></tr><tr><td colspan="2">● mewakili 8 botol &nbsp; ◐ mewakili 4 botol</td></tr></table>',
+    s: "Piktograf menunjukkan bilangan botol plastik yang dikumpul oleh empat kelas untuk program kitar semula. Berapakah beza bilangan botol yang dikumpul oleh 3 Cekal dengan 3 Bestari?",
+    en: "The pictograph shows plastic bottles collected by four classes. How many more bottles did 3 Cekal collect than 3 Bestari?",
+    p: ['16', '20', '24', '28'], a: 1, topik: 'Data & Statistik', aras: 'mudah',
+    hurai: "3 Cekal = 6 × 8 = 48 botol. 3 Bestari = 3 × 8 + 4 = 28 botol. Beza = 48 − 28 = <b>20</b>. (24 mengabaikan simbol separuh; 16 mengira simbol separuh sebagai penuh; 28 ialah jumlah 3 Bestari.)"
+  },
+  { // 6 Geometri — sederhana
+    rajah: '<svg viewBox="0 0 300 185" style="max-width:100%;width:320px" role="img" aria-label="Trapezium bersudut tegak ABCD: AB 10 cm, DC 16 cm, BC 10 cm, AD tegak"><path d="M30 30H180L270 150H30Z" fill="none" stroke="var(--c)" stroke-width="3"/><path d="M30 42h12v-12M30 138h12v12" fill="none" stroke="currentColor"/><g font-size="13" fill="currentColor"><text x="22" y="24">A</text><text x="182" y="24">B</text><text x="274" y="160">C</text><text x="16" y="164">D</text><text x="92" y="22">10 cm</text><text x="130" y="170">16 cm</text><text x="232" y="86">10 cm</text></g></svg>',
+    s: "Rajah menunjukkan trapezium ABCD dengan AB selari dengan DC dan AD berserenjang dengan kedua-duanya. AB = 10 cm, DC = 16 cm dan BC = 10 cm. Berapakah luas trapezium itu?",
+    en: "The diagram shows trapezium ABCD with AB parallel to DC and AD perpendicular to both. AB = 10 cm, DC = 16 cm, BC = 10 cm. What is the area of the trapezium?",
+    p: ['104 cm²', '128 cm²', '130 cm²', '208 cm²'], a: 0, topik: 'Geometri & Pengukuran', aras: 'sederhana',
+    hurai: "Beza sisi selari = 16 − 10 = 6 cm. Tinggi AD = √(10² − 6²) = √64 = 8 cm. Luas = ½ × (10 + 16) × 8 = <b>104 cm²</b>. (130 cm² menggunakan sisi condong 10 cm sebagai tinggi; 208 cm² lupa ½; 128 cm² = 16 × 8.)"
+  },
+  { // 7 Logik — sederhana
+    s: "Jam dinding Pak Leman berjalan perlahan: bagi setiap 1 jam waktu sebenar, jarum jam itu hanya bergerak 55 minit. Dia menetapkan jam itu tepat pada pukul 7:00 pagi. Apabila jam itu menunjukkan pukul 6:00 petang pada hari yang sama, pukul berapakah waktu sebenar?",
+    en: "Pak Leman's wall clock runs slow: for every 1 real hour it moves only 55 minutes. He sets it correctly at 7:00 a.m. When the clock shows 6:00 p.m. the same day, what is the real time?",
+    p: ['5:05 petang', '6:00 petang', '6:55 petang', '7:00 petang'], a: 3, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "Jam itu bergerak 11 jam = 660 minit. Setiap 55 minit pada jam = 60 minit sebenar, jadi masa sebenar = 660 ÷ 55 × 60 = 720 minit = 12 jam. 7:00 pagi + 12 jam = <b>7:00 petang</b>. (6:55 petang menambah 11 × 5 = 55 minit — ralat kerana jam lambat 5 minit bagi setiap jam <i>sebenar</i>, bukan setiap jam pada jam itu; 5:05 petang menolak pula.)"
+  },
+  { // 8 Pola — sederhana
+    s: "Pecahan <sup>5</sup>⁄<sub>7</sub> ditulis sebagai perpuluhan: 0.714285714285… Apakah digit ke-100 selepas titik perpuluhan?",
+    en: "5/7 as a decimal is 0.714285714285… What is the 100th digit after the decimal point?",
+    p: ['2', '4', '5', '8'], a: 0, topik: 'Pola & Jujukan', aras: 'sederhana',
+    hurai: "Digit berulang dalam kitaran 6: 7, 1, 4, 2, 8, 5. 100 ÷ 6 = 16 baki 4, jadi digit ke-100 sama dengan digit ke-4 dalam kitaran = <b>2</b>. (4 dan 8 ialah digit ke-3 dan ke-5, ralat tersasar satu; 5 menganggap digit ke-100 menamatkan kitaran.)"
+  },
+  { // 9 Persamaan linear — sederhana
+    s: "Tambang bas ekspres ialah RM 45 bagi seorang dewasa dan RM 28 bagi seorang kanak-kanak. Satu kumpulan 14 orang membayar RM 528 kesemuanya. Berapakah bilangan orang dewasa dalam kumpulan itu?",
+    en: "An express bus fare is RM 45 per adult and RM 28 per child. A group of 14 people paid RM 528 in total. How many adults are in the group?",
+    p: ['6', '7', '8', '11'], a: 2, topik: 'Persamaan Linear', aras: 'sederhana',
+    hurai: "Dewasa = d, kanak-kanak = 14 − d. 45d + 28(14 − d) = 528 → 17d + 392 = 528 → 17d = 136 → d = <b>8</b>. Semak: 8 × 45 + 6 × 28 = 360 + 168 = 528. (6 ialah bilangan kanak-kanak; 11 ≈ 528 ÷ 45; 7 = 14 ÷ 2.)"
+  },
+  { // 10 Peratus — sederhana
+    s: "Harga asal sebuah pembersih udara ialah RM 480. Kedai menaikkan harganya sebanyak 25%. Sebulan kemudian, kedai itu memberi diskaun 20% daripada harga baharu. Berapakah harga akhir pembersih udara itu?",
+    en: "An air purifier costs RM 480. The shop raises the price by 25%, then a month later gives a 20% discount on the new price. What is the final price?",
+    p: ['RM 600', 'RM 504', 'RM 480', 'RM 456'], a: 2, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
+    hurai: "Harga baharu = 480 × 1.25 = RM 600. Selepas diskaun = 600 × 0.80 = <b>RM 480</b> — sama dengan harga asal kerana 1.25 × 0.80 = 1. (RM 504 menganggap perubahan bersih +5% (25% − 20%); RM 456 menganggap −5%; RM 600 lupa diskaun.)"
+  },
+  { // 11 Nisbah — sederhana
+    s: "Konkrit dibancuh dengan nisbah isi padu simen : pasir : batu baur = 1 : 2 : 4. Seorang pekerja mempunyai 0.5 m³ simen, 1.2 m³ pasir dan 2.2 m³ batu baur. Berapakah isi padu maksimum bancuhan (jumlah ketiga-tiga bahan) yang boleh dihasilkan mengikut nisbah itu?",
+    en: "Concrete is mixed in the volume ratio cement : sand : gravel = 1 : 2 : 4. A worker has 0.5 m³ cement, 1.2 m³ sand and 2.2 m³ gravel. What is the maximum total volume of mix he can make in this ratio?",
+    p: ['3.5 m³', '3.85 m³', '3.9 m³', '4.2 m³'], a: 0, topik: 'Nisbah, Kadar & Laju', aras: 'sederhana',
+    hurai: "Nilai 1 bahagian yang dibenarkan: simen 0.5 ÷ 1 = 0.5; pasir 1.2 ÷ 2 = 0.6; batu baur 2.2 ÷ 4 = 0.55. Bahan yang paling menghadkan ialah simen (0.5). Jumlah = 7 bahagian × 0.5 = <b>3.5 m³</b>. (3.85 dan 4.2 menggunakan had batu baur atau pasir; 3.9 menjumlahkan semua bahan tanpa ikut nisbah.)"
+  },
+  { // 12 Data — sederhana (ISI)
+    jenis: 'isi',
+    rajah: '<table><tr><th>Bilangan adik-beradik</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><th>Bilangan murid</th><td>4</td><td>5</td><td>8</td><td>6</td><td>5</td><td>2</td></tr></table>',
+    s: "Jadual kekerapan menunjukkan bilangan adik-beradik bagi setiap murid dalam sebuah kelas. Hitung min bilangan adik-beradik.",
+    en: "The frequency table shows the number of siblings of each pupil in a class. Calculate the mean number of siblings.",
+    a: 2.3, tol: 0.01, topik: 'Data & Statistik', aras: 'sederhana',
+    hurai: "Jumlah murid = 4 + 5 + 8 + 6 + 5 + 2 = 30. Jumlah (nilai × kekerapan) = 0 + 5 + 16 + 18 + 20 + 10 = 69. Min = 69 ÷ 30 = <b>2.3</b>. (Ralat biasa: membahagi dengan 6 lajur atau mencari min kekerapan sahaja.)"
+  },
+  { // 13 Geometri — sederhana
+    rajah: '<svg viewBox="0 0 240 240" style="max-width:100%;width:260px" role="img" aria-label="Satah Cartes dengan titik C(1, 2) dan P(4, 1)"><g stroke="var(--muted)" stroke-width="1" opacity=".6"><path d="M60 30V210M90 30V210M120 30V210M150 30V210M180 30V210M210 30V210M30 180H210M30 150H210M30 120H210M30 90H210M30 60H210M30 30H210"/></g><g stroke="currentColor" stroke-width="1.5"><path d="M30 215V25M25 210H215"/></g><g font-size="12" fill="currentColor" text-anchor="middle"><text x="30" y="226">0</text><text x="60" y="226">1</text><text x="90" y="226">2</text><text x="120" y="226">3</text><text x="150" y="226">4</text><text x="180" y="226">5</text><text x="210" y="226">6</text><text x="18" y="184">1</text><text x="18" y="154">2</text><text x="18" y="124">3</text><text x="18" y="94">4</text><text x="18" y="64">5</text><text x="18" y="34">6</text><text x="222" y="214">x</text><text x="30" y="18">y</text></g><circle cx="60" cy="150" r="5" fill="var(--c)"/><circle cx="150" cy="180" r="5" fill="var(--c)"/><g font-size="13" fill="currentColor" font-weight="700"><text x="66" y="144">C</text><text x="156" y="174">P</text></g></svg>',
+    s: "Titik P(4, 1) diputarkan 90° <b>lawan arah jam</b> pada pusat C(1, 2). Apakah koordinat imej P?",
+    en: "Point P(4, 1) is rotated 90° anticlockwise about centre C(1, 2). What are the coordinates of the image of P?",
+    p: ['(−1, 4)', '(0, −1)', '(1, 3)', '(2, 5)'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sederhana',
+    hurai: "Dari C ke P: 3 unit ke kanan, 1 unit ke bawah. Putaran 90° lawan arah jam menukar \"3 kanan, 1 bawah\" kepada \"1 kanan, 3 atas\". Imej = (1 + 1, 2 + 3) = <b>(2, 5)</b>. ((−1, 4) ialah putaran pada asalan O; (0, −1) ialah putaran ikut arah jam; (1, 3) lupa menambah semula koordinat C.)"
+  },
+  { // 14 Logik — sederhana
+    s: "Dalam satu kejohanan bola tampar, 8 pasukan bermain dalam satu kumpulan dan setiap pasukan bertemu setiap pasukan lain <b>tepat sekali</b>. Empat pasukan teratas kemudian mara ke separuh akhir dan pemenangnya bertemu di perlawanan akhir. Berapakah jumlah perlawanan dalam kejohanan itu?",
+    en: "In a volleyball tournament, 8 teams play in one group and each team meets every other team exactly once. The top four go to the semi-finals and the winners meet in the final. How many matches are played in total?",
+    p: ['59', '35', '31', '28'], a: 2, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "Peringkat kumpulan: setiap pasukan main 7 kali, 8 × 7 = 56, tetapi setiap perlawanan dikira dua kali → 56 ÷ 2 = 28. Separuh akhir 2 + akhir 1 = 3. Jumlah = <b>31</b>. (59 = 56 + 3, lupa bahagi dua; 28 lupa peringkat kalah mati; 35 = 28 + 7.)"
+  },
+  { // 15 Pola — sukar
+    rajah: '<svg viewBox="0 0 260 100" style="max-width:100%;width:300px" role="img" aria-label="Pola jubin kelabu mengelilingi jubin putih"><g stroke="currentColor"><rect x="10" y="20" width="48" height="48" fill="var(--muted)"/><rect x="26" y="36" width="16" height="16" fill="var(--card)"/><path d="M26 20v48M42 20v48M10 36h48M10 52h48" fill="none"/><rect x="80" y="20" width="64" height="48" fill="var(--muted)"/><rect x="96" y="36" width="32" height="16" fill="var(--card)"/><path d="M96 20v48M112 20v48M128 20v48M80 36h64M80 52h64" fill="none"/><rect x="170" y="20" width="80" height="48" fill="var(--muted)"/><rect x="186" y="36" width="48" height="16" fill="var(--card)"/><path d="M186 20v48M202 20v48M218 20v48M234 20v48M170 36h80M170 52h80" fill="none"/></g><g font-size="12" fill="currentColor"><text x="12" y="88">Rajah 1</text><text x="90" y="88">Rajah 2</text><text x="188" y="88">Rajah 3</text></g></svg>',
+    s: "Dalam pola di atas, satu baris jubin putih dikelilingi oleh jubin kelabu. Satu rajah dalam pola yang sama menggunakan <b>150 jubin kesemuanya</b>. Berapakah bilangan jubin kelabu dalam rajah itu?",
+    en: "In the pattern, a row of white tiles is surrounded by grey tiles. One figure in the same pattern uses 150 tiles altogether. How many grey tiles does it have?",
+    p: ['102', '100', '96', '48'], a: 0, topik: 'Pola & Jujukan', aras: 'sukar',
+    hurai: "Rajah ke-n: n jubin putih, segi empat tepat 3 × (n + 2). Jumlah jubin = 3(n + 2) = 3n + 6; kelabu = 3n + 6 − n = 2n + 6. 3n + 6 = 150 → n = 48. Kelabu = 2(48) + 6 = <b>102</b>. (48 ialah bilangan jubin putih; 96 = 2n, lupa 6 jubin di hujung; 100 = ⅔ × 150.)"
+  },
+  { // 16 Persamaan linear — sukar
+    s: "Di pasar tani, 3 biji mangga dan 4 biji epal berharga RM 13.20, manakala 5 biji mangga dan 2 biji epal berharga RM 15.00. Berapakah harga 2 biji mangga dan 3 biji epal?",
+    en: "At a farmers' market, 3 mangoes and 4 apples cost RM 13.20, while 5 mangoes and 2 apples cost RM 15.00. What is the price of 2 mangoes and 3 apples?",
+    p: ['RM 10.20', 'RM 9.40', 'RM 9.30', 'RM 7.80'], a: 2, topik: 'Persamaan Linear', aras: 'sukar',
+    hurai: "3m + 4e = 13.20 … (1); 5m + 2e = 15.00 … (2). (2) × 2: 10m + 4e = 30.00. Tolak (1): 7m = 16.80 → m = 2.40. Daripada (2): 2e = 15 − 12 = 3 → e = 1.50. 2m + 3e = 4.80 + 4.50 = <b>RM 9.30</b>. (RM 10.20 menukar harga mangga dan epal; RM 9.40 = (13.20 + 15.00) ÷ 3, jalan pintas yang salah; RM 7.80 = 2 × (m + e).)"
+  },
+  { // 17 Peratus — sukar
+    s: "Harga sejenis saham jatuh 20% pada hari Isnin dan jatuh lagi 10% pada hari Selasa. Berapakah peratus kenaikan yang diperlukan pada hari Rabu supaya harganya kembali sama dengan harga sebelum hari Isnin?",
+    en: "A share price falls 20% on Monday and a further 10% on Tuesday. What percentage increase is needed on Wednesday to return to the price before Monday?",
+    p: ['28.0%', '30.0%', '36.1%', '38.9%'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sukar',
+    hurai: "Harga selepas dua hari = 0.8 × 0.9 = 0.72 daripada asal. Kenaikan diperlukan = (1 − 0.72) ÷ 0.72 = 0.28 ÷ 0.72 ≈ <b>38.9%</b>. (28% ialah peratus penurunan, bukan kenaikan; 30% = 20% + 10%; 36.1% = 25% + 11.1%, menjumlahkan kenaikan untuk setiap hari secara berasingan.)"
+  },
+  { // 18 Kadar & zon masa — sukar (ISI)
+    jenis: 'isi',
+    s: "Sebuah pesawat berlepas dari Kuala Lumpur pada pukul 9:00 pagi waktu Malaysia dan mendarat di London pada pukul 3:30 petang waktu London pada hari yang sama. Waktu London ialah 7 jam di belakang waktu Malaysia. Jarak penerbangan ialah 10 800 km. Hitung laju purata pesawat itu dalam km/j.",
+    en: "A plane leaves Kuala Lumpur at 9:00 a.m. Malaysian time and lands in London at 3:30 p.m. London time the same day. London time is 7 hours behind Malaysian time. The flight distance is 10 800 km. Find the average speed in km/h.",
+    a: 800, unit: 'km/j', topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
+    hurai: "9:00 pagi waktu Malaysia = 2:00 pagi waktu London. Masa penerbangan = 2:00 pagi hingga 3:30 petang = 13.5 jam. Laju = 10 800 ÷ 13.5 = <b>800 km/j</b>. (Jika zon masa diabaikan, masa disangka 6.5 jam dan laju ≈ 1 662 km/j — salah.)"
+  },
+  { // 19 Data — sukar
+    s: "Markah ujian lapan murid ialah:<br><b>56, 72, 48, 65, 80, 59, 72, 61</b><br>Dua murid lagi mengambil ujian itu dan memperoleh 70 dan 52. Apakah kesan kepada <b>median</b> markah?",
+    en: "Eight pupils scored 56, 72, 48, 65, 80, 59, 72, 61. Two more pupils score 70 and 52. What happens to the median mark?",
+    p: ['Berkurang 3', 'Berkurang 2', 'Berkurang 0.625', 'Tidak berubah'], a: 3, topik: 'Data & Statistik', aras: 'sukar',
+    hurai: "Susun 8 markah: 48, 56, 59, 61, 65, 72, 72, 80 → median = (61 + 65) ÷ 2 = 63. Susun 10 markah: 48, 52, 56, 59, 61, 65, 70, 72, 72, 80 → median = (61 + 65) ÷ 2 = 63. Median <b>tidak berubah</b> (satu markah baharu di bawah 61, satu di atas 65). (Berkurang 3 datang daripada tidak menyusun data; berkurang 2 mengambil nilai ke-5 sahaja sebagai median; 0.625 ialah perubahan min, bukan median.)"
+  },
+  { // 20 Geometri — sukar
+    rajah: '<svg viewBox="0 0 250 170" style="max-width:100%;width:290px" role="img" aria-label="Bulatan pusat O, tangen PT menyentuh bulatan di T, garis PO memotong bulatan di Q"><circle cx="90" cy="100" r="50" fill="none" stroke="var(--c)" stroke-width="2.5"/><g stroke="currentColor" stroke-width="2" fill="none"><path d="M90 100L109.2 53.8L220 100Z"/><path d="M106.2 61.2L113.5 64.3L116.6 56.9"/></g><circle cx="90" cy="100" r="3" fill="currentColor"/><circle cx="140" cy="100" r="3" fill="currentColor"/><g font-size="13" fill="currentColor"><text x="78" y="116">O</text><text x="104" y="46">T</text><text x="224" y="106">P</text><text x="140" y="116">Q</text><text x="74" y="76">5 cm</text><text x="162" y="68">12 cm</text></g></svg>',
+    s: "Dalam rajah, PT ialah tangen kepada bulatan berpusat O di titik T. Jejari bulatan ialah 5 cm dan PT = 12 cm. Garis lurus PO memotong bulatan di Q. Berapakah panjang PQ?",
+    en: "In the diagram, PT is a tangent to the circle with centre O at point T. The radius is 5 cm and PT = 12 cm. Line PO cuts the circle at Q. What is the length of PQ?",
+    p: ['13 cm', '10.9 cm', '8 cm', '7 cm'], a: 2, topik: 'Geometri & Pengukuran', aras: 'sukar',
+    hurai: "Tangen berserenjang dengan jejari, jadi ∠OTP = 90°. OP = √(5² + 12²) = √169 = 13 cm. PQ = OP − OQ = 13 − 5 = <b>8 cm</b>. (13 cm ialah OP; 10.9 cm = √(12² − 5²), tersilap memilih hipotenus; 7 cm = 12 − 5.)"
+  }
+  ]
+});
+
+UKKM_PART(8, {
+  id: 'eng', nama: 'Bahasa Inggeris', ikon: '📖', minit: 30, jenis: 'objektif',
+  arahan: 'Read each text carefully and answer the questions that follow. Choose the best answer (A, B, C or D).',
+  petikan: [
+    { id: 'P1', tajuk: 'Poster: Prevent Kitchen Fires', teks: `
+<p style="font-size:1.15em"><b>PREVENT KITCHEN FIRES</b></p>
+<p><i>A message from your local fire and rescue station</i></p>
+<p>Many house fires start in the kitchen. Follow these simple steps:</p>
+<ul>
+<li>Never leave cooking unattended. If you must leave the kitchen, switch off the stove first.</li>
+<li>Keep cloths, plastic bags and paper away from the stove.</li>
+<li>If oil in a pan catches fire, do <b>NOT</b> pour water on it. Turn off the gas and cover the pan with a lid or a damp cloth.</li>
+<li>Check gas hoses every month for cracks. Replace them every two years.</li>
+</ul>
+<p>In an emergency, call <b>999</b>.</p>
+<p>Free fire safety talk: Sunday, 12 July, 9.00 a.m., Dewan Orang Ramai Taman Desa</p>` },
+    { id: 'P2', tajuk: 'Minutes of the Student Council Meeting', teks: `
+<p><b>SMK Taman Universiti</b> · Date: 4 March · Time: 2.30 p.m. · Venue: Meeting Room 2<br>
+<b>Present:</b> 14 members and Puan Nora (teacher advisor)<br>
+<b>Absent with apology:</b> Iskandar (Treasurer), who was representing the school at a debate</p>
+<p><b>1. Canteen queues</b><br>Members reported long queues at recess, especially for Form 1 students. Puan Nora suggested staggered recess times. The secretary will write to the Senior Assistant to propose this.</p>
+<p><b>2. Sports Day budget</b><br>As the treasurer was absent, the budget could not be finalised. It will be discussed at the next meeting.</p>
+<p><b>3. Recycling bins</b><br>Farhan reported that the bins at Block C are often full by Wednesday. Members agreed to ask the cleaning contractor to empty them twice a week instead of once.</p>
+<p><b>4. Other matters</b><br>Nur Sabrina proposed a Quiet Reading Corner in the hall foyer. Several members liked the idea but felt that it needed more planning. She will present a detailed proposal at a later meeting.</p>
+<p>Meeting ended: 3.40 p.m. · Next meeting: 1 April<br>Prepared by: Chen Wei Ling (Secretary)</p>` },
+    { id: 'P3', tajuk: 'Article: Why Teenagers Can’t Fall Asleep Early', teks: `
+<p>Many parents complain that their teenage children stay up late and are difficult to wake in the morning. It is easy to blame laziness or phones, but scientists say that biology also plays a part.</p>
+<p>During the teenage years, the body’s internal clock shifts. The brain begins releasing melatonin, the hormone that makes us feel sleepy, about one to two hours later than it did in childhood. As a result, many teenagers do not feel tired until 11 p.m. or later, even if they go to bed earlier.</p>
+<p>At the same time, teenagers still need between eight and ten hours of sleep each night. A student who falls asleep at midnight and wakes at 5.45 a.m. for school gets less than six hours. Over a week, this missing sleep adds up. Studies link it with poorer memory, weaker concentration and changes in mood.</p>
+<p>Screens make the problem worse. The blue light from phones and tablets can delay the release of melatonin even further, and an exciting game or conversation keeps the brain alert.</p>
+<p>Some countries have responded by starting school later in the morning. In Malaysia, early school start times are unlikely to change soon, so experts suggest steps that students themselves can control. Keeping the same bedtime on weekdays and weekends helps the body clock stay steady. Putting phones away an hour before bed and getting morning sunlight can also help.</p>
+<p>None of this means that teenagers should be excused for being late. However, understanding the science may lead to more patience on both sides.</p>` }
+  ],
+  soalan: [
+    { petikan: 'P1', topik: 'Main idea / purpose', s: 'What is the main purpose of the poster?',
+      p: ['To advertise new gas stoves and hoses', 'To explain how the fire and rescue station is run', 'To invite people to train as firefighters', 'To give advice about kitchen fires'], a: 3,
+      hurai: `The title is "PREVENT KITCHEN FIRES" and the poster lists "simple steps", including what to do "If oil in a pan catches fire". The talk at the end is an extra activity.` },
+    { petikan: 'P1', topik: 'Specific detail', s: 'According to the poster, how often should gas hoses be replaced?',
+      p: ['Every month', 'Every two years', 'Every time they are checked', 'Only when a fire has started'], a: 1,
+      hurai: `"Check gas hoses every month for cracks. Replace them every two years." Checking is monthly; replacing is every two years.` },
+    { petikan: 'P1', topik: 'Vocabulary in context', s: 'In “Never leave cooking <b>unattended</b>”, the word <b>unattended</b> means',
+      p: ['with nobody watching it', 'without any guests present', 'without being invited', 'not finished on time'], a: 0,
+      hurai: `The next sentence says, "If you must leave the kitchen, switch off the stove first", so "unattended" means with no one there to watch it.` },
+    { petikan: 'P1', topik: 'Reference', s: 'In “Check gas hoses every month for cracks. Replace <b>them</b> every two years”, <b>them</b> refers to',
+      p: ['the cracks', 'the cloths and plastic bags', 'the gas hoses', 'the pan lids'], a: 2,
+      hurai: `You replace the gas hoses, not the cracks. The cracks are what you check the hoses for.` },
+    { petikan: 'P1', topik: 'Inference', s: 'While Aiman is frying fish, the oil in the pan catches fire. Which action follows the poster’s advice?',
+      p: ['Pour a jug of cold water over the pan', 'Carry the burning pan outside to the sink', 'Turn off the gas and cover the pan with a lid', 'Open the window and wait for the flames to burn out'], a: 2,
+      hurai: `"If oil in a pan catches fire, do NOT pour water on it. Turn off the gas and cover the pan with a lid or a damp cloth."` },
+
+    { petikan: 'P2', topik: 'Main idea / purpose', s: 'This document is mainly a record of',
+      p: ['what was discussed and decided at a meeting', 'the rules for using the school canteen', 'a proposal for a Quiet Reading Corner', 'the budget for the school’s Sports Day'], a: 0,
+      hurai: `Minutes list who was "Present", each item discussed, and what was agreed, such as asking the contractor "to empty them twice a week".` },
+    { petikan: 'P2', topik: 'Specific detail', s: 'Why could the Sports Day budget NOT be finalised?',
+      p: ['The meeting ended before the item was reached.', 'Puan Nora did not agree with the amount.', 'The secretary had not prepared the figures in time.', 'The treasurer was away representing the school.'], a: 3,
+      hurai: `"As the treasurer was absent, the budget could not be finalised." Iskandar, the treasurer, "was representing the school at a debate".` },
+    { petikan: 'P2', topik: 'Vocabulary in context', s: 'Puan Nora suggested <b>staggered</b> recess times. This means recess would',
+      p: ['be much longer than the usual twenty minutes', 'start at different times for each group', 'be a very surprising change for students', 'happen only when students walk steadily'], a: 1,
+      hurai: `The problem is "long queues at recess". Staggered times spread students out so that not everyone arrives at the canteen at once. The word is not about walking unsteadily or surprise.` },
+    { petikan: 'P2', topik: 'Reference', s: 'In item 3, <b>them</b> in “to empty them twice a week” refers to',
+      p: ['the recycling bins at Block C', 'the council members', 'the workers from the contractor', 'the Wednesday collections'], a: 0,
+      hurai: `"The bins at Block C are often full by Wednesday. Members agreed to ask the cleaning contractor to empty them". Only bins can be emptied.` },
+    { petikan: 'P2', topik: 'Inference', s: 'Which statement about Nur Sabrina’s idea is true?',
+      p: ['It was rejected because the hall foyer is too small.', 'It was first suggested by Puan Nora at the meeting.', 'It was approved and will start on 1 April.', 'It was welcomed but has not been approved yet.'], a: 3,
+      hurai: `"Several members liked the idea but felt that it needed more planning", and she must present "a detailed proposal". So it was liked but not yet approved.` },
+
+    { petikan: 'P3', topik: 'Main idea / purpose', s: 'What is the main idea of the article?',
+      p: ['Teenagers sleep late mainly because they are lazy and use phones.', 'Biology partly explains late sleep, and some habits can help.', 'Malaysian schools should start later in the morning.', 'Melatonin is a medicine that helps people fall asleep.'], a: 1,
+      hurai: `The writer says, "scientists say that biology also plays a part", explains the body clock, and ends with steps "that students themselves can control". The writer does not argue for a later school start.` },
+    { petikan: 'P3', topik: 'Specific detail', s: 'According to the article, how does a teenager’s brain release melatonin compared with a child’s?',
+      p: ['In smaller amounts than before', 'Only when there is no blue light', 'About one to two hours later than before', 'Only after eight to ten hours of sleep'], a: 2,
+      hurai: `"The brain begins releasing melatonin ... about one to two hours later than it did in childhood."` },
+    { petikan: 'P3', topik: 'Vocabulary in context', s: 'In “Over a week, this missing sleep <b>adds up</b>”, the phrase <b>adds up</b> means',
+      p: ['slowly grows into a large total', 'makes sense when it is explained', 'is calculated using a formula', 'is replaced at the weekend'], a: 0,
+      hurai: `Losing a little sleep each night builds into a big loss over a week. "Adds up" can also mean "makes sense", but that meaning does not fit here.` },
+    { petikan: 'P3', topik: 'Reference', s: 'In “Studies link <b>it</b> with poorer memory”, <b>it</b> refers to',
+      p: ['the week', 'the early school day', 'melatonin', 'the missing sleep'], a: 3,
+      hurai: `"Over a week, this missing sleep adds up. Studies link it with poorer memory ..." Lack of sleep is what causes these problems.` },
+    { petikan: 'P3', topik: 'Inference / attitude', s: 'Which best describes the writer’s attitude in the last paragraph?',
+      p: ['Angry at parents who wake their children early', 'Understanding, but not making excuses for teenagers', 'Hopeless that the sleep problem can ever be solved by students', 'Strongly in favour of punishing late students'], a: 1,
+      hurai: `"None of this means that teenagers should be excused for being late. However, understanding the science may lead to more patience on both sides."` }
+  ]
+});
+
+// UKKM Set 08 — Ujian Keperibadian (skala 4 mata), 100 item. Item terbalik bukan-kejujuran: 28.
+UKKM_PART(8, {
+  id: 'per', nama: 'Ujian Keperibadian', ikon: '🧭', minit: 30,
+  arahan: "Baca setiap pernyataan dan pilih <b>Sangat setuju</b>, <b>Setuju</b>, <b>Tidak setuju</b> atau <b>Sangat tidak setuju</b> mengikut diri anda yang sebenar. Jawab dengan jujur, logik dan konsisten; beberapa idea diulang dengan ayat berbeza. Bagi situasi asrama yang belum anda alami, jawab mengikut tindakan yang paling mungkin anda lakukan. Masa: kira-kira 18 saat bagi setiap item.",
+  skala: ["Sangat setuju","Setuju","Tidak setuju","Sangat tidak setuju"],
+  item: [
+    { s: "Saya sanggup menggantikan rakan dalam tugas dorm apabila dia ada pertandingan.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Saling membantu mengeratkan hubungan." },
+    { id: 'sb2', pasangan: 'sb1', s: "Saya terus meminta jawapan daripada rakan setiap kali menemui soalan sukar.", trait: "Minat Ilmu, Sains & Motivasi", pos: [2, 3], hurai: "Bergantung pada jawapan rakan menghalang pemikiran sendiri." },
+    { s: "Saya membawa semua buku dan alatan yang diperlukan ke kelas setiap hari.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Persediaan rapi menunjukkan disiplin diri." },
+    { id: 'ib2', pasangan: 'ib1', s: "Saya mendahulukan perkara yang seronok walaupun ada tugasan penting yang hampir tamat tempoh.", trait: "Integriti & Disiplin Diri", pos: [2, 3], hurai: "Mendahulukan keseronokan menunjukkan disiplin diri yang lemah." },
+    { s: "Saya mengurus masa kumpulan supaya pembentangan tamat dalam tempoh yang ditetapkan.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Mengurus masa ialah tanggungjawab pemimpin." },
+    { s: "Saya membuat senaman ringan secara berkala walaupun tiada sesiapa menyuruh.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Disiplin diri merangkumi menjaga kesihatan sendiri." },
+    { s: "Saya selalu memikirkan pandangan orang lain tentang diri saya sehingga resah.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [2, 3], hurai: "Terlalu memikirkan pandangan orang lain menjejaskan ketenangan." },
+    { s: "Saya menahan diri daripada menyampuk ketika guru sedang mengajar.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Kawalan diri menunjukkan hormat dan disiplin." },
+    { s: "Saya memberi tunjuk ajar kepada rakan yang baru menyertai pasukan beruniform.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Membimbing ahli baharu ialah ciri pemimpin." },
+    { s: "Saya menghargai kemajuan kecil yang saya capai setiap minggu.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Menghargai kemajuan membina motivasi." },
+    { s: "Saya mudah menerima rakan yang mempunyai minat berbeza daripada saya.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Keterbukaan memudahkan persahabatan." },
+    { id: 'mb2', pasangan: 'mb1', s: "Saya menyimpan pakaian sukan yang basah di dalam beg selama berhari-hari.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [2, 3], hurai: "Pakaian basah yang disimpan menjejaskan kebersihan." },
+    { s: "Saya suka mengaitkan konsep matematik dengan masalah sebenar.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Aplikasi matematik mengukuhkan kefahaman." },
+    { s: "Saya suka mencari corak dalam nombor.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Minat terhadap corak menyokong pemikiran matematik." },
+    { s: "Apabila kumpulan saya buntu, saya mencadangkan cara lain untuk menyelesaikan masalah.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Pemimpin mencari jalan apabila pasukan tersekat." },
+    { s: "Saya memberikan semua kerja kepada ahli lain dan hanya memantau dari jauh.", trait: "Kepimpinan & Inisiatif", pos: [2, 3], hurai: "Pemimpin turut menyumbang tenaga, bukan sekadar mengarah." },
+    { s: "Saya cepat bersemangat semula selepas menerima berita yang mengecewakan.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Pemulihan yang cepat ialah tanda daya tahan." },
+    { id: 'ma2', pasangan: 'ma1', s: "Saya lebih rela belajar di sekolah berhampiran rumah daripada tinggal di asrama.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [2, 3], hurai: "Calon MRSM perlu bersedia untuk kehidupan berasrama." },
+    { s: "Saya kekal bersemangat walaupun menghadapi beberapa minggu sibuk berturut-turut.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Daya tahan penting dalam kehidupan asrama yang padat." },
+    { s: "Saya membuat bahagian kerja saya dengan teliti supaya kumpulan berbangga.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Komitmen terhadap pasukan menunjukkan semangat berpasukan." },
+    { s: "Saya mencadangkan sistem giliran supaya peralatan sukan digunakan secara adil.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Mencipta sistem yang adil menunjukkan inisiatif kepimpinan." },
+    { id: 'ka2', pasangan: 'ka1', s: "Saya berasa jawatan kepimpinan di sekolah hanya membebankan dan elok dielakkan.", trait: "Kepimpinan & Inisiatif", pos: [2, 3], hurai: "Memandang kepimpinan sebagai beban menunjukkan inisiatif yang rendah." },
+    { s: "Saya berasa puas apabila memahami konsep yang sebelum ini mengelirukan.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Kepuasan belajar menunjukkan motivasi dalaman." },
+    { s: "Saya lebih rela meniru jawapan rakan daripada memerah otak sendiri.", trait: "Minat Ilmu, Sains & Motivasi", pos: [2, 3], hurai: "Meniru menghalang perkembangan kemahiran berfikir." },
+    { s: "Saya menyokong idea rakan yang bernas walaupun dia bukan kawan rapat saya.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Menilai idea secara adil menguatkan pasukan." },
+    { s: "Saya mengambil tempat duduk yang sudah dikhaskan untuk rakan lain.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [2, 3], hurai: "Mengambil hak orang lain menjejaskan hubungan." },
+    { s: "Saya menyesuaikan diri dengan jadual makan yang tetap di asrama.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Mematuhi jadual makan menunjukkan kesediaan." },
+    { s: "Saya bersemangat untuk mewakili sekolah dalam pertandingan sains.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Mewakili sekolah menunjukkan motivasi." },
+    { s: "Saya rasa projek inovasi sekolah membuang masa sahaja.", trait: "Minat Ilmu, Sains & Motivasi", pos: [2, 3], hurai: "Projek inovasi melatih kreativiti dan sains." },
+    { s: "Saya mengakui jika jawapan yang saya hantar sebenarnya hasil perbincangan dengan rakan.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Jujur tentang sumber jawapan menunjukkan integriti akademik." },
+    { s: "Saya mampu hidup dengan kemudahan yang sederhana di asrama.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Bersederhana memudahkan kehidupan asrama." },
+    { id: 'eb1', pasangan: 'eb2', s: "Saya menerima keadaan dengan tenang apabila barang saya hilang dan berusaha mencarinya.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Bertindak tenang membantu menyelesaikan masalah." },
+    { s: "Saya boleh berkata dengan tenang bahawa saya perlukan bantuan.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Meminta bantuan ialah tanda kekuatan emosi." },
+    { s: "Saya meminta rakan menyiapkan tugasan kebersihan saya dengan membayarnya.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [2, 3], hurai: "Tanggungjawab peribadi perlu dilaksanakan sendiri." },
+    { s: "Saya tenang menghadapi pemeriksaan mengejut warden.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Ketenangan dalam situasi mengejut menunjukkan kestabilan emosi." },
+    { id: 'ba1', pasangan: 'ba2', s: "Saya suka belajar bersama rakan-rakan dalam kumpulan perbincangan.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Belajar berkumpulan membina kerjasama dan kefahaman." },
+    { s: "Saya merancang menu makanan ringan yang sihat untuk disimpan di loker.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Memilih makanan sihat menunjukkan pengurusan diri." },
+    { s: "Saya membantu rakan sebilik yang demam dengan mengambilkan makanan untuknya.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Menjaga rakan yang sakit menunjukkan keprihatinan." },
+    { s: "Apabila ada masalah dalam kumpulan, saya mengadu kepada guru sebelum cuba menyelesaikannya sendiri.", trait: "Kepimpinan & Inisiatif", pos: [2, 3], hurai: "Pemimpin mencuba penyelesaian sendiri dahulu sebelum merujuk guru." },
+    { s: "Saya sentiasa membalas setiap mesej dengan segera dan sopan.", trait: "Skala Kejujuran", pos: [2, 3], hurai: "Setiap orang pernah lambat membalas mesej; menafikannya kelihatan tidak jujur." },
+    { id: 'ea1', pasangan: 'ea2', s: "Saya boleh mengawal kegelisahan sebelum peperiksaan dengan membuat persediaan yang teratur.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Persediaan rapi membantu mengawal kebimbangan." },
+    { s: "Saya mendengar penjelasan rakan sebelum membuat kesimpulan tentang tindakannya.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Mendengar dahulu mengelakkan salah faham." },
+    { s: "Ada kalanya saya berasa marah tetapi menyimpannya sahaja.", trait: "Skala Kejujuran", pos: [0, 1], hurai: "Perasaan ini biasa; mengakuinya ialah jawapan jujur." },
+    { s: "Saya boleh fokus belajar walaupun ada masalah kecil dengan rakan.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Mengasingkan masalah daripada tugas menunjukkan kestabilan." },
+    { id: 'sa2', pasangan: 'sa1', s: "Saya berasa belajar sains itu suatu beban yang membosankan.", trait: "Minat Ilmu, Sains & Motivasi", pos: [2, 3], hurai: "Memandang sains sebagai beban kurang sesuai bagi calon MRSM." },
+    { s: "Saya boleh mengurus keperluan harian sendiri sepanjang perkhemahan.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Kemandirian diuji semasa perkhemahan." },
+    { s: "Saya mengambil gambar kertas jawapan rakan untuk disalin di dorm.", trait: "Integriti & Disiplin Diri", pos: [2, 3], hurai: "Menyalin jawapan orang lain ialah ketidakjujuran akademik." },
+    { id: 'ia2', pasangan: 'ia1', s: "Apabila guru bertanya siapa yang membuat bising, saya menuding kepada rakan lain walaupun saya turut terlibat.", trait: "Integriti & Disiplin Diri", pos: [2, 3], hurai: "Mengalihkan kesalahan kepada orang lain ialah ketidakjujuran." },
+    { s: "Saya menyusun jadual harian sendiri pada hujung minggu di asrama.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Mengisi masa lapang dengan teratur menunjukkan kemandirian." },
+    { s: "Saya mengambil inisiatif mengemas kini papan kenyataan kelas tanpa disuruh.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Bertindak atas kehendak sendiri menunjukkan inisiatif." },
+    { s: "Saya menyediakan kelengkapan sekolah bagi minggu hadapan pada setiap hujung minggu.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Persediaan awal menunjukkan kemandirian." },
+    { s: "Saya pernah tersilap menuduh seseorang.", trait: "Skala Kejujuran", pos: [0, 1], hurai: "Mengakui kesilapan lalu menunjukkan kejujuran." },
+    { s: "Saya mengembalikan pen yang saya pinjam daripada guru selepas kelas.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Memulangkan barang pinjaman menunjukkan amanah." },
+    { id: 'sb1', pasangan: 'sb2', s: "Saya berusaha mencari jawapan sendiri sebelum bertanya kepada guru.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Usaha sendiri menguatkan pembelajaran." },
+    { id: 'mb1', pasangan: 'mb2', s: "Saya menjaga kebersihan pakaian sukan saya sendiri.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Mengurus pakaian sendiri menunjukkan kemandirian." },
+    { s: "Saya mencatat fakta menarik yang saya pelajari setiap minggu.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Mencatat fakta menunjukkan minat ilmu." },
+    { s: "Saya boleh menerima apabila kawan rapat berpindah ke kelas lain.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Menerima perubahan menunjukkan kestabilan emosi." },
+    { s: "Saya suka menonton video eksperimen sains di internet.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Minat terhadap eksperimen menunjukkan minat sains." },
+    { s: "Saya mudah berputus asa apabila latihan sukan terlalu berat.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [2, 3], hurai: "Mudah berputus asa menunjukkan ketahanan diri yang rendah." },
+    { s: "Saya cepat berasa jemu apabila perlu berfikir lama untuk satu soalan.", trait: "Minat Ilmu, Sains & Motivasi", pos: [2, 3], hurai: "Daya tahan berfikir penting untuk soalan aras tinggi." },
+    { id: 'ma1', pasangan: 'ma2', s: "Saya bersedia untuk tinggal di asrama yang jauh dari rumah.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Kesediaan tinggal jauh penting untuk pelajar MRSM." },
+    { s: "Saya pernah menyampuk ketika orang lain sedang bercakap.", trait: "Skala Kejujuran", pos: [0, 1], hurai: "Mengakui kelemahan kecil menunjukkan kejujuran." },
+    { s: "Saya mengajak rakan baharu menyertai kelab saya.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Mengajak rakan baharu menunjukkan sikap mesra." },
+    { s: "Saya rasa sangat kekok jika terpaksa membasuh pakaian sendiri.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [2, 3], hurai: "Pelajar asrama perlu mampu mengurus pakaian sendiri." },
+    { s: "Saya bersikap angkuh terhadap rakan yang lemah dalam pelajaran.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [2, 3], hurai: "Keangkuhan menjauhkan rakan." },
+    { s: "Saya mengisi borang kehadiran dengan maklumat yang betul.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Maklumat yang benar ialah asas integriti." },
+    { s: "Saya mencuci pinggan dan cawan sendiri selepas digunakan.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Menjaga kebersihan barang sendiri penting di asrama." },
+    { s: "Saya berasa rendah diri apabila berada dalam kumpulan pelajar yang lebih pandai.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [2, 3], hurai: "Rasa rendah diri berlebihan menghalang penglibatan." },
+    { s: "Saya menilai semula cara saya memimpin selepas sesuatu aktiviti tamat.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Refleksi membantu pemimpin menjadi lebih baik." },
+    { s: "Saya membalas dendam apabila rakan menyakitkan hati saya.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [2, 3], hurai: "Membalas dendam memanjangkan konflik." },
+    { s: "Saya tidak pernah bercakap kasar walaupun sedang marah.", trait: "Skala Kejujuran", pos: [2, 3], hurai: "Hampir setiap orang pernah terlepas cakap; jawapan jujur lebih dipercayai." },
+    { s: "Saya menghormati privasi rakan sebilik dengan tidak membaca diari atau mesejnya.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Menghormati privasi orang lain ialah tanda integriti." },
+    { s: "Saya mematuhi waktu keluar dan masuk asrama pada hari lawatan.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Mematuhi waktu asrama menunjukkan disiplin." },
+    { s: "Saya berminat memahami cara vaksin dan ubat dihasilkan.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Minat terhadap sains perubatan menunjukkan sifat ingin tahu." },
+    { s: "Saya mengucapkan selamat maju jaya kepada rakan yang akan menghadapi pertandingan.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Sokongan moral menguatkan persahabatan." },
+    { s: "Saya menunggu ketua memberi arahan walaupun saya tahu apa yang perlu dilakukan.", trait: "Kepimpinan & Inisiatif", pos: [2, 3], hurai: "Pelajar berinisiatif bertindak apabila sudah tahu tugasnya." },
+    { s: "Saya boleh mengetuai latihan kawad atau persembahan dengan yakin.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Mengetuai latihan di hadapan orang ramai memerlukan keyakinan pemimpin." },
+    { s: "Saya menetapkan sasaran untuk menguasai satu kemahiran baharu setiap cuti.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Sasaran kemahiran menunjukkan motivasi." },
+    { s: "Saya tetap bersemangat walaupun usaha saya belum dipuji oleh sesiapa.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Motivasi dalaman menunjukkan ketahanan diri." },
+    { s: "Saya melepaskan rasa geram kepada adik-beradik apabila saya tertekan.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [2, 3], hurai: "Melepaskan tekanan kepada orang lain menunjukkan kawalan emosi yang lemah." },
+    { s: "Saya menangguhkan urusan peribadi sehingga menjadi masalah besar.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [2, 3], hurai: "Menguruskan perkara kecil lebih awal menunjukkan kemandirian." },
+    { s: "Saya menggunakan wang yuran kelab untuk keperluan peribadi dan berniat menggantinya kemudian.", trait: "Integriti & Disiplin Diri", pos: [2, 3], hurai: "Menggunakan wang amanah untuk diri sendiri melanggar integriti." },
+    { s: "Saya bercakap dengan nada yang baik walaupun sedang marah.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [0, 1], hurai: "Mengawal nada menjaga hubungan." },
+    { s: "Saya sentiasa bercakap benar walaupun kebenaran itu akan memalukan saya.", trait: "Skala Kejujuran", pos: [2, 3], hurai: "Hampir setiap orang pernah berselindung untuk mengelak malu; jawapan jujur lebih realistik." },
+    { id: 'ib1', pasangan: 'ib2', s: "Saya menyusun keutamaan kerja supaya tugasan penting disiapkan dahulu.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Menyusun keutamaan ialah tanda disiplin diri." },
+    { id: 'sa1', pasangan: 'sa2', s: "Saya berasa bersemangat apabila belajar perkara baharu dalam sains.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Semangat belajar sains sesuai dengan aliran MRSM." },
+    { s: "Saya memastikan ahli baharu kelab berasa dialu-alukan.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Pemimpin menjadikan setiap ahli rasa dihargai." },
+    { id: 'ea2', pasangan: 'ea1', s: "Saya berasa sangat cemas sebelum peperiksaan sehingga sukar makan dan tidur.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [2, 3], hurai: "Kebimbangan yang melampau menjejaskan prestasi." },
+    { s: "Saya mengurus sendiri pembaharuan kad perpustakaan atau kad pelajar.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Menguruskan urusan rasmi sendiri menunjukkan berdikari." },
+    { id: 'ka1', pasangan: 'ka2', s: "Saya suka memikul tanggungjawab memimpin dalam aktiviti sekolah.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Minat memimpin ialah sifat yang dicari dalam calon MRSM." },
+    { id: 'ia1', pasangan: 'ia2', s: "Saya menjawab dengan jujur apabila guru bertanya siapa yang membuat bising.", trait: "Integriti & Disiplin Diri", pos: [0, 1], hurai: "Jujur walaupun melibatkan diri sendiri menunjukkan integriti." },
+    { s: "Saya tidak pernah menyimpan sedikit pun rasa tidak puas hati terhadap sesiapa.", trait: "Skala Kejujuran", pos: [2, 3], hurai: "Rasa tidak puas hati sekali-sekala ialah perkara biasa; mengakuinya ialah jawapan jujur." },
+    { s: "Saya mampu menahan diri daripada membalas ejekan.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Kawalan diri menunjukkan kematangan emosi." },
+    { s: "Saya tidak pernah berasa bosan walaupun melakukan kerja yang sama berulang kali.", trait: "Skala Kejujuran", pos: [2, 3], hurai: "Rasa bosan ialah perkara biasa; mengakuinya menunjukkan kejujuran." },
+    { s: "Saya berasa yakin mengurus diri apabila ibu bapa berada di luar kawasan selama beberapa hari.", trait: "Kemandirian & Kesediaan Hidup Berasrama", pos: [0, 1], hurai: "Keyakinan berdikari penting bagi pelajar asrama." },
+    { s: "Saya sanggup menghadapi guru bagi pihak kumpulan apabila kami membuat kesilapan.", trait: "Kepimpinan & Inisiatif", pos: [0, 1], hurai: "Pemimpin berani bertanggungjawab bagi pihak pasukan." },
+    { s: "Saya mengulang kaji pelajaran walaupun tiada ujian dalam masa terdekat.", trait: "Minat Ilmu, Sains & Motivasi", pos: [0, 1], hurai: "Belajar berterusan menunjukkan motivasi dalaman." },
+    { s: "Saya berusaha menyelesaikan masalah dahulu sebelum mengeluh.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [0, 1], hurai: "Fokus kepada penyelesaian menunjukkan ketahanan diri." },
+    { id: 'ba2', pasangan: 'ba1', s: "Saya rasa perbincangan berkumpulan hanya membuang masa saya.", trait: "Kerja Berpasukan & Hubungan Sosial", pos: [2, 3], hurai: "Menolak kerja kumpulan sepenuhnya menyukarkan kehidupan akademik di MRSM." },
+    { id: 'eb2', pasangan: 'eb1', s: "Saya mengamuk dan menuduh rakan sebilik apabila barang saya hilang.", trait: "Kestabilan Emosi & Ketahanan Diri", pos: [2, 3], hurai: "Menuduh tanpa bukti ketika marah merosakkan hubungan." }
+  ]
+});
+
+UKKM.push({ set: 8, tajuk: 'Set 8', bahagian: ['mat', 'sains', 'eng', 'per'].map(k => B[k]).filter(Boolean) }); })();

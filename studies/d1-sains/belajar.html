@@ -298,7 +298,7 @@ UNIT({
       contoh: 'Daun dibuang ke tong sampah. Kanta pembesar disimpan kemas dalam laci.' },
   ],
   soalan: [
-    { j: 'pilih', s: 'Kita memerhati menggunakan ___.', ikon: '🔍', p: ['deria', 'buku', 'pensel'], a: 0, kenapa: 'Kita memerhati menggunakan deria.' },
+    { j: 'pilih', s: 'Kita memerhati menggunakan ___.', ikon: '🔍', p: ['deria', 'mata sahaja', 'telinga sahaja'], a: 0, kenapa: 'Kita memerhati menggunakan semua deria.' },
     { j: 'pilih', s: 'Jari menyentuh ketulan ais. Deria apakah digunakan?', ikon: '🧊', p: ['sentuhan', 'penglihatan', 'bau', 'rasa'], a: 0, kenapa: 'Menyentuh menggunakan deria sentuhan.' },
     { j: 'pilih', s: 'Budak menghidu bunga ros. Deria apakah digunakan?', ikon: '🌹', p: ['bau', 'rasa', 'pendengaran', 'sentuhan'], a: 0, kenapa: 'Menghidu menggunakan deria bau.' },
     { j: 'pilih', s: 'Budak menjilat aiskrim. Deria apakah digunakan?', ikon: '🍦', p: ['rasa', 'bau', 'sentuhan', 'penglihatan'], a: 0, kenapa: 'Lidah merasa aiskrim. Itu deria rasa.' },
@@ -312,7 +312,7 @@ UNIT({
     { j: 'bs', s: 'Spesimen ialah bahan atau objek yang hendak dikaji.', ikon: '🌿', a: true, kenapa: 'Contohnya pokok dalam pasu.' },
     { j: 'bs', s: 'Selepas digunakan, kanta pembesar dibiarkan bersepah di atas meja.', ikon: '🔍', a: false, kenapa: 'Alatan mesti dibersihkan dan disimpan kemas dalam laci.' },
     { j: 'padan', s: 'Padankan perbuatan dengan deria.', pasangan: [['🧊 sentuh ais', 'sentuhan'], ['🌹 hidu bunga', 'bau'], ['🍦 jilat aiskrim', 'rasa'], ['⏰ dengar jam', 'pendengaran'], ['🍃 lihat daun', 'penglihatan']] },
-    { j: 'kumpul', s: 'Kemahiran proses sains atau kemahiran manipulatif?', kumpulan: [['🔎 Proses sains', ['memerhati', 'berkomunikasi']], ['🧰 Manipulatif', ['membuat lakaran', 'membersihkan alatan', 'menyimpan alatan']]] },
+    { j: 'kumpul', s: 'Kemahiran proses sains atau kemahiran manipulatif?', kumpulan: [['🔎 Proses sains', ['memerhati', 'berkomunikasi']], ['🧰 Manipulatif', ['mengendalikan spesimen', 'membersihkan alatan', 'menyimpan alatan']]] },
     { j: 'susun', s: 'Susun langkah "Cantiknya Bawang".', item: ['Potong bawang kepada dua', 'Perhati dengan kanta pembesar', 'Lakarkan corak bawang', 'Bersihkan dan simpan alatan'] },
     { j: 'susun', s: 'Susun langkah "Memerhati Alat Muzik".', item: ['Rakan menutup mata', 'Mainkan satu alat muzik', 'Rakan buka mata dan memilih', 'Rekodkan dalam jadual'] },
     { j: 'eja', s: 'Eja cara berkomunikasi dengan bercakap.', ikon: '🗣️', kata: 'lisan' },
@@ -320,7 +320,7 @@ UNIT({
   ],
   amali: [{
     id: 'teka-bunyi', tajuk: 'Teka Bunyi Alat Muzik', ikon: '🎵',
-    arahan: 'Mata ditutup. Dengar bunyi, kemudian pilih alat muzik yang dimainkan.',
+    arahan: 'Tutup mata. Dengar bunyi. Pilih alat muzik.',
     mula(el, api) {
       css();
       const K = api.shuffle(Object.keys(ALAT));
@@ -384,7 +384,7 @@ UNIT({
     },
   }, {
     id: 'kemas-alatan', tajuk: 'Kemaskan Alatan', ikon: '🧽',
-    arahan: 'Aktiviti sudah selesai. Tekan satu benda, kemudian tekan tempatnya.',
+    arahan: 'Tekan satu benda. Kemudian tekan tempatnya.',
     mula(el, api) {
       css(); el.style.position = 'relative';
       const T = [['🗑️', 'Tong sampah'], ['🚰', 'Singki (basuh)'], ['🗄️', 'Laci (simpan)']];
@@ -463,7 +463,7 @@ UNIT({
     { j: 'pilih', s: 'Sampah dibuang ke dalam singki. Apakah yang berlaku?', ikon: '🚰', p: ['Singki tersumbat', 'Singki lebih bersih', 'Air mengalir laju'], a: 0, kenapa: 'Singki tersumbat jika sampah dibuang ke dalamnya.' },
     { j: 'pilih', s: 'Kita mematuhi peraturan. Bilik Sains menjadi ___.', ikon: '😊', p: ['bersih dan kemas', 'kotor dan bahaya'], a: 0, kenapa: 'Mematuhi peraturan menjadikan Bilik Sains lebih bersih dan kemas.' },
     { j: 'pilih', s: 'Bermain di dalam Bilik Sains boleh ___ kamu.', ikon: '🤕', p: ['mencederakan', 'menyihatkan', 'memandaikan'], a: 0, kenapa: 'Bermain di dalam Bilik Sains boleh mencederakan kamu.' },
-    { j: 'pilih', s: 'Siapakah guru Sains dalam buku ini?', ikon: '🧑‍🏫', p: ['Cikgu Yusof', 'Cikgu Nora', 'Cikgu Ali'], a: 0, kenapa: 'Cikgu Yusof bersama Alia dan Hafiz di Bilik Sains.' },
+    { j: 'pilih', s: 'Di Bilik Sains, Hafiz memerhati bahan yang ___.', ikon: '🧑‍🏫', p: ['terapung dan tenggelam', 'panas dan sejuk', 'manis dan masam'], a: 0, kenapa: 'Gabus terapung. Syiling dan guli tenggelam.' },
     { j: 'pilih', s: 'Mengapakah kita mematuhi Peraturan Bilik Sains?', ikon: '🛡️', p: ['Mengelakkan kecederaan', 'Boleh bermain', 'Cepat balik'], a: 0, kenapa: 'Mematuhi peraturan dapat mengelakkan kecederaan.' },
     { j: 'pilih', s: 'Dadu Peraturan: peraturan tidak dipatuhi dapat berapa mata?', ikon: '🎲', p: ['0', '1', '2', '3'], a: 0, kenapa: 'Peraturan yang tidak dipatuhi dapat 0 mata.' },
     { j: 'bs', s: 'Kita boleh makan dan minum di dalam Bilik Sains.', ikon: '🍔', a: false, kenapa: 'Dilarang makan dan minum di dalam Bilik Sains.' },
@@ -473,12 +473,12 @@ UNIT({
     { j: 'kumpul', s: 'Patuh atau tidak patuh?', kumpulan: [['👍 Patuh', ['beratur', 'minta kebenaran guru', 'kemaskan bilik']], ['👎 Tidak patuh', ['berlari', 'makan', 'bergurau']]] },
     { j: 'susun', s: 'Susun ikut masa.', item: ['Beratur di luar', 'Minta kebenaran guru', 'Masuk dan belajar', 'Bersihkan dan kemaskan', 'Keluar dari Bilik Sains'] },
     { j: 'padan', s: 'Padankan perbuatan dengan akibatnya.', pasangan: [['Sampah dalam singki', 'singki tersumbat'], ['Bermain dan berlari', 'boleh tercedera'], ['Patuh peraturan', 'bilik bersih dan kemas']] },
-    { j: 'eja', s: 'Kita berbaris sebelum masuk. Eja perkataan lain untuk berbaris.', ikon: '🚶', kata: 'beratur' },
+    { j: 'eja', s: 'Perbuatan ini dilarang di Bilik Sains. Eja.', ikon: '🍔', kata: 'makan' },
     { j: 'ayat', s: 'Bina ayat peraturan.', kata: ['Dilarang', 'berlari', 'di', 'Bilik', 'Sains.'] },
   ],
   amali: [{
     id: 'dadu-peraturan', tajuk: 'Dadu Peraturan', ikon: '🎲',
-    arahan: 'Gulingkan dadu. Adakah peraturan itu dipatuhi? Peraturan dipatuhi dapat 1, 2 atau 3 mata. Tidak dipatuhi dapat 0.',
+    arahan: 'Guling dadu. Peraturan dipatuhi atau tidak?',
     mula(el, api) {
       css();
       const M = [['🚶‍♀️🚶', 'Beratur sebelum masuk', 1], ['🙋', 'Minta kebenaran guru sebelum masuk', 1], ['🧹', 'Kemaskan Bilik Sains sebelum keluar', 1],
@@ -529,7 +529,7 @@ UNIT({
       const X = H0.map(h => ({ h }));
       const salah = X.filter(x => x.h[2]).length; let jumpa = 0, miss = 0;
       const prog = () => pg.textContent = `Jumpa: ${jumpa} / ${salah}`;
-      X.forEach(x => { const [e, t, w, l, tp] = x.h; const b = api.H(`<button class="s2-h" style="left:${l}%;top:${tp}%" aria-label="gambar">${e}</button>`); sc.appendChild(b); x.b = b;
+      X.forEach(x => { const [e, t, w, l, tp] = x.h; const b = api.H(`<button class="s2-h" style="left:${l}%;top:${tp}%" aria-label="${t}">${e}</button>`); sc.appendChild(b); x.b = b;
         b.onclick = () => { if (b.disabled) return;
           if (w) { b.disabled = true; b.classList.add('ok'); b.insertAdjacentHTML('beforeend', `<small>${t}</small>`); jumpa++; prog();
             api.anim(b, [{ transform: 'translate(-50%,-50%) scale(1.3)' }, { transform: 'translate(-50%,-50%) scale(1)' }], { duration: 350 });
@@ -605,7 +605,7 @@ UNIT({
     { j: 'pilih', s: 'Burung dan kapal terbang sama-sama boleh ___.', ikon: '☁️', p: ['bergerak', 'bernafas', 'membiak'], a: 0, kenapa: 'Kapal terbang boleh bergerak tetapi tidak bernafas atau membiak.' },
     { j: 'pilih', s: 'Haiwan manakah paling besar?', ikon: '📏', p: ['gajah', 'rusa', 'tikus', 'seladang'], a: 0, kenapa: 'Dari kecil ke besar: tikus, kucing hutan, rusa, seladang, gajah.' },
     { j: 'pilih', s: 'Manusia memerlukan air untuk ___.', ikon: '💧', p: ['menghilangkan dahaga', 'membuat makanan', 'membiak'], a: 0, kenapa: 'Manusia dan haiwan minum air untuk menghilangkan dahaga.' },
-    { j: 'pilih', s: '"Saya melindungi manusia dan haiwan daripada bahaya dan cuaca buruk." Siapakah saya?', ikon: '🤔', p: ['tempat perlindungan', 'makanan dan air', 'udara segar'], a: 0, kenapa: 'Rumah, gua, reban dan sarang ialah tempat perlindungan.' },
+    { j: 'pilih', s: '"Saya melindungi kamu daripada bahaya dan cuaca buruk." Siapa saya?', ikon: '🤔', p: ['tempat perlindungan', 'makanan dan air', 'udara segar'], a: 0, kenapa: 'Rumah, gua, reban dan sarang ialah tempat perlindungan.' },
     { j: 'pilih', s: 'Penyelam berkata, "Lemasnya saya." Apakah yang dia perlukan?', ikon: '🤿', p: ['udara', 'makanan', 'tempat perlindungan'], a: 0, kenapa: 'Udara diperlukan untuk bernafas.' },
     { j: 'bs', s: 'Belon boleh membiak.', ikon: '🎈', a: false, kenapa: 'Belon tidak membiak. Belon ialah benda bukan hidup.' },
     { j: 'bs', s: 'Tumbuhan memerlukan udara untuk bernafas dan membuat makanan.', ikon: '🌱', a: true, kenapa: 'Tumbuhan memerlukan udara untuk bernafas dan membuat makanan.' },
@@ -620,7 +620,7 @@ UNIT({
   ],
   amali: [{
     id: 'tangkap-bakul', tajuk: 'Tangkap ke Bakul', ikon: '🧺',
-    arahan: 'Benda jatuh dari langit! Tekan bakul yang betul: benda hidup atau benda bukan hidup?',
+    arahan: 'Benda jatuh! Tekan bakul yang betul.',
     mula(el, api) {
       css();
       const HD = [['🐦', 'burung'], ['🦆', 'itik'], ['🐸', 'katak'], ['🐱', 'kucing'], ['🌳', 'pokok'], ['🪷', 'teratai'], ['🧒', 'manusia'], ['🐇', 'arnab']];
@@ -649,7 +649,7 @@ UNIT({
     },
   }, {
     id: 'kacang-bercambah', tajuk: 'Biji Benih Bercambah', ikon: '🌱',
-    arahan: 'Ikut langkah Mari Uji. Bekas A dan B ada tisu. Mari lihat kacang hijau selepas 3 hari!',
+    arahan: 'Bekas A dan B ada tisu. Jom tanam kacang hijau!',
     mula(el, api) {
       css();
       el.innerHTML = `<div class="s3-bekas"><div class="s3-bk" id="A"><b>A</b><div class="tisu"></div></div><div class="s3-bk" id="B"><b>B</b><div class="tisu"></div></div></div>
@@ -689,7 +689,7 @@ UNIT({
       function L5() {
         ct.innerHTML = ''; api.say('Kacang hijau dalam bekas A bercambah dan <b>membesar</b>. Apakah keperluan asas yang diberi kepada bekas A?');
         api.shuffle([['💧 air', 1], ['🍬 gula', 0], ['🧂 garam', 0]]).forEach(([t, k]) => btn(t, b => {
-          if (k) { api.betul(b); setTimeout(() => api.selesai(Math.max(0, 1 - miss * .2), 'Kacang hijau ialah benda hidup. Ia membesar dan memerlukan air.'), 500); }
+          if (k) { ct.querySelectorAll('button').forEach(x => x.disabled = true); api.betul(b); setTimeout(() => api.selesai(Math.max(0, 1 - miss * .2), 'Kacang hijau ialah benda hidup. Ia membesar dan memerlukan air.'), 500); }
           else { miss++; b.disabled = true; api.salah(b, 'Apakah yang kita titiskan ke dalam bekas A?'); } }));
       }
       L1();
@@ -828,12 +828,12 @@ UNIT({
     { j: 'kumpul', s: 'Kelaskan objek ikut bau.', kumpulan: [['🤢 Busuk', ['belacan', 'sampah']], ['🌸 Wangi', ['minyak wangi', 'bunga ros']]] },
     { j: 'kumpul', s: 'Kelaskan buah ikut rasa.', kumpulan: [['🍬 Manis', ['ciku', 'epal']], ['🍋 Masam', ['oren', 'kedondong']]] },
     { j: 'susun', s: 'Susun langkah "Kenali Objek".', item: ['Tutup mata dengan penutup mata', 'Ambil objek dari kotak', 'Buat pemerhatian', 'Teka dan nyatakan objek'] },
-    { j: 'eja', s: 'Eja nama bahagian tubuh ini.', ikon: '👂', kata: 'telinga' },
+    { j: 'eja', s: 'Eja nama bahagian tubuh ini.', ikon: '👅', kata: 'lidah' },
     { j: 'ayat', s: 'Bina ayat.', kata: ['Saya', 'melihat', 'menggunakan', 'mata.'] },
   ],
   amali: [{
     id: 'lembut-keras', tajuk: 'Lembut atau Keras?', ikon: '🧽',
-    arahan: 'Tekan objek untuk menyentuhnya. Kemudian pilih: lembut atau keras?',
+    arahan: 'Tekan objek. Lembut atau keras?',
     mula(el, api) {
       css(); el.style.position = 'relative';
       const X = api.shuffle([[SV.tanahliat, 'tanah liat', 0], ['🧽', 'span', 0], ['🧁', 'kek cawan', 0], ['🔔', 'loceng', 1], [SV.wisel, 'wisel', 1], [SV.guli, 'guli', 1]]);
@@ -841,7 +841,7 @@ UNIT({
         <div class="s4-bakul"><button class="opt" data-k="0"><b>🤲 Lembut</b><span class="isi"></span></button><button class="opt" data-k="1"><b>🪨 Keras</b><span class="isi"></span></button></div><p class="hint" id="pg"></p>`;
       const ob = el.querySelector('#ob'), nm = el.querySelector('#nm'), pg = el.querySelector('#pg'), ps = el.querySelector('.s4-pentas'), bk = [...el.querySelectorAll('.s4-bakul .opt')];
       let r = 0, miss = 0, disentuh = false, siap = false;
-      function lukis() { const x = X[r]; ob.innerHTML = gb(x[0], 80); nm.textContent = x[1]; disentuh = false; siap = true; pg.textContent = `Objek ${r + 1} / ${X.length}`;
+      function lukis() { const x = X[r]; ob.setAttribute('aria-label', x[1]); ob.innerHTML = gb(x[0], 80); nm.textContent = x[1]; disentuh = false; siap = true; pg.textContent = `Objek ${r + 1} / ${X.length}`;
         api.anim(ob, [{ transform: 'translateY(-40px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 350 }); api.say(`Tekan <b>${x[1]}</b> untuk menyentuhnya. ✋`); }
       ob.onclick = () => {
         if (!siap) return; const x = X[r]; disentuh = true;
@@ -865,24 +865,28 @@ UNIT({
     },
   }, {
     id: 'gelap-gelita', tajuk: 'Gelap Gelita!', ikon: '🔦',
-    arahan: 'Bekalan elektrik terputus! Mata tidak nampak. Raba (tekan) kotak-kotak gelap untuk mencari lampu suluh.',
+    arahan: 'Elektrik terputus! Raba untuk cari lampu suluh.',
     mula(el, api) {
       css();
-      const X = api.shuffle([['🔦', 'lampu suluh', 1], ['🧸', 'anak patung', 0], ['📚', 'buku', 0], ['🥄', 'sudu', 0], ['⚽', 'bola', 0], ['👟', 'kasut', 0]]);
-      el.innerHTML = `<div class="s4-bilik"><div class="s4-sinar"></div></div><p class="hint" id="pg">Tekan untuk meraba.</p>`;
-      const bl = el.querySelector('.s4-bilik'), sn = el.querySelector('.s4-sinar'), pg = el.querySelector('#pg');
-      let raba = 0, siap = true;
-      const cs = X.map(x => { const c = api.H(`<button class="s4-sel"><span class="e">${x[0]}</span><span class="t">?</span></button>`); bl.appendChild(c);
-        c.onclick = () => { if (!siap || c.classList.contains('raba')) return; raba++; c.classList.add('raba'); c.querySelector('.t').textContent = x[1];
-          api.anim(c, [{ transform: 'scale(.94)' }, { transform: 'none' }], { duration: 250 });
-          if (x[2]) { siap = false; const r0 = bl.getBoundingClientRect(), r1 = c.getBoundingClientRect();
-            sn.style.setProperty('--x', ((r1.left + r1.width / 2 - r0.left) / r0.width * 100) + '%'); sn.style.setProperty('--y', ((r1.top + r1.height / 2 - r0.top) / r0.height * 100) + '%');
-            api.anim(sn, [{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 1100, fill: 'none' }); setTimeout(() => bl.classList.add('cerah'), 600);
-            api.betul(c, 'Jumpa! Kamu menggunakan <b>deria sentuhan</b> untuk mencari lampu suluh. Klik! Terang!');
-            setTimeout(() => api.selesai(Math.max(.4, 1 - Math.max(0, raba - 3) * .15), 'Apabila mata tidak dapat melihat, kita masih boleh menggunakan deria yang lain.'), 1400); }
-          else api.say(`Kamu meraba… <b>${x[1]}</b>. Bukan lampu suluh. Cuba lagi!`); };
+      const X = api.shuffle([['🔦', 'lampu suluh', 1, 'panjang, keras, ada butang'], ['🧸', 'anak patung', 0, 'lembut dan berbulu'], ['📚', 'buku', 0, 'nipis, banyak helaian'],
+        ['🥄', 'sudu', 0, 'kecil, licin, berlekuk'], ['⚽', 'bola', 0, 'bulat dan melantun'], ['👟', 'kasut', 0, 'ada tali dan tapak']]);
+      el.innerHTML = `<div class="s4-bilik"><div class="s4-sinar"></div></div><div class="row" style="justify-content:center;margin-top:10px"><button class="btn go" id="am" disabled>🔦 Ini lampu suluh!</button></div><p class="hint" id="pg">Tekan kotak untuk meraba. Rasa dengan tangan!</p>`;
+      const bl = el.querySelector('.s4-bilik'), sn = el.querySelector('.s4-sinar'), am = el.querySelector('#am');
+      let miss = 0, siap = true, sel = null;
+      const cs = X.map(x => { const c = api.H(`<button class="s4-sel" aria-label="kotak gelap"><span class="e">${x[0]}</span><span class="t">?</span></button>`); c.x = x; bl.appendChild(c);
+        c.onclick = () => { if (!siap || c.disabled) return; cs.forEach(y => y.style.outline = ''); c.style.outline = '3px solid #fab005'; sel = c; am.disabled = false;
+          c.querySelector('.t').textContent = '✋ ' + x[3]; api.anim(c, [{ transform: 'scale(.94)' }, { transform: 'none' }], { duration: 250 });
+          api.say(`Kamu meraba sesuatu yang <b>${x[3]}</b>. Adakah ini lampu suluh?`); };
         return c; });
-      return { async jawab() { cs[X.findIndex(x => x[2])].click(); } };
+      am.onclick = () => { if (!siap || !sel) return; const c = sel, x = c.x;
+        if (x[2]) { siap = false; am.disabled = true; c.classList.add('raba'); c.querySelector('.t').textContent = x[1]; const r0 = bl.getBoundingClientRect(), r1 = c.getBoundingClientRect();
+          sn.style.setProperty('--x', ((r1.left + r1.width / 2 - r0.left) / r0.width * 100) + '%'); sn.style.setProperty('--y', ((r1.top + r1.height / 2 - r0.top) / r0.height * 100) + '%');
+          api.anim(sn, [{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 1100, fill: 'none' }); setTimeout(() => bl.classList.add('cerah'), 600);
+          api.betul(c, 'Jumpa! Kamu menggunakan <b>deria sentuhan</b> untuk mencari lampu suluh. Klik! Terang!');
+          setTimeout(() => api.selesai(Math.max(0, 1 - miss * .2), 'Apabila mata tidak dapat melihat, kita masih boleh menggunakan deria yang lain.'), 1400); }
+        else { miss++; c.disabled = true; c.classList.add('raba'); c.querySelector('.t').textContent = x[1]; c.style.outline = ''; sel = null; am.disabled = true;
+          api.salah(c, `Itu <b>${x[1]}</b>. Lampu suluh panjang dan ada butang. Raba lagi!`); } };
+      return { async jawab() { cs[X.findIndex(x => x[2])].click(); await tunggu(60); am.click(); } };
     },
   }, {
     id: 'gerai-buah', tajuk: 'Gerai Buah Hafiz dan Alia', ikon: '🍊',
@@ -969,15 +973,15 @@ UNIT({
   ],
   soalan: [
     { j: 'pilih', s: 'Bahagian keras yang melindungi siput dipanggil ___.', ikon: '🐌', p: ['cangkerang', 'sisik', 'bulu pelepah'], a: 0, kenapa: 'Siput dan kura-kura mempunyai cangkerang.' },
-    { j: 'pilih', s: 'Ikan berenang menggunakan ___.', ikon: '🐟', p: ['sirip', 'kepak', 'tanduk'], a: 0, kenapa: 'Sirip membantu ikan berenang.' },
-    { j: 'pilih', s: 'Ekor ikan membantu ___.', ikon: '🐠', p: ['memandu arah', 'terbang', 'bernafas'], a: 0, kenapa: 'Ekor untuk memandu arah.' },
-    { j: 'pilih', s: 'Kepak membantu burung ___.', ikon: '🐦', p: ['terbang', 'berenang', 'menggali'], a: 0, kenapa: 'Kepak membantu haiwan terbang.' },
-    { j: 'pilih', s: 'Kulit keras buaya untuk ___.', ikon: '🐊', p: ['mempertahankan diri', 'terbang', 'berenang laju'], a: 0, kenapa: 'Kulit keras untuk mempertahankan diri.' },
+    { j: 'pilih', s: 'Ikan berenang menggunakan ___.', ikon: '🐟', p: ['sirip', 'sisik'], a: 0, kenapa: 'Sirip membantu ikan berenang.' },
+    { j: 'pilih', s: 'Ekor ikan membantu ___.', ikon: '🐠', p: ['memandu arah', 'mempertahankan diri'], a: 0, kenapa: 'Ekor untuk memandu arah.' },
+    { j: 'pilih', s: 'Kepak membantu burung ___.', ikon: '🐦', p: ['terbang', 'memandu arah', 'mempertahankan diri'], a: 0, kenapa: 'Kepak membantu haiwan terbang.' },
+    { j: 'pilih', s: 'Kulit keras buaya untuk ___.', ikon: '🐊', p: ['mempertahankan diri', 'memandu arah', 'berenang laju'], a: 0, kenapa: 'Kulit keras untuk mempertahankan diri.' },
     { j: 'pilih', s: 'Itik dan katak mempunyai ___.', ikon: '🦆', p: ['kaki selaput renang', 'bulu pelepah', 'sesungut'], a: 0, kenapa: 'Kaki selaput renang membantu itik dan katak berenang.' },
     { j: 'pilih', s: 'Lembu, kucing, hamster dan arnab sama-sama ___.', ikon: '🐾', p: ['berbulu halus', 'bersisik', 'berkepak'], a: 0, kenapa: 'Hafiz mendapati haiwan ini berbulu halus.' },
     { j: 'pilih', s: 'Bulu burung dipanggil ___.', ikon: '🐦', p: ['bulu pelepah', 'bulu halus', 'sisik'], a: 0, kenapa: 'Burung mempunyai bulu pelepah.' },
-    { j: 'pilih', s: 'Lebah menggunakan sayap untuk ___.', ikon: '🐝', p: ['terbang', 'berenang', 'menggigit'], a: 0, kenapa: 'Lebah — sayap untuk terbang.' },
-    { j: 'pilih', s: 'Kambing menggunakan tanduk untuk ___.', ikon: '🐐', p: ['melindungi diri', 'berenang laju', 'terbang tinggi'], a: 0, kenapa: 'Tanduk untuk melindungi diri daripada bahaya.' },
+    { j: 'pilih', s: 'Lebah menggunakan sayap untuk ___.', ikon: '🐝', p: ['terbang', 'memandu arah', 'mempertahankan diri'], a: 0, kenapa: 'Lebah — sayap untuk terbang.' },
+    { j: 'pilih', s: 'Kambing menggunakan tanduk untuk ___.', ikon: '🐐', p: ['melindungi diri', 'memandu arah', 'berjalan laju'], a: 0, kenapa: 'Tanduk untuk melindungi diri daripada bahaya.' },
     { j: 'bs', s: 'Kepak juga dikenali sebagai sayap.', ikon: '🦋', a: true, kenapa: 'Kepak juga dikenali sebagai sayap.' },
     { j: 'bs', s: 'Ikan mempunyai bulu pelepah.', ikon: '🐟', a: false, kenapa: 'Ikan mempunyai sirip dan sisik. Burung mempunyai bulu pelepah.' },
     { j: 'bs', s: 'Haiwan yang berlainan boleh mempunyai bahagian tubuh yang serupa.', ikon: '🐄', a: true, kenapa: 'Contohnya lembu dan kucing sama-sama berbulu halus.' },
@@ -993,17 +997,18 @@ UNIT({
     arahan: 'Setiap haiwan ada misi. Pilih bahagian tubuh yang membantunya.',
     mula(el, api) {
       css();
-      const FN = { sirip: 'r', 'kaki selaput renang': 'r', kepak: 't', 'kulit keras': 'p', tanduk: 'p', sumbu: 'p', cangkerang: 'p', paruh: 'x' };
-      const M = api.shuffle([['🐟', 'Ikan mahu berenang di sungai.', 'sirip', 'renang'], ['🐦', 'Burung mahu terbang ke sarang.', 'kepak', 'terbang'],
-        ['🦆', 'Itik mahu berenang di kolam.', 'kaki selaput renang', 'renang'], ['🐊', 'Buaya mahu mempertahankan diri.', 'kulit keras', 'perisai'],
-        ['🦏', 'Badak sumbu mahu mempertahankan diri.', 'sumbu', 'rempuh'], ['🐌', 'Siput mahu melindungi diri.', 'cangkerang', 'perisai'], ['🦋', 'Rama-rama mahu terbang ke bunga.', 'kepak', 'terbang']]).slice(0, 6);
+      // pengganggu = bahagian tubuh haiwan yang sama (dari buku), bukan bahagian yang mustahil
+      const M = api.shuffle([['🐟', 'Ikan mahu berenang di sungai.', 'sirip', 'renang', ['sisik', 'ekor']], ['🐦', 'Burung mahu terbang ke sarang.', 'kepak', 'terbang', ['paruh', 'ekor']],
+        ['🦆', 'Itik mahu berenang di kolam.', 'kaki selaput renang', 'renang', ['paruh', 'kepala']], ['🐊', 'Buaya mahu mempertahankan diri.', 'kulit keras', 'perisai', ['ekor', 'kaki selaput renang']],
+        ['🦏', 'Badak sumbu mahu mempertahankan diri.', 'sumbu', 'rempuh', ['ekor', 'kepala']], ['🐌', 'Siput mahu melindungi diri.', 'cangkerang', 'perisai', ['kepala', 'badan']],
+        ['🦋', 'Rama-rama mahu terbang ke bunga.', 'kepak', 'terbang', ['sesungut', 'badan']]]).slice(0, 6);
       el.innerHTML = `<div class="s5-alam"><span class="s5-hw"></span></div><p class="s5-misi"></p><div class="opts" id="op"></div><p class="hint" id="pg"></p>`;
       const al = el.querySelector('.s5-alam'), hw = el.querySelector('.s5-hw'), ms = el.querySelector('.s5-misi'), op = el.querySelector('#op'), pg = el.querySelector('#pg');
       let r = 0, miss = 0, siap = false, bs = [];
       function lukis() {
         const m = M[r]; al.classList.toggle('darat', m[3] !== 'renang'); hw.textContent = m[0]; hw.style.transform = 'translate(-50%,-50%)';
         ms.textContent = m[1]; pg.textContent = `Misi ${r + 1} / ${M.length}`;
-        const lain = api.shuffle(Object.keys(FN).filter(p => FN[p] !== FN[m[2]])).slice(0, 3);
+        const lain = m[4];
         op.innerHTML = ''; bs = api.shuffle([m[2], ...lain]).map(p => { const b = api.H(`<button class="opt" style="text-align:center">${p}</button>`); b.dataset.p = p; op.appendChild(b); b.onclick = () => pilih(b); return b; });
         api.anim(hw, [{ transform: 'translate(-50%,-50%) scale(0)' }, { transform: 'translate(-50%,-50%) scale(1)' }], { duration: 400, easing: 'cubic-bezier(.3,1.5,.5,1)' });
         siap = true;
@@ -1052,6 +1057,7 @@ UNIT({
 
 (() => {
 const tunggu = t => new Promise(r => setTimeout(r, t));
+const a11y = (g, label) => { g.setAttribute('role', 'button'); g.setAttribute('tabindex', '0'); g.setAttribute('aria-label', label); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); g.dispatchEvent(new MouseEvent('click')); } }); };
 const W = 'style="width:min(270px,calc(100% - 58px))"', TX = 'style="fill:var(--ink)" font-size="13" font-weight="700" text-anchor="middle"';
 /* lukisan kecil (dipakai pada kad dan amali) */
 const daunJejala = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 -40 Q30 -10 0 40 Q-30 -10 0 -40Z" fill="#40c057" stroke="#2b8a3e" stroke-width="2"/>
@@ -1117,8 +1123,8 @@ UNIT({
     { j: 'pilih', s: 'Tanpa akar, pokok akan ___.', ikon: '🌬️', p: ['tumbang', 'berbunga', 'berbuah'], a: 0, kenapa: 'Akar memegang pokok dengan kuat pada tanah.' },
     { j: 'pilih', s: 'Bunga teluki putih direndam dalam air biru semalaman. Apakah yang berlaku?', ikon: '💐', p: ['Bunga bertukar warna', 'Bunga menjadi buah', 'Bunga jatuh ke tanah'], a: 0, kenapa: 'Air berwarna naik melalui batang ke bunga.' },
     { j: 'bs', s: 'Pokok betik mempunyai batang berkayu.', ikon: '🌴', a: false, kenapa: 'Pokok betik mempunyai batang tidak berkayu.' },
-    { j: 'bs', s: 'Daun pokok bunga raya dan daun pokok bunga ros berurat jejala.', ikon: '🌺', a: true, kenapa: 'Kedua-duanya berurat jejala.' },
-    { j: 'bs', s: 'Pokok bunga kekwa dan pokok jagung sama-sama mempunyai batang tidak berkayu.', ikon: '🌽', a: true, kenapa: 'Itulah persamaan antara kedua-dua pokok ini.' },
+    { j: 'bs', s: 'Daun bunga raya dan daun ros berurat jejala.', ikon: '🌺', a: true, kenapa: 'Kedua-duanya berurat jejala.' },
+    { j: 'bs', s: 'Pokok kekwa dan pokok jagung berbatang tidak berkayu.', ikon: '🌽', a: true, kenapa: 'Itulah persamaan antara kedua-dua pokok ini.' },
     { j: 'bs', s: 'Pokok pandan berakar tunjang.', ikon: '🌿', a: false, kenapa: 'Pokok pandan berakar serabut.' },
     { j: 'padan', s: 'Padankan bahagian dengan tugasnya.', pasangan: [['🌸 bunga', 'menjadi buah dan biji benih'], ['🍃 daun', 'membuat makanan'], ['🪵 batang', 'mengangkut air dan makanan'], ['🌱 akar', 'menyerap air dan nutrien']] },
     { j: 'kumpul', s: 'Ciri pokok bunga ros atau pokok pandan?', kumpulan: [['🌹 Pokok bunga ros', ['urat daun jejala', 'akar tunjang']], ['🌿 Pokok pandan', ['urat daun selari', 'akar serabut']]] },
@@ -1128,7 +1134,7 @@ UNIT({
   ],
   amali: [{
     id: 'pokok-ajaib', tajuk: 'Pokok Ajaib', ikon: '🌳',
-    arahan: 'Dengar soalan. Tekan bahagian pokok yang betul dan lihat apa yang berlaku!',
+    arahan: 'Dengar soalan. Tekan bahagian pokok yang betul.',
     mula(el, api) {
       css();
       const S = api.S;
@@ -1158,6 +1164,7 @@ UNIT({
           const bj = S('text', { x: 200, y: 50, 'font-size': 14, text: 'biji benih 🌰' }, fxg); setTimeout(() => { bj.remove(); bga.innerHTML = ori; }, 2000); }
       }
       function lukis() { const q = Q[r]; tn.textContent = q[0]; pg.textContent = `Soalan ${r + 1} / ${Q.length}`; siap = true; api.say(q[0]); }
+      sv.querySelectorAll('.b').forEach(g => a11y(g, 'bahagian pokok'));
       sv.querySelectorAll('.b').forEach(g => g.addEventListener('click', () => {
         if (!siap) return; const q = Q[r], b = g.dataset.b;
         if (b === q[1]) { siap = false; aksi(b, q[0]); api.betul(null, `Betul! <b>${b}</b>.`); r++;
@@ -1169,7 +1176,7 @@ UNIT({
     },
   }, {
     id: 'teluki-ajaib', tajuk: 'Bunga Teluki Bertukar Warna', ikon: '💐',
-    arahan: 'Rekreasi Sains: tukar warna bunga teluki putih! Ikut langkah satu demi satu.',
+    arahan: 'Tukar warna bunga teluki putih! Susun langkahnya.',
     mula(el, api) {
       css();
       const S = api.S;
@@ -1185,25 +1192,29 @@ UNIT({
       let warna = null, miss = 0;
       bunga.style.transform = 'translateY(-40px)';
       const btn = (t, f, cls = 'alt') => { const b = api.H(`<button class="btn ${cls}">${t}</button>`); b.onclick = () => f(b); ct.appendChild(b); return b; };
-      function L1() { ct.innerHTML = ''; api.say('Langkah 1: Pilih warna air.');
+      function L1() { ct.innerHTML = ''; api.say('Pilih warna air.');
         [['🔵 biru', 'biru'], ['🔴 merah', 'merah'], ['🟣 ungu', 'ungu']].forEach(([t, w]) => btn(t, () => { warna = w; air.setAttribute('fill', WR[w][0]); api.anim(air, [{ opacity: 0 }, { opacity: .9 }], { duration: 500 }); L2(); })); }
-      function L2() { ct.innerHTML = ''; api.say('Langkah 2: Potong batang pokok teluki secara <b>menyerong</b>. ✂️');
-        btn('✂️ Potong menyerong', () => { btg.setAttribute('y2', 196); const k = S('path', { d: 'M144 196 L156 204', stroke: '#e03131', 'stroke-width': 2 }, sv); setTimeout(() => k.remove(), 800); L3(); }); }
-      function L3() { ct.innerHTML = ''; api.say('Langkah 3: Rendamkan batang ke dalam air berwarna.');
-        btn('🥛 Rendam', () => { bunga.style.transition = 'transform .8s ease-in'; bunga.style.transform = 'translateY(0)'; setTimeout(L4, 900); }); }
-      function L4() { ct.innerHTML = ''; api.say('Langkah 4: Biarkan semalaman.');
-        btn('🌙 Semalaman ⏩', async b => { b.disabled = true; naik.setAttribute('stroke', WR[warna][0]); naik.setAttribute('opacity', 1);
+      // Langkah 2–4: murid memilih langkah seterusnya (susunan ikut buku p.60)
+      const LK = [['✂️ Potong batang menyerong', () => { btg.setAttribute('y2', 196); const k = S('path', { d: 'M144 196 L156 204', stroke: '#e03131', 'stroke-width': 2 }, sv); setTimeout(() => k.remove(), 800); return 500; }],
+        ['🥛 Rendam dalam air berwarna', () => { bunga.style.transition = 'transform .8s ease-in'; bunga.style.transform = 'translateY(0)'; return 900; }],
+        ['🌙 Biarkan semalaman', () => { (async () => { naik.setAttribute('stroke', WR[warna][0]); naik.setAttribute('opacity', 1);
           for (let i = 0; i <= 20; i++) { naik.setAttribute('y2', 200 - i * 7); await tunggu(60); }
-          kel.forEach(k => { k.style.transition = 'fill 1.2s'; k.setAttribute('fill', WR[warna][1]); });
-          await tunggu(1300); L5(); }, 'go'); }
+          kel.forEach(k => { k.style.transition = 'fill 1.2s'; k.setAttribute('fill', WR[warna][1]); }); })(); return 2700; }]];
+      let nx = 0, sibuk = false;
+      function L2() { ct.innerHTML = ''; api.say(nx ? 'Bagus! Apakah langkah seterusnya?' : 'Apakah langkah pertama selepas memilih warna air?');
+        api.shuffle(LK.map((l, i) => [l, i])).forEach(([l, i]) => btn(l[0], b => { if (sibuk) return;
+          if (i === nx) { sibuk = true; ct.querySelectorAll('button').forEach(x => x.disabled = true); const t = l[1](); nx++;
+            setTimeout(() => { sibuk = false; nx < LK.length ? L2() : L5(); }, t); }
+          else { miss++; b.disabled = true; api.salah(b, nx === 0 ? 'Batang perlu dipotong dahulu.' : nx === 1 ? 'Batang mesti berada dalam air dahulu.' : 'Cuba langkah yang lain.'); } })); }
       function L5() { ct.innerHTML = ''; api.say(`Wah! Bunga teluki menjadi ${warna}! Bahagian manakah yang mengangkut air berwarna ke bunga?`);
         api.shuffle([['batang', 1], ['bunga', 0], ['daun', 0]]).forEach(([t, k]) => btn(t, b => {
-          if (k) { api.betul(b); setTimeout(() => api.selesai(Math.max(0, 1 - miss * .25), 'Batang mengangkut air ke bahagian lain tumbuhan.'), 500); }
+          if (k) { ct.querySelectorAll('button').forEach(x => x.disabled = true); api.betul(b); setTimeout(() => api.selesai(Math.max(0, 1 - miss * .25), 'Batang mengangkut air ke bahagian lain tumbuhan.'), 500); }
           else { miss++; b.disabled = true; api.salah(b, 'Air naik melalui bahagian yang panjang dan hijau.'); } })); }
       L1();
       return { async jawab() {
-        ct.querySelector('button').click(); await tunggu(150); ct.querySelector('button').click(); await tunggu(150); ct.querySelector('button').click(); await tunggu(1050);
-        ct.querySelector('button').click(); await tunggu(3100); [...ct.querySelectorAll('button')].find(b => b.textContent === 'batang').click(); } };
+        ct.querySelector('button').click(); await tunggu(120);
+        for (let i = 0; i < LK.length; i++) { [...ct.querySelectorAll('button')].find(b => b.textContent === LK[i][0]).click(); while (sibuk) await tunggu(100); await tunggu(60); }
+        [...ct.querySelectorAll('button')].find(b => b.textContent === 'batang').click(); } };
     },
   }, {
     id: 'detektif-pokok', tajuk: 'Detektif Pokok', ikon: '🔍',
@@ -1262,6 +1273,7 @@ const svgTarikTolak = `<svg viewBox="0 0 300 120" ${W}>${bar(20, 10, 120, 26)}${
 const OBJ = {
   paku: '<svg viewBox="0 0 40 40" width="40" height="40"><rect x="8" y="4" width="24" height="6" rx="2" fill="#868e96"/><path d="M17 10 h6 v20 l-3 8 l-3 -8z" fill="#adb5bd" stroke="#495057"/></svg>',
   kayu: '<svg viewBox="0 0 40 40" width="40" height="40"><rect x="15" y="2" width="10" height="36" rx="5" fill="#e9c46a" stroke="#b08930"/></svg>',
+  bedak: '<svg viewBox="0 0 40 40" width="40" height="40"><path d="M4 34 Q20 6 36 34Z" fill="#f8f9fa" stroke="#adb5bd"/><circle cx="16" cy="26" r="2" fill="#dee2e6"/><circle cx="24" cy="22" r="2" fill="#dee2e6"/></svg>',
   butang: '<svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="15" fill="#a0642a"/><circle cx="15" cy="15" r="2.5" fill="#fff"/><circle cx="25" cy="15" r="2.5" fill="#fff"/><circle cx="15" cy="25" r="2.5" fill="#fff"/><circle cx="25" cy="25" r="2.5" fill="#fff"/></svg>',
 };
 function css() {
@@ -1322,7 +1334,7 @@ UNIT({
     { j: 'pilih', s: 'Magnet yang lebih kuat menarik ___ klip kertas.', ikon: '📎', p: ['lebih banyak', 'lebih sedikit'], a: 0, kenapa: 'Magnet yang lebih kuat dapat menarik lebih banyak klip kertas.' },
     { j: 'pilih', s: 'Bagaimanakah klip kertas diasingkan daripada bedak?', ikon: '🥣', p: ['Guna magnet', 'Tiup bedak', 'Basuh dengan air'], a: 0, kenapa: 'Magnet dapat menarik klip kertas tetapi tidak dapat menarik bedak.' },
     { j: 'bs', s: 'Semua objek dapat ditarik oleh magnet.', ikon: '🧲', a: false, kenapa: 'Bukan semua objek dapat ditarik oleh magnet.' },
-    { j: 'bs', s: 'Setiap magnet mempunyai kutub utara dan kutub selatan.', ikon: svgKutub, a: true, kenapa: 'Setiap magnet ada dua kutub yang berlainan.' },
+    { j: 'bs', s: 'Setiap magnet mempunyai kutub utara dan kutub selatan.', ikon: '🧲', a: true, kenapa: 'Setiap magnet ada dua kutub yang berlainan.' },
     { j: 'bs', s: 'Setiap magnet mempunyai kekuatan yang sama.', ikon: '📎', a: false, kenapa: 'Setiap magnet mempunyai kekuatan yang berbeza.' },
     { j: 'bs', s: 'Magnet dinamakan berdasarkan bentuknya.', ikon: '🔷', a: true, kenapa: 'Contohnya magnet bar, magnet cincin dan magnet ladam.' },
     { j: 'padan', s: 'Padankan benda dengan kegunaan magnetnya.', pasangan: [['peti sejuk', 'pintu ditutup rapat'], ['tanda nama', 'melekat tanpa pin'], ['pemutar skru', 'memegang skru'], ['ikan mainan', 'dapat dipancing']] },
@@ -1334,11 +1346,11 @@ UNIT({
   ],
   amali: [{
     id: 'kren-magnet', tajuk: 'Kren Magnet', ikon: '🏗️',
-    arahan: 'Pilih satu objek. Ramalkan: adakah magnet dapat menariknya? Kemudian lihat kren magnet menguji!',
+    arahan: 'Pilih objek. Ramal: ditarik magnet atau tidak?',
     mula(el, api) {
       css();
-      const X = api.shuffle([['paku', OBJ.paku, 1], ['skru', '🔩', 1], ['klip kertas', '📎', 1], ['pin baju', '🧷', 1],
-        ['pensel', '✏️', 0], ['kayu aiskrim', OBJ.kayu, 0], ['butang plastik', OBJ.butang, 0], ['pembaris plastik', '📏', 0]]).slice(0, 6);
+      // hanya objek yang keputusannya dinyatakan dalam buku (p.65, p.66, jawapan p.98)
+      const X = api.shuffle([['paku', OBJ.paku, 1], ['skru', '🔩', 1], ['klip kertas', '📎', 1], ['pensel', '✏️', 0], ['bedak', OBJ.bedak, 0]]);
       el.innerHTML = `<div class="s7-lab"><div class="s7-kren"></div><div class="s7-mg"><div class="s7-tali"></div><div class="s7-kepala"><svg viewBox="0 0 44 34"><path d="M6 0 V16 A16 16 0 0 0 38 16 V0" fill="none" stroke="#c92a2a" stroke-width="9"/><path d="M6 0 V7 M38 0 V7" stroke="#adb5bd" stroke-width="9"/></svg></div></div><div class="s7-meja"></div></div>
         <div class="row" id="rm" style="justify-content:center;margin-top:10px" hidden><button class="btn alt" data-v="1">🧲 Ditarik</button><button class="btn alt" data-v="0">🚫 Tidak ditarik</button></div>
         <div class="s7-hasil"><div class="box"><b>🧲 Ditarik</b><div class="chips" id="h1"></div></div><div class="box"><b>🚫 Tidak ditarik</b><div class="chips" id="h0"></div></div></div><p class="hint" id="pg"></p>`;
@@ -1396,13 +1408,18 @@ UNIT({
     },
   }, {
     id: 'klip-bedak', tajuk: 'Klip Kertas dalam Bedak', ikon: '📎',
-    arahan: 'Klip kertas tersorok dalam bedak! Tekan di dalam pinggan untuk menggerakkan magnet.',
+    arahan: 'Klip kertas tersorok dalam bedak! Tekan pinggan untuk gerakkan magnet.',
     mula(el, api) {
       css();
       el.innerHTML = `<div class="s7-mangkuk"><svg viewBox="0 0 400 300"><ellipse cx="200" cy="170" rx="190" ry="120" fill="#74c0fc"/><ellipse cx="200" cy="165" rx="160" ry="98" fill="#f8f9fa"/>
         ${Array.from({ length: 70 }, () => `<circle cx="${(60 + Math.random() * 280).toFixed(0)}" cy="${(90 + Math.random() * 150).toFixed(0)}" r="${(4 + Math.random() * 8).toFixed(0)}" fill="#fff" stroke="#e9ecef"/>`).join('')}</svg>
-        <span class="s7-mag" style="left:50%;top:12%">🧲</span></div><p class="hint" id="pg"></p>`;
+        <span class="s7-mag" style="left:50%;top:12%">🧲</span></div><p class="hint">⌨️ Papan kekunci: anak panah untuk gerak.</p><p class="hint" id="pg"></p>`;
       const mk = el.querySelector('.s7-mangkuk'), mg = el.querySelector('.s7-mag'), pg = el.querySelector('#pg');
+      mk.setAttribute('role', 'button'); mk.setAttribute('tabindex', '0'); mk.setAttribute('aria-label', 'pinggan bedak');
+      let kx = 50, ky = 50;
+      mk.addEventListener('keydown', e => { const d = { ArrowLeft: [-8, 0], ArrowRight: [8, 0], ArrowUp: [0, -8], ArrowDown: [0, 8] }[e.key]; if (!d) return; e.preventDefault();
+        kx = Math.min(95, Math.max(5, kx + d[0])); ky = Math.min(95, Math.max(5, ky + d[1])); const R = mk.getBoundingClientRect();
+        mk.dispatchEvent(new MouseEvent('click', { clientX: R.left + kx / 100 * R.width, clientY: R.top + ky / 100 * R.height, bubbles: true })); });
       const N = 6, klip = [];
       for (let i = 0; i < N; i++) { const x = 22 + (i % 3) * 26 + Math.random() * 10, y = 40 + Math.floor(i / 3) * 24 + Math.random() * 10;
         const k = api.H(`<span class="s7-klip" style="left:${x}%;top:${y}%;opacity:.28">📎</span>`); mk.appendChild(k); klip.push({ k, x, y, ada: true }); }
@@ -1478,7 +1495,7 @@ UNIT({
   ],
   soalan: [
     { j: 'pilih', s: 'Air sirap tertumpah. Alia mengelapnya dengan ___.', ikon: '🥤', p: ['kain lap', 'sudu logam', 'gelas kaca'], a: 0, kenapa: 'Kain lap menyerap air.' },
-    { j: 'pilih', s: 'Mengapakah baju Hafiz tidak basah semasa hujan?', ikon: '🌧️', p: ['Baju hujan tidak menyerap air', 'Baju hujan menyerap air'], a: 0, kenapa: 'Baju hujan mengelakkan kita daripada terkena air hujan.' },
+    { j: 'pilih', s: 'Hujan! Apakah yang Hafiz pakai supaya bajunya tidak basah?', ikon: '🌧️', p: ['baju hujan', 'tuala', 'sapu tangan'], a: 0, kenapa: 'Baju hujan tidak menyerap air. Ia mengelakkan kita daripada terkena air hujan.' },
     { j: 'pilih', s: 'Objek manakah boleh menyerap air?', ikon: '🍳', p: ['tisu dapur', 'gelas kaca', 'sudu logam', 'pinggan plastik'], a: 0, kenapa: 'Tisu dapur boleh menyerap air.' },
     { j: 'pilih', s: 'Objek manakah tidak boleh menyerap air?', ikon: '💧', p: ['duit syiling', 'sapu tangan', 'tisu', 'bebola kapas'], a: 0, kenapa: 'Titisan air masih ada di atas duit syiling.' },
     { j: 'pilih', s: 'Dalam ujian jalur, objek manakah menyerap air paling tinggi?', ikon: '📏', p: ['tisu dapur', 'kain', 'surat khabar'], a: 0, kenapa: 'Tisu dapur ialah objek yang menyerap air paling tinggi.' },
@@ -1489,7 +1506,7 @@ UNIT({
     { j: 'bs', s: 'Meja kaca menyerap air.', ikon: '🪟', a: false, kenapa: 'Meja kaca tidak menyerap air.' },
     { j: 'bs', s: 'Tong besi dapat menadah dan menyimpan air hujan.', ikon: '🛢️', a: true, kenapa: 'Tong besi tidak menyerap air.' },
     { j: 'bs', s: 'Payung plastik menyerap air hujan.', ikon: '☔', a: false, kenapa: 'Payung plastik menghalang kita daripada terkena air hujan.' },
-    { j: 'bs', s: 'Objek yang boleh dan tidak boleh menyerap air penting dalam kehidupan kita.', ikon: '🏠', a: true, kenapa: 'Kedua-duanya berguna dalam kehidupan kita.' },
+    { j: 'bs', s: 'Objek menyerap dan tidak menyerap air penting dalam kehidupan.', ikon: '🏠', a: true, kenapa: 'Kedua-duanya berguna dalam kehidupan kita.' },
     { j: 'kumpul', s: 'Boleh menyerap air atau tidak?', kumpulan: [['💧 Menyerap', ['sapu tangan', 'tisu', 'kain lap', 'kertas surat khabar']], ['🚫 Tidak menyerap', ['klip kertas', 'pemadam', 'mainan plastik', 'straw']]] },
     { j: 'kumpul', s: 'Bantu Alia kelaskan objek di dapur.', kumpulan: [['💧 Menyerap', ['mop', 'alas kaki']], ['🚫 Tidak menyerap', ['gelas kaca', 'sudu logam', 'pinggan plastik']]] },
     { j: 'susun', s: 'Susun ikut keupayaan menyerap air. Mula dengan yang paling sedikit.', item: ['kad manila', 'kertas surat khabar', 'kain lap'] },
@@ -1500,7 +1517,7 @@ UNIT({
   ],
   amali: [{
     id: 'makmal-titis', tajuk: 'Makmal Titis', ikon: '💧',
-    arahan: 'Pilih objek. Ramalkan, kemudian titiskan air berwarna. Adakah titisan air hilang?',
+    arahan: 'Pilih objek. Ramal, kemudian titiskan air.',
     mula(el, api) {
       css();
       const X = api.shuffle([...api.shuffle([[OB.saputangan, 'sapu tangan', 1], ['🧻', 'tisu', 1], [OB.kertas, 'kertas nota', 1], [OB.kapas, 'bebola kapas', 1]]).slice(0, 3),
@@ -1537,7 +1554,7 @@ UNIT({
     },
   }, {
     id: 'perlumbaan-serap', tajuk: 'Perlumbaan Serap', ikon: '📏',
-    arahan: 'Jalur kain, surat khabar dan tisu dapur dicelup ke dalam air berwarna. Siapa menang?',
+    arahan: 'Tiga jalur dicelup dalam air berwarna. Siapa menang?',
     mula(el, api) {
       css();
       const J = [['kain', '#f1f3f5', 58], ['surat khabar', '#e9ecef', 26], ['tisu dapur', '#fff', 86]];
@@ -1545,16 +1562,16 @@ UNIT({
       el.innerHTML = `<svg class="s8-bikar" viewBox="0 0 300 262"><line x1="20" y1="22" x2="280" y2="22" stroke="#c08457" stroke-width="6" stroke-linecap="round"/>
         <path d="M24 120 V236 H276 V120" fill="none" stroke="#868e96" stroke-width="3"/><rect id="air" x="26" y="200" width="248" height="34" fill="#40c057" opacity=".75"/>
         ${urut.map((j, i) => { const x = 48 + i * 82; return `<g><rect x="${x}" y="24" width="40" height="200" fill="${J[j][1]}" stroke="#adb5bd"/><rect class="wr" data-j="${j}" x="${x}" y="224" width="40" height="0" fill="#40c057" opacity=".85"/>
-          <text x="${x + 20}" y="254" text-anchor="middle" font-size="12" font-weight="700">${J[j][0]}</text></g>`; }).join('')}</svg>
+          <text x="${x + 20}" y="254" style="fill:var(--ink)" text-anchor="middle" font-size="12" font-weight="700">${J[j][0]}</text></g>`; }).join('')}</svg>
         <p class="s8-misi" id="tn"></p><div class="row" id="ct" style="justify-content:center"></div>`;
       const sv = el.querySelector('svg'), tn = el.querySelector('#tn'), ct = el.querySelector('#ct');
       let miss = 0;
       const pilihan = (soal, betul, lepas) => { tn.textContent = soal; ct.innerHTML = '';
         urut.forEach(j => { const b = api.H(`<button class="btn alt">${J[j][0]}</button>`); ct.appendChild(b);
-          b.onclick = () => { if (b.disabled) return; if (j === betul) { api.betul(b); lepas(); } else { miss++; b.disabled = true; api.salah(b, 'Lihat ketinggian air berwarna pada jalur.'); } }; }); };
+          b.onclick = () => { if (b.disabled) return; if (j === betul) { ct.querySelectorAll('button').forEach(x => x.disabled = true); api.betul(b); lepas(); } else { miss++; b.disabled = true; api.salah(b, 'Lihat ketinggian air berwarna pada jalur.'); } }; }); };
       tn.textContent = 'Ramalkan: jalur manakah akan menyerap air paling tinggi?';
       urut.forEach(j => { const b = api.H(`<button class="btn alt">${J[j][0]}</button>`); ct.appendChild(b);
-        b.onclick = () => { if (j !== 2) miss++; ct.innerHTML = ''; tn.textContent = `Ramalan kamu: ${J[j][0]}. Mari celup selama 1 minit!`;
+        b.onclick = () => { ct.innerHTML = ''; tn.textContent = `Ramalan kamu: ${J[j][0]}. Mari celup selama 1 minit!`;
           const c = api.H('<button class="btn go">⏱️ Celup 1 minit</button>'); ct.appendChild(c); c.onclick = celup; }; });
       async function celup() {
         ct.innerHTML = '';
@@ -1574,13 +1591,12 @@ UNIT({
     mula(el, api) {
       css();
       const M = api.shuffle([
-        ['🌧️🧒', 'Hujan lebat! Hafiz mahu berjalan tanpa basah.', ['baju hujan', 'tuala', 'tisu'], '🧥', 'Baju hujan tidak menyerap air.'],
-        ['🌧️🦶', 'Ada lopak air. Kaki mesti tidak basah.', ['kasut getah', 'sapu tangan', 'bebola kapas'], '👢', 'Kasut getah mengelakkan kaki daripada basah.'],
-        ['🌧️⬇️', 'Kita mahu menadah dan menyimpan air hujan.', ['tong besi', 'kain lap', 'tisu dapur'], '🛢️', 'Tong besi dapat menadah dan menyimpan air hujan.'],
-        ['👶💦', 'Badan adik basah selepas mandi.', ['tuala', 'payung plastik', 'kasut getah'], '🧺', 'Tuala menyerap air daripada badan.'],
-        ['🏠💦', 'Lantai rumah basah!', ['mop', 'gelas kaca', 'pinggan plastik'], '🧹', 'Mop menyerap air di lantai.'],
-        ['🐱🩹', 'Luka kucing perlu dilap.', ['bebola kapas', 'klip kertas', 'sudu logam'], '☁️', 'Bebola kapas boleh menyerap air.'],
-        ['🫖💦', 'Ibu mahu mengeringkan jag yang basah.', ['kain lap', 'straw', 'pemadam'], '🧽', 'Kain lap menyerap air pada jag.']]).slice(0, 5);
+        ['🌧️🧒', 'Hujan lebat! Hafiz mahu berjalan tanpa basah.', ['baju hujan', 'beg kertas', 'kain lap'], '🧥', 'Baju hujan tidak menyerap air.'],
+        ['🌧️🦶', 'Ada lopak air. Kaki mesti tidak basah.', ['kasut getah', 'kasut kain', 'stoking'], '👢', 'Kasut getah mengelakkan kaki daripada basah.'],
+        ['🌧️⬇️', 'Kita mahu menadah dan menyimpan air hujan.', ['tong besi', 'beg kertas', 'kotak kertas'], '🛢️', 'Tong besi dapat menadah dan menyimpan air hujan.'],
+        ['👶💦', 'Badan adik basah selepas mandi.', ['tuala', 'baju hujan', 'beg plastik'], '🧺', 'Tuala menyerap air daripada badan.'],
+        ['🏠💦', 'Lantai rumah basah!', ['mop', 'penyapu', 'pengaut sampah'], '🧹', 'Mop menyerap air di lantai.'],
+        ['🫖💦', 'Ibu mahu mengeringkan jag yang basah.', ['kain lap', 'beg plastik', 'pinggan plastik'], '🧽', 'Kain lap menyerap air pada jag.']]).slice(0, 5);
       el.innerHTML = `<div class="s8-adegan"><span id="em"></span></div><p class="s8-misi" id="ms"></p><div class="opts" id="op"></div><p class="hint" id="pg"></p>`;
       const ad = el.querySelector('.s8-adegan'), em = el.querySelector('#em'), ms = el.querySelector('#ms'), op = el.querySelector('#op'), pg = el.querySelector('#pg');
       let r = 0, miss = 0, siap = false, bs = [];
@@ -1607,6 +1623,7 @@ UNIT({
 
 (() => {
 const tunggu = t => new Promise(r => setTimeout(r, t));
+const a11y = (g, label) => { g.setAttribute('role', 'button'); g.setAttribute('tabindex', '0'); g.setAttribute('aria-label', label); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); g.dispatchEvent(new MouseEvent('click')); } }); };
 /* pemandangan bentuk muka bumi (p.82–83) */
 const PEMANDANGAN = (label) => `
   <rect width="400" height="260" fill="#d0ebff"/>
@@ -1673,12 +1690,12 @@ UNIT({
     { j: 'pilih', s: 'Tanah apakah biasanya terdapat di sawah padi?', ikon: '🌾', p: ['tanah liat', 'pasir', 'tanah kebun'], a: 0, kenapa: 'Tanah liat terdapat di kawasan sawah padi.' },
     { j: 'pilih', s: 'Pasir biasanya dijumpai di ___.', ikon: '🌵', p: ['pantai dan gurun', 'sawah padi', 'kebun sayur'], a: 0, kenapa: 'Pasir terdapat di pantai dan gurun.' },
     { j: 'pilih', s: 'Alat untuk mengasingkan kandungan tanah ialah ___.', ikon: '🪱', p: ['forsep', 'sudu', 'kertas putih'], a: 0, kenapa: 'Kandungan tanah diasingkan menggunakan forsep.' },
-    { j: 'pilih', s: 'Siapakah menyiasat kandungan tanah bersama Cikgu Yusof?', ikon: '🔍', p: ['Linda dan Hafiz', 'Alia dan Zaki', 'Imran dan Lina'], a: 0, kenapa: 'Linda dan Hafiz menyiasat kandungan tiga jenis tanah.' },
+    { j: 'pilih', s: 'Linda memegang tanah liat. Apakah katanya?', ikon: '👧', p: ['"Halusnya tanah ini."', '"Kasarnya tanah ini."', '"Berbatunya tanah ini."'], a: 0, kenapa: 'Tanah liat mengandungi butir-butir tanah yang sangat halus.' },
     { j: 'bs', s: 'Tanah kebun mengandungi ranting kayu dan daun kering.', ikon: '🥬', a: true, kenapa: 'Tanah kebun mengandungi ranting kayu, daun kering, batu, butir pasir dan haiwan kecil.' },
     { j: 'bs', s: 'Pasir mengandungi haiwan kecil dan daun kering.', ikon: '🏖️', a: false, kenapa: 'Pasir mengandungi batu dan butir pasir.' },
     { j: 'bs', s: 'Bukit dan gunung ialah bentuk muka bumi.', ikon: '⛰️', a: true, kenapa: 'Ada lapan bentuk muka bumi, termasuk bukit dan gunung.' },
     { j: 'bs', s: 'Tanah liat biasanya dijumpai di pantai.', ikon: '🌊', a: false, kenapa: 'Tanah liat terdapat di sawah padi. Pasir terdapat di pantai.' },
-    { j: 'kumpul', s: 'Ada dalam pasir atau tiada?', kumpulan: [['🏖️ Ada dalam pasir', ['batu', 'butir pasir']], ['🚫 Tiada dalam pasir', ['ranting kayu', 'daun kering', 'haiwan kecil']]] },
+    { j: 'kumpul', s: 'Apakah kandungan pasir? Ada atau tiada?', kumpulan: [['✅ Ada', ['batu', 'butir pasir']], ['❌ Tiada', ['ranting kayu', 'daun kering', 'haiwan kecil']]] },
     { j: 'padan', s: 'Padankan tumbuhan dengan tanahnya.', pasangan: [['🥬 sayur salad', 'tanah kebun'], ['🌾 padi', 'tanah liat'], ['🌵 kaktus', 'pasir']] },
     { j: 'padan', s: 'Padankan jenis tanah dengan tempatnya.', pasangan: [['tanah kebun', 'kebun sayur'], ['tanah liat', 'sawah padi'], ['pasir', 'pantai dan gurun']] },
     { j: 'susun', s: 'Susun langkah menyiasat kandungan tanah.', item: ['Alaskan meja dengan kertas', 'Letak dua sudu tanah kebun', 'Perhati dengan kanta pembesar', 'Asingkan dengan forsep'] },
@@ -1696,9 +1713,10 @@ UNIT({
       const Q = api.shuffle(Object.keys(POS));
       let r = 0, miss = 0, siap = false;
       function lukis() { tn.textContent = `📍 ${Q[r]}`; pg.textContent = `Cari ${r + 1} / ${Q.length}`; api.say(`Di manakah <b>${Q[r]}</b>?`); siap = true; }
+      sv.querySelectorAll('.b').forEach(g => a11y(g, 'tempat dalam gambar'));
       sv.querySelectorAll('.b').forEach(g => g.addEventListener('click', () => {
         if (!siap) return; const b = g.dataset.b;
-        if (b === Q[r]) { siap = false; g.classList.add('ok');
+        if (b === Q[r]) { siap = false; g.classList.add('ok'); g.style.pointerEvents = 'none'; g.removeAttribute('tabindex');
           const t = api.S('text', { x: POS[b][0], y: POS[b][1], 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, style: 'fill:#1c2740;paint-order:stroke;stroke:#fff;stroke-width:3px', text: b }, lb);
           api.anim(t, [{ opacity: 0 }, { opacity: 1 }], { duration: 300 });
           api.betul(null, `Jumpa <b>${b}</b>!`); r++; setTimeout(() => r < Q.length ? lukis() : api.selesai(Math.max(0, 1 - miss * .1), 'Hebat! Kamu kenal lapan bentuk muka bumi.'), 700); }
@@ -1709,9 +1727,10 @@ UNIT({
     },
   }, {
     id: 'makmal-tanah', tajuk: 'Makmal Tanah', ikon: '🔍',
-    arahan: 'Jadi saintis seperti Linda dan Hafiz! Perhati dengan kanta pembesar, kemudian ambil kandungan tanah dengan forsep.',
+    arahan: 'Jadi saintis seperti Linda dan Hafiz!',
     mula(el, api) {
       css();
+      const SEMUA = ['ranting kayu', 'daun kering', 'batu', 'butir pasir', 'haiwan kecil'];
       const SP = [['tanah kebun', '#6d4c41', [['ranting', 'ranting kayu'], ['daun', 'daun kering'], ['batu', 'batu'], ['pasir', 'butir pasir'], ['haiwan', 'haiwan kecil']]],
         ['pasir', '#e9c46a', [['batu', 'batu'], ['pasir', 'butir pasir']]]];
       el.innerHTML = `<p class="s9-tanya" id="nm"></p><div class="s9-sampel kabur"></div><div class="row" id="ct" style="justify-content:center;margin-top:8px"></div><div class="s9-dulang"></div><p class="hint" id="pg"></p>`;
@@ -1723,25 +1742,32 @@ UNIT({
           b.onclick = () => { if (fasa !== 2 || b.disabled) return; b.disabled = true; ambil++; b.style.transform = 'translate(-50%,-50%) translateY(220px) scale(.4)'; b.style.opacity = 0;
             dl.appendChild(api.H(`<span>${gb(KD[k], 22)}${n}</span>`)); api.betul(null, `Forsep mengambil <b>${n}</b>.`); pg.textContent = `Kandungan: ${ambil} / ${items.length}`;
             if (ambil === items.length) setTimeout(selesaiSampel, 700); }; return b; });
-        ct.innerHTML = ''; const k = api.H('<button class="btn go">🔍 Perhati dengan kanta pembesar</button>'); ct.appendChild(k);
-        k.onclick = () => { sp.classList.remove('kabur'); fasa = 2; ct.innerHTML = '<span class="hint">🥢 Tekan setiap kandungan untuk mengambilnya dengan forsep.</span>';
-          api.say(`Apa ada dalam <b>${s[0]}</b>? Ambil semua kandungan!`); };
-        pg.textContent = `Kandungan: 0 / ${items.length}`; api.say(`Letak dua sudu ${s[0]} di atas kertas. Tekan 🔍 untuk memerhati.`);
+        // ramal dahulu: pilih kandungan yang dijangka ada, kemudian semak dengan kanta
+        ct.innerHTML = '<div class="chips" id="rm" style="justify-content:center"></div><button class="btn go" id="sk" style="margin-top:8px">🔍 Semak dengan kanta pembesar</button>';
+        const ada = new Set(s[2].map(x => x[1]));
+        const cp = SEMUA.map(n => { const c = api.H(`<button class="chip">${n}</button>`); c.n = n; c.onclick = () => { if (fasa === 1) c.classList.toggle('on'); }; ct.querySelector('#rm').appendChild(c); return c; });
+        ct.querySelector('#sk').onclick = () => { if (fasa !== 1) return; let salah = 0;
+          cp.forEach(c => { const pilih = c.classList.contains('on'), betul = ada.has(c.n); c.disabled = true; c.classList.remove('on'); if (pilih !== betul) salah++; c.classList.add(betul ? 'ok' : 'no'); });
+          miss += Math.min(2, salah); sp.classList.remove('kabur'); fasa = 2;
+          (salah ? api.salah : api.betul)(null, `${salah ? 'Ramalan belum tepat. ' : 'Ramalan tepat! '}Dalam <b>${s[0]}</b> ada: ${[...ada].join(', ')}. Ambil semuanya dengan forsep 🥢.`);
+          ct.querySelector('#sk').remove(); };
+        pg.textContent = `Kandungan: 0 / ${items.length}`; api.say(`Apakah kandungan <b>${s[0]}</b>? Tekan kandungan yang kamu jangka ada, kemudian semak.`);
       }
       function selesaiSampel() {
         if (t === 0) { t = 1; sampel(); return; }
         fasa = 3; nm.textContent = 'Sampel misteri'; sp.innerHTML = ''; sp.style.background = 'radial-gradient(circle at 50% 30%, #adb5bdcc, #868e96)'; dl.innerHTML = ''; pg.textContent = '';
         api.say('Sampel ini hanya ada butir-butir tanah yang <b>sangat halus</b>. Apakah jenis tanah ini?');
         ct.innerHTML = ''; api.shuffle([['tanah liat', 1], ['tanah kebun', 0], ['pasir', 0]]).forEach(([n, v]) => { const b = api.H(`<button class="btn alt">${n}</button>`); ct.appendChild(b);
-          b.onclick = () => { if (v) { api.betul(b, 'Ya, tanah liat!'); setTimeout(() => api.selesai(Math.max(0, 1 - miss * .2), 'Tanah kebun, tanah liat dan pasir mempunyai kandungan yang berbeza.'), 600); } else { miss++; b.disabled = true; api.salah(b, 'Ingat kata Linda: "Halusnya tanah ___ ini."'); } }; });
+          b.onclick = () => { if (b.disabled) return; if (v) { ct.querySelectorAll('button').forEach(x => x.disabled = true); api.betul(b, 'Ya, tanah liat!'); setTimeout(() => api.selesai(Math.max(0, 1 - miss * .2), 'Tanah kebun, tanah liat dan pasir mempunyai kandungan yang berbeza.'), 600); } else { miss++; b.disabled = true; api.salah(b, 'Ingat kata Linda: "Halusnya tanah ___ ini."'); } }; });
       }
       sampel();
-      return { async jawab() { for (let k = 0; k < 2; k++) { ct.querySelector('button').click(); await tunggu(80); for (const b of items) { b.click(); await tunggu(60); } await tunggu(800); }
+      return { async jawab() { for (let k = 0; k < 2; k++) { const ada = SP[t][2].map(x => x[1]); ct.querySelectorAll('.chip').forEach(c => { if (ada.includes(c.n)) c.click(); });
+          ct.querySelector('#sk').click(); await tunggu(80); for (const b of items) { b.click(); await tunggu(60); } await tunggu(800); }
         [...ct.querySelectorAll('button')].find(b => b.textContent === 'tanah liat').click(); } };
     },
   }, {
     id: 'penapis-air', tajuk: 'Penapis Air Ringkas', ikon: '🧴',
-    arahan: 'Bina penapis air. Masukkan lapisan dari BAWAH ke ATAS: kain kasa dahulu, pasir paling atas.',
+    arahan: 'Bina penapis air dari bawah ke atas.',
     mula(el, api) {
       css();
       const L = [['kain kasa', '#f1f3f5'], ['batu', '#868e96'], ['batu kecil', '#adb5bd'], ['pasir halus', '#e9c46a'], ['pasir', '#d4a373']];
@@ -1777,6 +1803,7 @@ UNIT({
 
 (() => {
 const tunggu = t => new Promise(r => setTimeout(r, t));
+const a11y = (g, label) => { g.setAttribute('role', 'button'); g.setAttribute('tabindex', '0'); g.setAttribute('aria-label', label); g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); g.dispatchEvent(new MouseEvent('click')); } }); };
 /* ---- lukisan bongkah bentuk asas (SVG ringkas 3D) ---- */
 const P = a => a.map(p => p.map(n => +n.toFixed(1)).join(',')).join(' ');
 const ST = 'stroke="#1c2740" stroke-width="1.5" stroke-linejoin="round"';
@@ -1934,13 +1961,13 @@ UNIT({
       function lukis() { const t = ST[s]; hn.innerHTML = hantu(t[2]('#000')); tn.textContent = `Bahagian: ${t[0]}`; pg.textContent = `Langkah ${s + 1} / ${ST.length}`;
         api.anim(hn, [{ opacity: .2 }, { opacity: 1 }], { duration: 500, iterations: 2, direction: 'alternate' }); api.say(`Bongkah apakah untuk <b>${t[0]}</b> robot? Lihat bayangnya.`); }
       function pilih(b) {
-        const t = ST[s];
+        if (s >= ST.length) return; const t = ST[s];
         if (b.dataset.k === t[1]) {
           const g = api.S('g', {}, bina); g.innerHTML = t[2](t[3]); api.anim(g, [{ opacity: 0, transform: 'translateY(-30px)' }, { opacity: 1, transform: 'none' }], { duration: 400 });
           if (t[0] === 'lengan') g.id = 'lengan';
           api.betul(b, `Ya, <b>${t[1]}</b>!`); s++;
           if (s < ST.length) lukis();
-          else { hn.innerHTML = ''; tn.textContent = '🤖 Bip bup! Robot siap!';
+          else { hn.innerHTML = ''; tn.textContent = '🤖 Bip bup! Robot siap!'; bs.forEach(x => x.disabled = true);
             mata.innerHTML = '<circle cx="108" cy="104" r="5" fill="#1971c2"/><circle cx="128" cy="104" r="5" fill="#1971c2"/><path d="M108 114 q10 6 20 0" stroke="#1c2740" stroke-width="2" fill="none"/>';
             const l = sv.querySelector('#lengan'); if (l) { l.style.transformOrigin = '128px 165px'; l.style.transformBox = 'view-box'; api.anim(l, [{ transform: 'rotate(0)' }, { transform: 'rotate(-12deg)' }, { transform: 'rotate(12deg)' }, { transform: 'rotate(0)' }], { duration: 900, iterations: 2 }); }
             api.anim(sv, [{ transform: 'translateY(0)' }, { transform: 'translateY(-10px)' }, { transform: 'translateY(0)' }], { duration: 500, iterations: 3 });
@@ -1948,7 +1975,7 @@ UNIT({
         } else { miss++; api.salah(b, 'Bentuknya tidak sama dengan bayang. Cuba lagi!'); }
       }
       lukis();
-      return { async jawab() { for (let i = 0; i < ST.length; i++) { bs.find(b => b.dataset.k === ST[s][1]).click(); await tunggu(80); } } };
+      return { async jawab() { for (let i = 0; i < ST.length; i++) { bs.find(b => b.dataset.k === ST[s][1]).click(); await tunggu(80); } await tunggu(1300); } };
     },
   }, {
     id: 'taman-bongkah', tajuk: 'Cari Bongkah di Taman', ikon: '🛝',
@@ -1964,9 +1991,10 @@ UNIT({
       const Q = api.shuffle(O.map(o => o[0]));
       let r = 0, miss = 0, siap = false;
       function lukis() { tn.textContent = `🔎 ${Q[r]}`; pg.textContent = `Cari ${r + 1} / ${Q.length}`; api.say(`Di manakah <b>${Q[r]}</b>?`); siap = true; }
+      sv.querySelectorAll('.b').forEach(g => a11y(g, 'objek di taman'));
       sv.querySelectorAll('.b').forEach(g => g.addEventListener('click', () => {
         if (!siap) return; const k = g.dataset.b;
-        if (k === Q[r]) { siap = false; const bb = g.getBBox(), o = O.find(x => x[0] === k);
+        if (k === Q[r]) { siap = false; g.style.pointerEvents = 'none'; g.removeAttribute('tabindex'); const bb = g.getBBox(), o = O.find(x => x[0] === k);
           api.S('text', { x: o[1] + bb.x + bb.width / 2, y: o[2] + bb.y - 4, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, style: 'fill:#1c2740;paint-order:stroke;stroke:#fff;stroke-width:3px', text: k }, lb);
           g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center';
           api.anim(g, [{ transform: `translate(${o[1]}px,${o[2]}px) scale(1)` }, { transform: `translate(${o[1]}px,${o[2]}px) scale(1.15)` }, { transform: `translate(${o[1]}px,${o[2]}px) scale(1)` }], { duration: 400, fill: 'none' });
@@ -1974,7 +2002,7 @@ UNIT({
         else { miss++; api.salah(null, `Itu ${k}. Cari ${Q[r]}!`); }
       }));
       lukis();
-      return { async jawab() { for (let i = 0; i < Q.length; i++) { while (!siap) await tunggu(60); sv.querySelector(`.b[data-b="${Q[r]}"]`).dispatchEvent(new MouseEvent('click')); await tunggu(60); } } };
+      return { async jawab() { for (let i = 0; i < Q.length; i++) { while (!siap) await tunggu(60); sv.querySelector(`.b[data-b="${Q[r]}"]`).dispatchEvent(new MouseEvent('click')); await tunggu(60); } await tunggu(750); } };
     },
   }],
 });

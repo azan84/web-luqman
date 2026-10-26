@@ -149,6 +149,7 @@
         <button role="tab" id="tab-d2" aria-controls="form-d2" aria-selected="false" data-form="d2">Darjah 2</button>
         <button role="tab" id="tab-t1" aria-controls="form-t1" aria-selected="false" data-form="t1">Tingkatan 1</button>
         <button role="tab" id="tab-t3" aria-controls="form-t3" aria-selected="true" data-form="t3">Tingkatan 3</button>
+        <button role="tab" id="tab-ukkm" aria-controls="form-ukkm" aria-selected="false" data-form="ukkm">UKKM</button>
       </div>
       <div class="form-panel" id="form-d1" role="tabpanel" aria-labelledby="tab-d1" hidden>
       <article class="subject" id="matematik-d1">
@@ -819,6 +820,30 @@
         </div>
       </article>
       </div>
+      <!--UKKM-PANEL-->
+      <div class="form-panel" id="form-ukkm" role="tabpanel" aria-labelledby="tab-ukkm" hidden>
+      <article class="subject" id="ukkm">
+        <div class="subject-head">
+          <div class="subject-icon" aria-hidden="true" style="background:linear-gradient(135deg,#3b5bdb,#f59f00)">🎯</div>
+          <div>
+            <span class="tag">MRSM · Kemasukan Tingkatan 4</span>
+            <h2>Latihan UKKM Tingkatan 4</h2>
+            <p>10 set latihan dalam format atas talian: <b>Matematik</b> (penaakulan, 20), <b>Sains</b> (30), <b>Bahasa Inggeris</b> (pemahaman, 15) dan <b>Ujian Keperibadian</b> (100). Setiap kertas bermasa, ada mod ujian penuh, huraian setiap soalan dan profil keperibadian. Untuk murid Tingkatan 3.</p>
+            <div class="subject-actions"><a href="studies/ukkm/ujian.html" class="btn btn-small btn-primary">🎯 Mula latihan UKKM</a></div>
+            <div class="overall"><span class="ovt" data-key="ukkm">Kemajuan: belum ada set dicuba</span><div class="bar"><i class="ovb" data-key="ukkm"></i></div></div>
+          </div>
+        </div>
+        <div class="gzones"><div class="gzone" style="grid-column:1/-1;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));display:grid"><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=1" data-ukkm="1"><span class="no">SET 1</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=2" data-ukkm="2"><span class="no">SET 2</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=3" data-ukkm="3"><span class="no">SET 3</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=4" data-ukkm="4"><span class="no">SET 4</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=5" data-ukkm="5"><span class="no">SET 5</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=6" data-ukkm="6"><span class="no">SET 6</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=7" data-ukkm="7"><span class="no">SET 7</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=8" data-ukkm="8"><span class="no">SET 8</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=9" data-ukkm="9"><span class="no">SET 9</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#748ffc" href="studies/ukkm/ujian.html?set=10" data-ukkm="10"><span class="no">SET 10</span><span class="t">Matematik · Sains · English · Keperibadian</span><span class="k">—</span><div class="bar"><i></i></div></a></div></div>
+      </article>
+      <script>(function () { var R = {}; try { R = JSON.parse(localStorage.getItem('ukkm-t4') || '{}'); } catch (e) {}
+        var tried = 0; document.querySelectorAll('.bab[data-ukkm]').forEach(function (a) { var r = R[a.getAttribute('data-ukkm')]; if (!r) return;
+          var v = Object.keys(r).map(function (k) { return r[k].p; }); if (!v.length) return; tried++;
+          var avg = Math.round(v.reduce(function (x, y) { return x + y; }, 0) / v.length);
+          a.querySelector('.k').textContent = v.length + '/4 kertas · ' + avg + '%'; a.querySelector('.bar i').style.width = Math.round(100 * v.length / 4) + '%'; });
+        var t = document.querySelector('.ovt[data-key="ukkm"]'), b = document.querySelector('.ovb[data-key="ukkm"]');
+        if (tried && t) { t.textContent = 'Kemajuan: ' + tried + '/10 set dicuba'; b.style.width = Math.round(100 * tried / 10) + '%'; } })();</script>
+      </div>
+      <!--/UKKM-PANEL-->
       <p class="hint">More subjects coming soon. Kemajuan disimpan dalam pelayar ini sahaja.</p>
     </section>
   </main>

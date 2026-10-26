@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latihan UKKM Tingkatan 4 — 10 Set</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5fa; --card:#fff; --ink:#172033; --muted:#5b6782; --line:#d9dfeb; --soft:#eef2f9;
+  --c:#3b5bdb; --c2:#e8edff; --ok:#2b8a3e; --oksoft:#e6f6ea; --no:#d9480f; --nosoft:#fff0e6; --flag:#f59f00; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --ui:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+:root[data-theme="dark"]{
+  --bg:#0f1420; --card:#171e2e; --ink:#e8edf7; --muted:#9aa6bf; --line:#2a3550; --soft:#1d2638;
+  --c:#748ffc; --c2:#1f2a4a; --ok:#69db7c; --oksoft:#1c3326; --no:#ff8a5c; --nosoft:#3a2216; --flag:#ffc078;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--ui)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:16px 16px 80px}
+[hidden]{display:none!important}
+a{color:var(--c)}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:6px 0 18px}
+.back{padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:.9rem;text-decoration:none}
+h1{font-size:clamp(1.5rem,3.5vw,2.2rem);line-height:1.15;margin:0 0 6px;letter-spacing:-.02em}
+.sub{color:var(--muted);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.set{display:flex;flex-direction:column;gap:10px;text-align:left}
+.set h3{margin:0;font-size:1.15rem}
+.set .meta{color:var(--muted);font-size:.88rem}
+.bars{display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:110px 1fr 46px;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.bar i{display:block;height:8px;border-radius:9px;background:var(--soft);position:relative;overflow:hidden}
+.bar i b{position:absolute;inset:0 auto 0 0;background:var(--c);border-radius:9px}
+.bar span:last-child{font-family:var(--mono);text-align:right;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:10px 16px;border:1px solid var(--line);background:var(--card);font-weight:700}
+.btn.go{background:var(--c);border-color:var(--c);color:#fff}
+.btn.warn{border-color:var(--no);color:var(--no)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.secs{display:grid;gap:12px}
+.sec{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
+.sec .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.6rem;background:var(--c2)}
+.sec b{display:block;font-size:1.05rem}
+.sec small{color:var(--muted)}
+.note{background:var(--c2);border-radius:12px;padding:12px 14px;font-size:.92rem}
+
+/* Exam */
+.exam-head{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:14px}
+.exam-head .t{font-weight:800}
+.timer{margin-left:auto;font-family:var(--mono);font-weight:700;font-size:1.15rem;padding:6px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+.timer.low{color:var(--no);border-color:var(--no)}
+.exam{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
+.exam.has-passage{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 220px}
+.passage{max-height:72vh;overflow:auto;font-size:.95rem}
+.passage h4{margin:0 0 8px}
+.q .no{color:var(--muted);font-weight:700;font-size:.9rem;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.q .stem{font-size:1.05rem;margin:0 0 14px}
+.q .fig{margin:0 0 14px;overflow-x:auto}
+.q .fig svg{max-width:100%;height:auto}
+.q table{border-collapse:collapse;margin:6px 0 12px}
+.q td,.q th{border:1px solid var(--line);padding:4px 10px;text-align:center}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-weight:800;background:var(--soft);font-size:.9rem}
+.opt[aria-pressed="true"]{border-color:var(--c);background:var(--c2)}
+.opt[aria-pressed="true"] .k{background:var(--c);color:#fff}
+.opt.ok{border-color:var(--ok);background:var(--oksoft)}
+.opt.no{border-color:var(--no);background:var(--nosoft)}
+.likert{grid-template-columns:repeat(var(--n,2),minmax(0,1fr))}
+.likert .opt{justify-content:center;text-align:center}
+.nav{display:flex;gap:10px;justify-content:space-between;margin-top:16px;flex-wrap:wrap}
+.pal{position:sticky;top:76px}
+.pal .cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:6px;max-height:52vh;overflow:auto;padding:2px}
+.cell{height:36px;border-radius:8px;border:1px solid var(--line);background:var(--card);font:700 .82rem var(--mono);position:relative}
+.cell.done{background:var(--c2);border-color:var(--c)}
+.cell.cur{outline:2px solid var(--c)}
+.cell.flag::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--flag)}
+.cell.ok{background:var(--oksoft);border-color:var(--ok)}
+.cell.no{background:var(--nosoft);border-color:var(--no)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin:10px 0}
+.flagbtn[aria-pressed="true"]{border-color:var(--flag);color:var(--flag)}
+.hurai{margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:.95rem}
+.hurai b{color:var(--ok)}
+.en{margin:-8px 0 14px;color:var(--muted);font-style:italic;font-size:.92rem}
+.isi{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.isi input{font:700 1.2rem var(--mono);padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:min(220px,100%)}
+.isi input:focus{outline:none;border-color:var(--c)}
+.tglen[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.tm{font:600 .78rem var(--mono);color:var(--muted)}
+
+/* Results */
+.score{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.ring{--p:0;width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--soft) 0);display:grid;place-items:center}
+.ring span{width:94px;height:94px;border-radius:50%;background:var(--card);display:grid;place-items:center;font:800 1.5rem var(--mono)}
+.traits{display:grid;gap:8px;margin-top:10px}
+.warnlist li{margin-bottom:6px}
+@media (max-width: 900px){
+  .exam,.exam.has-passage{grid-template-columns:1fr}
+  .pal{position:static}
+  .passage{max-height:none}
+}
+@media (max-width: 520px){ .sec{grid-template-columns:auto 1fr} .sec .btn{grid-column:1/-1} .likert{grid-template-columns:1fr 1fr} }
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="../../studies.html#ukkm">← Studies</a><a class="back" href="#" id="toHome" hidden>◀ Semua set</a></div>
+  <main id="app" aria-live="polite"></main>
+</div>
+<script>
+window.UKKM = [];
+</script>
+<script src="sets/set01.js?v=1"></script>
+<script src="sets/set02.js?v=1"></script>
+<script src="sets/set03.js?v=1"></script>
+<script src="sets/set04.js?v=1"></script>
+<script src="sets/set05.js?v=1"></script>
+<script src="sets/set06.js?v=1"></script>
+<script src="sets/set07.js?v=1"></script>
+<script src="sets/set08.js?v=1"></script>
+<script src="sets/set09.js?v=1"></script>
+<script src="sets/set10.js?v=1"></script>
+<script>
+/* ===================== Enjin latihan UKKM =====================
+   Data: window.UKKM.push({ set, tajuk, bahagian:[ {id, nama, ikon, minit, arahan, jenis:'objektif'|'personaliti',
+     petikan?:[{id,tajuk,teks}], soalan?:[{s, p:[4], a, hurai, rajah?, petikan?, topik?}],
+     skala?:['Ya','Tidak'] | [...Likert], item?:[{s, trait, pos: indeks pilihan "positif" | [indeks...], pasangan?:id, id?}] } ] }) */
+(function () {
+  'use strict';
+  const $ = s => document.querySelector(s), app = $('#app');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'ukkm-t4', REC = store.get(KEY, {});
+  const SETS = window.UKKM.slice().sort((a, b) => a.set - b.set);
+  const LTR = 'ABCDEFGH';
+  let timer = 0, EN = store.get('ukkm-en', false);
+  const showEN = q => EN && q.en ? `<p class="en" lang="en">${q.en}</p>` : '';
+  const isIsi = q => q.jenis === 'isi';
+  const numOk = (q, v) => { if (v === null || v === undefined || String(v).trim() === '') return false; const x = parseFloat(String(v).replace(',', '.').replace(/[^0-9.\-]/g, '')); return !isNaN(x) && Math.abs(x - q.a) <= (q.tol || 1e-9); };
+  const right = (q, v) => isIsi(q) ? numOk(q, v) : v === q.a;
+  const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
+  const mmss = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+  const isPers = b => b.jenis === 'personaliti' || Array.isArray(b.item);
+  const total = b => isPers(b) ? b.item.length : b.soalan.length;
+
+  /* ---------- Laman utama ---------- */
+  function home() {
+    clearInterval(timer); $('#toHome').hidden = true; history.replaceState(null, '', location.pathname);
+    app.innerHTML = `<h1>Latihan UKKM Tingkatan 4</h1>
+      <p class="sub">Ujian Kecenderungan Kemasukan MRSM — ${SETS.length} set latihan dalam format atas talian: Matematik (penaakulan), Sains, Bahasa Inggeris (pemahaman) dan Ujian Keperibadian. Setiap bahagian bermasa; jawapan dan huraian dipaparkan selepas hantar.</p>
+      <div class="grid">${SETS.map(S => { const r = REC[S.set] || {};
+        return `<button class="card set" data-s="${S.set}"><h3>${esc(S.tajuk || 'Set ' + S.set)}</h3><span class="meta">${S.bahagian.map(b => `${b.ikon || ''} ${esc(b.nama)} · ${total(b)}`).join('<br>')}</span>
+          <div class="bars">${S.bahagian.map(b => { const v = r[b.id]; return `<div class="bar"><span>${esc(b.nama)}</span><i><b style="width:${v ? v.p : 0}%"></b></i><span>${v ? v.p + '%' : '—'}</span></div>`; }).join('')}</div></button>`; }).join('')}</div>
+      <p class="note" style="margin-top:18px">💡 <b>Latihan sahaja.</b> Format (Matematik 20, Sains 30, Bahasa Inggeris 15, Keperibadian 100; ±30 minit setiap kertas) disusun daripada panduan awam dan perbincangan calon — MARA tidak menerbitkan format rasmi, dan sesetengah sumber menyebut bilangan soalan atau kertas bahasa yang berbeza. Semua soalan ialah karya asal, bukan soalan sebenar UKKM. Sejak ambilan 2026, permohonan MRSM melalui PKSK (KPM); UKKM dijalankan untuk calon terpilih.</p>`;
+    app.querySelectorAll('.set').forEach(b => b.onclick = () => openSet(+b.dataset.s));
+  }
+
+  /* ---------- Halaman set ---------- */
+  function openSet(n) {
+    clearInterval(timer); const S = SETS.find(x => x.set === n); if (!S) return home();
+    $('#toHome').hidden = false; history.replaceState(null, '', '?set=' + n);
+    const r = REC[n] || {};
+    app.innerHTML = `<h1>${esc(S.tajuk || 'Set ' + n)}</h1><p class="sub">Jawab setiap bahagian dalam masa yang diberi. Anda boleh tanda soalan (🚩) untuk disemak semula sebelum hantar.</p>
+      <div class="secs">${S.bahagian.map((b, i) => { const v = r[b.id];
+        return `<div class="card sec"><div class="ic" aria-hidden="true">${b.ikon || '📝'}</div><div><b>${esc(b.nama)}</b><small>${total(b)} ${isPers(b) ? 'item' : 'soalan'} · ${b.minit} minit${v ? ` · terbaik ${v.p}%` : ''}</small>${b.arahan ? `<div style="font-size:.9rem;color:var(--muted)">${b.arahan}</div>` : ''}</div>
+          <button class="btn go" data-i="${i}">${v ? 'Cuba lagi' : 'Mula'} ▶</button></div>`; }).join('')}</div>
+      <div class="card" style="margin-top:14px"><b>🏁 Ujian penuh</b><p style="margin:4px 0 10px;color:var(--muted);font-size:.92rem">Keempat-empat kertas berturut-turut seperti hari sebenar (${S.bahagian.reduce((t, b) => t + b.minit, 0)} minit). Kertas yang sudah dihantar tidak boleh dibuka semula.</p>
+        <button class="btn go" id="full">Mula ujian penuh ▶</button></div>`;
+    app.querySelectorAll('.sec .btn').forEach(b => b.onclick = () => exam(S, S.bahagian[+b.dataset.i]));
+    $('#full').onclick = () => { if (confirm('Mula ujian penuh? Pastikan anda ada ' + S.bahagian.reduce((t, b) => t + b.minit, 0) + ' minit tanpa gangguan.')) exam(S, S.bahagian[0], { full: [] }); };
+  }
+
+  /* ---------- Peperiksaan ---------- */
+  function exam(S, B, run) {
+    clearInterval(timer);
+    const pers = isPers(B), list = pers ? B.item : B.soalan, N = list.length;
+    const ans = new Array(N).fill(null), flag = new Array(N).fill(false), tm = new Array(N).fill(0);
+    let t0 = Date.now();
+    const stamp = () => { const t = Date.now(); tm[i] += (t - t0) / 1000; t0 = t; };
+    let i = 0, left = B.minit * 60, done = false;
+    const pass = B.petikan ? Object.fromEntries(B.petikan.map(p => [p.id, p])) : {};
+    const opts = q => pers ? B.skala : q.p;
+    function render() {
+      t0 = Date.now();
+      const q = list[i], P = q.petikan && pass[q.petikan];
+      app.innerHTML = `<div class="exam-head"><span class="t">${B.ikon || ''} ${esc(B.nama)}</span><span style="color:var(--muted)">${esc(S.tajuk || 'Set ' + S.set)}</span>
+          ${!pers && list.some(x => x.en) ? `<button class="btn tglen" id="tgl" aria-pressed="${EN}" style="padding:4px 10px;font-size:.85rem" title="Papar terjemahan Bahasa Inggeris">EN</button>` : ''}${run ? `<span style="color:var(--muted);font-size:.85rem">Ujian penuh · kertas ${S.bahagian.indexOf(B) + 1}/${S.bahagian.length}</span>` : ''}
+          <span class="timer" id="tm" role="timer" aria-label="Masa berbaki">${mmss(left)}</span></div>
+        <div class="exam${P ? ' has-passage' : ''}">
+          ${P ? `<section class="card passage" aria-label="Petikan"><h4>${esc(P.tajuk || 'Passage')}</h4>${P.teks}</section>` : ''}
+          <section class="card q">
+            <div class="no"><span>${pers ? 'Item' : 'Soalan'} ${i + 1} / ${N}</span><button class="btn flagbtn" id="fl" aria-pressed="${flag[i]}" style="padding:2px 10px;font-size:.85rem">🚩 Tanda</button></div>
+            ${q.rajah ? `<div class="fig">${q.rajah}</div>` : ''}
+            <p class="stem">${q.s}</p>${showEN(q)}
+            ${isIsi(q) ? `<div class="isi"><input id="isi" inputmode="decimal" autocomplete="off" aria-label="Taip jawapan" placeholder="Jawapan" value="${ans[i] === null ? '' : esc(ans[i])}">${q.unit ? `<span>${esc(q.unit)}</span>` : ''}</div>` : `<div class="opts${pers ? ' likert' : ''}" style="--n:${opts(q).length}" role="group" aria-label="Pilihan jawapan">${opts(q).map((t, k) =>
+              `<button class="opt" data-k="${k}" aria-pressed="${ans[i] === k}"><span class="k">${pers ? '' : LTR[k]}</span><span>${t}</span></button>`).join('')}</div>`}
+            <div class="nav"><button class="btn" id="pv" ${i ? '' : 'disabled'}>◀ Sebelum</button>
+              ${i < N - 1 ? '<button class="btn go" id="nx">Seterusnya ▶</button>' : '<button class="btn go" id="sb">Hantar ✔</button>'}</div>
+          </section>
+          <aside class="card pal" aria-label="Navigasi soalan"><b>Navigasi</b>
+            <div class="legend"><span>■ dijawab ${ans.filter(x => x !== null).length}/${N}</span><span style="color:var(--flag)">● ditanda</span></div>
+            <div class="cells">${list.map((_, k) => `<button class="cell${ans[k] !== null ? ' done' : ''}${flag[k] ? ' flag' : ''}${k === i ? ' cur' : ''}" data-k="${k}" aria-label="${pers ? 'Item' : 'Soalan'} ${k + 1}">${k + 1}</button>`).join('')}</div>
+            <button class="btn warn" id="sb2" style="width:100%;margin-top:12px">Hantar bahagian ini</button></aside>
+        </div>`;
+      app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+        ans[i] = +b.dataset.k;
+        if (pers && i < N - 1) { stamp(); i++; render(); } else render();   // personaliti: terus ke item seterusnya (seperti ujian sebenar)
+      });
+      const inp = $('#isi'); if (inp) { inp.oninput = () => { ans[i] = inp.value.trim() === '' ? null : inp.value; const c = app.querySelector('.cell.cur'); if (c) c.classList.toggle('done', ans[i] !== null); };
+        inp.onkeydown = e => { if (e.key === 'Enter' && i < N - 1) { stamp(); i++; render(); } }; setTimeout(() => inp.focus({ preventScroll: true }), 50); }
+      if ($('#tgl')) $('#tgl').onclick = () => { EN = !EN; store.set('ukkm-en', EN); render(); };
+      app.querySelectorAll('.cell').forEach(b => b.onclick = () => { stamp(); i = +b.dataset.k; render(); });
+      $('#fl').onclick = () => { flag[i] = !flag[i]; render(); };
+      $('#pv').onclick = () => { if (i) { stamp(); i--; render(); } };
+      if ($('#nx')) $('#nx').onclick = () => { stamp(); i++; render(); };
+      [$('#sb'), $('#sb2')].forEach(b => b && (b.onclick = () => {
+        const kosong = ans.filter(x => x === null).length, ditanda = flag.filter(Boolean).length;
+        if (confirm(`Hantar ${B.nama}?${kosong ? `\n${kosong} belum dijawab.` : ''}${ditanda ? `\n${ditanda} masih ditanda.` : ''}`)) finish();
+      }));
+    }
+    function tick() { left--; const t = $('#tm'); if (t) { t.textContent = mmss(Math.max(0, left)); t.classList.toggle('low', left <= 60); } if (left <= 0) finish(true); }
+    function finish(auto) {
+      if (done) return; done = true; clearInterval(timer); stamp();
+      const used = B.minit * 60 - Math.max(0, left);
+      result(S, B, ans, used, auto, tm, run);
+    }
+    timer = setInterval(tick, 1000);
+    window.__ukkm = { B, ans, get i() { return i; }, finish: () => finish(), pick: (k, v) => { ans[k] = v; } };   // untuk ujian
+    render();
+  }
+
+  /* ---------- Keputusan ---------- */
+  function result(S, B, ans, used, auto, tm, run) {
+    const pers = isPers(B), list = pers ? B.item : B.soalan, N = list.length;
+    let p, head;
+    if (!pers) {
+      const betul = list.reduce((t, q, k) => t + (right(q, ans[k]) ? 1 : 0), 0); p = pct(betul, N);
+      head = `<div class="score"><div class="ring" style="--p:${p}"><span>${p}%</span></div><div><h1 style="margin:0">${betul} / ${N} betul</h1>
+        <p class="sub" style="margin:4px 0 0">${esc(B.nama)} · masa digunakan ${mmss(used)}${auto ? ' · ⏰ masa tamat, dihantar automatik' : ''}</p>
+        ${topikTable(list, ans)}</div></div>`;
+    } else {
+      const posOf = it => [].concat(it.pos);
+      const ok = list.reduce((t, it, k) => t + (ans[k] !== null && posOf(it).includes(ans[k]) ? 1 : 0), 0); p = pct(ok, N);
+      const tr = {}; list.forEach((it, k) => { const t = it.trait || 'Umum'; tr[t] = tr[t] || [0, 0]; tr[t][1]++; if (ans[k] !== null && posOf(it).includes(ans[k])) tr[t][0]++; });
+      // semakan konsisten: item berpasangan (pasangan = id item lain) mesti sama-sama positif atau sama-sama tidak
+      const byId = {}; list.forEach((it, k) => { if (it.id) byId[it.id] = k; });
+      const incons = []; list.forEach((it, k) => { if (it.pasangan && byId[it.pasangan] !== undefined && k < byId[it.pasangan]) {
+        const j = byId[it.pasangan], a1 = ans[k] !== null && posOf(it).includes(ans[k]), a2 = ans[j] !== null && posOf(list[j]).includes(ans[j]);
+        if (ans[k] !== null && ans[j] !== null && a1 !== a2) incons.push([k, j]); } });
+      head = `<div class="score"><div class="ring" style="--p:${p}"><span>${p}%</span></div><div><h1 style="margin:0">Profil keperibadian</h1>
+        <p class="sub" style="margin:4px 0 0">${ok}/${N} jawapan selari dengan sikap positif · ${incons.length} pasangan tidak konsisten · masa ${mmss(used)}${auto ? ' · ⏰ dihantar automatik' : ''}</p></div></div>
+        <div class="traits">${Object.entries(tr).map(([t, [a, b]]) => `<div class="bar" style="grid-template-columns:160px 1fr 46px"><span>${esc(t)}</span><i><b style="width:${pct(a, b)}%"></b></i><span>${pct(a, b)}%</span></div>`).join('')}</div>
+        ${(() => { const lie = list.map((it, k) => [it, k]).filter(([it]) => it.trait === 'Skala Kejujuran'), bad = lie.filter(([it, k]) => ans[k] !== null && !posOf(it).includes(ans[k]));
+          return lie.length ? `<div class="note" style="margin-top:14px"><b>Skala kejujuran:</b> ${bad.length ? `${bad.length}/${lie.length} jawapan menggambarkan diri "terlalu sempurna" (item ${bad.map(([, k]) => k + 1).join(', ')}). Ujian keperibadian biasanya mengesan jawapan begini — jawab dengan jujur.` : 'Jawapan anda jujur dan realistik. Bagus!'}</div>` : ''; })()}
+        ${incons.length ? `<div class="note" style="margin-top:14px"><b>Semakan konsisten:</b> ujian keperibadian sering mengulang idea yang sama dengan ayat berbeza. Jawapan anda bercanggah pada:<ul class="warnlist">${incons.map(([a, b]) => `<li>Item ${a + 1} & item ${b + 1}</li>`).join('')}</ul></div>` : ''}`;
+    }
+    const r = REC[S.set] = REC[S.set] || {}; const prev = r[B.id]; if (!prev || p >= prev.p) r[B.id] = { p, t: Date.now() }; store.set(KEY, REC);
+    const bi = S.bahagian.indexOf(B), nextB = run && S.bahagian[bi + 1];
+    if (run) run.full.push([B.nama, p, pers]);
+    const summary = run && !nextB ? `<div class="card" style="margin-top:14px"><b>🏁 Ringkasan ujian penuh</b>${run.full.map(([n, v, ps]) => `<div class="bar" style="grid-template-columns:170px 1fr 46px;margin-top:6px"><span>${esc(n)}${ps ? ' (profil)' : ''}</span><i><b style="width:${v}%"></b></i><span>${v}%</span></div>`).join('')}</div>` : '';
+    app.innerHTML = `${head}${summary}<div class="row" style="margin:18px 0">${nextB ? `<button class="btn go" id="nextP">▶ Kertas seterusnya: ${esc(nextB.nama)}</button>` : `<button class="btn go" id="again">🔁 Cuba lagi</button>`}<button class="btn" id="bk">◀ ${esc(S.tajuk || 'Set ' + S.set)}</button></div>
+      <h2 style="font-size:1.2rem">Semakan jawapan</h2><div style="display:grid;gap:12px">${list.map((q, k) => review(B, q, k, ans[k], tm && tm[k])).join('')}</div>`;
+    if (nextB) $('#nextP').onclick = () => exam(S, nextB, run); else $('#again').onclick = () => exam(S, B);
+    $('#bk').onclick = () => { if (!nextB || confirm('Keluar daripada ujian penuh?')) openSet(S.set); };
+    window.__ukkmDone = { p, set: S.set, id: B.id };
+    window.scrollTo({ top: 0 });
+  }
+  function topikTable(list, ans) {
+    const t = {}; list.forEach((q, k) => { if (!q.topik) return; t[q.topik] = t[q.topik] || [0, 0]; t[q.topik][1]++; if (right(q, ans[k])) t[q.topik][0]++; });
+    const e = Object.entries(t); if (!e.length) return '';
+    return `<div class="traits" style="margin-top:10px">${e.map(([n, [a, b]]) => `<div class="bar" style="grid-template-columns:170px 1fr 46px"><span>${esc(n)}</span><i><b style="width:${pct(a, b)}%"></b></i><span>${a}/${b}</span></div>`).join('')}</div>`;
+  }
+  function review(B, q, k, a, secs) {
+    const pers = isPers(B), tt = secs ? ` <span class="tm">⏱ ${Math.round(secs)}s</span>` : '';
+    if (pers) {
+      const pos = [].concat(q.pos), good = a !== null && pos.includes(a);
+      return `<div class="card q"><div class="no"><span>Item ${k + 1}${q.trait ? ' · ' + esc(q.trait) : ''}${tt}</span><span>${a === null ? '— tidak dijawab' : good ? '✅ positif' : '⚠️ kurang positif'}</span></div>
+        <p class="stem" style="margin:0">${q.s}</p><div class="hurai">Jawapan anda: <b style="color:inherit">${a === null ? '—' : esc(B.skala[a])}</b> · Jawapan yang menunjukkan sikap positif: <b>${pos.map(x => esc(B.skala[x])).join(' / ')}</b>${q.hurai ? '<br>' + q.hurai : ''}</div></div>`;
+    }
+    const ok = right(q, a);
+    return `<div class="card q"><div class="no"><span>Soalan ${k + 1}${q.topik ? ' · ' + esc(q.topik) : ''}${tt}</span><span>${a === null ? '— tidak dijawab' : ok ? '✅ betul' : '❌ salah'}</span></div>
+      ${q.rajah ? `<div class="fig">${q.rajah}</div>` : ''}<p class="stem">${q.s}</p>${showEN(q)}
+      ${isIsi(q) ? `<div class="isi"><span class="opt ${ok ? 'ok' : 'no'}" style="display:inline-flex">Jawapan anda: <b style="margin-left:6px">${a === null ? '—' : esc(a)}</b></span></div>`
+        : `<div class="opts">${q.p.map((t, j) => `<div class="opt${j === q.a ? ' ok' : j === a ? ' no' : ''}"><span class="k">${LTR[j]}</span><span>${t}</span></div>`).join('')}</div>`}
+      ${q.hurai ? `<div class="hurai"><b>Jawapan ${isIsi(q) ? esc(q.a) + (q.unit ? ' ' + esc(q.unit) : '') : LTR[q.a]}.</b> ${q.hurai}</div>` : ''}</div>`;
+  }
+
+  $('#toHome').onclick = e => { e.preventDefault(); home(); };
+  window.UKKMAPP = { home, openSet, exam: (s, i) => { const S = SETS.find(x => x.set === s); exam(S, S.bahagian[i]); } };
+  const sp = new URLSearchParams(location.search);
+  sp.get('set') ? openSet(+sp.get('set')) : home();
+})();
+</script>
+<script src="../../assets/cikgu-robo.js" defer></script>
+</body>
+</html>
