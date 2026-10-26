@@ -1,0 +1,1468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Darjah 1</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eef3f8; --card:#ffffff; --ink:#1c2740; --muted:#5a6884; --line:#cfd9e6; --rule:#d3e3f5; --margin:#e5484d;
+  --ok:#1f9d55; --no:#e0592a; --gold:#f2b705; --c:#1971c2; --c2:color-mix(in srgb,var(--c) 14%,var(--card));
+  --ui:"Andika","Comic Neue",system-ui,sans-serif; --hd:"Fredoka","Andika",system-ui,sans-serif; --ar:"Amiri","Scheherazade New","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#14241f; --card:#1b2f29; --ink:#eef5ef; --muted:#a9bfb6; --line:#2f4a41; --rule:#25403a; --margin:#ff7b7f; --ok:#6fdc97; --no:#ff9466; --gold:#ffd23f}}
+:root[data-theme="dark"]{--paper:#14241f; --card:#1b2f29; --ink:#eef5ef; --muted:#a9bfb6; --line:#2f4a41; --rule:#25403a; --margin:#ff7b7f; --ok:#6fdc97; --no:#ff9466; --gold:#ffd23f}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:21px/1.6 var(--ui)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+.ar{font-family:var(--ar);direction:rtl;unicode-bidi:isolate;font-size:1.5em;line-height:1.7}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 70px}
+[hidden]{display:none!important}
+
+/* Kulit buku latihan */
+.cover{background:var(--c);color:#fff;padding:44px 0 26px;position:relative;overflow:hidden}
+.cover::after{content:"";position:absolute;inset:auto 0 0 0;height:10px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 14px,transparent 14px 28px)}
+.cover .wrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding-bottom:0}
+.label{background:#fff;color:#1c2740;border-radius:14px;padding:12px 18px 10px;min-width:260px;flex:1;max-width:520px;box-shadow:0 6px 0 rgba(0,0,0,.18);position:relative}
+.label h1{margin:0;font:700 clamp(1.6rem,4.6vw,2.4rem)/1.05 var(--hd);color:var(--c)}
+.label .ln{display:flex;gap:8px;align-items:baseline;margin-top:6px;font-size:.92rem;color:#5a6884}
+.label input{flex:1;min-width:0;border:0;border-bottom:2px dotted #aab6c8;background:transparent;font:700 1.05rem var(--hd);color:#1c2740;padding:0 4px}
+.label input:focus{outline:none;border-bottom-color:var(--c)}
+.tools{display:flex;gap:10px;margin-left:auto}
+.pill{font:700 1.05rem var(--hd);background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.icon{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.6);background:rgba(255,255,255,.18);cursor:pointer;font-size:1.25rem;color:#fff}
+
+/* Laman utama */
+.tema h2{font:600 1.05rem var(--hd);color:var(--muted);margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+.tema h2::after{content:"";flex:1;height:2px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.ut{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 16px;cursor:pointer;transition:transform .18s,border-color .18s;min-height:96px}
+.ut:hover{transform:translateY(-3px);border-color:var(--uc,var(--c))}
+.ut .no{grid-row:1/3;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:2rem;background:color-mix(in srgb,var(--uc,var(--c)) 16%,var(--card));position:relative}
+.ut .no small{position:absolute;right:-4px;bottom:-4px;background:var(--uc,var(--c));color:#fff;font:700 .8rem var(--hd);border-radius:99px;padding:1px 7px;border:2px solid var(--card)}
+.ut b{font:600 1.08rem/1.2 var(--hd)}
+.ut .st{color:var(--gold);letter-spacing:2px;font-size:1.05rem}
+.ut .st i{font-style:normal;color:var(--line)}
+.ut .st span{font:600 .78rem var(--ui);color:var(--muted);letter-spacing:0;margin-left:6px}
+.mix{margin:22px 0 0;display:flex;gap:12px;flex-wrap:wrap}
+
+/* Unit */
+.uh{display:flex;align-items:center;gap:12px;margin:18px 0 10px;flex-wrap:wrap}
+.uh .big{font-size:2.6rem;line-height:1}
+.uh small{display:block;color:var(--muted);font-weight:700}
+.uh h2{margin:0;font:700 clamp(1.35rem,3.6vw,1.9rem)/1.15 var(--hd)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.tab{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:8px 18px;font:600 1.02rem var(--hd);cursor:pointer;min-height:48px}
+.tab.on{background:var(--c);border-color:var(--c);color:#fff}
+
+/* Kertas bergaris (kad belajar & soalan) */
+.page{background-color:var(--card);background-image:linear-gradient(90deg,transparent 46px,color-mix(in srgb,var(--margin) 55%,transparent) 46px,color-mix(in srgb,var(--margin) 55%,transparent) 48px,transparent 48px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 35px);border:2px solid var(--line);border-radius:22px;padding:22px 22px 22px 64px;min-height:300px;position:relative}
+.card .ik{font-size:4rem;line-height:1.1;margin:0 0 6px}
+.card .ik svg{width:min(320px,100%);height:auto;display:block}
+.card h3{margin:0 0 8px;font:700 1.5rem/1.2 var(--hd);color:var(--c)}
+.card p{margin:0 0 10px;font-size:1.18rem}
+.card ul{margin:6px 0 10px;padding-left:22px}
+.card li{margin:4px 0;font-size:1.12rem}
+.card .chipz{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.card .chipz span{background:var(--c2);border:2px solid color-mix(in srgb,var(--c) 40%,var(--line));border-radius:12px;padding:4px 12px;font-weight:700}
+.card .eg{border-left:5px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));padding:8px 12px;border-radius:0 12px 12px 0;margin:8px 0}
+.spk{position:absolute;right:14px;top:14px;width:50px;height:50px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.3rem;cursor:pointer}
+.nav{display:flex;align-items:center;gap:10px;margin-top:14px;justify-content:space-between}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--c);transform:scale(1.25)}
+.btn{border:0;border-radius:16px;padding:12px 20px;font:700 1.05rem var(--hd);cursor:pointer;background:var(--ink);color:var(--paper);box-shadow:0 5px 0 color-mix(in srgb,var(--ink) 55%,#000);min-height:52px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 55%,#000)}
+.btn.go{background:var(--c);color:#fff;box-shadow:0 5px 0 color-mix(in srgb,var(--c) 55%,#000)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.btn[disabled]{opacity:.4;cursor:default}
+
+/* Soalan */
+.qbar{display:flex;gap:6px;margin:0 0 12px}
+.qbar i{flex:1;height:10px;border-radius:99px;background:var(--line)}
+.qbar i.ok{background:var(--ok)} .qbar i.no{background:var(--no)} .qbar i.on{background:var(--c)}
+.qs{font:600 1.3rem/1.35 var(--hd);margin:0 0 6px;padding-right:56px}
+.qs .gap{display:inline-block;min-width:70px;border-bottom:3px solid var(--c);text-align:center}
+.qik{font-size:3.4rem;line-height:1.1;margin:4px 0 8px}
+.qik svg{width:min(300px,100%);height:auto}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.opt,.chip{border:3px solid var(--line);background:var(--card);border-radius:16px;padding:12px 16px;cursor:pointer;font:600 1.12rem/1.3 var(--ui);text-align:left;min-height:56px;transition:border-color .15s,background .15s}
+.opt:hover,.chip:hover{border-color:var(--c)}
+.chip{text-align:center;padding:10px 14px;min-height:50px}
+:is(.opt,.chip,.bin,.slot).on{background:var(--c2);border-color:var(--c)}
+:is(.opt,.chip,.bin,.slot,.now).ok{background:color-mix(in srgb,var(--ok) 18%,var(--card));border-color:var(--ok)}
+:is(.opt,.chip,.bin,.slot,.now).no{background:color-mix(in srgb,var(--no) 16%,var(--card));border-color:var(--no)}
+.opt[disabled],.chip[disabled]{cursor:default}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.col{display:grid;gap:10px;align-content:start}
+.slots{display:grid;gap:8px;margin:12px 0}
+.slot{min-height:52px;border:3px dashed var(--line);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:10px;font-weight:700}
+.slot b{font:700 1.1rem var(--hd);color:var(--c);min-width:24px}
+.slot.ok{border-style:solid}
+.pool{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.line{min-height:62px;border-bottom:3px solid var(--c);display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;padding:6px 0;margin:10px 0;font:700 1.35rem var(--hd)}
+.line span{background:var(--c2);border-radius:10px;padding:2px 10px}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.bin{border:3px solid var(--line);border-radius:16px;padding:10px;min-height:96px;background:var(--card);cursor:pointer;text-align:left}
+.bin b{display:block;font:700 1.05rem var(--hd);color:var(--c);margin-bottom:6px}
+.bin span{display:inline-block;margin:3px;padding:2px 10px;border-radius:10px;background:var(--c2);font-weight:700;font-size:.95rem}
+.now{font:700 1.5rem var(--hd);text-align:center;margin:10px 0;padding:12px;border-radius:16px;background:var(--c2)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:14px;font-size:1.08rem;display:none}
+.fb.show{display:block}
+.fb.ok{border:2px solid var(--ok)} .fb.no{border:2px solid var(--no)}
+.next{margin-top:12px}
+
+/* Hasil: cop guru */
+.res{text-align:center;padding:24px 10px;overflow:hidden}
+.stamp{display:inline-block;font:700 2.4rem/1 var(--hd);color:var(--margin);border:5px solid var(--margin);border-radius:18px;padding:12px 26px;transform:rotate(-8deg);letter-spacing:.04em;margin:12px 0 6px}
+.res .stars{font-size:3rem;color:var(--gold);letter-spacing:6px}
+.res .stars i{font-style:normal;color:var(--line)}
+.res p{margin:6px 0;font-size:1.1rem}
+
+/* Amali (modul aktiviti tersuai) */
+.alist{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.say{min-height:54px;margin:4px 0 12px;padding:12px 14px;border-radius:14px;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--c);font-size:1.08rem}
+.abody{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;min-height:260px}
+.abody svg{max-width:100%;height:auto}
+.abody svg text{font-family:var(--ui);fill:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.box{border:2px solid var(--line);border-radius:16px;padding:12px}
+.hint{color:var(--muted);font-size:.95rem;margin:6px 0 0}
+.meter{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--c);transition:width .4s}
+.back{margin:16px 0 0}
+#toast{position:fixed;right:16px;bottom:16px;z-index:50;display:grid;gap:8px}
+.tst{background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:12px;font-weight:700}
+@media (max-width:600px){
+  body{font-size:18px}
+  .label{min-width:0;flex-basis:100%}
+  .tools{margin-left:0}
+  .grid,.alist{grid-template-columns:1fr}
+  .page{padding:18px 14px 18px 40px;background-image:linear-gradient(90deg,transparent 26px,color-mix(in srgb,var(--margin) 55%,transparent) 26px,color-mix(in srgb,var(--margin) 55%,transparent) 28px,transparent 28px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 35px)}
+  .opts{grid-template-columns:1fr}
+  .card .ik{font-size:3.2rem}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="cover">
+<a href="../../studies.html#d1-english" style="position:absolute;z-index:5;left:12px;top:8px;padding:4px 12px;border-radius:999px;border:2px solid rgba(255,255,255,.7);background:rgba(0,0,0,.18);color:#fff;font:700 14px system-ui;text-decoration:none">← Studies</a>
+
+  <div class="wrap">
+    <div class="label">
+      <h1>🔤 English</h1>
+      <div class="ln"><span>Name:</span><input id="nama" maxlength="24" autocomplete="off" aria-label="Name:"><span>Year 1</span></div>
+    </div>
+    <div class="tools"><span class="pill" id="xp">⭐ 0</span><button class="icon" id="mute" aria-label="Bunyi dan suara">🔊</button></div>
+  </div>
+</header>
+<div class="wrap">
+  <main id="home"></main>
+  <main id="unit" hidden>
+    <button class="btn alt back" id="back">◀ All units</button>
+    <div class="uh" id="uh"></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <section id="pane"></section>
+  </main>
+</div>
+<div id="toast" aria-live="polite"></div>
+<script>
+const SUBJ = {"nama": "English", "ikon": "🔤", "warna": "#1971c2", "lang": "en-GB", "ui": "en", "unit": "Unit", "kod": "english"};
+/* ================= Enjin "Belajar Ceria" Darjah 1 =================
+   Setiap modul unit memanggil UNIT({...}) sekali. Lihat shared/d1/SPEC.md. */
+'use strict';
+const UNITS = [];
+function UNIT(u) { UNITS.push(u); }
+const NS = 'http://www.w3.org/2000/svg';
+function S(tag, at, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in at || {}) { if (k === 'text') e.textContent = at[k]; else e.setAttribute(k, at[k]); }
+  if (parent) parent.appendChild(e); return e;
+}
+function H(html) { const t = document.createElement('template'); t.innerHTML = String(html).trim(); return t.content.firstElementChild; }
+const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const anim = (el, kf, o) => (el && el.animate && !RM()) ? el.animate(kf, Object.assign({ duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }, o)) : null;
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+/* teks untuk dibaca kuat: buang tag, buang teks Arab/Jawi (.ar) dan emoji */
+function plain(h) {
+  const d = document.createElement('div'); d.innerHTML = String(h || '');
+  d.querySelectorAll('.ar,.nospeak,svg').forEach(e => e.remove());
+  return d.textContent.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, ' ').replace(/_{2,}/g, ' kosong ').replace(/\s+/g, ' ').trim();
+}
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+  const E = e => `<span style="font-size:2.6rem;line-height:1.1">${e}</span>`;
+  // Super Friends faces (simple SVG, from the book pictures: hair + top colour)
+  const FR = {
+    Whisper: { hair: '#1f1f24', top: '#e03131', skin: '#f3c99a', kind: 'short' },
+    Thunder: { hair: '#d9480f', top: '#1c7ed6', skin: '#ffd8b8', kind: 'spiky' },
+    Misty: { hair: '#f2c94c', top: '#9c36b5', skin: '#ffe0c7', kind: 'pig' },
+    Flash: { hair: '#4a2a12', top: '#0ca678', skin: '#b5774a', kind: 'pony' },
+  };
+  function face(name, w) {
+    const f = FR[name], hair = {
+      short: `<path d="M23 46 Q24 15 50 15 Q76 15 77 46 Q68 28 50 29 Q32 28 23 46Z" fill="${f.hair}"/>`,
+      spiky: `<path d="M23 44 L26 22 L34 28 L38 12 L46 24 L52 10 L58 24 L66 13 L68 28 L76 22 L77 44 Q66 30 50 30 Q34 30 23 44Z" fill="${f.hair}"/>`,
+      pig: `<path d="M23 46 Q24 16 50 16 Q76 16 77 46 Q66 30 50 30 Q34 30 23 46Z" fill="${f.hair}"/><circle cx="17" cy="36" r="9" fill="${f.hair}"/><circle cx="83" cy="36" r="9" fill="${f.hair}"/>`,
+      pony: `<path d="M74 30 Q96 44 86 84 Q80 60 70 46Z" fill="${f.hair}"/><path d="M23 46 Q24 16 50 16 Q76 16 77 46 Q66 30 50 30 Q34 30 23 46Z" fill="${f.hair}"/><path d="M25 33 Q50 20 75 33" stroke="#22b8cf" stroke-width="5" fill="none"/>`,
+    }[f.kind];
+    return `<svg viewBox="0 0 100 112" width="${w || 64}" height="${Math.round((w || 64) * 1.12)}">
+      <rect x="18" y="72" width="64" height="40" rx="18" fill="${f.top}"/><circle cx="50" cy="90" r="6" fill="#fff" opacity=".85"/>
+      <circle cx="50" cy="47" r="27" fill="${f.skin}"/>${hair}
+      <circle cx="40" cy="49" r="3.4" fill="#222"/><circle cx="60" cy="49" r="3.4" fill="#222"/>
+      <path d="M40 59 Q50 67 60 59" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+  }
+  const NAMES = ['Whisper', 'Thunder', 'Misty', 'Flash'];
+  const group = `<svg viewBox="0 0 400 150" width="320" height="120" role="img" aria-label="The Super Friends">${NAMES.map((n, i) =>
+    `<g transform="translate(${i * 100},0)">${face(n, 100).replace(/^<svg[^>]*>|<\/svg>$/g, '')}<text x="50" y="140" text-anchor="middle" font-size="17" font-weight="700" fill="currentColor">${i + 1} ${n}</text></g>`).join('')}</svg>`;
+  const balloons = `<svg viewBox="0 0 300 120" width="300" height="120" role="img" aria-label="balloons">${['#fcc419', '#e03131', '#fd7e14', '#9c36b5', '#1c7ed6', '#2f9e44'].map((c, i) =>
+    `<g transform="translate(${25 + i * 50},${i % 2 ? 14 : 4})"><path d="M0 70 Q-4 90 4 104" stroke="#adb5bd" stroke-width="2" fill="none"/><ellipse cx="0" cy="36" rx="22" ry="30" fill="${c}"/><ellipse cx="-8" cy="24" rx="5" ry="8" fill="#fff" opacity=".45"/></g>`).join('')}</svg>`;
+
+  UNIT({
+    n: 0, label: 'F', labelPenuh: 'Welcome', tajuk: 'Friends', tema: 'Greetings, numbers, colours', ikon: '👋', warna: '#1971c2',
+    belajar: [
+      { ikon: `<div style="max-width:250px">${group}</div>`, tajuk: 'Meet the Super Friends',
+        teks: ['Hi! We are the <b>Super Friends</b>.' + m('kawan-kawan hebat'), 'Whisper, Thunder, Misty and Flash.'],
+        chips: ['1 Whisper', '2 Thunder', '3 Misty', '4 Flash'] },
+      { ikon: '👋', tajuk: 'Hi! What\'s your name?',
+        teks: ['"Hi, I\'m Whisper. What\'s your <b>name</b>?"' + m('nama'), '"Hi, I\'m Thunder."', '"What a nice name!"' + m('Cantiknya nama itu!')],
+        contoh: '🎶 Chant: "Hi, I\'m Whisper. What\'s your name? …"' },
+      { ikon: '🔢', tajuk: 'Numbers 1 to 10',
+        teks: ['Let\'s count!' + m('mari kira')],
+        chips: ['1 one', '2 two', '3 three', '4 four', '5 five', '6 six', '7 seven', '8 eight', '9 nine', '10 ten'] },
+      { ikon: '🎂', tajuk: 'How old are you?',
+        teks: ['"What\'s your name?" "I\'m Carlos."', '"How old are you?"' + m('Berapa umur kamu?') + ' "I\'m <b>six</b>."'],
+        contoh: 'Carlos is six. How old are you?' },
+      { ikon: '🔤', tajuk: 'The alphabet song',
+        teks: ['There are <b>26</b> letters' + m('huruf') + ', A to Z.'],
+        chips: ['A B C D E F G', 'H I J K L M N', 'O P Q R S', 'T U V W', 'X Y Z'],
+        contoh: '🎶 "A, B, C, D, E, F, G. Sing with me …"' },
+      { ikon: balloons, tajuk: 'Colours',
+        teks: ['Look at the balloons!' + m('belon')],
+        chips: ['🟡 yellow' + m('kuning'), '🔴 red' + m('merah'), '🟠 orange' + m('oren'), '🟣 purple' + m('ungu'), '🔵 blue' + m('biru'), '🟢 green' + m('hijau')] },
+      { ikon: '⭐', tajuk: 'Story: Meet the Super Friends',
+        teks: ['Each friend can do something special.'],
+        senarai: ['💪 Thunder lifts the big table. "Wow!"', '💨 Flash runs very fast. "Look at me!"', '👻 Misty: "My turn. Look!" She disappears.', '🐾 Whisper: "I speak to animals."'] },
+      { ikon: '🐈', tajuk: 'Tabby the cat',
+        teks: ['Whisper: "What\'s your name, cat?" Cat: "I\'m <b>Tabby</b>."', '"How old are you?" "I\'m <b>four</b>."'],
+        contoh: '💛 Value: making friends' + m('berkawan') },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which number?', sebut: 'seven', ikon: '👂', p: ['7', '6', '9', '1'], a: 0, kenapa: 'Seven is 7.' },
+      { j: 'pilih', s: 'Listen. Who is it?', sebut: 'Hi, I\'m Misty.', ikon: '👂', p: NAMES.map(n => face(n, 70)), a: 2, htmlP: true, kenapa: 'Misty has yellow hair and a purple top.' },
+      { j: 'pilih', s: 'Listen. Who is it?', sebut: 'Hi, I\'m Thunder.', ikon: '👂', p: NAMES.map(n => face(n, 70)), a: 1, htmlP: true, kenapa: 'Thunder has red hair and a blue top.' },
+      { j: 'pilih', s: 'Look! Who is this?', ikon: `<div style="width:130px">${face('Flash', 130)}</div>`, p: ['Flash', 'Misty', 'Whisper', 'Thunder'], a: 0, kenapa: 'This is Flash. She runs very fast.' },
+      { j: 'pilih', s: 'Listen. Which colour?', sebut: 'purple', ikon: '👂', p: ['🟣', '🟢', '🔵', '🔴'].map(E), a: 0, htmlP: true, kenapa: 'Purple 🟣.' },
+      { j: 'pilih', s: 'What comes after seven?', ikon: '🔢', p: ['eight', 'six', 'nine'], a: 0, kenapa: 'Six, seven, eight.' },
+      { j: 'pilih', s: '"How old are you?" Carlos says …', ikon: '🎂', p: ['"I\'m six."', '"I\'m ten."', '"I\'m four."'], a: 0, kenapa: 'Carlos says "I\'m six."' },
+      { j: 'pilih', s: '"Hi, I\'m Misty." "What a nice ___!"', ikon: '👋', p: ['name', 'cat', 'hat'], a: 0, kenapa: '"What a nice name!"' },
+      { j: 'pilih', s: 'Story: Who says "I speak to animals"?', ikon: '🐾', p: ['Whisper', 'Thunder', 'Misty', 'Flash'], a: 0, kenapa: 'Whisper speaks to animals.' },
+      { j: 'pilih', s: 'Story: What is the cat\'s name?', ikon: '🐈', p: ['Tabby', 'Misty', 'Carlos'], a: 0, kenapa: '"I\'m Tabby."' },
+      { j: 'bs', s: 'There are four Super Friends.', ikon: '⭐', a: true, kenapa: 'Whisper, Thunder, Misty and Flash.' },
+      { j: 'bs', s: 'Misty says "I speak to animals."', ikon: '🐾', a: false, kenapa: 'Whisper says it. Misty says "My turn. Look!"' },
+      { j: 'bs', s: 'Tabby the cat is four.', ikon: '🐈', a: true, kenapa: 'Tabby says "I\'m four."' },
+      { j: 'bs', s: 'There are ten balloons.', ikon: '🎈', a: false, kenapa: 'There are six balloons: six colours.' },
+      { j: 'padan', s: 'Match the number and the word.', pasangan: [['1', 'one'], ['3', 'three'], ['5', 'five'], ['8', 'eight'], ['10', 'ten']] },
+      { j: 'susun', s: 'Put the numbers in order.', item: ['six', 'seven', 'eight', 'nine', 'ten'] },
+      { j: 'eja', s: 'Listen and spell the colour.', ikon: '🔴', kata: 'red' },
+      { j: 'eja', s: 'Listen and spell the number.', ikon: '5️⃣', kata: 'five' },
+      { j: 'ayat', s: 'Make the question.', ikon: '🎂', kata: ['How', 'old', 'are', 'you?'] },
+      { j: 'kumpul', s: 'Number or colour?', kumpulan: [['🔢 Number', ['one', 'four', 'nine']], ['🎨 Colour', ['red', 'blue', 'green']]] },
+    ],
+    amali: [
+      {
+        id: 'balloon-pop', tajuk: 'Pop the balloon!', ikon: '🎈',
+        arahan: '🔊 Listen to the colour. Pop that balloon!',
+        mula(el, api) {
+          const C = [['red', '#e03131'], ['yellow', '#fcc419'], ['orange', '#fd7e14'], ['purple', '#9c36b5'], ['blue', '#1c7ed6'], ['green', '#2f9e44']];
+          const order = api.shuffle(C.map((_, i) => i));
+          let r = 0, miss = 0, cur = [], busy = false;
+          el.innerHTML = `<style>
+            .bp-sky{position:relative;display:flex;justify-content:space-around;align-items:flex-end;gap:6px;min-height:230px;padding:10px 4px 0;border-radius:16px;
+              background:linear-gradient(color-mix(in srgb,#74c0fc 30%,var(--card)),var(--card))}
+            .bp-b{border:0;background:none;cursor:pointer;padding:0;width:72px;display:flex;flex-direction:column;align-items:center;animation:bpUp 2.6s ease-in-out infinite alternate}
+            .bp-b:nth-child(2){animation-delay:-.7s}.bp-b:nth-child(3){animation-delay:-1.4s}.bp-b:nth-child(4){animation-delay:-2s}
+            .bp-b i{display:block;width:62px;height:78px;border-radius:50% 50% 48% 48%/58% 58% 42% 42%;box-shadow:inset -8px -10px 0 rgba(0,0,0,.15),inset 8px 8px 0 rgba(255,255,255,.25)}
+            .bp-b s{display:block;width:2px;height:34px;background:var(--muted);text-decoration:none}
+            @keyframes bpUp{from{transform:translateY(6px)}to{transform:translateY(-14px)}}
+            @media (prefers-reduced-motion:reduce){.bp-b{animation:none}}
+            .bp-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+          </style>
+          <div class="bp-top"><button class="btn alt" id="bpAg">🔊 Listen again</button><span class="hint" id="bpN"></span></div>
+          <div class="bp-sky" id="bpSky"></div>`;
+          const sky = el.querySelector('#bpSky'), nEl = el.querySelector('#bpN');
+          const word = () => C[order[r]][0];
+          function round() {
+            busy = false;
+            const others = api.shuffle(C.map((_, i) => i).filter(i => i !== order[r])).slice(0, 3);
+            cur = api.shuffle([order[r], ...others]);
+            sky.innerHTML = cur.map(i => `<button class="bp-b" data-i="${i}" aria-label="${C[i][0]} balloon"><i style="background:${C[i][1]}"></i><s></s></button>`).join('');
+            sky.querySelectorAll('.bp-b').forEach(b => b.onclick = () => tap(+b.dataset.i, b));
+            nEl.textContent = `🎈 ${r + 1} / ${C.length}`;
+            api.say('🔊 Listen! Which colour?'); api.speak(word());
+          }
+          function tap(i, b) {
+            if (busy) return;
+            if (i !== order[r]) { miss++; api.salah(b, `That is <b>${C[i][0]}</b>. Listen again!`); api.speak(word()); return; }
+            busy = true;
+            api.anim(b, [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(1.5)', opacity: 0 }], { duration: 360 });
+            api.betul(null, `POP! 🎉 <b>${C[i][0]}</b>`); api.speak(C[i][0]);
+            r++;
+            setTimeout(() => { if (r < C.length) round(); else { sky.innerHTML = '<div style="font-size:4rem;align-self:center">🎉</div>'; api.selesai(Math.max(0, 1 - miss * .1), 'Great! You know the colours!'); } }, 450);
+          }
+          el.querySelector('#bpAg').onclick = () => !busy && r < C.length && api.speak(word());
+          round();
+          return { jawab() { const go = () => { if (r >= C.length) return; if (!busy) sky.querySelector(`.bp-b[data-i="${order[r]}"]`).click(); setTimeout(go, 520); }; go(); } };
+        },
+      },
+      {
+        id: 'number-train', tajuk: 'Number train', ikon: '🚂',
+        arahan: '🔊 Listen to the number. Tap it. It jumps on the train!',
+        mula(el, api) {
+          const W = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+          const order = api.shuffle(W.map((_, i) => i)).slice(0, 6);
+          let r = 0, miss = 0, busy = false;
+          el.innerHTML = `<style>
+            .nt-track{display:flex;align-items:flex-end;gap:4px;min-height:74px;overflow:hidden;border-bottom:6px solid var(--muted);padding:4px 2px;margin-bottom:14px}
+            .nt-eng{font-size:3rem;line-height:1}
+            .nt-car{min-width:44px;height:44px;border-radius:10px 10px 4px 4px;background:var(--c);color:#fff;display:grid;place-items:center;font:700 1.4rem var(--hd);box-shadow:inset 0 -6px 0 rgba(0,0,0,.2)}
+            .nt-pad{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+            .nt-pad .chip{font:700 1.6rem var(--hd);min-height:58px;padding:6px}
+          </style>
+          <div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="btn alt" id="ntAg">🔊 Listen again</button><span class="hint" id="ntN"></span></div>
+          <div class="nt-track" id="ntT"><span class="nt-eng">🚂</span></div>
+          <div class="nt-pad">${W.map((_, i) => `<button class="chip" data-i="${i}">${i + 1}</button>`).join('')}</div>`;
+          const T = el.querySelector('#ntT'), pads = [...el.querySelectorAll('.nt-pad .chip')], nEl = el.querySelector('#ntN');
+          function ask() { busy = false; nEl.textContent = `🚃 ${r + 1} / ${order.length}`; api.say('🔊 Listen! Which number?'); api.speak(W[order[r]]); }
+          function tap(i, b) {
+            if (busy || r >= order.length) return;
+            if (i !== order[r]) { miss++; api.salah(b, `That is <b>${W[i]}</b>. Listen again!`); api.speak(W[order[r]]); return; }
+            busy = true; const car = api.H(`<span class="nt-car">${i + 1}</span>`); T.appendChild(car);
+            api.anim(car, [{ transform: 'translateY(-60px) scale(.4)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 420 });
+            api.betul(b, `<b>${i + 1}</b> — ${W[i]}! All aboard! 🚃`); api.speak(W[i]);
+            r++;
+            if (r < order.length) setTimeout(() => r < order.length && ask(), 650);
+            else { api.anim(T, [{ transform: 'none' }, { transform: 'translateX(12px)' }, { transform: 'none' }], { duration: 500, iterations: 2 }); api.selesai(Math.max(0, 1 - miss * .1), 'Choo choo! Great counting!'); }
+          }
+          pads.forEach(b => b.onclick = () => tap(+b.dataset.i, b));
+          el.querySelector('#ntAg').onclick = () => !busy && r < order.length && api.speak(W[order[r]]);
+          ask();
+          return { jawab() { const go = () => { if (r >= order.length) return; if (!busy) pads[order[r]].click(); setTimeout(go, 700); }; go(); } };
+        },
+      },
+      {
+        id: 'friends-memory', tajuk: 'Memory: Super Friends', ikon: '🃏',
+        arahan: 'Turn over two cards. Find the friend and the name!',
+        mula(el, api) {
+          const P = [...NAMES.map(n => [face(n, 54), `<b style="font:700 1.05rem var(--hd)">${n}</b>`, n]), ['<span style="font-size:2.6rem">🐈</span>', '<b style="font:700 1.05rem var(--hd)">Tabby</b>', 'Tabby']];
+          return memory(el, api, P, 'You found all the friends!');
+        },
+      },
+    ],
+  });
+
+  // ---- memory card game (flip two cards, find pairs) ----
+  function memory(el, api, P, endMsg) {
+    const cards = api.shuffle(P.flatMap((p, k) => [{ h: p[0], k }, { h: p[1], k }]));
+    let first = null, lock = false, found = 0, miss = 0;
+    el.innerHTML = `<style>
+      .mm-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+      .mm{border:0;background:none;padding:0;height:96px;perspective:600px;cursor:pointer}
+      .mm-in{display:block;position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+      .mm.open .mm-in{transform:rotateY(180deg)}
+      .mm-f,.mm-b{position:absolute;inset:0;border-radius:14px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:3px solid var(--line)}
+      .mm-f{background:var(--c);color:#fff;font:700 2rem var(--hd)}
+      .mm-b{background:var(--card);color:var(--ink);transform:rotateY(180deg);padding:4px;text-align:center}
+      .mm.ok .mm-b{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--card))}
+      @media (prefers-reduced-motion:reduce){.mm-in{transition:none}}
+    </style><p class="hint" id="mmN"></p><div class="mm-g"></div>`;
+    const g = el.querySelector('.mm-g'), nEl = el.querySelector('#mmN');
+    const prog = () => nEl.textContent = `⭐ ${found} / ${P.length}`;
+    const bs = cards.map(c => { const b = api.H(`<button class="mm" aria-label="card"><span class="mm-in"><span class="mm-f">?</span><span class="mm-b">${c.h}</span></span></button>`); b._c = c; b.onclick = () => flip(b); g.appendChild(b); return b; });
+    function flip(b) {
+      if (lock || b.classList.contains('open')) return;
+      b.classList.add('open');
+      if (!first) { first = b; return; }
+      const a = first; first = null;
+      if (a._c.k === b._c.k) {
+        a.classList.add('ok'); b.classList.add('ok'); found++; prog(); api.speak(P[b._c.k][2]); api.betul(b, `<b>${P[b._c.k][2]}</b> ✔`);
+        if (found === P.length) api.selesai(Math.max(0, 1 - Math.max(0, miss - 2) * .08), endMsg);
+      } else { miss++; lock = true; setTimeout(() => { a.classList.remove('open'); b.classList.remove('open'); lock = false; }, 850); }
+    }
+    prog();
+    return { jawab() { if (first) { first.classList.remove('open'); first = null; } const go = () => { if (found >= P.length) return; if (lock) return setTimeout(go, 200); const k = P.findIndex((_, i) => !bs.some(b => b._c.k === i && b.classList.contains('ok'))); bs.filter(b => b._c.k === k).forEach(b => b.click()); setTimeout(go, 60); }; go(); } };
+  }
+})();
+
+(() => {
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+  const E = e => `<span style="font-size:2.6rem;line-height:1.1">${e}</span>`;
+  // small pictures with no emoji of their own
+  const RUB = w => `<svg viewBox="0 0 64 64" width="${w}" height="${w}"><g transform="rotate(-20 32 32)"><rect x="8" y="22" width="48" height="22" rx="5" fill="#f783ac"/><rect x="8" y="22" width="18" height="22" rx="5" fill="#74c0fc"/></g></svg>`;
+  const PCASE = w => `<svg viewBox="0 0 64 64" width="${w}" height="${w}"><rect x="15" y="9" width="5" height="16" rx="1" fill="#f03e3e"/><rect x="23" y="6" width="5" height="19" rx="1" fill="#40c057"/><rect x="31" y="10" width="5" height="15" rx="1" fill="#339af0"/><rect x="6" y="20" width="52" height="30" rx="13" fill="#7048e8"/><path d="M11 27h42" stroke="#ffd43b" stroke-width="3"/><circle cx="50" cy="27" r="3.4" fill="#ffd43b"/></svg>`;
+  const DESK = w => `<svg viewBox="0 0 64 64" width="${w}" height="${w}"><rect x="5" y="17" width="54" height="9" rx="2" fill="#d08c4a"/><rect x="9" y="26" width="6" height="32" fill="#8d5a2b"/><rect x="49" y="26" width="6" height="32" fill="#8d5a2b"/><rect x="31" y="26" width="18" height="13" fill="#a86b35"/><circle cx="40" cy="32.5" r="2" fill="#ffe8a3"/></svg>`;
+  const ink = (h, w) => `<i style="display:inline-block;vertical-align:middle;font-style:normal">${typeof h === 'function' ? h(w) : h}</i>`;
+
+  UNIT({
+    n: 1, tajuk: 'At school', tema: 'Classroom objects', ikon: '🏫', warna: '#1971c2',
+    belajar: [
+      { ikon: '💨', tajuk: 'Whoosh! Watch out, Flash!',
+        teks: ['Flash runs out of the classroom.', 'Her school things fly! Look:'],
+        chips: ['🖊️ pen', ink(RUB, 26) + ' rubber' + m('pemadam'), '✏️ pencil' + m('pensel'), '📕 book' + m('buku'), '📓 notebook' + m('buku nota')] },
+      { ikon: '🎒', tajuk: 'More school things',
+        teks: ['Can you see them in your classroom?' + m('bilik darjah')],
+        chips: ['🎒 bag' + m('beg'), ink(DESK, 28) + ' desk' + m('meja'), '📏 ruler' + m('pembaris'), ink(PCASE, 28) + ' pencil case' + m('bekas pensel')] },
+      { ikon: '🎶', tajuk: 'Chant: Hey, Flash!',
+        teks: ['"Hey, Flash! Hey, Flash! Come back, come back!"' + m('kembali')],
+        contoh: '"Your ruler, your rubber, your pencil, your book, your pen, and your pencil case."' },
+      { ikon: '🙈', tajuk: 'What\'s this?',
+        teks: ['"What\'s this?"' + m('Apakah ini?') + ' "It\'s a <b>ruler</b>."', '"Is it a pencil?" "<b>No, it isn\'t.</b> It\'s a pen."', '"Is it a rubber?" "<b>Yes, it is.</b>"'] },
+      { ikon: '🙋', tajuk: 'Please!',
+        teks: ['Say <b>please</b>' + m('tolong') + ' to your friends.'],
+        senarai: ['📖 Open your book, please.', '🎒 Close your bag, please.', '🪑 Sit at your desk, please.', '📏 Pass me a ruler, please.'],
+        contoh: '"Here you are."' + m('Nah, ambil ini') + ' "Thank you."' },
+      { ikon: '📚', tajuk: 'Song: What\'s this?',
+        teks: ['Look at Joe\'s desk. It is in a <b>mess</b>!' + m('bersepah')],
+        contoh: '🎶 "Look at the desk, look at the desk, the desk is in a mess!"' },
+      { ikon: '🏃‍♀️', tajuk: 'Story: Watch out, Flash!',
+        senarai: ['"Watch out!" Flash bumps into a man. 💥', 'Flash: "I\'m sorry." Man: "It\'s OK."', 'Flash: "Mum. My notebook!" Mum: "Here you are!" 📓', 'Friends: "Here\'s your pencil case. Here\'s your ruler."', 'Flash: "Oh no! My bag!" 🎒'],
+        contoh: '💛 Value: helping each other' + m('tolong-menolong') },
+      { ikon: '🐀', tajuk: 'Sound: a',
+        teks: ['Say <b>a</b> … <b>a</b> … like in r<b>a</b>t!'],
+        chips: ['fat' + m('gemuk'), 'rat' + m('tikus'), 'black' + m('hitam'), 'bag' + m('beg')],
+        contoh: 'A f<b>a</b>t r<b>a</b>t in <b>a</b> bl<b>a</b>ck b<b>a</b>g.' },
+      { ikon: '🎨', tajuk: 'Mix the colours',
+        teks: ['There are <b>3</b> primary colours' + m('warna primer') + ': 🔴 red, 🔵 blue, 🟡 yellow.'],
+        senarai: ['🔴 + 🔵 = 🟣 purple', '🔵 + 🟡 = 🟢 green', '🔴 + 🟡 = 🟠 orange'],
+        contoh: 'Purple, green and orange are secondary colours.' + m('warna sekunder') + ' White makes a colour lighter.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which picture?', sebut: 'ruler', ikon: '👂', p: ['📏', '🖊️', '📕', '🎒'].map(E), a: 0, htmlP: true, kenapa: 'A ruler 📏.' },
+      { j: 'pilih', s: 'Listen. Which picture?', sebut: 'notebook', ikon: '👂', p: ['📓', '📕', '✏️', '📏'].map(E), a: 0, htmlP: true, kenapa: 'A notebook 📓.' },
+      { j: 'pilih', s: 'What\'s this?', ikon: '✏️', p: ['pencil', 'pen', 'ruler'], a: 0, kenapa: 'It\'s a pencil.' },
+      { j: 'pilih', s: '"Is it a pencil?"', ikon: '🖊️', p: ['No, it isn\'t.', 'Yes, it is.'], a: 0, kenapa: 'No, it isn\'t. It\'s a pen.' },
+      { j: 'pilih', s: 'Look at the picture. What does the teacher say?', ikon: '📖', p: ['Open your book, please.', 'Close your bag, please.', 'Sit at your desk, please.'], a: 0, kenapa: 'The book is open: "Open your book, please."' },
+      { j: 'pilih', s: '"Pass me a pen, please." Your friend says …', ikon: '🖊️', p: ['"Here you are."', '"It\'s OK."', '"Watch out!"'], a: 0, kenapa: '"Here you are." Then say "Thank you."' },
+      { j: 'pilih', s: 'Story: Flash bumps into a man. She says …', ikon: '💥', p: ['"I\'m sorry."', '"Thank you."', '"Look at me!"'], a: 0, kenapa: 'Flash says "I\'m sorry." The man says "It\'s OK."' },
+      { j: 'pilih', s: 'Story: What does Flash forget at the end?', ikon: '😮', p: ['🎒', '📏', '📕'].map(E), a: 0, htmlP: true, kenapa: '"Oh no! My bag!"' },
+      { j: 'pilih', s: 'Red and blue make …', ikon: '🔴➕🔵', p: ['🟣 purple', '🟢 green', '🟠 orange'], a: 0, kenapa: 'Red + blue = purple.' },
+      { j: 'pilih', s: 'A fat rat in a black ___.', ikon: '🐀', p: ['bag', 'pen', 'desk'], a: 0, kenapa: 'A fat rat in a black bag.' },
+      { j: 'bs', s: 'Joe\'s desk is in a mess.', ikon: '📚', a: true, kenapa: '"Look at the desk, the desk is in a mess!"' },
+      { j: 'bs', s: 'Green is a primary colour.', ikon: '🟢', a: false, kenapa: 'Green is a secondary colour. Blue + yellow = green.' },
+      { j: 'bs', s: 'Mum gives Flash her notebook.', ikon: '📓', a: true, kenapa: 'Mum says "Here you are!"' },
+      { j: 'bs', s: 'There are four primary colours.', ikon: '🎨', a: false, kenapa: 'There are three: red, blue and yellow.' },
+      { j: 'padan', s: 'Match the picture and the word.', pasangan: [['🖊️', 'pen'], ['✏️', 'pencil'], ['📏', 'ruler'], ['🎒', 'bag'], ['📕', 'book']] },
+      { j: 'kumpul', s: 'Primary or secondary colour?', kumpulan: [['1️⃣ Primary', ['🔴 red', '🔵 blue', '🟡 yellow']], ['2️⃣ Secondary', ['🟣 purple', '🟢 green', '🟠 orange']]] },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🖊️', kata: 'pen' },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🎒', kata: 'bag' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '📖', kata: ['Open', 'your', 'book,', 'please.'] },
+      { j: 'susun', s: 'Put the story in order.', item: ['"Watch out!"', '"I\'m sorry."', '"Mum. My notebook!"', '"Here\'s your ruler."', '"My bag!"'] },
+    ],
+    amali: [
+      {
+        id: 'messy-desk', tajuk: 'Joe\'s messy desk', ikon: '📏',
+        arahan: '🔊 Listen! Tap the thing. Put it in the bag.',
+        mula(el, api) {
+          const O = [['pen', E('🖊️')], ['rubber', RUB(50)], ['pencil', E('✏️')], ['book', E('📕')], ['notebook', E('📓')], ['ruler', E('📏')], ['pencil case', PCASE(56)]];
+          const SL = api.shuffle([[4, 8], [36, 4], [68, 10], [10, 52], [42, 46], [72, 54], [24, 28], [56, 30]]);
+          const order = api.shuffle(O.map((_, i) => i));
+          let r = 0, miss = 0, busy = false;
+          el.innerHTML = `<style>
+            .md-wrap{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+            .md-desk{position:relative;height:250px;border-radius:14px;background:linear-gradient(#e0a96d,#c98b4a);box-shadow:inset 0 -10px 0 rgba(0,0,0,.18);overflow:hidden}
+            .md-o{position:absolute;border:0;background:none;cursor:pointer;padding:4px;line-height:1;border-radius:12px}
+            .md-o:focus-visible{outline:3px solid #1c2740}
+            .md-bag{font-size:4rem;line-height:1;text-align:center}
+            .md-bag small{display:block;font:700 .9rem var(--hd);color:var(--muted)}
+            @media (max-width:480px){.md-wrap{grid-template-columns:1fr}.md-bag{order:-1}}
+          </style>
+          <div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="btn alt" id="mdAg">🔊 Listen again</button><span class="hint" id="mdN"></span></div>
+          <div class="md-wrap"><div class="md-desk" id="mdD"></div><div class="md-bag" id="mdBag">🎒<small>bag</small></div></div>`;
+          const D = el.querySelector('#mdD'), bag = el.querySelector('#mdBag'), nEl = el.querySelector('#mdN');
+          const bs = O.map((o, i) => { const b = api.H(`<button class="md-o" aria-label="${o[0]}" style="left:${SL[i][0]}%;top:${SL[i][1]}%;transform:rotate(${Math.round(Math.random() * 50 - 25)}deg)">${o[1]}</button>`); b.onclick = () => tap(i, b); D.appendChild(b); return b; });
+          const line = () => `Pass me a ${O[order[r]][0]}, please.`;
+          function ask() { busy = false; nEl.textContent = `🎒 ${r} / ${O.length}`; api.say('🔊 "Pass me a … , please."'); api.speak(line()); }
+          function tap(i, b) {
+            if (busy || r >= O.length) return;
+            if (i !== order[r]) { miss++; api.salah(b, `That is a <b>${O[i][0]}</b>. Listen again!`); api.speak(line()); return; }
+            busy = true;
+            const a = b.getBoundingClientRect(), z = bag.getBoundingClientRect();
+            api.anim(b, [{ transform: 'none', opacity: 1 }, { transform: `translate(${z.left - a.left}px,${z.top - a.top}px) scale(.3)`, opacity: 0 }], { duration: 560 });
+            api.betul(null, `"Here you are." A <b>${O[i][0]}</b>! ✔`); api.speak('Here you are. A ' + O[i][0] + '.');
+            r++;
+            setTimeout(() => {
+              b.style.visibility = 'hidden';
+              api.anim(bag, [{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(1)' }], { duration: 300, fill: 'none' });
+              if (r < O.length) ask(); else { nEl.textContent = `🎒 ${r} / ${O.length}`; api.selesai(Math.max(0, 1 - miss * .08), 'The desk is tidy now. Thank you!'); }
+            }, 600);
+          }
+          el.querySelector('#mdAg').onclick = () => !busy && r < O.length && api.speak(line());
+          ask();
+          return { jawab() { const go = () => { if (r >= O.length) return; if (!busy) bs[order[r]].click(); setTimeout(go, 650); }; go(); } };
+        },
+      },
+      {
+        id: 'paint-mix', tajuk: 'Mix the paints', ikon: '🎨',
+        arahan: 'Tap two paints. Make the new colour!',
+        mula(el, api) {
+          const P = [['red', '#e03131'], ['blue', '#1c7ed6'], ['yellow', '#fcc419']];
+          const MIX = { '0,1': ['purple', '#9c36b5', '🟣'], '1,2': ['green', '#2f9e44', '🟢'], '0,2': ['orange', '#fd7e14', '🟠'] };
+          const goals = api.shuffle(Object.keys(MIX));
+          let g = 0, pick = [], miss = 0, busy = false;
+          el.innerHTML = `<style>
+            .pm-goal{font:700 1.5rem var(--hd);text-align:center;margin:4px 0 12px}
+            .pm-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+            .pm-pot{border:3px solid var(--line);background:var(--card);border-radius:18px;padding:8px 10px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font:700 1rem var(--hd);color:var(--ink);min-width:86px}
+            .pm-pot i{display:block;width:58px;height:58px;border-radius:50% 50% 14px 14px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.18)}
+            .pm-pot.on{border-color:var(--c);background:var(--c2);transform:translateY(-4px)}
+            .pm-bowl{margin:18px auto 6px;width:150px;height:84px;border-radius:0 0 80px 80px;border:5px solid var(--muted);border-top:0;position:relative;overflow:hidden;background:var(--card)}
+            .pm-bowl b{position:absolute;left:0;right:0;bottom:0;height:0;transition:height .5s,background .5s}
+          </style>
+          <div class="pm-goal" id="pmG"></div>
+          <div class="pm-row">${P.map((p, i) => `<button class="pm-pot" data-i="${i}"><i style="background:${p[1]}"></i>${p[0]}</button>`).join('')}</div>
+          <div class="pm-bowl"><b id="pmB"></b></div><p class="hint" id="pmN" style="text-align:center"></p>`;
+          const pots = [...el.querySelectorAll('.pm-pot')], bowl = el.querySelector('#pmB'), gEl = el.querySelector('#pmG'), nEl = el.querySelector('#pmN');
+          function show() {
+            const t = MIX[goals[g]]; pick = []; busy = false; pots.forEach(p => p.classList.remove('on'));
+            bowl.style.height = '0'; gEl.innerHTML = `Make <b>${t[0]}</b>!`; nEl.textContent = `🎨 ${g + 1} / ${goals.length}`;
+            api.say(`Make <b>${t[0]}</b>. Tap two paints.`); api.speak('Make ' + t[0] + '!');
+          }
+          function tap(i) {
+            if (busy || pick.includes(i)) return;
+            pick.push(i); pots[i].classList.add('on'); api.speak(P[i][0]);
+            bowl.style.background = P[i][1]; bowl.style.height = '45%';
+            if (pick.length < 2) return;
+            busy = true;
+            const key = pick.slice().sort().join(','), res = MIX[key], t = MIX[goals[g]];
+            setTimeout(() => {
+              bowl.style.background = res[1]; bowl.style.height = '85%';
+              const sen = `${P[pick[0]][0]} and ${P[pick[1]][0]} make ${res[0]}.`;
+              if (key === goals[g]) {
+                api.betul(bowl.parentNode, `${res[2]} ${sen[0].toUpperCase() + sen.slice(1)}`); api.speak(sen);
+                g++; setTimeout(() => g < goals.length ? show() : api.selesai(Math.max(0, 1 - miss * .15), 'Purple, green and orange are secondary colours!'), 1300);
+              } else {
+                miss++; api.salah(bowl.parentNode, `${res[2]} ${sen[0].toUpperCase() + sen.slice(1)} We need <b>${t[0]}</b>. Try again!`); api.speak(sen);
+                setTimeout(show, 1600);
+              }
+            }, 450);
+          }
+          pots.forEach(p => p.onclick = () => tap(+p.dataset.i));
+          show();
+          return { jawab() { const go = () => { if (g >= goals.length) return; if (!busy && !pick.length) { const [a, b] = goals[g].split(',').map(Number); tap(a); tap(b); } setTimeout(go, 400); }; go(); } };
+        },
+      },
+      {
+        id: 'school-memory', tajuk: 'Memory: school things', ikon: '🃏',
+        arahan: 'Turn over two cards. Find the picture and the word!',
+        mula(el, api) {
+          const W = t => `<b style="font:700 1.05rem var(--hd)">${t}</b>`;
+          const P = [[E('🖊️'), W('pen'), 'pen'], [E('✏️'), W('pencil'), 'pencil'], [E('📕'), W('book'), 'book'], [E('🎒'), W('bag'), 'bag'], [E('📏'), W('ruler'), 'ruler'], [RUB(50), W('rubber'), 'rubber']];
+          return memory(el, api, P, 'Super! You know your school things!');
+        },
+      },
+    ],
+  });
+
+  // ---- memory card game (flip two cards, find pairs) ----
+  function memory(el, api, P, endMsg) {
+    const cards = api.shuffle(P.flatMap((p, k) => [{ h: p[0], k }, { h: p[1], k }]));
+    let first = null, lock = false, found = 0, miss = 0;
+    el.innerHTML = `<style>
+      .mm-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+      .mm{border:0;background:none;padding:0;height:96px;perspective:600px;cursor:pointer}
+      .mm-in{display:block;position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+      .mm.open .mm-in{transform:rotateY(180deg)}
+      .mm-f,.mm-b{position:absolute;inset:0;border-radius:14px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:3px solid var(--line)}
+      .mm-f{background:var(--c);color:#fff;font:700 2rem var(--hd)}
+      .mm-b{background:var(--card);color:var(--ink);transform:rotateY(180deg);padding:4px;text-align:center}
+      .mm.ok .mm-b{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--card))}
+      @media (prefers-reduced-motion:reduce){.mm-in{transition:none}}
+    </style><p class="hint" id="mmN"></p><div class="mm-g"></div>`;
+    const g = el.querySelector('.mm-g'), nEl = el.querySelector('#mmN');
+    const prog = () => nEl.textContent = `⭐ ${found} / ${P.length}`;
+    const bs = cards.map(c => { const b = api.H(`<button class="mm" aria-label="card"><span class="mm-in"><span class="mm-f">?</span><span class="mm-b">${c.h}</span></span></button>`); b._c = c; b.onclick = () => flip(b); g.appendChild(b); return b; });
+    function flip(b) {
+      if (lock || b.classList.contains('open')) return;
+      b.classList.add('open');
+      if (!first) { first = b; return; }
+      const a = first; first = null;
+      if (a._c.k === b._c.k) {
+        a.classList.add('ok'); b.classList.add('ok'); found++; prog(); api.speak(P[b._c.k][2]); api.betul(b, `<b>${P[b._c.k][2]}</b> ✔`);
+        if (found === P.length) api.selesai(Math.max(0, 1 - Math.max(0, miss - 3) * .08), endMsg);
+      } else { miss++; lock = true; setTimeout(() => { a.classList.remove('open'); b.classList.remove('open'); lock = false; }, 850); }
+    }
+    prog();
+    return { jawab() { if (first) { first.classList.remove('open'); first = null; } const go = () => { if (found >= P.length) return; if (lock) return setTimeout(go, 200); const k = P.findIndex((_, i) => !bs.some(b => b._c.k === i && b.classList.contains('ok'))); bs.filter(b => b._c.k === k).forEach(b => b.click()); setTimeout(go, 60); }; go(); } };
+  }
+})();
+
+(() => {
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+  const E = e => `<span style="font-size:2.6rem;line-height:1.1">${e}</span>`;
+  const DOLL = w => `<svg viewBox="0 0 64 64" width="${w}" height="${w}"><path d="M32 26 L14 60 H50Z" fill="#f783ac"/><circle cx="32" cy="17" r="10" fill="#ffe0c7"/><path d="M21 17 Q22 5 32 5 Q42 5 43 17 Q38 10 32 11 Q26 10 21 17Z" fill="#f2c94c"/><circle cx="28" cy="18" r="1.6" fill="#222"/><circle cx="36" cy="18" r="1.6" fill="#222"/><path d="M29 22 Q32 24 35 22" stroke="#c92a2a" stroke-width="1.5" fill="none"/></svg>`;
+  const SH = {
+    triangle: (w) => `<svg viewBox="0 0 80 64" width="${w}" height="${w * .8}"><path d="M40 6 L76 58 H4Z" fill="#fd7e14"/></svg>`,
+    square: (w) => `<svg viewBox="0 0 80 64" width="${w}" height="${w * .8}"><rect x="12" y="4" width="56" height="56" fill="#2f9e44"/></svg>`,
+    circle: (w) => `<svg viewBox="0 0 80 64" width="${w}" height="${w * .8}"><circle cx="40" cy="32" r="28" fill="#fcc419"/></svg>`,
+    parallelogram: (w) => `<svg viewBox="0 0 80 64" width="${w}" height="${w * .8}"><path d="M24 10 H78 L56 54 H2Z" fill="#1c7ed6"/></svg>`,
+    rectangle: (w) => `<svg viewBox="0 0 80 64" width="${w}" height="${w * .8}"><rect x="4" y="14" width="72" height="38" fill="#e03131"/></svg>`,
+  };
+  const shapesPic = `<svg viewBox="0 0 400 90" width="320" height="72">${Object.values(SH).map((f, i) => `<g transform="translate(${i * 80},8)">${f(76).replace(/^<svg[^>]*>|<\/svg>$/g, '')}</g>`).join('')}</svg>`;
+
+  UNIT({
+    n: 2, tajuk: 'Let\'s play!', tema: 'Toys', ikon: '🪁', warna: '#e8590c',
+    belajar: [
+      { ikon: '🏪', tajuk: 'The toy shop',
+        teks: ['Thunder, Misty and Flash look in the <b>toy shop</b>.' + m('kedai mainan'), 'Look at the toys!' + m('mainan')],
+        chips: ['🪁 kite' + m('layang-layang'), `<i style="font-style:normal;display:inline-block;vertical-align:middle">${DOLL(26)}</i> doll` + m('anak patung'), '👾 monster' + m('raksasa'), '✈️ plane' + m('kapal terbang'), '🎮 computer game'] },
+      { ikon: '🏎️', tajuk: 'More toys',
+        teks: ['There is a <b>go-kart race</b>!' + m('perlumbaan go-kart')],
+        chips: ['🚂 train' + m('kereta api'), '🚗 car' + m('kereta'), '⚽ ball' + m('bola'), '🚲 bike' + m('basikal'), '🏎️ go-kart'] },
+      { ikon: '🎶', tajuk: 'Chant: Toy shop',
+        teks: ['"Toy shop, toy shop, let\'s go to the toy shop. Look!"'],
+        contoh: '"A doll, a car, a bike, oh yes, a go-kart and a train …"' },
+      { ikon: '👦👧', tajuk: 'His name, her name',
+        senarai: ['👦 What\'s <b>his</b> name? His name\'s Ben.', '👦 How old is <b>he</b>? He\'s seven.', '👧 What\'s <b>her</b> name? Her name\'s Lisa.', '👧 How old is <b>she</b>? She\'s six.'],
+        contoh: 'Ben\'s favourite toy is his ball ⚽. Lisa\'s favourite toy is her doll.' + m('kegemaran') },
+      { ikon: '🎵', tajuk: 'Song: What\'s your favourite toy?',
+        teks: ['Emma: "My favourite toy\'s a <b>go-kart</b>. That\'s smart!"', 'Mike: "My favourite number\'s <b>eight</b>. That\'s great!"'],
+        contoh: '🎶 "Hey, Emma! What\'s your favourite toy? …"' },
+      { ikon: '🚂', tajuk: 'Long or short? Big or small?',
+        teks: ['A <b>long</b> blue train. A <b>short</b> red train.', 'A <b>big</b> green ball. A <b>small</b> yellow ball.'],
+        chips: ['long ↔ short' + m('panjang ↔ pendek'), 'big ↔ small' + m('besar ↔ kecil'), 'old ↔ new' + m('lama ↔ baru'), 'ugly ↔ beautiful' + m('hodoh ↔ cantik')],
+        contoh: '"It\'s <b>a</b> new kite." "It\'s <b>an</b> ugly monster."' },
+      { ikon: '🏁', tajuk: 'Story: The go-kart race',
+        senarai: ['Ben (Red team): "What an ugly old go-kart!"', '"1, 2, 3 – Go!" Misty is first. Red team boy: "She\'s first! Stop her!"', 'Misty\'s go-kart breaks. "Help!" Ben: "Now I\'m first!"', '"That isn\'t fair!" Thunder pushes. "Hold on, Misty!"', '"Congratulations, Misty! You\'re first!" 🏆'],
+        contoh: '💛 Value: fair play – cheating is wrong.' + m('main adil – menipu itu salah') },
+      { ikon: '🖊️', tajuk: 'Sound: e',
+        teks: ['Say <b>e</b> … <b>e</b> … like in r<b>e</b>d!'],
+        chips: ['Ken', 'ten' + m('sepuluh'), 'red' + m('merah'), 'pens' + m('pen')],
+        contoh: 'K<b>e</b>n and his t<b>e</b>n r<b>e</b>d p<b>e</b>ns.' },
+      { ikon: `<div style="max-width:250px">${shapesPic}</div>`, tajuk: 'Shapes and tangrams',
+        teks: ['The <b>tangram</b> is an old Chinese toy.' + m('mainan lama dari China')],
+        chips: ['triangle' + m('segi tiga'), 'square' + m('segi empat sama'), 'circle' + m('bulatan'), 'parallelogram', 'rectangle' + m('segi empat tepat')],
+        contoh: '"My book is a rectangle." "I can see a square. I can\'t see a circle."' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which toy?', sebut: 'kite', ikon: '👂', p: ['🪁', '✈️', '🚂', '🚗'].map(E), a: 0, htmlP: true, kenapa: 'A kite 🪁.' },
+      { j: 'pilih', s: 'Listen. Which toy?', sebut: 'go-kart', ikon: '👂', p: ['🏎️', '🚲', '🎮', '⚽'].map(E), a: 0, htmlP: true, kenapa: 'A go-kart 🏎️.' },
+      { j: 'pilih', s: 'Listen. Which toy?', sebut: 'monster', ikon: '👂', p: ['👾', '🪁', '⚽', '🚲'].map(E), a: 0, htmlP: true, kenapa: 'A monster 👾.' },
+      { j: 'pilih', s: '"How old is Lisa?"', ikon: '👧', p: ['She\'s six.', 'He\'s seven.', 'She\'s seven.'], a: 0, kenapa: 'Lisa is six. "She\'s six."' },
+      { j: 'pilih', s: 'Ben: "My favourite toy\'s my ___."', ikon: '👦', p: ['ball', 'doll', 'kite'], a: 0, kenapa: 'His favourite toy\'s his ball.' },
+      { j: 'pilih', s: 'Lisa is a girl. "What\'s ___ name?"', ikon: '👧', p: ['her', 'his', 'he'], a: 0, kenapa: 'For a girl we say her.' },
+      { j: 'pilih', s: 'Song: Emma\'s favourite toy is …', ikon: '🎵', p: ['a go-kart', 'a plane', 'a kite'], a: 0, kenapa: '"My favourite toy\'s a go-kart. That\'s smart!"' },
+      { j: 'pilih', s: 'Story: Who is in the Red team?', ikon: '🏁', p: ['Ben', 'Misty', 'Thunder'], a: 0, kenapa: '"This is Ben from the Red team."' },
+      { j: 'pilih', s: 'Story: Who pushes Misty\'s go-kart?', ikon: '💪', p: ['Thunder', 'Ben', 'Flash'], a: 0, kenapa: 'Thunder says "Hold on, Misty!"' },
+      { j: 'pilih', s: 'Ken and his ten red ___.', ikon: '🔟', p: ['pens', 'cats', 'cars'], a: 0, kenapa: 'Ken and his ten red pens.' },
+      { j: 'bs', s: 'Misty is first at the end of the race.', ikon: '🏆', a: true, kenapa: '"Congratulations, Misty! You\'re first!"' },
+      { j: 'bs', s: 'Lisa is seven.', ikon: '👧', a: false, kenapa: 'Lisa is six. Ben is seven.' },
+      { j: 'bs', s: 'The tangram is an old Chinese toy.', ikon: '🧩', a: true, kenapa: 'Yes, it is.' },
+      { j: 'bs', s: 'Ben says "What a beautiful go-kart!"', ikon: '🏎️', a: false, kenapa: 'Ben says "What an ugly old go-kart!"' },
+      { j: 'padan', s: 'Match the opposites.', pasangan: [['big', 'small'], ['long', 'short'], ['old', 'new'], ['ugly', 'beautiful']] },
+      { j: 'kumpul', s: 'Toy or shape?', kumpulan: [['🧸 Toy', ['kite', 'doll', 'train', 'ball']], ['🔺 Shape', ['triangle', 'square', 'circle', 'rectangle']]] },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🪁', kata: 'kite' },
+      { j: 'eja', s: 'Listen and spell.', ikon: '⚽', kata: 'ball' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🪁', kata: ['It\'s', 'a', 'new', 'kite.'] },
+      { j: 'susun', s: 'Put the story in order.', item: ['"1, 2, 3 – Go!"', '"She\'s first! Stop her!"', '"Help!"', '"Hold on, Misty!"', '"Congratulations, Misty!"'] },
+    ],
+    amali: [
+      {
+        id: 'toy-shop', tajuk: 'Toy shop: listen and tap', ikon: '🧸',
+        arahan: '🔊 Listen! Find the toy. Put it in the basket.',
+        mula(el, api) {
+          const T = [['kite', E('🪁')], ['doll', DOLL(50)], ['monster', E('👾')], ['plane', E('✈️')], ['computer game', E('🎮')], ['train', E('🚂')], ['car', E('🚗')], ['ball', E('⚽')], ['bike', E('🚲')], ['go-kart', E('🏎️')]];
+          const pos = api.shuffle(T.map((_, i) => i)), order = api.shuffle(T.map((_, i) => i)).slice(0, 6);
+          let r = 0, miss = 0, busy = false;
+          el.innerHTML = `<style>
+            .ts-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+            .ts-bask{font-size:3rem;line-height:1;display:flex;align-items:center;gap:6px}
+            .ts-bask span{font-size:1.4rem;display:flex;flex-wrap:wrap;max-width:200px}
+            .ts-shop{border:4px solid #e8590c;border-radius:16px;overflow:hidden;background:color-mix(in srgb,#74c0fc 14%,var(--card))}
+            .ts-aw{height:22px;background:repeating-linear-gradient(90deg,#e03131 0 24px,#fff 24px 48px)}
+            .ts-sh{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:8px 6px;border-bottom:8px solid #c98b4a}
+            .ts-t{border:0;background:none;cursor:pointer;min-height:64px;display:grid;place-items:center;border-radius:12px;padding:0;min-width:0}
+            .ts-t span{font-size:clamp(1.8rem,8vw,2.6rem)!important}.ts-t svg{width:46px!important;height:46px!important;max-width:none!important}
+            .ts-t:hover{background:var(--c2)}
+          </style>
+          <div class="ts-top"><button class="btn alt" id="tsAg">🔊 Listen again</button><div class="ts-bask">🧺<span id="tsB"></span></div></div>
+          <div class="ts-shop"><div class="ts-aw"></div><div class="ts-sh" id="ts1"></div><div class="ts-sh" id="ts2"></div></div>`;
+          const sh = [el.querySelector('#ts1'), el.querySelector('#ts2')], bk = el.querySelector('#tsB');
+          const bs = [];
+          pos.forEach((i, k) => { const b = api.H(`<button class="ts-t" aria-label="${T[i][0]}">${T[i][1]}</button>`); b.onclick = () => tap(i, b); sh[k < 5 ? 0 : 1].appendChild(b); bs[i] = b; });
+          const line = () => `Find the ${T[order[r]][0]}!`;
+          function ask() { busy = false; api.say(`🔊 Find the toy! (${r + 1} / ${order.length})`); api.speak(line()); }
+          function tap(i, b) {
+            if (busy || r >= order.length) return;
+            if (i !== order[r]) { miss++; api.salah(b, `That's a <b>${T[i][0]}</b>. Listen again!`); api.speak(line()); return; }
+            busy = true;
+            api.anim(b, [{ transform: 'none' }, { transform: 'translateY(-30px) scale(1.3)' }, { transform: 'translateY(-60px) scale(.2)', opacity: 0 }], { duration: 520 });
+            api.betul(null, `It's a <b>${T[i][0]}</b>! 🧺`); api.speak(`It's a ${T[i][0]}.`);
+            r++;
+            setTimeout(() => {
+              b.style.visibility = 'hidden'; const x = api.H(`<i style="font-style:normal">${T[i][1].replace(/2\.6rem/, '1.4rem').replace(/width="50" height="50"/, 'width="26" height="26"')}</i>`); bk.appendChild(x);
+              api.anim(x, [{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 260 });
+              if (r < order.length) ask(); else api.selesai(Math.max(0, 1 - miss * .1), 'Toy shop, toy shop! Great listening!');
+            }, 560);
+          }
+          el.querySelector('#tsAg').onclick = () => !busy && r < order.length && api.speak(line());
+          ask();
+          return { jawab() { const go = () => { if (r >= order.length) return; if (!busy) bs[order[r]].click(); setTimeout(go, 620); }; go(); } };
+        },
+      },
+      {
+        id: 'go-kart-race', tajuk: 'Help Misty win the race!', ikon: '🏁',
+        arahan: '🔊 Listen and tap the right picture. Misty\'s go-kart goes faster!',
+        mula(el, api) {
+          const COL = { blue: '#1c7ed6', red: '#e03131', green: '#2f9e44', yellow: '#fcc419' };
+          const pic = (kind, size, col) => {
+            const c = COL[col];
+            if (kind === 'ball') { const r = size === 'big' ? 32 : 13; return `<svg viewBox="0 0 160 76" width="150" height="68"><circle cx="80" cy="${72 - r}" r="${r}" fill="${c}"/><ellipse cx="${80 - r * .35}" cy="${72 - r * 1.35}" rx="${r * .25}" ry="${r * .18}" fill="#fff" opacity=".5"/></svg>`; }
+            const n = size === 'long' ? 4 : 1; let g = '';
+            for (let k = 0; k < n; k++) g += `<rect x="${8 + k * 30}" y="36" width="26" height="24" rx="3" fill="${c}"/><circle cx="${14 + k * 30}" cy="64" r="5" fill="#495057"/><circle cx="${28 + k * 30}" cy="64" r="5" fill="#495057"/>`;
+            const x = 8 + n * 30;
+            g += `<rect x="${x}" y="28" width="34" height="32" rx="4" fill="${c}"/><rect x="${x + 6}" y="16" width="9" height="14" fill="${c}"/><rect x="${x + 18}" y="33" width="11" height="10" rx="2" fill="#e7f5ff"/><circle cx="${x + 8}" cy="64" r="6" fill="#495057"/><circle cx="${x + 26}" cy="64" r="6" fill="#495057"/>`;
+            return `<svg viewBox="0 0 170 76" width="150" height="67">${g}</svg>`;
+          };
+          const R = api.shuffle([['train', 'long', 'blue'], ['train', 'short', 'red'], ['ball', 'big', 'green'], ['ball', 'small', 'yellow'], ['train', 'long', 'red'], ['ball', 'big', 'yellow']]);
+          const flip = { long: 'short', short: 'long', big: 'small', small: 'big' };
+          let r = 0, miss = 0, ben = 0, busy = false;
+          el.innerHTML = `<style>
+            .gk-track{position:relative;border-radius:14px;background:#495057;padding:8px 46px 8px 6px;margin-bottom:12px}
+            .gk-lane{position:relative;height:50px;border-bottom:2px dashed #ced4da}
+            .gk-lane:last-child{border-bottom:0}
+            .gk-car{position:absolute;top:4px;left:0;font-size:2.4rem;line-height:1;transition:left .7s cubic-bezier(.3,1.3,.5,1);display:flex;align-items:center;gap:2px}
+            .gk-car b{font:700 .8rem var(--hd);color:#fff;border-radius:8px;padding:1px 6px}
+            .gk-fin{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:2rem}
+            .gk-op{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+            .gk-op button{border:3px solid var(--line);background:var(--card);border-radius:16px;padding:8px;cursor:pointer;display:grid;place-items:center;min-height:90px}
+            .gk-op button:hover{border-color:var(--c)}
+          </style>
+          <div class="gk-track"><div class="gk-lane"><div class="gk-car" id="gkM">🏎️<b style="background:#2f9e44">Misty</b></div></div>
+            <div class="gk-lane"><div class="gk-car" id="gkB">🏎️<b style="background:#e03131">Ben</b></div></div><div class="gk-fin">🏁</div></div>
+          <div class="row" style="justify-content:space-between;margin-bottom:8px"><button class="btn alt" id="gkAg">🔊 Listen again</button><span class="hint" id="gkN"></span></div>
+          <div class="gk-op" id="gkO"></div>`;
+          const M = el.querySelector('#gkM'), B = el.querySelector('#gkB'), O = el.querySelector('#gkO'), nEl = el.querySelector('#gkN');
+          const phrase = t => `A ${t[1]} ${t[2]} ${t[0]}.`;
+          const move = () => { M.style.left = `calc(${(r / R.length) * 100}% - ${(r / R.length) * 70}px)`; B.style.left = `calc(${ben}% - ${ben * .7}px)`; };
+          let opts = [];
+          function round() {
+            busy = false;
+            const t = R[r], others = Object.keys(COL).filter(c => c !== t[2]);
+            const d1 = [t[0], flip[t[1]], t[2]], d2 = [t[0], t[1], others[Math.floor(Math.random() * others.length)]];
+            opts = api.shuffle([t, d1, d2]);
+            O.innerHTML = ''; opts.forEach((o, k) => { const b = api.H(`<button aria-label="${o[1]} ${o[2]} ${o[0]}">${pic(...o)}</button>`); b.onclick = () => tap(k, b); O.appendChild(b); });
+            nEl.textContent = `🏁 ${r + 1} / ${R.length}`; api.say('🔊 Listen! Which picture?'); api.speak(phrase(t));
+          }
+          function tap(k, b) {
+            if (busy) return;
+            const t = R[r], o = opts[k];
+            if (o !== t) { miss++; ben = Math.min(70, ben + 9); move(); api.salah(b, `That is ${phrase(o).toLowerCase()} Listen again!`); api.speak(phrase(t)); return; }
+            busy = true; r++; move(); api.betul(b, `Yes! ${phrase(t)} Go, Misty!`); api.speak(phrase(t));
+            setTimeout(() => { if (r < R.length) round(); else { O.innerHTML = '<div style="font-size:4rem;text-align:center">🏆</div>'; api.selesai(Math.max(0, 1 - miss * .1), 'Congratulations, Misty! You\'re first!'); } }, 800);
+          }
+          el.querySelector('#gkAg').onclick = () => !busy && r < R.length && api.speak(phrase(R[r]));
+          move(); round();
+          return { jawab() { const go = () => { if (r >= R.length) return; if (!busy) O.children[opts.indexOf(R[r])].click(); setTimeout(go, 850); }; go(); } };
+        },
+      },
+      {
+        id: 'shape-tap', tajuk: 'Tangram shapes', ikon: '🔺',
+        arahan: '🔊 Listen to the shape. Tap it!',
+        mula(el, api) {
+          const K = Object.keys(SH), order = api.shuffle(K.slice());
+          let r = 0, miss = 0, busy = false;
+          el.innerHTML = `<style>.sp-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px}
+            .sp-g button{border:3px solid var(--line);background:var(--card);border-radius:16px;min-height:96px;cursor:pointer;display:grid;place-items:center}
+            .sp-g button:hover{border-color:var(--c)}</style>
+            <div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="btn alt" id="spAg">🔊 Listen again</button><span class="hint" id="spN"></span></div>
+            <div class="sp-g" id="spG"></div>`;
+          const G = el.querySelector('#spG'), nEl = el.querySelector('#spN');
+          let bs = {};
+          function round() {
+            busy = false; G.innerHTML = ''; bs = {};
+            api.shuffle(K.slice()).forEach(k => { const b = api.H(`<button aria-label="${k}">${SH[k](80)}</button>`); b.onclick = () => tap(k, b); G.appendChild(b); bs[k] = b; });
+            nEl.textContent = `🔺 ${r + 1} / ${K.length}`; api.say('🔊 Which shape?'); api.speak(order[r]);
+          }
+          function tap(k, b) {
+            if (busy) return;
+            if (k !== order[r]) { miss++; api.salah(b, `That is a <b>${k}</b>. Listen again!`); api.speak(order[r]); return; }
+            busy = true; api.betul(b, `A <b>${k}</b>! ✔`); api.speak(`A ${k}.`);
+            api.anim(b, [{ transform: 'rotate(0)' }, { transform: 'rotate(360deg)' }], { duration: 600 });
+            r++; setTimeout(() => r < K.length ? round() : api.selesai(Math.max(0, 1 - miss * .12), 'You know the tangram shapes!'), 750);
+          }
+          el.querySelector('#spAg').onclick = () => !busy && r < K.length && api.speak(order[r]);
+          round();
+          return { jawab() { const go = () => { if (r >= K.length) return; if (!busy) bs[order[r]].click(); setTimeout(go, 800); }; go(); } };
+        },
+      },
+    ],
+  });
+})();
+
+(() => {
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+  const E = e => `<span style="font-size:2.6rem;line-height:1.1">${e}</span>`;
+  // desk with an animal in / on / under it (like the stickers on p.35)
+  const POS = { on: [70, 34], in: [123, 70], under: [72, 112] };
+  function desk(w, items) {
+    const a = (items || []).map(([pos, e]) => `<text x="${POS[pos][0]}" y="${POS[pos][1]}" font-size="26" text-anchor="middle">${e}</text>`).join('');
+    const inside = (items || []).filter(x => x[0] === 'in').length ? '' : '';
+    return `<svg viewBox="0 0 160 124" width="${w}" height="${Math.round(w * .775)}">
+      <rect x="18" y="40" width="124" height="9" rx="2" fill="#d08c4a"/><rect x="22" y="49" width="7" height="72" fill="#8d5a2b"/><rect x="131" y="49" width="7" height="72" fill="#8d5a2b"/>
+      <rect x="98" y="49" width="40" height="26" fill="#6b3f1d"/>${a}${inside}<rect x="98" y="66" width="40" height="11" fill="#a86b35"/><circle cx="118" cy="71.5" r="2" fill="#ffe8a3"/></svg>`;
+  }
+  const DW = (pos, e) => `<div style="width:170px">${desk(170, [[pos, e]])}</div>`;
+
+  UNIT({
+    n: 3, tajuk: 'Pet show', tema: 'Animals', ikon: '🐾', warna: '#2b8a3e',
+    belajar: [
+      { ikon: '🐾', tajuk: 'Pet show!',
+        teks: ['"Pet show – bring your pets!"' + m('bawa haiwan peliharaan'), 'Oh no! The pets run away!'],
+        chips: ['🐘 elephant' + m('gajah'), '🐀 rat' + m('tikus'), '🦎 lizard' + m('cicak'), '🐸 frog' + m('katak')] },
+      { ikon: '🕷️', tajuk: 'More pets',
+        teks: ['Whisper has a big spider!'],
+        chips: ['🕷️ spider' + m('labah-labah'), '🦆 duck' + m('itik'), '🐕 dog' + m('anjing'), '🐈 cat' + m('kucing')] },
+      { ikon: '🎶', tajuk: 'Chant: Pet show',
+        teks: ['"Pet show, pet show, look at all the pets."'],
+        chips: ['Whisper and <b>his</b> spider 🕷️', 'Daisy and <b>her</b> dog 🐕', 'Lenny and <b>his</b> lizard 🦎', 'Sandra and <b>her</b> frog 🐸', 'Donnie and <b>his</b> duck 🦆', 'Katie and <b>her</b> cat 🐈', 'Thunder and <b>his</b> elephant 🐘', 'Misty and <b>her</b> rat 🐀'] },
+      { ikon: `<div style="max-width:240px">${desk(240, [['on', '🐸'], ['in', '🐸'], ['under', '🐸']])}</div>`, tajuk: 'In, on, under',
+        teks: ['The frog is <b>on</b> the desk.' + m('di atas'), 'The frog is <b>in</b> the desk.' + m('di dalam'), 'The frog is <b>under</b> the desk.' + m('di bawah')],
+        contoh: 'The lizard is in / on / under the bag.' },
+      { ikon: '🕸️', tajuk: 'Song: Look at the spiders',
+        teks: ['Count the animals. Where are they?'],
+        contoh: ['🎶 "Look at the spiders, look at the rats, look at the lizards, and look at the cats!"', '"Six spiders are on the pencil case."'] },
+      { ikon: '😊', tajuk: 'I like … I don\'t like …',
+        teks: ['😊 "I <b>like</b> dogs."' + m('suka') + ' 😊 "I like dogs <b>too</b>."' + m('juga'), '☹️ "I <b>don\'t like</b> dogs."' + m('tidak suka')],
+        contoh: '"I like cats. What about you?"' },
+      { ikon: '🕷️', tajuk: 'Story: The spider',
+        senarai: ['Flash: "Oh no. I don\'t like spiders."', 'Whisper: "Come back, he\'s beautiful. Look!" "Touch him, Misty."', '"Look, he\'s under the table." "He\'s clever."', 'Misty: "I like spiders." Whisper: "I\'ve got an idea."', 'Spider: "My brothers and sisters are in the tree!" "Aagh!"'],
+        contoh: '💛 Value: being brave' + m('berani') },
+      { ikon: '🕷️🕷️', tajuk: 'Sound: i',
+        teks: ['Say <b>i</b> … <b>i</b> … like in s<b>i</b>t!'],
+        chips: ['Tim', 'his', 'silly' + m('lucu'), 'sister' + m('adik perempuan'), 'Kim'],
+        contoh: 'This is T<b>i</b>m and h<b>i</b>s s<b>i</b>lly s<b>i</b>ster K<b>i</b>m.' },
+      { ikon: '🐊', tajuk: 'Camouflage: animals hide!',
+        teks: ['Some animals are hard to see.' + m('sukar dilihat'), '"The crocodile is green and the water is green."'],
+        chips: ['🐍 snake' + m('ular'), '🐊 crocodile' + m('buaya'), '🦋 butterfly' + m('rama-rama'), '🐅 tiger' + m('harimau'), '🦒 giraffe' + m('zirafah')],
+        contoh: '"Tigers hide in tall grass." Animals hide in logs, trees, leaves and tall grass.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which animal?', sebut: 'lizard', ikon: '👂', p: ['🦎', '🐸', '🐀', '🕷️'].map(E), a: 0, htmlP: true, kenapa: 'A lizard 🦎.' },
+      { j: 'pilih', s: 'Listen. Which animal?', sebut: 'duck', ikon: '👂', p: ['🦆', '🐕', '🐈', '🐘'].map(E), a: 0, htmlP: true, kenapa: 'A duck 🦆.' },
+      { j: 'pilih', s: 'Where is the frog?', ikon: DW('under', '🐸'), p: ['under the desk', 'on the desk', 'in the desk'], a: 0, kenapa: 'The frog is under the desk.' },
+      { j: 'pilih', s: 'Where is the cat?', ikon: DW('on', '🐈'), p: ['on the desk', 'under the desk', 'in the desk'], a: 0, kenapa: 'The cat is on the desk.' },
+      { j: 'pilih', s: 'Chant: Whisper and his ___.', ikon: '🎶', p: ['🕷️ spider', '🐀 rat', '🐘 elephant'], a: 0, kenapa: 'Whisper and his spider.' },
+      { j: 'pilih', s: 'Story: Who doesn\'t like spiders at the start?', ikon: '😱', p: ['Flash', 'Whisper', 'Misty'], a: 0, kenapa: 'Flash: "Oh no. I don\'t like spiders."' },
+      { j: 'pilih', s: 'Story: Where are the spider\'s brothers and sisters?', ikon: '🕷️', p: ['in the tree', 'under the table', 'on the bag'], a: 0, kenapa: '"My brothers and sisters are in the tree!"' },
+      { j: 'pilih', s: 'This is Tim and his silly sister ___.', ikon: '🕷️', p: ['Kim', 'Ken', 'Sam'], a: 0, kenapa: 'Tim and his silly sister Kim.' },
+      { j: 'pilih', s: 'Tigers hide in …', ikon: '🐅', p: ['tall grass', 'logs', 'leaves'], a: 0, kenapa: '"Tigers hide in tall grass."' },
+      { j: 'pilih', s: 'Listen. Does she like spiders?', sebut: 'I don\'t like spiders.', ikon: '👂', p: ['☹️', '😊'].map(E), a: 0, htmlP: true, kenapa: '"I don\'t like spiders." ☹️' },
+      { j: 'bs', s: 'Whisper\'s pet is a spider.', ikon: '🕷️', a: true, kenapa: 'Whisper and his spider.' },
+      { j: 'bs', s: 'Look! The lizard is on the desk.', ikon: DW('in', '🦎'), a: false, kenapa: 'The lizard is in the desk.' },
+      { j: 'bs', s: 'The crocodile is green and the water is green.', ikon: '🐊', a: true, kenapa: 'That is why it is hard to see.' },
+      { j: 'bs', s: 'At the end, Misty, Thunder and Flash like the spiders.', ikon: '😱', a: false, kenapa: 'They say "Aagh!"' },
+      { j: 'kumpul', s: 'Chant: his or her?', kumpulan: [['👦 his', ['Whisper', 'Lenny', 'Donnie', 'Thunder']], ['👧 her', ['Daisy', 'Sandra', 'Katie', 'Misty']]] },
+      { j: 'padan', s: 'Match the animal and the word.', pasangan: [['🐘', 'elephant'], ['🐸', 'frog'], ['🦎', 'lizard'], ['🦆', 'duck'], ['🐀', 'rat']] },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🐸', kata: 'frog' },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🐈', kata: 'cat' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🦎🎒', kata: ['The', 'lizard', 'is', 'on', 'the', 'bag.'] },
+      { j: 'susun', s: 'Put the story in order.', item: ['"Oh no. I don\'t like spiders."', '"Touch him, Misty."', '"Look, he\'s under the table."', '"I\'ve got an idea."', '"My brothers and sisters are in the tree!"'] },
+    ],
+    amali: [
+      {
+        id: 'in-on-under', tajuk: 'In, on or under?', ikon: '🐸',
+        arahan: '🔊 Listen! Where is the animal? Tap the place.',
+        mula(el, api) {
+          const A = [['frog', '🐸'], ['lizard', '🦎'], ['spider', '🕷️'], ['rat', '🐀'], ['cat', '🐈']];
+          const P = api.shuffle(['in', 'on', 'under', 'in', 'on', 'under']);
+          const Z = { on: [18, 4, 64, 36], in: [61, 41, 25, 21], under: [20, 66, 56, 30] };   // left, top, width, height (%)
+          let r = 0, miss = 0, busy = false, an;
+          el.innerHTML = `<style>
+            .io-box{position:relative;max-width:420px;margin:0 auto}
+            .io-box svg{display:block;width:100%;height:auto}
+            .io-z{position:absolute;border:3px dashed transparent;background:none;border-radius:14px;cursor:pointer}
+            .io-z:hover,.io-z:focus-visible{border-color:var(--c)}
+            .io-a{position:absolute;font-size:2.6rem;line-height:1;transform:translate(-50%,-50%);transition:left .5s cubic-bezier(.3,1.4,.5,1),top .5s cubic-bezier(.3,1.4,.5,1);pointer-events:none}
+          </style>
+          <div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="btn alt" id="ioAg">🔊 Listen again</button><span class="hint" id="ioN"></span></div>
+          <div class="io-box" id="ioB">${desk(420).replace(/width="420" height="\d+"/, '')}</div>`;
+          const box = el.querySelector('#ioB'), nEl = el.querySelector('#ioN');
+          const zs = {}; Object.keys(Z).forEach(k => { const z = Z[k], b = api.H(`<button class="io-z" aria-label="${k} the desk" style="left:${z[0]}%;top:${z[1]}%;width:${z[2]}%;height:${z[3]}%"></button>`); b.onclick = () => tap(k, b); box.appendChild(b); zs[k] = b; });
+          an = api.H('<span class="io-a"></span>'); box.appendChild(an);
+          const AN = [];
+          for (let k = 0; k < P.length; k++) AN.push(A[Math.floor(Math.random() * A.length)]);
+          const line = () => `The ${AN[r][0]} is ${P[r]} the desk.`;
+          function round() {
+            busy = false; an.style.transition = 'none'; an.style.left = '8%'; an.style.top = '10%'; an.textContent = AN[r][1];
+            an.offsetWidth; an.style.transition = '';
+            nEl.textContent = `⭐ ${r + 1} / ${P.length}`; api.say(`🔊 Where is the ${AN[r][0]}?`); api.speak(line());
+          }
+          function tap(k, b) {
+            if (busy) return;
+            if (k !== P[r]) { miss++; api.salah(b, `That is <b>${k}</b> the desk. Listen again!`); api.speak(line()); return; }
+            busy = true; const z = Z[k];
+            an.style.left = (z[0] + z[2] / 2) + '%'; an.style.top = (z[1] + z[3] / 2 + (k === 'in' ? 2 : 0)) + '%';
+            api.betul(null, `${AN[r][1]} ${line()}`); api.speak(line());
+            r++; setTimeout(() => r < P.length ? round() : api.selesai(Math.max(0, 1 - miss * .1), 'In, on, under – you got it!'), 1100);
+          }
+          el.querySelector('#ioAg').onclick = () => !busy && r < P.length && api.speak(line());
+          round();
+          return { jawab() { const go = () => { if (r >= P.length) return; if (!busy) zs[P[r]].click(); setTimeout(go, 1150); }; go(); } };
+        },
+      },
+      {
+        id: 'pet-catch', tajuk: 'Catch the pets!', ikon: '🐕',
+        arahan: '🔊 The pets run away! Listen and catch the right pet.',
+        mula(el, api) {
+          const A = [['elephant', '🐘'], ['rat', '🐀'], ['lizard', '🦎'], ['frog', '🐸'], ['spider', '🕷️'], ['duck', '🦆'], ['dog', '🐕'], ['cat', '🐈']];
+          const order = api.shuffle(A.map((_, i) => i)).slice(0, 6), lanes = api.shuffle(A.map((_, i) => i));
+          let r = 0, miss = 0, busy = false;
+          el.innerHTML = `<style>
+            .pc-pen{display:flex;align-items:center;gap:6px;min-height:52px;border:3px dashed var(--c);border-radius:14px;padding:4px 10px;margin-bottom:10px;font-size:1.8rem;flex-wrap:wrap}
+            .pc-pen small{font:700 .95rem var(--hd);color:var(--muted)}
+            .pc-f{position:relative;height:260px;border-radius:16px;overflow:hidden;background:linear-gradient(#8ce99a,#51cf66)}
+            .pc-l{position:absolute;left:0;right:0;height:25%;border-bottom:2px dashed rgba(255,255,255,.5)}
+            .pc-a{position:absolute;top:50%;margin-top:-28px;border:0;background:none;font-size:2.8rem;line-height:1;padding:4px;cursor:pointer;animation:pcRun linear infinite}
+            .pc-a.got{animation-play-state:paused}
+            @keyframes pcRun{from{left:104%}to{left:-16%}}
+            @media (prefers-reduced-motion:reduce){.pc-a{animation:none}}
+          </style>
+          <div class="pc-pen" id="pcP"><small>Pet show 🎪</small></div>
+          <div class="row" style="justify-content:space-between;margin-bottom:8px"><button class="btn alt" id="pcAg">🔊 Listen again</button><span class="hint" id="pcN"></span></div>
+          <div class="pc-f" id="pcF">${[0, 1, 2, 3].map(k => `<div class="pc-l" style="top:${k * 25}%"></div>`).join('')}</div>`;
+          const F = el.querySelector('#pcF'), pen = el.querySelector('#pcP'), nEl = el.querySelector('#pcN'), bs = [];
+          const L = [...F.querySelectorAll('.pc-l')];
+          lanes.forEach((i, k) => {
+            const dur = 10 + Math.random() * 5, b = api.H(`<button class="pc-a" aria-label="${A[i][0]}" style="left:${k < 4 ? 10 : 58}%;animation-duration:${dur.toFixed(1)}s;animation-delay:-${((k < 4 ? 0 : 1) * dur / 2 + Math.random() * 2).toFixed(1)}s">${A[i][1]}</button>`);
+            b.onclick = () => tap(i, b); L[k % 4].appendChild(b); bs[i] = b;
+          });
+          const line = () => `Catch the ${A[order[r]][0]}!`;
+          function ask() { busy = false; nEl.textContent = `🐾 ${r + 1} / ${order.length}`; api.say(`🔊 ${line().replace(/the (\w+)/, 'the …')}`); api.speak(line()); }
+          function tap(i, b) {
+            if (busy || r >= order.length || b.classList.contains('got')) return;
+            if (i !== order[r]) { miss++; api.salah(b, `That's the <b>${A[i][0]}</b>. Listen again!`); api.speak(line()); return; }
+            busy = true; b.classList.add('got');
+            api.anim(b, [{ transform: 'none', opacity: 1 }, { transform: 'translateY(-40px) scale(1.4)', opacity: 1 }, { transform: 'translateY(-120px) scale(.3)', opacity: 0 }], { duration: 600 });
+            api.betul(null, `You've got the <b>${A[i][0]}</b>! ${A[i][1]}`); api.speak(`The ${A[i][0]}!`);
+            r++;
+            setTimeout(() => { b.style.visibility = 'hidden'; const x = api.H(`<span>${A[i][1]}</span>`); pen.appendChild(x); api.anim(x, [{ transform: 'scale(0)' }, { transform: 'scale(1)' }], { duration: 250 });
+              if (r < order.length) ask(); else api.selesai(Math.max(0, 1 - miss * .1), 'Pet show, pet show! All the pets are back!'); }, 620);
+          }
+          el.querySelector('#pcAg').onclick = () => !busy && r < order.length && api.speak(line());
+          ask();
+          return { jawab() { const go = () => { if (r >= order.length) return; if (!busy) bs[order[r]].click(); setTimeout(go, 680); }; go(); } };
+        },
+      },
+      {
+        id: 'animal-memory', tajuk: 'Memory: animals', ikon: '🃏',
+        arahan: 'Turn over two cards. Find the animal and the word!',
+        mula(el, api) {
+          const W = t => `<b style="font:700 1.05rem var(--hd)">${t}</b>`;
+          const P = [['🐘', 'elephant'], ['🐀', 'rat'], ['🦎', 'lizard'], ['🐸', 'frog'], ['🕷️', 'spider'], ['🦆', 'duck']].map(([e, w]) => [E(e), W(w), w]);
+          return memory(el, api, P, 'Great! You know the pets!');
+        },
+      },
+    ],
+  });
+
+  // ---- memory card game (flip two cards, find pairs) ----
+  function memory(el, api, P, endMsg) {
+    const cards = api.shuffle(P.flatMap((p, k) => [{ h: p[0], k }, { h: p[1], k }]));
+    let first = null, lock = false, found = 0, miss = 0;
+    el.innerHTML = `<style>
+      .mm-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+      .mm{border:0;background:none;padding:0;height:96px;perspective:600px;cursor:pointer}
+      .mm-in{display:block;position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+      .mm.open .mm-in{transform:rotateY(180deg)}
+      .mm-f,.mm-b{position:absolute;inset:0;border-radius:14px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:3px solid var(--line)}
+      .mm-f{background:var(--c);color:#fff;font:700 2rem var(--hd)}
+      .mm-b{background:var(--card);color:var(--ink);transform:rotateY(180deg);padding:4px;text-align:center}
+      .mm.ok .mm-b{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--card))}
+      @media (prefers-reduced-motion:reduce){.mm-in{transition:none}}
+    </style><p class="hint" id="mmN"></p><div class="mm-g"></div>`;
+    const g = el.querySelector('.mm-g'), nEl = el.querySelector('#mmN');
+    const prog = () => nEl.textContent = `⭐ ${found} / ${P.length}`;
+    const bs = cards.map(c => { const b = api.H(`<button class="mm" aria-label="card"><span class="mm-in"><span class="mm-f">?</span><span class="mm-b">${c.h}</span></span></button>`); b._c = c; b.onclick = () => flip(b); g.appendChild(b); return b; });
+    function flip(b) {
+      if (lock || b.classList.contains('open')) return;
+      b.classList.add('open');
+      if (!first) { first = b; return; }
+      const a = first; first = null;
+      if (a._c.k === b._c.k) {
+        a.classList.add('ok'); b.classList.add('ok'); found++; prog(); api.speak(P[b._c.k][2]); api.betul(b, `<b>${P[b._c.k][2]}</b> ✔`);
+        if (found === P.length) api.selesai(Math.max(0, 1 - Math.max(0, miss - 3) * .08), endMsg);
+      } else { miss++; lock = true; setTimeout(() => { a.classList.remove('open'); b.classList.remove('open'); lock = false; }, 850); }
+    }
+    prog();
+    return { jawab() { if (first) { first.classList.remove('open'); first = null; } const go = () => { if (found >= P.length) return; if (lock) return setTimeout(go, 200); const k = P.findIndex((_, i) => !bs.some(b => b._c.k === i && b.classList.contains('ok'))); bs.filter(b => b._c.k === k).forEach(b => b.click()); setTimeout(go, 60); }; go(); } };
+  }
+})();
+
+(() => {
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+  const E = e => `<span style="font-size:2.6rem;line-height:1.1">${e}</span>`;
+  const SAUS = w => `<svg viewBox="0 0 64 64" width="${w}" height="${w}"><ellipse cx="32" cy="46" rx="27" ry="8" fill="#dee2e6"/><path d="M13 40 Q32 22 51 40" stroke="#a0522d" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M20 33 Q32 26 44 33" stroke="#e8a07a" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".7"/></svg>`;
+  const PEAS = w => `<svg viewBox="0 0 64 64" width="${w}" height="${w}"><circle cx="20" cy="40" r="9" fill="#37b24d"/><circle cx="37" cy="42" r="9" fill="#51cf66"/><circle cx="28" cy="25" r="9" fill="#40c057"/><circle cx="45" cy="26" r="9" fill="#2f9e44"/><circle cx="17" cy="37" r="2.5" fill="#fff" opacity=".5"/><circle cx="25" cy="22" r="2.5" fill="#fff" opacity=".5"/></svg>`;
+  const ic = (f, w) => `<i style="font-style:normal;display:inline-block;vertical-align:middle">${f(w)}</i>`;
+
+  UNIT({
+    n: 4, tajuk: 'Lunchtime', tema: 'Food', ikon: '🍕', warna: '#c2255c',
+    belajar: [
+      { ikon: '🍽️', tajuk: 'Lunchtime!',
+        teks: ['The Super Friends wait for lunch.' + m('makan tengah hari'), 'What\'s for lunch? Look!'],
+        chips: ['🍌 banana' + m('pisang'), '🍰 cake' + m('kek'), '🥪 cheese sandwich' + m('sandwic keju'), '🍎 apple' + m('epal'), '🍕 pizza' + m('piza')] },
+      { ikon: '🍗', tajuk: 'More food',
+        teks: ['Yummy!' + m('sedapnya')],
+        chips: [ic(SAUS, 28) + ' sausage' + m('sosej'), '🍗 chicken' + m('ayam'), '🥩 steak' + m('stik'), ic(PEAS, 28) + ' peas' + m('kacang pis'), '🥕 carrots' + m('lobak merah')] },
+      { ikon: '🎶', tajuk: 'Chant and song',
+        teks: ['Chant: "Lunchtime! Lunchtime! What\'s for lunch?"', '"Oh, I like apples, and I like steak. Oh, I like carrots, and I like cake! Yummy!"'],
+        contoh: '🎵 Song: "Tommy\'s in the kitchen, come and take him out!" Tommy has milk on his peas!' },
+      { ikon: '🍱', tajuk: 'I\'ve got … I haven\'t got …',
+        teks: ['"I\'ve <b>got</b> a sandwich and an apple."' + m('Saya ada'), '"I <b>haven\'t got</b> a banana."' + m('Saya tiada')],
+        contoh: '"I\'ve got pizza and a banana." "Me too!"' + m('Saya pun!') },
+      { ikon: '🧀', tajuk: 'Have we got any …?',
+        teks: ['"Have we got any cheese?"' + m('Adakah kita ada keju?'), '👍 "Yes, we have." 👎 "No, we haven\'t."'] },
+      { ikon: '🍕', tajuk: 'Story: The pizza',
+        senarai: ['"Where\'s Misty?" She is invisible. She goes to the front. "Mmm. Pizza. My favourite!"', 'The friends: "Look at Misty! Hey! That isn\'t fair."', 'Misty: "Pizza, please."', 'Cook: "Sorry, we haven\'t got pizza."', 'Misty: "OK. Sausages and peas, please."', 'Cook: "A new pizza. Nice and hot." The friends get pizza!'],
+        contoh: '💛 Value: waiting your turn' + m('tunggu giliran') },
+      { ikon: '🌭', tajuk: 'Sound: o',
+        teks: ['Say <b>o</b> … <b>o</b> … like in h<b>o</b>t!'],
+        chips: ['Polly', 'stops' + m('berhenti'), 'shop' + m('kedai'), 'hot' + m('panas'), 'dog'],
+        contoh: 'P<b>o</b>lly st<b>o</b>ps at the sh<b>o</b>p for a h<b>o</b>t d<b>o</b>g.' },
+      { ikon: '🧁', tajuk: 'Numbers 11 to 20',
+        teks: ['Count the cakes!'],
+        chips: ['11 eleven', '12 twelve', '13 thirteen', '14 fourteen', '15 fifteen', '16 sixteen', '17 seventeen', '18 eighteen', '19 nineteen', '20 twenty'],
+        contoh: 'Shopping list' + m('senarai belian') + ': 12 apples, 13 steaks.' },
+      { ikon: '🥦', tajuk: 'Fruit and vegetables',
+        teks: ['Eat fruit and vegetables to be healthy!' + m('sihat')],
+        senarai: ['🍎 Fruit' + m('buah') + ': 🍑 peaches, 🍍 pineapples, 🍐 pears, 🍊 oranges, 🥥 coconuts, 🍅 tomatoes', '🥕 Vegetables' + m('sayur') + ': 🥦 broccoli, 🧅 onions, 🍄 mushrooms, 🥔 potatoes, 🌽 corn, green beans'],
+        contoh: '"Onions grow in the ground." "Coconuts grow on trees."' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Listen. Which food?', sebut: 'carrots', ikon: '👂', p: ['🥕', '🍌', '🍎', '🍕'].map(E), a: 0, htmlP: true, kenapa: 'Carrots 🥕.' },
+      { j: 'pilih', s: 'Listen. Which food?', sebut: 'chicken', ikon: '👂', p: ['🍗', '🥩', '🍕', '🧀'].map(E), a: 0, htmlP: true, kenapa: 'Chicken 🍗.' },
+      { j: 'pilih', s: '"I\'ve got a sandwich and ___ apple."', ikon: '🍱', p: ['an', 'a', 'any'], a: 0, kenapa: 'We say "an apple".' },
+      { j: 'pilih', s: 'Look in the fridge. "Have we got any cheese?"', ikon: '🧀🍰🍌🥕🍎',  p: ['Yes, we have.', 'No, we haven\'t.', 'Yes, it is.'], a: 0, kenapa: 'There is cheese in the fridge. Yes, we have.' },
+      { j: 'pilih', s: 'Chant: "Oh, I like carrots, and I like ___!"', ikon: '🎶', p: ['🍰 cake', '🍕 pizza', '🧀 cheese'], a: 0, kenapa: '"… and I like cake! Yummy!"' },
+      { j: 'pilih', s: 'Song: Tommy has milk on his …', ikon: '🥛', p: ['peas', 'pizza', 'cake'], a: 0, kenapa: '"I\'ve got milk on my peas."' },
+      { j: 'pilih', s: 'Story: What is Misty\'s favourite food?', ikon: '⭐', p: ['🍕 pizza', '🍌 banana', '🥕 carrots'], a: 0, kenapa: '"Mmm. Pizza. My favourite!"' },
+      { j: 'pilih', s: 'Story: Who says "Sorry, we haven\'t got pizza"?', ikon: '🍕', p: ['the cook', 'Misty', 'Flash'], a: 0, kenapa: 'The cook says it to Misty.' },
+      { j: 'pilih', s: 'Polly stops at the shop for a hot ___.', ikon: '🏪', p: ['dog', 'cake', 'steak'], a: 0, kenapa: 'A hot dog!' },
+      { j: 'pilih', s: 'Onions grow in the …', ikon: '🧅', p: ['ground', 'trees', 'tall grass'], a: 0, kenapa: '"Onions grow in the ground."' },
+      { j: 'bs', s: 'Misty waits for her turn.', ikon: '🕐', a: false, kenapa: 'Misty goes to the front. That isn\'t fair.' },
+      { j: 'bs', s: 'Coconuts grow on trees.', ikon: '🥥', a: true, kenapa: '"Coconuts grow on trees."' },
+      { j: 'bs', s: 'Twenty comes after nineteen.', ikon: '🔢', a: true, kenapa: 'Eighteen, nineteen, twenty.' },
+      { j: 'bs', s: 'At the start, the cook has got pizza for Misty.', ikon: '👩‍🍳', a: false, kenapa: '"Sorry, we haven\'t got pizza."' },
+      { j: 'kumpul', s: 'Fruit or vegetable?', kumpulan: [['🍎 Fruit', ['🍑 peach', '🍍 pineapple', '🍐 pear', '🥥 coconut']], ['🥕 Vegetable', ['🥦 broccoli', '🧅 onion', '🍄 mushroom', '🌽 corn']]] },
+      { j: 'padan', s: 'Match the number and the word.', pasangan: [['11', 'eleven'], ['12', 'twelve'], ['15', 'fifteen'], ['18', 'eighteen'], ['20', 'twenty']] },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🍰', kata: 'cake' },
+      { j: 'eja', s: 'Listen and spell.', ikon: '🍎', kata: 'apple' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🍌', kata: ['I\'ve', 'got', 'a', 'banana.'] },
+      { j: 'susun', s: 'Put the story in order.', item: ['"Where\'s Misty?"', '"Look at Misty!"', '"Pizza, please."', '"Sausages and peas, please."', '"A new pizza. Nice and hot."'] },
+    ],
+    amali: [
+      {
+        id: 'lunch-tray', tajuk: 'Fill the lunch tray', ikon: '🍱',
+        arahan: '🔊 Listen! "I\'ve got …" Put the two foods on the tray.',
+        mula(el, api) {
+          const F = { banana: E('🍌'), cake: E('🍰'), sandwich: E('🥪'), apple: E('🍎'), pizza: E('🍕'), sausages: SAUS(48), chicken: E('🍗'), steak: E('🥩'), peas: PEAS(48), carrots: E('🥕') };
+          const R = api.shuffle([
+            ['I\'ve got a sandwich and an apple.', 'sandwich', 'apple'], ['I\'ve got a sandwich and a banana.', 'sandwich', 'banana'],
+            ['I\'ve got pizza and a banana.', 'pizza', 'banana'], ['I\'ve got pizza and an apple.', 'pizza', 'apple'],
+            ['I\'ve got sausages and peas.', 'sausages', 'peas'], ['I\'ve got chicken and carrots.', 'chicken', 'carrots']]).slice(0, 5);
+          let r = 0, got = [], miss = 0, busy = false;
+          const K = api.shuffle(Object.keys(F));
+          el.innerHTML = `<style>
+            .lt-tray{display:flex;justify-content:center;align-items:center;gap:14px;min-height:96px;border-radius:18px;background:#4dabf7;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2);margin-bottom:12px;padding:8px}
+            .lt-tray .pl{width:76px;height:76px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+            .lt-c{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;border-top:8px solid #adb5bd;padding-top:8px}
+            .lt-c button{border:3px solid var(--line);background:var(--card);border-radius:14px;min-height:66px;cursor:pointer;display:grid;place-items:center;padding:2px;min-width:0}
+            .lt-c button span{font-size:clamp(1.7rem,7vw,2.4rem)!important}
+            .lt-c button:hover{border-color:var(--c)}
+          </style>
+          <div class="row" style="justify-content:space-between;margin-bottom:8px"><button class="btn alt" id="ltAg">🔊 Listen again</button><span class="hint" id="ltN"></span></div>
+          <div class="lt-tray" id="ltT"><div class="pl"></div><div class="pl"></div></div>
+          <div class="lt-c" id="ltC"></div><p class="hint" style="text-align:center">👩‍🍳 The lunch counter</p>`;
+          const T = el.querySelector('#ltT'), C = el.querySelector('#ltC'), nEl = el.querySelector('#ltN'), bs = {};
+          K.forEach(k => { const b = api.H(`<button aria-label="${k}">${F[k]}</button>`); b.onclick = () => tap(k, b); C.appendChild(b); bs[k] = b; });
+          const pl = [...T.querySelectorAll('.pl')];
+          function round() { busy = false; got = []; pl.forEach(p => p.innerHTML = ''); nEl.textContent = `🍱 ${r + 1} / ${R.length}`; api.say('🔊 "I\'ve got … and …"'); api.speak(R[r][0]); }
+          function tap(k, b) {
+            if (busy || got.includes(k)) return;
+            const want = R[r].slice(1);
+            if (!want.includes(k)) { miss++; api.salah(b, `That is <b>${k}</b>. Listen again!`); api.speak(R[r][0]); return; }
+            const p = pl[got.length]; got.push(k); p.innerHTML = F[k];
+            api.anim(p, [{ transform: 'translateY(40px) scale(.4)' }, { transform: 'none' }], { duration: 320 }); api.speak(k);
+            if (got.length === 2) {
+              busy = true; api.betul(T, `"${R[r][0]}" Yummy! 😋`);
+              r++; setTimeout(() => r < R.length ? round() : api.selesai(Math.max(0, 1 - miss * .1), 'Lunchtime! Great listening!'), 1300);
+            }
+          }
+          el.querySelector('#ltAg').onclick = () => !busy && r < R.length && api.speak(R[r][0]);
+          round();
+          return { jawab() { const go = () => { if (r >= R.length) return; if (!busy) R[r].slice(1).forEach(k => bs[k].click()); setTimeout(go, 1350); }; go(); } };
+        },
+      },
+      {
+        id: 'fruit-veg', tajuk: 'Fruit or vegetable?', ikon: '🧺',
+        arahan: 'Is it fruit or a vegetable? Tap the right basket!',
+        mula(el, api) {
+          const ALL = [['peach', '🍑', 0], ['pineapple', '🍍', 0], ['pear', '🍐', 0], ['orange', '🍊', 0], ['coconut', '🥥', 0], ['tomato', '🍅', 0],
+                       ['broccoli', '🥦', 1], ['onion', '🧅', 1], ['mushroom', '🍄', 1], ['potato', '🥔', 1], ['corn', '🌽', 1]];
+          const X = api.shuffle(ALL).slice(0, 8);
+          let i = 0, miss = 0, busy = false;
+          el.innerHTML = `<style>
+            .fv-now{text-align:center;margin:4px 0 14px}
+            .fv-now span{display:inline-block;font-size:4.2rem;line-height:1}
+            .fv-now b{display:block;font:700 1.4rem var(--hd)}
+            .fv-b{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+            .fv-b button{border:3px solid var(--line);background:color-mix(in srgb,#c98b4a 16%,var(--card));border-radius:18px;padding:10px;min-height:120px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink)}
+            .fv-b button:hover{border-color:var(--c)}
+            .fv-b button big{font-size:2.6rem;line-height:1}
+            .fv-b button b{font:700 1.2rem var(--hd)}
+            .fv-b button em{font-style:normal;font-size:1.3rem;min-height:1.6rem;display:flex;flex-wrap:wrap;justify-content:center}
+          </style>
+          <div class="fv-now" id="fvNow"></div>
+          <div class="fv-b"><button data-g="0"><big>🧺</big><b>fruit 🍌</b><em></em></button><button data-g="1"><big>🧺</big><b>vegetables 🥕</b><em></em></button></div>
+          <p class="hint" id="fvN" style="text-align:center"></p>`;
+          const now = el.querySelector('#fvNow'), B = [...el.querySelectorAll('.fv-b button')], nEl = el.querySelector('#fvN');
+          function show() { busy = false; const x = X[i]; now.innerHTML = `<span>${x[1]}</span><b>${x[0]}</b>`; api.anim(now, [{ transform: 'scale(.3)' }, { transform: 'scale(1)' }], { duration: 300 }); nEl.textContent = `🧺 ${i + 1} / ${X.length}`; api.say(`<b>${x[0]}</b> — fruit or vegetable?`); api.speak(x[0] + '. Fruit or vegetable?'); }
+          function drop(g, b) {
+            if (busy || i >= X.length) return;
+            const x = X[i];
+            if (x[2] !== g) { miss++; api.salah(b, `Look again! At the market, the ${x[0]} is with the ${x[2] ? 'vegetables' : 'fruit'}.`); return; }
+            busy = true;
+            const a = now.querySelector('span').getBoundingClientRect(), z = b.getBoundingClientRect();
+            api.anim(now.querySelector('span'), [{ transform: 'none' }, { transform: `translate(${z.left + z.width / 2 - a.left - a.width / 2}px,${z.top - a.top}px) scale(.4)`, opacity: .2 }], { duration: 450 });
+            api.betul(null, `${x[1]} A ${x[0]} is ${x[2] ? 'a vegetable' : 'fruit'}!`); api.speak(`A ${x[0]} is ${x[2] ? 'a vegetable' : 'fruit'}.`);
+            i++;
+            setTimeout(() => { b.querySelector('em').insertAdjacentHTML('beforeend', `<span>${x[1]}</span>`); if (i < X.length) show(); else { now.innerHTML = '<span>🎉</span>'; api.selesai(Math.max(0, 1 - miss * .1), 'Eat fruit and vegetables to be healthy!'); } }, 480);
+          }
+          B.forEach(b => b.onclick = () => drop(+b.dataset.g, b));
+          show();
+          return { jawab() { const go = () => { if (i >= X.length) return; if (!busy) B[X[i][2]].click(); setTimeout(go, 520); }; go(); } };
+        },
+      },
+      {
+        id: 'number-cakes', tajuk: 'Cakes: 11 to 20', ikon: '🧁',
+        arahan: '🔊 Listen to the number. Tap the right plate of cakes!',
+        mula(el, api) {
+          const W = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
+          const order = api.shuffle(W.map((_, i) => i)).slice(0, 6);
+          let r = 0, miss = 0, busy = false;
+          el.innerHTML = `<style>
+            .nc-g{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+            .nc-g button{border:3px solid var(--line);background:var(--card);border-radius:16px;min-height:72px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;padding:4px}
+            .nc-g button:hover{border-color:var(--c)}
+            .nc-g button b{font:700 1.5rem var(--hd);color:var(--ink)}
+            .nc-g button i{font-style:normal;font-size:1.3rem;line-height:1}
+            .nc-g button.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--card))}
+          </style>
+          <div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="btn alt" id="ncAg">🔊 Listen again</button><span class="hint" id="ncN"></span></div>
+          <div class="nc-g">${W.map((_, i) => `<button data-i="${i}"><b>${i + 11}</b><i>🍽️</i></button>`).join('')}</div>`;
+          const bs = [...el.querySelectorAll('.nc-g button')], nEl = el.querySelector('#ncN');
+          function ask() { busy = false; nEl.textContent = `🧁 ${r + 1} / ${order.length}`; api.say('🔊 Which number?'); api.speak(W[order[r]]); }
+          function tap(i, b) {
+            if (busy || r >= order.length) return;
+            if (i !== order[r]) { miss++; api.salah(b, `That is <b>${W[i]}</b>. Listen again!`); api.speak(W[order[r]]); return; }
+            busy = true; b.classList.add('ok'); b.querySelector('i').textContent = '🧁'; api.betul(b, `<b>${i + 11}</b> — ${W[i]} cakes! 🧁`); api.speak(W[i]);
+            r++; setTimeout(() => r < order.length ? ask() : api.selesai(Math.max(0, 1 - miss * .1), 'Yummy! You can count to twenty!'), 700);
+          }
+          bs.forEach(b => b.onclick = () => tap(+b.dataset.i, b));
+          el.querySelector('#ncAg').onclick = () => !busy && r < order.length && api.speak(W[order[r]]);
+          ask();
+          return { jawab() { const go = () => { if (r >= order.length) return; if (!busy) bs[order[r]].click(); setTimeout(go, 750); }; go(); } };
+        },
+      },
+    ],
+  });
+})();
+
+/* ================= Aplikasi "Belajar Ceria" Darjah 1 (7 tahun: soalan & pilihan dibaca kuat secara automatik) ================= */
+(function () {
+  const $ = s => document.querySelector(s);
+  const EN = SUBJ.ui === 'en';
+  const L = EN ? { betul: '✔ True', salah: '✘ False', next: 'Next ▶', prev: '◀ Back', main: '🎮 Let\'s play!', baca: '📖 Learn', game: '🎮 Play', amali: '🧪 Try it',
+      again: '🔁 Play again', units: 'All units', ok: ['Well done!', 'Correct!', 'Great!', 'Yes!'], no: 'Not quite.', ans: 'Answer:', mix: '🏆 Big challenge (all units)',
+      s3: 'Excellent!', s2: 'Good job!', s1: 'Try again!', score: n => `You got ${n}`, readDone: 'You finished the lesson!', unit: 'Unit', listen: 'Listen' }
+    : { betul: '✔ Betul', salah: '✘ Salah', next: 'Seterusnya ▶', prev: '◀ Kembali', main: '🎮 Jom main!', baca: '📖 Belajar', game: '🎮 Main', amali: '🧪 Amali',
+      again: '🔁 Main lagi', units: 'Semua unit', ok: ['Bagus!', 'Betul!', 'Hebat!', 'Pandai!'], no: 'Belum tepat.', ans: 'Jawapan:', mix: '🏆 Cabaran besar (semua unit)',
+      s3: 'Syabas!', s2: 'Bagus!', s1: 'Cuba lagi!', score: n => `Markah kamu ${n}`, readDone: 'Kamu sudah habis belajar!', unit: SUBJ.unit || 'Unit', listen: 'Dengar' };
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'd1' + SUBJ.kod;
+  const G = Object.assign({ xp: 0, u: {}, cab: 0, mute: false }, store.get(KEY, {}));
+  const UU = n => (G.u[n] = G.u[n] || { baca: 0, main: 0, am: {} });
+  const totalStars = () => Object.values(G.u).reduce((t, x) => t + (x.main || 0) + Object.values(x.am || {}).reduce((a, b) => a + b, 0), 0) + (G.cab || 0);
+  const save = () => { store.set(KEY, G); $('#xp').textContent = '⭐ ' + totalStars(); };
+  UNITS.sort((a, b) => a.n - b.n);
+  const stars = (n, of = 3) => '★'.repeat(n) + '<i>' + '★'.repeat(of - n) + '</i>';
+
+  /* nama murid dikongsi semua subjek */
+  const nm = $('#nama'); try { nm.value = localStorage.getItem('d1nama') || ''; } catch (e) {}
+  nm.oninput = () => { try { localStorage.setItem('d1nama', nm.value); } catch (e) {} };
+
+  /* bunyi + suara */
+  let AC = null;
+  function tone(fs, d) { if (G.mute) return; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); const t = AC.currentTime;
+    fs.forEach((f, i) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = 'triangle'; o.frequency.value = f; o.connect(g); g.connect(AC.destination);
+      g.gain.setValueAtTime(.0001, t + i * d); g.gain.exponentialRampToValueAtTime(.16, t + i * d + .02); g.gain.exponentialRampToValueAtTime(.0001, t + i * d + d * 1.6);
+      o.start(t + i * d); o.stop(t + i * d + d * 1.7); }); } catch (e) {} }
+  let VOICE;
+  function pickVoice() { try { const vs = speechSynthesis.getVoices(), l = SUBJ.lang.slice(0, 2);
+    VOICE = vs.find(v => v.lang.replace('_', '-') === SUBJ.lang) || vs.find(v => v.lang.startsWith(l)) || (l === 'ms' ? vs.find(v => v.lang.startsWith('id')) : null); } catch (e) {} }
+  if (window.speechSynthesis) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+  function speak(h) { if (G.mute || !window.speechSynthesis) return; const t = plain(h); if (!t) return;
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = VOICE ? VOICE.lang : SUBJ.lang; if (VOICE) u.voice = VOICE; u.rate = .88; speechSynthesis.speak(u); } catch (e) {} }
+  const hush = () => { try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {} };
+  const spkBtn = txt => { const b = H('<button class="spk" aria-label="' + L.listen + '">🔊</button>'); b.onclick = () => speak(typeof txt === 'function' ? txt() : txt); return b; };
+  const ikon = i => !i ? '' : (String(i).trim().startsWith('<') ? i : esc(i));
+
+  /* ---------- laman utama ---------- */
+  function home() {
+    hush(); cur = null; history.replaceState(null, '', location.pathname);
+    $('#unit').hidden = true; $('#home').hidden = false;
+    const temas = []; UNITS.forEach(u => { const t = u.tema || ''; let g = temas.find(x => x[0] === t); if (!g) temas.push(g = [t, []]); g[1].push(u); });
+    $('#home').innerHTML = temas.map(([t, us]) => `<section class="tema">${t ? `<h2>${esc(t)}</h2>` : '<h2></h2>'}<div class="grid">${us.map(u => {
+      const x = G.u[u.n] || {}, na = (u.amali || []).length, da = Object.keys(x.am || {}).length;
+      return `<button class="ut" data-n="${u.n}" style="--uc:${u.warna || 'var(--c)'}"><span class="no" aria-hidden="true">${ikon(u.ikon)}<small>${esc(u.label || u.n)}</small></span>
+        <b>${esc(u.tajuk)}</b><span class="st" aria-label="${x.main || 0} / 3">${stars(x.main || 0)}<span>${x.baca ? '📖✓' : ''}${na ? ` 🧪${da}/${na}` : ''}</span></span></button>`; }).join('')}</div></section>`).join('')
+      + `<div class="mix"><button class="btn go" id="cab">${L.mix}</button><span class="st" style="color:var(--gold);font-size:1.4rem;align-self:center">${stars(G.cab || 0)}</span></div>`;
+    $('#home').querySelectorAll('.ut').forEach(b => b.onclick = () => open(+b.dataset.n));
+    $('#cab').onclick = cabaran;
+    if (!RM()) $('#home').querySelectorAll('.ut').forEach((b, i) => anim(b, [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { delay: Math.min(i * 35, 500), duration: 380 }));
+    window.scrollTo({ top: 0 });
+  }
+
+  /* ---------- unit ---------- */
+  let cur = null, gen = 0;
+  function open(n, tabName) {
+    const u = UNITS.find(x => x.n === n); if (!u) return home();
+    hush(); cur = u; history.replaceState(null, '', '?u=' + n);
+    $('#home').hidden = true; $('#unit').hidden = false;
+    document.documentElement.style.setProperty('--uc', u.warna || '');
+    $('#uh').innerHTML = `<span class="big" aria-hidden="true">${ikon(u.ikon)}</span><div><small>${esc(u.labelPenuh || (L.unit + ' ' + (u.label || u.n)))}${u.tema ? ' · ' + esc(u.tema) : ''}</small><h2>${esc(u.tajuk)}</h2></div>`;
+    const tabs = [['baca', L.baca], ['main', L.game]].concat((u.amali || []).length ? [['amali', L.amali]] : []);
+    $('#tabs').innerHTML = tabs.map(([k, t]) => `<button class="tab" role="tab" data-t="${k}">${t}</button>`).join('');
+    $('#tabs').querySelectorAll('.tab').forEach(b => b.onclick = () => tab(b.dataset.t));
+    tab(tabName || (UU(n).baca ? 'main' : 'baca'));
+    window.scrollTo({ top: 0 });
+  }
+  function tab(k) {
+    hush(); gen++;
+    $('#tabs').querySelectorAll('.tab').forEach(b => { b.classList.toggle('on', b.dataset.t === k); b.setAttribute('aria-selected', b.dataset.t === k); });
+    ({ baca, main: () => kuiz(cur.soalan || [], 8, onMain), amali: alist })[k]();
+  }
+
+  /* ---------- Belajar: kad bergaris ---------- */
+  function baca() {
+    const cs = cur.belajar || []; let i = 0; const P = $('#pane');
+    function draw() {
+      const c = cs[i] || {}; hush();
+      const paras = [].concat(c.teks || []).map(p => `<p>${p}</p>`).join('');
+      P.innerHTML = `<article class="page card"><div class="ik" aria-hidden="true">${ikon(c.ikon)}</div><h3>${c.tajuk || ''}</h3>${paras}
+        ${c.senarai ? `<ul>${c.senarai.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
+        ${c.chips ? `<div class="chipz">${c.chips.map(x => `<span>${x}</span>`).join('')}</div>` : ''}
+        ${c.contoh ? `<div class="eg">${[].concat(c.contoh).join('<br>')}</div>` : ''}</article>
+        <div class="nav"><button class="btn alt" id="pv" ${i ? '' : 'disabled'}>${L.prev}</button><div class="dots">${cs.map((_, j) => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div>
+        <button class="btn go" id="nx">${i < cs.length - 1 ? L.next : L.main}</button></div>`;
+      const art = P.querySelector('.page'); art.appendChild(spkBtn(() => [c.tajuk, ...[].concat(c.teks || []), ...(c.senarai || []), ...(c.chips || []), ...[].concat(c.contoh || [])].join('. ')));
+      if (c.svg && typeof c.svg === 'function') { try { c.svg(P.querySelector('.ik'), { S, H, anim }); } catch (e) { console.error(e); } }
+      anim(art, [{ opacity: 0, transform: 'translateX(24px)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+      P.querySelector('#pv').onclick = () => { if (i) { i--; draw(); } };
+      P.querySelector('#nx').onclick = () => { if (i < cs.length - 1) { i++; draw(); } else { UU(cur.n).baca = 1; G.xp += 5; save(); api0.toast(L.readDone); tab('main'); } };
+    }
+    draw();
+  }
+
+  /* ---------- Main: kuiz bercampur ---------- */
+  let Q = null;   // keadaan soalan semasa (untuk ujian)
+  function pickQs(bank, n) {
+    const by = {}; shuffle(bank).forEach(q => (by[q.j] = by[q.j] || []).push(q));
+    const out = [], ks = shuffle(Object.keys(by));
+    while (out.length < n && ks.some(k => by[k].length)) ks.forEach(k => { if (out.length < n && by[k].length) out.push(by[k].shift()); });
+    return shuffle(out);
+  }
+  function kuiz(bank, n, onEnd) {
+    const qs = pickQs(bank, Math.min(n, bank.length)), sc = []; let i = 0; const P = $('#pane'), g = gen;
+    if (!qs.length) { P.innerHTML = '<p class="hint">—</p>'; return; }
+    function show() {
+      if (g !== gen) return;
+      const q = qs[i]; hush();
+      P.innerHTML = `<div class="qbar">${qs.map((_, j) => `<i class="${j < i ? (sc[j] >= 1 ? 'ok' : 'no') : j === i ? 'on' : ''}"></i>`).join('')}</div><article class="page" id="qp"></article>`;
+      const box = P.querySelector('#qp');
+      Q = { q, i, solve: null, done: false };
+      const fin = (s) => {
+        if (Q.done) return; Q.done = true; sc[i] = s;
+        const fb = H(`<div class="fb show ${s >= 1 ? 'ok' : 'no'}"></div>`);
+        fb.innerHTML = (s >= 1 ? '✅ <b>' + L.ok[Math.floor(Math.random() * L.ok.length)] + '</b>' : '💡 <b>' + (s > 0 ? L.ok[0] : L.no) + '</b>') + (q.kenapa ? ' ' + q.kenapa : '');
+        s >= 1 ? tone([660, 880], .09) : tone([300, 240], .12);
+        const nx = H(`<button class="btn go next">${i < qs.length - 1 ? L.next : '🏁'}</button>`);
+        nx.onclick = () => { i++; i < qs.length ? show() : end(); };
+        box.append(fb, nx); anim(fb, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 260 });
+        if (q.kenapa && s < 1) speak(q.kenapa);
+      };
+      (R[q.j] || R.pilih)(q, box, fin);
+      anim(box, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
+      const ops = [...box.querySelectorAll('.opts .opt')].map(b => plain(b.innerHTML)).filter(Boolean);   // plain() buang teks Arab/Jawi (.ar) & emoji
+      const lisan = (q.sebut || q.s) + (q.j === 'bs' ? (EN ? '. True or false?' : '. Betul atau salah?') : q.j === 'eja' ? '. ' + q.kata : ops.length ? '. ' + ops.join('. ') : '');
+      setTimeout(() => g === gen && speak(lisan), 250);
+    }
+    function end() {
+      const s = sc.reduce((a, b) => a + b, 0) / qs.length, n3 = s >= .9 ? 3 : s >= .6 ? 2 : s > 0 ? 1 : 0;
+      const isNew = onEnd(n3, s); Q = null;
+      const msg = n3 === 3 ? L.s3 : n3 === 2 ? L.s2 : L.s1;
+      P.innerHTML = `<div class="page res"><div class="stamp">${msg}</div><div class="stars">${stars(n3)}</div><p>${L.score(Math.round(s * qs.length) + ' / ' + qs.length)}${isNew ? ' 🎉' : ''}</p>
+        <div class="row" style="justify-content:center;margin-top:12px"><button class="btn go" id="ag">${L.again}</button><button class="btn alt" id="hm">◀ ${L.units}</button></div></div>`;
+      tone(n3 === 3 ? [523, 659, 784, 1046] : [523, 659, 784], .11); speak(msg);
+      anim(P.querySelector('.stamp'), [{ opacity: 0, transform: 'rotate(-30deg) scale(2.2)' }, { opacity: 1, transform: 'rotate(-8deg) scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+      P.querySelector('#ag').onclick = () => kuiz(bank, n, onEnd); P.querySelector('#hm').onclick = home;
+      window.__d2Done = { skor: s, n3 };
+    }
+    show();
+  }
+  function onMain(n3, s) { const x = UU(cur.n), was = x.main || 0; x.main = Math.max(was, n3); G.xp += Math.round(10 + 20 * s); save(); return n3 > was; }
+  function cabaran() {
+    gen++; cur = { n: -1, tajuk: L.mix }; history.replaceState(null, '', '?cabaran');
+    $('#home').hidden = true; $('#unit').hidden = false; $('#tabs').innerHTML = '';
+    $('#uh').innerHTML = `<span class="big">🏆</span><div><small>${EN ? 'Year 1' : 'Darjah 1'} · ${esc(SUBJ.nama)}</small><h2>${L.mix.replace(/^\S+\s/, '')}</h2></div>`;
+    kuiz(UNITS.flatMap(u => u.soalan || []), 12, (n3) => { const was = G.cab || 0; G.cab = Math.max(was, n3); save(); return n3 > was; });
+  }
+
+  /* ---------- penyampai jenis soalan ---------- */
+  const qhead = (q, box) => {
+    const s = esc(q.s || '').replace(/_{3,}/g, '<span class="gap">&nbsp;</span>');
+    box.insertAdjacentHTML('beforeend', `<p class="qs">${q.html ? q.s : s}</p>${q.ikon ? `<div class="qik" aria-hidden="true">${ikon(q.ikon)}</div>` : ''}`);
+    box.appendChild(spkBtn(() => q.sebut || q.s));
+  };
+  const btn = (t, cls = 'opt') => H(`<button class="${cls}">${t}</button>`);
+  const shake = el => anim(el, [{ transform: 'translateX(-7px)' }, { transform: 'translateX(7px)' }, { transform: 'none' }], { duration: 280, fill: 'none' });
+  const pop = el => anim(el, [{ transform: 'scale(1.1)' }, { transform: 'none' }], { duration: 260, fill: 'none' });
+  const R = {
+    pilih(q, box, fin) {
+      qhead(q, box); const o = H('<div class="opts"></div>'); box.appendChild(o);
+      const bs = shuffle(q.p.map((t, k) => [t, k])).map(([t, k]) => { const b = btn(q.htmlP ? t : esc(t)); b.dataset.k = k; o.appendChild(b); return b; });
+      const pickK = k => { const b = bs.find(x => +x.dataset.k === k); bs.forEach(x => x.disabled = true);
+        if (k === q.a) { b.classList.add('ok'); pop(b); fin(1); } else { b.classList.add('no'); shake(b); bs.find(x => +x.dataset.k === q.a).classList.add('ok'); fin(0); } };
+      bs.forEach(b => b.onclick = () => pickK(+b.dataset.k));
+      Q.solve = () => pickK(q.a);
+    },
+    bs(q, box, fin) { R.pilih(Object.assign({}, q, { p: [L.betul, L.salah], a: q.a ? 0 : 1 }), box, fin); },
+    padan(q, box, fin) {
+      qhead(q, box); const w = H('<div class="two"><div class="col"></div><div class="col"></div></div>'); box.appendChild(w);
+      const [cl, cr] = w.children; let sel = null, left = q.pasangan.length, miss = 0;
+      const A = shuffle(q.pasangan.map((p, k) => [p[0], k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; cl.appendChild(b); return b; });
+      const B = shuffle(q.pasangan.map((p, k) => [p[1], k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; cr.appendChild(b); return b; });
+      const tryPair = (a, b) => { if (a.dataset.k === b.dataset.k) { [a, b].forEach(x => { x.classList.remove('on'); x.classList.add('ok'); x.disabled = true; pop(x); }); tone([700], .06); if (!--left) fin(miss ? .5 : 1); }
+        else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } sel = null; A.forEach(x => x.classList.remove('on')); };
+      A.forEach(a => a.onclick = () => { A.forEach(x => x.classList.remove('on')); sel = a; a.classList.add('on'); speak(a.textContent); });
+      B.forEach(b => b.onclick = () => { if (sel) tryPair(sel, b); else { shake(b); } });
+      Q.solve = () => A.forEach(a => { if (!a.disabled) tryPair(a, B.find(b => b.dataset.k === a.dataset.k)); });
+    },
+    susun(q, box, fin) {
+      qhead(q, box); const sl = H('<div class="slots"></div>'), pool = H('<div class="pool"></div>'); box.append(sl, pool);
+      const slots = q.item.map((_, k) => sl.appendChild(H(`<div class="slot"><b>${k + 1}</b><span></span></div>`)));
+      let nx = 0, miss = 0;
+      const cs = shuffle(q.item.map((t, k) => [t, k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; pool.appendChild(b); return b; });
+      const put = b => { const k = +b.dataset.k;
+        if (q.item[k] === q.item[nx]) { slots[nx].querySelector('span').innerHTML = b.innerHTML; slots[nx].classList.add('ok'); pop(slots[nx]); b.remove(); nx++; tone([600 + nx * 40], .05); if (nx === q.item.length) fin(miss ? .5 : 1); }
+        else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      cs.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < q.item.length) put(cs.find(b => b.isConnected && q.item[+b.dataset.k] === q.item[nx])); };
+    },
+    kumpul(q, box, fin) {
+      qhead(q, box); const items = shuffle(q.kumpulan.flatMap(([g, xs], gi) => xs.map(x => [x, gi])));
+      const now = H('<div class="now"></div>'), bins = H('<div class="bins"></div>'); box.append(now, bins);
+      const bb = q.kumpulan.map(([g]) => { const b = H(`<button class="bin"><b>${q.html ? g : esc(g)}</b></button>`); bins.appendChild(b); return b; });
+      let i = 0, miss = 0;
+      const showNow = () => { now.innerHTML = i < items.length ? (q.html ? items[i][0] : esc(items[i][0])) : '✔'; if (i < items.length) pop(now); };
+      const drop = gi => { if (i >= items.length) return; const [x, g] = items[i];
+        if (g === gi) { bb[gi].insertAdjacentHTML('beforeend', `<span>${q.html ? x : esc(x)}</span>`); pop(bb[gi]); tone([700], .05); i++; showNow(); if (i === items.length) { bb.forEach(b => b.disabled = true); fin(miss ? .5 : 1); } }
+        else { miss++; bb[gi].classList.add('no'); shake(bb[gi]); setTimeout(() => bb[gi].classList.remove('no'), 450); } };
+      bb.forEach((b, gi) => b.onclick = () => drop(gi)); showNow();
+      Q.solve = () => { while (i < items.length) drop(items[i][1]); };
+    },
+    eja(q, box, fin) {
+      qhead(Object.assign({}, q, { sebut: q.sebut || q.kata }), box);
+      const word = q.kata, line = H('<div class="line" aria-live="polite"></div>'), pool = H('<div class="pool"></div>'); box.append(line, pool);
+      let nx = 0, miss = 0; const chars = [...word].filter(c => c !== ' ');
+      const tiles = shuffle(chars.map((c, k) => [c, k])).map(([c]) => { const b = btn(esc(c), 'chip'); b.dataset.c = c; pool.appendChild(b); return b; });
+      const put = b => { if (b.dataset.c.toLowerCase() === chars[nx].toLowerCase()) { line.insertAdjacentHTML('beforeend', `<span>${esc(chars[nx])}</span>`); b.remove(); nx++; tone([600 + nx * 30], .04);
+          if (nx === chars.length) { speak(word); fin(miss ? .5 : 1); } } else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      tiles.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < chars.length) put(tiles.find(b => b.isConnected && b.dataset.c.toLowerCase() === chars[nx].toLowerCase())); };
+    },
+    ayat(q, box, fin) {
+      qhead(q, box); const line = H('<div class="line"></div>'), pool = H('<div class="pool"></div>'); box.append(line, pool);
+      let nx = 0, miss = 0;
+      const ws = shuffle(q.kata.map((w, k) => [w, k])).map(([w]) => { const b = btn(esc(w), 'chip'); b.dataset.w = w; pool.appendChild(b); return b; });
+      const put = b => { if (b.dataset.w === q.kata[nx]) { line.insertAdjacentHTML('beforeend', `<span>${esc(b.dataset.w)}</span>`); b.remove(); nx++; tone([600 + nx * 30], .04);
+          if (nx === q.kata.length) { speak(q.kata.join(' ')); fin(miss ? .5 : 1); } } else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      ws.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < q.kata.length) put(ws.find(b => b.isConnected && b.dataset.w === q.kata[nx])); };
+    },
+  };
+
+  /* ---------- Amali: aktiviti tersuai ---------- */
+  const api0 = { toast(t) { const d = document.createElement('div'); d.className = 'tst'; d.textContent = t; $('#toast').appendChild(d); setTimeout(() => d.remove(), 2600); } };
+  let ctl = null;
+  function alist() {
+    const P = $('#pane'), x = UU(cur.n);
+    P.innerHTML = `<div class="alist">${cur.amali.map((a, k) => `<button class="ut" data-k="${k}"><span class="no" aria-hidden="true">${ikon(a.ikon)}</span><b>${esc(a.tajuk)}</b><span class="st">${stars(x.am[a.id] || 0)}</span></button>`).join('')}</div>`;
+    P.querySelectorAll('.ut').forEach(b => b.onclick = () => runAmali(cur.amali[+b.dataset.k]));
+    if (cur.amali.length === 1 && !x.am[cur.amali[0].id]) runAmali(cur.amali[0]);
+  }
+  function runAmali(a) {
+    gen++; const g = gen, P = $('#pane'), u = cur; hush();
+    P.innerHTML = `<div class="say" aria-live="polite"></div><div class="abody"></div><div id="afin"></div>`;
+    const say = P.querySelector('.say'), body = P.querySelector('.abody');
+    const api = {
+      say(h) { if (g === gen) say.innerHTML = h; },
+      betul(el, h) { tone([660, 880], .09); if (el) pop(el); if (h !== undefined) api.say('✅ ' + h); },
+      salah(el, h) { tone([300, 240], .12); if (el) shake(el); if (h !== undefined) api.say('💡 ' + h); },
+      selesai(skor, h) {
+        if (g !== gen) return; skor = Math.max(0, Math.min(1, +skor || 0));
+        const n = skor >= .999 ? 3 : skor >= .7 ? 2 : skor > 0 ? 1 : 0, x = UU(u.n), was = x.am[a.id] || 0;
+        x.am[a.id] = Math.max(was, n); G.xp += Math.round(10 + 20 * skor); save();
+        const msg = n === 3 ? L.s3 : n === 2 ? L.s2 : L.s1; tone([523, 659, 784, 1046], .1); speak(h || msg);
+        P.querySelector('#afin').innerHTML = `<div class="res"><div class="stamp">${msg}</div><div class="stars">${stars(n)}</div>${h ? `<p>${h}</p>` : ''}
+          <div class="row" style="justify-content:center"><button class="btn go" id="ag">${L.again}</button><button class="btn alt" id="bk">◀ ${L.amali.replace(/^\S+\s/, '')}</button></div></div>`;
+        P.querySelector('#ag').onclick = () => runAmali(a); P.querySelector('#bk').onclick = () => tab('amali');
+        anim(P.querySelector('.stamp'), [{ opacity: 0, transform: 'rotate(-30deg) scale(2.2)' }, { opacity: 1, transform: 'rotate(-8deg) scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+        P.querySelector('#afin').scrollIntoView({ block: 'nearest', behavior: RM() ? 'auto' : 'smooth' });
+        window.__amaliDone = { id: a.id, skor };
+      },
+      toast: api0.toast, speak, shuffle, S, H, anim, esc,
+    };
+    api.say(a.arahan || '');
+    try { ctl = a.mula(body, api) || null; } catch (e) { console.error(e); body.innerHTML = '<p class="hint">Aktiviti ini gagal dimuat.</p>'; }
+  }
+
+  $('#back').onclick = home;
+  $('#mute').onclick = () => { G.mute = !G.mute; if (G.mute) hush(); save(); $('#mute').textContent = G.mute ? '🔇' : '🔊'; };
+  $('#mute').textContent = G.mute ? '🔇' : '🔊';
+  window.D1 = window.D2 = { open, home, tab, cabaran, runAmali, kuizAll: () => { gen++; kuiz(cur.soalan || [], 999, () => false); }, get Q() { return Q; }, get ctl() { return ctl; }, get cur() { return cur; }, UNITS, G, R };   // untuk ujian
+  save();
+  const sp = new URLSearchParams(location.search);
+  sp.has('cabaran') ? cabaran() : sp.get('u') ? open(+sp.get('u')) : home();
+})();
+
+</script>
+<script src="../../assets/cikgu-robo.js" defer></script>
+</body>
+</html>
