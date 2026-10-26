@@ -358,6 +358,26 @@
       </div>
       <!--/D2-PANEL-->
       <div class="form-panel" id="form-t1" role="tabpanel" aria-labelledby="tab-t1" hidden>
+      <!--T1EN-->
+      <article class="subject" id="english-t1">
+        <div class="subject-head">
+          <div class="subject-icon" aria-hidden="true" style="background:linear-gradient(135deg,#1971c2,#74c0fc)">🔤</div>
+          <div>
+            <span class="tag">KSSM · Tingkatan 1 · CEFR</span>
+            <h2>English Form 1</h2>
+            <p><b>Pulse 2</b> (Starter + Units 1–5): learning cards for vocabulary, grammar and reading, then a quiz and mini-games — tense detective, sentence builders, timelines and more.</p>
+            <div class="subject-actions"><a href="studies/english-t1/belajar.html" class="btn btn-small btn-primary">🔤 Open English Form 1</a></div>
+            <div class="overall"><span class="ovt" data-key="t1english">Progress: 0 stars</span><div class="bar"><i class="ovb" data-key="t1english"></i></div></div>
+          </div>
+        </div>
+        <div class="gzones"><div class="gzone" style="grid-column:1/-1;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));display:grid"><a class="bab" style="--c:#74c0fc" href="studies/english-t1/belajar.html?u=0" data-t1en="0"><span class="no">S</span><span class="t">👋 Starter: It&#x27;s my life!</span><span class="k">☆☆☆</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#74c0fc" href="studies/english-t1/belajar.html?u=1" data-t1en="1"><span class="no">UNIT 1</span><span class="t">🛹 What do you like?</span><span class="k">☆☆☆</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#74c0fc" href="studies/english-t1/belajar.html?u=2" data-t1en="2"><span class="no">UNIT 2</span><span class="t">📚 Fact or fiction?</span><span class="k">☆☆☆</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#74c0fc" href="studies/english-t1/belajar.html?u=3" data-t1en="3"><span class="no">UNIT 3</span><span class="t">⛈️ Wild weather</span><span class="k">☆☆☆</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#74c0fc" href="studies/english-t1/belajar.html?u=4" data-t1en="4"><span class="no">UNIT 4</span><span class="t">🌍 Life on Earth</span><span class="k">☆☆☆</span><div class="bar"><i></i></div></a><a class="bab" style="--c:#74c0fc" href="studies/english-t1/belajar.html?u=5" data-t1en="5"><span class="no">UNIT 5</span><span class="t">🧪 Let&#x27;s experiment!</span><span class="k">☆☆☆</span><div class="bar"><i></i></div></a></div></div>
+      </article>
+      <script>(function () { var C = {}; try { C = JSON.parse(localStorage.getItem('t1english') || '{}'); } catch (e) {}
+        var got = 0; document.querySelectorAll('.bab[data-t1en]').forEach(function (a) { var u = (C.u || {})[a.getAttribute('data-t1en')] || {}, st = u.main || 0; got += st;
+          a.querySelector('.k').textContent = '★★★'.slice(0, st) + '☆☆☆'.slice(st) + (u.baca ? ' · 📖' : ''); a.querySelector('.bar i').style.width = Math.round(100 * st / 3) + '%'; });
+        var n = document.querySelectorAll('.bab[data-t1en]').length * 3, t = document.querySelector('.ovt[data-key="t1english"]'), b = document.querySelector('.ovb[data-key="t1english"]');
+        if (got && t) { t.textContent = 'Progress: ' + got + '/' + n + ' quiz stars'; b.style.width = Math.round(100 * got / n) + '%'; } })();</script>
+      <!--/T1EN-->
       <article class="subject" id="sejarah-t1">
         <div class="subject-head">
           <div class="subject-icon" aria-hidden="true" style="background:linear-gradient(135deg,#f0c060,#c4553b)">&#x23F3;</div>

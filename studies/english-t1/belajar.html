@@ -1,0 +1,1762 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Form 1</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eef3f8; --card:#ffffff; --ink:#1c2740; --muted:#5a6884; --line:#cfd9e6; --rule:#d3e3f5; --margin:#e5484d;
+  --ok:#1f9d55; --no:#e0592a; --gold:#f2b705; --c:#1971c2; --c2:color-mix(in srgb,var(--c) 14%,var(--card));
+  --ui:"Andika","Comic Neue",system-ui,sans-serif; --hd:"Fredoka","Andika",system-ui,sans-serif; --ar:"Amiri","Scheherazade New","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#14241f; --card:#1b2f29; --ink:#eef5ef; --muted:#a9bfb6; --line:#2f4a41; --rule:#25403a; --margin:#ff7b7f; --ok:#6fdc97; --no:#ff9466; --gold:#ffd23f}}
+:root[data-theme="dark"]{--paper:#14241f; --card:#1b2f29; --ink:#eef5ef; --muted:#a9bfb6; --line:#2f4a41; --rule:#25403a; --margin:#ff7b7f; --ok:#6fdc97; --no:#ff9466; --gold:#ffd23f}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.6 var(--ui)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+.ar{font-family:var(--ar);direction:rtl;unicode-bidi:isolate;font-size:1.5em;line-height:1.7}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 70px}
+[hidden]{display:none!important}
+
+/* Kulit buku latihan */
+.cover{background:var(--c);color:#fff;padding:44px 0 26px;position:relative;overflow:hidden}
+.cover::after{content:"";position:absolute;inset:auto 0 0 0;height:10px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 14px,transparent 14px 28px)}
+.cover .wrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding-bottom:0}
+.label{background:#fff;color:#1c2740;border-radius:14px;padding:12px 18px 10px;min-width:260px;flex:1;max-width:520px;box-shadow:0 6px 0 rgba(0,0,0,.18);position:relative}
+.label h1{margin:0;font:700 clamp(1.6rem,4.6vw,2.4rem)/1.05 var(--hd);color:var(--c)}
+.label .ln{display:flex;gap:8px;align-items:baseline;margin-top:6px;font-size:.92rem;color:#5a6884}
+.label input{flex:1;min-width:0;border:0;border-bottom:2px dotted #aab6c8;background:transparent;font:700 1.05rem var(--hd);color:#1c2740;padding:0 4px}
+.label input:focus{outline:none;border-bottom-color:var(--c)}
+.tools{display:flex;gap:10px;margin-left:auto}
+.pill{font:700 1.05rem var(--hd);background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.icon{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.6);background:rgba(255,255,255,.18);cursor:pointer;font-size:1.25rem;color:#fff}
+
+/* Laman utama */
+.tema h2{font:600 1.05rem var(--hd);color:var(--muted);margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+.tema h2::after{content:"";flex:1;height:2px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.ut{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 16px;cursor:pointer;transition:transform .18s,border-color .18s;min-height:96px}
+.ut:hover{transform:translateY(-3px);border-color:var(--uc,var(--c))}
+.ut .no{grid-row:1/3;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:2rem;background:color-mix(in srgb,var(--uc,var(--c)) 16%,var(--card));position:relative}
+.ut .no small{position:absolute;right:-4px;bottom:-4px;background:var(--uc,var(--c));color:#fff;font:700 .8rem var(--hd);border-radius:99px;padding:1px 7px;border:2px solid var(--card)}
+.ut b{font:600 1.08rem/1.2 var(--hd)}
+.ut .st{color:var(--gold);letter-spacing:2px;font-size:1.05rem}
+.ut .st i{font-style:normal;color:var(--line)}
+.ut .st span{font:600 .78rem var(--ui);color:var(--muted);letter-spacing:0;margin-left:6px}
+.mix{margin:22px 0 0;display:flex;gap:12px;flex-wrap:wrap}
+
+/* Unit */
+.uh{display:flex;align-items:center;gap:12px;margin:18px 0 10px;flex-wrap:wrap}
+.uh .big{font-size:2.6rem;line-height:1}
+.uh small{display:block;color:var(--muted);font-weight:700}
+.uh h2{margin:0;font:700 clamp(1.35rem,3.6vw,1.9rem)/1.15 var(--hd)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.tab{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:8px 18px;font:600 1.02rem var(--hd);cursor:pointer;min-height:48px}
+.tab.on{background:var(--c);border-color:var(--c);color:#fff}
+
+/* Kertas bergaris (kad belajar & soalan) */
+.page{background-color:var(--card);background-image:linear-gradient(90deg,transparent 46px,color-mix(in srgb,var(--margin) 55%,transparent) 46px,color-mix(in srgb,var(--margin) 55%,transparent) 48px,transparent 48px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 35px);border:2px solid var(--line);border-radius:22px;padding:22px 22px 22px 64px;min-height:300px;position:relative}
+.card .ik{font-size:4rem;line-height:1.1;margin:0 0 6px}
+.card .ik svg{width:min(320px,100%);height:auto;display:block}
+.card h3{margin:0 0 8px;font:700 1.5rem/1.2 var(--hd);color:var(--c)}
+.card p{margin:0 0 10px;font-size:1.18rem}
+.card ul{margin:6px 0 10px;padding-left:22px}
+.card li{margin:4px 0;font-size:1.12rem}
+.card .chipz{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.card .chipz span{background:var(--c2);border:2px solid color-mix(in srgb,var(--c) 40%,var(--line));border-radius:12px;padding:4px 12px;font-weight:700}
+.card .eg{border-left:5px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));padding:8px 12px;border-radius:0 12px 12px 0;margin:8px 0}
+.spk{position:absolute;right:14px;top:14px;width:50px;height:50px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-size:1.3rem;cursor:pointer}
+.nav{display:flex;align-items:center;gap:10px;margin-top:14px;justify-content:space-between}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--c);transform:scale(1.25)}
+.btn{border:0;border-radius:16px;padding:12px 20px;font:700 1.05rem var(--hd);cursor:pointer;background:var(--ink);color:var(--paper);box-shadow:0 5px 0 color-mix(in srgb,var(--ink) 55%,#000);min-height:52px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 55%,#000)}
+.btn.go{background:var(--c);color:#fff;box-shadow:0 5px 0 color-mix(in srgb,var(--c) 55%,#000)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.btn[disabled]{opacity:.4;cursor:default}
+
+/* Soalan */
+.qbar{display:flex;gap:6px;margin:0 0 12px}
+.qbar i{flex:1;height:10px;border-radius:99px;background:var(--line)}
+.qbar i.ok{background:var(--ok)} .qbar i.no{background:var(--no)} .qbar i.on{background:var(--c)}
+.qs{font:600 1.3rem/1.35 var(--hd);margin:0 0 6px;padding-right:56px}
+.qs .gap{display:inline-block;min-width:70px;border-bottom:3px solid var(--c);text-align:center}
+.qik{font-size:3.4rem;line-height:1.1;margin:4px 0 8px}
+.qik svg{width:min(300px,100%);height:auto}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.opt,.chip{border:3px solid var(--line);background:var(--card);border-radius:16px;padding:12px 16px;cursor:pointer;font:600 1.12rem/1.3 var(--ui);text-align:left;min-height:56px;transition:border-color .15s,background .15s}
+.opt:hover,.chip:hover{border-color:var(--c)}
+.chip{text-align:center;padding:10px 14px;min-height:50px}
+:is(.opt,.chip,.bin,.slot).on{background:var(--c2);border-color:var(--c)}
+:is(.opt,.chip,.bin,.slot,.now).ok{background:color-mix(in srgb,var(--ok) 18%,var(--card));border-color:var(--ok)}
+:is(.opt,.chip,.bin,.slot,.now).no{background:color-mix(in srgb,var(--no) 16%,var(--card));border-color:var(--no)}
+.opt[disabled],.chip[disabled]{cursor:default}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.col{display:grid;gap:10px;align-content:start}
+.slots{display:grid;gap:8px;margin:12px 0}
+.slot{min-height:52px;border:3px dashed var(--line);border-radius:14px;padding:8px 12px;display:flex;align-items:center;gap:10px;font-weight:700}
+.slot b{font:700 1.1rem var(--hd);color:var(--c);min-width:24px}
+.slot.ok{border-style:solid}
+.pool{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.line{min-height:62px;border-bottom:3px solid var(--c);display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;padding:6px 0;margin:10px 0;font:700 1.35rem var(--hd)}
+.line span{background:var(--c2);border-radius:10px;padding:2px 10px}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.bin{border:3px solid var(--line);border-radius:16px;padding:10px;min-height:96px;background:var(--card);cursor:pointer;text-align:left}
+.bin b{display:block;font:700 1.05rem var(--hd);color:var(--c);margin-bottom:6px}
+.bin span{display:inline-block;margin:3px;padding:2px 10px;border-radius:10px;background:var(--c2);font-weight:700;font-size:.95rem}
+.now{font:700 1.5rem var(--hd);text-align:center;margin:10px 0;padding:12px;border-radius:16px;background:var(--c2)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:14px;font-size:1.08rem;display:none}
+.fb.show{display:block}
+.fb.ok{border:2px solid var(--ok)} .fb.no{border:2px solid var(--no)}
+.next{margin-top:12px}
+
+/* Hasil: cop guru */
+.res{text-align:center;padding:24px 10px;overflow:hidden}
+.stamp{display:inline-block;font:700 2.4rem/1 var(--hd);color:var(--margin);border:5px solid var(--margin);border-radius:18px;padding:12px 26px;transform:rotate(-8deg);letter-spacing:.04em;margin:12px 0 6px}
+.res .stars{font-size:3rem;color:var(--gold);letter-spacing:6px}
+.res .stars i{font-style:normal;color:var(--line)}
+.res p{margin:6px 0;font-size:1.1rem}
+
+/* Amali (modul aktiviti tersuai) */
+.alist{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.say{min-height:54px;margin:4px 0 12px;padding:12px 14px;border-radius:14px;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--c);font-size:1.08rem}
+.abody{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;min-height:260px}
+.abody svg{max-width:100%;height:auto}
+.abody svg text{font-family:var(--ui);fill:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.box{border:2px solid var(--line);border-radius:16px;padding:12px}
+.hint{color:var(--muted);font-size:.95rem;margin:6px 0 0}
+.meter{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--c);transition:width .4s}
+.back{margin:16px 0 0}
+#toast{position:fixed;right:16px;bottom:16px;z-index:50;display:grid;gap:8px}
+.tst{background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:12px;font-weight:700}
+@media (max-width:600px){
+  body{font-size:18px}
+  .label{min-width:0;flex-basis:100%}
+  .tools{margin-left:0}
+  .grid,.alist{grid-template-columns:1fr}
+  .page{padding:18px 14px 18px 40px;background-image:linear-gradient(90deg,transparent 26px,color-mix(in srgb,var(--margin) 55%,transparent) 26px,color-mix(in srgb,var(--margin) 55%,transparent) 28px,transparent 28px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 35px)}
+  .opts{grid-template-columns:1fr}
+  .card .ik{font-size:3.2rem}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="cover">
+<a href="../../studies.html#english-t1" style="position:absolute;z-index:5;left:12px;top:8px;padding:4px 12px;border-radius:999px;border:2px solid rgba(255,255,255,.7);background:rgba(0,0,0,.18);color:#fff;font:700 14px system-ui;text-decoration:none">← Studies</a>
+
+  <div class="wrap">
+    <div class="label">
+      <h1>🔤 English</h1>
+      <div class="ln"><span>Name:</span><input id="nama" maxlength="24" autocomplete="off" aria-label="Name:"><span>Form 1</span></div>
+    </div>
+    <div class="tools"><span class="pill" id="xp">⭐ 0</span><button class="icon" id="mute" aria-label="Bunyi dan suara">🔊</button></div>
+  </div>
+</header>
+<div class="wrap">
+  <main id="home"></main>
+  <main id="unit" hidden>
+    <button class="btn alt back" id="back">◀ All units</button>
+    <div class="uh" id="uh"></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <section id="pane"></section>
+  </main>
+</div>
+<div id="toast" aria-live="polite"></div>
+<script>
+const SUBJ = {"nama": "English", "ikon": "🔤", "warna": "#1971c2", "lang": "en-GB", "ui": "en", "unit": "Unit", "kod": "english"};
+/* ================= Enjin "Belajar" Tingkatan 1 (English) =================
+   Setiap modul unit memanggil UNIT({...}) sekali. Lihat shared/t1/SPEC.md. */
+'use strict';
+const UNITS = [];
+function UNIT(u) { UNITS.push(u); }
+const NS = 'http://www.w3.org/2000/svg';
+function S(tag, at, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in at || {}) { if (k === 'text') e.textContent = at[k]; else e.setAttribute(k, at[k]); }
+  if (parent) parent.appendChild(e); return e;
+}
+function H(html) { const t = document.createElement('template'); t.innerHTML = String(html).trim(); return t.content.firstElementChild; }
+const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const anim = (el, kf, o) => (el && el.animate && !RM()) ? el.animate(kf, Object.assign({ duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }, o)) : null;
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+/* teks untuk dibaca kuat: buang tag, buang teks Arab/Jawi (.ar) dan emoji */
+function plain(h) {
+  const d = document.createElement('div'); d.innerHTML = String(h || '');
+  d.querySelectorAll('.ar,.nospeak,svg').forEach(e => e.remove());
+  return d.textContent.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, ' ').replace(/_{2,}/g, ' kosong ').replace(/\s+/g, ' ').trim();
+}
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+
+  UNIT({
+    n: 0, label: 'S', tajuk: "Starter: It's my life!", tema: 'Starter unit', ikon: '👋', warna: '#7048e8',
+    belajar: [
+      { ikon: '🎉', tajuk: 'Celebrations',
+        teks: ['The Starter unit begins with <b>celebrations</b>' + m('perayaan') + '. Four photos show a wedding, a carnival, Christmas and a birthday.'],
+        chips: ['🎂 birthday' + m('hari jadi'), '🎄 Christmas', '🐣 Easter', '💍 wedding' + m('perkahwinan'), '🎆 New Year', '🎭 carnival' + m('pesta jalanan')],
+        contoh: 'Which celebrations can\'t you see in the photos? <b>Easter</b> and <b>New Year</b>.' },
+      { ikon: '📅', tajuk: 'Dates and question words',
+        teks: ['Write: <b>02/05/08</b> = 2nd May 2008.', 'Say: "<b>The second of May, two thousand and eight.</b>"'],
+        senarai: ['<b>What</b> do you eat on Christmas Day?', '<b>How</b> do you celebrate Easter?', '<b>When</b> do the school holidays start?',
+                  '<b>Where</b> do you go on New Year\'s Eve?', '<b>Which</b> day don\'t you like?'],
+        contoh: ['"Halloween\'s on the thirty-first of October."', '"Which month do you like best?" — "I like July best."'] },
+      { ikon: '👕', tajuk: 'Reading: Our favourite clothes',
+        teks: ['Lucy, Chris and Nina describe their clothes. Who am I?'],
+        senarai: ['"My favourite clothes are my <b>jeans</b>! I wear them with a <b>T-shirt</b> in summer and with a <b>jumper</b> in winter. I always wear <b>trainers</b>." — <b>Chris</b>',
+                  '"I love my new <b>jacket</b>. It looks great with my <b>scarf</b> and my brown <b>boots</b>!" — <b>Nina</b>',
+                  '"This is my favourite <b>dress</b>. It looks nice with these <b>sandals</b>. I sometimes wear a jacket with it if it\'s cold." — <b>Lucy</b>'],
+        chips: ['jumper' + m('baju sejuk'), 'trainers' + m('kasut sukan'), 'scarf' + m('mafela'), 'boots' + m('but'), 'dress' + m('gaun')] },
+      { ikon: '👜', tajuk: "Possessive adjectives and 's",
+        teks: ['Possessive adjectives' + m('kata sifat milik') + ' go before a noun.'],
+        chips: ['I → my', 'you → your', 'he → his', 'she → her', 'it → its', 'we → our', 'they → their'],
+        contoh: ["We use <b>'s</b> or <b>'</b> to show possession: Stella's hair is blond. The boys' hats are new.",
+                 "<b>'s</b> can also mean <b>has</b> (He's got brown eyes) or <b>is</b> (Adam's Scottish)."] },
+      { ikon: '🌍', tajuk: 'Languages around the world',
+        teks: ['Many language names end in <b>-ish, -an, -ese</b> or <b>-ch</b>.'],
+        senarai: ['-ish: Spain → Spanish, Poland → Polish', '-an: Russia → Russian, Italy → Italian, Germany → German',
+                  '-ese: China → Chinese, Japan → Japanese', '-ch: the Netherlands → Dutch' + m('Belanda') + ', France → French'],
+        contoh: 'LOOK! The United Kingdom includes England, Scotland, Wales and Northern Ireland. Only England, Scotland and Wales are in Great Britain.' },
+      { ikon: '💪', tajuk: "can / can't and like + -ing",
+        teks: ["We use <b>can / can't</b> to show ability" + m('kebolehan') + '. After can / can\'t, use the verb <b>without to</b>.'],
+        contoh: ['I <b>can speak</b> English. He <b>can\'t speak</b> Japanese.',
+                 'like / love / hate + verb<b>-ing</b>: I like play<b>ing</b> computer games. Lisa loves eat<b>ing</b> chocolate! They hate gett<b>ing</b> up early!'] },
+      { ikon: '✅', tajuk: "be and there's / there are",
+        senarai: ["I'm 15 years old. He isn't my best friend. We aren't in London.",
+                  'Am I a teenager? — Yes, I am. / No, I\'m not.', 'Is he your teacher? — Yes, he is. / No, he isn\'t.',
+                  "There's a famous bridge in Sydney. There isn't a royal family in the USA.",
+                  "There are some American programmes on TV. There aren't any beaches in Madrid."],
+        contoh: 'Edinburgh <b>isn\'t</b> the capital of England. <b>It\'s</b> the capital of Scotland.' },
+      { ikon: '🎒', tajuk: 'In the classroom',
+        chips: ['💻 laptop' + m('komputer riba'), '📓 notebook', '⬜ board', '🖼️ poster', '🎒 schoolbag', '🖊️ pen', '✏️ pencil', '🧽 rubber' + m('pemadam'), '👝 pencil case'],
+        senarai: ['What does \'poster\' mean?', 'How do you say \'lápiz\' in English?', 'Can you write it on the board, please?', 'Sorry, I don\'t understand. — OK, I\'ll repeat it.'],
+        contoh: '"How do you spell \'rubber\'?" "R-u-b-e-r?" "No, that\'s wrong. Try again." "R-u-b-b-e-r?" "Yes, that\'s right."' },
+      { ikon: '🤝', tajuk: 'Getting to know people',
+        teks: ['Chris and Lucy meet outside school.'],
+        senarai: ['"So, what\'s your name?" — "My name\'s Lucy. What about you?"', '"I\'m Chris." — "Nice to meet you, Chris. What year are you in?"',
+                  'Lucy: "I\'m in Mr Brown\'s class."', '"Cool. Where do you live?" — "On … (street name)."', 'Chris: "Oh, I live near there. Shall we … together?" — "OK, let\'s go!"'],
+        chips: ['How old are you?', 'Where are you from?', 'Whose class are you in?'],
+        contoh: 'After a positive sentence say <b>Me too!</b> ("I\'m 14." "Me too!"). After a negative sentence say <b>Me neither!</b> ("I\'m not from the UK." "Me neither!")' },
+      { ikon: '💡', tajuk: 'Exam tip: small words, big marks',
+        senarai: ["One owner: the girl<b>'s</b> bag. Plural owners ending in -s: the boy<b>s'</b> hats.", "can + verb with no <b>to</b>: I can swim (not <s>I can to swim</s>).",
+                  "like + -ing: I like reading books.", "Me too ✔ after positive; Me neither ✘ after negative."] },
+    ],
+    soalan: [
+      { j: 'pilih', s: '___ do you go on New Year\'s Eve?', ikon: '🎆', p: ['Where', 'What', 'Which'], a: 0, kenapa: 'We ask about a place with Where.' },
+      { j: 'pilih', s: '___ month do you like best?', ikon: '📅', p: ['Which', 'Where', 'How'], a: 0, kenapa: 'Which + noun (month) asks us to choose one.' },
+      { j: 'pilih', s: 'How do you say the date 02/05/08?', ikon: '🗓️', p: ['The second of May', 'The fifth of February', 'The second of February'], a: 0, kenapa: 'British dates are day/month/year: 02/05/08 = the second of May, two thousand and eight.' },
+      { j: 'pilih', s: 'Lucy\'s dress is brown and ___ sandals are brown.', ikon: '👡', p: ['her', 'his', 'their', 'its'], a: 0, kenapa: 'Lucy is a girl, so we use her.' },
+      { j: 'pilih', s: 'Lucy, Chris and Nina are happy. They like ___ clothes!', ikon: '😀', p: ['their', 'our', 'his', 'its'], a: 0, kenapa: 'they → their.' },
+      { j: 'pilih', s: '"Adam\'s Scottish." Here \'s means ___.', ikon: '🏴', p: ['is', 'has', 'his'], a: 0, kenapa: 'Adam\'s Scottish = Adam is Scottish.' },
+      { j: 'pilih', s: '"He\'s got brown eyes." Here \'s means ___.', ikon: '👀', p: ['has', 'is', 'his'], a: 0, kenapa: 'He\'s got brown eyes = He has got brown eyes.' },
+      { j: 'pilih', s: 'Two boys wear big T-shirts. Which sentence is correct?', ikon: '👦👦', p: ["The boys' T-shirts are big.", "The boy's T-shirts are big.", 'The boys T-shirts are big.'], a: 0, kenapa: "Plural owners ending in -s take ' after the s: the boys'." },
+      { j: 'pilih', s: 'He can\'t ___ Japanese.', ikon: '🗾', p: ['speak', 'to speak', 'speaking', 'speaks'], a: 0, kenapa: 'After can / can\'t we use the infinitive without to.' },
+      { j: 'pilih', s: 'Lisa loves ___ chocolate!', ikon: '🍫', p: ['eating', 'eat', 'eats', 'ate'], a: 0, kenapa: 'love + verb-ing: Lisa loves eating chocolate.' },
+      { j: 'pilih', s: 'There ___ any beaches in Madrid.', ikon: '🏖️', p: ["aren't", "isn't", "not"], a: 0, kenapa: 'beaches is plural, so: There aren\'t any beaches.' },
+      { j: 'pilih', s: '"I love my new jacket. It looks great with my scarf and my brown boots!" Who is it?', ikon: '🧥', p: ['Nina', 'Lucy', 'Chris'], a: 0, kenapa: 'Nina wears a jacket, a scarf and boots.' },
+      { j: 'bs', s: 'The United Kingdom includes Northern Ireland.', ikon: '🇬🇧', a: true, kenapa: 'The UK = England, Scotland, Wales and Northern Ireland.' },
+      { j: 'bs', s: 'Northern Ireland is in Great Britain.', ikon: '🗺️', a: false, kenapa: 'Only England, Scotland and Wales are in Great Britain.' },
+      { j: 'bs', s: 'Edinburgh is the capital of England.', ikon: '🏰', a: false, kenapa: 'Edinburgh isn\'t the capital of England. It\'s the capital of Scotland.' },
+      { j: 'bs', s: 'Chris always wears trainers.', ikon: '👟', a: true, kenapa: '"I always wear trainers." — Chris' },
+      { j: 'bs', s: 'Lucy is in Mr Brown\'s class.', ikon: '🏫', a: true, kenapa: 'Lucy says: "Me too! I\'m in Mr Brown\'s class."' },
+      { j: 'bs', s: 'Chris lives far away from Lucy.', ikon: '🏠', a: false, kenapa: 'Chris says: "Oh, I live near there."' },
+      { j: 'padan', s: 'Match the subject pronoun and the possessive adjective.', pasangan: [['I', 'my'], ['he', 'his'], ['she', 'her'], ['we', 'our'], ['they', 'their'], ['it', 'its']] },
+      { j: 'padan', s: 'Match the classroom questions and answers.', pasangan: [["What does 'poster' mean?", "'Cartel'."], ["How do you say 'lápiz' in English?", 'Pencil.'], ['Can you write it on the board?', 'Yes, of course.'], ["Sorry, I don't understand.", "OK, I'll repeat it."], ['What page are we on?', 'Page 18.']] },
+      { j: 'kumpul', s: 'Sort the languages by their ending.', kumpulan: [['-ish', ['Spanish', 'Polish']], ['-an', ['Russian', 'Italian', 'German']], ['-ese', ['Chinese', 'Japanese']], ['-ch', ['Dutch', 'French']]] },
+      { j: 'kumpul', s: 'You agree. Do you say "Me too!" or "Me neither!"?', kumpulan: [['👍 Me too!', ["I'm 14.", 'I like reading books.', 'I can swim.']], ['👎 Me neither!', ["I'm not from the UK.", "I can't drive a car.", "I don't like learning grammar."]]] },
+      { j: 'susun', s: 'Put the start of Chris and Lucy\'s dialogue in order.', item: ["So, what's your name?", "My name's Lucy. What about you?", "I'm Chris.", 'Nice to meet you, Chris.', 'What year are you in?'] },
+      { j: 'susun', s: 'Put the spelling dialogue in order.', item: ["How do you spell 'rubber'?", 'R-u-b-e-r?', "No, that's wrong. Try again.", 'R-u-b-b-e-r?', "Yes, that's right."] },
+      { j: 'eja', s: 'Listen and spell the classroom object. (Malay: pemadam)', ikon: '🧽', kata: 'rubber' },
+      { j: 'eja', s: 'Listen and spell the language of Japan.', ikon: '🗾', kata: 'Japanese' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🎮', kata: ['I', 'like', 'playing', 'computer', 'games.'] },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '🌉', kata: ["There's", 'a', 'famous', 'bridge', 'in', 'Sydney.'] },
+    ],
+    amali: [{
+      id: 's0-chat', tajuk: 'Getting to know Chris', ikon: '💬',
+      arahan: 'You are Lucy. Chris talks to you outside school. Choose the best reply each time to keep the chat going.',
+      mula(el, api) {
+        const T = [
+          ["So, what's your name?", ["My name's Lucy. What about you?", "I'm fine, thanks.", 'Yes, of course.'], 'Answer with your name, then ask back.'],
+          ["I'm Chris.", ['Nice to meet you, Chris.', 'Me neither!', 'Page 18.'], 'When you meet someone new, say "Nice to meet you".'],
+          ["I'm 14.", ['Me too!', 'Me neither!', 'Yes, I am.'], '"I\'m 14" is positive, so we agree with "Me too!"'],
+          ["I'm not from the UK.", ['Me neither!', 'Me too!', "No, it isn't."], '"I\'m not…" is negative, so we agree with "Me neither!"'],
+          ['Where do you live?', ['I live near the school.', 'I like July best.', "I'm in Year 9."], 'Where asks about a place.'],
+          ["How do you spell 'rubber'?", ['R-u-b-b-e-r.', 'R-u-b-e-r.', 'R-o-b-b-e-r.'], 'Rubber has a double b.'],
+          ["Sorry, I don't understand.", ["OK, I'll repeat it.", 'Me too!', 'Pencil.'], 'Offer to say it again.'],
+        ];
+        el.innerHTML = `<style>
+          .s0-chat{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;padding:10px;border:2px solid var(--line);border-radius:16px;background:var(--card);margin-bottom:12px}
+          .s0-b{max-width:82%;color:var(--ink);padding:8px 12px;border-radius:14px;font-size:1.02rem;line-height:1.35;overflow-wrap:anywhere}
+          .s0-b.l{align-self:flex-start;background:var(--c2);border:2px solid var(--line)}
+          .s0-b.r{align-self:flex-end;background:color-mix(in srgb,var(--ok) 16%,var(--card));border:2px solid var(--ok)}
+          .s0-b small{display:block;color:var(--muted);font-weight:700;font-size:.8rem}
+          .s0-op{display:grid;gap:8px}
+        </style><div class="s0-chat" aria-live="polite"></div><div class="s0-op"></div><p class="hint" id="s0pg"></p>`;
+        const chat = el.querySelector('.s0-chat'), op = el.querySelector('.s0-op'), pg = el.querySelector('#s0pg');
+        let k = 0, miss = 0;
+        const bub = (t, side, who) => { const b = api.H(`<div class="s0-b ${side}"><small>${who}</small>${api.esc(t)}</div>`); chat.appendChild(b); chat.scrollTop = chat.scrollHeight; api.anim(b, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 260 }); return b; };
+        function step() {
+          const [q, opts] = T[k];
+          bub(q, 'l', 'Chris');
+          pg.textContent = `Reply ${k + 1} / ${T.length}`;
+          op.innerHTML = '';
+          api.shuffle(opts.map((t, i) => [t, i])).map(([t, i]) => { const b = api.H(`<button class="opt">${api.esc(t)}</button>`); b.onclick = () => pick(i, b); op.appendChild(b); return b; });
+        }
+        function pick(i, b) {
+          if (k >= T.length) return;
+          if (i !== 0) { miss++; api.salah(b, T[k][2]); return; }
+          bub(T[k][1][0], 'r', 'You (Lucy)');
+          api.betul(null, 'Good reply!');
+          k++;
+          if (k < T.length) step();
+          else { op.innerHTML = ''; pg.textContent = 'Chat finished!'; api.selesai(Math.max(0, 1 - miss * .12), 'Great chat! You can get to know people in English.'); }
+        }
+        step();
+        return { jawab() { while (k < T.length) { const b = [...op.querySelectorAll('button')].find(x => x.textContent === T[k][1][0]); b.click(); } } };
+      },
+    }, {
+      id: 's0-apostrophe', tajuk: "Apostrophe fixer: 's or s'?", ikon: '🔧',
+      arahan: "Look at the picture clue. Choose the correct word. Then say what the 's means.",
+      mula(el, api) {
+        // [emoji clue, before, after, correct, wrong1, wrong2, meaning of 's or null]
+        const X = api.shuffle([
+          ['🤪', 'Mr', 'face is funny.', "Bean's", "Beans'", 'Beans', 'possession'],
+          ['🐕🐕🐕', 'The', 'coats are red.', "dogs'", "dog's", 'dogs', null],
+          ['👧', 'The', 'got old trainers.', "girl's", "girls'", 'girls', 'has'],
+          ['🙂', '', 'happy.', "Jane's", "Janes'", 'Janes', 'is'],
+          ['👦👦', 'The', 'T-shirts are big.', "boys'", "boy's", 'boys', null],
+          ['👱‍♀️', '', 'hair is blond.', "Stella's", "Stellas'", 'Stellas', 'possession'],
+        ]);
+        const MEAN = [['possession', 'possession (belongs to)'], ['is', 'is'], ['has', 'has']];
+        el.innerHTML = `<style>
+          .s0-card{border:2px solid var(--line);border-radius:16px;background:var(--card);padding:14px;text-align:center}
+          .s0-pic{font-size:2.6rem;line-height:1.2}
+          .s0-sen{font:600 1.25rem/1.4 var(--hd);margin:8px 0 12px;overflow-wrap:anywhere}
+          .s0-sen u{display:inline-block;min-width:70px;border-bottom:3px solid var(--c);text-decoration:none;color:var(--c)}
+          .s0-ops{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+          .s0-ops .opt{min-width:110px;text-align:center}
+        </style><div class="s0-card"><div class="s0-pic" aria-hidden="true"></div><div class="s0-sen"></div><div class="s0-ops"></div></div><p class="hint" id="s0ap"></p>`;
+        const pic = el.querySelector('.s0-pic'), sen = el.querySelector('.s0-sen'), ops = el.querySelector('.s0-ops'), pg = el.querySelector('#s0ap');
+        let k = 0, miss = 0, stage = 0, ended = false;
+        const line = (w) => `${X[k][1] ? api.esc(X[k][1]) + ' ' : ''}<u>${w ? api.esc(w) : '&nbsp;?&nbsp;'}</u> ${api.esc(X[k][2])}`;
+        function show() {
+          const x = X[k]; stage = 0;
+          pic.textContent = x[0]; sen.innerHTML = line('');
+          pg.textContent = `Sentence ${k + 1} / ${X.length}`;
+          ops.innerHTML = '';
+          api.shuffle([x[3], x[4], x[5]]).forEach(w => { const b = api.H(`<button class="opt">${api.esc(w)}</button>`); b.onclick = () => word(w, b); ops.appendChild(b); });
+        }
+        function word(w, b) {
+          if (ended || stage !== 0) return;
+          const x = X[k];
+          if (w !== x[3]) { miss++; return api.salah(b, x[6] === 'is' || x[6] === 'has' ? `Here 's is short for <b>${x[6]}</b>. One person → 's.` : x[3].endsWith("'") ? 'Count the people or animals in the picture. More than one owner → s\'.' : "One owner → 's."); }
+          sen.innerHTML = line(w); api.betul(sen, 'Correct!');
+          if (!x[6]) return next();
+          stage = 1; ops.innerHTML = '';
+          api.say(`In <b>${api.esc(w)}</b>, what does <b>'s</b> mean?`);
+          MEAN.forEach(([v, t]) => { const b = api.H(`<button class="opt" data-v="${v}">${t}</button>`); b.onclick = () => mean(v, b); ops.appendChild(b); });
+        }
+        function mean(v, b) {
+          if (ended || stage !== 1) return;
+          const x = X[k];
+          if (v !== x[6]) { miss++; return api.salah(b, 'Try the sentence with is or has. Does it still make sense?'); }
+          api.betul(b, x[6] === 'possession' ? "Yes, 's shows possession here." : `Yes, 's = ${x[6]} here.`);
+          next();
+        }
+        function next() {
+          k++;
+          if (k < X.length) show();
+          else { ended = true; ops.innerHTML = ''; pg.textContent = 'All fixed!'; api.selesai(Math.max(0, 1 - miss * .1), "Brilliant! You can use 's and s' correctly."); }
+        }
+        show();
+        return { jawab() {
+          while (!ended) {
+            const x = X[k];
+            if (stage === 0) [...ops.querySelectorAll('button')].find(b => b.textContent === x[3]).click();
+            else ops.querySelector(`button[data-v="${x[6]}"]`).click();
+          }
+        } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+
+  UNIT({
+    n: 1, tajuk: 'What do you like?', tema: 'Free time & abilities', ikon: '🛹', warna: '#1971c2',
+    belajar: [
+      { ikon: '🤔', tajuk: 'What kind of teenager are you?',
+        teks: ['Think about it: <b>What do you do in your free time?</b>',
+               'The quiz on page 10 sorts you into three types.'],
+        senarai: ['😊 <b>Mostly As – sociable' + m('suka bergaul') + ':</b> ring someone for a chat, watch a DVD with a friend, go shopping with friends.',
+                  '💻 <b>Mostly Bs – technology lover:</b> play computer games, surf the internet' + m('melayari internet') + ', chat online.',
+                  '🏃 <b>Mostly Cs – sporty:</b> go for a run, go to the gym, play volleyball, do water sports.'],
+        chips: ['go to a café', 'go to a concert', 'hang out with your friends' + m('lepak'), 'listen to music', 'send text messages'] },
+      { ikon: '📅', tajuk: 'Opposites and time phrases',
+        teks: ['Adjectives from the quiz and their opposites:'],
+        chips: ['sociable ↔ shy' + m('pemalu'), 'sporty ↔ lazy' + m('malas'), 'friendly ↔ unfriendly'],
+        contoh: ['<b>on</b> Monday morning · <b>on</b> Sunday evening · <b>on</b> Friday afternoon · <b>at</b> the weekend',
+                 '"What do you do on Saturday morning?" — "I go shopping with my mum."'] },
+      { ikon: '🛹', tajuk: 'Reading: Urban sports – a teen perspective',
+        teks: ['A reporter interviews <b>Jon Harrison</b>, 17, about urban' + m('bandar') + ' sports.'],
+        senarai: ['What are they? Skateboarding, BMX biking, scootering and parkour (free running).',
+                  'Who? Teenagers and people in their 20s, mainly.',
+                  'Where? Anywhere! No special facilities' + m('kemudahan') + ' – and they\'re free!',
+                  'Equipment' + m('peralatan') + ': a skateboard, BMX bike or scooter and a helmet' + m('topi keledar') + '. Parkour needs no equipment.',
+                  'Clothes: jeans or shorts, a T-shirt and trainers.',
+                  'Girls are often as good as boys, or better!'],
+        contoh: '🛹 21st June is Go Skateboarding Day.' },
+      { ikon: '🔁', tajuk: 'Present simple',
+        teks: ['Use it for <b>habits, routines and permanent situations</b>.'],
+        senarai: ['✅ They <b>wear</b> casual clothes. He <b>watches</b> films.',
+                  '❌ They <b>don\'t study</b> art. He <b>doesn\'t play</b> rugby.',
+                  '❓ <b>Do</b> you <b>live</b> in a house? Yes, I do. / No, I don\'t.',
+                  '❓ <b>Does</b> she <b>like</b> to sing? Yes, she does. / No, she doesn\'t.'],
+        contoh: ['He/she/it spelling: draw → draws · watch → watches · do → does · study → studies · fly → flies',
+                 'Irregular: have → has · be → is'] },
+      { ikon: '🎬', tajuk: 'Present continuous',
+        teks: ['Use it for <b>things that are happening now</b>: am / is / are + verb-<b>ing</b>.'],
+        senarai: ['✅ I\'m dancing. They\'re cooking. He\'s watching a DVD.',
+                  '❌ I\'m not talking to Jane. They aren\'t listening. She isn\'t swimming.',
+                  '❓ <b>Are</b> they eating? Yes, they are. <b>Is</b> he playing the guitar? No, he isn\'t.'],
+        contoh: 'Tom: "What are you doing?" Anna: "I\'m looking at some photos."' },
+      { ikon: '⏰', tajuk: 'Simple or continuous? Look at the time word!',
+        teks: ['I usually <b>hate</b> museums. (habit)', 'We\'<b>re enjoying</b> this trip today! (in progress)'],
+        senarai: ['⏰ Present continuous: now, at the moment, today, tonight',
+                  '🔁 Present simple: always, usually, often, sometimes, never, every day, once a week / month / year'],
+        contoh: ['Harry <b>sometimes goes</b> to theme parks.', 'Harry <b>is playing</b> football <b>at the moment</b>.',
+                 '📝 Exam tip: find the time word first, then choose the tense.'] },
+      { ikon: '🎤', tajuk: 'Skills and abilities: They\'ve got TALENT!',
+        chips: ['act' + m('berlakon'), 'sing', 'dance', 'paint', 'draw', 'cook', 'bake a cake', 'play a musical instrument',
+                'write songs' + m('cipta lagu'), 'tell jokes', 'ride a motorbike', 'do tricks', 'drive a car', 'speak a language'],
+        senarai: ['Kelly and Jamie dance together.', 'Ben\'s dog Shelley can do tricks!', 'Lara plays the drums.',
+                  'Zak is a singer and also writes songs.', 'Emma tells jokes – she hopes to make you laugh!'],
+        contoh: ['I can / can\'t <b>dance</b>. I\'m good / not very good at <b>dancing</b>.',
+                 '"I\'m good at drawing, but I can\'t write poetry. How about you?"'] },
+      { ikon: '🇬🇧', tajuk: 'Four teen days out in the UK',
+        senarai: ['🦈 <b>Blue Planet Aquarium</b> (Jack, 13): a diving lesson, then swimming with real sharks. Quite expensive.',
+                  '🦄 <b>Magic Unicorn Theme Park</b> (Daniel, 14): rides are OK, nothing special. Best bit: the Magic Spell Academy.',
+                  '🚋 <b>Beamish</b> (Daisy, 14): a \'living\' museum – experience life in the past. "I usually hate museums, but Beamish is different!"',
+                  '🎢 <b>Giant Swing</b> (Anna, 15): very high and really scary! Better than a rollercoaster, but it doesn\'t last very long.'],
+        contoh: 'Fact box: Blackgang Chine Park (Isle of Wight, 1843) is the oldest of over 50 amusement parks in the UK.' },
+      { ikon: '📝', tajuk: 'Asking for personal information',
+        teks: ['Chris Bradley registers' + m('mendaftar') + ' for an adventure weekend at Greenwood Activity Camp.', 'The advert: a weekend in September or October for teenagers aged 13–16. £150 includes accommodation in log cabins and all meals.'],
+        senarai: ['What\'s your name? / What\'s your address?', 'What\'s your date of birth?',
+                  'What\'s your mobile phone number?', 'Have you got an email address?'],
+        contoh: ['📧 Say <b>at</b> for @ and <b>dot</b> for "." → c-h-r-i-s at i-n-m-a-i-l dot co dot uk',
+                 '📞 220785 → "double two zero, seven eight five"'] },
+      { ikon: '✍️', tajuk: 'Writing: a personal profile',
+        teks: ['Claire Edwards, 14, from Cardiff in Wales, plays the guitar in a band called The Daisies.'],
+        senarai: ['<b>because</b> = a reason: I love going shopping <b>because</b> I\'m really into fashion.',
+                  '<b>so</b> = a result: My favourite colour is green, <b>so</b> I\'ve got lots of green clothes.'],
+        contoh: '📝 Exam tip: plan notes first (nationality, family, friends, likes and dislikes), then check present simple, present continuous, because and so.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'In the quiz, the opposite of "sociable" is ___.', ikon: '🙈', p: ['shy', 'lazy', 'sporty', 'unfriendly'], a: 0, kenapa: 'Sociable ↔ shy, sporty ↔ lazy, friendly ↔ unfriendly.' },
+      { j: 'pilih', s: 'What do you usually do ___ the weekend?', ikon: '📅', p: ['at', 'on', 'in'], a: 0, kenapa: 'We say on Monday morning, but at the weekend.' },
+      { j: 'pilih', s: 'My dad ___ when I come home late.', ikon: '😟', p: ['worries', 'worrys', 'worry', 'is worry'], a: 0, kenapa: 'Consonant + y: omit the y and add -ies → worries.' },
+      { j: 'pilih', s: 'Look! Anna ___ at some photos.', ikon: '📷', p: ['is looking', 'looks', 'look', 'are looking'], a: 0, kenapa: 'It is happening now, so we use the present continuous: is looking.' },
+      { j: 'pilih', s: 'Harry sometimes ___ to theme parks.', ikon: '🎢', p: ['goes', 'is going', 'go', 'going'], a: 0, kenapa: '"Sometimes" is a habit word, so we use the present simple: goes.' },
+      { j: 'pilih', s: '"___ he wearing trainers?" "No, he isn\'t."', ikon: '👟', p: ['Is', 'Does', 'Are', 'Do'], a: 0, kenapa: 'Present continuous question: Is + he + verb-ing?' },
+      { j: 'pilih', s: '"Does she like parkour?" "No, she ___."', ikon: '🤸', p: ['doesn\'t', 'isn\'t', 'don\'t', 'not'], a: 0, kenapa: 'Short answer to a Does question: No, she doesn\'t.' },
+      { j: 'pilih', s: 'Which time expression goes with the present continuous?', ikon: '⏰', p: ['at the moment', 'every day', 'once a week', 'usually'], a: 0, kenapa: 'Now, at the moment, today and tonight go with the present continuous.' },
+      { j: 'pilih', s: 'Which urban sport can you do without any equipment?', ikon: '🏙️', p: ['Parkour', 'Skateboarding', 'BMX biking', 'Scootering'], a: 0, kenapa: 'Jon says parkour is the only urban sport you can do without any equipment.' },
+      { j: 'pilih', s: 'Which UK attraction is scary and very big?', ikon: '😱', p: ['Giant Swing', 'Blue Planet Aquarium', 'Beamish museum', 'Magic Unicorn Theme Park'], a: 0, kenapa: 'Anna says the Giant Swing is very high and really scary.' },
+      { j: 'pilih', s: 'Claire doesn\'t like singing ___ she\'s shy.', ikon: '🎸', p: ['because', 'so', 'but', 'or'], a: 0, kenapa: 'Being shy is the reason, and we use because for a reason.' },
+      { j: 'pilih', s: 'I\'m an animal lover, ___ I\'ve got lots of pets.', ikon: '🐶', p: ['so', 'because', 'or', 'but'], a: 0, kenapa: 'Having lots of pets is the result, and we use so for a result.' },
+      { j: 'pilih', s: 'Listen. Which phone number do you hear?', sebut: 'double two zero, seven eight five', ikon: '📞', p: ['220785', '202785', '220758', '227085'], a: 0, kenapa: '"Double two zero, seven eight five" = 220785.' },
+      { j: 'pilih', s: 'Your email is ben@inmail.co.uk. How do you say "@"?', ikon: '📧', p: ['at', 'dot', 'and', 'to'], a: 0, kenapa: 'We say at for the @ sign and dot for the . mark.' },
+      { j: 'bs', s: 'Jon says urban sports are mainly for teenagers and people in their 20s.', ikon: '🛹', a: true, kenapa: 'Jon: "Teenagers and people in their 20s, mainly."' },
+      { j: 'bs', s: 'You need a helmet for all urban sports.', ikon: '⛑️', a: false, kenapa: 'Parkour is the only urban sport you can do without any equipment.' },
+      { j: 'bs', s: 'Jon says girls are often as good as boys at urban sports, or better.', ikon: '🚲', a: true, kenapa: 'Lots of girls are getting interested, and they are often as good as boys, or better.' },
+      { j: 'bs', s: 'You need special facilities to do urban sports.', ikon: '🧱', a: false, kenapa: 'You don\'t need any special facilities. Every city has walls and steps – and they\'re free!' },
+      { j: 'bs', s: 'Daisy usually loves museums.', ikon: '🚋', a: false, kenapa: 'Daisy says: "I usually hate museums, but Beamish is different!"' },
+      { j: 'bs', s: 'The £150 price at Greenwood Activity Camp includes all meals.', ikon: '🏕️', a: true, kenapa: 'The price includes accommodation in log cabins and all meals.' },
+      { j: 'padan', s: 'Match the talent show contestants with their talents.', pasangan: [['Kelly and Jamie', 'dance together'], ['Shelley the dog', 'does tricks'], ['Lara', 'plays the drums'], ['Zak', 'writes songs'], ['Emma', 'tells jokes']] },
+      { j: 'padan', s: 'Match the adjectives with their opposites.', pasangan: [['sociable', 'shy'], ['sporty', 'lazy'], ['friendly', 'unfriendly']] },
+      { j: 'kumpul', s: 'Which tense goes with each time word?', kumpulan: [['🔁 Present simple', ['always', 'usually', 'every day', 'once a week']], ['🎬 Present continuous', ['now', 'at the moment', 'today', 'tonight']]] },
+      { j: 'kumpul', s: 'Sort the quiz answers into the three teenager types.', kumpulan: [['😊 Sociable (As)', ['ring someone for a chat', 'watch a DVD with a friend', 'go shopping with friends']], ['💻 Technology lover (Bs)', ['play computer games', 'surf the internet', 'chat online']], ['🏃 Sporty (Cs)', ['go for a run', 'play volleyball', 'go to the gym']]] },
+      { j: 'susun', s: 'Put Chris\'s registration dialogue in order.', item: ['Hello. I\'d like to register.', 'OK, great! What\'s your name?', 'Chris Bradley.', 'Have you got an email address?', 'Yes, it\'s chris@inmail.co.uk.', 'Can you spell that for me?'] },
+      { j: 'susun', s: 'Put Dan and Kate\'s dialogue in order.', item: ['Dan: Hi Kate. What are you doing?', 'Kate: I\'m going to Chessington.', 'Dan: My brother and I sometimes go there.', 'Kate: What\'s the best ride?', 'Dan: I love the Dragon Falls.'] },
+      { j: 'eja', s: 'Spell it: you wear this on your head for BMX biking.', ikon: '⛑️', kata: 'helmet' },
+      { j: 'eja', s: 'Spell the he/she form of "study".', ikon: '📚', kata: 'studies' },
+      { j: 'ayat', s: 'Make the sentence.', ikon: '⚽', kata: ['Harry', 'is', 'playing', 'football', 'at', 'the', 'moment.'] },
+      { j: 'ayat', s: 'Make the question.', ikon: '🏟️', kata: ['Does', 'your', 'town', 'have', 'a', 'football', 'team?'] },
+    ],
+    amali: [{
+      id: 'tense-detective', tajuk: 'Tense Detective', ikon: '🕵️',
+      arahan: 'Find the time word, then choose the correct verb form. Simple or continuous?',
+      mula(el, api) {
+        const R = api.shuffle([
+          ['Oh no! I don\'t believe it! It ___ (rain) now!', ['is raining', 'rains', 'rain'], '"now" → present continuous.'],
+          ['My brother always ___ (sing) in the shower.', ['sings', 'is singing', 'sing'], '"always" → present simple.'],
+          ['We ___ (play) tennis at the moment.', ['are playing', 'play', 'plays'], '"at the moment" → present continuous.'],
+          ['Sam usually ___ (not go) swimming on Monday.', ['doesn\'t go', 'isn\'t going', 'don\'t go'], '"usually" → present simple, he/she → doesn\'t.'],
+          ['I ___ (not send) Matt a text message now.', ['am not sending', 'don\'t send', 'doesn\'t send'], '"now" → present continuous.'],
+          ['In July, Jo ___ (go) to the beach every weekend.', ['goes', 'is going', 'go'], '"every weekend" → present simple, Jo → goes.'],
+          ['Today we ___ (go) on a school trip to The National Gallery.', ['are going', 'go', 'goes'], '"today" → present continuous.'],
+          ['Jenna ___ (do) a lot of sport in her free time.', ['does', 'is doing', 'do'], 'A habit → present simple, do → does.'],
+        ]);
+        let k = 0, miss = 0, done = false;
+        el.innerHTML = `<style>
+          .u1-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;font-weight:700}
+          .u1-sen{font:600 1.25rem/1.4 var(--hd);padding:14px;border:2px dashed var(--c);border-radius:14px;background:var(--c2);margin:10px 0;overflow-wrap:anywhere}
+          .u1-sen .gap{display:inline-block;min-width:80px;border-bottom:3px solid var(--c);text-align:center;color:var(--c)}
+          .u1-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+          .u1-log{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:4px;font-size:.95rem;color:var(--muted)}
+          .u1-log li b{color:var(--ok)}
+        </style>
+        <div class="u1-top"><span>🕵️ Case <span id="u1k">1</span> / ${R.length}</span><span id="u1m">❌ 0</span></div>
+        <div class="meter"><i id="u1bar"></i></div>
+        <div class="u1-sen" id="u1s" aria-live="polite"></div>
+        <div class="u1-opts" id="u1o"></div>
+        <ul class="u1-log" id="u1l"></ul>`;
+        const sen = el.querySelector('#u1s'), opts = el.querySelector('#u1o'), log = el.querySelector('#u1l'), bar = el.querySelector('#u1bar');
+        function show() {
+          const r = R[k];
+          el.querySelector('#u1k').textContent = k + 1;
+          sen.innerHTML = api.esc(r[0]).replace('___', '<span class="gap">?</span>');
+          opts.innerHTML = '';
+          api.shuffle(r[1].map((t, i) => [t, i])).forEach(([t, i]) => {
+            const b = api.H(`<button class="opt">${api.esc(t)}</button>`); b.dataset.ok = i === 0 ? '1' : '';
+            b.onclick = () => pick(b, i); opts.appendChild(b);
+          });
+          api.speak(r[0].replace('___', 'blank'));
+        }
+        function pick(b, i) {
+          if (done) return;
+          const r = R[k];
+          if (i !== 0) { miss++; el.querySelector('#u1m').textContent = '❌ ' + miss; b.disabled = true; b.classList.add('no'); api.salah(b, 'Not quite. Clue: ' + r[2]); return; }
+          b.classList.add('ok'); api.betul(b, r[2]);
+          log.insertAdjacentHTML('beforeend', `<li>✔ ${api.esc(r[0]).replace(/\s*\([^)]*\)/, '').replace('___', '<b>' + api.esc(r[1][0]) + '</b>')}</li>`);
+          k++; bar.style.width = (k / R.length * 100) + '%';
+          if (k < R.length) show();
+          else { done = true; opts.innerHTML = ''; sen.textContent = '🕵️ Case closed! All tenses are correct.'; api.selesai(Math.max(0, 1 - miss * 0.1), 'Great detective work! You chose the right tense from the time words.'); }
+        }
+        show();
+        return { jawab() { while (!done) opts.querySelector('[data-ok="1"]').click(); } };
+      },
+    }, {
+      id: 'adventure-signup', tajuk: 'Sign up for Adventure Camp', ikon: '🏕️',
+      arahan: 'You are Chris at Greenwood Activity Camp. Choose the best thing to say at each step.',
+      mula(el, api) {
+        const S = [
+          ['', ['Hello. I\'d like to register for an adventure weekend.', 'Hello. Can I have a ticket to the concert?', 'Hi. Where is the sports centre?'], 'You want to register for an adventure weekend.'],
+          ['OK, great! I just need a few details from you. What\'s your name?', ['Chris Bradley.', 'I\'m fine, thanks.', 'I\'m thirteen.'], 'She asks for your name.'],
+          ['And what\'s your address, Chris?', ['It\'s 14 Hill Street.', 'It\'s Monday morning.', 'It\'s double two zero.'], 'An address is a street and a number.'],
+          ['OK. What\'s your mobile phone number?', ['It\'s double two zero, seven eight five.', 'It\'s at the weekend.', 'It\'s c-h-r-i-s.'], 'Say the numbers: 220785 = double two zero, seven eight five.'],
+          ['OK. Have you got an email address?', ['Yes, it\'s chris@inmail.co.uk.', 'Yes, I am.', 'No, I don\'t like it.'], 'Give your email address.'],
+          ['Can you spell that for me?', ['c-h-r-i-s at i-n-m-a-i-l dot co dot uk', 'c-h-r-i-s and i-n-m-a-i-l point co uk', 'c-h-r-i-s to i-n-m-a-i-l . co . uk'], 'We say at for @ and dot for "."'],
+          ['Great, thanks. Oh, I nearly forgot! What\'s your date of birth?', ['It\'s the 3rd of March.', 'It\'s thirteen years.', 'It\'s at three o\'clock.'], 'A date of birth is a day and a month (and year).'],
+        ];
+        let k = 0, miss = 0, done = false;
+        el.innerHTML = `<style>
+          .u1-chat{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;padding:4px;margin-bottom:12px}
+          .u1-b{max-width:85%;padding:10px 14px;border-radius:16px;border:2px solid var(--line);line-height:1.35;overflow-wrap:anywhere}
+          .u1-b.them{align-self:flex-start;background:var(--c2);border-color:var(--c)}
+          .u1-b.me{align-self:flex-end;background:var(--card);border-color:var(--ok)}
+          .u1-b small{display:block;font-weight:700;color:var(--muted);font-size:.8rem}
+          .u1-ch{display:grid;gap:8px}
+        </style>
+        <div class="u1-chat" id="u1c" aria-live="polite"></div>
+        <div class="u1-ch" id="u1r"></div>
+        <p class="hint" id="u1p"></p>`;
+        const chat = el.querySelector('#u1c'), box = el.querySelector('#u1r'), pg = el.querySelector('#u1p');
+        const bub = (who, t) => { const d = api.H(`<div class="u1-b ${who}"><small>${who === 'me' ? '🙋 Chris' : '👩‍💼 Camp staff'}</small>${api.esc(t)}</div>`); chat.appendChild(d); chat.scrollTop = chat.scrollHeight; api.anim(d, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 260 }); };
+        function step() {
+          const s = S[k];
+          pg.textContent = `Step ${k + 1} / ${S.length}`;
+          if (s[0]) { bub('them', s[0]); api.speak(s[0]); } else chat.appendChild(api.H('<p class="hint" style="text-align:center;margin:4px 0">🏕️ You walk into the Greenwood Activity Camp office. What do you say first?</p>'));
+          box.innerHTML = '';
+          api.shuffle(s[1].map((t, i) => [t, i])).forEach(([t, i]) => {
+            const b = api.H(`<button class="opt">${api.esc(t)}</button>`); b.dataset.ok = i === 0 ? '1' : '';
+            b.onclick = () => reply(b, i); box.appendChild(b);
+          });
+        }
+        function reply(b, i) {
+          if (done) return;
+          if (i !== 0) { miss++; b.disabled = true; b.classList.add('no'); api.salah(b, 'Try again. ' + S[k][2]); return; }
+          api.betul(null, 'Good reply!'); bub('me', S[k][1][0]); k++;
+          if (k < S.length) step();
+          else {
+            done = true; box.innerHTML = ''; pg.textContent = '';
+            const end = 'OK, great. Here\'s a leaflet for you with more information about the camp.';
+            bub('them', end);
+            api.selesai(Math.max(0, 1 - miss * 0.1), 'You are registered for the adventure weekend! 🏕️');
+          }
+        }
+        step();
+        return { jawab() { while (!done) box.querySelector('[data-ok="1"]').click(); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+
+  UNIT({
+    n: 2, tajuk: 'Fact or fiction?', tema: 'Literature & professions', ikon: '📚', warna: '#c2255c',
+    belajar: [
+      { ikon: '📚', tajuk: 'Fact or fiction? Kinds of books',
+        teks: ['What kind of books do you like? Do you prefer <b>fiction</b>' + m('rekaan') + ' or <b>non-fiction</b>' + m('bukan rekaan') + '?',
+               'Pulse 2 lists 13 literary genres' + m('jenis karya') + ':'],
+        chips: ['🗺️ adventure story', '✍️ autobiography' + m('kisah hidup sendiri'), '👤 biography' + m('biografi'), '😂 comic novel' + m('novel lucu'),
+                '🍳 cookery book' + m('buku masakan'), '🔍 detective novel', '🧚 fairy tale' + m('dongeng'), '🏰 historical novel' + m('novel sejarah'),
+                '📝 poetry book', '💕 romantic novel', '🚀 science fiction novel', '😱 thriller', '🧳 travel guide' + m('panduan pelancongan')] },
+      { ikon: '⭐', tajuk: "This week's bestsellers",
+        teks: ['Readers wrote short reviews. Can you spot the genre?'],
+        senarai: ['<i>Europe Essentials</i> — a <b>travel guide</b> about great places in Europe. (Jess, 15)',
+                  '<i>Steve Jobs: The man who thought different</i> — a <b>biography</b>: it tells his amazing life story. (Maisie, 17)',
+                  '<i>My Side</i> — the <b>autobiography</b> of David Beckham. (Tom, 19)',
+                  '<i>Percy Jackson and the Lightning Thief</i> — an <b>adventure story</b> about a very clever boy. (Kate, 11)',
+                  '<i>The Adventures of Sean Ryanis</i> — a <b>science fiction novel</b> about adventures in space. (Brad, 16)'],
+        contoh: '💡 A <b>biography</b> is written by another person. An <b>autobiography</b> is written by the person himself or herself.' },
+      { ikon: '📱', tajuk: 'Reading: The story of the mobile phone novel',
+        teks: ['A 19-year-old Japanese girl, <b>Akiko</b>, wrote a novel about her life in a small town. She finished it in just <b>three weeks</b> and called it <i>Dreams Come True</i>.',
+               'She wrote it on her <b>mobile phone</b> and posted it, chapter by chapter, on a website. The romantic novel sold over <b>200,000</b> copies.'],
+        senarai: ['Mobile phone novelists use a simple, <b>chatty</b>' + m('santai') + ' style, <b>abbreviations</b>' + m('singkatan') + ' and emoticons.',
+                  'Some people were critical: they thought the novels were a bad <b>influence</b>' + m('pengaruh') + ' on teenage girls.',
+                  'Now they are popular with people of all ages. Many best-selling <b>paperback</b> books in Japan were mobile phone novels!'] },
+      { ikon: '⏪', tajuk: 'Grammar: Past simple',
+        teks: ['We use the past simple for <b>finished actions in the past</b>.',
+               'Regular verbs add <b>-ed</b> (finish → finish<b>ed</b>). Irregular verbs change (write → <b>wrote</b>).'],
+        senarai: ['✅ She <b>finished</b> the novel. She <b>wrote</b> the novel on a phone.',
+                  '❌ They <b>didn\'t like</b> mobile phone novels. (didn\'t + infinitive)',
+                  '❓ <b>Did</b> you <b>enjoy</b> the book? — Yes, I <b>did</b>. / No, I <b>didn\'t</b>.'],
+        chips: ['go → went', 'see → saw', 'get → got', 'read → read', 'say → said', 'come → came', 'like → liked', 'start → started'],
+        contoh: '⏱️ <b>ago</b> comes after the time expression: "That book came out two years <b>ago</b>."' },
+      { ikon: '🌍', tajuk: 'People who changed the world',
+        teks: ['Learn 13 professions' + m('pekerjaan') + ' from a timeline.'],
+        chips: ['👩‍🚀 astronaut', '🏃 athlete' + m('atlet'), '🤡 comedian' + m('pelawak'), '💃 dancer', '⚙️ engineer' + m('jurutera'), '🧭 explorer' + m('penjelajah'),
+                '💡 inventor' + m('pencipta'), '🎸 musician', '🎨 painter' + m('pelukis'), '✈️ pilot', '🏛️ politician' + m('ahli politik'), '🔬 scientist', '✏️ writer'],
+        contoh: ['1822 An English <b>engineer</b> invented the first computer.', '1930 A female <b>pilot</b> flew alone from Britain to Australia.',
+                 '1969 An American <b>astronaut</b> walked on the moon.'] },
+      { ikon: '🎭', tajuk: 'Cultural awareness: the Edinburgh Fringe Festival',
+        teks: ['The biggest festival of theatre, comedy, music and dance in the world. It started in <b>1947</b>, the same year as the Edinburgh International Festival.',
+               'At the Fringe, <b>anybody</b> could put on a show' + m('mengadakan pertunjukan') + '!'],
+        senarai: ['📅 Every August for three weeks.', '🎟️ Most tickets cost under ten pounds; many shows are free.',
+                  '🚌 Shows take place on the street, in cafés, in people\'s homes – once even on a moving bus!',
+                  '🌟 Rowan Atkinson (Mr Bean) appeared in a play there when he was a student.'] },
+      { ikon: '🎬', tajuk: 'Grammar: was / were and could / couldn\'t',
+        teks: ['<b>was</b> → I / he / she / it. <b>were</b> → we / you / they.',
+               '<b>could / couldn\'t</b> + infinitive = ability or possibility in the <b>past</b>.'],
+        senarai: ['He <b>was</b> a student in Madrid. Many events <b>were</b> for teenagers.', 'It <b>wasn\'t</b> a good play. They <b>weren\'t</b> from Scotland.',
+                  'There\'s a film festival this week. → There <b>was</b> a film festival last week.',
+                  'You <b>could watch</b> unknown performers. They <b>couldn\'t perform</b> at that festival.'],
+        contoh: '"<b>Could</b> you read when you were four?" — "Yes, I <b>could</b>. / No, I <b>couldn\'t</b>."' },
+      { ikon: '🐉', tajuk: 'Asking about an experience',
+        teks: ['Chris visited <b>King Arthur\'s Labyrinth</b> in Wales: an underground adventure in a large cave with a guide. You might even see a Welsh dragon!',
+               'Nina asks him about it:'],
+        senarai: ['"So, <b>did you have a good time</b> in Wales?" — "Yes, thanks. <b>It was amazing!</b>"', '"<b>What did you do</b> there?"',
+                  '"<b>What did you enjoy most?</b>"', '"<b>I\'m glad you enjoyed it.</b>" / "<b>It\'s a pity</b> you didn\'t enjoy it."'],
+        contoh: 'It was amazing / interesting / awful' + m('teruk') + ' / boring.' },
+      { ikon: '✍️', tajuk: 'Writing a review: also and too',
+        teks: ['Penelope reviewed the <b>Sherlock Holmes Museum</b> in London in three paragraphs: general information → what you can do → what she liked and didn\'t like.',
+               '<b>also</b> goes after <i>be</i> but before main verbs. <b>too</b> goes at the end of the sentence.'],
+        senarai: ['You could <b>also</b> meet characters from the books.', 'It\'s got a shop for visitors <b>too</b>.'],
+        contoh: '📝 <b>Exam tip:</b> in a review, use past simple verbs (we visited, we waited), <i>could / couldn\'t</i>, and <i>also / too</i> to add information.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'A book that helps you to make food is a ___.', ikon: '🍳', p: ['cookery book', 'travel guide', 'poetry book', 'fairy tale'], a: 0, kenapa: 'A cookery book helps you to make food.' },
+      { j: 'pilih', s: 'A traditional story about magical events is a ___.', ikon: '🧚', p: ['fairy tale', 'thriller', 'biography', 'historical novel'], a: 0, kenapa: 'A fairy tale is a traditional story about magical events.' },
+      { j: 'pilih', s: 'David Beckham wrote "My Side" about his own life. It is ___.', ikon: '⚽', p: ['an autobiography', 'a biography', 'a comic novel', 'a travel guide'], a: 0, kenapa: 'A book about your own life, written by you, is an autobiography.' },
+      { j: 'pilih', s: 'Akiko finished "Dreams Come True" in just ___.', ikon: '📱', p: ['three weeks', 'two months', 'one year', 'six weeks'], a: 0, kenapa: 'She finished it in just three weeks.' },
+      { j: 'pilih', s: 'People were first able to read "Dreams Come True" ___.', ikon: '🌐', p: ['on the internet', 'in a paperback', 'in a newspaper', 'in a magazine'], a: 0, kenapa: 'She posted it chapter by chapter on a website.' },
+      { j: 'pilih', s: 'They ___ like mobile phone novels at first.', ikon: '👎', p: ["didn't", "doesn't", "wasn't", "weren't"], a: 0, kenapa: 'Past simple negative: didn\'t + infinitive.' },
+      { j: 'pilih', s: '___ you enjoy the book? — Yes, I did.', ikon: '❓', p: ['Did', 'Were', 'Was', 'Do'], a: 0, kenapa: 'Past simple questions begin with Did. The answer "Yes, I did" matches.' },
+      { j: 'pilih', s: 'I sent you an email a few minutes ___.', ikon: '📧', p: ['ago', 'last', 'before', 'past'], a: 0, kenapa: '"Ago" comes after the time expression.' },
+      { j: 'pilih', s: 'In 1969 an American ___ walked on the moon.', ikon: '🌕', p: ['astronaut', 'explorer', 'pilot', 'athlete'], a: 0, kenapa: 'An astronaut (Neil Armstrong) walked on the moon.' },
+      { j: 'pilih', s: 'The Edinburgh Fringe Festival takes place every ___.', ikon: '🎭', p: ['August', 'December', 'April', 'June'], a: 0, kenapa: 'It takes place every August for three weeks.' },
+      { j: 'pilih', s: 'Jenny: "Was the play good?" John: "Yes, but I ___ see very well."', ikon: '🎬', p: ["couldn't", 'could', "wasn't", "weren't"], a: 0, kenapa: 'Couldn\'t + infinitive: he wasn\'t able to see well.' },
+      { j: 'pilih', s: '"Did you have a good time in Wales?" The best reply is:', ikon: '🏴', p: ['Yes, thanks. It was amazing!', "Yes, I do. It's amazing!", "Yes, I have. It's amazing!"], a: 0, kenapa: 'The question is past simple, so we answer with "It was …".' },
+      { j: 'bs', s: 'Akiko was an experienced writer.', ikon: '✍️', a: false, kenapa: 'Akiko wasn\'t an experienced writer.' },
+      { j: 'bs', s: 'Akiko posted her novel chapter by chapter on a website.', ikon: '📲', a: true, kenapa: 'Readers could download each chapter immediately.' },
+      { j: 'bs', s: 'Mobile phone novelists worry a lot about grammar and spelling.', ikon: '🔤', a: false, kenapa: 'They don\'t worry too much about grammar and spelling.' },
+      { j: 'bs', s: 'The Fringe and the Edinburgh International Festival started in the same year.', ikon: '📅', a: true, kenapa: 'Both started in 1947.' },
+      { j: 'bs', s: 'At the Fringe Festival, only famous performers can put on a show.', ikon: '🌟', a: false, kenapa: 'At the Fringe, anybody could put on a show.' },
+      { j: 'bs', s: 'King Arthur\'s Labyrinth is suitable for children, teenagers and adults.', ikon: '🐉', a: true, kenapa: 'It is suitable for all the family.' },
+      { j: 'padan', s: 'Match the profession with the timeline event.', pasangan: [['pilot', 'flew alone from Britain to Australia'], ['painter', 'was born in Málaga, Spain'],
+        ['explorer', 'made a trip to the South Pole'], ['scientist', 'invented the World Wide Web'], ['politician', 'became president of the USA'], ['athlete', 'won Olympic gold medals']] },
+      { j: 'padan', s: 'Match the verb with its past simple form.', pasangan: [['go', 'went'], ['see', 'saw'], ['say', 'said'], ['come', 'came'], ['get', 'got'], ['write', 'wrote']] },
+      { j: 'kumpul', s: 'Regular or irregular past simple?', kumpulan: [['➕ Regular (-ed)', ['liked', 'started', 'wished', 'hated', 'finished']], ['🔀 Irregular', ['went', 'saw', 'got', 'said', 'came']]] },
+      { j: 'kumpul', s: 'Fiction or non-fiction?', kumpulan: [['🧚 Fiction', ['fairy tale', 'thriller', 'detective novel', 'science fiction novel']], ['📖 Non-fiction', ['biography', 'autobiography', 'cookery book', 'travel guide']]] },
+      { j: 'susun', s: 'Put Nina and Chris\'s dialogue in order.', item: ['Did you have a good time in Wales?', 'Yes, thanks. It was amazing!', 'What did you do there?',
+        "We went to King Arthur's Labyrinth.", 'What did you enjoy most?', 'The interactive parts were best.', "I'm glad you enjoyed it."] },
+      { j: 'susun', s: 'Put Akiko\'s story in order.', item: ['She started writing a novel about her life.', 'She posted it chapter by chapter.', 'It came out a few months later.', 'It sold over 200,000 copies.'] },
+      { j: 'eja', s: 'Listen and spell: a book about a person\'s life, written by another person.', ikon: '👤', kata: 'biography' },
+      { j: 'eja', s: 'Listen and spell: a person who makes people laugh.', ikon: '🤡', kata: 'comedian' },
+      { j: 'ayat', s: 'Make the past simple sentence.', ikon: '📱', kata: ['She', "didn't", 'rewrite', 'anything.'] },
+      { j: 'ayat', s: 'Make the question with could.', ikon: '📖', kata: ['Could', 'you', 'read', 'when', 'you', 'were', 'four?'] },
+      { j: 'ayat', s: 'Put "also" in the right place.', ikon: '🕵️', kata: ['You', 'could', 'also', 'meet', 'characters', 'from', 'the', 'books.'] },
+    ],
+    amali: [{
+      id: 'verb-forge', tajuk: 'The Past Simple Forge', ikon: '⚒️',
+      arahan: 'Forge the past simple! Choose the correct verb for each sentence. Each verb then goes to the Regular or Irregular shelf.',
+      mula(el, api) {
+        // [sentence with ___, infinitive, correct, wrong1, wrong2, regular?]
+        const R = api.shuffle([
+          ['Akiko ___ the novel on her mobile phone.', 'write', 'wrote', 'writed', 'writes', false],
+          ['She ___ the novel in just three weeks.', 'finish', 'finished', 'finish', 'finishes', true],
+          ['My brother ___ me The Hunger Games.', 'give', 'gave', 'gived', 'gives', false],
+          ['I ___ reading it and I loved it.', 'start', 'started', 'start', 'startted', true],
+          ['We ___ to King Arthur\'s Labyrinth.', 'go', 'went', 'goed', 'goes', false],
+          ['I ___ a good film two weeks ago.', 'see', 'saw', 'seed', 'sees', false],
+          ['Many people ___ the mobile phone novel.', 'like', 'liked', 'likeed', 'likes', true],
+          ['That book ___ out two years ago.', 'come', 'came', 'comed', 'comes', false],
+        ]);
+        let k = 0, miss = 0, busy = false, tm = null;
+        el.innerHTML = `<style>
+          .u2-anvil{border:3px solid var(--line);border-radius:18px;padding:14px;background:var(--c2);text-align:center;margin-bottom:12px}
+          .u2-anvil .u2-inf{display:inline-block;font:700 1.05rem var(--hd);color:var(--c);margin-bottom:6px}
+          .u2-anvil p{margin:0;font:600 1.2rem/1.4 var(--ui);color:var(--ink)}
+          .u2-ch{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:12px}
+          .u2-ch .opt{text-align:center}
+          .u2-sh{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+          .u2-sh .box{min-height:90px;min-width:0}
+          .u2-sh .chips{margin-top:6px}
+          .u2-tag{display:inline-block;border:2px solid var(--ok);background:var(--card);color:var(--ink);border-radius:10px;padding:3px 8px;font:600 .92rem var(--ui);max-width:100%;overflow-wrap:anywhere}
+          .u2-meter{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0 12px}
+          .u2-meter i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+        </style>
+        <div class="u2-meter" aria-hidden="true"><i></i></div>
+        <div class="u2-anvil" aria-live="polite"><span class="u2-inf"></span><p></p></div>
+        <div class="u2-ch"></div>
+        <div class="u2-sh"><div class="box"><b>➕ Regular <small style="white-space:nowrap">(-ed)</small></b><div class="chips" id="u2Reg"></div></div><div class="box"><b>🔀 Irregular</b><div class="chips" id="u2Irr"></div></div></div>
+        <p class="hint" id="u2Pg"></p>`;
+        const inf = el.querySelector('.u2-inf'), sen = el.querySelector('.u2-anvil p'), ch = el.querySelector('.u2-ch'),
+          reg = el.querySelector('#u2Reg'), irr = el.querySelector('#u2Irr'), pg = el.querySelector('#u2Pg'), bar = el.querySelector('.u2-meter i');
+        let btns = [];
+        function show() {
+          const r = R[k]; busy = false;
+          inf.textContent = '⚒️ ' + r[1];
+          sen.innerHTML = api.esc(r[0]).replace('___', '<b>_____</b>');
+          ch.innerHTML = '';
+          btns = api.shuffle([r[2], r[3], r[4]]).map(w => { const b = api.H(`<button class="opt">${api.esc(w)}</button>`); b.dataset.w = w; b.onclick = () => pick(b); ch.appendChild(b); return b; });
+          pg.textContent = `Verb ${k + 1} of ${R.length}`;
+        }
+        function pick(b) {
+          if (busy || k >= R.length) return;
+          const r = R[k];
+          if (b.dataset.w !== r[2]) { miss++; api.salah(b, `Not "${api.esc(b.dataset.w)}". ${r[5] ? 'This verb is regular: add -ed.' : 'This verb is irregular.'}`); return; }
+          busy = true; b.classList.add('ok');
+          sen.innerHTML = api.esc(r[0]).replace('___', `<b>${api.esc(r[2])}</b>`);
+          const c = api.H(`<span class="u2-tag">${api.esc(r[1])} → ${api.esc(r[2])}</span>`);
+          (r[5] ? reg : irr).appendChild(c); api.anim(c, [{ transform: 'translateY(-12px)' }, { transform: 'none' }], { duration: 300 });
+          api.betul(b, `<b>${api.esc(r[2])}</b> — ${r[5] ? 'regular (-ed)' : 'irregular'}.`);
+          k++; bar.style.width = (k / R.length * 100) + '%';
+          if (k === R.length) { pg.textContent = 'All verbs forged!'; api.selesai(Math.max(0, 1 - miss * .1), 'Great forging! Remember: make a list of irregular verbs and add each new one.'); }
+          else tm = setTimeout(() => { if (el.isConnected) show(); }, 650);
+        }
+        show();
+        return { jawab() {
+          const step = () => { if (!el.isConnected || k >= R.length) return; clearTimeout(tm); show(); btns.find(b => b.dataset.w === R[k][2]).click(); if (k < R.length) step(); };
+          step();
+        } };
+      },
+    }, {
+      id: 'changed-the-world', tajuk: 'Timeline: People who changed the world', ikon: '🌍',
+      arahan: 'Build the timeline from 1800 to now. Read each event and choose the missing profession.',
+      mula(el, api) {
+        const E = [
+          ['1822', 'An English ___ invented the first computer.', 'engineer', 'Charles Babbage'],
+          ['1881', 'A great ___ was born in Málaga, Spain.', 'painter', 'Pablo Picasso'],
+          ['1911', 'A(n) ___ from Norway made a trip to the South Pole.', 'explorer', 'Roald Amundsen'],
+          ['1914', 'A young ___ appeared in the first of many black and white films.', 'comedian', 'Charlie Chaplin'],
+          ['1930', 'A female ___ flew alone from Britain to Australia.', 'pilot', 'Amy Johnson'],
+          ['1963', 'A great flamenco ___ gave her last performance.', 'dancer', 'Carmen Amaya'],
+          ['1969', 'An American ___ walked on the moon.', 'astronaut', 'Neil Armstrong'],
+          ['1980', 'A famous ___ was shot dead in New York.', 'musician', 'John Lennon'],
+          ['1989', 'A computer ___ invented the World Wide Web.', 'scientist', 'Tim Berners-Lee'],
+          ['2003', 'The ___ of Facebook became a millionaire.', 'inventor', 'Mark Zuckerberg'],
+          ['2007', 'A ___ of children\'s books sold more than any other author.', 'writer', 'J.K. Rowling'],
+          ['2008', 'A black ___ became president of the USA.', 'politician', 'Barack Obama'],
+          ['2012', 'A(n) ___ won gold medals at the Olympics in the 5,000 m and 10,000 m.', 'athlete', 'Mo Farah'],
+        ];
+        let k = 0, miss = 0;
+        el.innerHTML = `<style>
+          .u2-tl{list-style:none;margin:0 0 12px;padding:0 0 0 18px;border-left:4px solid var(--c);display:grid;gap:8px}
+          .u2-tl li{position:relative;border:2px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--card);color:var(--muted);min-width:0;overflow-wrap:anywhere}
+          .u2-tl li::before{content:'';position:absolute;left:-29px;top:14px;width:14px;height:14px;border-radius:50%;background:var(--line);border:3px solid var(--card)}
+          .u2-tl li.cur{border-color:var(--c);background:var(--c2);color:var(--ink)} .u2-tl li.cur::before{background:var(--c)}
+          .u2-tl li.ok{border-color:var(--ok);color:var(--ink)} .u2-tl li.ok::before{background:var(--ok)}
+          .u2-tl li b.y{font-family:var(--hd);color:var(--c);margin-right:6px}
+          .u2-tl li small{display:block;color:var(--muted)}
+          .u2-pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
+          .u2-pal .chip{min-height:46px;padding:6px 8px;font-size:1rem}
+        </style>
+        <ol class="u2-tl">${E.map(e => `<li><b class="y">${e[0]}</b><span>${api.esc(e[1]).replace('___', '_____')}</span></li>`).join('')}</ol>
+        <div class="u2-pal">${api.shuffle(E.map(e => e[2])).map(w => `<button class="chip" data-w="${w}">${w}</button>`).join('')}</div>
+        <p class="hint" id="u2Tp"></p>`;
+        const lis = [...el.querySelectorAll('.u2-tl li')], chips = [...el.querySelectorAll('.u2-pal .chip')], tp = el.querySelector('#u2Tp');
+        function cur() {
+          lis.forEach((l, i) => l.classList.toggle('cur', i === k));
+          tp.textContent = `Event ${k + 1} of ${E.length}`;
+          api.say(`<b>${E[k][0]}</b> — ${api.esc(E[k][1]).replace('___', '_____')}`);
+        }
+        function tap(b) {
+          if (k >= E.length || b.disabled) return;
+          const e = E[k];
+          if (b.dataset.w !== e[2]) { miss++; api.salah(b, `Not a${/^[aeiou]/i.test(b.dataset.w) ? 'n' : ''} ${api.esc(b.dataset.w)}. Read the event again.`); return; }
+          b.disabled = true; b.classList.add('ok');
+          const li = lis[k]; li.classList.remove('cur'); li.classList.add('ok');
+          li.innerHTML = `<b class="y">${e[0]}</b>${api.esc(e[1]).replace('___', `<b>${e[2]}</b>`)}<small>👤 ${api.esc(e[3])}</small>`;
+          api.betul(li, `${e[0]}: a${/^[aeiou]/.test(e[2]) ? 'n' : ''} <b>${e[2]}</b> — ${api.esc(e[3])}.`);
+          k++;
+          if (k === E.length) { tp.textContent = 'Timeline complete: 1800 → NOW!'; api.selesai(Math.max(0, 1 - miss * .08), 'You know all 13 professions!'); }
+          else cur();
+        }
+        chips.forEach(b => b.onclick = () => tap(b));
+        cur();
+        return { jawab() { while (k < E.length) chips.find(b => b.dataset.w === E[k][2]).click(); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+
+  UNIT({
+    n: 3, tajuk: 'Wild weather', tema: 'Weather & natural disasters', ikon: '⛈️', warna: '#0c8599',
+    belajar: [
+      { ikon: '🌦️', tajuk: 'What\'s the weather like?',
+        teks: ['What kind of weather do you like best? How does it make you feel?',
+               'The weather board shows six cities today. <i>In London it\'s cold and foggy.</i>'],
+        chips: ['☀️ sunny', '🌧️ rainy', '💨 windy', '❄️ snowy', '⛈️ stormy', '☁️ cloudy', '💧 damp' + m('lembap'), '🧊 icy' + m('berais'),
+                '🌫️ foggy' + m('berkabus'), '🌤️ warm', '☔ wet', '🏜️ dry', '⚡ thunder and lightning' + m('guruh dan kilat'),
+                '🌨️ blizzard' + m('ribut salji'), '🔥 heatwave' + m('gelombang haba'), '🧊 hailstones' + m('hujan batu')],
+        contoh: ['🏄 Sydney 38 degrees: a heatwave!', '⚡ Tokyo: thunder and lightning.  ❄️ New York −1 degrees: snow.'] },
+      { ikon: '🍂', tajuk: 'Seasons and weather',
+        teks: ['We say <b>in</b> spring, <b>in</b> summer, <b>in</b> autumn, <b>in</b> winter.',
+               'Sydney, Australia: "In spring it\'s usually sunny and dry. In summer it\'s very hot and windy."'],
+        contoh: ['"When do you go windsurfing?"', '"I go windsurfing on windy days."'] },
+      { ikon: '🎧', tajuk: 'News report: Saved by an MP3 player!',
+        teks: ['Sophie Frost, 14, from England, got an MP3 player from her grandmother.',
+               'She was walking with her friend Mason Billington when it started raining. They were sitting under a tree when lightning struck.'],
+        senarai: ['Mason woke up and carried Sophie to the nearest road. A car took them to hospital.',
+                  'Sophie had burns on her chest and legs, but she quickly recovered.',
+                  'She was wearing the MP3 player around her neck. The lightning travelled through the <b>wire</b>, not her body.'],
+        contoh: 'Word check: take shelter' + m('berlindung') + ', consciousness' + m('kesedaran') + ', burn, damage' + m('kerosakan') + ', recover' + m('pulih') + ', injury, wire' },
+      { ikon: '⏳', tajuk: 'Grammar: past continuous',
+        teks: ['We use the past continuous for <b>actions in progress</b> in the past.', 'Form: <b>was / were + verb-ing</b>.'],
+        senarai: ['✅ I / He / She / It <b>was going</b> for a walk. We / You / They <b>were sitting</b> under a tree.',
+                  '❌ She <b>wasn\'t listening</b> to music. They <b>weren\'t standing</b> in the rain.',
+                  '❓ <b>Was</b> it snow<b>ing</b>? — Yes, it was. <b>Were</b> they walk<b>ing</b>? — No, they weren\'t.'],
+        contoh: ['Spelling: play → playing · come → coming · run → running · lie → lying'] },
+      { ikon: '🚗', tajuk: 'Adverbs: how do we do it?',
+        teks: ['Adjectives tell us more about <b>nouns</b>. Adverbs tell us more about <b>verbs</b>.',
+               'It was a bright, sunny day. → The sun was shining <b>brightly</b>.'],
+        chips: ['careful → carefully', 'quick → quickly', 'noisy → noisily', 'easy → easily', 'hard → hard', 'good → well'],
+        contoh: ['🧊 The roads are icy. Drive carefully!', '❄️ It\'s snowing! Dress warmly!', '🌧️ It was raining hard yesterday.'] },
+      { ikon: '🌋', tajuk: 'Natural disasters',
+        senarai: ['🌀 A <b>hurricane</b> is a storm with very strong winds.', '🏔️ An <b>avalanche</b> is a large amount of snow which falls down a mountain.',
+                  '🔥 A <b>wildfire</b> happens in hot weather when an area of forest is very dry.', '🌊 A <b>flood</b> happens when it rains a lot.',
+                  '🌋 A <b>volcano</b> is a mountain that erupts and releases hot liquid.', '🫨 An <b>earthquake</b> makes the ground move.',
+                  '🌊 A <b>tsunami</b> is a very big sea wave.', '🏜️ A <b>drought</b> happens when there isn\'t enough rain.',
+                  '🌪️ A <b>tornado</b> is a very strong wind that goes round and round.'],
+        contoh: 'Also: landslide' + m('tanah runtuh') + ', famine' + m('kebuluran') },
+      { ikon: '🏚️', tajuk: 'Earthquake in Christchurch',
+        teks: ['New Zealand is in the Pacific Ocean, 1,500 km east of Australia. It has more than 50 volcanoes.',
+               'The earthquake in Christchurch killed 185 people, but Jay Watson had a lucky escape.'],
+        senarai: ['Jay was sick, so he was at home, sitting on his bed, when the house started shaking.',
+                  'He got down on the floor between his bed and the wall. At school they have earthquake <b>drills</b>' + m('latihan') + '.',
+                  'The wall <b>collapsed</b>' + m('runtuh') + ' and he fell about ten metres into the front garden.',
+                  'He only had a few <b>scratches</b> and <b>bruises</b>' + m('calar dan lebam') + '. His neighbour, a firefighter, pulled him out from under the bricks.',
+                  'His family moved to a new house, but Jay still goes to the same school.'] },
+      { ikon: '⚡', tajuk: 'Past simple + past continuous',
+        teks: ['A long action (past continuous) is interrupted by a short action (past simple).'],
+        senarai: ['I <b>was sitting</b> on my bed <b>when</b> I <b>heard</b> a noise.', 'I <b>heard</b> a noise <b>while</b> I <b>was sitting</b> on my bed.'],
+        contoh: ['📌 We usually use the <b>past simple after when</b>.', '📌 We usually use the <b>past continuous after while</b>.',
+                 'His mum was cooking dinner when she heard a shout.'] },
+      { ikon: '📞', tajuk: 'Reacting to news',
+        teks: ['Sara calls Chris: "Guess what happened last night during the storm!"'],
+        chips: ['What …?', 'Where …?', 'When …?', 'Why / Why not?', 'No way! / I can\'t believe it!', 'That\'s amazing / great / terrible news!',
+                'I\'m really sorry / pleased.', 'Congratulations!', 'Well done!'],
+        contoh: ['😟 Bad news → "No way! That\'s terrible news. Was anybody hurt?"', '🎉 Good news → "Wow, that\'s amazing!"'] },
+      { ikon: '✍️', tajuk: 'Writing a story + Exam tip',
+        teks: ['Story "Lost!": Rosie and her friend went for a walk in the mountains. It got foggy, they were lost, and a helicopter came to rescue them.',
+               'Sequencing words show the order of events:'],
+        chips: ['One day', 'Soon', 'Then', 'By then', 'Later', 'In the end'],
+        contoh: ['📝 <b>Exam tip:</b> start with <b>One day</b>, finish with <b>In the end</b>. After <b>by then</b> we often use the past continuous: <i>By then his family were eating.</i>',
+                 'Check your story: past simple + past continuous verbs ✔ sequencing words ✔'] },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'It was raining ___ yesterday.', ikon: '🌧️', p: ['hard', 'hardly', 'harder'], a: 0, kenapa: '"Hard" is an irregular adverb: it was raining hard.' },
+      { j: 'pilih', s: 'The roads are icy. Drive ___!', ikon: '🧊', p: ['carefully', 'careful', 'caring'], a: 0, kenapa: 'We need an adverb to describe the verb "drive": carefully.' },
+      { j: 'pilih', s: 'It\'s snowing! Dress ___!', ikon: '❄️', p: ['warmly', 'warm', 'warmer'], a: 0, kenapa: 'Adverb of warm = warmly. Dress warmly!' },
+      { j: 'pilih', s: 'Sophie and Mason ___ under a tree when lightning struck.', ikon: '🌳', p: ['were sitting', 'was sitting', 'are sitting'], a: 0, kenapa: 'Two people = were + -ing: they were sitting.' },
+      { j: 'pilih', s: 'I ___ TV when I heard a loud noise.', ikon: '📺', p: ['was watching', 'were watching', 'am watching'], a: 0, kenapa: 'I + was + -ing for the long action in the past.' },
+      { j: 'pilih', s: 'His mum was cooking when she ___ a shout.', ikon: '🍳', p: ['heard', 'was hearing', 'hears'], a: 0, kenapa: 'The short action after "when" is usually in the past simple: heard.' },
+      { j: 'pilih', s: 'We usually use the past continuous after ___.', ikon: '⏳', p: ['while', 'when', 'then'], a: 0, kenapa: 'I heard a noise while I was sitting on my bed.' },
+      { j: 'pilih', s: 'A ___ happens when there isn\'t enough rain.', ikon: '🏜️', p: ['drought', 'flood', 'famine', 'tsunami'], a: 0, kenapa: 'A drought happens when there isn\'t enough rain.' },
+      { j: 'pilih', s: 'It is a large amount of snow which falls down a mountain. What is it?', ikon: '🏔️', p: ['an avalanche', 'a landslide', 'a blizzard', 'a flood'], a: 0, kenapa: 'An avalanche is a large amount of snow which falls down a mountain.' },
+      { j: 'pilih', s: 'A ___ is a very strong wind that goes round and round.', ikon: '🌀', p: ['tornado', 'tsunami', 'drought', 'volcano'], a: 0, kenapa: 'A tornado is a very strong wind that goes round and round.' },
+      { j: 'pilih', s: 'On the weather board, which city has a heatwave (38 degrees)?', ikon: '🌡️', p: ['Sydney', 'London', 'New York', 'Athens'], a: 0, kenapa: 'Sydney: 38 degrees, sunny – a heatwave!' },
+      { j: 'pilih', s: 'Why wasn\'t Jay at school on the day of the earthquake?', ikon: '🤒', p: ['He was sick.', 'It was a holiday.', 'The school was closed.'], a: 0, kenapa: '"I wasn\'t at school that day because I was sick."' },
+      { j: 'pilih', s: 'Who pulled Jay out from under the bricks?', ikon: '🧱', p: ['His next-door neighbour', 'A team of firefighters', 'His mum'], a: 0, kenapa: 'His next-door neighbour, who is a firefighter, pulled him out.' },
+      { j: 'pilih', s: 'Your friend says: "I came first in a photography competition!" Best reply?', ikon: '📸', p: ['Congratulations!', 'I\'m really sorry.', 'No way! That\'s terrible.'], a: 0, kenapa: 'Good news → Congratulations! / Well done!' },
+      { j: 'pilih', s: 'Which phrase introduces the final event of a story?', ikon: '📖', p: ['In the end', 'One day', 'By then', 'Soon'], a: 0, kenapa: '"In the end" finishes a story. "One day" often begins it.' },
+      { j: 'bs', s: 'Sophie was listening to music when the lightning struck.', ikon: '🎧', a: false, kenapa: 'She wasn\'t listening to music. She was wearing the MP3 player around her neck.' },
+      { j: 'bs', s: 'Doctors believe the lightning travelled through the wire of the MP3 player.', ikon: '⚡', a: true, kenapa: 'The lightning went through the wire instead of through Sophie\'s body.' },
+      { j: 'bs', s: 'Mason carried Sophie to the nearest road to get help.', ikon: '🛣️', a: true, kenapa: 'Mason woke up and carried Sophie to the nearest road. A car stopped.' },
+      { j: 'bs', s: 'After the earthquake, Jay moved to a different school.', ikon: '🏫', a: false, kenapa: 'His new house is in a different area, but he still goes to the same school.' },
+      { j: 'bs', s: 'New Zealand has more than 50 volcanoes.', ikon: '🌋', a: true, kenapa: 'Fact box: New Zealand also has more than 50 volcanoes.' },
+      { j: 'bs', s: 'Jay was seriously injured in the earthquake.', ikon: '🩹', a: false, kenapa: 'He only had a few scratches and bruises on his back.' },
+      { j: 'susun', s: 'Put the events of "Saved by an MP3 player!" in order.',
+        item: ['Grandmother gave Sophie a present.', 'Sophie and Mason went for a walk.', 'It started raining.', 'Lightning hit them under a tree.', 'A car took them to hospital.'] },
+      { j: 'susun', s: 'Put the story "Lost!" in order.',
+        item: ['Rosie and I went for a walk.', 'The weather changed. It was foggy.', 'We were lost.', 'My phone wasn\'t working.', 'We heard a helicopter.'] },
+      { j: 'padan', s: 'Match each disaster with its meaning.',
+        pasangan: [['flood', 'happens when it rains a lot'], ['tsunami', 'a very big sea wave'], ['earthquake', 'makes the ground move'],
+                   ['volcano', 'erupts and releases hot liquid'], ['hurricane', 'a storm with very strong winds'], ['wildfire', 'a forest fire in hot, dry weather']] },
+      { j: 'padan', s: 'Match the adjective with its adverb.',
+        pasangan: [['careful', 'carefully'], ['noisy', 'noisily'], ['easy', 'easily'], ['good', 'well'], ['quick', 'quickly']] },
+      { j: 'kumpul', s: 'Weather or natural disaster?',
+        kumpulan: [['🌦️ Weather', ['foggy', 'icy', 'heatwave', 'hailstones', 'damp']], ['🌋 Natural disaster', ['avalanche', 'drought', 'landslide', 'famine', 'tornado']]] },
+      { j: 'eja', s: 'Listen and spell: a very strong wind that goes round and round.', ikon: '🌪️', kata: 'tornado' },
+      { j: 'eja', s: 'Listen and spell: thunder and ___.', ikon: '⚡', kata: 'lightning' },
+      { j: 'ayat', s: 'Build the sentence (past continuous + past simple).', ikon: '🍳', kata: ['His', 'mum', 'was', 'cooking', 'when', 'she', 'heard', 'a', 'shout.'] },
+      { j: 'ayat', s: 'Build the answer to "When do you go windsurfing?"', ikon: '🏄', kata: ['I', 'go', 'windsurfing', 'on', 'windy', 'days.'] },
+    ],
+    amali: [
+      {
+        id: 'storm-story', tajuk: 'Storm story builder', ikon: '⛈️',
+        arahan: 'A long action was in progress… then something interrupted it! Fill both gaps to build each storm story.',
+        mula(el, api) {
+          // [who-emoji, before, gap1 options (0 = correct), middle, gap2 options (0 = correct), after, note]
+          const R = api.shuffle([
+            ['🛏️', 'Jay', ['was sitting', 'sat', 'is sitting'], 'on his bed when he', ['heard', 'was hearing', 'hears'], 'a terrible noise.', 'Long action: was sitting. Short action after when: heard.'],
+            ['🌳', 'Sophie and Mason', ['were sitting', 'was sitting', 'sat'], 'under a tree when lightning', ['struck', 'was striking', 'strikes'], '.', 'They were sitting (long) when lightning struck (short).'],
+            ['🍳', 'His mum', ['was cooking', 'cooked', 'were cooking'], 'when she', ['heard', 'was hearing', 'hear'], 'a shout.', 'She was cooking when she heard a shout.'],
+            ['📺', 'I', ['was watching', 'watched', 'were watching'], 'TV when I', ['heard', 'was hearing', 'hears'], 'a loud noise.', 'I was watching TV when I heard a loud noise.'],
+            ['🧱', 'Lots of bricks', ['fell', 'were falling', 'falls'], 'on me while I', ['was lying', 'lay', 'were lying'], 'on the ground.', 'After while we usually use the past continuous: was lying.'],
+            ['🚢', 'A ship', ['was crossing', 'crossed', 'were crossing'], 'the Atlantic Ocean when it suddenly', ['hit', 'was hitting', 'hits'], 'an iceberg.', 'The ship was crossing (long) when it hit (short) an iceberg.'],
+          ]);
+          let k = 0, miss = 0, g1 = null;
+          el.innerHTML = `<style>
+            .u3-sky{display:flex;gap:6px;justify-content:center;font-size:1.7rem;margin-bottom:8px;flex-wrap:wrap}
+            .u3-sky span{opacity:.35;transition:opacity .3s} .u3-sky span.on{opacity:1}
+            .u3-sent{font:600 1.2rem/1.9 var(--ui);background:var(--c2);border-radius:14px;padding:12px 14px;margin:8px 0;color:var(--ink)}
+            .u3-gap{display:inline-block;min-width:96px;border-bottom:3px dashed var(--c);text-align:center;padding:0 6px;font-weight:700}
+            .u3-gap.ok{border-bottom-style:solid;border-color:var(--ok);color:var(--ok)}
+            .u3-gap.cur{background:var(--card);border-radius:8px}
+            .u3-pal{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+          </style>
+          <div class="u3-sky" aria-hidden="true">${R.map(() => '<span>☁️</span>').join('')}</div>
+          <p class="hint" id="u3n"></p>
+          <div class="u3-sent" id="u3s"></div>
+          <div class="u3-pal" id="u3p"></div>`;
+          const sky = [...el.querySelectorAll('.u3-sky span')], sEl = el.querySelector('#u3s'), pEl = el.querySelector('#u3p'), nEl = el.querySelector('#u3n');
+          let btns = [];
+          function draw() {
+            const r = R[k];
+            nEl.textContent = `Story ${k + 1} of ${R.length} · ${g1 === null ? 'Gap 1: the first verb' : 'Gap 2: the second verb'}`;
+            sEl.innerHTML = `${r[0]} ${api.esc(r[1])} <span class="u3-gap ${g1 === null ? 'cur' : 'ok'}">${g1 === null ? '?' : api.esc(r[2][0])}</span> ${api.esc(r[3])} <span class="u3-gap ${g1 === null ? '' : 'cur'}">?</span>${r[5] === '.' ? '.' : ' ' + api.esc(r[5])}`;
+            const opts = g1 === null ? r[2] : r[4];
+            pEl.innerHTML = '';
+            btns = api.shuffle(opts.map((t, i) => [t, i])).map(([t, i]) => {
+              const b = api.H(`<button class="chip">${api.esc(t)}</button>`); b.dataset.i = i;
+              b.onclick = () => pick(i, b); pEl.appendChild(b); return b;
+            });
+          }
+          function pick(i, b) {
+            if (k >= R.length) return;
+            const r = R[k];
+            if (i !== 0) { miss++; api.salah(b, r[6]); return; }
+            if (g1 === null) { g1 = 0; api.betul(b, 'Good! Now the second verb.'); draw(); return; }
+            sky[k].textContent = '⚡'; sky[k].classList.add('on');
+            const full = `${r[1]} ${r[2][0]} ${r[3]} ${r[4][0]}${r[5] === '.' ? '.' : ' ' + r[5]}`;
+            api.betul(sEl, '<b>' + api.esc(full) + '</b>');
+            api.speak(full);
+            k++; g1 = null;
+            if (k < R.length) draw();
+            else { pEl.innerHTML = ''; nEl.textContent = 'All stories built!'; api.selesai(Math.max(0, 1 - miss * 0.08), 'Great storm stories! Past continuous for the long action, past simple for the interruption.'); }
+          }
+          draw();
+          return { jawab() { let guard = 0; while (k < R.length && guard++ < 40) btns.find(b => b.dataset.i === '0').click(); } };
+        },
+      },
+      {
+        id: 'news-chat', tajuk: 'Reacting to news: phone chat', ikon: '📞',
+        arahan: 'Sara is telling Chris some news. Choose the best reply for Chris each time.',
+        mula(el, api) {
+          // [Sara's message, [correct, wrong, wrong], tip]
+          const R = [
+            ['Hi Chris! Guess what happened last night during the storm.', ['I don\'t know, what happened?', 'Congratulations!', 'Well done!'], 'When someone says "Guess what happened", ask: What happened?'],
+            ['Well, I was watching TV when I heard a loud noise.', ['What was it?', 'I\'m really pleased.', 'That\'s amazing news!'], 'Ask a question to find out more: What was it?'],
+            ['A huge tree fell down in our street! It fell in our garden.', ['No way! That\'s terrible news. Was anybody hurt?', 'Wow, that\'s amazing!', 'Congratulations! Well done!'], 'A tree in the garden is bad news: No way! That\'s terrible news.'],
+            ['No, luckily everybody was OK. We were all inside.', ['Great, I\'m really pleased about that.', 'I\'m really sorry.', 'No way! That\'s terrible.'], 'Everybody was OK – that is good: I\'m really pleased.'],
+            ['I\'ve got some good news too! I\'m going to be on TV tonight!', ['Wow, that\'s amazing! I\'m going to watch it.', 'That\'s terrible news.', 'What was it?'], 'Good news → Wow, that\'s amazing!'],
+            ['Did you see the news? Lucy Preston won a national photo competition!', ['Wow! Well done, Lucy!', 'I\'m really sorry.', 'Why not?'], 'Someone won → Congratulations! Well done!'],
+          ];
+          let k = 0, miss = 0, btns = [];
+          el.innerHTML = `<style>
+            .u3-chat{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;padding:4px;margin-bottom:10px}
+            .u3-b{max-width:85%;padding:9px 13px;border-radius:16px;font-size:1.02rem;line-height:1.35;border:2px solid var(--line)}
+            .u3-b small{display:block;font:700 .78rem var(--hd);color:var(--muted)}
+            .u3-sara{align-self:flex-start;background:var(--card);border-bottom-left-radius:4px}
+            .u3-chris{align-self:flex-end;background:var(--c2);border-color:var(--c);border-bottom-right-radius:4px}
+            .u3-opts{display:grid;gap:8px}
+            .u3-opts .opt{font-size:1rem;min-height:50px}
+          </style>
+          <div class="u3-chat" id="u3c" aria-live="polite"></div>
+          <div class="u3-opts" id="u3o"></div>
+          <p class="hint" id="u3h"></p>`;
+          const chat = el.querySelector('#u3c'), oEl = el.querySelector('#u3o'), hEl = el.querySelector('#u3h');
+          const bubble = (who, txt) => {
+            const b = api.H(`<div class="u3-b u3-${who}"><small>${who === 'sara' ? '📱 Sara' : 'Chris 📱'}</small>${api.esc(txt)}</div>`);
+            chat.appendChild(b); chat.scrollTop = chat.scrollHeight;
+            api.anim(b, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 280 });
+          };
+          function next() {
+            const r = R[k];
+            bubble('sara', r[0]); api.speak(r[0]);
+            hEl.textContent = `Reply ${k + 1} of ${R.length}`;
+            oEl.innerHTML = '';
+            btns = api.shuffle(r[1].map((t, i) => [t, i])).map(([t, i]) => {
+              const b = api.H(`<button class="opt">${api.esc(t)}</button>`); b.dataset.i = i;
+              b.onclick = () => pick(i, b); oEl.appendChild(b); return b;
+            });
+          }
+          function pick(i, b) {
+            if (k >= R.length) return;
+            const r = R[k];
+            if (i !== 0) { miss++; b.disabled = true; b.classList.add('no'); api.salah(b, r[2]); return; }
+            bubble('chris', r[1][0]); api.betul(null, 'Good reply!');
+            k++;
+            if (k < R.length) next();
+            else { oEl.innerHTML = ''; hEl.textContent = ''; api.selesai(Math.max(0, 1 - miss * 0.1), 'Well done! You can react to good and bad news.'); }
+          }
+          next();
+          return { jawab() { let guard = 0; while (k < R.length && guard++ < 30) btns.find(b => b.dataset.i === '0').click(); } };
+        },
+      },
+    ],
+  });
+})();
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+
+  UNIT({
+    n: 4, tajuk: 'Life on Earth', tema: 'Geography & animals', ikon: '🌍', warna: '#2b8a3e',
+    belajar: [
+      { ikon: '🏞️', tajuk: 'The seven natural wonders',
+        teks: ['Readers chose seven natural wonders of the world. Which place on Earth would you most like to visit?'],
+        senarai: ['🏜️ The Grand Canyon, USA — nearly 2 km deep; rafting down the Colorado River',
+                  '🐠 The Great Barrier Reef, Australia — over 1,500 kinds of fish',
+                  '🌳 The Amazon Rainforest, Ecuador — the world\'s biggest forest',
+                  '🧂 The Dead Sea, Jordan — a lake of salty water you can float in',
+                  '💦 The Niagara Falls, Canada — three waterfalls; about 5 million litres of water every second',
+                  '⛰️ Table Mountain, South Africa — flat on top, with steep cliffs',
+                  '💙 The Blue Cave, Greece — on the island of Kastelorizo'],
+        contoh: 'Names of mountains, rivers, etc have a capital letter: Table Mountain, Everest, the Mississippi.' },
+      { ikon: '🗺️', tajuk: 'Geography and landscape',
+        teks: ['Sort the landscape words: is it <b>land</b> or <b>water</b>?'],
+        chips: ['🏜️ canyon' + m('ngarai'), '🏜️ desert' + m('gurun'), '🌳 forest' + m('hutan'), '⛰️ mountain' + m('gunung'),
+                '🪨 cliff' + m('tebing'), '🕳️ cave' + m('gua'), '🏝️ island' + m('pulau'), '🏞️ valley' + m('lembah'),
+                '🏖️ beach' + m('pantai'), '🌊 coast' + m('pesisir'), '🏞️ river' + m('sungai'), '💧 lake' + m('tasik'),
+                '🌊 ocean' + m('lautan'), '🐠 reef' + m('terumbu'), '💦 waterfalls' + m('air terjun')],
+        contoh: 'Adjectives for places: beautiful, dangerous, amazing, unusual, boring, interesting.' },
+      { ikon: '🏝️', tajuk: 'Reading: Family wanted to live on an island',
+        teks: ['The owners of the <b>Isle of Muck</b>, a small Scottish island, are looking for a new family.'],
+        senarai: ['📏 Only 4 km long · 16 houses · 30 people',
+                  '🚫 No post office, one shop, one café (closed in the evenings)',
+                  '🔌 No electricity between 11am and 5pm; mobile phones are not easy to use',
+                  '🐬 White sandy beaches, clear sea, seabirds and dolphins',
+                  '🔓 The last crime was in the 1960s — nobody locks their doors',
+                  '🏫 The primary school has only eight pupils, so the family must have children'],
+        contoh: 'Lara17: "City people aren\'t as friendly as island people. Island life is also healthier than city life!"' },
+      { ikon: '📊', tajuk: 'Comparatives and superlatives',
+        teks: ['Use the <b>comparative + than</b> to compare two things. Use <b>the + superlative</b> to compare one thing with many.'],
+        senarai: ['small → smaller → the smallest', 'big → bigger → the biggest', 'friendly → friendlier → the friendliest',
+                  'interesting → more interesting → the most interesting', 'good → better → the best', 'bad → worse → the worst'],
+        contoh: ['The Atlantic is colder <b>than</b> the Mediterranean.', 'The Lake District is <b>the wettest</b> place in England.'] },
+      { ikon: '⚖️', tajuk: 'as … as',
+        teks: ['Use <b>as + adjective + as</b> when two things are equal.', 'Use <b>isn\'t / aren\'t as … as</b> when they are not equal.'],
+        contoh: ['Scotland is as beautiful as England. (equally beautiful)', 'Islands aren\'t as dirty as cities. (cities are dirtier)',
+                 'The Mediterranean isn\'t as cold as the Atlantic.'] },
+      { ikon: '🐘', tajuk: 'Animals in danger',
+        teks: ['Top ten endangered species' + m('spesies terancam') + ': these animals are in danger!'],
+        chips: ['🦋 butterfly' + m('rama-rama'), '🦍 gorilla', '🐻‍❄️ polar bear' + m('beruang kutub'), '🐢 turtle' + m('penyu'),
+                '🐅 tiger' + m('harimau'), '🐋 whale' + m('ikan paus'), '🦏 rhinoceros' + m('badak sumbu'), '🐧 penguin',
+                '🐊 crocodile' + m('buaya'), '🐘 elephant' + m('gajah')],
+        contoh: ['People hunt the rhinoceros for its horn, which is very valuable.', 'Not in the top ten: 🦉 owl, 🐍 snake, 🦒 giraffe, 🐝 bee.'] },
+      { ikon: '🦓', tajuk: 'Thula Thula Wildlife Reserve',
+        teks: ['A private wildlife reserve and hotel in Kwazulu Natal, South Africa. <b>Thula Thula</b> means \'peace\' in Zulu.'],
+        senarai: ['🐘 1999: Lawrence Anthony rescued a herd' + m('kawanan') + ' of seven elephants — now 25!',
+                  '📖 His book: <i>The Elephant Whisperer</i>',
+                  '🦏 2009: the owners adopted Thabo, a baby rhino',
+                  '⛺ Guests stay in luxury tents; try a \'braai\' (barbecue)',
+                  '☀️ Summer (September–March): hot days, warm nights'] },
+      { ikon: '🔢', tajuk: 'a / an, some, any · much, many, a lot of',
+        teks: ['<b>some</b> = affirmative; <b>any</b> = negatives and questions (plural countable and uncountable nouns).',
+               '<b>a lot of</b> = affirmative. In negatives and questions: <b>many</b> + countable, <b>much</b> + uncountable.'],
+        contoh: ['Try some traditional African food. · There aren\'t any lions.', 'We didn\'t see many wild animals. · There isn\'t much water in the river.'] },
+      { ikon: '🙋', tajuk: 'Expressing preferences',
+        teks: ['A girl signs up for a volunteer day at the zoo.'],
+        senarai: ['I\'d like to sign up for the volunteer day.', 'It\'s a nice idea but … I want to help wildlife.',
+                  'I\'d rather do something with the animals. (I\'d rather + infinitive)', 'I\'d prefer to help a person. (I\'d prefer + to + infinitive)',
+                  'I don\'t mind cleaning, but …', 'That sounds more interesting than the other activities.'] },
+      { ikon: '📝', tajuk: 'Exam tip: order of adjectives',
+        teks: ['Two or more adjectives? Use this order: <b>opinion, size, age, shape, colour, origin, material</b> + noun.'],
+        contoh: ['a picturesque little village (opinion, size)', 'a long sandy beach (shape, material)', 'Use paragraphs with subheadings: Climate, Landscape, Places to visit.'] },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'The Grand Canyon is nearly 2 km ___.', ikon: '🏜️', p: ['deep', 'long', 'high', 'wide'], a: 0, kenapa: '"This canyon … is nearly 2 km deep!"' },
+      { j: 'pilih', s: 'You can float in the Dead Sea because it is a lake of ___ water.', ikon: '🧂', p: ['salty', 'clear', 'warm', 'cold'], a: 0, kenapa: 'The Dead Sea is a lake of salty water which you can float in.' },
+      { j: 'pilih', s: 'Which natural wonder is flat on top?', ikon: '⛰️', p: ['Table Mountain', 'Grand Canyon', 'Blue Cave', 'Niagara Falls'], a: 0, kenapa: 'Table Mountain is flat on top and has steep cliffs.' },
+      { j: 'pilih', s: 'It\'s ___ place you can imagine.', ikon: '🌅', p: ['the most beautiful', 'more beautiful', 'beautifuller', 'the beautifulest'], a: 0, kenapa: 'Long adjective: the most beautiful.' },
+      { j: 'pilih', s: 'Summer in Scotland is ___ than winter.', ikon: '☀️', p: ['better', 'gooder', 'best', 'more good'], a: 0, kenapa: 'good → better → the best (irregular).' },
+      { j: 'pilih', s: 'Vatican City is ___ country in the world.', ikon: '🗺️', p: ['the smallest', 'the smaller', 'smallest', 'the most small'], a: 0, kenapa: 'Superlative: the + small + est.' },
+      { j: 'pilih', s: 'Scotland is as beautiful ___ England.', ikon: '⚖️', p: ['as', 'than', 'like', 'that'], a: 0, kenapa: 'as + adjective + as = equally beautiful.' },
+      { j: 'pilih', s: 'I\'d like ___ information, please.', ikon: 'ℹ️', p: ['some', 'any', 'a', 'many'], a: 0, kenapa: 'Affirmative sentence + uncountable noun → some.' },
+      { j: 'pilih', s: 'Is there ___ airport near the wildlife reserve?', ikon: '✈️', p: ['an', 'a', 'some', 'much'], a: 0, kenapa: 'One airport; "airport" starts with a vowel sound → an.' },
+      { j: 'pilih', s: 'There isn\'t ___ water in the river.', ikon: '🏞️', p: ['much', 'many', 'a', 'some'], a: 0, kenapa: 'Negative + uncountable noun (water) → much.' },
+      { j: 'pilih', s: 'How ___ endangered species live there?', ikon: '🐾', p: ['many', 'much', 'any', 'some'], a: 0, kenapa: 'Question + plural countable noun → How many.' },
+      { j: 'pilih', s: 'Which animal is hunted for its horn?', ikon: '🎯', p: ['rhinoceros', 'tiger', 'whale', 'gorilla'], a: 0, kenapa: 'People hunt the rhinoceros for its horn, which is very valuable.' },
+      { j: 'pilih', s: 'A dolphin looks like a fish, but it is actually a ___.', ikon: '🐬', p: ['mammal', 'reptile', 'bird', 'insect'], a: 0, kenapa: 'Dolphins are mammals.' },
+      { j: 'pilih', s: 'Choose the correct order of adjectives.', ikon: '🏖️', p: ['a long sandy beach', 'a sandy long beach', 'a beach long sandy'], a: 0, kenapa: 'Shape (long) comes before material (sandy).' },
+      { j: 'bs', s: 'The Isle of Muck has a population of 30 people.', ikon: '🏝️', a: true, kenapa: 'It\'s only got 16 houses and a population of 30 people.' },
+      { j: 'bs', s: 'There is a post office on the Isle of Muck.', ikon: '📮', a: false, kenapa: 'There\'s no post office on the island.' },
+      { j: 'bs', s: 'On the Isle of Muck, nobody locks their doors.', ikon: '🔓', a: true, kenapa: 'The last crime happened in the 1960s, and nobody locks their doors.' },
+      { j: 'bs', s: 'The island\'s primary school has eighty pupils.', ikon: '🏫', a: false, kenapa: 'It has only eight pupils at the moment.' },
+      { j: 'bs', s: '"Thula Thula" means \'peace\' in Zulu.', ikon: '🕊️', a: true, kenapa: 'Thula Thula means \'peace\' in Zulu.' },
+      { j: 'bs', s: 'At Thula Thula, the hottest time of the year is the winter.', ikon: '🌡️', a: false, kenapa: 'Summer (September–March) has hot days and warm nights.' },
+      { j: 'padan', s: 'Match the natural wonder to its country.', pasangan: [['The Grand Canyon', 'USA'], ['The Great Barrier Reef', 'Australia'], ['The Amazon Rainforest', 'Ecuador'], ['The Dead Sea', 'Jordan'], ['The Niagara Falls', 'Canada'], ['The Blue Cave', 'Greece']] },
+      { j: 'padan', s: 'Match the adjective to its superlative.', pasangan: [['good', 'the best'], ['bad', 'the worst'], ['big', 'the biggest'], ['friendly', 'the friendliest'], ['expensive', 'the most expensive']] },
+      { j: 'kumpul', s: 'Land or water?', kumpulan: [['⛰️ Land', ['canyon', 'desert', 'cliff', 'valley', 'cave']], ['🌊 Water', ['river', 'ocean', 'lake', 'waterfalls', 'reef']]] },
+      { j: 'kumpul', s: 'Sort the animals.', kumpulan: [['Mammal', ['gorilla', 'whale', 'tiger']], ['Reptile', ['crocodile', 'snake', 'turtle']], ['Bird', ['owl', 'penguin']], ['Insect', ['bee', 'butterfly']]] },
+      { j: 'susun', s: 'Put the volunteer-day dialogue in order.', item: ['Hello there, how can I help?', 'Hello, I\'d like to sign up for the volunteer day.', 'Do you want to help in the zoo gift shop?', 'That\'s a nice idea, but I want to help wildlife.', 'OK. How about cleaning the penguin pool?'] },
+      { j: 'susun', s: 'Put the Thula Thula story in time order.', item: ['Lawrence Anthony rescued seven elephants.', 'The owners adopted Thabo, a baby rhino.', 'The elephant family has grown to 25.'] },
+      { j: 'eja', s: 'Spell the word: a place with sand and very little water.', ikon: '🏜️', kata: 'desert' },
+      { j: 'eja', s: 'Spell the animal with a long neck.', ikon: '🦒', kata: 'giraffe' },
+      { j: 'ayat', s: 'Make the superlative sentence.', ikon: '🗼', kata: ['Tokyo', 'is', 'the', 'biggest', 'city', 'in', 'the', 'world.'] },
+      { j: 'ayat', s: 'Make a sentence to express a preference.', ikon: '🐒', kata: ['I\'d', 'rather', 'do', 'something', 'with', 'the', 'animals.'] },
+    ],
+    amali: [{
+      id: 'u4-word-builder', tajuk: 'Comparative Word Builder', ikon: '🏗️',
+      arahan: 'Choose the rule that builds each adjective. Then see its comparative and superlative appear!',
+      mula(el, api) {
+        const R = [['+er / +est', 'add -er / -est'], ['double + er/est', 'double the last letter'], ['y → ier/iest', 'change y to -ier / -iest'],
+                   ['more / most', 'use more / the most'], ['irregular', 'irregular form']];
+        const W = api.shuffle([['small', 0, 'smaller', 'the smallest'], ['fast', 0, 'faster', 'the fastest'], ['big', 1, 'bigger', 'the biggest'],
+          ['hot', 1, 'hotter', 'the hottest'], ['friendly', 2, 'friendlier', 'the friendliest'], ['funny', 2, 'funnier', 'the funniest'],
+          ['interesting', 3, 'more interesting', 'the most interesting'], ['expensive', 3, 'more expensive', 'the most expensive'],
+          ['good', 4, 'better', 'the best'], ['bad', 4, 'worse', 'the worst']]);
+        el.innerHTML = `<style>
+          .u4-word{font:700 1.8rem var(--hd);text-align:center;margin:6px 0;color:var(--c)}
+          .u4-rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:10px 0}
+          .u4-rules .chip{font-size:1rem}
+          .u4-tbl{display:grid;gap:6px;margin-top:12px}
+          .u4-row{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:6px;border:2px solid var(--line);border-radius:12px;padding:6px 10px;font-size:.95rem;min-width:0}
+          .u4-row span{min-width:0;overflow-wrap:anywhere}
+          .u4-row.hd{border:0;font-weight:700;color:var(--muted);padding:0 10px;font-size:.78rem}
+        </style>
+        <p class="hint" id="u4pg"></p>
+        <div class="u4-word" id="u4w" aria-live="polite"></div>
+        <div class="u4-rules">${R.map((r, i) => `<button class="chip" data-i="${i}">${r[0]}</button>`).join('')}</div>
+        <div class="u4-tbl"><div class="u4-row hd"><span>adjective</span><span>comparative</span><span>superlative</span></div><div id="u4t"></div></div>`;
+        const wEl = el.querySelector('#u4w'), pg = el.querySelector('#u4pg'), tb = el.querySelector('#u4t');
+        const chips = [...el.querySelectorAll('.u4-rules .chip')];
+        let k = 0, miss = 0;
+        const show = () => { wEl.textContent = W[k][0]; pg.textContent = `Word ${k + 1} / ${W.length}`; api.say(`How do we build <b>${api.esc(W[k][0])}</b>?`); };
+        function pick(i, b) {
+          if (k >= W.length) return;
+          const w = W[k];
+          if (i !== w[1]) { miss++; api.salah(b, `Not this rule. Think: is "${api.esc(w[0])}" short, long, ending in -y, or irregular?`); return; }
+          const row = api.H(`<div class="u4-row"><span>${api.esc(w[0])}</span><span><b>${api.esc(w[2])}</b></span><span><b>${api.esc(w[3])}</b></span></div>`);
+          tb.appendChild(row); api.anim(row, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }]);
+          api.betul(b, `${api.esc(w[0])} → <b>${api.esc(w[2])}</b> → <b>${api.esc(w[3])}</b> (${R[i][1]})`);
+          k++;
+          if (k < W.length) show();
+          else { wEl.textContent = '🏆'; pg.textContent = `Word ${W.length} / ${W.length}`; api.selesai(Math.max(0, 1 - miss * .1), 'Great building! You know the comparative rules.'); }
+        }
+        chips.forEach(b => b.onclick = () => pick(+b.dataset.i, b));
+        show();
+        return { jawab() { while (k < W.length) chips[W[k][1]].click(); } };
+      },
+    }, {
+      id: 'u4-wonders-race', tajuk: 'Seven Wonders Race', ikon: '⏱️',
+      arahan: 'Read each fact and tap the natural wonder it describes. Be quick — beat the clock!',
+      mula(el, api) {
+        const P = ['🏜️ The Grand Canyon', '🐠 The Great Barrier Reef', '🌳 The Amazon Rainforest', '🧂 The Dead Sea',
+                   '💦 The Niagara Falls', '⛰️ Table Mountain', '💙 The Blue Cave'];
+        const F = api.shuffle([['It is nearly 2 km deep, in the middle of a desert.', 0], ['It has over 1,500 different kinds of fish.', 1],
+          ['It is the world\'s biggest forest.', 2], ['You can float in its salty water.', 3], ['About 5 million litres of water go through it every second.', 4],
+          ['It is flat on top and has steep cliffs.', 5], ['Its water is a beautiful deep blue, on the island of Kastelorizo.', 6]]);
+        el.innerHTML = `<style>
+          .u4-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+          .u4-fact{font:600 1.15rem/1.35 var(--hd);padding:12px;border:2px dashed var(--c);border-radius:14px;margin:10px 0;background:var(--c2)}
+          .u4-pl{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+          .u4-pl .opt{font-size:1rem;min-height:50px}
+        </style>
+        <div class="u4-bar"><b id="u4n"></b><span>⏱️ <b id="u4s">0</b> s</span></div>
+        <div class="meter"><i id="u4m" style="width:0%"></i></div>
+        <div class="u4-fact" id="u4f" aria-live="polite"></div>
+        <div class="u4-pl">${P.map((p, i) => `<button class="opt" data-i="${i}">${p}</button>`).join('')}</div>`;
+        const fEl = el.querySelector('#u4f'), nEl = el.querySelector('#u4n'), sEl = el.querySelector('#u4s'), mEl = el.querySelector('#u4m');
+        const bs = [...el.querySelectorAll('.u4-pl .opt')];
+        let k = 0, miss = 0, sec = 0, done = false;
+        const tick = setInterval(() => { if (!el.isConnected || done) return clearInterval(tick); sec++; sEl.textContent = sec; }, 1000);
+        const show = () => { nEl.textContent = `Fact ${k + 1} / ${F.length}`; fEl.textContent = F[k][0]; mEl.style.width = (100 * k / F.length) + '%'; };
+        function tap(i, b) {
+          if (done) return;
+          if (i !== F[k][1]) { miss++; api.salah(b, 'Not that one. Read the fact again.'); return; }
+          api.betul(b, `Yes! ${api.esc(P[i])}.`);
+          k++;
+          if (k < F.length) show();
+          else {
+            done = true; clearInterval(tick); mEl.style.width = '100%'; fEl.textContent = `All seven wonders in ${sec} seconds!`;
+            api.selesai(Math.max(0, 1 - miss * .1), `Finished in ${sec} s with ${miss} mistake${miss === 1 ? '' : 's'}.`);
+          }
+        }
+        bs.forEach(b => b.onclick = () => tap(+b.dataset.i, b));
+        show();
+        return { jawab() { while (!done) bs[F[k][1]].click(); } };
+      },
+    }],
+  });
+})();
+
+(() => {
+  // Malay meaning in brackets: shown on screen, not read aloud by the English voice
+  const m = t => ` <small class="nospeak" style="color:var(--muted);font-weight:400;font-size:.85em">(${t})</small>`;
+
+  UNIT({
+    n: 5, tajuk: "Let's experiment!", tema: 'Science & the future', ikon: '🧪', warna: '#e8590c',
+    belajar: [
+      { ikon: '🏛️', tajuk: 'The Science Museum',
+        teks: ['"Explore the world and have fun!" The museum guide has sections about space, medicine and the environment.',
+               'Think about it: in your opinion, what is the best scientific invention?'],
+        chips: ['🚀 spacecraft' + m('kapal angkasa'), '🪐 planet', '🛰️ satellite' + m('satelit'),
+                '💉 vaccine' + m('vaksin'), '💊 cure' + m('penawar'), '🦠 disease' + m('penyakit'),
+                '🌬️ wind turbine' + m('turbin angin'), '☀️ solar panel' + m('panel solar'), '🔋 battery' + m('bateri'),
+                '🧬 DNA', '🐑 clone' + m('klon'), '🌽 genetically modified crops' + m('tanaman terubah suai genetik')],
+        contoh: '"Watch a wind turbine and a solar panel make electricity."' },
+      { ikon: '🔬', tajuk: 'Science in the classroom',
+        teks: ['Some words are equipment that a scientist uses. Others describe what happens in an experiment.'],
+        chips: ['🏫 laboratory' + m('makmal'), '🧪 test tube' + m('tabung uji'), '🌡️ thermometer' + m('termometer'),
+                '🫗 jug' + m('jag'), '💨 gas', '💧 liquid' + m('cecair'), '🫧 bubbles' + m('gelembung'),
+                '🍋 acid' + m('asid'), '🌬️ air' + m('udara'), '💥 explosion' + m('letupan'), '⬇️ gravity' + m('graviti'),
+                '🎈 pressure' + m('tekanan'), '🔥 temperature' + m('suhu'), '⚗️ chemical reaction' + m('tindak balas kimia')] },
+      { ikon: '🔮', tajuk: 'Reading: 6 Amazing predictions for the future!',
+        teks: ['Futurologist <b>Mark Mann</b> gives us his view of life 20 years from now.'],
+        senarai: ['💉 People born in the 2040s will live until they are 150, because there will be vaccines for most serious diseases.',
+                  '🚗 Cars will drive themselves – safely and easily.',
+                  '🎧 Learning a second language won\'t be necessary: tiny computers in our ear will translate.',
+                  '🍬 Sweets will have vitamins in them, and square fruit and vegetables will fit in the fridge.',
+                  '🏨 People will go on holiday to space. Space stations will have hotels, restaurants and sports stadiums.',
+                  '🎮 We\'ll play video games just by thinking – we won\'t need to touch anything!'],
+        contoh: 'Word check: safely' + m('dengan selamat') + ', square' + m('segi empat sama') + ', advanced' + m('canggih') },
+      { ikon: '🤖', tajuk: 'Grammar: will / won\'t',
+        teks: ['We use <b>will / won\'t</b> + base form of the verb to make predictions about the future.',
+               'Short forms: will → <b>\'ll</b>, will not → <b>won\'t</b>.'],
+        senarai: ['✅ Robots <b>will work</b> for humans. We<b>\'ll be able to</b> relax.',
+                  '❌ Learning a second language <b>won\'t be</b> necessary.',
+                  '❓ <b>Will</b> humans <b>be able to</b> fly?',
+                  '💬 Yes, they <b>will</b>. / No, they <b>won\'t</b>.'],
+        contoh: 'The car of the future … won\'t need a driver! It will be fast, but safe!' },
+      { ikon: '🎈', tajuk: 'Experiment: The exploding bag!',
+        teks: ['You need: a plastic bag with a zip, a measuring jug, warm water, vinegar' + m('cuka') + ' and baking soda' + m('soda penaik') + '.'],
+        senarai: ['<b>First</b>, put 100 ml of warm water and 200 ml of vinegar into the bag. The temperature of the water shouldn\'t be higher than 60°C.',
+                  '<b>Next</b>, add three spoons of baking soda to the bag of liquid.',
+                  'Quickly close the bag with the zip. A gas called <b>carbon dioxide</b> is produced. Can you see the bubbles?',
+                  '<b>Now</b> the bag will get bigger and bigger until there is an explosion!'],
+        contoh: 'If you mix vinegar and baking soda, there is a chemical reaction.' },
+      { ikon: '👩‍🚀', tajuk: 'A day in the life of an astronaut',
+        teks: ['<b>Serena Hughes</b> is an American astronaut on the International Space Station (ISS).',
+               'The ISS is 354 km from Earth and goes round the Earth 16 times a day!'],
+        senarai: ['8.00 am: Mission Control in Houston plays a song to wake her up.',
+                  '8.15 am: no showers – they use too much water.',
+                  '9.00 am: she tries to "fly" to her work station. There is no gravity, so everyone is weightless' + m('tanpa berat') + '.',
+                  '1.00 pm: no fresh fruit – the whole station will smell of bananas!',
+                  '3.00 pm: exercise bike, so her muscles' + m('otot') + ' don\'t become weak.',
+                  '4.00 pm: laboratory – can they grow vegetables in space?',
+                  '7.00 pm: emails to friends and family. 10.00 pm: sleeping bag' + m('beg tidur') + '.'] },
+      { ikon: '⚡', tajuk: 'Grammar: the first conditional',
+        teks: ['We use it to talk about possible actions in the future and their results.',
+               '<b>If</b> + present simple (situation) → <b>will / won\'t</b> + verb (result).'],
+        contoh: ['If we <b>use</b> too much water for washing<b>,</b> we <b>won\'t have</b> enough to drink!',
+                 'They<b>\'ll worry</b> about me if I <b>don\'t keep</b> in touch with them!',
+                 '📌 When <b>If</b> comes first, put a <b>comma</b> between the two parts.'] },
+      { ikon: '📦', tajuk: 'Making a time capsule & suggestions',
+        teks: ['Put everyday things in a box for someone in the future to find. Avoid things that need electronic equipment to work.'],
+        chips: ['What shall we …?', 'What / How about a …?', 'Why don\'t we …?', 'Let\'s …', 'Maybe we could …', 'Then … will …'],
+        contoh: ['"So, what shall we put in the time capsule?"', '"How about a photo of us?"', '"That\'s a good idea!"'] },
+      { ikon: '🌕', tajuk: 'Writing: an opinion essay',
+        teks: ['"Will people ever live on the Moon?" The essay has four paragraphs.'],
+        senarai: ['A – Introduction with a question.',
+                  'B – <b>On the one hand</b>, … (reasons for "yes": we are destroying our environment).',
+                  'C – <b>On the other hand</b>, … (reasons for "no": no air or water on the Moon).',
+                  'D – <b>In conclusion</b>, … your personal opinion.'],
+        contoh: '📝 Exam tip: use <i>On the one hand</i> and <i>On the other hand</i> at the beginning of paragraphs to make the two opinions clear.' },
+    ],
+    soalan: [
+      { j: 'pilih', s: 'Learning a second language ___ be necessary in the future.', ikon: '🎧', p: ['won\'t', 'doesn\'t', 'isn\'t', 'didn\'t'], a: 0, kenapa: 'Predictions use will / won\'t + base verb: "won\'t be necessary".' },
+      { j: 'pilih', s: 'If you ___ red and yellow, it will make orange.', ikon: '🎨', p: ['mix', 'will mix', 'mixed', 'mixing'], a: 0, kenapa: 'After if we use the present simple: "If you mix …".' },
+      { j: 'pilih', s: 'If lightning strikes, you ___ thunder.', ikon: '🌩️', p: ['will hear', 'heard', 'are hearing', 'hearing'], a: 0, kenapa: 'The result part of the first conditional uses will + verb.' },
+      { j: 'pilih', s: 'A worm won\'t die if you ___ it in half.', ikon: '🪱', p: ['cut', 'will cut', 'cutting', 'to cut'], a: 0, kenapa: 'The if-part uses the present simple: "if you cut it".' },
+      { j: 'pilih', s: 'Check the temperature of water with a ___.', ikon: '🌡️', p: ['thermometer', 'test tube', 'jug', 'battery'], a: 0, kenapa: 'A thermometer measures temperature.' },
+      { j: 'pilih', s: 'A ___ like carbon dioxide needs a lot of space.', ikon: '💨', p: ['gas', 'liquid', 'laboratory', 'gravity'], a: 0, kenapa: 'Carbon dioxide is a gas.' },
+      { j: 'pilih', s: 'How can a ___ stop you getting ill?', ikon: '💉', p: ['vaccine', 'satellite', 'battery', 'planet'], a: 0, kenapa: 'The museum guide: "How can a vaccine stop you getting ill?"' },
+      { j: 'pilih', s: 'Mark Mann says many people born in the 2040s will live until they are ___.', ikon: '🎂', p: ['150', '100', '120', '200'], a: 0, kenapa: 'Prediction 1: they will live until they are 150.' },
+      { j: 'pilih', s: 'Why can\'t astronauts on the ISS have showers?', ikon: '🚿', p: ['They use too much water.', 'There is no soap.', 'The water is too cold.', 'They have no time.'], a: 0, kenapa: 'Water comes from Earth, and showers use too much water.' },
+      { j: 'pilih', s: 'The ISS goes round the Earth ___ times a day.', ikon: '🛰️', p: ['16', '28', '6', '354'], a: 0, kenapa: 'Fact box: it goes round the Earth 16 times a day.' },
+      { j: 'pilih', s: '"What shall we put in the time capsule?" Choose the best reply.', ikon: '📦', p: ['How about a photo of us?', 'Yes, it will.', 'No, I don\'t think so.', 'I put it in yesterday.'], a: 0, kenapa: '"How about a …?" makes a suggestion.' },
+      { j: 'pilih', s: 'In an opinion essay, which phrase starts the paragraph with the second opinion?', ikon: '📝', p: ['On the other hand', 'On the one hand', 'In conclusion', 'First of all'], a: 0, kenapa: 'On the one hand → first opinion; On the other hand → second opinion.' },
+      { j: 'pilih', s: 'If + situation comes first, we put a ___ between the two parts.', ikon: '✏️', p: ['comma', 'full stop', 'question mark', 'colon'], a: 0, kenapa: 'LOOK!: "When we write If + conditional situation first, we use a comma."' },
+      { j: 'bs', s: 'Mark Mann predicts that cars will drive themselves.', ikon: '🚗', a: true, kenapa: 'Prediction 2: "Cars will drive themselves!"' },
+      { j: 'bs', s: 'Mark Mann says sweets will have vitamins in them.', ikon: '🍬', a: true, kenapa: 'Prediction 4: "sweets will have vitamins in them!"' },
+      { j: 'bs', s: 'In the future, we will need to touch a screen to play video games.', ikon: '🎮', a: false, kenapa: 'We\'ll play just by thinking – we won\'t need to touch anything.' },
+      { j: 'bs', s: 'Serena eats fresh bananas for lunch on the space station.', ikon: '🍌', a: false, kenapa: 'Fresh fruit isn\'t allowed – the station will smell of bananas!' },
+      { j: 'bs', s: 'Moving around the ISS is difficult because there is no gravity.', ikon: '👩‍🚀', a: true, kenapa: 'Everyone is weightless, so moving around is difficult.' },
+      { j: 'bs', s: 'You should put things that need electronic equipment in a time capsule.', ikon: '📦', a: false, kenapa: 'Avoid them – CD players and computers will be very different in the future.' },
+      { j: 'kumpul', s: 'Sort the museum words: space, medicine or environment?', kumpulan: [
+        ['🚀 Space', ['spacecraft', 'planet', 'satellite']],
+        ['💊 Medicine', ['cure', 'disease', 'vaccine']],
+        ['🌍 Environment', ['wind turbine', 'solar panel', 'battery']]] },
+      { j: 'padan', s: 'Match the science words with their Malay meaning.', pasangan: [['laboratory', 'makmal'], ['liquid', 'cecair'], ['pressure', 'tekanan'], ['explosion', 'letupan'], ['bubbles', 'gelembung'], ['temperature', 'suhu']] },
+      { j: 'padan', s: 'Serena\'s day: match the time with what she does.', pasangan: [['8.00 am', 'wakes up to a song'], ['9.00 am', '"flies" to her work station'], ['3.00 pm', 'rides the exercise bike'], ['4.00 pm', 'checks an experiment'], ['7.00 pm', 'sends emails home'], ['10.00 pm', 'gets into her sleeping bag']] },
+      { j: 'susun', s: 'Put the steps of "The exploding bag!" in order.', item: ['Put warm water and vinegar in the bag.', 'Add three spoons of baking soda.', 'Quickly close the bag with the zip.', 'The bag gets bigger and bigger.', 'There is an explosion!'] },
+      { j: 'susun', s: 'How do you make a time capsule? Put the steps in order.', item: ['Choose five to six things.', 'Write a letter to the finder.', 'Put the things and letter in a box.', 'Seal the box in a plastic bag.', 'Write your name and dates on the bag.', 'Bury it in the garden.', 'Draw a map. Keep it safe.'] },
+      { j: 'susun', s: 'Order the paragraphs of an opinion essay.', item: ['Introduction with a question', 'On the one hand, …', 'On the other hand, …', 'In conclusion, …'] },
+      { j: 'eja', s: 'Spell the place where scientists do experiments.', ikon: '🏫', kata: 'laboratory' },
+      { j: 'eja', s: 'Spell the instrument that measures temperature.', ikon: '🌡️', kata: 'thermometer' },
+      { j: 'ayat', s: 'Make the question about the future.', ikon: '🦸', kata: ['Will', 'humans', 'be', 'able', 'to', 'fly?'] },
+      { j: 'ayat', s: 'Make Serena\'s first conditional sentence.', ikon: '📧', kata: ['They\'ll', 'worry', 'about', 'me', 'if', 'I', 'don\'t', 'keep', 'in', 'touch.'] },
+    ],
+    amali: [{
+      id: 'exploding-bag', tajuk: 'Lab: The exploding bag!', ikon: '🎈',
+      arahan: '🧪 First pack the 5 things you need. Then do the steps in the right order and watch what happens!',
+      mula(el, api) {
+        const NEED = [['🛍️', 'plastic bag with a zip'], ['🫗', 'measuring jug'], ['💧', 'warm water'], ['🍶', 'vinegar'], ['🥄', 'baking soda']];
+        const NOT = [['📄', 'paper bag'], ['🧊', 'ice cubes'], ['🧂', 'salt']];
+        const STEPS = [['First', 'Put 100 ml of warm water and 200 ml of vinegar into the bag.'],
+                       ['Next', 'Add three spoons of baking soda to the bag of liquid.'],
+                       ['Then', 'Quickly close the bag with the zip.'],
+                       ['Now', 'Watch the bag get bigger and bigger …']];
+        el.innerHTML = `<style>
+          .u5-lab{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:16px;align-items:start}
+          @media (max-width:640px){.u5-lab{grid-template-columns:1fr}}
+          .u5-pic{display:flex;justify-content:center}
+          .u5-pic svg{width:100%;max-width:240px}
+          .u5-pal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+          .u5-pal .chip{font-size:1rem;text-align:left}
+          .u5-tray{min-height:44px;display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+          .u5-tray span{background:var(--c2);border-radius:10px;padding:4px 10px;font-weight:700}
+          .u5-st .opt{width:100%;font-size:1rem;margin-bottom:8px}
+        </style>
+        <div class="u5-lab">
+          <div class="u5-pic"><svg viewBox="0 0 240 230" role="img" aria-label="The plastic bag"></svg></div>
+          <div>
+            <b id="u5h">1. Pack your equipment</b>
+            <div class="u5-tray" id="u5tr"></div>
+            <div class="u5-pal" id="u5pal"></div>
+            <div class="u5-st" id="u5st" hidden></div>
+            <p class="hint" id="u5pg"></p>
+          </div>
+        </div>`;
+        const svg = el.querySelector('svg'), pal = el.querySelector('#u5pal'), tray = el.querySelector('#u5tr'),
+              st = el.querySelector('#u5st'), pg = el.querySelector('#u5pg'), hd = el.querySelector('#u5h');
+        // scene
+        const g = api.S('g', {}, svg);
+        const bag = api.S('path', { d: 'M60 60 Q55 200 70 205 L170 205 Q185 200 180 60 Z', style: 'fill:var(--card);stroke:var(--ink);stroke-width:3' }, g);
+        const liq = api.S('rect', { x: 64, y: 205, width: 112, height: 0, rx: 6, style: 'fill:var(--c);opacity:.35' }, g);
+        const pow = api.S('g', { style: 'opacity:0' }, g);
+        [[90, 175], [110, 168], [130, 178], [150, 170], [100, 185], [140, 186], [120, 180]].forEach(([x, y]) => api.S('circle', { cx: x, cy: y, r: 4, style: 'fill:var(--ink);opacity:.5' }, pow));
+        const zip = api.S('line', { x1: 58, y1: 62, x2: 182, y2: 62, style: 'stroke:var(--c);stroke-width:7;stroke-linecap:round;opacity:0' }, g);
+        const bub = api.S('g', { style: 'opacity:0' }, g);
+        [[85, 150, 6], [115, 130, 8], [145, 145, 5], [100, 110, 5], [135, 100, 7], [120, 160, 4]].forEach(([x, y, r]) => api.S('circle', { cx: x, cy: y, r, style: 'fill:none;stroke:var(--c);stroke-width:2.5' }, bub));
+        const star = api.S('polygon', { points: '120,30 138,85 195,70 155,112 205,150 145,150 150,205 120,160 90,205 95,150 35,150 85,112 45,70 102,85', style: 'fill:var(--gold);opacity:0;transform-box:view-box;transform-origin:120px 118px' }, svg);
+        const boom = api.S('text', { x: 120, y: 132, 'text-anchor': 'middle', style: 'font:700 34px var(--hd);fill:var(--no);opacity:0;transform-box:view-box;transform-origin:120px 120px', text: 'BANG!' }, svg);
+        let packed = 0, step = 0, miss = 0, over = false; const timers = [];
+        const later = (f, ms) => timers.push(setTimeout(() => { if (el.isConnected) f(); }, ms));
+        const prog = () => pg.textContent = step === 0 && packed < NEED.length ? `Packed: ${packed} / ${NEED.length}` : `Step ${Math.min(step + 1, STEPS.length)} / ${STEPS.length}`;
+        const items = api.shuffle(NEED.map(x => [x, true]).concat(NOT.map(x => [x, false])));
+        const ib = items.map(([x, ok]) => {
+          const b = api.H(`<button class="chip">${x[0]} ${api.esc(x[1])}</button>`);
+          b.onclick = () => {
+            if (b.disabled || over) return;
+            if (!ok) { miss++; api.salah(b, `We don't need ${api.esc(x[1])} for this experiment.`); return; }
+            b.disabled = true; b.classList.add('ok'); packed++;
+            tray.appendChild(api.H(`<span>${x[0]} ${api.esc(x[1])}</span>`)); api.betul(b, `${x[0]} <b>${api.esc(x[1])}</b> – packed!`);
+            prog(); if (packed === NEED.length) later(startSteps, 500);
+          };
+          b.dataset.ok = ok ? 1 : 0; pal.appendChild(b); return b;
+        });
+        let sb = [];
+        function startSteps() {
+          pal.hidden = true; st.hidden = false; hd.textContent = '2. Do the experiment – which step comes next?';
+          api.say('🧪 Everything is ready. What do you do <b>first</b>?');
+          sb = api.shuffle(STEPS.map((s, k) => [s, k])).map(([s, k]) => {
+            const b = api.H(`<button class="opt">${api.esc(s[1])}</button>`); b.dataset.k = k;
+            b.onclick = () => act(k, b); st.appendChild(b); return b;
+          });
+          prog();
+        }
+        function act(k, b) {
+          if (over || b.disabled) return;
+          if (k !== step) { miss++; api.salah(b, 'Not yet! Read the instructions again.'); return; }
+          b.disabled = true; b.classList.add('ok'); st.insertBefore(b, st.children[step]); b.innerHTML = `<b>${STEPS[k][0]}</b>, ${api.esc(STEPS[k][1].charAt(0).toLowerCase() + STEPS[k][1].slice(1))}`;
+          if (k === 0) { api.anim(liq, [{ height: 0, y: 205 }, { height: 60, y: 145 }], { duration: 700 }); liq.setAttribute('height', 60); liq.setAttribute('y', 145); api.betul(b, '100 ml of warm water + 200 ml of vinegar. Not higher than 60°C!'); }
+          if (k === 1) { pow.style.opacity = 1; api.betul(b, 'Three spoons of baking soda go into the liquid.'); }
+          if (k === 2) { zip.style.opacity = 1; bub.style.opacity = 1; api.betul(b, 'Bubbles! A gas called <b>carbon dioxide</b> is produced inside the bag.'); }
+          step++; prog();
+          if (k === 3) {
+            over = true; api.say('🎈 The bag gets bigger … and bigger … and bigger …');
+            g.style.transformOrigin = '120px 130px'; g.style.transformBox = 'view-box';
+            api.anim(g, [{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }], { duration: 900, easing: 'ease-in' });
+            later(() => {
+              g.style.opacity = .15; star.style.opacity = .85; boom.style.opacity = 1;
+              api.anim(star, [{ transform: 'scale(.2) rotate(-20deg)' }, { transform: 'scale(1) rotate(0)' }], { duration: 450 });
+              api.anim(boom, [{ transform: 'scale(.3)' }, { transform: 'scale(1)' }], { duration: 400 });
+              api.selesai(Math.max(0, 1 - miss * .1), 'BANG! There is an <b>explosion</b>! Vinegar + baking soda = a chemical reaction.');
+            }, 1000);
+          }
+        }
+        prog();
+        return { jawab() {
+          ib.forEach(b => { if (b.dataset.ok === '1') b.click(); });
+          const go = () => { if (!sb.length) return later(go, 200); for (let k = 0; k < STEPS.length; k++) sb.find(b => +b.dataset.k === k).click(); };
+          later(go, 600);
+        } };
+      },
+    }, {
+      id: 'if-will-chain', tajuk: 'If … will … chain reaction', ikon: '⚡',
+      arahan: '⚡ Tap an <b>If …</b> situation, then tap its result. Build six first-conditional sentences!',
+      mula(el, api) {
+        const P = api.shuffle([
+          ['If you go to the space station,', 'the journey will take two days.'],
+          ['If you miss your family,', 'you\'ll be able to send them emails.'],
+          ['If you feel sick,', 'the doctor will give you some medicine.'],
+          ['If you go on the exercise bike,', 'your muscles will stay strong.'],
+          ['If you cut a worm in half,', 'it will become two worms.'],
+          ['If lightning strikes,', 'you will hear thunder.']]);
+        el.innerHTML = `<style>
+          .u5-ch .opt{width:100%;font-size:1rem;margin-bottom:8px}
+          .u5-out{margin-top:12px;display:grid;gap:6px}
+          .u5-out div{border-left:6px solid var(--ok);background:var(--c2);border-radius:10px;padding:8px 12px;font-weight:600}
+          .u5-out i{color:var(--no);font-style:normal;font-weight:800}
+        </style>
+        <div class="cols u5-ch"><div class="box"><b>Situation (If …)</b><div id="u5a"></div></div><div class="box"><b>Result (will / won't)</b><div id="u5b"></div></div></div>
+        <div class="meter" style="margin-top:12px"><i id="u5m"></i></div>
+        <div class="u5-out" id="u5o"></div>`;
+        const A = el.querySelector('#u5a'), B = el.querySelector('#u5b'), O = el.querySelector('#u5o'), M = el.querySelector('#u5m');
+        let sel = null, done = 0, miss = 0;
+        const ab = P.map((p, i) => { const b = api.H(`<button class="opt">${api.esc(p[0])}</button>`); b.onclick = () => { if (b.disabled) return; ab.forEach(x => x.classList.remove('on')); b.classList.add('on'); sel = i; api.say(`<b>${api.esc(p[0])}</b> … what will happen?`); }; A.appendChild(b); return b; });
+        const order = api.shuffle(P.map((p, i) => i));
+        const bb = [];
+        order.forEach(i => { const b = api.H(`<button class="opt">${api.esc(P[i][1])}</button>`); b.onclick = () => pick(i, b); B.appendChild(b); bb[i] = b; });
+        function pick(i, b) {
+          if (b.disabled) return;
+          if (sel === null) return api.say('First tap an <b>If …</b> situation.');
+          if (sel !== i) { miss++; api.salah(b, 'That result doesn\'t match. Try another one.'); return; }
+          ab[i].disabled = bb[i].disabled = true; ab[i].classList.remove('on'); ab[i].classList.add('ok'); bb[i].classList.add('ok');
+          const s = P[i][0].replace(/,$/, '') + '<i>,</i> ' + P[i][1];
+          O.appendChild(api.H(`<div>⚡ ${s}</div>`)); api.betul(bb[i], s); api.speak(P[i][0] + ' ' + P[i][1]);
+          sel = null; done++; M.style.width = (done / P.length * 100) + '%';
+          if (done === P.length) api.selesai(Math.max(0, 1 - miss * .1), 'Great chain! If + present simple<b>,</b> will + verb.');
+        }
+        return { jawab() { P.forEach((p, i) => { ab[i].click(); bb[i].click(); }); } };
+      },
+    }],
+  });
+})();
+
+/* ================= Aplikasi "Belajar Ceria" Darjah 2 ================= */
+(function () {
+  const $ = s => document.querySelector(s);
+  const EN = SUBJ.ui === 'en';
+  const L = EN ? { betul: '✔ True', salah: '✘ False', next: 'Next ▶', prev: '◀ Back', main: '🎮 Let\'s play!', baca: '📖 Learn', game: '🎮 Play', amali: '🧪 Try it',
+      again: '🔁 Play again', units: 'All units', ok: ['Well done!', 'Correct!', 'Great!', 'Yes!'], no: 'Not quite.', ans: 'Answer:', mix: '🏆 Big challenge (all units)',
+      s3: 'Excellent!', s2: 'Good job!', s1: 'Try again!', score: n => `You got ${n}`, readDone: 'You finished the lesson!', unit: 'Unit', listen: 'Listen' }
+    : { betul: '✔ Betul', salah: '✘ Salah', next: 'Seterusnya ▶', prev: '◀ Kembali', main: '🎮 Jom main!', baca: '📖 Belajar', game: '🎮 Main', amali: '🧪 Amali',
+      again: '🔁 Main lagi', units: 'Semua unit', ok: ['Bagus!', 'Betul!', 'Hebat!', 'Pandai!'], no: 'Belum tepat.', ans: 'Jawapan:', mix: '🏆 Cabaran besar (semua unit)',
+      s3: 'Syabas!', s2: 'Bagus!', s1: 'Cuba lagi!', score: n => `Markah kamu ${n}`, readDone: 'Kamu sudah habis belajar!', unit: SUBJ.unit || 'Unit', listen: 'Dengar' };
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 't1' + SUBJ.kod;
+  const G = Object.assign({ xp: 0, u: {}, cab: 0, mute: false }, store.get(KEY, {}));
+  const UU = n => (G.u[n] = G.u[n] || { baca: 0, main: 0, am: {} });
+  const totalStars = () => Object.values(G.u).reduce((t, x) => t + (x.main || 0) + Object.values(x.am || {}).reduce((a, b) => a + b, 0), 0) + (G.cab || 0);
+  const save = () => { store.set(KEY, G); $('#xp').textContent = '⭐ ' + totalStars(); };
+  UNITS.sort((a, b) => a.n - b.n);
+  const stars = (n, of = 3) => '★'.repeat(n) + '<i>' + '★'.repeat(of - n) + '</i>';
+
+  /* nama murid dikongsi semua subjek */
+  const nm = $('#nama'); try { nm.value = localStorage.getItem('t1nama') || ''; } catch (e) {}
+  nm.oninput = () => { try { localStorage.setItem('t1nama', nm.value); } catch (e) {} };
+
+  /* bunyi + suara */
+  let AC = null;
+  function tone(fs, d) { if (G.mute) return; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); const t = AC.currentTime;
+    fs.forEach((f, i) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = 'triangle'; o.frequency.value = f; o.connect(g); g.connect(AC.destination);
+      g.gain.setValueAtTime(.0001, t + i * d); g.gain.exponentialRampToValueAtTime(.16, t + i * d + .02); g.gain.exponentialRampToValueAtTime(.0001, t + i * d + d * 1.6);
+      o.start(t + i * d); o.stop(t + i * d + d * 1.7); }); } catch (e) {} }
+  let VOICE;
+  function pickVoice() { try { const vs = speechSynthesis.getVoices(), l = SUBJ.lang.slice(0, 2);
+    VOICE = vs.find(v => v.lang.replace('_', '-') === SUBJ.lang) || vs.find(v => v.lang.startsWith(l)) || (l === 'ms' ? vs.find(v => v.lang.startsWith('id')) : null); } catch (e) {} }
+  if (window.speechSynthesis) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+  function speak(h) { if (G.mute || !window.speechSynthesis) return; const t = plain(h); if (!t) return;
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = VOICE ? VOICE.lang : SUBJ.lang; if (VOICE) u.voice = VOICE; u.rate = .88; speechSynthesis.speak(u); } catch (e) {} }
+  const hush = () => { try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {} };
+  const spkBtn = txt => { const b = H('<button class="spk" aria-label="' + L.listen + '">🔊</button>'); b.onclick = () => speak(typeof txt === 'function' ? txt() : txt); return b; };
+  const ikon = i => !i ? '' : (String(i).trim().startsWith('<') ? i : esc(i));
+
+  /* ---------- laman utama ---------- */
+  function home() {
+    hush(); cur = null; history.replaceState(null, '', location.pathname);
+    $('#unit').hidden = true; $('#home').hidden = false;
+    const temas = []; UNITS.forEach(u => { const t = u.tema || ''; let g = temas.find(x => x[0] === t); if (!g) temas.push(g = [t, []]); g[1].push(u); });
+    $('#home').innerHTML = temas.map(([t, us]) => `<section class="tema">${t ? `<h2>${esc(t)}</h2>` : '<h2></h2>'}<div class="grid">${us.map(u => {
+      const x = G.u[u.n] || {}, na = (u.amali || []).length, da = Object.keys(x.am || {}).length;
+      return `<button class="ut" data-n="${u.n}" style="--uc:${u.warna || 'var(--c)'}"><span class="no" aria-hidden="true">${ikon(u.ikon)}<small>${esc(u.label || u.n)}</small></span>
+        <b>${esc(u.tajuk)}</b><span class="st" aria-label="${x.main || 0} / 3">${stars(x.main || 0)}<span>${x.baca ? '📖✓' : ''}${na ? ` 🧪${da}/${na}` : ''}</span></span></button>`; }).join('')}</div></section>`).join('')
+      + `<div class="mix"><button class="btn go" id="cab">${L.mix}</button><span class="st" style="color:var(--gold);font-size:1.4rem;align-self:center">${stars(G.cab || 0)}</span></div>`;
+    $('#home').querySelectorAll('.ut').forEach(b => b.onclick = () => open(+b.dataset.n));
+    $('#cab').onclick = cabaran;
+    if (!RM()) $('#home').querySelectorAll('.ut').forEach((b, i) => anim(b, [{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { delay: Math.min(i * 35, 500), duration: 380 }));
+    window.scrollTo({ top: 0 });
+  }
+
+  /* ---------- unit ---------- */
+  let cur = null, gen = 0;
+  function open(n, tabName) {
+    const u = UNITS.find(x => x.n === n); if (!u) return home();
+    hush(); cur = u; history.replaceState(null, '', '?u=' + n);
+    $('#home').hidden = true; $('#unit').hidden = false;
+    document.documentElement.style.setProperty('--uc', u.warna || '');
+    $('#uh').innerHTML = `<span class="big" aria-hidden="true">${ikon(u.ikon)}</span><div><small>${esc(u.labelPenuh || (L.unit + ' ' + (u.label || u.n)))}${u.tema ? ' · ' + esc(u.tema) : ''}</small><h2>${esc(u.tajuk)}</h2></div>`;
+    const tabs = [['baca', L.baca], ['main', L.game]].concat((u.amali || []).length ? [['amali', L.amali]] : []);
+    $('#tabs').innerHTML = tabs.map(([k, t]) => `<button class="tab" role="tab" data-t="${k}">${t}</button>`).join('');
+    $('#tabs').querySelectorAll('.tab').forEach(b => b.onclick = () => tab(b.dataset.t));
+    tab(tabName || (UU(n).baca ? 'main' : 'baca'));
+    window.scrollTo({ top: 0 });
+  }
+  function tab(k) {
+    hush(); gen++;
+    $('#tabs').querySelectorAll('.tab').forEach(b => { b.classList.toggle('on', b.dataset.t === k); b.setAttribute('aria-selected', b.dataset.t === k); });
+    ({ baca, main: () => kuiz(cur.soalan || [], 10, onMain), amali: alist })[k]();
+  }
+
+  /* ---------- Belajar: kad bergaris ---------- */
+  function baca() {
+    const cs = cur.belajar || []; let i = 0; const P = $('#pane');
+    function draw() {
+      const c = cs[i] || {}; hush();
+      const paras = [].concat(c.teks || []).map(p => `<p>${p}</p>`).join('');
+      P.innerHTML = `<article class="page card"><div class="ik" aria-hidden="true">${ikon(c.ikon)}</div><h3>${c.tajuk || ''}</h3>${paras}
+        ${c.senarai ? `<ul>${c.senarai.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
+        ${c.chips ? `<div class="chipz">${c.chips.map(x => `<span>${x}</span>`).join('')}</div>` : ''}
+        ${c.contoh ? `<div class="eg">${[].concat(c.contoh).join('<br>')}</div>` : ''}</article>
+        <div class="nav"><button class="btn alt" id="pv" ${i ? '' : 'disabled'}>${L.prev}</button><div class="dots">${cs.map((_, j) => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div>
+        <button class="btn go" id="nx">${i < cs.length - 1 ? L.next : L.main}</button></div>`;
+      const art = P.querySelector('.page'); art.appendChild(spkBtn(() => [c.tajuk, ...[].concat(c.teks || []), ...(c.senarai || []), ...(c.chips || []), ...[].concat(c.contoh || [])].join('. ')));
+      if (c.svg && typeof c.svg === 'function') { try { c.svg(P.querySelector('.ik'), { S, H, anim }); } catch (e) { console.error(e); } }
+      anim(art, [{ opacity: 0, transform: 'translateX(24px)' }, { opacity: 1, transform: 'none' }], { duration: 320 });
+      P.querySelector('#pv').onclick = () => { if (i) { i--; draw(); } };
+      P.querySelector('#nx').onclick = () => { if (i < cs.length - 1) { i++; draw(); } else { UU(cur.n).baca = 1; G.xp += 5; save(); api0.toast(L.readDone); tab('main'); } };
+    }
+    draw();
+  }
+
+  /* ---------- Main: kuiz bercampur ---------- */
+  let Q = null;   // keadaan soalan semasa (untuk ujian)
+  function pickQs(bank, n) {
+    const by = {}; shuffle(bank).forEach(q => (by[q.j] = by[q.j] || []).push(q));
+    const out = [], ks = shuffle(Object.keys(by));
+    while (out.length < n && ks.some(k => by[k].length)) ks.forEach(k => { if (out.length < n && by[k].length) out.push(by[k].shift()); });
+    return shuffle(out);
+  }
+  function kuiz(bank, n, onEnd) {
+    const qs = pickQs(bank, Math.min(n, bank.length)), sc = []; let i = 0; const P = $('#pane'), g = gen;
+    if (!qs.length) { P.innerHTML = '<p class="hint">—</p>'; return; }
+    function show() {
+      if (g !== gen) return;
+      const q = qs[i]; hush();
+      P.innerHTML = `<div class="qbar">${qs.map((_, j) => `<i class="${j < i ? (sc[j] >= 1 ? 'ok' : 'no') : j === i ? 'on' : ''}"></i>`).join('')}</div><article class="page" id="qp"></article>`;
+      const box = P.querySelector('#qp');
+      Q = { q, i, solve: null, done: false };
+      const fin = (s) => {
+        if (Q.done) return; Q.done = true; sc[i] = s;
+        const fb = H(`<div class="fb show ${s >= 1 ? 'ok' : 'no'}"></div>`);
+        fb.innerHTML = (s >= 1 ? '✅ <b>' + L.ok[Math.floor(Math.random() * L.ok.length)] + '</b>' : '💡 <b>' + (s > 0 ? L.ok[0] : L.no) + '</b>') + (q.kenapa ? ' ' + q.kenapa : '');
+        s >= 1 ? tone([660, 880], .09) : tone([300, 240], .12);
+        const nx = H(`<button class="btn go next">${i < qs.length - 1 ? L.next : '🏁'}</button>`);
+        nx.onclick = () => { i++; i < qs.length ? show() : end(); };
+        box.append(fb, nx); anim(fb, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 260 });
+        if (q.kenapa && s < 1) speak(q.kenapa);
+      };
+      (R[q.j] || R.pilih)(q, box, fin);
+      anim(box, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 300 });
+      if (q.sebut) setTimeout(() => g === gen && speak(q.sebut), 250);
+    }
+    function end() {
+      const s = sc.reduce((a, b) => a + b, 0) / qs.length, n3 = s >= .9 ? 3 : s >= .6 ? 2 : s > 0 ? 1 : 0;
+      const isNew = onEnd(n3, s); Q = null;
+      const msg = n3 === 3 ? L.s3 : n3 === 2 ? L.s2 : L.s1;
+      P.innerHTML = `<div class="page res"><div class="stamp">${msg}</div><div class="stars">${stars(n3)}</div><p>${L.score(Math.round(s * qs.length) + ' / ' + qs.length)}${isNew ? ' 🎉' : ''}</p>
+        <div class="row" style="justify-content:center;margin-top:12px"><button class="btn go" id="ag">${L.again}</button><button class="btn alt" id="hm">◀ ${L.units}</button></div></div>`;
+      tone(n3 === 3 ? [523, 659, 784, 1046] : [523, 659, 784], .11); speak(msg);
+      anim(P.querySelector('.stamp'), [{ opacity: 0, transform: 'rotate(-30deg) scale(2.2)' }, { opacity: 1, transform: 'rotate(-8deg) scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+      P.querySelector('#ag').onclick = () => kuiz(bank, n, onEnd); P.querySelector('#hm').onclick = home;
+      window.__d2Done = { skor: s, n3 };
+    }
+    show();
+  }
+  function onMain(n3, s) { const x = UU(cur.n), was = x.main || 0; x.main = Math.max(was, n3); G.xp += Math.round(10 + 20 * s); save(); return n3 > was; }
+  function cabaran() {
+    gen++; cur = { n: -1, tajuk: L.mix }; history.replaceState(null, '', '?cabaran');
+    $('#home').hidden = true; $('#unit').hidden = false; $('#tabs').innerHTML = '';
+    $('#uh').innerHTML = `<span class="big">🏆</span><div><small>Form 1 · ${esc(SUBJ.nama)}</small><h2>${L.mix.replace(/^\S+\s/, '')}</h2></div>`;
+    kuiz(UNITS.flatMap(u => u.soalan || []), 12, (n3) => { const was = G.cab || 0; G.cab = Math.max(was, n3); save(); return n3 > was; });
+  }
+
+  /* ---------- penyampai jenis soalan ---------- */
+  const qhead = (q, box) => {
+    const s = esc(q.s || '').replace(/_{3,}/g, '<span class="gap">&nbsp;</span>');
+    box.insertAdjacentHTML('beforeend', `<p class="qs">${q.html ? q.s : s}</p>${q.ikon ? `<div class="qik" aria-hidden="true">${ikon(q.ikon)}</div>` : ''}`);
+    box.appendChild(spkBtn(() => q.sebut || q.s));
+  };
+  const btn = (t, cls = 'opt') => H(`<button class="${cls}">${t}</button>`);
+  const shake = el => anim(el, [{ transform: 'translateX(-7px)' }, { transform: 'translateX(7px)' }, { transform: 'none' }], { duration: 280, fill: 'none' });
+  const pop = el => anim(el, [{ transform: 'scale(1.1)' }, { transform: 'none' }], { duration: 260, fill: 'none' });
+  const R = {
+    pilih(q, box, fin) {
+      qhead(q, box); const o = H('<div class="opts"></div>'); box.appendChild(o);
+      const bs = shuffle(q.p.map((t, k) => [t, k])).map(([t, k]) => { const b = btn(q.htmlP ? t : esc(t)); b.dataset.k = k; o.appendChild(b); return b; });
+      const pickK = k => { const b = bs.find(x => +x.dataset.k === k); bs.forEach(x => x.disabled = true);
+        if (k === q.a) { b.classList.add('ok'); pop(b); fin(1); } else { b.classList.add('no'); shake(b); bs.find(x => +x.dataset.k === q.a).classList.add('ok'); fin(0); } };
+      bs.forEach(b => b.onclick = () => pickK(+b.dataset.k));
+      Q.solve = () => pickK(q.a);
+    },
+    bs(q, box, fin) { R.pilih(Object.assign({}, q, { p: [L.betul, L.salah], a: q.a ? 0 : 1 }), box, fin); },
+    padan(q, box, fin) {
+      qhead(q, box); const w = H('<div class="two"><div class="col"></div><div class="col"></div></div>'); box.appendChild(w);
+      const [cl, cr] = w.children; let sel = null, left = q.pasangan.length, miss = 0;
+      const A = shuffle(q.pasangan.map((p, k) => [p[0], k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; cl.appendChild(b); return b; });
+      const B = shuffle(q.pasangan.map((p, k) => [p[1], k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; cr.appendChild(b); return b; });
+      const tryPair = (a, b) => { if (a.dataset.k === b.dataset.k) { [a, b].forEach(x => { x.classList.remove('on'); x.classList.add('ok'); x.disabled = true; pop(x); }); tone([700], .06); if (!--left) fin(miss ? .5 : 1); }
+        else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } sel = null; A.forEach(x => x.classList.remove('on')); };
+      A.forEach(a => a.onclick = () => { A.forEach(x => x.classList.remove('on')); sel = a; a.classList.add('on'); speak(a.textContent); });
+      B.forEach(b => b.onclick = () => { if (sel) tryPair(sel, b); else { shake(b); } });
+      Q.solve = () => A.forEach(a => { if (!a.disabled) tryPair(a, B.find(b => b.dataset.k === a.dataset.k)); });
+    },
+    susun(q, box, fin) {
+      qhead(q, box); const sl = H('<div class="slots"></div>'), pool = H('<div class="pool"></div>'); box.append(sl, pool);
+      const slots = q.item.map((_, k) => sl.appendChild(H(`<div class="slot"><b>${k + 1}</b><span></span></div>`)));
+      let nx = 0, miss = 0;
+      const cs = shuffle(q.item.map((t, k) => [t, k])).map(([t, k]) => { const b = btn(q.html ? t : esc(t), 'chip'); b.dataset.k = k; pool.appendChild(b); return b; });
+      const put = b => { const k = +b.dataset.k;
+        if (q.item[k] === q.item[nx]) { slots[nx].querySelector('span').innerHTML = b.innerHTML; slots[nx].classList.add('ok'); pop(slots[nx]); b.remove(); nx++; tone([600 + nx * 40], .05); if (nx === q.item.length) fin(miss ? .5 : 1); }
+        else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      cs.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < q.item.length) put(cs.find(b => b.isConnected && q.item[+b.dataset.k] === q.item[nx])); };
+    },
+    kumpul(q, box, fin) {
+      qhead(q, box); const items = shuffle(q.kumpulan.flatMap(([g, xs], gi) => xs.map(x => [x, gi])));
+      const now = H('<div class="now"></div>'), bins = H('<div class="bins"></div>'); box.append(now, bins);
+      const bb = q.kumpulan.map(([g]) => { const b = H(`<button class="bin"><b>${q.html ? g : esc(g)}</b></button>`); bins.appendChild(b); return b; });
+      let i = 0, miss = 0;
+      const showNow = () => { now.innerHTML = i < items.length ? (q.html ? items[i][0] : esc(items[i][0])) : '✔'; if (i < items.length) pop(now); };
+      const drop = gi => { if (i >= items.length) return; const [x, g] = items[i];
+        if (g === gi) { bb[gi].insertAdjacentHTML('beforeend', `<span>${q.html ? x : esc(x)}</span>`); pop(bb[gi]); tone([700], .05); i++; showNow(); if (i === items.length) { bb.forEach(b => b.disabled = true); fin(miss ? .5 : 1); } }
+        else { miss++; bb[gi].classList.add('no'); shake(bb[gi]); setTimeout(() => bb[gi].classList.remove('no'), 450); } };
+      bb.forEach((b, gi) => b.onclick = () => drop(gi)); showNow();
+      Q.solve = () => { while (i < items.length) drop(items[i][1]); };
+    },
+    eja(q, box, fin) {
+      qhead(q, box);   // T1: jangan sebut perkataan sasaran (ejaan berasaskan petunjuk)
+      const word = q.kata, line = H('<div class="line" aria-live="polite"></div>'), pool = H('<div class="pool"></div>'); box.append(line, pool);
+      let nx = 0, miss = 0; const chars = [...word].filter(c => c !== ' ');
+      const tiles = shuffle(chars.map((c, k) => [c, k])).map(([c]) => { const b = btn(esc(c), 'chip'); b.dataset.c = c; pool.appendChild(b); return b; });
+      const put = b => { if (b.dataset.c.toLowerCase() === chars[nx].toLowerCase()) { line.insertAdjacentHTML('beforeend', `<span>${esc(chars[nx])}</span>`); b.remove(); nx++; tone([600 + nx * 30], .04);
+          if (nx === chars.length) { speak(word); fin(miss ? .5 : 1); } } else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      tiles.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < chars.length) put(tiles.find(b => b.isConnected && b.dataset.c.toLowerCase() === chars[nx].toLowerCase())); };
+    },
+    ayat(q, box, fin) {
+      qhead(q, box); const line = H('<div class="line"></div>'), pool = H('<div class="pool"></div>'); box.append(line, pool);
+      let nx = 0, miss = 0;
+      const ws = shuffle(q.kata.map((w, k) => [w, k])).map(([w]) => { const b = btn(esc(w), 'chip'); b.dataset.w = w; pool.appendChild(b); return b; });
+      const put = b => { if (b.dataset.w === q.kata[nx]) { line.insertAdjacentHTML('beforeend', `<span>${esc(b.dataset.w)}</span>`); b.remove(); nx++; tone([600 + nx * 30], .04);
+          if (nx === q.kata.length) { speak(q.kata.join(' ')); fin(miss ? .5 : 1); } } else { miss++; b.classList.add('no'); shake(b); setTimeout(() => b.classList.remove('no'), 450); } };
+      ws.forEach(b => b.onclick = () => put(b));
+      Q.solve = () => { while (nx < q.kata.length) put(ws.find(b => b.isConnected && b.dataset.w === q.kata[nx])); };
+    },
+  };
+
+  /* ---------- Amali: aktiviti tersuai ---------- */
+  const api0 = { toast(t) { const d = document.createElement('div'); d.className = 'tst'; d.textContent = t; $('#toast').appendChild(d); setTimeout(() => d.remove(), 2600); } };
+  let ctl = null;
+  function alist() {
+    const P = $('#pane'), x = UU(cur.n);
+    P.innerHTML = `<div class="alist">${cur.amali.map((a, k) => `<button class="ut" data-k="${k}"><span class="no" aria-hidden="true">${ikon(a.ikon)}</span><b>${esc(a.tajuk)}</b><span class="st">${stars(x.am[a.id] || 0)}</span></button>`).join('')}</div>`;
+    P.querySelectorAll('.ut').forEach(b => b.onclick = () => runAmali(cur.amali[+b.dataset.k]));
+    if (cur.amali.length === 1 && !x.am[cur.amali[0].id]) runAmali(cur.amali[0]);
+  }
+  function runAmali(a) {
+    gen++; const g = gen, P = $('#pane'), u = cur; hush();
+    P.innerHTML = `<div class="say" aria-live="polite"></div><div class="abody"></div><div id="afin"></div>`;
+    const say = P.querySelector('.say'), body = P.querySelector('.abody');
+    const api = {
+      say(h) { if (g === gen) say.innerHTML = h; },
+      betul(el, h) { tone([660, 880], .09); if (el) pop(el); if (h !== undefined) api.say('✅ ' + h); },
+      salah(el, h) { tone([300, 240], .12); if (el) shake(el); if (h !== undefined) api.say('💡 ' + h); },
+      selesai(skor, h) {
+        if (g !== gen) return; skor = Math.max(0, Math.min(1, +skor || 0));
+        const n = skor >= .999 ? 3 : skor >= .7 ? 2 : skor > 0 ? 1 : 0, x = UU(u.n), was = x.am[a.id] || 0;
+        x.am[a.id] = Math.max(was, n); G.xp += Math.round(10 + 20 * skor); save();
+        const msg = n === 3 ? L.s3 : n === 2 ? L.s2 : L.s1; tone([523, 659, 784, 1046], .1); speak(h || msg);
+        P.querySelector('#afin').innerHTML = `<div class="res"><div class="stamp">${msg}</div><div class="stars">${stars(n)}</div>${h ? `<p>${h}</p>` : ''}
+          <div class="row" style="justify-content:center"><button class="btn go" id="ag">${L.again}</button><button class="btn alt" id="bk">◀ ${L.amali.replace(/^\S+\s/, '')}</button></div></div>`;
+        P.querySelector('#ag').onclick = () => runAmali(a); P.querySelector('#bk').onclick = () => tab('amali');
+        anim(P.querySelector('.stamp'), [{ opacity: 0, transform: 'rotate(-30deg) scale(2.2)' }, { opacity: 1, transform: 'rotate(-8deg) scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+        P.querySelector('#afin').scrollIntoView({ block: 'nearest', behavior: RM() ? 'auto' : 'smooth' });
+        window.__amaliDone = { id: a.id, skor };
+      },
+      toast: api0.toast, speak, shuffle, S, H, anim, esc,
+    };
+    api.say(a.arahan || '');
+    try { ctl = a.mula(body, api) || null; } catch (e) { console.error(e); body.innerHTML = '<p class="hint">Aktiviti ini gagal dimuat.</p>'; }
+  }
+
+  $('#back').onclick = home;
+  $('#mute').onclick = () => { G.mute = !G.mute; if (G.mute) hush(); save(); $('#mute').textContent = G.mute ? '🔇' : '🔊'; };
+  $('#mute').textContent = G.mute ? '🔇' : '🔊';
+  window.T1 = window.D2 = { open, home, tab, cabaran, runAmali, kuizAll: () => { gen++; kuiz(cur.soalan || [], 999, () => false); }, get Q() { return Q; }, get ctl() { return ctl; }, get cur() { return cur; }, UNITS, G, R };   // untuk ujian
+  save();
+  const sp = new URLSearchParams(location.search);
+  sp.has('cabaran') ? cabaran() : sp.get('u') ? open(+sp.get('u')) : home();
+})();
+
+</script>
+<script src="../../assets/cikgu-robo.js" defer></script>
+</body>
+</html>
