@@ -10,12 +10,33 @@
   var root = document.documentElement;
   var toggle = document.getElementById('themeToggle');
   if (toggle) {
-    toggle.addEventListener('click', function () {
-      var current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-      var next = current === 'light' ? 'dark' : 'light';
+    var lastVt = null;
+    var apply = function (next) {
       if (next === 'light') root.setAttribute('data-theme', 'light');
       else root.removeAttribute('data-theme');
       try { localStorage.setItem('luqman-theme', next); } catch (e) {}
+    };
+    toggle.addEventListener('click', function () {
+      var current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      var next = current === 'light' ? 'dark' : 'light';
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (still || !document.startViewTransition) { apply(next); return; }
+      // The new colours burst out of the toggle in a growing circle
+      var b = toggle.getBoundingClientRect();
+      var x = b.left + b.width / 2, y = b.top + b.height / 2;
+      var r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      root.classList.add('m-vt');
+      var vt = document.startViewTransition(function () { apply(next); });
+      var mine = vt;
+      lastVt = vt;
+      vt.ready.then(function () {
+        root.animate(
+          { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + r + 'px at ' + x + 'px ' + y + 'px)'] },
+          { duration: 650, easing: 'cubic-bezier(.65,0,.35,1)', pseudoElement: '::view-transition-new(root)' }
+        );
+      }).catch(function () {});
+      var clear = function () { if (lastVt === mine) root.classList.remove('m-vt'); };   // a newer toggle owns the class
+      vt.finished.then(clear, clear);
     });
   }
 
