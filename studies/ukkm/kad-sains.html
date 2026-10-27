@@ -14,7 +14,7 @@
   --bg:#f3f5fa; --card:#fff; --ink:#172033; --muted:#5b6782; --line:#d9dfeb; --soft:#eef2f9;
   --c:#3b5bdb; --c2:#e8edff; --ok:#2b8a3e; --oksoft:#e6f6ea; --no:#d9480f; --nosoft:#fff0e6; --flag:#f59f00; --mono:"JetBrains Mono",ui-monospace,monospace;
   --ui:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --bio:#2b8a3e; --eko:#0c8599; --kim:#ae3ec9; --fiz:#e8590c; --bumi:#3b5bdb;
+  --bio:#237032; --eko:#0b7285; --kim:#9c36b5; --fiz:#c2410c; --bumi:#3b5bdb;
 }
 :root[data-theme="dark"]{
   --bg:#0f1420; --card:#171e2e; --ink:#e8edf7; --muted:#9aa6bf; --line:#2a3550; --soft:#1d2638;
@@ -79,6 +79,8 @@ details summary{cursor:pointer;font-weight:700;font-size:.92rem;color:var(--mute
 .flip{perspective:1600px}
 .flip .inner{display:grid;transition:transform .5s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
 .flip.on .inner{transform:rotateY(180deg)}
+/* selepas putaran tamat, muka tersembunyi tidak lagi menentukan tinggi kad */
+.flip.settled:not(.on) .belakang,.flip.settled.on .depan{visibility:hidden;max-height:0;overflow:hidden;padding-top:0;padding-bottom:0;border-width:0}
 .face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-top:8px solid var(--bc,var(--c));border-radius:18px;padding:16px 18px 18px;min-width:0}
 .face.belakang{transform:rotateY(180deg);background:color-mix(in srgb,var(--bc,var(--c)) 7%,var(--card))}
 .meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);font-weight:700;margin-bottom:10px}
@@ -127,9 +129,9 @@ kbd{font:600 .75rem var(--mono);border:1px solid var(--line);border-bottom-width
 window.UKKM = [];
 </script>
 <!-- Sama seperti ujian.html: kemas kini ?v= di KEDUA-DUA fail apabila set berubah -->
-<script src="sets/set01.js?v=e0d698eb36"></script>
+<script src="sets/set01.js?v=80e5473bb4"></script>
 <script src="sets/set02.js?v=88d2e24146"></script>
-<script src="sets/set03.js?v=0faf37820c"></script>
+<script src="sets/set03.js?v=f7435a577b"></script>
 <script src="sets/set04.js?v=176b1f462b"></script>
 <script src="sets/set05.js?v=38d4b98c33"></script>
 <script src="sets/set06.js?v=952454c32d"></script>
@@ -177,7 +179,7 @@ window.UKKM = [];
   const sp = new URLSearchParams(location.search);
   const P = Object.assign({ topik: [], set: [], mode: 'semua', rawak: true }, store.get(PREF, {}));
   P.topik = P.topik.filter(t => ORDER.some(b => TOPIK[b].includes(t))); P.set = P.set.filter(n => SETNOS.includes(n));
-  if (sp.get('set') && SETNOS.includes(+sp.get('set'))) { P.set = [+sp.get('set')]; P.topik = []; }
+  if (sp.get('set') && SETNOS.includes(+sp.get('set'))) { P.set = [+sp.get('set')]; P.topik = []; P.mode = 'semua'; }
   const savePref = () => store.set(PREF, P);
   const pick = () => CARDS.filter(c => (!P.topik.length || P.topik.includes(c.topik)) && (!P.set.length || P.set.includes(c.set))
     && (P.mode === 'semua' || (P.mode === 'belum' ? status(c) !== 'tahu' : status(c) === 'ulang')));
@@ -210,7 +212,10 @@ window.UKKM = [];
     const upd = () => { const L = pick(); $('#cnt').textContent = `${L.length} kad dipilih`;
       $('#cnth').textContent = L.length ? `${L.filter(c => status(c) === 'tahu').length} dikuasai · ${L.filter(c => status(c) === 'ulang').length} perlu ulang · ${L.filter(c => status(c) === 'baru').length} baru` : (P.mode === 'semua' ? 'Tiada kad untuk pilihan ini.' : 'Tiada kad dalam kategori ini — cuba “Semua kad”.');
       $('#go').disabled = !L.length; };
-    const redo = () => { savePref(); const y = scrollY; home(); scrollTo(0, y); };
+    const redo = () => {   // lukis semula tanpa hilang kedudukan tatal atau fokus papan kekunci
+      const a = document.activeElement, at = a && a.attributes && [...a.attributes].find(x => x.name.startsWith('data-'));
+      savePref(); const y = scrollY; home(); scrollTo(0, y);
+      if (at) { const f = app.querySelector(`[${at.name}="${CSS.escape(at.value)}"]`); if (f) f.focus({ preventScroll: true }); } };
     const toggle = (arr, v) => { const i = arr.indexOf(v); i < 0 ? arr.push(v) : arr.splice(i, 1); };
     app.querySelectorAll('[data-all]').forEach(b => b.onclick = () => { P[b.dataset.all] = []; redo(); });
     app.querySelectorAll('[data-b]').forEach(b => b.onclick = () => { const L = TOPIK[b.dataset.b], on = L.every(t => P.topik.includes(t));
@@ -232,14 +237,15 @@ window.UKKM = [];
     function next() {
       card = queue.shift(); flipped = false; guess = null;
       if (!card) return summary(deck, res);
-      render(); window.scrollTo({ top: 0 });
+      render(); window.scrollTo({ top: 0 }); $('#fl').focus({ preventScroll: true });
+      live.textContent = `Kad baharu: ${card.topik || 'Sains'}, Set ${card.set} soalan ${card.no}. ${plain(card.s)}`;
     }
     function render() {
       const q = card, col = bc(q.bidang);
       app.innerHTML = `<div class="shead"><span class="t" title="Kad dikuasai dalam sesi ini">✅ ${doneN}/${total}</span><div class="pbar" aria-hidden="true"><i style="width:${pct(doneN, total)}%"></i></div>
           <span class="cnt" title="Kad yang perlu diulang">🔁 ${ulangN()}</span>
           ${q.en ? `<button class="btn tglen small" id="tgl" aria-pressed="${EN}" title="Papar terjemahan Bahasa Inggeris">EN</button>` : ''}</div>
-        <div class="flip${flipped ? ' on' : ''}" id="fc" style="--bc:${col}"><div class="inner">
+        <div class="flip settled${flipped ? ' on' : ''}" id="fc" style="--bc:${col}"><div class="inner">
           <section class="face depan" aria-label="Depan kad: soalan"${flipped ? ' inert aria-hidden="true"' : ''}>
             <div class="meta"><span class="tp">${esc(q.topik || 'Sains')}</span><span>Set ${q.set} · Soalan ${q.no}</span></div>
             ${q.rajah ? `<div class="fig">${q.rajah}</div>` : ''}
@@ -266,11 +272,12 @@ window.UKKM = [];
       if ($('#fl')) $('#fl').onclick = flip;
       if ($('#ul')) $('#ul').onclick = () => rate(0);
       if ($('#th')) $('#th').onclick = () => rate(1);
-      if ($('#tgl')) $('#tgl').onclick = () => { EN = !EN; store.set('ukkm-en', EN); render(); };
+      if ($('#tgl')) $('#tgl').onclick = () => { EN = !EN; store.set('ukkm-en', EN); render(); $('#tgl').focus(); };
     }
     function flip() {   // lukis semula, kemudian mainkan putaran dari muka lama ke muka baharu
       flipped = !flipped; render(); const n = $('#fc');
-      n.classList.toggle('on', !flipped); void n.offsetWidth; n.classList.toggle('on', flipped);
+      n.classList.remove('settled'); n.classList.toggle('on', !flipped); void n.offsetWidth; n.classList.toggle('on', flipped);
+      setTimeout(() => n.classList.add('settled'), 550);
       if (flipped) { live.textContent = `Jawapan ${LTR[card.a]}: ${plain(card.p[card.a])}`; $('#th').focus({ preventScroll: true }); }
       else { live.textContent = 'Soalan'; $('#fl').focus({ preventScroll: true }); }
     }
@@ -283,10 +290,11 @@ window.UKKM = [];
     }
     onKey = e => {
       if (e.ctrlKey || e.metaKey || e.altKey || !card) return;
-      const k = e.key, tag = (e.target.tagName || '').toLowerCase();
-      if (k === ' ' && tag !== 'button') { e.preventDefault(); flip(); return; }
-      if (!flipped) { const i = LTR.indexOf(k.toUpperCase()); if (k.length === 1 && i >= 0 && i < card.p.length) { guess = i; flip(); } }
-      else if (k === 'ArrowLeft') rate(0); else if (k === 'ArrowRight') rate(1);
+      const k = e.key, t = e.target;
+      if (t.closest && (t.closest('.top, .shead, a, input, textarea, select') || t.isContentEditable)) return;   // jangan ganggu navigasi & suis EN
+      if (k === ' ' && t.tagName !== 'BUTTON') { e.preventDefault(); flip(); return; }
+      if (!flipped) { const i = LTR.indexOf(k.toUpperCase()); if (k.length === 1 && i >= 0 && i < card.p.length) { e.preventDefault(); guess = i; flip(); } }
+      else if (k === 'ArrowLeft' || k === 'ArrowRight') { e.preventDefault(); rate(k === 'ArrowRight' ? 1 : 0); }
     };
     next();
   }
@@ -299,6 +307,7 @@ window.UKKM = [];
         <div><h1 style="margin:0">Sesi tamat! 🎉</h1><p class="sub" style="margin:4px 0 0">${deck.length} kad dikuasai · ${first} terus tahu kali pertama · ${ul.length} perlu diulang dalam sesi ini</p></div></div>
       <div class="row" style="margin:18px 0">${ul.length ? `<button class="btn go" id="lagi">🔁 Ulang ${ul.length} kad yang sukar</button>` : ''}<button class="btn${ul.length ? '' : ' go'}" id="semula">🔀 Sesi baharu (kad sama)</button><button class="btn" id="bk">◀ Pilih kad</button></div>
       ${ul.length ? `<section class="card"><h2>Kad yang perlu diberi perhatian</h2><ul class="list">${ul.map(c => `<li style="border-left:4px solid ${bc(c.bidang)}"><small>${esc(c.topik)} · Set ${c.set} S${c.no}</small>${c.s.replace(/<br\s*\/?>/gi, ' ').replace(/<(?!\/?(b|i|sub|sup)\b)[^>]*>/gi, '')}<br><b>Jawapan ${LTR[c.a]}:</b> ${c.p[c.a]}</li>`).join('')}</ul></section>` : ''}`;
+    live.textContent = `Sesi tamat. ${deck.length} kad dikuasai, ${ul.length} perlu diulang.`;
     if ($('#lagi')) $('#lagi').onclick = () => session(shuffle(ul.slice()));
     $('#semula').onclick = () => session(shuffle(deck.slice()));
     $('#bk').onclick = home;
