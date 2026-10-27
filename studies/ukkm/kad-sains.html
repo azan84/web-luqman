@@ -82,7 +82,10 @@ details summary{cursor:pointer;font-weight:700;font-size:.92rem;color:var(--mute
 /* selepas putaran tamat, muka tersembunyi tidak lagi menentukan tinggi kad */
 .flip.settled:not(.on) .belakang,.flip.settled.on .depan{visibility:hidden;max-height:0;overflow:hidden;padding-top:0;padding-bottom:0;border-width:0}
 .face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-top:8px solid var(--bc,var(--c));border-radius:18px;padding:16px 18px 18px;min-width:0}
-.face.belakang{transform:rotateY(180deg);background:color-mix(in srgb,var(--bc,var(--c)) 7%,var(--card))}
+.face.depan{z-index:2}
+.flip.on .face.depan{z-index:1}
+.flip.on .face.belakang{z-index:2}
+.face.belakang{z-index:1;-webkit-transform:rotateY(180deg);transform:rotateY(180deg);background:color-mix(in srgb,var(--bc,var(--c)) 7%,var(--card))}
 .meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);font-weight:700;margin-bottom:10px}
 .meta .tp{color:var(--bc,var(--c))}
 .stem{font-size:1.05rem;margin:0 0 14px}
@@ -179,14 +182,14 @@ window.UKKM = [];
   const sp = new URLSearchParams(location.search);
   const P = Object.assign({ topik: [], set: [], mode: 'semua', rawak: true }, store.get(PREF, {}));
   P.topik = P.topik.filter(t => ORDER.some(b => TOPIK[b].includes(t))); P.set = P.set.filter(n => SETNOS.includes(n));
-  if (sp.get('set') && SETNOS.includes(+sp.get('set'))) { P.set = [+sp.get('set')]; P.topik = []; P.mode = 'semua'; }
+  if (sp.get('set') && SETNOS.includes(+sp.get('set'))) { P.set = [+sp.get('set')]; P.topik = []; P.mode = 'semua'; store.set(PREF, P); }
   const savePref = () => store.set(PREF, P);
   const pick = () => CARDS.filter(c => (!P.topik.length || P.topik.includes(c.topik)) && (!P.set.length || P.set.includes(c.set))
     && (P.mode === 'semua' || (P.mode === 'belum' ? status(c) !== 'tahu' : status(c) === 'ulang')));
 
   /* ---------- Laman pilih kad ---------- */
   function home() {
-    onKey = null; $('#toHome').hidden = true; history.replaceState(null, '', location.pathname);
+    onKey = null; $('#toHome').hidden = true; try { history.replaceState(null, '', location.pathname); } catch (e) {}
     const n = { tahu: 0, ulang: 0, baru: 0 }; CARDS.forEach(c => n[status(c)]++);
     const chip = (attr, val, on, label, count, col) => `<button class="chip" ${attr}="${esc(val)}" aria-pressed="${on}"${col ? ` style="--bc:${col}"` : ''}>${label}${count !== undefined ? ` <small>${count}</small>` : ''}</button>`;
     app.innerHTML = `<h1>🃏 Kad Imbas Sains UKKM</h1>
@@ -243,7 +246,7 @@ window.UKKM = [];
     function render() {
       const q = card, col = bc(q.bidang);
       app.innerHTML = `<div class="shead"><span class="t" title="Kad dikuasai dalam sesi ini">✅ ${doneN}/${total}</span><div class="pbar" aria-hidden="true"><i style="width:${pct(doneN, total)}%"></i></div>
-          <span class="cnt" title="Kad yang perlu diulang">🔁 ${ulangN()}</span>
+          <span class="cnt" title="Kad sukar dalam sesi ini">🔁 ${ulangN()}</span>
           ${q.en ? `<button class="btn tglen small" id="tgl" aria-pressed="${EN}" title="Papar terjemahan Bahasa Inggeris">EN</button>` : ''}</div>
         <div class="flip settled${flipped ? ' on' : ''}" id="fc" style="--bc:${col}"><div class="inner">
           <section class="face depan" aria-label="Depan kad: soalan"${flipped ? ' inert aria-hidden="true"' : ''}>
@@ -278,8 +281,8 @@ window.UKKM = [];
       flipped = !flipped; render(); const n = $('#fc');
       n.classList.remove('settled'); n.classList.toggle('on', !flipped); void n.offsetWidth; n.classList.toggle('on', flipped);
       setTimeout(() => n.classList.add('settled'), 550);
-      if (flipped) { live.textContent = `Jawapan ${LTR[card.a]}: ${plain(card.p[card.a])}`; $('#th').focus({ preventScroll: true }); }
-      else { live.textContent = 'Soalan'; $('#fl').focus({ preventScroll: true }); }
+      if (flipped) { live.textContent = `Jawapan ${LTR[card.a]}: ${plain(card.p[card.a])}`; $(guess !== null && guess !== card.a ? '#ul' : '#th').focus({ preventScroll: true }); }
+      else { live.textContent = 'Soalan: ' + plain(card.s); $('#fl').focus({ preventScroll: true }); }
     }
     function rate(v) {
       if (!flipped) return;
@@ -292,7 +295,7 @@ window.UKKM = [];
       if (e.ctrlKey || e.metaKey || e.altKey || !card) return;
       const k = e.key, t = e.target;
       if (t.closest && (t.closest('.top, .shead, a, input, textarea, select') || t.isContentEditable)) return;   // jangan ganggu navigasi & suis EN
-      if (k === ' ' && t.tagName !== 'BUTTON') { e.preventDefault(); flip(); return; }
+      if (k === ' ') { e.preventDefault(); flip(); return; }   // termasuk ketika fokus pada butang, supaya Space tidak menekan "Saya tahu"
       if (!flipped) { const i = LTR.indexOf(k.toUpperCase()); if (k.length === 1 && i >= 0 && i < card.p.length) { e.preventDefault(); guess = i; flip(); } }
       else if (k === 'ArrowLeft' || k === 'ArrowRight') { e.preventDefault(); rate(k === 'ArrowRight' ? 1 : 0); }
     };
