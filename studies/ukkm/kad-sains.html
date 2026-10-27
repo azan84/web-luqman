@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kad Imbas Sains UKKM</title>
+<script>(function(){try{var t=localStorage.getItem('luqman-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5fa; --card:#fff; --ink:#172033; --muted:#5b6782; --line:#d9dfeb; --soft:#eef2f9;
+  --c:#3b5bdb; --c2:#e8edff; --ok:#2b8a3e; --oksoft:#e6f6ea; --no:#d9480f; --nosoft:#fff0e6; --flag:#f59f00; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --ui:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --bio:#2b8a3e; --eko:#0c8599; --kim:#ae3ec9; --fiz:#e8590c; --bumi:#3b5bdb;
+}
+:root[data-theme="dark"]{
+  --bg:#0f1420; --card:#171e2e; --ink:#e8edf7; --muted:#9aa6bf; --line:#2a3550; --soft:#1d2638;
+  --c:#748ffc; --c2:#1f2a4a; --ok:#69db7c; --oksoft:#1c3326; --no:#ff8a5c; --nosoft:#3a2216; --flag:#ffc078;
+  --bio:#69db7c; --eko:#3bc9db; --kim:#e599f7; --fiz:#ffa94d; --bumi:#91a7ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--ui)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding:16px 16px 80px}
+[hidden]{display:none!important}
+a{color:var(--c)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:6px 0 18px}
+.back{padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:.9rem;text-decoration:none}
+h1{font-size:clamp(1.5rem,3.5vw,2.2rem);line-height:1.15;margin:0 0 6px;letter-spacing:-.02em}
+h2{font-size:1.05rem;margin:0 0 10px}
+.sub{color:var(--muted);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:10px 16px;border:1px solid var(--line);background:var(--card);font-weight:700}
+.btn.go{background:var(--c);border-color:var(--c);color:#fff}
+:root[data-theme="dark"] .btn.go{color:#0f1420}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stack{display:grid;gap:14px}
+
+/* Ringkasan kemajuan */
+.score{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.ring{--p:0;width:108px;height:108px;border-radius:50%;background:conic-gradient(var(--ok) calc(var(--p)*1%),var(--soft) 0);display:grid;place-items:center;flex:none}
+.ring span{width:84px;height:84px;border-radius:50%;background:var(--card);display:grid;place-items:center;font:800 1.3rem var(--mono)}
+.counts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.cnt{font-size:.85rem;padding:3px 10px;border-radius:999px;background:var(--soft);font-weight:700}
+.bars{display:grid;gap:6px;margin-top:14px}
+.bar{display:grid;grid-template-columns:130px 1fr 64px;gap:8px;align-items:center;font-size:.85rem;color:var(--muted)}
+.bar i{display:block;height:8px;border-radius:9px;background:var(--soft);position:relative;overflow:hidden}
+.bar i b{position:absolute;inset:0 auto 0 0;background:var(--bc,var(--c));border-radius:9px}
+.bar span:last-child{font-family:var(--mono);text-align:right;color:var(--ink)}
+
+/* Penapis */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.88rem;font-weight:700;display:inline-flex;gap:6px;align-items:center}
+.chip small{font:600 .75rem var(--mono);color:var(--muted)}
+.chip[aria-pressed="true"]{border-color:var(--bc,var(--c));background:color-mix(in srgb,var(--bc,var(--c)) 16%,var(--card))}
+.chip[aria-pressed="true"]::before{content:"✓";font-weight:800;color:var(--bc,var(--c))}
+.grp{margin-top:12px}
+.grp > b{display:block;font-size:.8rem;color:var(--bc);margin-bottom:6px;letter-spacing:.02em}
+details summary{cursor:pointer;font-weight:700;font-size:.92rem;color:var(--muted);margin-top:12px}
+.hint{color:var(--muted);font-size:.85rem;margin:8px 0 0}
+.startbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.startbar b{font-size:1.05rem}
+
+/* Sesi */
+.shead{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:14px}
+.shead .t{font-weight:800;font-family:var(--mono)}
+.shead .sp{margin-left:auto}
+.pbar{flex:1 1 120px;height:8px;border-radius:9px;background:var(--soft);overflow:hidden;min-width:80px}
+.pbar i{display:block;height:100%;background:var(--c);border-radius:9px;transition:width .3s}
+.tglen[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.small{padding:4px 10px;font-size:.85rem}
+
+.flip{perspective:1600px}
+.flip .inner{display:grid;transition:transform .5s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.flip.on .inner{transform:rotateY(180deg)}
+.face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-top:8px solid var(--bc,var(--c));border-radius:18px;padding:16px 18px 18px;min-width:0}
+.face.belakang{transform:rotateY(180deg);background:color-mix(in srgb,var(--bc,var(--c)) 7%,var(--card))}
+.meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);font-weight:700;margin-bottom:10px}
+.meta .tp{color:var(--bc,var(--c))}
+.stem{font-size:1.05rem;margin:0 0 14px}
+.fig{margin:0 0 14px;overflow-x:auto}
+.fig svg{max-width:100%;height:auto}
+.face table{border-collapse:collapse;margin:6px 0 12px}
+.face td,.face th{border:1px solid var(--line);padding:4px 10px;text-align:center}
+.en{margin:-8px 0 14px;color:var(--muted);font-style:italic;font-size:.92rem}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-weight:800;background:var(--soft);font-size:.9rem}
+.opt:hover{border-color:var(--c)}
+.tapnote{text-align:center;color:var(--muted);font-size:.82rem;margin:12px 0 0}
+.recap{color:var(--muted);font-size:.9rem;margin:0 0 12px;padding-left:10px;border-left:3px solid var(--line)}
+.ans{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:12px;border:2px solid var(--ok);background:var(--oksoft);font-weight:700}
+.ans .k{flex:none;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-weight:800;background:var(--ok);color:var(--card)}
+.mine{margin:10px 0 0;font-size:.92rem}
+.mine.no{color:var(--no)}
+.mine.ok{color:var(--ok)}
+.hurai{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:.95rem}
+.rate{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.rate .btn{padding:14px 12px;font-size:1rem}
+.rate .ulang{border-color:var(--no);color:var(--no)}
+.rate .tahu{border-color:var(--ok);background:var(--ok);color:var(--card)}
+.rate .ulang.sug{box-shadow:0 0 0 3px color-mix(in srgb,var(--no) 40%,transparent)}
+.rate .tahu.sug{box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 40%,transparent)}
+.flipbtn{display:flex;justify-content:center;margin-top:16px}
+.keys{text-align:center;color:var(--muted);font-size:.78rem;margin-top:10px}
+kbd{font:600 .75rem var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--card)}
+.list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.list li{padding:10px 12px;border-radius:10px;background:var(--soft);font-size:.92rem}
+.list li small{display:block;color:var(--muted);font-weight:700}
+@media (max-width:520px){ .bar{grid-template-columns:96px 1fr 58px} .rate .btn{font-size:.92rem} .keys{display:none} }
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="../../studies.html#ukkm">← Studies</a><a class="back" href="ujian.html">🎯 Latihan UKKM</a><a class="back" href="#" id="toHome" hidden>◀ Pilih kad</a></div>
+  <main id="app"></main>
+  <div class="sr" aria-live="polite" id="live"></div>
+</div>
+<script>
+window.UKKM = [];
+</script>
+<!-- Sama seperti ujian.html: kemas kini ?v= di KEDUA-DUA fail apabila set berubah -->
+<script src="sets/set01.js?v=e0d698eb36"></script>
+<script src="sets/set02.js?v=88d2e24146"></script>
+<script src="sets/set03.js?v=0faf37820c"></script>
+<script src="sets/set04.js?v=176b1f462b"></script>
+<script src="sets/set05.js?v=38d4b98c33"></script>
+<script src="sets/set06.js?v=952454c32d"></script>
+<script src="sets/set07.js?v=2c1bd72da4"></script>
+<script src="sets/set08.js?v=8999fe4cb2"></script>
+<script src="sets/set09.js?v=bab961edea"></script>
+<script src="sets/set10.js?v=5aff9e337f"></script>
+<script>
+/* ===================== Kad imbas Sains UKKM =====================
+   Setiap soalan Sains dalam semua set (window.UKKM, bahagian id 'sains') menjadi satu kad.
+   Depan: soalan + rajah + pilihan. Belakang: jawapan betul + huraian.
+   Kemajuan: localStorage 'ukkm-kad-sains' = { 's<set>-<no>': { r: 1 tahu | 0 ulang, n: kali dilihat, t } } */
+(function () {
+  'use strict';
+  const $ = s => document.querySelector(s), app = $('#app'), live = $('#live');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'ukkm-kad-sains', PREF = 'ukkm-kad-sains-pilih', LTR = 'ABCDEFGH';
+  const REC = store.get(KEY, {});
+  let EN = store.get('ukkm-en', false), onKey = null;
+  const BIDANG = [['Biologi', 'bio', '🧬'], ['Ekologi', 'eko', '🌿'], ['Kimia', 'kim', '⚗️'], ['Fizik', 'fiz', '⚡'], ['Bumi & Angkasa', 'bumi', '🪐']];
+  const bOf = t => String(t || '').split(':')[0].trim();
+  const bc = b => { const x = BIDANG.find(z => z[0] === b); return x ? `var(--${x[1]})` : 'var(--c)'; };
+  const plain = h => { const d = document.createElement('div'); d.innerHTML = h; return d.textContent.replace(/\s+/g, ' ').trim(); };
+  const short = t => String(t).split(':').slice(1).join(':').trim() || t;
+
+  /* ---------- Kad daripada semua set ---------- */
+  const CARDS = [];
+  window.UKKM.slice().sort((a, b) => a.set - b.set).forEach(S => {
+    const B = S.bahagian.find(b => b.id === 'sains'); if (!B) return;
+    B.soalan.forEach((q, i) => CARDS.push(Object.assign({}, q, { id: `s${S.set}-${i + 1}`, set: S.set, no: i + 1, bidang: bOf(q.topik) })));
+  });
+  const SETNOS = [...new Set(CARDS.map(c => c.set))];
+  const TOPIK = {};   // bidang -> [topik...] mengikut susunan pertama muncul
+  CARDS.forEach(c => { const l = TOPIK[c.bidang] = TOPIK[c.bidang] || []; if (!l.includes(c.topik)) l.push(c.topik); });
+  const ORDER = BIDANG.map(b => b[0]).filter(b => TOPIK[b]).concat(Object.keys(TOPIK).filter(b => !BIDANG.some(x => x[0] === b)));
+  ORDER.forEach(b => TOPIK[b].sort((x, y) => x.localeCompare(y, 'ms')));
+
+  const status = c => { const r = REC[c.id]; return !r ? 'baru' : r.r ? 'tahu' : 'ulang'; };
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
+
+  /* Pilihan penapis (diingat) */
+  const sp = new URLSearchParams(location.search);
+  const P = Object.assign({ topik: [], set: [], mode: 'semua', rawak: true }, store.get(PREF, {}));
+  P.topik = P.topik.filter(t => ORDER.some(b => TOPIK[b].includes(t))); P.set = P.set.filter(n => SETNOS.includes(n));
+  if (sp.get('set') && SETNOS.includes(+sp.get('set'))) { P.set = [+sp.get('set')]; P.topik = []; }
+  const savePref = () => store.set(PREF, P);
+  const pick = () => CARDS.filter(c => (!P.topik.length || P.topik.includes(c.topik)) && (!P.set.length || P.set.includes(c.set))
+    && (P.mode === 'semua' || (P.mode === 'belum' ? status(c) !== 'tahu' : status(c) === 'ulang')));
+
+  /* ---------- Laman pilih kad ---------- */
+  function home() {
+    onKey = null; $('#toHome').hidden = true; history.replaceState(null, '', location.pathname);
+    const n = { tahu: 0, ulang: 0, baru: 0 }; CARDS.forEach(c => n[status(c)]++);
+    const chip = (attr, val, on, label, count, col) => `<button class="chip" ${attr}="${esc(val)}" aria-pressed="${on}"${col ? ` style="--bc:${col}"` : ''}>${label}${count !== undefined ? ` <small>${count}</small>` : ''}</button>`;
+    app.innerHTML = `<h1>🃏 Kad Imbas Sains UKKM</h1>
+      <p class="sub">Semua ${CARDS.length} soalan Sains daripada ${SETNOS.length} set latihan UKKM sebagai kad imbas. Baca soalan dan fikirkan jawapan, kemudian terbalikkan kad untuk melihat jawapan dan huraian. Tandakan <b>Saya tahu</b> atau <b>Ulang lagi</b>; kad yang perlu diulang akan muncul semula.</p>
+      <div class="stack">
+      <section class="card"><div class="score"><div class="ring" style="--p:${pct(n.tahu, CARDS.length)}"><span>${pct(n.tahu, CARDS.length)}%</span></div>
+        <div><h2 style="margin:0">Kemajuan kad</h2><div class="counts"><span class="cnt">✅ Dikuasai ${n.tahu}</span><span class="cnt">🔁 Perlu ulang ${n.ulang}</span><span class="cnt">🆕 Belum dicuba ${n.baru}</span></div></div></div>
+        <div class="bars">${ORDER.map(b => { const L = CARDS.filter(c => c.bidang === b), t = L.filter(c => status(c) === 'tahu').length;
+          return `<div class="bar" style="--bc:${bc(b)}"><span>${esc(b)}</span><i><b style="width:${pct(t, L.length)}%"></b></i><span>${t}/${L.length}</span></div>`; }).join('')}</div></section>
+      <section class="card"><h2>1 · Pilih topik</h2>
+        <div class="chips">${chip('data-all', 'topik', !P.topik.length, 'Semua topik', CARDS.length)}${ORDER.map(b => { const L = TOPIK[b], on = L.every(t => P.topik.includes(t));
+          return chip('data-b', b, on, (BIDANG.find(x => x[0] === b) || [, , '🔬'])[2] + ' ' + esc(b), CARDS.filter(c => c.bidang === b).length, bc(b)); }).join('')}</div>
+        <details${P.topik.length && ORDER.some(b => { const s = TOPIK[b].filter(t => P.topik.includes(t)).length; return s && s < TOPIK[b].length; }) ? ' open' : ''}><summary>Pilih topik tertentu</summary>
+          ${ORDER.map(b => `<div class="grp" style="--bc:${bc(b)}"><b>${esc(b)}</b><div class="chips">${TOPIK[b].map(t => chip('data-t', t, P.topik.includes(t), esc(short(t)), CARDS.filter(c => c.topik === t).length, bc(b))).join('')}</div></div>`).join('')}
+        </details></section>
+      <section class="card"><h2>2 · Pilih set</h2>
+        <div class="chips">${chip('data-all', 'set', !P.set.length, 'Semua set', SETNOS.length + ' set')}${SETNOS.map(s => chip('data-s', s, P.set.includes(s), 'Set ' + s)).join('')}</div></section>
+      <section class="card"><h2>3 · Kad mana?</h2>
+        <div class="chips">${[['semua', 'Semua kad'], ['belum', 'Belum dikuasai'], ['ulang', 'Perlu ulang sahaja']].map(([v, l]) => chip('data-m', v, P.mode === v, l)).join('')}
+          <span style="width:12px"></span>${chip('data-r', '1', P.rawak, '🔀 Susunan rawak')}</div></section>
+      <section class="card startbar"><div><b id="cnt"></b><p class="hint" id="cnth"></p></div><button class="btn go" id="go">Mula ▶</button></section>
+      </div>`;
+    const upd = () => { const L = pick(); $('#cnt').textContent = `${L.length} kad dipilih`;
+      $('#cnth').textContent = L.length ? `${L.filter(c => status(c) === 'tahu').length} dikuasai · ${L.filter(c => status(c) === 'ulang').length} perlu ulang · ${L.filter(c => status(c) === 'baru').length} baru` : (P.mode === 'semua' ? 'Tiada kad untuk pilihan ini.' : 'Tiada kad dalam kategori ini — cuba “Semua kad”.');
+      $('#go').disabled = !L.length; };
+    const redo = () => { savePref(); const y = scrollY; home(); scrollTo(0, y); };
+    const toggle = (arr, v) => { const i = arr.indexOf(v); i < 0 ? arr.push(v) : arr.splice(i, 1); };
+    app.querySelectorAll('[data-all]').forEach(b => b.onclick = () => { P[b.dataset.all] = []; redo(); });
+    app.querySelectorAll('[data-b]').forEach(b => b.onclick = () => { const L = TOPIK[b.dataset.b], on = L.every(t => P.topik.includes(t));
+      P.topik = on ? P.topik.filter(t => !L.includes(t)) : P.topik.concat(L.filter(t => !P.topik.includes(t))); redo(); });
+    app.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { toggle(P.topik, b.dataset.t); redo(); });
+    app.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { toggle(P.set, +b.dataset.s); redo(); });
+    app.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { P.mode = b.dataset.m; redo(); });
+    app.querySelector('[data-r]').onclick = () => { P.rawak = !P.rawak; redo(); };
+    $('#go').onclick = () => { const L = pick(); if (L.length) session(P.rawak ? shuffle(L.slice()) : L.slice()); };
+    upd();
+  }
+
+  /* ---------- Sesi kad imbas ---------- */
+  function session(deck) {
+    $('#toHome').hidden = false;
+    const queue = deck.slice(), total = deck.length, res = {};   // res[id] = 1 tahu kali pertama / 0 pernah 'ulang' dalam sesi ini
+    let card = null, flipped = false, guess = null, doneN = 0;
+    const ulangN = () => Object.values(res).filter(v => v === 0).length;
+    function next() {
+      card = queue.shift(); flipped = false; guess = null;
+      if (!card) return summary(deck, res);
+      render(); window.scrollTo({ top: 0 });
+    }
+    function render() {
+      const q = card, col = bc(q.bidang);
+      app.innerHTML = `<div class="shead"><span class="t" title="Kad dikuasai dalam sesi ini">✅ ${doneN}/${total}</span><div class="pbar" aria-hidden="true"><i style="width:${pct(doneN, total)}%"></i></div>
+          <span class="cnt" title="Kad yang perlu diulang">🔁 ${ulangN()}</span>
+          ${q.en ? `<button class="btn tglen small" id="tgl" aria-pressed="${EN}" title="Papar terjemahan Bahasa Inggeris">EN</button>` : ''}</div>
+        <div class="flip${flipped ? ' on' : ''}" id="fc" style="--bc:${col}"><div class="inner">
+          <section class="face depan" aria-label="Depan kad: soalan"${flipped ? ' inert aria-hidden="true"' : ''}>
+            <div class="meta"><span class="tp">${esc(q.topik || 'Sains')}</span><span>Set ${q.set} · Soalan ${q.no}</span></div>
+            ${q.rajah ? `<div class="fig">${q.rajah}</div>` : ''}
+            <p class="stem">${q.s}</p>${EN && q.en ? `<p class="en" lang="en">${q.en}</p>` : ''}
+            <div class="opts" role="group" aria-label="Pilih jawapan anda (pilihan)">${q.p.map((t, k) => `<button class="opt" data-k="${k}"><span class="k">${LTR[k]}</span><span>${t}</span></button>`).join('')}</div>
+            <p class="tapnote">Pilih jawapan anda, atau ketik kad untuk terus melihat jawapan.</p>
+          </section>
+          <section class="face belakang" aria-label="Belakang kad: jawapan"${flipped ? '' : ' inert aria-hidden="true"'}>
+            <div class="meta"><span class="tp">${esc(q.topik || 'Sains')}</span><span>Set ${q.set} · Soalan ${q.no}</span></div>
+            <p class="recap">${q.s}</p>
+            <div class="ans"><span class="k">${LTR[q.a]}</span><span>${q.p[q.a]}</span></div>
+            ${guess === null ? '' : guess === q.a ? '<p class="mine ok">✅ Jawapan anda betul!</p>' : `<p class="mine no">❌ Anda pilih ${LTR[guess]}: ${q.p[guess]}</p>`}
+            ${q.hurai ? `<div class="hurai">${q.hurai}</div>` : ''}
+            <p class="tapnote">Ketik kad untuk melihat soalan semula.</p>
+          </section>
+        </div></div>
+        ${flipped ? `<div class="rate"><button class="btn ulang${guess !== null && guess !== q.a ? ' sug' : ''}" id="ul">🔁 Ulang lagi</button><button class="btn tahu${guess === q.a ? ' sug' : ''}" id="th">✅ Saya tahu</button></div>
+          <p class="keys"><kbd>←</kbd> ulang lagi · <kbd>→</kbd> saya tahu · <kbd>Space</kbd> terbalikkan kad</p>`
+        : `<div class="flipbtn"><button class="btn go" id="fl">🔄 Terbalikkan kad</button></div>
+          <p class="keys"><kbd>A</kbd>–<kbd>${LTR[q.p.length - 1]}</kbd> pilih jawapan · <kbd>Space</kbd> terbalikkan kad</p>`}`;
+      const fc = $('#fc');
+      fc.onclick = e => { if (e.target.closest('button, a, input, summary')) return; if (getSelection && String(getSelection()).length) return; flip(); };
+      app.querySelectorAll('.opt').forEach(b => b.onclick = () => { guess = +b.dataset.k; flip(); });
+      if ($('#fl')) $('#fl').onclick = flip;
+      if ($('#ul')) $('#ul').onclick = () => rate(0);
+      if ($('#th')) $('#th').onclick = () => rate(1);
+      if ($('#tgl')) $('#tgl').onclick = () => { EN = !EN; store.set('ukkm-en', EN); render(); };
+    }
+    function flip() {   // lukis semula, kemudian mainkan putaran dari muka lama ke muka baharu
+      flipped = !flipped; render(); const n = $('#fc');
+      n.classList.toggle('on', !flipped); void n.offsetWidth; n.classList.toggle('on', flipped);
+      if (flipped) { live.textContent = `Jawapan ${LTR[card.a]}: ${plain(card.p[card.a])}`; $('#th').focus({ preventScroll: true }); }
+      else { live.textContent = 'Soalan'; $('#fl').focus({ preventScroll: true }); }
+    }
+    function rate(v) {
+      if (!flipped) return;
+      const r = REC[card.id] = REC[card.id] || { n: 0 }; r.r = v; r.n++; r.t = Date.now(); store.set(KEY, REC);
+      if (v) { if (!(card.id in res)) res[card.id] = 1; doneN++; }
+      else { res[card.id] = 0; queue.splice(Math.min(4, queue.length), 0, card); }   // muncul semula selepas beberapa kad
+      next();
+    }
+    onKey = e => {
+      if (e.ctrlKey || e.metaKey || e.altKey || !card) return;
+      const k = e.key, tag = (e.target.tagName || '').toLowerCase();
+      if (k === ' ' && tag !== 'button') { e.preventDefault(); flip(); return; }
+      if (!flipped) { const i = LTR.indexOf(k.toUpperCase()); if (k.length === 1 && i >= 0 && i < card.p.length) { guess = i; flip(); } }
+      else if (k === 'ArrowLeft') rate(0); else if (k === 'ArrowRight') rate(1);
+    };
+    next();
+  }
+
+  /* ---------- Ringkasan sesi ---------- */
+  function summary(deck, res) {
+    onKey = null;
+    const ul = deck.filter(c => res[c.id] === 0), first = deck.length - ul.length;
+    app.innerHTML = `<div class="score"><div class="ring" style="--p:${pct(first, deck.length)}"><span>${pct(first, deck.length)}%</span></div>
+        <div><h1 style="margin:0">Sesi tamat! 🎉</h1><p class="sub" style="margin:4px 0 0">${deck.length} kad dikuasai · ${first} terus tahu kali pertama · ${ul.length} perlu diulang dalam sesi ini</p></div></div>
+      <div class="row" style="margin:18px 0">${ul.length ? `<button class="btn go" id="lagi">🔁 Ulang ${ul.length} kad yang sukar</button>` : ''}<button class="btn${ul.length ? '' : ' go'}" id="semula">🔀 Sesi baharu (kad sama)</button><button class="btn" id="bk">◀ Pilih kad</button></div>
+      ${ul.length ? `<section class="card"><h2>Kad yang perlu diberi perhatian</h2><ul class="list">${ul.map(c => `<li style="border-left:4px solid ${bc(c.bidang)}"><small>${esc(c.topik)} · Set ${c.set} S${c.no}</small>${c.s.replace(/<br\s*\/?>/gi, ' ').replace(/<(?!\/?(b|i|sub|sup)\b)[^>]*>/gi, '')}<br><b>Jawapan ${LTR[c.a]}:</b> ${c.p[c.a]}</li>`).join('')}</ul></section>` : ''}`;
+    if ($('#lagi')) $('#lagi').onclick = () => session(shuffle(ul.slice()));
+    $('#semula').onclick = () => session(shuffle(deck.slice()));
+    $('#bk').onclick = home;
+    window.scrollTo({ top: 0 });
+  }
+  document.addEventListener('keydown', e => { if (onKey) onKey(e); });
+  $('#toHome').onclick = e => { e.preventDefault(); home(); };
+  window.UKKMKAD = { CARDS, home, session };   // untuk ujian
+  home();
+})();
+</script>
+<script src="../../assets/cikgu-robo.js" defer></script>
+</body>
+</html>
