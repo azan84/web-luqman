@@ -89,6 +89,11 @@ h1{font-size:clamp(1.5rem,3.5vw,2.2rem);line-height:1.15;margin:0 0 6px;letter-s
 .flagbtn[aria-pressed="true"]{border-color:var(--flag);color:var(--flag)}
 .hurai{margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:.95rem}
 .hurai b{color:var(--ok)}
+.ansline{margin-top:12px;font-size:.95rem}.ansline b{color:var(--ok)}
+.solbtn{margin-top:10px;padding:6px 14px;font-size:.92rem}
+.sol{margin-top:12px;padding:4px 16px 12px;border-radius:12px;background:var(--soft);border-left:4px solid var(--c);font-size:.95rem;line-height:1.6}
+.sol h5{margin:14px 0 4px;font-size:.98rem;color:var(--ink)}.sol p{margin:0 0 6px}.sol ol,.sol ul{margin:0 0 6px;padding-left:22px}.sol li{margin:3px 0}
+.sol table{border-collapse:collapse;margin:6px 0}.sol th,.sol td{border:1px solid var(--line);padding:3px 8px}.sol b{color:var(--ok)}
 .en{margin:-8px 0 14px;color:var(--muted);font-style:italic;font-size:.92rem}
 .isi{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .isi input{font:700 1.2rem var(--mono);padding:10px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:min(220px,100%)}
@@ -141,6 +146,11 @@ window.UKKM = [];
   const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
   const KEY = 'ukkm-t4', REC = store.get(KEY, {});
+  /* Penyelesaian penuh (Matematik & Sains) dimuat hanya selepas kertas dihantar: sol/setNN.js → window.UKKM_SOL[set] = { mat:[…], sains:[…] } */
+  const SOLV = ['', 'sol/set01.js?v=7095a26f24', 'sol/set02.js?v=d2000b3136', 'sol/set03.js?v=8dc0b605b1', 'sol/set04.js?v=5d7c3a4dd3', 'sol/set05.js?v=147ce0e717', 'sol/set06.js?v=06a0b66448', 'sol/set07.js?v=f8d17c74cc', 'sol/set08.js?v=89dcbac950', 'sol/set09.js?v=a0a7ff723e', 'sol/set10.js?v=fab02ae6e9'];
+  const SOLP = {}, hasSol = B => B.id === 'mat' || B.id === 'sains';
+  const loadSol = n => SOLP[n] = SOLP[n] || new Promise(res => { if (!SOLV[n]) return res(null);
+    const el = document.createElement('script'); el.src = SOLV[n]; el.onload = () => res((window.UKKM_SOL || {})[n] || null); el.onerror = () => { delete SOLP[n]; res(null); }; document.head.appendChild(el); });
   const SETS = window.UKKM.slice().sort((a, b) => a.set - b.set);
   const LTR = 'ABCDEFGH';
   let timer = 0, EN = store.get('ukkm-en', false);
@@ -274,9 +284,20 @@ window.UKKM = [];
     if (run) run.full.push([B.nama, p, pers]);
     const summary = run && !nextB ? `<div class="card" style="margin-top:14px"><b>🏁 Ringkasan ujian penuh</b>${run.full.map(([n, v, ps]) => `<div class="bar" style="grid-template-columns:170px 1fr 46px;margin-top:6px"><span>${esc(n)}${ps ? ' (profil)' : ''}</span><i><b style="width:${v}%"></b></i><span>${v}%</span></div>`).join('')}</div>` : '';
     app.innerHTML = `${head}${summary}<div class="row" style="margin:18px 0">${nextB ? `<button class="btn go" id="nextP">▶ Kertas seterusnya: ${esc(nextB.nama)}</button>` : `<button class="btn go" id="again">🔁 Cuba lagi</button>`}<button class="btn" id="bk">◀ ${esc(S.tajuk || 'Set ' + S.set)}</button>${B.id === 'sains' && !nextB ? `<a class="btn" href="kad-sains.html?set=${S.set}" style="text-decoration:none;color:var(--ink)">🃏 Kad imbas Set ${S.set}</a>` : ''}</div>
-      <h2 style="font-size:1.2rem">Semakan jawapan</h2><div style="display:grid;gap:12px">${list.map((q, k) => review(B, q, k, ans[k], tm && tm[k])).join('')}</div>`;
+      <div class="row" style="align-items:center;justify-content:space-between;gap:10px"><h2 style="font-size:1.2rem;margin:0">Semakan jawapan</h2>${hasSol(B) ? `<button class="btn" id="solAll" aria-pressed="false">💡 Buka semua ${B.id === 'mat' ? 'penyelesaian' : 'penjelasan'}</button>` : ''}</div><div style="display:grid;gap:12px;margin-top:12px">${list.map((q, k) => review(B, q, k, ans[k], tm && tm[k])).join('')}</div>`;
     if (nextB) $('#nextP').onclick = () => exam(S, nextB, run); else $('#again').onclick = () => exam(S, B);
     $('#bk').onclick = () => { if (!nextB || confirm('Keluar daripada ujian penuh?')) openSet(S.set); };
+    if (hasSol(B)) {
+      loadSol(S.set);   // pra-muat di latar
+      const toggle = (btn, open) => { const box = document.getElementById(btn.getAttribute('aria-controls')), k = +btn.dataset.k, q = list[k];
+        btn.setAttribute('aria-expanded', open); btn.textContent = (open ? '🔼 Tutup ' : '💡 Lihat ') + btn.dataset.lbl; box.hidden = !open;
+        if (open && !box.dataset.done) { box.innerHTML = '<p>Memuatkan…</p>';
+          loadSol(S.set).then(d => { const h = d && d[B.id] && d[B.id][k]; box.innerHTML = h || (q.hurai ? `<h5>Huraian</h5><p>${q.hurai}</p>` : '<p>Penyelesaian belum tersedia.</p>'); if (h) box.dataset.done = 1; }); } };
+      app.querySelectorAll('.solbtn').forEach(b => b.onclick = () => toggle(b, b.getAttribute('aria-expanded') !== 'true'));
+      $('#solAll').onclick = e => { const on = e.currentTarget.getAttribute('aria-pressed') !== 'true'; e.currentTarget.setAttribute('aria-pressed', on);
+        e.currentTarget.textContent = (on ? '🔼 Tutup semua ' : '💡 Buka semua ') + (B.id === 'mat' ? 'penyelesaian' : 'penjelasan');
+        app.querySelectorAll('.solbtn').forEach(b => toggle(b, on)); };
+    }
     window.__ukkmDone = { p, set: S.set, id: B.id };
     window.scrollTo({ top: 0 });
   }
@@ -297,7 +318,9 @@ window.UKKM = [];
       ${q.rajah ? `<div class="fig">${q.rajah}</div>` : ''}<p class="stem">${q.s}</p>${showEN(q)}
       ${isIsi(q) ? `<div class="isi"><span class="opt ${ok ? 'ok' : 'no'}" style="display:inline-flex">Jawapan anda: <b style="margin-left:6px">${a === null ? '—' : esc(a)}</b></span></div>`
         : `<div class="opts">${q.p.map((t, j) => `<div class="opt${j === q.a ? ' ok' : j === a ? ' no' : ''}"><span class="k">${LTR[j]}</span><span>${t}</span></div>`).join('')}</div>`}
-      ${q.hurai ? `<div class="hurai"><b>Jawapan ${isIsi(q) ? esc(q.a) + (q.unit ? ' ' + esc(q.unit) : '') : LTR[q.a]}.</b> ${q.hurai}</div>` : ''}</div>`;
+      ${hasSol(B) ? `<div class="ansline">Jawapan betul: <b>${isIsi(q) ? esc(q.a) + (q.unit ? ' ' + esc(q.unit) : '') : LTR[q.a] + ' — ' + q.p[q.a]}</b></div>
+        <button class="btn solbtn" data-k="${k}" data-lbl="${B.id === 'mat' ? 'penyelesaian' : 'penjelasan'}" aria-expanded="false" aria-controls="sol${k}">💡 Lihat ${B.id === 'mat' ? 'penyelesaian' : 'penjelasan'}</button><div class="sol" id="sol${k}" hidden></div>`
+        : q.hurai ? `<div class="hurai"><b>Jawapan ${isIsi(q) ? esc(q.a) + (q.unit ? ' ' + esc(q.unit) : '') : LTR[q.a]}.</b> ${q.hurai}</div>` : ''}</div>`;
   }
 
   $('#toHome').onclick = e => { e.preventDefault(); home(); };
