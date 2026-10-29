@@ -1,6 +1,6 @@
 (function () { const B = {}; const UKKM_PART = (n, b) => { B[b.id] = b; };
 UKKM_PART(3, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
-  arahan: 'Jawab semua 20 soalan. 18 soalan objektif (pilih A, B, C atau D) dan 2 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
+  arahan: 'Jawab semua 30 soalan. 27 soalan objektif (pilih A, B, C atau D) dan 3 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
   soalan: [
   { // 1 Pola — mudah
     rajah: '<svg viewBox="0 0 330 110" style="max-width:100%;width:340px" role="img" aria-label="Pola titik segi tiga: 1, 3, 6, 10 titik"><circle cx="26" cy="14" r="5" fill="var(--c)"/><text x="20" y="100" font-size="12" fill="currentColor">Rajah 1</text><circle cx="83" cy="14" r="5" fill="var(--c)"/><circle cx="76" cy="28" r="5" fill="var(--c)"/><circle cx="90" cy="28" r="5" fill="var(--c)"/><text x="70" y="100" font-size="12" fill="currentColor">Rajah 2</text><circle cx="155" cy="14" r="5" fill="var(--c)"/><circle cx="148" cy="28" r="5" fill="var(--c)"/><circle cx="162" cy="28" r="5" fill="var(--c)"/><circle cx="141" cy="42" r="5" fill="var(--c)"/><circle cx="155" cy="42" r="5" fill="var(--c)"/><circle cx="169" cy="42" r="5" fill="var(--c)"/><text x="135" y="100" font-size="12" fill="currentColor">Rajah 3</text><circle cx="242" cy="14" r="5" fill="var(--c)"/><circle cx="235" cy="28" r="5" fill="var(--c)"/><circle cx="249" cy="28" r="5" fill="var(--c)"/><circle cx="228" cy="42" r="5" fill="var(--c)"/><circle cx="242" cy="42" r="5" fill="var(--c)"/><circle cx="256" cy="42" r="5" fill="var(--c)"/><circle cx="221" cy="56" r="5" fill="var(--c)"/><circle cx="235" cy="56" r="5" fill="var(--c)"/><circle cx="249" cy="56" r="5" fill="var(--c)"/><circle cx="263" cy="56" r="5" fill="var(--c)"/><text x="215" y="100" font-size="12" fill="currentColor">Rajah 4</text></svg>',
@@ -34,100 +34,164 @@ UKKM_PART(3, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     p: ['50', '60', '75', '180'], a: 0, topik: 'Data & Statistik', aras: 'mudah',
     hurai: "Badminton = 75° daripada 360°. Bilangan = 75/360 × 240 = <b>50</b>. (75 ialah sudut, bukan bilangan murid; 180 menganggap 75° sebagai 75%; 60 ialah bilangan bagi sektor 90°, bola jaring.)"
   },
-  { // 6 Geometri — sederhana
+  { // 6 Kadar — mudah
+    s: "Sebuah pasar raya menjual telur ayam dalam dua jenis pek: <b>Pek A</b> berisi 10 biji berharga RM 4.50 dan <b>Pek B</b> berisi 30 biji berharga RM 12.90. Puan Siti memerlukan tepat 60 biji telur. Berapakah wang yang dapat dijimatkan jika dia membeli Pek B sahaja berbanding Pek A sahaja?",
+    en: "A supermarket sells eggs in two packs: Pack A has 10 eggs for RM 4.50 and Pack B has 30 eggs for RM 12.90. Puan Siti needs exactly 60 eggs. How much does she save by buying only Pack B instead of only Pack A?",
+    p: ['RM 0.02', 'RM 0.60', 'RM 1.20', 'RM 8.40'], a: 2, topik: 'Nisbah, Kadar & Laju', aras: 'mudah',
+    hurai: "Pek A: 6 pek × RM 4.50 = RM 27.00. Pek B: 2 pek × RM 12.90 = RM 25.80. Penjimatan = 27.00 − 25.80 = <b>RM 1.20</b>. (Atau: harga sebiji 45 sen berbanding 43 sen, jimat 2 sen × 60 biji = RM 1.20.) (RM 0.02 ialah penjimatan bagi sebiji telur sahaja; RM 0.60 ialah penjimatan bagi 30 biji sahaja; RM 8.40 ialah beza harga sebuah Pek B dengan sebuah Pek A, sedangkan isinya tidak sama.)"
+  },
+  { // 7 Data — mudah
+    rajah: '<svg viewBox="0 0 340 250" style="max-width:100%;width:340px" role="img" aria-label="Graf garis bilangan pengunjung perpustakaan dari Isnin hingga Jumaat"><line x1="60" y1="200" x2="310" y2="200" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="204" font-size="12" fill="currentColor" text-anchor="end">0</text><line x1="60" y1="180" x2="310" y2="180" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="184" font-size="12" fill="currentColor" text-anchor="end">10</text><line x1="60" y1="160" x2="310" y2="160" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="164" font-size="12" fill="currentColor" text-anchor="end">20</text><line x1="60" y1="140" x2="310" y2="140" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="144" font-size="12" fill="currentColor" text-anchor="end">30</text><line x1="60" y1="120" x2="310" y2="120" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="124" font-size="12" fill="currentColor" text-anchor="end">40</text><line x1="60" y1="100" x2="310" y2="100" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="104" font-size="12" fill="currentColor" text-anchor="end">50</text><line x1="60" y1="80" x2="310" y2="80" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="84" font-size="12" fill="currentColor" text-anchor="end">60</text><line x1="60" y1="60" x2="310" y2="60" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="64" font-size="12" fill="currentColor" text-anchor="end">70</text><line x1="60" y1="40" x2="310" y2="40" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="44" font-size="12" fill="currentColor" text-anchor="end">80</text><line x1="60" y1="200" x2="310" y2="200" stroke="currentColor" stroke-width="1.5"/><line x1="60" y1="200" x2="60" y2="30" stroke="currentColor" stroke-width="1.5"/><polyline points="90,110 140,80 190,130 240,60 290,100" fill="none" stroke="var(--c)" stroke-width="2.5"/><circle cx="90" cy="110" r="4" fill="var(--c)"/><text x="90" y="216" font-size="12" fill="currentColor" text-anchor="middle">Isnin</text><circle cx="140" cy="80" r="4" fill="var(--c)"/><text x="140" y="216" font-size="12" fill="currentColor" text-anchor="middle">Selasa</text><circle cx="190" cy="130" r="4" fill="var(--c)"/><text x="190" y="216" font-size="12" fill="currentColor" text-anchor="middle">Rabu</text><circle cx="240" cy="60" r="4" fill="var(--c)"/><text x="240" y="216" font-size="12" fill="currentColor" text-anchor="middle">Khamis</text><circle cx="290" cy="100" r="4" fill="var(--c)"/><text x="290" y="216" font-size="12" fill="currentColor" text-anchor="middle">Jumaat</text><text x="4" y="16" font-size="12" fill="currentColor">Bilangan pengunjung</text><text x="185" y="242" font-size="12" fill="currentColor" text-anchor="middle">Hari</text></svg>',
+    s: "Graf garis menunjukkan bilangan pengunjung perpustakaan sekolah dari hari Isnin hingga Jumaat. Berapakah jumlah pengunjung pada hari-hari yang bilangan pengunjungnya <b>melebihi</b> 50 orang?",
+    en: "The line graph shows the number of visitors to the school library from Monday to Friday. What is the total number of visitors on the days with more than 50 visitors?",
+    p: ['70', '130', '180', '260'], a: 1, topik: 'Data & Statistik', aras: 'mudah',
+    hurai: "Daripada graf: Isnin 45, Selasa 60, Rabu 35, Khamis 70, Jumaat 50. Hari yang melebihi 50 orang: Selasa (60) dan Khamis (70). Jumlah = 60 + 70 = <b>130</b>. (180 turut mengira Jumaat, tetapi 50 tidak melebihi 50; 70 hanya bilangan pada hari tertinggi; 260 ialah jumlah kelima-lima hari.)"
+  },
+  { // 8 Geometri — mudah
+    s: "Sebuah bekas berbentuk kuboid berukuran 25 cm panjang, 12 cm lebar dan 10 cm tinggi. Bekas itu mengandungi air sedalam 6 cm. Berapakah isi padu air, dalam liter, yang perlu ditambah untuk memenuhkan bekas itu? (1 liter = 1 000 cm³)",
+    en: "A cuboid container is 25 cm long, 12 cm wide and 10 cm high. It holds water 6 cm deep. How many litres of water must be added to fill the container? (1 litre = 1 000 cm³)",
+    p: ['1.2 L', '1.8 L', '3.0 L', '12 L'], a: 0, topik: 'Geometri & Pengukuran', aras: 'mudah',
+    hurai: "Ketinggian bahagian yang belum berisi air = 10 − 6 = 4 cm. Isi padu = 25 × 12 × 4 = 1 200 cm³ = <b>1.2 L</b>. (1.8 L ialah isi padu air yang sudah ada, 25 × 12 × 6; 3.0 L ialah isi padu penuh bekas; 12 L menukar 1 200 cm³ dengan membahagi 100, bukan 1 000.)"
+  },
+  { // 9 Geometri — sederhana
     s: "Sebuah tin berbentuk silinder mempunyai diameter 14 cm dan tinggi 20 cm. Tin itu diisi air sehingga 3/4 penuh. Berapakah isi padu air dalam tin itu? (Guna π = 22/7)",
     en: "A cylindrical tin has diameter 14 cm and height 20 cm. It is filled with water until it is 3/4 full. What is the volume of water? (Use π = 22/7)",
     p: ['9 240 cm³', '3 080 cm³', '2 310 cm³', '660 cm³'], a: 2, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Jejari = 7 cm. Isi padu tin = 22/7 × 7² × 20 = 3 080 cm³. Air = 3/4 × 3 080 = <b>2 310 cm³</b>. (3 080 lupa 3/4; 9 240 guna diameter 14 sebagai jejari; 660 guna 2πr × h × 3/4, iaitu luas sisi, bukan isi padu.)"
   },
-  { // 7 Logik — sederhana
+  { // 10 Logik — sederhana
     s: "Enam peserta tamat dalam satu larian merentas desa tanpa ada yang seri.<br>• Hakim tamat sebelum Farid.<br>• Farid tamat sebelum Gopal.<br>• Irfan tamat sejurus selepas Gopal.<br>• Kumar tamat sejurus selepas Jamal.<br>• Jamal tamat di tempat ketiga.<br>Siapakah yang tamat di tempat <b>kelima</b>?",
     en: "Six runners finish a race with no ties. Hakim finishes before Farid; Farid before Gopal; Irfan immediately after Gopal; Kumar immediately after Jamal; Jamal is third. Who is fifth?",
     p: ['Gopal', 'Farid', 'Irfan', 'Kumar'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Jamal ke-3, Kumar ke-4. Tempat kosong: 1, 2, 5, 6 untuk Hakim, Farid, Gopal, Irfan. Hakim < Farid < Gopal dan Irfan sejurus selepas Gopal → Gopal dan Irfan mesti 5 dan 6. Maka Hakim 1, Farid 2, <b>Gopal 5</b>, Irfan 6."
   },
-  { // 8 Pola — sederhana
+  { // 11 Pola — sederhana
     s: "Manik disusun pada seutas tali mengikut pola berulang: <b>merah, biru, biru, kuning, hijau, biru, putih</b>, merah, biru, biru, … Berapakah bilangan manik <b>biru</b> dalam 2026 biji manik yang pertama?",
     en: "Beads are strung in the repeating pattern red, blue, blue, yellow, green, blue, white, red, blue, blue, … How many blue beads are among the first 2026 beads?",
     p: ['1013', '869', '868', '867'], a: 1, topik: 'Pola & Jujukan', aras: 'sederhana',
     hurai: "Satu kitaran = 7 manik dengan 3 biru (kedudukan 2, 3, 6). 2026 = 7 × 289 + 3. 289 kitaran penuh → 867 biru; baki 3 manik (merah, biru, biru) → 2 biru lagi. Jumlah = <b>869</b>. (867 lupa baki; 868 = 2026 × 3/7 dibundarkan ke bawah; 1013 menganggap separuh manik biru.)"
   },
-  { // 9 Persamaan linear — sederhana
+  { // 12 Persamaan linear — sederhana
     s: "Sebuah tabung mengandungi 48 keping syiling yang terdiri daripada syiling 20 sen dan 50 sen sahaja. Jumlah nilainya ialah RM 15.30. Berapakah bilangan syiling 50 sen?",
     en: "A money box holds 48 coins, all 20 sen or 50 sen, worth RM 15.30 in total. How many 50 sen coins are there?",
     p: ['19', '24', '29', '31'], a: 0, topik: 'Persamaan Linear', aras: 'sederhana',
     hurai: "Katakan 50 sen = y keping, 20 sen = 48 − y. 50y + 20(48 − y) = 1530 → 30y + 960 = 1530 → y = <b>19</b> (20 sen = 29 keping). (29 ialah bilangan syiling 20 sen; 24 menganggap sama banyak; 31 ≈ 15.30 ÷ 0.50, menganggap semua syiling 50 sen.)"
   },
-  { // 10 Komisen — sederhana (ISI)
+  { // 13 Komisen — sederhana (ISI)
     jenis: 'isi',
     s: "Seorang ejen hartanah menerima komisen 2.5% bagi RM 500 000 yang pertama daripada harga jualan rumah, dan 1.5% bagi baki harga jualan selebihnya. Sebuah rumah dijual dengan harga RM 680 000. Berapakah komisen ejen itu, dalam RM?",
     en: "An estate agent earns 2.5% commission on the first RM 500 000 of a house price and 1.5% on the rest. A house sells for RM 680 000. What is the commission, in RM?",
     a: 15200, unit: 'RM', topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
     hurai: "2.5% × 500 000 = RM 12 500. Baki = 180 000; 1.5% × 180 000 = RM 2 700. Jumlah komisen = <b>RM 15 200</b>."
   },
-  { // 11 Kadaran songsang — sederhana
+  { // 14 Kadaran songsang — sederhana
     s: "12 orang pekerja boleh menyiapkan sebuah pagar dalam 15 hari. Selepas mereka bekerja selama 5 hari, 4 orang pekerja berhenti. Berapakah bilangan hari <b>lagi</b> yang diperlukan oleh pekerja yang tinggal untuk menyiapkan pagar itu? (Anggap semua pekerja bekerja pada kadar yang sama.)",
     en: "12 workers can build a fence in 15 days. After 5 days, 4 workers leave. How many more days do the remaining workers need to finish? (All work at the same rate.)",
     p: ['22.5', '20', '15', '10'], a: 2, topik: 'Nisbah, Kadar & Laju', aras: 'sederhana',
     hurai: "Jumlah kerja = 12 × 15 = 180 hari-pekerja. Selepas 5 hari: 12 × 5 = 60 siap; baki 120. Pekerja tinggal 8 → 120 ÷ 8 = <b>15 hari</b>. (10 menganggap baki hari tidak berubah; 20 ialah jumlah keseluruhan 5 + 15; 22.5 = 15 × 12 ÷ 8, mengabaikan kerja yang sudah siap.)"
   },
-  { // 12 Statistik — sederhana
+  { // 15 Statistik — sederhana
     rajah: '<table><tr><th>Batang</th><th>Daun</th></tr><tr><td>3</td><td style="text-align:left">2 5 8</td></tr><tr><td>4</td><td style="text-align:left">0 1 1 6 9</td></tr><tr><td>5</td><td style="text-align:left">3 3 3 7</td></tr><tr><td>6</td><td style="text-align:left">0 4</td></tr><tr><td>7</td><td style="text-align:left">1</td></tr><tr><td colspan="2">Kekunci: 3 | 2 bermaksud 32 kg</td></tr></table>',
     s: "Plot batang-dan-daun menunjukkan jisim (kg) 15 orang murid. Berapakah median jisim mereka?",
     en: "The stem-and-leaf plot shows the masses (kg) of 15 pupils. What is the median mass?",
     p: ['46 kg', '49 kg', '51.5 kg', '53 kg'], a: 1, topik: 'Data & Statistik', aras: 'sederhana',
     hurai: "15 data → median ialah nilai ke-8. Kira menaik: 32, 35, 38, 40, 41, 41, 46, <b>49</b>. Median = 49 kg. (53 ialah mod; 51.5 = (32 + 71) ÷ 2, titik tengah julat; 46 ialah nilai ke-7.)"
   },
-  { // 13 Kecerunan — sederhana
+  { // 16 Kecerunan — sederhana
     rajah: '<svg viewBox="-8 0 288 250" style="max-width:100%;width:300px" role="img" aria-label="Garis lurus pada satah Cartes"><line x1="20" y1="20" x2="20" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="50" y1="20" x2="50" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="80" y1="20" x2="80" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="110" y1="20" x2="110" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="140" y1="20" x2="140" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="170" y1="20" x2="170" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="200" y1="20" x2="200" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="230" y1="20" x2="230" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="260" y1="20" x2="260" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="230" x2="260" y2="230" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="200" x2="260" y2="200" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="170" x2="260" y2="170" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="140" x2="260" y2="140" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="110" x2="260" y2="110" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="80" x2="260" y2="80" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="50" x2="260" y2="50" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="20" x2="260" y2="20" stroke="var(--muted)" stroke-opacity="0.35"/><line x1="20" y1="200" x2="262" y2="200" stroke="currentColor" stroke-width="1.5"/><line x1="110" y1="230" x2="110" y2="16" stroke="currentColor" stroke-width="1.5"/><text x="20" y="215" font-size="12" fill="currentColor" text-anchor="middle">-3</text><text x="50" y="215" font-size="12" fill="currentColor" text-anchor="middle">-2</text><text x="80" y="215" font-size="12" fill="currentColor" text-anchor="middle">-1</text><text x="140" y="215" font-size="12" fill="currentColor" text-anchor="middle">1</text><text x="170" y="215" font-size="12" fill="currentColor" text-anchor="middle">2</text><text x="200" y="215" font-size="12" fill="currentColor" text-anchor="middle">3</text><text x="230" y="215" font-size="12" fill="currentColor" text-anchor="middle">4</text><text x="260" y="215" font-size="12" fill="currentColor" text-anchor="middle">5</text><text x="105" y="234" font-size="12" fill="currentColor" text-anchor="end">-1</text><text x="105" y="174" font-size="12" fill="currentColor" text-anchor="end">1</text><text x="105" y="144" font-size="12" fill="currentColor" text-anchor="end">2</text><text x="105" y="114" font-size="12" fill="currentColor" text-anchor="end">3</text><text x="105" y="84" font-size="12" fill="currentColor" text-anchor="end">4</text><text x="105" y="54" font-size="12" fill="currentColor" text-anchor="end">5</text><text x="105" y="24" font-size="12" fill="currentColor" text-anchor="end">6</text><text x="105" y="215" font-size="12" fill="currentColor" text-anchor="end">0</text><text x="266" y="204" font-size="12" fill="currentColor">x</text><text x="115" y="14" font-size="12" fill="currentColor">y</text><line x1="20" y1="30.0" x2="260" y2="190.0" stroke="var(--c)" stroke-width="2.5"/><circle cx="50" cy="50" r="4.5" fill="var(--c)"/><circle cx="230" cy="170" r="4.5" fill="var(--c)"/><text x="56" y="42" font-size="13" font-weight="700" fill="currentColor">A</text><text x="234" y="160" font-size="13" font-weight="700" fill="currentColor">B</text></svg>',
     s: "Rajah menunjukkan garis lurus yang melalui titik A dan titik B pada satah Cartes. Berapakah kecerunan garis itu?",
     en: "The diagram shows a straight line through points A and B on a Cartesian plane. What is the gradient of the line?",
     p: ['−3/2', '−2/3', '2/3', '3/2'], a: 1, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Daripada graf, A(−2, 5) dan B(4, 1). Kecerunan = (1 − 5) ÷ (4 − (−2)) = −4/6 = <b>−2/3</b>. Garis menurun dari kiri ke kanan, jadi kecerunan negatif. (2/3 tertinggal tanda negatif; −3/2 menterbalikkan pecahan, iaitu jarak mengufuk ÷ jarak mencancang.)"
   },
-  { // 14 Logik — sederhana
+  { // 17 Logik — sederhana
     s: "Tiga kotak berlabel <b>\"Epal\"</b>, <b>\"Oren\"</b> dan <b>\"Campur\"</b>. Satu kotak berisi epal sahaja, satu berisi oren sahaja dan satu berisi campuran epal dan oren. Diketahui <b>semua</b> label dilekatkan salah. Anda boleh mengeluarkan sebiji buah dari satu kotak sahaja (tanpa melihat ke dalam) untuk menentukan isi semua kotak. Dari kotak manakah buah itu patut dikeluarkan?",
     en: "Three boxes are labelled 'Apples', 'Oranges' and 'Mixed'; every label is wrong. You may take one fruit from one box (without looking inside) to work out the contents of all boxes. Which box should you take it from?",
     p: ['Kotak berlabel "Epal"', 'Kotak berlabel "Oren"', 'Mana-mana kotak', 'Kotak berlabel "Campur"'], a: 3, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Kotak berlabel \"Campur\" pasti berisi satu jenis buah sahaja (labelnya salah). Jika buah yang keluar ialah epal, kotak itu = Epal. Kotak berlabel \"Oren\" tidak boleh berisi oren, dan epal sudah diambil, jadi ia = Campur; kotak berlabel \"Epal\" = Oren. Jadi pilih <b>kotak berlabel \"Campur\"</b>. Dari kotak \"Epal\" atau \"Oren\", buah yang keluar tidak dapat membezakan kotak satu jenis daripada kotak campur."
   },
-  { // 15 Pola — sukar
+  { // 18 Pola — sederhana (ISI)
+    jenis: 'isi',
+    s: "Seorang penjual buah di pasar malam menyusun oren dalam bentuk piramid bertapak segi empat sama. Lapisan paling atas ada 1 biji, lapisan kedua 4 biji (2 × 2), lapisan ketiga 9 biji (3 × 3), dan seterusnya. Dia ada 120 biji oren dan mahu membina <b>satu</b> piramid lengkap yang setinggi mungkin. Berapakah bilangan oren yang <b>tidak</b> digunakan?",
+    en: "A fruit seller at a night market stacks oranges in a square-based pyramid. The top layer has 1 orange, the second 4 (2 × 2), the third 9 (3 × 3), and so on. He has 120 oranges and wants to build one complete pyramid as tall as possible. How many oranges are not used?",
+    a: 29, unit: 'biji', topik: 'Pola & Jujukan', aras: 'sederhana',
+    hurai: "Jumlah kumulatif nombor kuasa dua: 1, 1 + 4 = 5, 5 + 9 = 14, 14 + 16 = 30, 30 + 25 = 55, 55 + 36 = 91, 91 + 49 = 140. Piramid 7 lapisan memerlukan 140 biji (melebihi 120), jadi piramid paling tinggi ialah 6 lapisan = 91 biji. Oren yang tidak digunakan = 120 − 91 = <b>29</b>."
+  },
+  { // 19 Peratus — sederhana
+    rajah: '<table><tr><th>Penggunaan air sebulan</th><th>Kadar</th></tr><tr><td>20 m³ pertama (0–20 m³)</td><td>RM 0.60 se m³</td></tr><tr><td>15 m³ berikutnya (21–35 m³)</td><td>RM 1.20 se m³</td></tr><tr><td>Setiap m³ melebihi 35 m³</td><td>RM 2.00 se m³</td></tr></table>',
+    s: "Jadual menunjukkan tarif air berblok sebuah syarikat bekalan air. Bil air rumah Encik Lim bagi bulan Mei ialah RM 46.00 (tiada caj lain). Berapakah penggunaan air rumahnya pada bulan itu?",
+    en: "The table shows the block water tariff of a water supply company. Mr Lim's water bill for May is RM 46.00 (no other charges). How much water did his house use that month?",
+    p: ['8 m³', '23 m³', '37 m³', '43 m³'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
+    hurai: "Kos 20 m³ pertama = 20 × RM 0.60 = RM 12.00. Kos 15 m³ berikutnya = 15 × RM 1.20 = RM 18.00. Kos 35 m³ = RM 30.00, kurang daripada RM 46.00, jadi penggunaan melebihi 35 m³. Baki = 46 − 30 = RM 16 → 16 ÷ 2.00 = 8 m³. Penggunaan = 35 + 8 = <b>43 m³</b>. (8 m³ hanya bahagian dalam blok ketiga, lupa menambah 35 m³; 23 m³ = 46 ÷ 2, menganggap semua air dikenakan RM 2.00; 37 m³ melangkau blok kedua: 20 + (46 − 12) ÷ 2.)"
+  },
+  { // 20 Data — sukar
+    s: "Masa (minit) yang diambil oleh 11 orang murid untuk menyiapkan satu teka silang kata adalah seperti berikut:<br>14, 18, 11, 25, 9, 15, 20, 13, 22, 12, 16<br>Kuartil pertama ialah median bagi separuh data yang lebih kecil, dan kuartil ketiga ialah median bagi separuh data yang lebih besar (median keseluruhan tidak dimasukkan dalam mana-mana separuh). Berapakah <b>julat antara kuartil</b> (kuartil ketiga − kuartil pertama)?",
+    en: "The times (minutes) taken by 11 pupils to finish a crossword are: 14, 18, 11, 25, 9, 15, 20, 13, 22, 12, 16. The first quartile is the median of the lower half of the data and the third quartile is the median of the upper half (the overall median is not included in either half). What is the interquartile range (third quartile − first quartile)?",
+    p: ['8 minit', '11 minit', '15 minit', '16 minit'], a: 0, topik: 'Data & Statistik', aras: 'sukar',
+    hurai: "Susun menaik: 9, 11, 12, 13, 14, 15, 16, 18, 20, 22, 25. Median = 15 (nilai ke-6). Separuh bawah: 9, 11, 12, 13, 14 → kuartil pertama = 12. Separuh atas: 16, 18, 20, 22, 25 → kuartil ketiga = 20. Julat antara kuartil = 20 − 12 = <b>8 minit</b>. (11 = 22 − 11, mengambil nilai ke-3 dan ke-9 tanpa menyusun data dahulu; 15 ialah median; 16 = 25 − 9 ialah julat.)"
+  },
+  { // 21 Logik — sederhana
+    s: "Kelas 3 Bestari mempunyai 32 orang murid. Seramai 21 orang murid suka nasi lemak dan 17 orang murid suka roti canai. Seseorang murid mungkin suka kedua-duanya, suka satu sahaja atau tidak suka kedua-duanya. Berapakah bilangan <b>minimum</b> dan bilangan <b>maksimum</b> murid yang suka kedua-dua makanan itu?",
+    en: "Class 3 Bestari has 32 pupils. 21 like nasi lemak and 17 like roti canai. A pupil may like both, only one, or neither. What are the minimum and maximum numbers of pupils who like both foods?",
+    p: ['Minimum 6, maksimum 17', 'Minimum 6, maksimum 21', 'Minimum 6, maksimum 32', 'Minimum 15, maksimum 17'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "Minimum: 21 + 17 = 38, melebihi 32 sebanyak 6, jadi sekurang-kurangnya 6 orang mesti suka kedua-duanya (berlaku apabila setiap murid suka sekurang-kurangnya satu makanan). Maksimum: bilangan yang suka kedua-duanya tidak boleh melebihi kumpulan yang lebih kecil, iaitu 17 (semua peminat roti canai juga suka nasi lemak, dan 11 orang tidak suka kedua-duanya). Jawapan: <b>minimum 6, maksimum 17</b>. (Maksimum 21 atau 32 mustahil kerana hanya 17 orang suka roti canai; 15 = 32 − 17 ialah bilangan murid yang tidak suka roti canai, bukan bilangan minimum.)"
+  },
+  { // 22 Pola — sukar
     s: "Jujukan P: 5, 12, 19, 26, … (tambah 7)<br>Jujukan Q: 3, 7, 11, 15, … (tambah 4)<br>Berapakah bilangan nombor <b>kurang daripada 200</b> yang terdapat dalam <b>kedua-dua</b> jujukan?",
     en: "Sequence P: 5, 12, 19, 26, … (add 7). Sequence Q: 3, 7, 11, 15, … (add 4). How many numbers less than 200 appear in both sequences?",
     p: ['6', '7', '8', '28'], a: 1, topik: 'Pola & Jujukan', aras: 'sukar',
     hurai: "Sebutan sepunya pertama ialah 19 (19 = 5 + 2×7 = 3 + 4×4). Selepas itu, sebutan sepunya berulang setiap GSTK(7, 4) = 28: 19, 47, 75, 103, 131, 159, 187 → <b>7</b> nombor (215 melebihi 200). (6 tertinggal 19 atau 187; 8 termasuk 215; 28 ialah beza sebutan sepunya.)"
   },
-  { // 16 Persamaan linear — sukar
+  { // 23 Persamaan linear — sukar
     s: "Cikgu Liza mengagihkan gula-gula kepada murid dalam kumpulannya. Jika setiap murid diberi 5 biji, berbaki 13 biji. Jika setiap murid diberi 7 biji, tidak cukup 9 biji. Berapakah bilangan gula-gula yang ada pada Cikgu Liza?",
     en: "Cikgu Liza shares sweets among her group. If each pupil gets 5, 13 are left over. If each gets 7, she is 9 short. How many sweets does she have?",
     p: ['11', '23', '55', '68'], a: 3, topik: 'Persamaan Linear', aras: 'sukar',
     hurai: "Murid = n. 5n + 13 = 7n − 9 → 2n = 22 → n = 11. Gula-gula = 5(11) + 13 = <b>68</b> (semak: 7 × 11 − 9 = 68). (11 ialah bilangan murid; 55 lupa baki 13; 23 datang daripada ralat tanda 5n + 13 = 7n + 9 → n = 2.)"
   },
-  { // 17 Peratus — sukar
+  { // 24 Peratus — sukar
     s: "Bilangan pengunjung sebuah taman tema meningkat 20% dari tahun 2023 ke tahun 2024, kemudian menurun 20% dari tahun 2024 ke tahun 2025. Pada tahun 2025, terdapat 4 800 orang pengunjung. Berapakah bilangan pengunjung pada tahun 2023?",
     en: "Visitors to a theme park rose 20% from 2023 to 2024, then fell 20% from 2024 to 2025. There were 4 800 visitors in 2025. How many were there in 2023?",
     p: ['4 608', '4 800', '4 992', '5 000'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sukar',
     hurai: "2025 = 2023 × 1.20 × 0.80 = 2023 × 0.96. Maka 2023 = 4800 ÷ 0.96 = <b>5 000</b>. (4 800 menganggap naik 20% lalu turun 20% kembali ke asal; 4 608 = 4800 × 0.96, arah salah; 4 992 = 4800 × 1.04, menambah 4% pada nilai akhir.)"
   },
-  { // 18 Nisbah — sukar
+  { // 25 Nisbah — sukar
     s: "Nisbah ahli lelaki kepada ahli perempuan dalam Kelab Robotik ialah 3 : 5. Selepas 6 orang ahli lelaki baharu menyertai kelab dan 2 orang ahli perempuan keluar, nisbah itu menjadi 1 : 1. Berapakah bilangan ahli perempuan <b>asal</b>?",
     en: "In the Robotics Club the ratio of boys to girls is 3 : 5. After 6 new boys join and 2 girls leave, the ratio becomes 1 : 1. How many girls were there originally?",
     p: ['12', '18', '20', '32'], a: 2, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
     hurai: "Lelaki = 3k, perempuan = 5k. 3k + 6 = 5k − 2 → k = 4. Perempuan asal = 5 × 4 = <b>20</b>. (18 ialah bilangan perempuan selepas 2 keluar; 12 ialah lelaki asal; 32 ialah jumlah ahli asal.)"
   },
-  { // 19 Set & kebarangkalian — sukar
+  { // 26 Set & kebarangkalian — sukar
     s: "Dalam sebuah kelas 40 orang murid, 25 orang menyertai Kelab Sains, 18 orang menyertai Kelab Robotik dan 7 orang tidak menyertai mana-mana kelab ini. Seorang murid dipilih secara rawak daripada murid yang menyertai <b>sekurang-kurangnya satu</b> kelab ini. Berapakah kebarangkalian murid itu menyertai Kelab Sains <b>sahaja</b>?",
     en: "In a class of 40, 25 join the Science Club, 18 join the Robotics Club and 7 join neither. A pupil is chosen at random from those in at least one of these clubs. What is the probability that the pupil is in the Science Club only?",
     p: ['10/33', '3/8', '5/11', '5/8'], a: 2, topik: 'Data & Statistik', aras: 'sukar',
     hurai: "Sekurang-kurangnya satu kelab = 40 − 7 = 33. Kedua-dua kelab = 25 + 18 − 33 = 10. Sains sahaja = 25 − 10 = 15. Kebarangkalian = 15/33 = <b>5/11</b>. (3/8 = 15/40, ruang sampel salah; 10/33 ialah kebarangkalian kedua-dua kelab; 5/8 = 25/40, termasuk ahli kedua-dua kelab.)"
   },
-  { // 20 Lengkok — sukar (ISI)
+  { // 27 Lengkok — sukar (ISI)
     jenis: 'isi',
     rajah: '<svg viewBox="0 0 300 170" style="max-width:100%;width:300px" role="img" aria-label="Kipas berbentuk sektor bulatan"><path d="M150,150 L253.9,90.0 A120,120 0 0 0 46.1,90.0 Z" fill="var(--c)" fill-opacity="0.15" stroke="var(--c)" stroke-width="2.5"/><path d="M167.3,140 A20,20 0 0 0 132.7,140" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="150" y="128" font-size="13" fill="currentColor" text-anchor="middle">120°</text><text x="214" y="132" font-size="13" fill="currentColor">21 cm</text><circle cx="150" cy="150" r="3" fill="currentColor"/></svg>',
     s: "Sebuah kipas tangan berbentuk sektor bulatan dengan jejari 21 cm dan sudut 120° di pusat. Renda akan dijahit di sepanjang <b>seluruh</b> sempadan kipas itu (lengkok dan kedua-dua jejari). Berapakah panjang renda yang diperlukan, dalam cm? (Guna π = 22/7)",
     en: "A hand fan is a sector of a circle with radius 21 cm and angle 120° at the centre. Lace is sewn along the whole boundary (arc and both radii). How many cm of lace are needed? (Use π = 22/7)",
     a: 86, unit: 'cm', topik: 'Geometri & Pengukuran', aras: 'sukar',
     hurai: "Panjang lengkok = 120/360 × 2 × 22/7 × 21 = 1/3 × 132 = 44 cm. Perimeter = 44 + 21 + 21 = <b>86 cm</b>. (Jangan lupa dua jejari.)"
+  },
+  { // 28 Persamaan linear — sukar
+    s: "Tiket sebuah pertunjukan amal dijual pada harga RM 12 (dewasa), RM 7 (kanak-kanak) dan RM 5 (warga emas). Sebanyak 200 keping tiket terjual dengan kutipan RM 1 890. Bilangan tiket kanak-kanak ialah dua kali bilangan tiket warga emas. Berapakah bilangan tiket dewasa yang terjual?",
+    en: "Charity show tickets cost RM 12 (adult), RM 7 (child) and RM 5 (senior citizen). 200 tickets were sold for RM 1 890. The number of child tickets is twice the number of senior tickets. How many adult tickets were sold?",
+    p: ['30', '60', '98', '110'], a: 3, topik: 'Persamaan Linear', aras: 'sukar',
+    hurai: "Katakan tiket warga emas = w, kanak-kanak = 2w, dewasa = 200 − 3w. 12(200 − 3w) + 7(2w) + 5w = 1890 → 2400 − 36w + 19w = 1890 → 17w = 510 → w = 30. Dewasa = 200 − 90 = <b>110</b> (semak: 1 320 + 420 + 150 = 1 890). (30 ialah bilangan tiket warga emas; 60 ialah bilangan tiket kanak-kanak; 98 menganggap semua tiket bukan dewasa berharga RM 7: 12d + 7(200 − d) = 1890.)"
+  },
+  { // 29 Kadar — sukar
+    s: "Seorang kontraktor merancang untuk menyiapkan sebuah dewan dalam 30 hari menggunakan 20 orang pekerja. Selepas 10 hari, didapati hanya 1/4 daripada kerja itu siap. Berapakah bilangan pekerja <b>tambahan</b> yang diperlukan supaya dewan itu siap dalam tempoh 30 hari yang dirancang? (Anggap semua pekerja, termasuk pekerja tambahan, bekerja pada kadar yang sama seperti dalam 10 hari pertama.)",
+    en: "A contractor plans to finish a hall in 30 days with 20 workers. After 10 days, only 1/4 of the work is done. How many additional workers are needed so that the hall is finished within the planned 30 days? (Assume all workers, including the extra ones, work at the same rate as in the first 10 days.)",
+    p: ['3', '10', '30', '40'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
+    hurai: "20 pekerja × 10 hari = 200 hari-pekerja menyiapkan 1/4 kerja, jadi seluruh kerja = 800 hari-pekerja. Baki kerja = 600 hari-pekerja, perlu disiapkan dalam 30 − 10 = 20 hari → 600 ÷ 20 = 30 pekerja. Tambahan = 30 − 20 = <b>10</b>. (30 ialah jumlah pekerja yang diperlukan, bukan tambahan; 40 menganggap baki 3/4 kerja perlu disiapkan dalam 10 hari sahaja, jadi 3 × 20 = 60 pekerja; 3 menggunakan anggaran asal 20 × 30 = 600 hari-pekerja bagi seluruh kerja: 3/4 × 600 ÷ 20 = 22.5 → 23 pekerja, jadi tambahan 23 − 20 = 3.)"
+  },
+  { // 30 Geometri — sukar
+    rajah: '<svg viewBox="0 0 300 224" style="max-width:100%;width:280px" role="img" aria-label="Rangka wau berbentuk layang-layang ABCD dengan pepenjuru AC dan BD bersilang tegak di O"><polygon points="150,20 258,65 150,209 42,65" fill="var(--c)" fill-opacity="0.15" stroke="var(--c)" stroke-width="2.5"/><line x1="150" y1="20" x2="150" y2="209" stroke="currentColor" stroke-width="1.5"/><line x1="42" y1="65" x2="258" y2="65" stroke="currentColor" stroke-width="1.5"/><path d="M158,65 L158,57 L150,57" fill="none" stroke="currentColor" stroke-width="1.2"/><g font-size="13" font-weight="700" fill="currentColor"><text x="150" y="15" text-anchor="middle">A</text><text x="36" y="70" text-anchor="end">B</text><text x="150" y="223" text-anchor="middle">C</text><text x="264" y="70">D</text><text x="144" y="80" text-anchor="end">O</text></g><g font-size="12" fill="currentColor"><text x="155" y="50">5 cm</text><text x="155" y="137">16 cm</text><text x="96" y="60" text-anchor="middle">12 cm</text><text x="204" y="60" text-anchor="middle">12 cm</text></g></svg>',
+    s: "Rajah menunjukkan rangka sebuah model wau berbentuk layang-layang ABCD. Batang buluh AC dan BD bersilang secara serenjang di O, dengan AO = 5 cm, OC = 16 cm dan BO = OD = 12 cm. Benang diikat di sepanjang sisi AB, BC, CD dan DA. Berapakah panjang benang yang diperlukan?",
+    en: "The diagram shows the frame of a model wau (traditional kite) shaped like kite ABCD. Bamboo sticks AC and BD cross at right angles at O, with AO = 5 cm, OC = 16 cm and BO = OD = 12 cm. String is tied along sides AB, BC, CD and DA. What length of string is needed?",
+    p: ['33 cm', '45 cm', '66 cm', '90 cm'], a: 2, topik: 'Geometri & Pengukuran', aras: 'sukar',
+    hurai: "AB = √(5² + 12²) = √169 = 13 cm. BC = √(16² + 12²) = √400 = 20 cm. Bagi layang-layang, AD = AB = 13 cm dan CD = CB = 20 cm. Panjang benang = 2(13 + 20) = <b>66 cm</b>. (33 cm hanya mengira dua sisi, AB + BC; 45 cm ialah panjang buluh AC + BD = 21 + 24; 90 cm menambah kedua-dua kaki segi tiga, (5 + 12) + (16 + 12) bagi setiap pasangan sisi, bukannya menggunakan teorem Pythagoras.)"
   }
   ]
 });

@@ -1,6 +1,6 @@
 (function () { const B = {}; const UKKM_PART = (n, b) => { B[b.id] = b; };
 UKKM_PART(5, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
-  arahan: 'Jawab semua 20 soalan. 18 soalan objektif (pilih A, B, C atau D) dan 2 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
+  arahan: 'Jawab semua 30 soalan. 27 soalan objektif (pilih A, B, C atau D) dan 3 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
   soalan: [
   { // 1 Pola — mudah
     s: "Apakah sebutan <b>keenam</b> dalam jujukan berikut?<br><b>5, −10, 20, −40, …</b>",
@@ -33,105 +33,170 @@ UKKM_PART(5, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     p: ['1.6', '2.0', '4.0', '6.4'], a: 0, topik: 'Data & Statistik', aras: 'mudah',
     hurai: "Jumlah murid = 3 + 7 + 6 + 3 + 1 = 20. Jumlah adik-beradik = 0(3) + 1(7) + 2(6) + 3(3) + 4(1) = 32. Min = 32 ÷ 20 = <b>1.6</b>. (2.0 ialah min nilai 0–4 tanpa kekerapan; 4.0 = 20 ÷ 5; 6.4 = 32 ÷ 5, bahagi dengan bilangan lajur.)"
   },
-  { // 6 Geometri (ruang) — sederhana
+  { // 6 Kadar — mudah
+    s: "Encik Lim memandu sejauh 120 km dari Seremban ke Kuala Lumpur dalam masa 1 jam 30 minit. Kemudian dia meneruskan perjalanan sejauh 60 km lagi ke Kuala Selangor dalam masa 1 jam. Berapakah laju purata bagi <b>keseluruhan</b> perjalanan itu?",
+    en: "Mr Lim drives 120 km from Seremban to Kuala Lumpur in 1 hour 30 minutes. He then drives another 60 km to Kuala Selangor in 1 hour. What is the average speed for the whole journey?",
+    p: ['70 km/j', '72 km/j', '78.3 km/j', '80 km/j'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'mudah',
+    hurai: "Jumlah jarak = 120 + 60 = 180 km. Jumlah masa = 1.5 + 1 = 2.5 jam. Laju purata = 180 ÷ 2.5 = <b>72 km/j</b>. (70 km/j ialah min dua laju, (80 + 60) ÷ 2 — salah kerana masa setiap bahagian berbeza; 78.3 km/j = 180 ÷ 2.3, menganggap 1 jam 30 minit = 1.3 jam; 80 km/j ialah laju bahagian pertama sahaja.)"
+  },
+  { // 7 Data — mudah
+    rajah: '<svg viewBox="0 0 330 250" style="max-width:100%;width:350px" role="img" aria-label="Carta palang berganda bilangan buku dipinjam: Januari 3 Amanah 30, 3 Bestari 25; Februari 3 Amanah 35, 3 Bestari 15; Mac 3 Amanah 15, 3 Bestari 30; April 3 Amanah 30, 3 Bestari 5"><g font-size="12" fill="currentColor"><text x="4" y="16">Bilangan buku</text><text x="165" y="244" text-anchor="middle">Bulan</text></g><g stroke="var(--muted)" stroke-width="1"><line x1="50" y1="200" x2="320" y2="200"/><line x1="50" y1="40" x2="50" y2="200"/><g stroke-dasharray="2 4"><line x1="46" y1="180" x2="320" y2="180"/><line x1="46" y1="160" x2="320" y2="160"/><line x1="46" y1="140" x2="320" y2="140"/><line x1="46" y1="120" x2="320" y2="120"/><line x1="46" y1="100" x2="320" y2="100"/><line x1="46" y1="80" x2="320" y2="80"/><line x1="46" y1="60" x2="320" y2="60"/><line x1="46" y1="40" x2="320" y2="40"/></g></g><g font-size="12" fill="currentColor" text-anchor="end"><text x="42" y="204">0</text><text x="42" y="184">5</text><text x="42" y="164">10</text><text x="42" y="144">15</text><text x="42" y="124">20</text><text x="42" y="104">25</text><text x="42" y="84">30</text><text x="42" y="64">35</text><text x="42" y="44">40</text></g><g fill="var(--c)"><rect x="62" y="80" width="22" height="120"/><rect x="130" y="60" width="22" height="140"/><rect x="198" y="140" width="22" height="60"/><rect x="266" y="80" width="22" height="120"/></g><g fill="var(--c)" fill-opacity="0.3" stroke="var(--c)" stroke-width="1.5"><rect x="86" y="100" width="22" height="100"/><rect x="154" y="140" width="22" height="60"/><rect x="222" y="80" width="22" height="120"/><rect x="290" y="180" width="22" height="20"/></g><g font-size="12" fill="currentColor" text-anchor="middle"><text x="85" y="216">Jan</text><text x="153" y="216">Feb</text><text x="221" y="216">Mac</text><text x="289" y="216">Apr</text></g><rect x="200" y="6" width="12" height="12" fill="var(--c)"/><rect x="200" y="22" width="12" height="12" fill="var(--c)" fill-opacity="0.3" stroke="var(--c)" stroke-width="1.5"/><g font-size="12" fill="currentColor"><text x="217" y="16">3 Amanah</text><text x="217" y="32">3 Bestari</text></g></svg>',
+    s: "Carta palang berganda menunjukkan bilangan buku yang dipinjam dari perpustakaan oleh murid kelas 3 Amanah dan 3 Bestari dalam empat bulan. Pada bulan manakah <b>jumlah</b> buku yang dipinjam oleh kedua-dua kelas itu paling banyak?",
+    en: "The dual bar chart shows the number of library books borrowed by pupils of 3 Amanah and 3 Bestari over four months. In which month was the total number of books borrowed by both classes the greatest?",
+    p: ['Januari', 'Februari', 'Mac', 'April'], a: 0, topik: 'Data & Statistik', aras: 'mudah',
+    hurai: "Jumlah setiap bulan: Januari 30 + 25 = 55; Februari 35 + 15 = 50; Mac 15 + 30 = 45; April 30 + 5 = 35. Paling banyak ialah <b>Januari</b>. (Februari mempunyai palang tertinggi, iaitu 3 Amanah = 35, tetapi jumlahnya hanya 50; Mac ialah bulan tertinggi bagi 3 Bestari sahaja; April ialah bulan beza antara dua kelas paling besar, bukan jumlah paling besar.)"
+  },
+  { // 8 Geometri — mudah
+    rajah: '<svg viewBox="0 0 300 160" style="max-width:100%;width:300px" role="img" aria-label="Segi empat selari dengan tapak 12 cm, sisi condong 7.5 cm dan tinggi tegak 6 cm (garis putus-putus)"><path d="M20 125 L200 125 L267.5 35 L87.5 35 Z" fill="var(--c)" fill-opacity="0.15" stroke="var(--c)" stroke-width="2.5"/><g stroke="currentColor" stroke-width="1.5"><line x1="87.5" y1="35" x2="87.5" y2="125" stroke-dasharray="4 3"/><path d="M87.5 115 L97.5 115 L97.5 125" fill="none"/></g><g font-size="13" fill="currentColor"><text x="110" y="145" text-anchor="middle">12 cm</text><text x="48" y="78" text-anchor="end">7.5 cm</text><text x="93" y="84">6 cm</text></g></svg>',
+    s: "Rajah menunjukkan sebuah segi empat selari dengan tapak 12 cm, sisi condong 7.5 cm dan tinggi tegak 6 cm. Berapakah luas segi empat selari itu?",
+    en: "The diagram shows a parallelogram with base 12 cm, slanting side 7.5 cm and perpendicular height 6 cm. What is the area of the parallelogram?",
+    p: ['36 cm²', '39 cm²', '72 cm²', '90 cm²'], a: 2, topik: 'Geometri & Pengukuran', aras: 'mudah',
+    hurai: "Luas segi empat selari = tapak × tinggi tegak = 12 × 6 = <b>72 cm²</b>. (36 cm² = ½ × 12 × 6, guna rumus luas segi tiga; 39 cm² = 2(12 + 7.5) ialah perimeter, bukan luas; 90 cm² = 12 × 7.5, guna sisi condong sebagai tinggi.)"
+  },
+  { // 9 Geometri (ruang) — sederhana
     rajah: '<svg viewBox="0 0 200 140" style="max-width:100%;width:240px" role="img" aria-label="Bentangan kubus berbentuk tangga: baris atas muka 1 dan 2; baris tengah muka 3 dan 4 (muka 3 di bawah muka 2); baris bawah muka 5 dan 6 (muka 5 di bawah muka 4)"><g fill="none" stroke="var(--c)" stroke-width="2.5"><rect x="20" y="10" width="40" height="40"/><rect x="60" y="10" width="40" height="40"/><rect x="60" y="50" width="40" height="40"/><rect x="100" y="50" width="40" height="40"/><rect x="100" y="90" width="40" height="40"/><rect x="140" y="90" width="40" height="40"/></g><g font-size="16" font-weight="700" fill="currentColor" text-anchor="middle"><text x="40" y="36">1</text><text x="80" y="36">2</text><text x="80" y="76">3</text><text x="120" y="76">4</text><text x="120" y="116">5</text><text x="160" y="116">6</text></g></svg>',
     s: "Rajah menunjukkan bentangan sebuah kubus. Apabila bentangan itu dilipat menjadi kubus, muka manakah yang bertentangan dengan muka <b>2</b>?",
     en: "The diagram shows the net of a cube. When it is folded into a cube, which face is opposite face 2?",
     p: ['1', '3', '4', '5'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Jadikan muka 4 sebagai tapak. Muka 3 naik menjadi dinding kiri, muka 5 dinding hadapan, muka 6 (bercantum pada 5) dinding kanan, muka 2 (bercantum pada 3) dinding belakang dan muka 1 (bercantum pada 2) menjadi bahagian atas. Maka muka 2 (belakang) bertentangan dengan muka <b>5</b> (hadapan); pasangan lain ialah 1–4 dan 3–6. (Muka 1 dan 3 bersentuhan dengan muka 2 dalam bentangan, jadi pasti bersebelahan dengannya; 4 bertentangan dengan 1.)"
   },
-  { // 7 Logik — sederhana
+  { // 10 Logik — sederhana
     s: "Terdapat 9 keping syiling yang kelihatan serupa. Sekeping daripadanya palsu dan <b>lebih berat</b> sedikit. Dengan menggunakan neraca dua lengan sahaja (tanpa pemberat), berapakah bilangan penimbangan <b>minimum</b> yang <b>menjamin</b> syiling palsu itu dapat dikenal pasti?",
     en: "There are 9 identical-looking coins; one fake coin is slightly heavier. Using only a two-pan balance, what is the minimum number of weighings that guarantees finding the fake coin?",
     p: ['1', '2', '3', '4'], a: 1, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Bahagi kepada 3 kumpulan 3 syiling. Timbang kumpulan I lawan II: lengan yang turun mengandungi syiling palsu; jika seimbang, ia dalam kumpulan III. Kemudian timbang 1 lawan 1 daripada kumpulan itu dengan cara yang sama. Jadi <b>2</b> penimbangan. (Kaedah separuh 4 lawan 4 memerlukan 3 penimbangan dalam kes terburuk; 1 penimbangan hanya ada 3 kemungkinan keputusan, tidak cukup untuk 9 syiling.)"
   },
-  { // 8 Pola — sederhana
+  { // 11 Pola — sederhana
     rajah: '<svg viewBox="0 0 290 105" style="max-width:100%;width:320px" role="img" aria-label="Meja disambung dalam satu baris: 1 meja 4 kerusi, 2 meja 6 kerusi, 3 meja 8 kerusi"><g fill="none" stroke="var(--c)" stroke-width="2"><rect x="20" y="30" width="24" height="24"/><rect x="90" y="30" width="48" height="24"/><line x1="114" y1="30" x2="114" y2="54"/><rect x="180" y="30" width="72" height="24"/><line x1="204" y1="30" x2="204" y2="54"/><line x1="228" y1="30" x2="228" y2="54"/></g><g fill="currentColor"><circle cx="32" cy="21" r="4.5"/><circle cx="32" cy="63" r="4.5"/><circle cx="11" cy="42" r="4.5"/><circle cx="53" cy="42" r="4.5"/><circle cx="102" cy="21" r="4.5"/><circle cx="126" cy="21" r="4.5"/><circle cx="102" cy="63" r="4.5"/><circle cx="126" cy="63" r="4.5"/><circle cx="81" cy="42" r="4.5"/><circle cx="147" cy="42" r="4.5"/><circle cx="192" cy="21" r="4.5"/><circle cx="216" cy="21" r="4.5"/><circle cx="240" cy="21" r="4.5"/><circle cx="192" cy="63" r="4.5"/><circle cx="216" cy="63" r="4.5"/><circle cx="240" cy="63" r="4.5"/><circle cx="171" cy="42" r="4.5"/><circle cx="261" cy="42" r="4.5"/></g><g font-size="12" fill="currentColor"><text x="4" y="92">1 meja</text><text x="90" y="92">2 meja</text><text x="196" y="92">3 meja</text></g></svg>',
     s: "Meja segi empat sama disambung dalam satu baris dan kerusi (•) diletakkan di sekelilingnya seperti dalam rajah. Untuk satu majlis, 58 orang tetamu perlu duduk di <b>satu baris</b> meja sahaja. Berapakah bilangan meja minimum yang diperlukan?",
     en: "Square tables are joined in one row with chairs placed around them as shown. 58 guests must sit at a single row of tables. What is the minimum number of tables needed?",
     p: ['30', '29', '28', '15'], a: 2, topik: 'Pola & Jujukan', aras: 'sederhana',
     hurai: "Bilangan kerusi = 2n + 2 (2 kerusi di atas dan bawah setiap meja, tambah 2 di hujung). 2n + 2 ≥ 58 → n ≥ 28. Jadi <b>28</b> meja (tepat 58 kerusi). (15 ≈ 58 ÷ 4 menganggap setiap meja berasingan; 29 = 58 ÷ 2 lupa 2 kerusi di hujung.)"
   },
-  { // 9 Persamaan linear — sederhana
+  { // 12 Persamaan linear — sederhana
     rajah: '<svg viewBox="0 0 420 110" style="max-width:100%;width:420px" role="img" aria-label="Neraca 1: dua tin T dan pemberat 300 g seimbang dengan satu kotak K. Neraca 2: satu kotak K dan satu tin T seimbang dengan pemberat 1200 g."><g stroke="currentColor" stroke-width="2" fill="none"><line x1="10" y1="62" x2="190" y2="62"/><path d="M100 62 L90 82 L110 82 Z"/><line x1="70" y1="82" x2="130" y2="82"/><line x1="220" y1="62" x2="410" y2="62"/><path d="M315 62 L305 82 L325 82 Z"/><line x1="285" y1="82" x2="345" y2="82"/></g><g stroke="var(--c)" stroke-width="2" fill="none"><circle cx="24" cy="51" r="11"/><circle cx="48" cy="51" r="11"/><rect x="62" y="40" width="34" height="22"/><rect x="138" y="30" width="40" height="32"/><rect x="230" y="30" width="40" height="32"/><circle cx="286" cy="51" r="11"/><rect x="345" y="40" width="52" height="22"/></g><g font-size="12" fill="currentColor" text-anchor="middle"><text x="24" y="55">T</text><text x="48" y="55">T</text><text x="79" y="55">300 g</text><text x="158" y="51">K</text><text x="250" y="51">K</text><text x="286" y="55">T</text><text x="371" y="55">1200 g</text><text x="100" y="102">Neraca 1</text><text x="315" y="102">Neraca 2</text></g></svg>',
     s: "Kedua-dua neraca dalam rajah berada dalam keseimbangan. Semua tin T mempunyai jisim yang sama. Berapakah jisim sebuah kotak K?",
     en: "Both balances in the diagram are balanced. All tins T have the same mass. What is the mass of one box K?",
     p: ['300 g', '600 g', '750 g', '900 g'], a: 3, topik: 'Persamaan Linear', aras: 'sederhana',
     hurai: "Neraca 1: K = 2T + 300. Neraca 2: K + T = 1200. Gantikan: 2T + 300 + T = 1200 → 3T = 900 → T = 300 g, maka K = 2(300) + 300 = <b>900 g</b>. (300 g ialah jisim tin; 600 g = 2T sahaja; 750 g = (1200 + 300) ÷ 2, menggabungkan persamaan secara salah.)"
   },
-  { // 10 Peratus — sederhana
+  { // 13 Peratus — sederhana
     rajah: '<table><tr><th>Penggunaan elektrik</th><th>Kadar</th></tr><tr><td>200 kWj pertama (1–200)</td><td>20 sen/kWj</td></tr><tr><td>100 kWj berikutnya (201–300)</td><td>35 sen/kWj</td></tr><tr><td>Setiap kWj melebihi 300</td><td>50 sen/kWj</td></tr></table>',
     s: "Jadual menunjukkan tarif elektrik berperingkat sebuah syarikat. Rumah Encik Ravi menggunakan 365 kWj sebulan. Cukai perkhidmatan 6% dikenakan ke atas jumlah caj elektrik. Berapakah bil bulanannya?",
     en: "The table shows a tiered electricity tariff. Mr Ravi's house uses 365 kWh in a month. A 6% service tax is charged on the electricity charge. What is his monthly bill?",
     p: ['RM 193.45', 'RM 182.50', 'RM 113.95', 'RM 107.50'], a: 2, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
     hurai: "200 × 0.20 = RM 40.00; 100 × 0.35 = RM 35.00; 65 × 0.50 = RM 32.50. Jumlah = RM 107.50. Tambah cukai 6%: 107.50 × 1.06 = <b>RM 113.95</b>. (RM 107.50 lupa cukai; RM 182.50 = 365 × 0.50, mengenakan kadar tertinggi pada semua unit; RM 193.45 = 182.50 × 1.06.)"
   },
-  { // 11 Kadar — sederhana (ISI)
+  { // 14 Kadar — sederhana (ISI)
     jenis: 'isi',
     s: "Kereta Encik Faiz menggunakan 6 liter petrol bagi setiap 100 km. Dia memandu pergi dan balik dari Kuala Lumpur ke Ipoh, iaitu 205 km sehala. Jika harga petrol RM 2.05 seliter, berapakah kos petrol bagi perjalanan itu? (Jawab dalam RM, betul kepada 2 tempat perpuluhan.)",
     en: "Mr Faiz's car uses 6 litres per 100 km. He drives from Kuala Lumpur to Ipoh and back (205 km each way). Petrol costs RM 2.05 per litre. What is the petrol cost in RM (2 decimal places)?",
     a: 50.43, tol: 0.01, unit: 'RM', topik: 'Nisbah, Kadar & Laju', aras: 'sederhana',
     hurai: "Jarak = 2 × 205 = 410 km. Petrol = 410 ÷ 100 × 6 = 24.6 liter. Kos = 24.6 × 2.05 = <b>RM 50.43</b>. (Ralat biasa: lupa perjalanan balik → RM 25.22.)"
   },
-  { // 12 Data / kebarangkalian — sederhana
+  { // 15 Data / kebarangkalian — sederhana
     rajah: '<table><tr><th></th><th>Kelab Sains</th><th>Kelab Sukan</th><th>Kelab Seni</th></tr><tr><th>Tingkatan 2</th><td>12</td><td>18</td><td>10</td></tr><tr><th>Tingkatan 3</th><td>15</td><td>9</td><td>16</td></tr></table>',
     s: "Jadual menunjukkan bilangan murid Tingkatan 2 dan Tingkatan 3 mengikut kelab. Seorang murid dipilih secara rawak daripada <b>ahli Kelab Sains</b>. Apakah kebarangkalian murid itu murid Tingkatan 3?",
     en: "The table shows Form 2 and Form 3 pupils by club. A pupil is chosen at random from the Science Club members. What is the probability that the pupil is in Form 3?",
     p: ['5/9', '3/8', '27/80', '3/16'], a: 0, topik: 'Data & Statistik', aras: 'sederhana',
     hurai: "Ruang sampel hanya ahli Kelab Sains: 12 + 15 = 27 murid. P(Tingkatan 3) = 15/27 = <b>5/9</b>. (3/8 = 15/40 guna semua murid Tingkatan 3; 3/16 = 15/80 guna semua murid; 27/80 ialah kebarangkalian memilih ahli Kelab Sains.)"
   },
-  { // 13 Geometri bulatan — sederhana
+  { // 16 Geometri bulatan — sederhana
     rajah: '<svg viewBox="0 0 220 200" style="max-width:100%;width:240px" role="img" aria-label="Bulatan berpusat O. A dan B di bahagian bawah lilitan, C di bahagian atas. Garis OA, OB, AB, CA dan CB dilukis. Sudut OAB = 34 darjah."><circle cx="110" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="var(--c)" stroke-width="2" fill="none"><line x1="43.7" y1="144.7" x2="176.3" y2="144.7"/><line x1="43.7" y1="144.7" x2="110" y2="100"/><line x1="176.3" y1="144.7" x2="110" y2="100"/><line x1="43.7" y1="144.7" x2="110" y2="20"/><line x1="176.3" y1="144.7" x2="110" y2="20"/></g><circle cx="110" cy="100" r="2.5" fill="currentColor"/><g font-size="13" fill="currentColor"><text x="28" y="160">A</text><text x="182" y="160">B</text><text x="105" y="14">C</text><text x="114" y="96">O</text><text x="66" y="141">34°</text></g></svg>',
     s: "Dalam rajah, O ialah pusat bulatan dan A, B, C terletak pada lilitan. Diberi ∠OAB = 34°, cari ∠ACB.",
     en: "In the diagram, O is the centre of the circle and A, B, C lie on the circumference. Given angle OAB = 34°, find angle ACB.",
     p: ['34°', '56°', '68°', '112°'], a: 1, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "OA = OB (jejari), jadi ∠OBA = 34°. ∠AOB = 180° − 2(34°) = 112°. Sudut di lilitan = ½ sudut di pusat: ∠ACB = 112° ÷ 2 = <b>56°</b>. (112° ialah sudut di pusat; 68° = 2 × 34°; 34° menganggap sudut sama dengan ∠OAB.)"
   },
-  { // 14 Logik — sederhana
+  { // 17 Logik — sederhana
     s: "Diberi dua pernyataan:<br>• Semua ahli Kelab Robotik pandai mengekod.<br>• Sebahagian ahli Kelab Robotik ialah pengawas sekolah.<br>Pernyataan manakah yang <b>PASTI</b> benar?",
     en: "All Robotics Club members can code. Some Robotics Club members are school prefects. Which statement MUST be true?",
     p: ['Semua pengawas sekolah pandai mengekod.', 'Semua murid yang pandai mengekod ialah ahli Kelab Robotik.', 'Sebahagian ahli Kelab Robotik tidak pandai mengekod.', 'Sebahagian pengawas sekolah pandai mengekod.'], a: 3, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Pengawas yang menjadi ahli Kelab Robotik pasti pandai mengekod, jadi <b>sebahagian pengawas pandai mengekod</b>. Tiada maklumat tentang pengawas lain (A tidak pasti); B menterbalikkan pernyataan pertama; C bercanggah dengan 'semua ahli pandai mengekod'."
   },
-  { // 15 Pola — sukar
+  { // 18 Pola — sederhana
+    s: "Kumar menyimpan RM 5 pada minggu pertama. Setiap minggu berikutnya, dia menyimpan RM 3 lebih daripada minggu sebelumnya. Berapakah <b>jumlah</b> simpanannya selepas 20 minggu?",
+    en: "Kumar saves RM 5 in the first week. Each following week he saves RM 3 more than the week before. What are his total savings after 20 weeks?",
+    p: ['RM 62', 'RM 670', 'RM 700', 'RM 1 240'], a: 1, topik: 'Pola & Jujukan', aras: 'sederhana',
+    hurai: "Simpanan minggu ke-20 = 5 + 19 × 3 = RM 62. Jumlah = <sup>20</sup>⁄<sub>2</sub> × (5 + 62) = 10 × 67 = <b>RM 670</b>. (RM 62 ialah simpanan minggu ke-20 sahaja; RM 700 guna sebutan terakhir 5 + 20 × 3 = 65 — sepatutnya tambah 19 kali beza sahaja; RM 1 240 = 20 × 62, lupa membahagi dua.)"
+  },
+  { // 19 Peratus — sederhana
+    s: "Sebuah kedai memberikan diskaun 20% bagi satu set periuk. Kemudian cukai jualan 10% dikenakan ke atas harga selepas diskaun. Puan Rosnah membayar RM 66.00 bagi set periuk itu. Berapakah harga asal set periuk itu?",
+    en: "A shop gives a 20% discount on a set of pots. Then 10% sales tax is charged on the discounted price. Mrs Rosnah pays RM 66.00 for the set. What was the original price of the set?",
+    p: ['RM 72.00', 'RM 73.33', 'RM 75.00', 'RM 82.50'], a: 2, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
+    hurai: "Bayaran = harga asal × 0.80 × 1.10 = 0.88 × harga asal. Harga asal = 66 ÷ 0.88 = <b>RM 75.00</b> (semak: 75 × 0.8 = 60; 60 × 1.1 = 66). (RM 72.00 = 60 × 1.2, menambah semula 20% — sepatutnya bahagi dengan 0.8; RM 73.33 = 66 ÷ 0.9, menganggap diskaun bersih 20% − 10% = 10%; RM 82.50 = 66 ÷ 0.8, lupa membuang cukai 10%.)"
+  },
+  { // 20 Data — sederhana
+    rajah: '<svg viewBox="0 0 330 225" style="max-width:100%;width:330px" role="img" aria-label="Carta pai perbelanjaan gaji bulanan: Makanan 108 darjah, Sewa 90 darjah, Pengangkutan x darjah, Simpanan 36 darjah, Lain-lain 72 darjah"><g fill="var(--c)" stroke="currentColor" stroke-width="1.5"><path d="M160 112 L160 32 A80 80 0 0 1 236.1 136.7 Z" fill-opacity="0.55"/><path d="M160 112 L236.1 136.7 A80 80 0 0 1 135.3 188.1 Z" fill-opacity="0.15"/><path d="M160 112 L135.3 188.1 A80 80 0 0 1 83.9 136.7 Z" fill-opacity="0.35"/><path d="M160 112 L83.9 136.7 A80 80 0 0 1 83.9 87.3 Z" fill-opacity="0.7"/><path d="M160 112 L83.9 87.3 A80 80 0 0 1 160 32 Z" fill-opacity="0.25"/></g><g font-size="12" fill="currentColor"><text x="198.8" y="87.8" text-anchor="middle" font-weight="700">108°</text><text x="232.8" y="63.1" text-anchor="start">Makanan</text><text x="181.8" y="158.8" text-anchor="middle" font-weight="700">90°</text><text x="200.9" y="196.2" text-anchor="start">Sewa</text><text x="126.1" y="149.9" text-anchor="middle" font-weight="700">x</text><text x="96.4" y="179.6" text-anchor="end">Pengangkutan</text><text x="112" y="116" text-anchor="middle" font-weight="700">36°</text><text x="70" y="116" text-anchor="end">Simpanan</text><text x="131.8" y="77.2" text-anchor="middle" font-weight="700">72°</text><text x="107.1" y="43.2" text-anchor="end">Lain-lain</text></g></svg>',
+    s: "Carta pai menunjukkan cara Encik Azman membelanjakan gaji bulanannya. Dia menyimpan RM 360 sebulan. Berapakah perbelanjaannya bagi <b>pengangkutan</b> sebulan?",
+    en: "The pie chart shows how Mr Azman spends his monthly salary. He saves RM 360 a month. How much does he spend on transport per month?",
+    p: ['RM 540', 'RM 1 260', 'RM 1 944', 'RM 3 600'], a: 0, topik: 'Data & Statistik', aras: 'sederhana',
+    hurai: "x = 360° − (108° + 90° + 36° + 72°) = 54°. Simpanan 36° = RM 360, maka 1° = RM 10. Pengangkutan = 54 × 10 = <b>RM 540</b>. (RM 1 260 = 126° × 10, lupa menolak sektor Lain-lain 72°; RM 1 944 = 54% × RM 3 600, menganggap darjah sebagai peratus; RM 3 600 ialah jumlah gaji, 360 × 10.)"
+  },
+  { // 21 Logik — sederhana
+    s: "Bilangan ahli pancaragam sebuah MRSM adalah antara 100 hingga 150 orang. Apabila mereka berbaris 4 orang sebaris, tinggal 3 orang. Apabila berbaris 5 orang sebaris, tinggal 4 orang. Apabila berbaris 6 orang sebaris, tinggal 5 orang. Berapakah bilangan ahli pancaragam itu?",
+    en: "The number of members of an MRSM marching band is between 100 and 150. When they line up 4 in a row, 3 are left over; 5 in a row, 4 are left over; 6 in a row, 5 are left over. How many members are there?",
+    p: ['119', '120', '121', '179'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "Setiap kali, baki ialah satu kurang daripada saiz baris. Jadi jika ditambah seorang, bilangan itu boleh dibahagi tepat dengan 4, 5 dan 6, iaitu gandaan KSTK = 60. Gandaan 60 ialah 60, 120, 180, … Bilangan ahli = gandaan 60 tolak 1, dan antara 100 hingga 150 hanya 120 − 1 = <b>119</b> (semak: 119 = 4 × 29 + 3 = 5 × 23 + 4 = 6 × 19 + 5). (120 boleh dibahagi tepat dengan 4, 5 dan 6 — tiada baki; 121 = 120 + 1, menambah 1 dan bukan menolak; 179 = 180 − 1 memenuhi syarat baki tetapi melebihi 150.)"
+  },
+  { // 22 Pola — sukar
     rajah: '<svg viewBox="0 0 230 80" style="max-width:100%;width:280px" role="img" aria-label="Segi empat sama dibina daripada lapisan berbentuk L: 1 petak; 1 + 3 petak membentuk 2 kali 2; 1 + 3 + 5 petak membentuk 3 kali 3"><g stroke="currentColor" stroke-width="1.5"><rect x="10" y="40" width="16" height="16" fill="var(--c)" fill-opacity=".6"/><rect x="60" y="40" width="16" height="16" fill="var(--c)" fill-opacity=".6"/><rect x="76" y="40" width="16" height="16" fill="none"/><rect x="60" y="24" width="16" height="16" fill="none"/><rect x="76" y="24" width="16" height="16" fill="none"/><rect x="130" y="40" width="16" height="16" fill="var(--c)" fill-opacity=".6"/><rect x="146" y="40" width="16" height="16" fill="none"/><rect x="130" y="24" width="16" height="16" fill="none"/><rect x="146" y="24" width="16" height="16" fill="none"/><rect x="162" y="40" width="16" height="16" fill="var(--c)" fill-opacity=".6"/><rect x="162" y="24" width="16" height="16" fill="var(--c)" fill-opacity=".6"/><rect x="130" y="8" width="16" height="16" fill="var(--c)" fill-opacity=".6"/><rect x="146" y="8" width="16" height="16" fill="var(--c)" fill-opacity=".6"/><rect x="162" y="8" width="16" height="16" fill="var(--c)" fill-opacity=".6"/></g><g font-size="12" fill="currentColor"><text x="6" y="74">1 = 1²</text><text x="50" y="74">1+3 = 2²</text><text x="122" y="74">1+3+5 = 3²</text></g></svg>',
     s: "Rajah menunjukkan bahawa hasil tambah nombor ganjil berturutan bermula daripada 1 membentuk nombor kuasa dua. Gunakan pola ini untuk mencari nilai<br><b>21 + 23 + 25 + … + 79</b>.",
     en: "The diagram shows that sums of consecutive odd numbers starting from 1 give square numbers. Use this pattern to find 21 + 23 + 25 + … + 79.",
     p: ['1479', '1500', '1550', '1600'], a: 1, topik: 'Pola & Jujukan', aras: 'sukar',
     hurai: "1 + 3 + … + 79 ialah 40 nombor ganjil = 40² = 1600. 1 + 3 + … + 19 ialah 10 nombor ganjil = 10² = 100. Maka 21 + … + 79 = 1600 − 100 = <b>1500</b>. (1600 tidak menolak sebutan awal; 1479 = 1600 − 11², turut menolak 21; 1550 = 31 × 50, tersilap kira bilangan sebutan — sebenarnya 30.)"
   },
-  { // 16 Rumus / persamaan linear — sukar
+  { // 23 Rumus / persamaan linear — sukar
     s: "Hubungan antara suhu dalam darjah Fahrenheit (F) dan darjah Celsius (C) ialah F = <sup>9</sup>⁄<sub>5</sub>C + 32. Berapakah suhu dalam darjah Celsius apabila bacaan dalam °F ialah <b>dua kali</b> bacaan dalam °C?",
     en: "Temperature in Fahrenheit is F = (9/5)C + 32. At what Celsius temperature is the Fahrenheit reading twice the Celsius reading?",
     p: ['−40°C', '80°C', '160°C', '320°C'], a: 2, topik: 'Persamaan Linear', aras: 'sukar',
     hurai: "Syarat F = 2C: 2C = 1.8C + 32 → 0.2C = 32 → C = <b>160°C</b> (semak: F = 288 + 32 = 320 = 2 × 160). (320 ialah bacaan °F, bukan °C; −40°C ialah suhu apabila F = C; 80°C tersilap 0.4C = 32.)"
   },
-  { // 17 Kredit — sukar
+  { // 24 Kredit — sukar
     s: "Penyata kad kredit Puan Aida menunjukkan baki tertunggak RM 2 400. Dia hanya membuat bayaran minimum 5% sebelum tarikh akhir. Bank mengenakan caj kewangan pada kadar 18% setahun ke atas baki yang belum dibayar. Berapakah caj kewangan untuk satu bulan?",
     en: "Mrs Aida's credit card statement shows RM 2 400 outstanding. She pays only the 5% minimum payment before the due date. The bank charges 18% per annum on the unpaid balance. What is the finance charge for one month?",
     p: ['RM 34.20', 'RM 36.00', 'RM 410.40', 'RM 432.00'], a: 0, topik: 'Peratus & Matematik Pengguna', aras: 'sukar',
     hurai: "Bayaran minimum = 5% × 2400 = RM 120. Baki belum dibayar = RM 2 280. Kadar sebulan = 18% ÷ 12 = 1.5%. Caj = 2280 × 0.015 = <b>RM 34.20</b>. (RM 36.00 dikira atas RM 2 400 penuh; RM 410.40 dan RM 432.00 lupa menukar kadar tahunan kepada bulanan.)"
   },
-  { // 18 Laju — sukar
+  { // 25 Laju — sukar
     s: "Ali berlari dengan laju seragam 5 m/s. Empat saat kemudian, Badrul mula berlari dari garisan yang sama dengan laju seragam 6 m/s. Berapakah jarak dari garisan permulaan apabila Badrul memintas Ali?",
     en: "Ali runs at a steady 5 m/s. Four seconds later, Badrul starts from the same line at a steady 6 m/s. How far from the start line does Badrul overtake Ali?",
     p: ['20 m', '100 m', '120 m', '144 m'], a: 2, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
     hurai: "Dalam 4 s, Ali mendahului 4 × 5 = 20 m. Badrul merapatkan jarak 6 − 5 = 1 m/s, jadi perlu 20 s. Jarak Badrul = 6 × 20 = <b>120 m</b> (semak Ali: 5 × 24 = 120 m). (20 m ialah jarak pendahuluan; 100 m = 5 × 20 lupa 4 s awal Ali; 144 m = 6 × 24 guna masa Ali untuk Badrul.)"
   },
-  { // 19 Data — sukar (ISI)
+  { // 26 Data — sukar (ISI)
     jenis: 'isi',
     s: "Min tinggi 25 orang murid ialah 152 cm. Kemudian didapati tinggi seorang murid tersalah catat sebagai 165 cm, sedangkan tinggi sebenar ialah 156 cm. Selepas pembetulan, seorang murid baharu setinggi 148 cm turut dimasukkan. Berapakah min tinggi baharu bagi 26 orang murid itu?",
     en: "The mean height of 25 pupils is 152 cm. One height was wrongly recorded as 165 cm instead of 156 cm. After correcting it, a new pupil of height 148 cm is added. What is the new mean height of the 26 pupils?",
     a: 151.5, tol: 0.01, unit: 'cm', topik: 'Data & Statistik', aras: 'sukar',
     hurai: "Jumlah asal = 25 × 152 = 3800. Betulkan: 3800 − 165 + 156 = 3791. Tambah murid baharu: 3791 + 148 = 3939. Min = 3939 ÷ 26 = <b>151.5 cm</b>."
   },
-  { // 20 Isi padu — sukar
+  { // 27 Isi padu — sukar
     rajah: '<svg viewBox="0 0 240 160" style="max-width:100%;width:280px" role="img" aria-label="Kon tegak terbalik berjejari 6 cm dan tinggi 15 cm penuh dengan air; silinder kosong berjejari 5 cm dan tinggi 10 cm"><g fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="55" cy="30" rx="36" ry="9"/><line x1="19" y1="30" x2="55" y2="130"/><line x1="91" y1="30" x2="55" y2="130"/><ellipse cx="160" cy="50" rx="30" ry="8"/><line x1="130" y1="50" x2="130" y2="130"/><line x1="190" y1="50" x2="190" y2="130"/><path d="M130 130 A30 8 0 0 0 190 130"/></g><g stroke="var(--muted)" stroke-dasharray="3 3"><line x1="55" y1="30" x2="91" y2="30"/><line x1="55" y1="30" x2="55" y2="130"/><line x1="160" y1="50" x2="190" y2="50"/></g><g font-size="12" fill="currentColor"><text x="60" y="24">6 cm</text><text x="60" y="88">15 cm</text><text x="162" y="42">5 cm</text><text x="194" y="95">10 cm</text><text x="30" y="152">Kon (penuh air)</text><text x="135" y="152">Silinder</text></g></svg>',
     s: "Sebuah bekas berbentuk kon terbalik berjejari 6 cm dan tinggi 15 cm penuh dengan air. Semua air itu dituang ke dalam sebuah silinder kosong berjejari 5 cm dan tinggi 10 cm. Berapakah kedalaman air dalam silinder?",
     en: "An inverted cone of radius 6 cm and height 15 cm is full of water. All the water is poured into an empty cylinder of radius 5 cm and height 10 cm. What is the depth of water in the cylinder?",
     p: ['7.2 cm', '10.0 cm', '21.6 cm', '28.8 cm'], a: 0, topik: 'Geometri & Pengukuran', aras: 'sukar',
     hurai: "Isi padu kon = ⅓ × π × 6² × 15 = 180π cm³. Kedalaman h dalam silinder: π × 5² × h = 180π → h = 180 ÷ 25 = <b>7.2 cm</b> (kurang daripada 10 cm, tidak melimpah). (21.6 cm lupa faktor ⅓; 10.0 cm menyangka air melimpah kerana 21.6 > 10; 28.8 cm guna diameter 12 cm sebagai jejari kon.)"
+  },
+  { // 28 Persamaan linear — sukar (ISI)
+    jenis: 'isi',
+    s: "Kos sewa sebuah bas untuk lawatan sambil belajar dikongsi sama rata oleh murid yang menyertainya. Pada mulanya 30 orang murid mendaftar. Kemudian 5 orang murid menarik diri, menyebabkan setiap murid yang tinggal perlu membayar RM 4 lebih. Berapakah kos sewa bas itu? (Jawab dalam RM.)",
+    en: "The cost of hiring a bus for a study trip is shared equally by the pupils who join. At first 30 pupils registered. Then 5 pupils withdrew, so each remaining pupil had to pay RM 4 more. What is the cost of hiring the bus? (Answer in RM.)",
+    a: 600, unit: 'RM', topik: 'Persamaan Linear', aras: 'sukar',
+    hurai: "Biar kos = k. Bayaran asal seorang = k ÷ 30; bayaran baharu = k ÷ 25. k ÷ 25 − k ÷ 30 = 4 → darab dengan 150: 6k − 5k = 600 → k = <b>RM 600</b> (semak: 600 ÷ 30 = RM 20; 600 ÷ 25 = RM 24, beza RM 4). (Ralat biasa: RM 120 = 30 × 4 atau RM 720 = 24 × 30, mendarab bayaran baharu dengan bilangan murid asal.)"
+  },
+  { // 29 Kadar — sukar
+    s: "Sebuah kereta api ETS sepanjang 150 m bergerak pada laju 108 km/j. Ia memintas sebuah kereta api barang sepanjang 210 m yang bergerak pada laju 54 km/j di atas landasan yang selari, dalam arah yang <b>sama</b>. Berapakah masa yang diambil dari saat hadapan ETS sampai ke belakang kereta api barang hingga saat belakang ETS melepasi hadapan kereta api barang?",
+    en: "A 150 m long ETS train travels at 108 km/h. It overtakes a 210 m long freight train travelling at 54 km/h on a parallel track in the same direction. How long does it take from the moment the front of the ETS reaches the back of the freight train until the back of the ETS passes the front of the freight train?",
+    p: ['8 s', '10 s', '14 s', '24 s'], a: 3, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
+    hurai: "Tukar unit: 108 km/j = 30 m/s; 54 km/j = 15 m/s. Laju relatif (arah sama) = 30 − 15 = 15 m/s. Untuk memintas sepenuhnya, ETS perlu mendahului sejauh jumlah panjang kedua-dua kereta api = 150 + 210 = 360 m. Masa = 360 ÷ 15 = <b>24 s</b>. (8 s = 360 ÷ 45, menambah laju seolah-olah bergerak bertentangan arah; 10 s = 150 ÷ 15, guna panjang ETS sahaja; 14 s = 210 ÷ 15, guna panjang kereta api barang sahaja.)"
+  },
+  { // 30 Geometri — sukar
+    rajah: '<svg viewBox="0 0 250 190" style="max-width:100%;width:280px" role="img" aria-label="Pelan: stor berbentuk segi empat sama bersisi 7 m; kambing ditambat pada satu bucu luar stor dengan tali sepanjang 14 m"><rect x="150" y="30" width="70" height="70" fill="var(--muted)" fill-opacity="0.35" stroke="currentColor" stroke-width="2"/><line x1="150" y1="100" x2="28.8" y2="170" stroke="var(--c)" stroke-width="2.5"/><circle cx="150" cy="100" r="3.5" fill="currentColor"/><circle cx="28.8" cy="170" r="5" fill="var(--c)"/><g font-size="12" fill="currentColor"><text x="185" y="70" text-anchor="middle">Stor</text><text x="185" y="116" text-anchor="middle">7 m</text><text x="226" y="69">7 m</text><text x="78" y="126" text-anchor="middle">tali 14 m</text><text x="28.8" y="160" text-anchor="middle">kambing</text></g></svg>',
+    s: "Seekor kambing ditambat pada satu bucu luar sebuah stor berbentuk segi empat sama bersisi 7 m dengan tali sepanjang 14 m, seperti dalam pelan. Kawasan di sekeliling stor ialah padang rumput yang rata dan kambing tidak boleh memasuki stor. Berapakah luas maksimum kawasan rumput yang boleh dicapai oleh kambing itu? (Guna π = <sup>22</sup>⁄<sub>7</sub>)",
+    en: "A goat is tied to an outside corner of a square shed of side 7 m with a 14 m rope, as shown in the plan. The shed is surrounded by flat grassland and the goat cannot enter the shed. What is the maximum area of grass the goat can reach? (Use π = 22/7)",
+    p: ['462 m²', '490 m²', '500.5 m²', '539 m²'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sukar',
+    hurai: "Stor menghalang sudut 90°, jadi kambing boleh bergerak pada sektor 270° berjejari 14 m: ¾ × <sup>22</sup>⁄<sub>7</sub> × 14² = 462 m². Apabila tali melilit setiap bucu bersebelahan, baki tali 14 − 7 = 7 m membentuk sukuan bulatan di sepanjang dua sisi stor: 2 × ¼ × <sup>22</sup>⁄<sub>7</sub> × 7² = 77 m². Jumlah = 462 + 77 = <b>539 m²</b>. (462 m² mengabaikan tali yang melilit bucu stor; 490 m² = 539 − 49, menolak luas stor walaupun stor tiada dalam kawasan itu; 500.5 m² mengambil kira satu sukuan 7 m sahaja.)"
   }
   ]
 });

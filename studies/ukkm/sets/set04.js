@@ -1,6 +1,6 @@
 (function () { const B = {}; const UKKM_PART = (n, b) => { B[b.id] = b; };
 UKKM_PART(4, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
-  arahan: 'Jawab semua 20 soalan. 18 soalan objektif (pilih A, B, C atau D) dan 2 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
+  arahan: 'Jawab semua 30 soalan. 27 soalan objektif (pilih A, B, C atau D) dan 3 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
   soalan: [
   { // 1 Pola — mudah
     s: "Apakah nombor seterusnya dalam jujukan berikut?<br><b>2, 9, 28, 65, …</b>",
@@ -34,99 +34,165 @@ UKKM_PART(4, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     p: ['10', '12', '13', '22'], a: 0, topik: 'Data & Statistik', aras: 'mudah',
     hurai: "Mod = saiz 7 (kekerapan tertinggi, 12). Lebih besar daripada 7: saiz 8 dan 9 → 7 + 3 = <b>10</b>. (22 termasuk saiz 7; 12 ialah kekerapan mod; 13 ialah murid bersaiz lebih kecil.)"
   },
-  { // 6 Perimeter — sederhana
+  { // 6 Kadar — mudah
+    s: "Resipi kuih bahulu untuk 24 biji memerlukan 150 g gula, 3 biji telur dan 180 g tepung. Puan Kavitha mahu membuat 60 biji kuih bahulu menggunakan resipi yang sama. Berapakah jisim gula yang diperlukan?",
+    en: "A bahulu recipe for 24 pieces needs 150 g of sugar, 3 eggs and 180 g of flour. Puan Kavitha wants to make 60 pieces using the same recipe. What mass of sugar is needed?",
+    p: ['60 g', '186 g', '300 g', '375 g'], a: 3, topik: 'Nisbah, Kadar & Laju', aras: 'mudah',
+    hurai: "Faktor skala = 60 ÷ 24 = 2.5. Gula = 150 × 2.5 = <b>375 g</b>. (60 g = 150 × 24 ÷ 60, faktor diterbalikkan; 186 g = 150 + 36, menambah beza bilangan kuih dan bukannya mendarab; 300 g hanya menggandakan resipi, iaitu untuk 48 biji.)"
+  },
+  { // 7 Data — mudah
+    rajah: '<table><tr><th>Tembikai</th><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td></tr><tr><th>Jisim</th><td>1 200 g</td><td>2.4 kg</td><td>2.2 kg</td><td>2 400 g</td><td>2.3 kg</td></tr></table>',
+    s: "Jadual menunjukkan jisim lima biji tembikai yang dituai oleh Pak Hamid. Berapakah min jisim tembikai itu?",
+    en: "The table shows the masses of five watermelons harvested by Pak Hamid. What is the mean mass of the watermelons?",
+    p: ['2.1 kg', '2.3 kg', '2.4 kg', '2.625 kg'], a: 0, topik: 'Data & Statistik', aras: 'mudah',
+    hurai: "Tukar semua jisim kepada kg: 1.2, 2.4, 2.2, 2.4, 2.3. Jumlah = 10.5 kg. Min = 10.5 ÷ 5 = <b>2.1 kg</b>. (2.3 kg ialah median; 2.4 kg ialah mod; 2.625 kg = 10.5 ÷ 4, dibahagi dengan bilangan data yang salah.)"
+  },
+  { // 8 Geometri — mudah
+    rajah: '<svg viewBox="0 0 330 230" style="max-width:100%;width:320px" role="img" aria-label="Sisi empat PQRS dengan sudut 2x, 105°, x + 15° dan sudut tegak di S"><polygon points="50.0,46.0 186.9,21.9 270.0,200.0 50.0,200.0" fill="var(--c)" fill-opacity="0.15" stroke="var(--c)" stroke-width="2.5"/><path d="M62.0,200.0 L62.0,188.0 L50.0,188.0" fill="none" stroke="currentColor" stroke-width="1.2"/><g font-size="13" font-weight="700" fill="currentColor"><text x="42" y="44" text-anchor="end">P</text><text x="187" y="14" text-anchor="middle">Q</text><text x="278" y="212">R</text><text x="42" y="214" text-anchor="end">S</text></g><g font-size="13" fill="currentColor"><text x="58" y="66">2x</text><text x="180" y="50" text-anchor="middle">105°</text><text x="255" y="190" text-anchor="end">x + 15°</text></g></svg>',
+    s: "Rajah menunjukkan sisi empat PQRS dengan ∠SPQ = 2x, ∠PQR = 105°, ∠QRS = x + 15° dan ∠PSR = 90°. Cari nilai x.",
+    en: "The diagram shows quadrilateral PQRS with angle SPQ = 2x, angle PQR = 105°, angle QRS = x + 15° and angle PSR = 90°. Find the value of x.",
+    p: ['50°', '65°', '100°', '110°'], a: 0, topik: 'Geometri & Pengukuran', aras: 'mudah',
+    hurai: "Hasil tambah sudut pedalaman sisi empat = 360°. 2x + 105° + (x + 15°) + 90° = 360° → 3x + 210° = 360° → 3x = 150° → x = <b>50°</b>. (65° ialah ∠QRS = x + 15°; 100° ialah ∠SPQ = 2x; 110° menggunakan hasil tambah 540°, iaitu bagi pentagon.)"
+  },
+  { // 9 Perimeter — sederhana
     rajah: '<svg viewBox="-25 0 340 175" style="max-width:100%;width:330px" role="img" aria-label="Segi empat tepat dengan semibulatan"><path d="M210,20 L30,20 L30,146 L210,146 A63.0,63.0 0 0 0 210,20" fill="var(--c)" fill-opacity="0.15" stroke="var(--c)" stroke-width="2.5"/><line x1="210" y1="20" x2="210" y2="146" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/><g font-size="13" fill="currentColor"><text x="102.0" y="164">20 cm</text><text x="26" y="87.0" text-anchor="end">14 cm</text></g></svg>',
     s: "Rajah menunjukkan sebuah papan tanda yang terdiri daripada sebuah segi empat tepat dan sebuah semibulatan. Garis putus-putus bukan sebahagian daripada sempadan. Berapakah perimeter papan tanda itu? (Guna π = 22/7)",
     en: "The diagram shows a signboard made of a rectangle and a semicircle. The dashed line is not part of the boundary. What is the perimeter? (Use π = 22/7)",
     p: ['65 cm', '76 cm', '90 cm', '98 cm'], a: 1, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Diameter semibulatan = 14 cm, jejari 7 cm. Lengkok = ½ × 2 × 22/7 × 7 = 22 cm. Perimeter = 20 + 14 + 20 + 22 = <b>76 cm</b>. (90 cm termasuk garis putus-putus 14 cm; 98 cm guna lilitan bulatan penuh 44 cm; 65 cm guna lengkok suku bulatan 11 cm.)"
   },
-  { // 7 Logik — sederhana
+  { // 10 Logik — sederhana
     s: "Hari Malaysia, 16 September 2026, jatuh pada hari Rabu. Pada hari apakah 25 Disember 2026?",
     en: "Malaysia Day, 16 September 2026, falls on a Wednesday. On what day is 25 December 2026?",
     p: ['Khamis', 'Jumaat', 'Sabtu', 'Ahad'], a: 1, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Bilangan hari dari 16 Sept hingga 25 Dis: 14 (baki September) + 31 (Oktober) + 30 (November) + 25 = 100 hari. 100 = 7 × 14 + 2, jadi 2 hari selepas Rabu = <b>Jumaat</b>. (Khamis: tersilap kira 99 hari, contohnya menganggap Oktober 30 hari; Sabtu: terkira 16 Sept sekali lagi, 101 hari.)"
   },
-  { // 8 Pola — sederhana
+  { // 11 Pola — sederhana
     s: "Dalam suatu jujukan, setiap sebutan diperoleh dengan menambah nombor yang sama kepada sebutan sebelumnya. Sebutan ke-4 ialah 23 dan sebutan ke-9 ialah 48. Berapakah sebutan ke-25?",
     en: "In a sequence, each term is found by adding the same number to the previous term. The 4th term is 23 and the 9th term is 48. What is the 25th term?",
     p: ['123', '125', '128', '133'], a: 2, topik: 'Pola & Jujukan', aras: 'sederhana',
     hurai: "Dari sebutan ke-4 ke ke-9 ada 5 langkah: beza = (48 − 23) ÷ 5 = 5. Sebutan pertama = 23 − 3 × 5 = 8. Sebutan ke-25 = 8 + 24 × 5 = <b>128</b>. (133 = 8 + 25 × 5, tertambah satu langkah; 125 = 25 × 5 tanpa sebutan pertama; 123 = 48 + 15 × 5, tersilap kira 15 langkah dari sebutan ke-9 ke ke-25 (sepatutnya 16).)"
   },
-  { // 9 Persamaan linear — sederhana
+  { // 12 Persamaan linear — sederhana
     s: "Sebuah balang yang berisi penuh dengan madu berjisim 1 500 g. Selepas separuh daripada madu itu digunakan, jisim balang bersama baki madu ialah 900 g. Berapakah jisim balang kosong itu?",
     en: "A jar full of honey has a mass of 1 500 g. After half of the honey is used, the jar and the remaining honey have a mass of 900 g. What is the mass of the empty jar?",
     p: ['300 g', '600 g', '750 g', '1 200 g'], a: 0, topik: 'Persamaan Linear', aras: 'sederhana',
     hurai: "Separuh madu = 1500 − 900 = 600 g, jadi madu penuh = 1 200 g. Balang = 1500 − 1200 = <b>300 g</b>. (600 g ialah separuh madu; 1 200 g ialah jisim madu penuh; 750 g = 1500 ÷ 2, menganggap balang tiada jisim.)"
   },
-  { // 10 Pinjaman — sederhana
+  { // 13 Pinjaman — sederhana
     s: "Puan Aida meminjam RM 12 000 untuk membeli sebuah motosikal. Pinjaman itu dikenakan kadar faedah sama rata 4% setahun dan perlu dibayar balik dalam 5 tahun secara ansuran bulanan yang sama. Berapakah bayaran ansuran bulanannya?",
     en: "Mrs Aida borrows RM 12 000 for a motorcycle at a flat interest rate of 4% per year, repaid over 5 years in equal monthly instalments. What is the monthly instalment?",
     p: ['RM 200', 'RM 208', 'RM 240', 'RM 1 200'], a: 2, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
     hurai: "Faedah = 12 000 × 0.04 × 5 = RM 2 400. Jumlah bayaran = RM 14 400. Ansuran = 14 400 ÷ 60 bulan = <b>RM 240</b>. (RM 200 lupa faedah; RM 208 hanya faedah setahun; RM 1 200 = 14 400 ÷ 12, ansuran tahunan bagi setahun sahaja.)"
   },
-  { // 11 Pertukaran wang — sederhana
+  { // 14 Pertukaran wang — sederhana
     s: "Sebelum melancong ke Singapura, Aiman menukar RM 850 kepada dolar Singapura (SGD) pada kadar SGD 1 = RM 3.40. Dia membelanjakan SGD 180. Selepas pulang, dia menukar baki SGD kepada ringgit pada kadar SGD 1 = RM 3.30. Berapakah jumlah ringgit yang diterimanya?",
     en: "Aiman changes RM 850 to Singapore dollars at SGD 1 = RM 3.40 and spends SGD 180. Back home he changes the balance to ringgit at SGD 1 = RM 3.30. How many ringgit does he receive?",
     p: ['RM 21.21', 'RM 231', 'RM 238', 'RM 670'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'sederhana',
     hurai: "850 ÷ 3.40 = SGD 250. Baki = 250 − 180 = SGD 70. 70 × 3.30 = <b>RM 231</b>. (RM 238 guna kadar lama 3.40; RM 670 = 850 − 180, mencampurkan RM dengan SGD; RM 21.21 = 70 ÷ 3.30, membahagi sedangkan patut mendarab.)"
   },
-  { // 12 Graf garis — sederhana
+  { // 15 Graf garis — sederhana
     rajah: '<svg viewBox="0 0 340 250" style="max-width:100%;width:340px" role="img" aria-label="Graf garis jualan bulanan"><line x1="60" y1="200.0" x2="310" y2="200.0" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="204.0" font-size="12" fill="currentColor" text-anchor="end">100</text><line x1="60" y1="172.0" x2="310" y2="172.0" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="176.0" font-size="12" fill="currentColor" text-anchor="end">120</text><line x1="60" y1="144.0" x2="310" y2="144.0" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="148.0" font-size="12" fill="currentColor" text-anchor="end">140</text><line x1="60" y1="116.0" x2="310" y2="116.0" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="120.0" font-size="12" fill="currentColor" text-anchor="end">160</text><line x1="60" y1="88.0" x2="310" y2="88.0" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="92.0" font-size="12" fill="currentColor" text-anchor="end">180</text><line x1="60" y1="60.0" x2="310" y2="60.0" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="64.0" font-size="12" fill="currentColor" text-anchor="end">200</text><line x1="60" y1="32.0" x2="310" y2="32.0" stroke="var(--muted)" stroke-opacity="0.35"/><text x="54" y="36.0" font-size="12" fill="currentColor" text-anchor="end">220</text><line x1="60" y1="200.0" x2="310" y2="200.0" stroke="currentColor" stroke-width="1.5"/><line x1="60" y1="200.0" x2="60" y2="20" stroke="currentColor" stroke-width="1.5"/><line x1="60" y1="186" x2="310" y2="186" stroke="var(--muted)" stroke-opacity="0.25" stroke-dasharray="2 4"/><line x1="60" y1="158" x2="310" y2="158" stroke="var(--muted)" stroke-opacity="0.25" stroke-dasharray="2 4"/><line x1="60" y1="130" x2="310" y2="130" stroke="var(--muted)" stroke-opacity="0.25" stroke-dasharray="2 4"/><line x1="60" y1="102" x2="310" y2="102" stroke="var(--muted)" stroke-opacity="0.25" stroke-dasharray="2 4"/><line x1="60" y1="74" x2="310" y2="74" stroke="var(--muted)" stroke-opacity="0.25" stroke-dasharray="2 4"/><line x1="60" y1="46" x2="310" y2="46" stroke="var(--muted)" stroke-opacity="0.25" stroke-dasharray="2 4"/><polyline points="70,172.0 115,130.0 160,151.0 205,88.0 250,46.0 295,67.0" fill="none" stroke="var(--c)" stroke-width="2.5"/><circle cx="70" cy="172.0" r="4" fill="var(--c)"/><text x="70" y="216.0" font-size="12" fill="currentColor" text-anchor="middle">Jan</text><circle cx="115" cy="130.0" r="4" fill="var(--c)"/><text x="115" y="216.0" font-size="12" fill="currentColor" text-anchor="middle">Feb</text><circle cx="160" cy="151.0" r="4" fill="var(--c)"/><text x="160" y="216.0" font-size="12" fill="currentColor" text-anchor="middle">Mac</text><circle cx="205" cy="88.0" r="4" fill="var(--c)"/><text x="205" y="216.0" font-size="12" fill="currentColor" text-anchor="middle">Apr</text><circle cx="250" cy="46.0" r="4" fill="var(--c)"/><text x="250" y="216.0" font-size="12" fill="currentColor" text-anchor="middle">Mei</text><circle cx="295" cy="67.0" r="4" fill="var(--c)"/><text x="295" y="216.0" font-size="12" fill="currentColor" text-anchor="middle">Jun</text><text x="4" y="12" font-size="12" fill="currentColor">Bilangan unit dijual</text><text x="185" y="244" font-size="12" fill="currentColor" text-anchor="middle">Bulan</text></svg>',
     s: "Graf garis menunjukkan bilangan unit telefon yang dijual oleh sebuah kedai dari Januari hingga Jun. Antara dua bulan berturutan yang manakah berlakunya <b>peningkatan</b> jualan yang paling besar?",
     en: "The line graph shows phones sold by a shop from January to June. Between which two consecutive months was the largest increase in sales?",
     p: ['Januari – Februari', 'Mac – April', 'April – Mei', 'Mei – Jun'], a: 1, topik: 'Data & Statistik', aras: 'sederhana',
     hurai: "Bacaan: Jan 120, Feb 150, Mac 135, Apr 180, Mei 210, Jun 195. Perubahan: +30, −15, <b>+45</b>, +30, −15. Peningkatan terbesar Mac – April. (Mei – Jun ialah penurunan; April – Mei mempunyai nilai jualan tertinggi tetapi peningkatannya hanya 30.)"
   },
-  { // 13 Penjelmaan — sederhana
+  { // 16 Penjelmaan — sederhana
     s: "Titik P(3, −1) dipantulkan pada garis y = 2. Imejnya kemudian ditranslasikan 4 unit ke kiri dan 1 unit ke atas. Apakah koordinat imej akhir?",
     en: "Point P(3, −1) is reflected in the line y = 2, then the image is translated 4 units left and 1 unit up. What are the final coordinates?",
     p: ['(−1, 6)', '(−1, 2)', '(−7, 0)', '(7, 4)'], a: 0, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "P berada 3 unit di bawah garis y = 2, jadi imej pantulan berada 3 unit di atas: (3, 5). Translasi: (3 − 4, 5 + 1) = <b>(−1, 6)</b>. ((−1, 2) memantul pada paksi-x; (−7, 0) memantul pada paksi-y; (7, 4) mentranslasi ke arah bertentangan.)"
   },
-  { // 14 Logik — sederhana
+  { // 17 Logik — sederhana
     s: "Aina, Balqis dan Chen masing-masing bermain satu sukan yang berbeza: badminton, renang atau bola jaring. Umur mereka juga berbeza.<br>• Pemain badminton lebih tua daripada Balqis.<br>• Chen ialah yang paling muda.<br>• Perenang lebih tua daripada pemain bola jaring.<br>Siapakah pemain bola jaring?",
     en: "Aina, Balqis and Chen each play a different sport: badminton, swimming or netball, and are of different ages. The badminton player is older than Balqis; Chen is the youngest; the swimmer is older than the netball player. Who plays netball?",
     p: ['Aina', 'Balqis', 'Chen', 'Tidak dapat ditentukan'], a: 2, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Pemain badminton lebih tua daripada Balqis, jadi bukan Balqis; dan bukan Chen (paling muda tidak boleh lebih tua daripada sesiapa). Maka Aina = badminton. Antara Balqis dan Chen, perenang lebih tua; Chen paling muda, jadi Balqis = renang dan <b>Chen = bola jaring</b>."
   },
-  { // 15 Pola & bentuk piawai — sukar
+  { // 18 Pola — sederhana
+    s: "Lima orang murid berdiri dalam satu barisan mengikut urutan Amin, Bala, Chong, Dina dan Elly. Cikgu Rosnah menunjuk mereka seorang demi seorang dari Amin hingga Elly, kemudian berpatah balik hingga Amin, kemudian ke arah Elly semula, dan seterusnya:<br>Amin, Bala, Chong, Dina, Elly, Dina, Chong, Bala, Amin, Bala, Chong, …<br>(Murid di hujung barisan tidak ditunjuk dua kali berturut-turut.) Siapakah yang ditunjuk pada kali ke-97?",
+    en: "Five pupils stand in a row in the order Amin, Bala, Chong, Dina, Elly. Cikgu Rosnah points at them one by one from Amin to Elly, then back to Amin, then towards Elly again, and so on: Amin, Bala, Chong, Dina, Elly, Dina, Chong, Bala, Amin, Bala, Chong, … (The pupils at the ends are not pointed at twice in a row.) Who is pointed at the 97th time?",
+    p: ['Amin', 'Bala', 'Chong', 'Dina'], a: 0, topik: 'Pola & Jujukan', aras: 'sederhana',
+    hurai: "Pola berulang setiap 8 kali: Amin, Bala, Chong, Dina, Elly, Dina, Chong, Bala (kemudian Amin semula). 97 = 8 × 12 + 1, jadi kali ke-97 sama dengan kali pertama dalam kitaran: <b>Amin</b>. (Bala menganggap kitaran 5 orang sahaja, 97 = 5 × 19 + 2; Chong mengira Amin dua kali dalam kitaran 9, 97 = 9 × 10 + 7; Dina menggunakan kitaran 7 yang tertinggal Bala dalam perjalanan balik, 97 = 7 × 13 + 6.)"
+  },
+  { // 19 Peratus — sederhana
+    rajah: '<table><tr><th>Pendapatan bercukai (RM)</th><th>Kadar cukai</th></tr><tr><td>20 000 pertama</td><td>0%</td></tr><tr><td>20 001 – 35 000</td><td>3%</td></tr><tr><td>35 001 – 50 000</td><td>8%</td></tr><tr><td>50 001 – 70 000</td><td>13%</td></tr></table>',
+    s: "Jadual menunjukkan kadar cukai pendapatan (rekaan) sebuah negara. Setiap kadar dikenakan hanya pada bahagian pendapatan yang berada dalam julat itu. Pendapatan bercukai tahunan Encik Wong meningkat daripada RM 46 000 kepada RM 58 000. Berapakah <b>pertambahan</b> cukai pendapatan yang perlu dibayarnya?",
+    en: "The table shows (fictional) income tax rates of a country. Each rate applies only to the part of income within that band. Mr Wong's annual taxable income rises from RM 46 000 to RM 58 000. By how much does his income tax increase?",
+    p: ['RM 960', 'RM 1 360', 'RM 1 560', 'RM 3 860'], a: 1, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
+    hurai: "Cukai bagi RM 46 000: 15 000 × 3% + 11 000 × 8% = 450 + 880 = RM 1 330. Cukai bagi RM 58 000: 450 + 15 000 × 8% + 8 000 × 13% = 450 + 1 200 + 1 040 = RM 2 690. Pertambahan = 2 690 − 1 330 = <b>RM 1 360</b>. (Cara pintas: RM 4 000 daripada kenaikan berada dalam julat 8% dan RM 8 000 dalam julat 13%: 320 + 1 040 = 1 360.) (RM 960 mengenakan 8% pada seluruh kenaikan RM 12 000; RM 1 560 mengenakan 13% pada seluruh kenaikan; RM 3 860 = 13% × 58 000 − 8% × 46 000, mengenakan satu kadar sahaja pada seluruh pendapatan.)"
+  },
+  { // 20 Data — sederhana
+    rajah: '<table><tr><th>Bilangan buku dibaca</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><th>Bilangan murid</th><td>4</td><td>6</td><td>9</td><td>k</td><td>3</td></tr></table>',
+    s: "Jadual kekerapan menunjukkan bilangan buku yang dibaca oleh sekumpulan murid dalam program NILAM pada bulan Mac. Min bilangan buku yang dibaca ialah 3. Cari nilai k.",
+    en: "The frequency table shows the number of books read by a group of pupils in the NILAM reading programme in March. The mean number of books read is 3. Find the value of k.",
+    p: ['2', '8', '22', '30'], a: 1, topik: 'Data & Statistik', aras: 'sederhana',
+    hurai: "Jumlah fx = 1(4) + 2(6) + 3(9) + 4k + 5(3) = 58 + 4k. Jumlah murid = 22 + k. (58 + 4k) ÷ (22 + k) = 3 → 58 + 4k = 66 + 3k → k = <b>8</b>. (2 terhasil apabila k tidak dimasukkan dalam jumlah murid: (58 + 4k) ÷ 22 = 3; 22 ialah jumlah kekerapan yang diberi; 30 ialah jumlah murid, 22 + 8.)"
+  },
+  { // 21 Logik — sederhana
+    rajah: '<svg viewBox="0 0 200 200" style="max-width:100%;width:200px" role="img" aria-label="Imej jam dinding tanpa angka dalam cermin; jarum kelihatan menunjukkan pukul 4:20"><circle cx="100" cy="100" r="80" fill="var(--c)" fill-opacity="0.08" stroke="currentColor" stroke-width="2.5"/><line x1="100.0" y1="36.0" x2="100.0" y2="22.0" stroke="currentColor" stroke-width="5"/><line x1="135.5" y1="38.5" x2="139.0" y2="32.5" stroke="currentColor" stroke-width="2"/><line x1="161.5" y1="64.5" x2="167.5" y2="61.0" stroke="currentColor" stroke-width="2"/><line x1="171.0" y1="100.0" x2="178.0" y2="100.0" stroke="currentColor" stroke-width="2"/><line x1="161.5" y1="135.5" x2="167.5" y2="139.0" stroke="currentColor" stroke-width="2"/><line x1="135.5" y1="161.5" x2="139.0" y2="167.5" stroke="currentColor" stroke-width="2"/><line x1="100.0" y1="171.0" x2="100.0" y2="178.0" stroke="currentColor" stroke-width="2"/><line x1="64.5" y1="161.5" x2="61.0" y2="167.5" stroke="currentColor" stroke-width="2"/><line x1="38.5" y1="135.5" x2="32.5" y2="139.0" stroke="currentColor" stroke-width="2"/><line x1="29.0" y1="100.0" x2="22.0" y2="100.0" stroke="currentColor" stroke-width="2"/><line x1="38.5" y1="64.5" x2="32.5" y2="61.0" stroke="currentColor" stroke-width="2"/><line x1="64.5" y1="38.5" x2="61.0" y2="32.5" stroke="currentColor" stroke-width="2"/><line x1="100" y1="100" x2="132.2" y2="127.0" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><line x1="100" y1="100" x2="155.4" y2="132.0" stroke="var(--c)" stroke-width="3.5" stroke-linecap="round"/><circle cx="100" cy="100" r="4" fill="currentColor"/></svg>',
+    s: "Rajah menunjukkan imej sebuah jam dinding tanpa angka seperti yang dilihat dalam cermin. Tanda yang paling tebal ialah kedudukan angka 12. Dalam imej itu, jarum jam kelihatan menunjukkan pukul 4:20. Pukul berapakah masa yang <b>sebenar</b>?",
+    en: "The diagram shows the image of a wall clock without numerals as seen in a mirror. The thickest mark is the 12 position. In the image, the hands appear to show 4:20. What is the actual time?",
+    p: ['4:40', '7:20', '7:40', '8:40'], a: 2, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "Cermin menterbalikkan kiri dan kanan, jadi masa sebenar + masa dalam imej = 12:00. Masa sebenar = 12:00 − 4:20 = <b>7:40</b>. Semak: pada pukul 7:40, jarum minit menunjuk ke angka 8 (dalam cermin: angka 4, iaitu 20 minit) dan jarum jam berada di antara 7 dan 8 (dalam cermin: di antara 4 dan 5). (8:40 mencerminkan jam dan minit secara berasingan, 12 − 4 dan 60 − 20; 7:20 hanya mencerminkan jarum jam, minit tidak diubah; 4:40 hanya mencerminkan jarum minit.)"
+  },
+  { // 22 Pola & bentuk piawai — sukar
     s: "Sejenis bakteria membiak dengan setiap sel membahagi kepada dua setiap 20 minit. Pada mulanya terdapat 3 × 10³ sel bakteria. Berapakah bilangan sel selepas 4 jam? Beri jawapan dalam bentuk piawai.",
     en: "Each bacterial cell divides into two every 20 minutes. Initially there are 3 × 10³ cells. How many cells are there after 4 hours, in standard form?",
     p: ['3.6 × 10⁴', '4.8 × 10⁴', '1.2288 × 10⁷', '2.4576 × 10⁷'], a: 2, topik: 'Pola & Jujukan', aras: 'sukar',
     hurai: "4 jam = 240 minit = 12 kali pembahagian. Bilangan = 3 000 × 2¹² = 3 000 × 4 096 = 12 288 000 = <b>1.2288 × 10⁷</b>. (2.4576 × 10⁷ guna 2¹³, terlebih satu kitaran; 4.8 × 10⁴ = 3 000 × 2⁴, mengira 4 kali pembahagian (sejam sekali); 3.6 × 10⁴ = 3 000 × 12, menambah, bukan menggandakan.)"
   },
-  { // 16 Persamaan linear — sukar (ISI)
+  { // 23 Persamaan linear — sukar (ISI)
     jenis: 'isi',
     s: "Lilin A sepanjang 30 cm memendek 2 cm setiap jam apabila dinyalakan. Lilin B sepanjang 22 cm memendek 1.2 cm setiap jam. Kedua-dua lilin dinyalakan serentak. Selepas berapa jam panjang kedua-dua lilin itu menjadi sama?",
     en: "Candle A is 30 cm long and burns 2 cm per hour. Candle B is 22 cm long and burns 1.2 cm per hour. Both are lit at the same time. After how many hours are they the same length?",
     a: 10, unit: 'jam', topik: 'Persamaan Linear', aras: 'sukar',
     hurai: "30 − 2t = 22 − 1.2t → 8 = 0.8t → t = <b>10 jam</b>. Semak: A = 30 − 20 = 10 cm, B = 22 − 12 = 10 cm (kedua-duanya masih menyala)."
   },
-  { // 17 Matematik pengguna — sukar
+  { // 24 Matematik pengguna — sukar
     s: "Harga sehelai baju di dua buah kedai ialah RM 45. Kedai X menawarkan \"Beli 3, percuma 1\". Kedai Y memberi diskaun 25% bagi setiap helai. Puan Ros mahu membeli <b>tepat 6 helai</b> baju. Pernyataan manakah yang betul?",
     en: "A shirt costs RM 45 at two shops. Shop X offers 'Buy 3, get 1 free'. Shop Y gives 25% off every shirt. Mrs Ros wants exactly 6 shirts. Which statement is correct?",
     p: ['Kedua-dua kedai sama harga', 'Kedai X lebih murah sebanyak RM 22.50', 'Kedai Y lebih murah sebanyak RM 67.50', 'Kedai Y lebih murah sebanyak RM 22.50'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sukar',
     hurai: "Kedai X: bayar 3 dapat 4 (RM 135), kemudian bayar 2 lagi (RM 90) → 6 helai = RM 225. Kedai Y: 6 × 45 × 0.75 = RM 202.50. Kedai Y lebih murah sebanyak <b>RM 22.50</b>. (\"Beli 3 percuma 1\" bersamaan diskaun 25% hanya jika bilangan baju gandaan 4; RM 67.50 menganggap Kedai X tiada baju percuma.)"
   },
-  { // 18 Nisbah campuran — sukar
+  { // 25 Nisbah campuran — sukar
     s: "Jus P dibancuh dengan nisbah sirap kepada air 1 : 4. Jus Q dibancuh dengan nisbah sirap kepada air 3 : 2. Sebanyak 500 ml jus P dicampurkan dengan 250 ml jus Q. Apakah nisbah sirap kepada air dalam campuran itu?",
     en: "Drink P has syrup : water = 1 : 4 and drink Q has syrup : water = 3 : 2. 500 ml of P is mixed with 250 ml of Q. What is the syrup : water ratio of the mixture?",
     p: ['1 : 2', '2 : 3', '4 : 11', '1 : 4'], a: 0, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
     hurai: "P: sirap = 1/5 × 500 = 100 ml, air = 400 ml. Q: sirap = 3/5 × 250 = 150 ml, air = 100 ml. Campuran: sirap 250 ml, air 500 ml → <b>1 : 2</b>. (2 : 3 menambah sebutan nisbah terus (1+3 : 4+2); 4 : 11 tersilap baca nisbah Q sebagai air : sirap; 1 : 4 hanya nisbah jus P.)"
   },
-  { // 19 Statistik — sukar
+  { // 26 Statistik — sukar
     s: "Satu set 10 nombor mempunyai min 18 dan julat 20. Setiap nombor dalam set itu didarab dengan 3, kemudian ditolak 5. Apakah min dan julat set nombor yang baharu?",
     en: "A set of 10 numbers has mean 18 and range 20. Each number is multiplied by 3 and then 5 is subtracted. What are the new mean and range?",
     p: ['Min 13, julat 15', 'Min 49, julat 55', 'Min 54, julat 60', 'Min 49, julat 60'], a: 3, topik: 'Data & Statistik', aras: 'sukar',
     hurai: "Min berubah mengikut operasi yang sama: 18 × 3 − 5 = 49. Julat = terbesar − terkecil; darab 3 menggandakan julat (60), tetapi tolak 5 daripada setiap nombor tidak mengubah beza → julat = 60. Jawapan: <b>min 49, julat 60</b>. (Julat 55 tersilap menolak 5 daripada julat; min 54 lupa tolak 5.)"
   },
-  { // 20 Pythagoras 3D — sukar
+  { // 27 Pythagoras 3D — sukar
     rajah: '<svg viewBox="-10 0 310 200" style="max-width:100%;width:300px" role="img" aria-label="Kotak berbentuk kuboid 12 cm × 9 cm × 8 cm"><line x1="40.0" y1="70.0" x2="220.0" y2="70.0" stroke="currentColor" stroke-width="2"/><line x1="220.0" y1="70.0" x2="220.0" y2="166.0" stroke="currentColor" stroke-width="2"/><line x1="220.0" y1="166.0" x2="40.0" y2="166.0" stroke="currentColor" stroke-width="2"/><line x1="40.0" y1="166.0" x2="40.0" y2="70.0" stroke="currentColor" stroke-width="2"/><line x1="83.2" y1="37.6" x2="263.2" y2="37.6" stroke="currentColor" stroke-width="2"/><line x1="263.2" y1="37.6" x2="263.2" y2="133.6" stroke="currentColor" stroke-width="2"/><line x1="40.0" y1="70.0" x2="83.2" y2="37.6" stroke="currentColor" stroke-width="2"/><line x1="220.0" y1="70.0" x2="263.2" y2="37.6" stroke="currentColor" stroke-width="2"/><line x1="220.0" y1="166.0" x2="263.2" y2="133.6" stroke="currentColor" stroke-width="2"/><line x1="83.2" y1="133.6" x2="83.2" y2="37.6" stroke="currentColor" stroke-width="2" stroke-dasharray="5 4" stroke-opacity="0.6"/><line x1="83.2" y1="133.6" x2="263.2" y2="133.6" stroke="currentColor" stroke-width="2" stroke-dasharray="5 4" stroke-opacity="0.6"/><line x1="40.0" y1="166.0" x2="83.2" y2="133.6" stroke="currentColor" stroke-width="2" stroke-dasharray="5 4" stroke-opacity="0.6"/><line x1="40" y1="166" x2="263.2" y2="37.6" stroke="var(--c)" stroke-width="2.5"/><g font-size="13" fill="currentColor"><text x="114.0" y="184">12 cm</text><text x="247.6" y="161.8">9 cm</text><text x="34" y="122.0" text-anchor="end">8 cm</text></g></svg>',
     s: "Sebuah kotak berbentuk kuboid berukuran 12 cm × 9 cm × 8 cm. Berapakah panjang batang lidi lurus yang <b>terpanjang</b> yang boleh dimuatkan sepenuhnya di dalam kotak itu (seperti garis berwarna dalam rajah)?",
     en: "A cuboid box measures 12 cm × 9 cm × 8 cm. What is the length of the longest straight stick that fits entirely inside the box (like the coloured line in the diagram)?",
     p: ['12.04 cm', '14.42 cm', '15.00 cm', '17.00 cm'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sukar',
     hurai: "Pepenjuru tapak = √(12² + 9²) = √225 = 15 cm. Pepenjuru ruang = √(15² + 8²) = √289 = <b>17 cm</b>. (15 cm hanya pepenjuru tapak; 14.42 cm = √(12² + 8²) dan 12.04 cm = √(9² + 8²) ialah pepenjuru muka sisi.)"
+  },
+  { // 28 Persamaan linear — sukar
+    s: "Sebuah pameran sains mengenakan bayaran masuk RM 4 bagi pelajar dan RM 10 bagi dewasa. Pada hari pertama, nisbah pengunjung pelajar kepada pengunjung dewasa ialah 5 : 2 dan kutipan ialah RM 1 440. Pada hari kedua, jumlah pengunjung sama seperti hari pertama tetapi kutipan ialah RM 1 800. Berapakah bilangan pengunjung dewasa pada hari kedua?",
+    en: "A science exhibition charges RM 4 per student and RM 10 per adult. On day one, the ratio of student to adult visitors was 5 : 2 and the takings were RM 1 440. On day two, the total number of visitors was the same as on day one but the takings were RM 1 800. How many adult visitors were there on day two?",
+    p: ['72', '90', '120', '132'], a: 3, topik: 'Persamaan Linear', aras: 'sukar',
+    hurai: "Hari pertama: pelajar 5k, dewasa 2k. 4(5k) + 10(2k) = 40k = 1440 → k = 36. Jumlah pengunjung = 180 + 72 = 252. Hari kedua: p + d = 252 dan 4p + 10d = 1800. 4(252 − d) + 10d = 1800 → 1008 + 6d = 1800 → d = <b>132</b> (pelajar = 120; semak: 480 + 1 320 = 1 800). (72 ialah bilangan dewasa pada hari pertama; 90 menganggap nisbah 5 : 2 kekal pada hari kedua, 40k = 1800; 120 ialah bilangan pelajar pada hari kedua.)"
+  },
+  { // 29 Kadar — sukar
+    s: "Encik Arumugam boleh mengecat sebuah rumah seorang diri dalam 24 hari. Dia mula mengecat seorang diri selama 4 hari. Kemudian Encik Hafiz menyertainya dan mereka bekerja bersama-sama selama 8 hari lagi sehingga kerja itu siap. Berapakah bilangan hari yang diperlukan oleh Encik Hafiz untuk mengecat rumah itu <b>seorang diri</b>? (Anggap setiap orang bekerja pada kadar yang tetap.)",
+    en: "Mr Arumugam can paint a house alone in 24 days. He paints alone for 4 days. Then Mr Hafiz joins him and they work together for another 8 days until the job is finished. How many days would Mr Hafiz need to paint the house alone? (Assume each person works at a constant rate.)",
+    p: ['8', '12', '16', '24'], a: 2, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
+    hurai: "Encik Arumugam bekerja 4 + 8 = 12 hari → dia menyiapkan 12/24 = 1/2 daripada kerja. Encik Hafiz menyiapkan baki 1/2 dalam 8 hari, jadi seorang diri dia memerlukan 8 × 2 = <b>16 hari</b>. (8 ialah bilangan hari Encik Hafiz bekerja; 12 ialah jumlah hari dari mula hingga siap; 24 menganggap Encik Hafiz juga bekerja selama 12 hari.)"
+  },
+  { // 30 Geometri — sukar (ISI)
+    jenis: 'isi',
+    s: "Sebuah bekas berbentuk silinder dengan jejari 7 cm dan tinggi 20 cm mengandungi air sedalam 12 cm. Seketul bongkah logam berbentuk kuboid berukuran 11 cm × 7 cm × 4 cm dimasukkan ke dalam bekas itu dan tenggelam sepenuhnya. Berapakah kedalaman air yang baharu, dalam cm? (Guna π = 22/7)",
+    en: "A cylindrical container with radius 7 cm and height 20 cm holds water 12 cm deep. A solid metal cuboid measuring 11 cm × 7 cm × 4 cm is put into the container and is fully submerged. What is the new depth of the water, in cm? (Use π = 22/7)",
+    a: 14, unit: 'cm', topik: 'Geometri & Pengukuran', aras: 'sukar',
+    hurai: "Isi padu bongkah = 11 × 7 × 4 = 308 cm³. Air naik seperti silinder dengan luas tapak 22/7 × 7² = 154 cm². Kenaikan aras air = 308 ÷ 154 = 2 cm. Kedalaman baharu = 12 + 2 = <b>14 cm</b>. (Jangan berhenti pada 2 cm; itu hanya kenaikan aras air.)"
   }
   ]
 });

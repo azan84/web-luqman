@@ -1,6 +1,6 @@
 (function () { const B = {}; const UKKM_PART = (n, b) => { B[b.id] = b; };
 UKKM_PART(2, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
-  arahan: 'Jawab semua 20 soalan. 18 soalan objektif (pilih A, B, C atau D) dan 2 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
+  arahan: 'Jawab semua 30 soalan. 27 soalan objektif (pilih A, B, C atau D) dan 3 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
   soalan: [
   { // 1 Pola — mudah
     s: "Apakah nombor seterusnya dalam jujukan berikut?<br><b>2, 5, 10, 17, 26, …</b>",
@@ -34,99 +34,163 @@ UKKM_PART(2, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     p: ['24', '28', '32', '36'], a: 1, topik: 'Data & Statistik', aras: 'mudah',
     hurai: "Paling ramai: Khamis = 5 × 8 = 40. Paling sedikit: Jumaat = 8 + 4 = 12. Beza = 40 − 12 = <b>28</b>. (32 mengabaikan separuh simbol; 24 menganggap ◐ sebagai simbol penuh; 36 ialah bilangan pada hari Selasa.)"
   },
-  { // 6 Geometri — sederhana
+  { // 6 Kadar — mudah
+    s: "Kadar pertukaran wang ialah RM 1 = 7.50 baht. Sebuah beg sekolah berharga 1 350 baht di Hatyai, manakala beg yang sama berharga RM 189 di Malaysia. Di manakah beg itu lebih murah, dan berapakah bezanya dalam ringgit?",
+    en: "The exchange rate is RM 1 = 7.50 baht. A school bag costs 1 350 baht in Hatyai, while the same bag costs RM 189 in Malaysia. Where is the bag cheaper, and by how much in ringgit?",
+    p: ['Di Hatyai, lebih murah RM 9.00', 'Di Hatyai, lebih murah RM 67.50', 'Di Malaysia, lebih murah RM 1 161.00', 'Di Malaysia, lebih murah RM 9 936.00'], a: 0, topik: 'Nisbah, Kadar & Laju', aras: 'mudah',
+    hurai: "Harga di Hatyai = 1 350 ÷ 7.50 = RM 180. Beza = 189 − 180 = RM 9, jadi <b>di Hatyai, lebih murah RM 9.00</b>. (RM 67.50 ialah beza dalam baht, 1 417.50 − 1 350, yang dilabel sebagai ringgit; RM 1 161 = 1 350 − 189, menolak baht dengan ringgit; RM 9 936 terjadi apabila 1 350 didarab dengan 7.50 dan bukannya dibahagi.)"
+  },
+  { // 7 Data — mudah
+    rajah: '<table><tr><th>Peserta</th><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td></tr><tr><th>Masa (s)</th><td>13.2</td><td>12.8</td><td>14.1</td><td>12.8</td><td>13.5</td><td>15.0</td><td>13.2</td><td>14.6</td></tr></table>',
+    s: "Jadual menunjukkan masa larian 100 m bagi lapan orang peserta Kejohanan Olahraga MSSD. Pernyataan manakah yang betul tentang mod dan julat masa mereka?",
+    en: "The table shows the 100 m times of eight runners at a district schools athletics meet. Which statement about the mode and range of their times is correct?",
+    p: ['Mod: 12.8 s dan 13.2 s; julat: 2.2 s', 'Mod: 12.8 s sahaja; julat: 2.2 s', 'Mod: 12.8 s dan 13.2 s; julat: 1.4 s', 'Tiada mod; julat: 2.2 s'], a: 0, topik: 'Data & Statistik', aras: 'mudah',
+    hurai: "12.8 s dan 13.2 s masing-masing muncul dua kali manakala nilai lain muncul sekali sahaja, jadi data ini mempunyai dua mod. Julat = 15.0 − 12.8 = 2.2 s. Jawapan: <b>Mod: 12.8 s dan 13.2 s; julat: 2.2 s</b>. ('12.8 s sahaja' terlepas mod kedua; julat 1.4 s = 14.6 − 13.2 ialah nilai terakhir tolak nilai pertama dalam jadual; 'tiada mod' salah kerana dua nilai yang sama kerap tetap kedua-duanya mod.)"
+  },
+  { // 8 Geometri — mudah
+    rajah: '<svg viewBox="0 0 320 180" style="max-width:100%;width:320px" role="img" aria-label="Dua garis selari PQ dan RS dipotong oleh garis KL dengan sudut (3x + 10) darjah dan (2x + 20) darjah"><g stroke="currentColor" stroke-width="2"><line x1="20" y1="40" x2="300" y2="40"/><line x1="20" y1="140" x2="300" y2="140"/></g><g stroke="currentColor" stroke-width="2" fill="none"><path d="M246 34l8 6-8 6M256 34l8 6-8 6"/><path d="M246 134l8 6-8 6M256 134l8 6-8 6"/></g><line x1="172.92" y1="10" x2="144.71" y2="170" stroke="var(--c)" stroke-width="3"/><g stroke="var(--c)" stroke-width="1.5" fill="none"><path d="M181.63 40A14 14 0 0 1 165.20 53.79"/><path d="M164 140A14 14 0 0 0 152.43 126.21"/></g><g font-size="13" fill="currentColor"><text x="184" y="62">(3x + 10)°</text><text x="170" y="130">(2x + 20)°</text><text x="22" y="32">P</text><text x="290" y="32">Q</text><text x="22" y="160">R</text><text x="290" y="160">S</text><text x="178" y="16">K</text><text x="128" y="172">L</text></g></svg>',
+    s: "Dalam rajah, PQ selari dengan RS, dan garis lurus KL memotong kedua-dua garis itu. Cari nilai x.",
+    en: "In the diagram, PQ is parallel to RS and the straight line KL cuts both lines. Find the value of x.",
+    p: ['10', '30', '36', '66'], a: 1, topik: 'Geometri & Pengukuran', aras: 'mudah',
+    hurai: "Kedua-dua sudut itu ialah sudut pedalaman di antara dua garis selari pada sebelah yang sama, maka hasil tambahnya 180°: (3x + 10) + (2x + 20) = 180 → 5x + 30 = 180 → x = <b>30</b>. (Semak: 100° + 80° = 180°.) (10 menganggap kedua-dua sudut sama seperti sudut selang-seli; 36 terlupa pemalar 10 dan 20, iaitu 5x = 180; 66 menggunakan 360° sebagai hasil tambah.)"
+  },
+  { // 9 Geometri — sederhana
     rajah: '<svg viewBox="0 0 280 200" style="max-width:100%;width:300px" role="img" aria-label="Pelan tanah berbentuk L"><polygon points="40,20 160,20 160,80 250,80 250,170 40,170" fill="var(--c)" fill-opacity="0.12" stroke="var(--c)" stroke-width="3"/><g font-size="13" fill="currentColor"><text x="130" y="188">14 m</text><text x="4" y="100">10 m</text><text x="190" y="72">6 m</text><text x="166" y="55">4 m</text></g></svg>',
     s: "Rajah menunjukkan pelan sebidang tanah berbentuk L. Semua sudutnya ialah sudut tegak. Pagar akan dipasang di sekeliling tanah itu dengan kos RM 12.50 semeter. Berapakah kos memasang pagar itu?",
     en: "The diagram shows an L-shaped plot; all corners are right angles. Fencing costs RM 12.50 per metre. What is the cost of fencing the whole boundary?",
     p: ['RM 425', 'RM 550', 'RM 600', 'RM 1 450'], a: 2, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Sisi yang tidak berlabel: atas = 14 − 6 = 8 m, kanan = 10 − 4 = 6 m. Perimeter = 14 + 10 + 8 + 4 + 6 + 6 = 48 m (sama dengan perimeter segi empat tepat 14 × 10). Kos = 48 × 12.50 = <b>RM 600</b>. (RM 425 = 34 m, hanya jumlah label; RM 550 tertinggal satu sisi 4 m; RM 1 450 guna luas 116 m².)"
   },
-  { // 7 Logik — sederhana
+  { // 10 Logik — sederhana
     s: "Enam sahabat P, Q, R, S, T dan U duduk mengelilingi meja bulat dengan jarak yang sama.<br>• P duduk bertentangan dengan Q.<br>• R duduk bersebelahan dengan Q.<br>• S duduk bertentangan dengan R.<br>• T tidak duduk bersebelahan dengan P.<br>Siapakah yang duduk bertentangan dengan T?",
     en: "Six friends sit equally spaced around a round table. P is opposite Q; R is next to Q; S is opposite R; T is not next to P. Who sits opposite T?",
     p: ['P', 'R', 'S', 'U'], a: 3, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Nomborkan kerusi 1–6 mengikut bulatan. P = 1, Q = 4. R bersebelahan Q: kerusi 3 (kes kerusi 5 ialah cerminan yang sama). S bertentangan R: kerusi 6. Tinggal kerusi 2 dan 5; kerusi 2 bersebelahan P, maka T = 5, U = 2. Bertentangan dengan kerusi 5 ialah kerusi 2 = <b>U</b>."
   },
-  { // 8 Pola — sederhana
+  { // 11 Pola — sederhana
     s: "Rajah 1 dalam satu pola menggunakan 9 jubin, Rajah 2 menggunakan 14 jubin dan Rajah 3 menggunakan 19 jubin. Pola ini berterusan dengan cara yang sama. Berapakah bilangan jubin dalam Rajah 40?",
     en: "Figure 1 of a pattern uses 9 tiles, Figure 2 uses 14 and Figure 3 uses 19, continuing in the same way. How many tiles are in Figure 40?",
     p: ['200', '204', '209', '360'], a: 1, topik: 'Pola & Jujukan', aras: 'sederhana',
     hurai: "Beza tetap 5, jadi sebutan ke-n = 9 + 5(n − 1) = 5n + 4. Rajah 40: 5(40) + 4 = <b>204</b>. (209 = 9 + 5 × 40, tertambah satu beza; 200 = 5 × 40 tanpa pemalar; 360 = 9 × 40, menganggap kadar berkadaran.)"
   },
-  { // 9 Persamaan linear — sederhana
+  { // 12 Persamaan linear — sederhana
     s: "Harga 3 batang pen dan 2 buah buku nota ialah RM 13.00. Harga 2 batang pen dan 3 buah buku nota ialah RM 14.50. Berapakah harga 2 batang pen dan 2 buah buku nota?",
     en: "3 pens and 2 notebooks cost RM 13.00; 2 pens and 3 notebooks cost RM 14.50. How much do 2 pens and 2 notebooks cost?",
     p: ['RM 11.00', 'RM 13.75', 'RM 22.00', 'RM 27.50'], a: 0, topik: 'Persamaan Linear', aras: 'sederhana',
     hurai: "Tambah dua persamaan: 5 pen + 5 buku = RM 27.50, maka 1 pen + 1 buku = RM 5.50, dan 2 pen + 2 buku = <b>RM 11.00</b>. (Semakan: pen = RM 2, buku = RM 3.50.) RM 27.50 ialah harga 5 set; RM 13.75 ialah purata dua jumlah; RM 22.00 = 27.50 × 4/5, salah nisbah."
   },
-  { // 10 Peratus — sederhana
+  { // 13 Peratus — sederhana
     s: "Selepas diberi diskaun 15%, harga sebuah jam tangan ialah RM 170. Berapakah harga asal jam tangan itu?",
     en: "After a 15% discount, a watch costs RM 170. What was its original price?",
     p: ['RM 144.50', 'RM 185.00', 'RM 195.50', 'RM 200.00'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
     hurai: "RM 170 ialah 85% daripada harga asal. Harga asal = 170 ÷ 0.85 = <b>RM 200</b>. (RM 195.50 = 170 × 1.15, menambah 15% pada harga baharu — 15% sepatutnya daripada harga asal; RM 144.50 = 170 × 0.85; RM 185 = 170 + 15.)"
   },
-  { // 11 Laju — sederhana
+  { // 14 Laju — sederhana
     s: "Encik Rahman memandu sejauh 200 km dari Ipoh ke Kuala Lumpur dengan laju purata 100 km/j. Dalam perjalanan pulang melalui jalan yang sama, hujan lebat menyebabkan laju puratanya hanya 80 km/j. Berapakah laju purata bagi keseluruhan perjalanan pergi dan balik?",
     en: "Mr Rahman drives 200 km from Ipoh to Kuala Lumpur at an average speed of 100 km/h and returns on the same road at 80 km/h. What is his average speed for the whole round trip?",
     p: ['88.89 km/j', '90.00 km/j', '100.00 km/j', '180.00 km/j'], a: 0, topik: 'Nisbah, Kadar & Laju', aras: 'sederhana',
     hurai: "Masa pergi = 200 ÷ 100 = 2 j; masa balik = 200 ÷ 80 = 2.5 j. Laju purata = jumlah jarak ÷ jumlah masa = 400 ÷ 4.5 = <b>88.89 km/j</b>. (90 ialah purata dua laju — salah kerana masa balik lebih lama; 100 menganggap perjalanan balik juga 2 j; 180 menjumlahkan laju.)"
   },
-  { // 12 Kebarangkalian — sederhana
+  { // 15 Kebarangkalian — sederhana
     s: "Sebuah kotak mengandungi 4 biji guli merah, 6 biji guli biru dan beberapa biji guli hijau. Sebiji guli dipilih secara rawak. Kebarangkalian mendapat guli biru ialah 1/3. Berapakah kebarangkalian mendapat guli <b>hijau</b>?",
     en: "A box has 4 red, 6 blue and some green marbles. One marble is picked at random. The probability of blue is 1/3. What is the probability of green?",
     p: ['2/9', '1/3', '4/9', '2/3'], a: 2, topik: 'Data & Statistik', aras: 'sederhana',
     hurai: "6 ÷ jumlah = 1/3 → jumlah = 18 biji. Hijau = 18 − 4 − 6 = 8. P(hijau) = 8/18 = <b>4/9</b>. (2/9 ialah P(merah); 1/3 menganggap setiap warna sama peluang; 2/3 ialah P(bukan biru).)"
   },
-  { // 13 Geometri — sederhana
+  { // 16 Geometri — sederhana
     rajah: '<svg viewBox="0 0 320 200" style="max-width:100%;width:320px" role="img" aria-label="Dua garis selari dengan sudut 38 darjah dan 47 darjah"><g stroke="currentColor" stroke-width="2"><line x1="20" y1="40" x2="300" y2="40"/><line x1="20" y1="160" x2="300" y2="160"/></g><g stroke="currentColor" stroke-width="2" fill="none"><path d="M246 34l8 6-8 6M256 34l8 6-8 6"/><path d="M246 154l8 6-8 6M256 154l8 6-8 6"/></g><polyline points="60,40 136.8,100 80.85,160" fill="none" stroke="var(--c)" stroke-width="3"/><g font-size="13" fill="currentColor"><text x="90" y="56">38°</text><text x="104" y="154">47°</text><text x="110" y="105" font-style="italic">x</text><text x="52" y="32">A</text><text x="142" y="104">X</text><text x="72" y="178">B</text><text x="22" y="32">P</text><text x="290" y="32">Q</text><text x="22" y="180">R</text><text x="290" y="180">S</text></g></svg>',
     s: "Dalam rajah, PQ selari dengan RS. Titik A terletak pada PQ dan titik B terletak pada RS. ∠XAQ = 38° dan ∠XBS = 47°. Cari nilai x, iaitu ∠AXB.",
     en: "In the diagram PQ is parallel to RS, A is on PQ and B is on RS. Angle XAQ = 38° and angle XBS = 47°. Find x, the angle AXB.",
     p: ['85°', '95°', '133°', '142°'], a: 0, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Lukis garis melalui X selari dengan PQ. Sudut selang-seli: bahagian atas = 38°, bahagian bawah = 47°. x = 38° + 47° = <b>85°</b>. (95° = 180° − 85°, menganggap A, X, B membentuk segi tiga dengan sudut 38° dan 47°; 142° = 180° − 38°.)"
   },
-  { // 14 Logik — sederhana
+  { // 17 Logik — sederhana
     s: "Sebuah laci mengandungi 10 stoking hitam, 8 stoking putih dan 6 stoking kelabu yang bercampur. Dalam gelap, berapakah bilangan <b>minimum</b> stoking yang perlu diambil untuk memastikan sekurang-kurangnya 2 stoking <b>putih</b> diperoleh?",
     en: "A drawer holds 10 black, 8 white and 6 grey socks, mixed. In the dark, what is the minimum number of socks you must take to be sure of getting at least 2 white socks?",
     p: ['4', '16', '17', '18'], a: 3, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Kes paling malang: semua 10 hitam dan 6 kelabu diambil dahulu (16 stoking), kemudian barulah 2 putih. Minimum = 16 + 2 = <b>18</b>. (4 hanya menjamin sepasang stoking SEBARANG warna; 17 hanya menjamin sekurang-kurangnya SATU stoking putih; 16 belum menjamin sebarang stoking putih.)"
   },
-  { // 15 Pola — sukar (ISI)
+  { // 18 Pola — sederhana (ISI)
+    jenis: 'isi',
+    s: "Jujukan berikut terbentuk daripada dua pola yang berselang-seli:<br><b>3, 100, 7, 96, 11, 92, 15, 88, …</b><br>Berapakah sebutan ke-40?",
+    en: "The sequence 3, 100, 7, 96, 11, 92, 15, 88, … is made of two alternating patterns. What is the 40th term?",
+    a: 24, topik: 'Pola & Jujukan', aras: 'sederhana',
+    hurai: "Sebutan di kedudukan ganjil: 3, 7, 11, 15, … (tambah 4). Sebutan di kedudukan genap: 100, 96, 92, 88, … (tolak 4). Sebutan ke-40 ialah sebutan ke-20 dalam pola genap: 100 − 4 × (20 − 1) = 100 − 76 = <b>24</b>. (Ralat biasa: menggunakan 40 sebagai kedudukan dalam pola genap, 100 − 4 × 39 = −56; atau mengambil pola ganjil, 4 × 20 − 1 = 79, iaitu sebutan ke-39.)"
+  },
+  { // 19 Peratus — sederhana
+    s: "Encik Ravi menerima gaji bersih RM 3 200 sebulan. Dia membelanjakan 35% daripada gajinya untuk sewa rumah, kemudian 1/4 daripada baki itu untuk makanan. Daripada wang yang tinggal selepas itu, dia menyimpan 40%. Berapakah simpanan Encik Ravi sebulan?",
+    en: "Mr Ravi earns a net salary of RM 3 200 a month. He spends 35% of his salary on rent, then 1/4 of the remainder on food. Of the money left after that, he saves 40%. How much does Mr Ravi save each month?",
+    p: ['RM 520.00', 'RM 624.00', 'RM 832.00', 'RM 1 280.00'], a: 1, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
+    hurai: "Sewa = 35% × 3 200 = RM 1 120; baki = RM 2 080. Makanan = 1/4 × 2 080 = RM 520; baki = RM 1 560. Simpanan = 40% × 1 560 = <b>RM 624.00</b>. (RM 1 280.00 = 40% × 3 200, mengira peratus daripada gaji asal; RM 832.00 = 40% × 2 080, terlupa menolak belanja makanan; RM 520.00 ialah belanja makanan, bukan simpanan.)"
+  },
+  { // 20 Data — sederhana
+    s: "Lima nombor bulat positif mempunyai mod 8, median 7 dan min 6.2. Nombor 8 ialah satu-satunya mod. Berapakah julat <b>terbesar</b> yang mungkin bagi lima nombor itu?",
+    en: "Five positive whole numbers have mode 8, median 7 and mean 6.2; 8 is the only mode. What is the largest possible range of the five numbers?",
+    p: ['4', '5', '6', '7'], a: 2, topik: 'Data & Statistik', aras: 'sederhana',
+    hurai: "Jumlah = 5 × 6.2 = 31. Susun menaik: a, b, 7, 8, 8 (8 mesti muncul sekurang-kurangnya dua kali dan lebih besar daripada median, jadi mengisi dua tempat terakhir). Maka a + b = 31 − 23 = 8 dengan a < b < 7, kerana a = b atau b = 7 akan mewujudkan mod kedua. Pilihan: (2, 6) atau (3, 5). Julat terbesar = 8 − 2 = <b>6</b>. (7 datang daripada 1, 7, 7, 8, 8 yang mempunyai dua mod; 5 ialah julat terkecil, daripada 3, 5, 7, 8, 8; 4 datang daripada 4, 4, 7, 8, 8 yang juga mempunyai dua mod.)"
+  },
+  { // 21 Logik — sederhana
+    s: "Sepotong kek di bilik guru telah hilang. Hanya seorang daripada empat murid yang mengambilnya, dan <b>tepat dua orang</b> daripada mereka bercakap benar.<br>Arif: \"Chong bercakap benar.\"<br>Bella: \"Bukan saya yang ambil.\"<br>Chong: \"Devi yang ambil.\"<br>Devi: \"Bukan Chong yang ambil.\"<br>Siapakah yang mengambil kek itu?",
+    en: "A slice of cake went missing from the staff room. Exactly one of four pupils took it, and exactly two of them are telling the truth. Arif: 'Chong is telling the truth.' Bella: 'It wasn't me.' Chong: 'Devi took it.' Devi: 'It wasn't Chong.' Who took the cake?",
+    p: ['Arif', 'Bella', 'Chong', 'Devi'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "Kenyataan Arif dan Chong sama ada kedua-duanya benar atau kedua-duanya bohong. Jika Devi yang ambil, keempat-empat kenyataan benar ✗. Jadi bukan Devi; maka Chong dan Arif berbohong, dan Bella serta Devi mesti benar: bukan Bella dan bukan Chong. Pengambilnya ialah <b>Arif</b>. (Jika Bella: hanya Devi benar ✗. Jika Chong: hanya Bella benar ✗. Jika Devi: empat orang benar ✗.)"
+  },
+  { // 22 Pola — sukar (ISI)
     jenis: 'isi',
     s: "Jujukan berikut berterusan mengikut pola yang sama:<br><b>1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, …</b><br>(nombor n ditulis sebanyak n kali). Apakah sebutan ke-100?",
     en: "The sequence 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, … continues (the number n is written n times). What is the 100th term?",
     a: 14, topik: 'Pola & Jujukan', aras: 'sukar',
     hurai: "Sebutan terakhir bagi nombor n berada pada kedudukan 1 + 2 + … + n = n(n + 1)/2. n = 13 → kedudukan 91; n = 14 → kedudukan 105. Kedudukan 92 hingga 105 ialah 14, maka sebutan ke-100 = <b>14</b>."
   },
-  { // 16 Ketaksamaan — sukar
+  { // 23 Ketaksamaan — sukar
     s: "Pelan telefon A mengenakan RM 30 sebulan dan 10 sen seminit panggilan. Pelan B mengenakan RM 12 sebulan dan 25 sen seminit. Berapakah bilangan minit (nombor bulat) <b>terkecil</b> sebulan supaya pelan A lebih murah daripada pelan B?",
     en: "Phone plan A costs RM 30 a month plus 10 sen per minute; plan B costs RM 12 a month plus 25 sen per minute. What is the smallest whole number of minutes per month for which plan A is cheaper than plan B?",
     p: ['72', '120', '121', '180'], a: 2, topik: 'Persamaan Linear', aras: 'sukar',
     hurai: "30 + 0.10m < 12 + 0.25m → 18 < 0.15m → m > 120. Nombor bulat terkecil = <b>121</b>. (Pada 120 minit kedua-dua pelan sama, RM 42, jadi A belum lebih murah; 72 = 18 ÷ 0.25 dan 180 = 18 ÷ 0.10 hanya menggunakan satu kadar.)"
   },
-  { // 17 Matematik pengguna — sukar
+  { // 24 Matematik pengguna — sukar
     s: "Jumlah harga makanan di sebuah restoran ialah RM 80. Caj perkhidmatan 10% dikenakan, kemudian cukai 6% dikenakan ke atas jumlah selepas caj perkhidmatan. Kamal mempunyai baucar RM 10 yang ditolak daripada harga makanan <b>sebelum</b> caj dan cukai. Berapakah jumlah yang perlu dibayar?",
     en: "A restaurant food bill is RM 80. A 10% service charge is added, then 6% tax is charged on the total after the service charge. Kamal's RM 10 voucher is deducted from the food price before the charge and tax. How much must he pay?",
     p: ['RM 81.20', 'RM 81.62', 'RM 82.80', 'RM 83.28'], a: 1, topik: 'Peratus & Matematik Pengguna', aras: 'sukar',
     hurai: "Selepas baucar: 80 − 10 = RM 70. Caj 10%: 70 × 1.10 = RM 77. Cukai 6%: 77 × 1.06 = <b>RM 81.62</b>. (RM 81.20 = 70 × 1.16, menambah 16% sekali gus; RM 83.28 menolak baucar selepas caj dan cukai; RM 82.80 = 80 × 1.16 − 10.)"
   },
-  { // 18 Laju — sukar
+  { // 25 Laju — sukar
     s: "Bandar P dan bandar Q terletak 310 km antara satu sama lain. Kereta A bertolak dari P ke Q pada pukul 8:00 pagi dengan laju 80 km/j. Kereta B bertolak dari Q ke P melalui jalan yang sama pada pukul 8:30 pagi dengan laju 100 km/j. Pada pukul berapakah kedua-dua kereta itu bertemu?",
     en: "Towns P and Q are 310 km apart. Car A leaves P for Q at 8:00 a.m. at 80 km/h. Car B leaves Q for P on the same road at 8:30 a.m. at 100 km/h. At what time do they meet?",
     p: ['9:43 pagi', '10:00 pagi', '10:13 pagi', '10:30 pagi'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
     hurai: "Pada 8:30, A sudah bergerak 80 × 0.5 = 40 km; baki jarak = 270 km. Kedua-duanya mendekati pada 80 + 100 = 180 km/j. Masa = 270 ÷ 180 = 1.5 j → 8:30 + 1 j 30 min = <b>10:00 pagi</b>. (9:43 = 8:00 + 310/180 j, mengabaikan B lewat bertolak; 10:13 = 8:30 + 310/180 j, mengabaikan jarak yang sudah dilalui A.)"
   },
-  { // 19 Statistik — sukar
+  { // 26 Statistik — sukar
     s: "Enam nombor disusun secara menaik: <b>4, 7, 10, x, 22, 27</b>. Median bagi set data itu ialah 12. Berapakah min set data itu?",
     en: "Six numbers in ascending order: 4, 7, 10, x, 22, 27. The median is 12. What is the mean?",
     p: ['12.00', '13.67', '14.00', '15.50'], a: 2, topik: 'Data & Statistik', aras: 'sukar',
     hurai: "Median = (10 + x) ÷ 2 = 12 → x = 14. Jumlah = 4 + 7 + 10 + 14 + 22 + 27 = 84. Min = 84 ÷ 6 = <b>14</b>. (13.67 menganggap x = median = 12; 12 ialah median, bukan min; 15.50 = (4 + 27) ÷ 2, titik tengah julat.)"
   },
-  { // 20 Trigonometri — sukar
+  { // 27 Trigonometri — sukar
     rajah: '<svg viewBox="0 0 280 200" style="max-width:100%;width:300px" role="img" aria-label="Pemerhati dan menara"><line x1="10" y1="170" x2="270" y2="170" stroke="currentColor" stroke-width="2"/><line x1="30" y1="170" x2="30" y2="150" stroke="currentColor" stroke-width="4"/><rect x="202" y="24" width="16" height="146" fill="var(--c)" fill-opacity="0.25" stroke="var(--c)" stroke-width="2"/><line x1="30" y1="150" x2="210" y2="24" stroke="var(--c)" stroke-width="2"/><line x1="30" y1="150" x2="210" y2="150" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"/><path d="M70 150 A40 40 0 0 0 62.8 127.1" fill="none" stroke="currentColor" stroke-width="1.5"/><g font-size="13" fill="currentColor"><text x="76" y="144">35°</text><text x="105" y="188">40 m</text><text x="36" y="166">1.5 m</text><text x="180" y="18">menara</text></g></svg>',
     s: "Mata seorang pemerhati berada 1.5 m di atas tanah mengufuk dan dia berdiri 40 m dari kaki sebuah menara. Sudut di antara garis pandangannya ke puncak menara dengan garis mengufuk ialah 35°. Berapakah tinggi menara itu? (Beri jawapan betul kepada 2 tempat perpuluhan.)",
     en: "An observer's eyes are 1.5 m above level ground, 40 m from the foot of a tower. The angle between the line of sight to the top and the horizontal is 35°. How tall is the tower (2 d.p.)?",
     p: ['22.94 m', '24.44 m', '28.01 m', '29.51 m'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sukar',
     hurai: "Bahagian di atas aras mata = 40 × tan 35° = 40 × 0.7002 = 28.01 m. Tinggi menara = 28.01 + 1.5 = <b>29.51 m</b>. (28.01 m lupa ketinggian mata; 24.44 m guna sin 35° (40 × 0.5736 + 1.5); 22.94 m guna sin tanpa tambah 1.5 m.)"
+  },
+  { // 28 Persamaan linear — sukar
+    s: "Puan Kavita berkata kepada anaknya, Arjun: \"Semasa ibu sebaya dengan umur kamu sekarang, kamu baru berumur 4 tahun. Apabila kamu sebaya dengan umur ibu sekarang, ibu akan berumur 82 tahun.\" Berapakah umur Puan Kavita sekarang?",
+    en: "Mrs Kavita tells her son Arjun: 'When I was your present age, you were only 4. When you reach my present age, I will be 82.' How old is Mrs Kavita now?",
+    p: ['26 tahun', '30 tahun', '43 tahun', '56 tahun'], a: 3, topik: 'Persamaan Linear', aras: 'sukar',
+    hurai: "Katakan umur Arjun = A dan beza umur mereka = d (sentiasa tetap), jadi umur ibu = A + d. Ibu sebaya A berlaku d tahun dahulu, ketika Arjun berumur A − d = 4. Arjun sebaya dengan ibu sekarang selepas d tahun, ketika ibu berumur A + 2d = 82. Tolak: 3d = 78 → d = 26, A = 30. Umur Puan Kavita = 30 + 26 = <b>56 tahun</b>. (30 ialah umur Arjun; 26 ialah beza umur; 43 = (82 + 4) ÷ 2, purata dua umur yang disebut.)"
+  },
+  { // 29 Kadar — sukar
+    s: "Puan Rohana menyediakan 400 g air garam yang mengandungi 15% garam (mengikut jisim) untuk membuat telur masin. Dia menambah 20 g garam lagi, kemudian memanaskan larutan itu sehingga sebahagian air tersejat dan kandungan garam menjadi 25%. Berapakah jisim air yang tersejat?",
+    en: "Mrs Rohana prepares 400 g of brine that is 15% salt by mass for making salted eggs. She adds another 20 g of salt, then heats the solution until some water evaporates and the salt content becomes 25%. What mass of water evaporated?",
+    p: ['80 g', '100 g', '180 g', '320 g'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
+    hurai: "Garam asal = 15% × 400 = 60 g; selepas ditambah = 80 g. Jisim larutan akhir = 80 ÷ 0.25 = 320 g. Sebelum dipanaskan, jisim larutan = 400 + 20 = 420 g. Air tersejat = 420 − 320 = <b>100 g</b>. (80 g terlupa menambah 20 g garam ke dalam jisim larutan, 400 − 320; 180 g terlupa garam tambahan, 420 − 60 ÷ 0.25; 320 g ialah jisim larutan akhir, bukan jisim air yang tersejat.)"
+  },
+  { // 30 Geometri — sukar
+    rajah: '<svg viewBox="0 0 300 220" style="max-width:100%;width:300px" role="img" aria-label="Segi tiga ABC dengan DE selari dengan BC, AD 6 cm dan DB 4 cm"><polygon points="150,20 84,128 222,128" fill="var(--c)" fill-opacity="0.15"/><polygon points="150,20 40,200 270,200" fill="none" stroke="currentColor" stroke-width="2"/><line x1="84" y1="128" x2="222" y2="128" stroke="var(--c)" stroke-width="3"/><g stroke="currentColor" stroke-width="2" fill="none"><path d="M149 123l6 5-6 5"/><path d="M151 195l6 5-6 5"/></g><g font-size="13" fill="currentColor"><text x="145" y="14">A</text><text x="26" y="212">B</text><text x="274" y="212">C</text><text x="70" y="132">D</text><text x="228" y="132">E</text><text x="104" y="74" text-anchor="end">6 cm</text><text x="50" y="168" text-anchor="end">4 cm</text></g></svg>',
+    s: "Dalam rajah, D terletak pada AB dan E terletak pada AC dengan keadaan DE selari dengan BC. AD = 6 cm dan DB = 4 cm. Luas segi tiga ADE ialah 27 cm². Berapakah luas trapezium DBCE?",
+    en: "In the diagram, D is on AB and E is on AC such that DE is parallel to BC. AD = 6 cm and DB = 4 cm. The area of triangle ADE is 27 cm². What is the area of trapezium DBCE?",
+    p: ['18 cm²', '45 cm²', '48 cm²', '75 cm²'], a: 2, topik: 'Geometri & Pengukuran', aras: 'sukar',
+    hurai: "Oleh sebab DE selari dengan BC, segi tiga ADE dan ABC adalah serupa dengan nisbah sisi AD : AB = 6 : 10 = 3 : 5. Nisbah luas = 3² : 5² = 9 : 25. Luas ABC = 27 × 25 ÷ 9 = 75 cm². Luas DBCE = 75 − 27 = <b>48 cm²</b>. (75 cm² ialah luas seluruh segi tiga ABC; 45 cm² dan 18 cm² menggunakan nisbah sisi 3 : 5, bukan kuasa duanya, bagi luas ABC dan luas trapezium.)"
   }
   ]
 });

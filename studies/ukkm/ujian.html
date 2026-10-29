@@ -119,16 +119,16 @@ h1{font-size:clamp(1.5rem,3.5vw,2.2rem);line-height:1.15;margin:0 0 6px;letter-s
 <script>
 window.UKKM = [];
 </script>
-<script src="sets/set01.js?v=80e5473bb4"></script>
-<script src="sets/set02.js?v=88d2e24146"></script>
-<script src="sets/set03.js?v=f7435a577b"></script>
-<script src="sets/set04.js?v=176b1f462b"></script>
-<script src="sets/set05.js?v=38d4b98c33"></script>
-<script src="sets/set06.js?v=952454c32d"></script>
-<script src="sets/set07.js?v=2c1bd72da4"></script>
-<script src="sets/set08.js?v=8999fe4cb2"></script>
-<script src="sets/set09.js?v=bab961edea"></script>
-<script src="sets/set10.js?v=5aff9e337f"></script>
+<script src="sets/set01.js?v=b433e1082b"></script>
+<script src="sets/set02.js?v=b01a5b80c8"></script>
+<script src="sets/set03.js?v=e73777401a"></script>
+<script src="sets/set04.js?v=85a9d851b1"></script>
+<script src="sets/set05.js?v=7ccfbd5b81"></script>
+<script src="sets/set06.js?v=e2f4078ad7"></script>
+<script src="sets/set07.js?v=3ce1c68716"></script>
+<script src="sets/set08.js?v=c986bf056c"></script>
+<script src="sets/set09.js?v=aaa95cf4e6"></script>
+<script src="sets/set10.js?v=c6f5b9902a"></script>
 <script>
 /* ===================== Enjin latihan UKKM =====================
    Data: window.UKKM.push({ set, tajuk, bahagian:[ {id, nama, ikon, minit, arahan, jenis:'objektif'|'personaliti',
@@ -146,7 +146,11 @@ window.UKKM = [];
   let timer = 0, EN = store.get('ukkm-en', false);
   const showEN = q => EN && q.en ? `<p class="en" lang="en">${q.en}</p>` : '';
   const isIsi = q => q.jenis === 'isi';
-  const numOk = (q, v) => { if (v === null || v === undefined || String(v).trim() === '') return false; const x = parseFloat(String(v).replace(',', '.').replace(/[^0-9.\-]/g, '')); return !isNaN(x) && Math.abs(x - q.a) <= (q.tol || 1e-9); };
+  // Nombor pertama dalam jawapan: "RM 2,192.40" / "2 192.4" / "12,8" / "108cm2" → 2192.4 / 2192.4 / 12.8 / 108
+  const numOf = v => { let t = String(v).replace(/[\s\u00a0]/g, '').replace(/\u2212/g, '-');
+    t = /^\D*-?\d{1,3}(,\d{3})+(\.\d+)?\D*$/.test(t) || /\d,\d+\./.test(t) ? t.replace(/,/g, '') : t.replace(',', '.');
+    const m = t.match(/-?\d*\.?\d+/); return m ? parseFloat(m[0]) : NaN; };
+  const numOk = (q, v) => { if (v === null || v === undefined || String(v).trim() === '') return false; const x = numOf(v); return !isNaN(x) && Math.abs(x - q.a) <= (q.tol || 1e-9); };
   const right = (q, v) => isIsi(q) ? numOk(q, v) : v === q.a;
   const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
   const mmss = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
@@ -162,7 +166,7 @@ window.UKKM = [];
         return `<button class="card set" data-s="${S.set}"><h3>${esc(S.tajuk || 'Set ' + S.set)}</h3><span class="meta">${S.bahagian.map(b => `${b.ikon || ''} ${esc(b.nama)} · ${total(b)}`).join('<br>')}</span>
           <div class="bars">${S.bahagian.map(b => { const v = r[b.id]; return `<div class="bar"><span>${esc(b.nama)}</span><i><b style="width:${v ? v.p : 0}%"></b></i><span>${v ? v.p + '%' : '—'}</span></div>`; }).join('')}</div></button>`; }).join('')}</div>
       <a class="card" href="kad-sains.html" style="display:flex;gap:14px;align-items:center;margin-top:14px;color:inherit;text-decoration:none"><span style="font-size:1.8rem" aria-hidden="true">🃏</span><span><b>Kad Imbas Sains</b><br><small style="color:var(--muted)">Ulang kaji semua soalan Sains daripada ${SETS.length} set sebagai kad imbas, mengikut topik atau set.</small></span></a>
-      <p class="note" style="margin-top:18px">💡 <b>Latihan sahaja.</b> Format (Matematik 20, Sains 30, Bahasa Inggeris 15, Keperibadian 100; ±30 minit setiap kertas) disusun daripada panduan awam dan perbincangan calon — MARA tidak menerbitkan format rasmi, dan sesetengah sumber menyebut bilangan soalan atau kertas bahasa yang berbeza. Semua soalan ialah karya asal, bukan soalan sebenar UKKM. Sejak ambilan 2026, permohonan MRSM melalui PKSK (KPM); UKKM dijalankan untuk calon terpilih.</p>`;
+      <p class="note" style="margin-top:18px">💡 <b>Latihan sahaja.</b> Format (Matematik 30, Sains 30, Bahasa Inggeris 15, Keperibadian 100; ±30 minit setiap kertas) disusun daripada panduan awam dan perbincangan calon — MARA tidak menerbitkan format rasmi, dan sesetengah sumber menyebut bilangan soalan atau kertas bahasa yang berbeza. Semua soalan ialah karya asal, bukan soalan sebenar UKKM. Sejak ambilan 2026, permohonan MRSM melalui PKSK (KPM); UKKM dijalankan untuk calon terpilih.</p>`;
     app.querySelectorAll('.set').forEach(b => b.onclick = () => openSet(+b.dataset.s));
   }
 

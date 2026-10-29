@@ -1,6 +1,6 @@
 (function () { const B = {}; const UKKM_PART = (n, b) => { B[b.id] = b; };
 UKKM_PART(9, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
-  arahan: 'Jawab semua 20 soalan. 18 soalan objektif (pilih A, B, C atau D) dan 2 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
+  arahan: 'Jawab semua 30 soalan. 27 soalan objektif (pilih A, B, C atau D) dan 3 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
   soalan: [
   { // 1 Pola — mudah
     s: "Jujukan berikut berkurang secara tetap:<br><b>85, 78, 71, 64, …</b><br>Apakah sebutan <b>negatif yang pertama</b> dalam jujukan ini?",
@@ -32,101 +32,164 @@ UKKM_PART(9, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     p: ['Julat 28, mod 25', 'Julat 32, mod 25', 'Julat 32, mod 12', 'Julat 40, mod 25'], a: 1, topik: 'Data & Statistik', aras: 'mudah',
     hurai: "Julat = nilai terbesar − nilai terkecil = 40 − 8 = <b>32</b>. Mod = nilai paling kerap = <b>25</b> (3 kali; 12 hanya 2 kali). (28 = 40 − 12, menolak nilai pertama dalam senarai, bukan nilai terkecil; 40 ialah nilai terbesar sahaja.)"
   },
-  { // 6 Geometri — sederhana (ISI)
+  { // 6 Kadar — mudah
+    s: "Sebuah mukim mempunyai keluasan 3 200 hektar dan penduduk seramai 9 600 orang. Berapakah kepadatan penduduk mukim itu, dalam <b>orang per km²</b>? (1 km² = 100 hektar)",
+    en: "A mukim (sub-district) has an area of 3 200 hectares and a population of 9 600. What is its population density in people per km²? (1 km² = 100 hectares)",
+    p: ['3', '30', '300', '3 000'], a: 2, topik: 'Nisbah, Kadar & Laju', aras: 'mudah',
+    hurai: "Keluasan = 3 200 ÷ 100 = 32 km². Kepadatan = 9 600 ÷ 32 = <b>300 orang per km²</b>. (3 = 9 600 ÷ 3 200 ialah orang per hektar, lupa menukar unit; 30 menukar hektar dengan ÷ 10 (320 km²); 3 000 menukar dengan ÷ 1 000 (3.2 km²).)"
+  },
+  { // 7 Data — mudah
+    rajah: '<table><tr><th>Murid</th><th>Aina</th><th>Badrul</th><th>Chandra</th><th>Dayang</th><th>Eng Kit</th></tr><tr><th>Bilangan buku</th><td>12</td><td>15</td><td>9</td><td>18</td><td>16</td></tr></table>',
+    s: "Jadual menunjukkan bilangan buku yang dibaca oleh lima orang murid dalam satu bulan. Kemudian, data Zulkifli yang membaca <b>26</b> buah buku ditambah ke dalam jadual. Berapakah min dan julat <b>baharu</b> bagi enam orang murid itu?",
+    en: "The table shows the number of books read by five pupils in a month. Then the data for Zulkifli, who read 26 books, is added. What are the new mean and range for the six pupils?",
+    p: ['Min 16, julat 9', 'Min 16, julat 17', 'Min 19.2, julat 17', 'Min 20, julat 17'], a: 1, topik: 'Data & Statistik', aras: 'mudah',
+    hurai: "Jumlah asal = 12 + 15 + 9 + 18 + 16 = 70. Jumlah baharu = 70 + 26 = 96, jadi min = 96 ÷ 6 = <b>16</b>. Julat baharu = 26 − 9 = <b>17</b> (26 kini nilai terbesar). (Julat 9 ialah julat lama, lupa nilai terbesar sudah berubah; min 19.2 = 96 ÷ 5, lupa bilangan murid kini 6; min 20 = (14 + 26) ÷ 2, mempuratakan min lama dengan nilai baharu.)"
+  },
+  { // 8 Geometri — mudah
+    s: "Sebuah kotak hadiah berbentuk kubus mempunyai isi padu 343 cm³. Berapakah jumlah luas permukaan kotak itu?",
+    en: "A cube-shaped gift box has a volume of 343 cm³. What is its total surface area?",
+    p: ['49 cm²', '147 cm²', '196 cm²', '294 cm²'], a: 3, topik: 'Geometri & Pengukuran', aras: 'mudah',
+    hurai: "Panjang sisi = ∛343 = 7 cm. Luas satu muka = 7 × 7 = 49 cm². Kubus mempunyai 6 muka: 6 × 49 = <b>294 cm²</b>. (49 cm² ialah luas satu muka sahaja; 147 cm² hanya 3 muka; 196 cm² hanya 4 muka sisi, tanpa muka atas dan bawah.)"
+  },
+  { // 9 Geometri — sederhana (ISI)
     jenis: 'isi',
     s: "Sudut-sudut pedalaman sebuah heksagon ialah 130°, 110°, 140°, x, (x + 20°) dan 2x. Berapakah saiz sudut <b>terbesar</b> heksagon itu, dalam darjah?",
     en: "The interior angles of a hexagon are 130°, 110°, 140°, x, (x + 20°) and 2x. What is the size of the largest angle, in degrees?",
     a: 160, unit: '°', topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Hasil tambah sudut pedalaman heksagon = (6 − 2) × 180° = 720°. 130 + 110 + 140 + x + x + 20 + 2x = 720 → 400 + 4x = 720 → x = 80. Sudut-sudut: 130°, 110°, 140°, 80°, 100°, 160°. Terbesar = <b>160°</b>. (Ralat biasa: berhenti pada x = 80, atau guna 540° iaitu hasil tambah pentagon.)"
   },
-  { // 7 Logik — sederhana
+  { // 10 Logik — sederhana
     rajah: '<svg viewBox="0 0 220 160" style="max-width:100%;width:250px" role="img" aria-label="Grid jalan 3 blok ke kanan dan 2 blok ke atas dari A ke B, simpang P ditutup"><g stroke="currentColor" stroke-width="2.5"><path d="M30 30V130M80 30V130M130 30V130M180 30V130M30 30H180M30 80H180M30 130H180"/></g><circle cx="30" cy="130" r="5" fill="var(--c)"/><circle cx="180" cy="30" r="5" fill="var(--c)"/><g stroke="var(--no, #d9480f)" stroke-width="3"><path d="M72 72L88 88M88 72L72 88"/></g><g font-size="13" fill="currentColor" font-weight="700"><text x="12" y="148">A</text><text x="188" y="24">B</text><text x="88" y="98">P</text></g><text x="40" y="154" font-size="12" fill="var(--muted)">simpang P ditutup</text></svg>',
     s: "Rajah menunjukkan jalan-jalan berbentuk grid. Daniel berjalan dari A ke B dan hanya bergerak <b>ke kanan</b> atau <b>ke atas</b> di sepanjang jalan. Simpang P ditutup untuk kerja membaiki jalan. Berapakah bilangan laluan berlainan yang boleh diambil oleh Daniel?",
     en: "The diagram shows a grid of roads. Daniel walks from A to B moving only right or up along the roads. Junction P is closed. How many different routes can he take?",
     p: ['4', '6', '9', '10'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Tanpa sekatan terdapat 10 laluan (3 langkah kanan + 2 langkah atas). Laluan melalui P: 2 cara dari A ke P × 3 cara dari P ke B = 6. Laluan yang tidak melalui P = 10 − 6 = <b>4</b>. (Boleh juga kira dengan menulis bilangan cara pada setiap simpang dan meletakkan 0 di P.) (6 ialah laluan melalui P; 10 ialah jumlah tanpa sekatan; 9 menganggap hanya satu laluan tersekat.)"
   },
-  { // 8 Pola — sederhana
+  { // 11 Pola — sederhana
     s: "Sebuah dewan mempunyai 20 baris kerusi. Baris pertama mempunyai 14 kerusi dan setiap baris berikutnya mempunyai 2 kerusi lebih daripada baris sebelumnya. Berapakah jumlah kerusi dalam dewan itu?",
     en: "A hall has 20 rows of seats. The first row has 14 seats and each following row has 2 more than the row before. How many seats are there in total?",
     p: ['52', '660', '680', '1 320'], a: 1, topik: 'Pola & Jujukan', aras: 'sederhana',
     hurai: "Baris ke-20 = 14 + 19 × 2 = 52. Pasangkan baris pertama dengan terakhir, kedua dengan ke-19, …: setiap pasangan = 14 + 52 = 66, ada 10 pasangan. Jumlah = 10 × 66 = <b>660</b>. (52 ialah kerusi baris ke-20 sahaja; 680 menganggap baris ke-20 = 14 + 20 × 2 = 54; 1 320 = 20 × 66, lupa bahawa ada hanya 10 pasangan.)"
   },
-  { // 9 Persamaan linear — sederhana
+  { // 12 Persamaan linear — sederhana
     s: "Jumlah umur Kak Long dan adiknya sekarang ialah 28 tahun. Empat tahun yang lalu, umur Kak Long ialah 3 kali umur adiknya. Berapakah umur Kak Long sekarang?",
     en: "The sum of the present ages of Kak Long and her younger sibling is 28. Four years ago, Kak Long was 3 times as old as the sibling. How old is Kak Long now?",
     p: ['21', '19', '15', '9'], a: 1, topik: 'Persamaan Linear', aras: 'sederhana',
     hurai: "Adik = a, Kak Long = 28 − a. 4 tahun lalu: (28 − a) − 4 = 3(a − 4) → 24 − a = 3a − 12 → 4a = 36 → a = 9. Kak Long = <b>19</b>. Semak: 4 tahun lalu 15 dan 5 ✓. (21 menganggap 3 kali umur adik sekarang; 15 ialah umur Kak Long 4 tahun lalu; 9 ialah umur adik.)"
   },
-  { // 10 Peratus — sederhana
+  { // 13 Peratus — sederhana
     s: "Aisyah mahu membeli komputer riba berharga RM 2 850. Dia sudah mempunyai simpanan RM 600. Setiap bulan dia menyimpan 15% daripada elaunnya sebanyak RM 1 250. Berapakah bilangan bulan <b>minimum</b> yang diperlukan supaya simpanannya cukup?",
     en: "Aisyah wants a laptop costing RM 2 850. She already has RM 600 saved and saves 15% of her RM 1 250 monthly allowance. What is the minimum number of months needed?",
     p: ['18', '16', '15', '12'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
     hurai: "Simpanan sebulan = 15% × 1 250 = RM 187.50. Baki diperlukan = 2 850 − 600 = RM 2 250. Bulan = 2 250 ÷ 187.50 = <b>12</b> bulan tepat. (15 dan 16 datang daripada 2 850 ÷ 187.50 = 15.2, lupa simpanan sedia ada; 18 = 2 250 ÷ 125, guna 10% dan bukan 15%.)"
   },
-  { // 11 Nisbah — sederhana
+  { // 14 Nisbah — sederhana
     s: "Nisbah bilangan guli Ali, Bala dan Chong ialah 5 : 3 : 4. Selepas Ali memberi 12 biji guli kepada Bala, nisbah guli Ali kepada Bala menjadi 7 : 5. Chong tidak memberi atau menerima guli. Berapakah bilangan guli Chong?",
     en: "Ali, Bala and Chong share marbles in the ratio 5 : 3 : 4. After Ali gives Bala 12 marbles, Ali : Bala becomes 7 : 5. Chong is unchanged. How many marbles does Chong have?",
     p: ['180', '144', '120', '108'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'sederhana',
     hurai: "Ali = 5k, Bala = 3k, Chong = 4k. (5k − 12) : (3k + 12) = 7 : 5 → 5(5k − 12) = 7(3k + 12) → 25k − 60 = 21k + 84 → 4k = 144 → k = 36. Chong = 4 × 36 = <b>144</b>. (180 dan 108 ialah guli asal Ali dan Bala; 120 ialah guli Bala selepas menerima.)"
   },
-  { // 12 Data — sederhana
+  { // 15 Data — sederhana
     rajah: '<svg viewBox="0 0 320 240" style="max-width:100%;width:340px" role="img" aria-label="Graf garis suhu air melawan masa: 0 min 20°C, 2 min 35°C, 4 min 50°C, 6 min 60°C, 8 min 65°C, 10 min 65°C"><g stroke="var(--muted)" stroke-width="1" opacity=".5"><path d="M50 185H300M50 170H300M50 155H300M50 140H300M50 125H300M50 110H300M50 95H300M50 80H300M50 65H300M50 50H300M100 50V200M150 50V200M200 50V200M250 50V200M300 50V200"/></g><path d="M50 200H300M50 50V200" stroke="currentColor" stroke-width="1.5" fill="none"/><polyline points="50,200 100,155 150,110 200,80 250,65 300,65" fill="none" stroke="var(--c)" stroke-width="3"/><g fill="var(--c)"><circle cx="50" cy="200" r="4"/><circle cx="100" cy="155" r="4"/><circle cx="150" cy="110" r="4"/><circle cx="200" cy="80" r="4"/><circle cx="250" cy="65" r="4"/><circle cx="300" cy="65" r="4"/></g><g font-size="12" fill="currentColor" text-anchor="end"><text x="44" y="204">20</text><text x="44" y="174">30</text><text x="44" y="144">40</text><text x="44" y="114">50</text><text x="44" y="84">60</text><text x="44" y="54">70</text></g><g font-size="12" fill="currentColor" text-anchor="middle"><text x="50" y="216">0</text><text x="100" y="216">2</text><text x="150" y="216">4</text><text x="200" y="216">6</text><text x="250" y="216">8</text><text x="300" y="216">10</text><text x="175" y="234">Masa (minit)</text></g><text x="6" y="36" font-size="12" fill="currentColor">Suhu (°C)</text></svg>',
     s: "Graf garis menunjukkan suhu air yang dipanaskan dalam sebuah bikar. Berapakah kadar purata kenaikan suhu dari minit ke-0 hingga minit ke-8?",
     en: "The line graph shows the temperature of water being heated in a beaker. What is the average rate of temperature rise from minute 0 to minute 8?",
     p: ['8.125 °C/min', '7.5 °C/min', '5.625 °C/min', '4.5 °C/min'], a: 2, topik: 'Data & Statistik', aras: 'sederhana',
     hurai: "Suhu pada minit 0 = 20 °C, pada minit 8 = 65 °C. Kadar purata = (65 − 20) ÷ 8 = 45 ÷ 8 = <b>5.625 °C/min</b>. (8.125 = 65 ÷ 8, lupa menolak suhu awal; 7.5 ialah kadar 2 minit pertama sahaja; 4.5 = 45 ÷ 10, guna tempoh yang salah.)"
   },
-  { // 13 Geometri — sederhana
+  { // 16 Geometri — sederhana
     s: "Satu garis lurus melalui titik (2, 7) dan (6, −1). Berapakah <b>pintasan-x</b> garis lurus itu?",
     en: "A straight line passes through (2, 7) and (6, −1). What is its x-intercept?",
     p: ['−5.5', '−1.5', '5.5', '11'], a: 2, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Kecerunan m = (−1 − 7) ÷ (6 − 2) = −2. y = −2x + c; 7 = −2(2) + c → c = 11. Pintasan-x: 0 = −2x + 11 → x = <b>5.5</b>. (11 ialah pintasan-y; −1.5 datang daripada kecerunan +2 (ralat tanda); −5.5 tersilap tanda ketika menyelesaikan.)"
   },
-  { // 14 Logik — sederhana
+  { // 17 Logik — sederhana
     s: "Di sebuah pulau, setiap penduduk sama ada <b>sentiasa bercakap benar</b> atau <b>sentiasa berbohong</b>. Pak Ali berkata, \"Saya dan Pak Badar kedua-duanya pembohong.\" Apakah kesimpulan yang betul?",
     en: "On an island, every inhabitant either always tells the truth or always lies. Pak Ali says, 'Pak Badar and I are both liars.' Which conclusion is correct?",
     p: ['Pak Ali pembohong, Pak Badar bercakap benar', 'Pak Ali bercakap benar, Pak Badar pembohong', 'Kedua-duanya pembohong', 'Kedua-duanya bercakap benar'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Jika Pak Ali bercakap benar, maka dia pembohong — bercanggah. Jadi Pak Ali <b>pembohong</b>, dan kenyataannya palsu: tidak benar bahawa kedua-duanya pembohong. Oleh sebab Pak Ali pembohong, Pak Badar mestilah <b>bercakap benar</b>. (\"Kedua-duanya pembohong\" menerima kenyataan pembohong sebagai benar.)"
   },
-  { // 15 Pola — sukar
+  { // 18 Pola — sederhana
+    s: "Huruf-huruf disusun mengikut corak: setiap huruf ialah huruf ke-4 selepas huruf sebelumnya dalam abjad. Selepas Z, kiraan bersambung semula dari A.<br><b>A, E, I, M, Q, U, Y, C, G, …</b><br>Apakah huruf yang ke-<b>50</b> dalam jujukan ini?",
+    en: "Letters follow a pattern: each letter is the 4th letter after the previous one in the alphabet, and after Z the count continues from A again: A, E, I, M, Q, U, Y, C, G, … What is the 50th letter of the sequence?",
+    p: ['K', 'N', 'O', 'S'], a: 2, topik: 'Pola & Jujukan', aras: 'sederhana',
+    hurai: "Sebutan ke-n berada pada kedudukan 1 + 4(n − 1) dalam abjad (A = 1), ditolak 26 berulang kali jika melebihi 26. Sebutan ke-50: 1 + 4 × 49 = 197; 197 − 7 × 26 = 15 → huruf ke-15 ialah <b>O</b>. (Cara lain: corak berulang setiap 13 sebutan kerana 13 × 4 = 52 = 2 × 26; 50 = 3 × 13 + 11, jadi sama dengan sebutan ke-11: A, E, I, M, Q, U, Y, C, G, K, O.) (K ialah huruf ke-11 dalam abjad, bukan sebutan ke-11 jujukan — K juga sebutan ke-10, ralat kurang satu semasa mengira; N datang daripada 4 × 49 = 196 → kedudukan 14, lupa titik mula A = 1; S datang daripada 1 + 4 × 50 = 201 → kedudukan 19, guna n dan bukan n − 1.)"
+  },
+  { // 19 Peratus — sederhana
+    s: "Encik Wong membeli 500 batang pen secara borong. Harga biasa ialah RM 1.20 sebatang, tetapi dia mendapat diskaun 15% kerana membeli sekurang-kurangnya 500 batang. Dia menjual 80% daripada pen itu pada harga RM 1.50 sebatang dan bakinya pada harga RM 0.80 sebatang. Berapakah peratus keuntungannya berdasarkan kos, betul kepada satu tempat perpuluhan?",
+    en: "Mr Wong buys 500 pens wholesale. The usual price is RM 1.20 each, but he gets a 15% discount for buying at least 500. He sells 80% of the pens at RM 1.50 each and the rest at RM 0.80 each. What is his percentage profit on cost, correct to one decimal place?",
+    p: ['13.3%', '25.0%', '28.3%', '33.3%'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
+    hurai: "Kos = 500 × RM 1.20 × 0.85 = RM 510. Jualan = 400 × RM 1.50 + 100 × RM 0.80 = RM 600 + RM 80 = RM 680. Untung = 680 − 510 = RM 170. Peratus untung = 170 ÷ 510 × 100% = 33.33…% ≈ <b>33.3%</b>. (13.3% lupa diskaun borong, iaitu kos RM 600 dan untung RM 80; 25.0% = 170 ÷ 680, membahagi dengan jualan dan bukan kos; 28.3% = 170 ÷ 600, membahagi dengan kos sebelum diskaun.)"
+  },
+  { // 20 Data — sukar
+    s: "Sebuah beg mengandungi 5 biji guli merah dan 3 biji guli biru. Dua biji guli dikeluarkan secara rawak satu demi satu <b>tanpa dikembalikan</b>. Berapakah kebarangkalian kedua-dua biji guli itu sama warna?",
+    en: "A bag contains 5 red and 3 blue marbles. Two marbles are taken out at random one after the other without replacement. What is the probability that both marbles are the same colour?",
+    p: ['13/28', '1/2', '17/32', '15/28'], a: 0, topik: 'Data & Statistik', aras: 'sukar',
+    hurai: "P(merah, merah) = 5/8 × 4/7 = 20/56. P(biru, biru) = 3/8 × 2/7 = 6/56. P(sama warna) = 26/56 = <b>13/28</b>. (1/2 menganggap \"sama warna\" dan \"berlainan warna\" sama peluang; 17/32 = 25/64 + 9/64 ialah jawapan jika guli dikembalikan; 15/28 ialah P(berlainan warna).)"
+  },
+  { // 21 Logik — sederhana
+    s: "Aiman, Mei Ling, Kavin dan Siti masing-masing memelihara seekor haiwan yang berlainan: kucing, arnab, ikan atau burung. Mei Ling dan Siti ialah murid perempuan.<br>• Aiman tidak memelihara kucing atau burung.<br>• Mei Ling memelihara sama ada arnab atau burung.<br>• Kavin memelihara sama ada kucing atau arnab.<br>• Siti tidak memelihara burung.<br>• Arnab dipelihara oleh seorang murid perempuan.<br>Siapakah yang memelihara <b>ikan</b>?",
+    en: "Aiman, Mei Ling, Kavin and Siti each keep a different pet: a cat, a rabbit, a fish or a bird. Mei Ling and Siti are girls. Aiman keeps neither the cat nor the bird. Mei Ling keeps either the rabbit or the bird. Kavin keeps either the cat or the rabbit. Siti does not keep the bird. The rabbit is kept by a girl. Who keeps the fish?",
+    p: ['Aiman', 'Mei Ling', 'Kavin', 'Siti'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "Burung: bukan Aiman, bukan Kavin, bukan Siti → Mei Ling memelihara burung. Arnab dipelihara oleh murid perempuan dan Mei Ling sudah memelihara burung → Siti memelihara arnab. Kavin (kucing atau arnab) → kucing. Yang tinggal ialah ikan → <b>Aiman</b>. Semak: Aiman tidak memelihara kucing atau burung ✓. (Siti hanya boleh memelihara ikan jika petunjuk terakhir diabaikan; Mei Ling memelihara burung; Kavin hanya boleh memelihara kucing atau arnab.)"
+  },
+  { // 22 Pola — sukar
     rajah: '<div style="text-align:center;font-family:var(--mono);line-height:1.9">Baris 1: &nbsp; 1<br>Baris 2: &nbsp; 3 &nbsp; 5<br>Baris 3: &nbsp; 7 &nbsp; 9 &nbsp; 11<br>Baris 4: &nbsp; 13 &nbsp; 15 &nbsp; 17 &nbsp; 19<br>⋮</div>',
     s: "Nombor ganjil disusun dalam baris seperti di atas: baris ke-n mengandungi n nombor ganjil berturutan. Berapakah hasil tambah semua nombor dalam <b>baris ke-10</b>?",
     en: "Odd numbers are arranged in rows as shown: row n contains n consecutive odd numbers. What is the sum of all numbers in row 10?",
     p: ['100', '910', '1 000', '1 090'], a: 2, topik: 'Pola & Jujukan', aras: 'sukar',
     hurai: "Hasil tambah baris: 1, 8, 27, 64, … = 1³, 2³, 3³, 4³ → baris ke-10 = 10³ = <b>1 000</b>. Semak: baris 1–9 menggunakan 45 nombor ganjil, jadi baris ke-10 bermula dengan nombor ganjil ke-46 = 91 dan berakhir dengan 109; 10 nombor dengan purata 100 → 1 000. (910 = 10 × 91 dan 1 090 = 10 × 109 guna nombor pertama atau terakhir sahaja; 100 = 10², corak salah.)"
   },
-  { // 16 Persamaan linear — sukar (ISI)
+  { // 23 Persamaan linear — sukar (ISI)
     jenis: 'isi',
     s: "Encik Ravi dibayar RM 12 sejam bagi 8 jam pertama setiap hari. Setiap jam kerja lebih masa dibayar 1.5 kali kadar biasa. Dalam satu minggu, dia bekerja 5 hari, 8 jam biasa setiap hari, ditambah beberapa jam lebih masa. Jumlah gajinya minggu itu ialah RM 588. Berapakah jumlah jam lebih masa yang dia kerjakan?",
     en: "Mr Ravi earns RM 12 an hour for the first 8 hours each day; overtime is paid at 1.5 times the normal rate. One week he works 5 days of 8 normal hours plus some overtime and earns RM 588. How many overtime hours did he work?",
     a: 6, unit: 'jam', topik: 'Persamaan Linear', aras: 'sukar',
     hurai: "Gaji biasa = 5 × 8 × 12 = RM 480. Kadar lebih masa = 1.5 × 12 = RM 18 sejam. 480 + 18h = 588 → 18h = 108 → h = <b>6 jam</b>. (Ralat biasa: guna RM 12 untuk lebih masa → 9 jam.)"
   },
-  { // 17 Peratus — sukar
+  { // 24 Peratus — sukar
     s: "Encik Tan ingin menyimpan RM 10 000 selama 2 tahun.<br>• Bank X: faedah 4% setahun, dikompaun setiap 6 bulan.<br>• Bank Y: faedah 4.1% setahun, dikompaun setiap tahun.<br>Pernyataan manakah yang betul tentang nilai simpanan pada akhir tahun ke-2?",
     en: "Mr Tan saves RM 10 000 for 2 years. Bank X: 4% per year compounded every 6 months. Bank Y: 4.1% per year compounded yearly. Which statement about the value after 2 years is correct?",
     p: ['Bank X lebih tinggi sebanyak RM 12.49', 'Kedua-dua bank memberi nilai yang sama', 'Bank Y lebih tinggi sebanyak RM 20.00', 'Bank Y lebih tinggi sebanyak RM 12.49'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sukar',
     hurai: "Bank X: 10 000 × (1 + 0.04/2)⁴ = 10 000 × 1.02⁴ = RM 10 824.32. Bank Y: 10 000 × 1.041² = RM 10 836.81. Bank Y lebih tinggi sebanyak <b>RM 12.49</b>. (RM 20.00 = 0.1% × 2 × 10 000, mengabaikan kesan pengkompaunan; ramai menyangka pengkompaunan 6 bulan pasti lebih untung.)"
   },
-  { // 18 Kadar kerja — sukar
+  { // 25 Kadar kerja — sukar
     s: "Amin boleh mengecat sebuah pagar seorang diri dalam 6 jam, manakala Bakar memerlukan 9 jam. Mereka mula mengecat bersama-sama, tetapi selepas 2 jam Amin terpaksa pergi. Berapakah bilangan jam <b>lagi</b> yang diperlukan oleh Bakar bekerja seorang diri untuk menyiapkan pagar itu?",
     en: "Amin can paint a fence alone in 6 hours; Bakar needs 9 hours. They start together, but after 2 hours Amin leaves. How many more hours must Bakar work alone to finish?",
     p: ['1.6 jam', '3.6 jam', '4 jam', '7 jam'], a: 2, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
     hurai: "Kadar bersama = 1/6 + 1/9 = 5/18 pagar sejam. Dalam 2 jam: 10/18 = 5/9 siap. Baki = 4/9. Masa Bakar = (4/9) ÷ (1/9) = <b>4 jam</b>. (3.6 jam ialah masa jika mereka bekerja bersama sepanjang masa; 1.6 = 3.6 − 2; 7 = 9 − 2, menganggap Amin tidak membantu langsung.)"
   },
-  { // 19 Data — sukar
+  { // 26 Data — sukar
     s: "Markah akhir Sains dikira sebagai 30% markah kerja kursus + 70% markah peperiksaan. Hana memperoleh 84 bagi kerja kursus. Untuk mendapat gred A, markah akhir mesti sekurang-kurangnya 75. Jika markah peperiksaan ialah nombor bulat, berapakah markah peperiksaan <b>minimum</b> yang diperlukan oleh Hana?",
     en: "The final Science mark = 30% coursework + 70% exam. Hana scored 84 for coursework. Grade A needs a final mark of at least 75. If exam marks are whole numbers, what is the minimum exam mark Hana needs?",
     p: ['50', '66', '71', '72'], a: 3, topik: 'Data & Statistik', aras: 'sukar',
     hurai: "0.3 × 84 + 0.7x ≥ 75 → 25.2 + 0.7x ≥ 75 → 0.7x ≥ 49.8 → x ≥ 71.14… Markah bulat minimum = <b>72</b>. Semak: 71 memberi 74.9 (tidak cukup), 72 memberi 75.6. (71 membundarkan ke bawah; 66 = 2 × 75 − 84, menganggap kedua-dua markah sama berat; 50 ≈ 49.8, lupa membahagi dengan 0.7.)"
   },
-  { // 20 Geometri — sukar
+  { // 27 Geometri — sukar
     rajah: '<svg viewBox="0 0 240 185" style="max-width:100%;width:280px" role="img" aria-label="Kapsul: silinder dengan hemisfera di kedua-dua hujung, panjang 26 cm, diameter 14 cm"><path d="M70 24H166A56 56 0 0 1 166 136H70A56 56 0 0 1 70 24Z" fill="none" stroke="var(--c)" stroke-width="3"/><path d="M70 24V136M166 24V136" stroke="var(--muted)" stroke-dasharray="4 4"/><path d="M118 24V136" stroke="currentColor"/><path d="M14 160H222M14 154V166M222 154V166" stroke="currentColor"/><g font-size="13" fill="currentColor"><text x="124" y="84">14 cm</text><text x="100" y="180">26 cm</text></g></svg>',
     s: "Sebuah bekas berbentuk kapsul terdiri daripada sebuah silinder dengan hemisfera pada kedua-dua hujungnya. Panjang keseluruhan kapsul ialah 26 cm dan diameternya 14 cm. Hitung isi padu kapsul itu. (Guna π = <sup>22</sup>⁄<sub>7</sub>)",
     en: "A capsule-shaped container is a cylinder with a hemisphere at each end. Its total length is 26 cm and its diameter is 14 cm. Find its volume. (Use π = 22/7)",
     p: ['5 441.33 cm³', '4 004.00 cm³', '3 285.33 cm³', '2 566.67 cm³'], a: 2, topik: 'Geometri & Pengukuran', aras: 'sukar',
     hurai: "Jejari = 7 cm. Panjang silinder = 26 − 7 − 7 = 12 cm. Silinder = 22/7 × 7² × 12 = 1 848 cm³. Dua hemisfera = satu sfera = 4/3 × 22/7 × 7³ = 1 437.33 cm³. Jumlah = <b>3 285.33 cm³</b>. (4 004 guna tinggi silinder 26 cm; 5 441.33 = 4 004 + sfera, tinggi silinder salah; 2 566.67 hanya mengira satu hemisfera.)"
+  },
+  { // 28 Persamaan linear — sukar
+    s: "Sebuah bot bergerak 36 km ke hilir sungai dalam masa 2 jam. Perjalanan balik ke hulu sejauh 36 km mengambil masa 3 jam. Laju bot dalam air tenang dan laju arus sungai adalah tetap. Berapakah masa yang diperlukan oleh bot itu untuk bergerak sejauh 30 km di sebuah tasik yang airnya tenang?",
+    en: "A boat travels 36 km downstream in 2 hours, and the 36 km return trip upstream takes 3 hours. The boat's speed in still water and the speed of the current are constant. How long does the boat take to travel 30 km on a lake with still water?",
+    p: ['1 jam 40 minit', '2 jam', '2 jam 5 minit', '2 jam 30 minit'], a: 1, topik: 'Persamaan Linear', aras: 'sukar',
+    hurai: "Katakan b = laju bot dalam air tenang dan a = laju arus. Ke hilir: b + a = 36 ÷ 2 = 18 km/j. Ke hulu: b − a = 36 ÷ 3 = 12 km/j. Tambah kedua-dua persamaan: 2b = 30 → b = 15 km/j (a = 3 km/j). Masa = 30 ÷ 15 = <b>2 jam</b>. (2 jam 5 minit = 30 ÷ 14.4, guna laju purata pergi-balik 72 ÷ 5 = 14.4 km/j, bukan laju dalam air tenang; 1 jam 40 minit guna laju ke hilir 18 km/j; 2 jam 30 minit guna laju ke hulu 12 km/j.)"
+  },
+  { // 29 Kadar — sukar (ISI)
+    jenis: 'isi',
+    s: "Encik Arif menginap 4 malam di sebuah hotel di Tokyo dengan kadar ¥18 000 semalam dan membayar dengan kad kredit. Bank menukar yen kepada dolar AS dahulu pada kadar USD 1 = ¥150, kemudian dolar AS kepada ringgit pada kadar USD 1 = RM 4.50, dan mengenakan caj 1.5% ke atas amaun ringgit itu. Berapakah jumlah bayaran Encik Arif, dalam RM?",
+    en: "Mr Arif stays 4 nights at a hotel in Tokyo at ¥18 000 per night and pays by credit card. The bank converts yen to US dollars at USD 1 = ¥150, then US dollars to ringgit at USD 1 = RM 4.50, and adds a 1.5% charge on the ringgit amount. How much does Mr Arif pay in total, in RM?",
+    a: 2192.4, unit: 'RM', tol: 0.01, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
+    hurai: "Jumlah = 4 × ¥18 000 = ¥72 000. Dalam USD: 72 000 ÷ 150 = USD 480. Dalam RM: 480 × 4.50 = RM 2 160. Tambah caj 1.5%: 2 160 × 1.015 = <b>RM 2 192.40</b>. (Ralat biasa: lupa caj → RM 2 160.00; kira satu malam sahaja → RM 548.10; membahagi dengan 4.50 dan bukan mendarab → RM 108.27.)"
+  },
+  { // 30 Geometri — sukar
+    rajah: '<svg viewBox="0 0 320 205" style="max-width:100%;width:320px" role="img" aria-label="Kuboid 12 cm panjang, 5 cm lebar, 4 cm tinggi; A di bucu hadapan bawah kiri, G di bucu belakang atas kanan"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M45 160H225V100H45Z"/><path d="M45 100L100 60H280L225 100"/><path d="M225 160L280 120V60"/></g><g stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4"><path d="M100 120L45 160M100 120H280M100 120V60"/></g><circle cx="45" cy="160" r="5" fill="var(--c)"/><circle cx="280" cy="60" r="5" fill="var(--c)"/><g font-size="13" fill="currentColor"><text x="30" y="178" font-weight="700">A</text><text x="286" y="54" font-weight="700">G</text><text x="135" y="178" text-anchor="middle">12 cm</text><text x="39" y="134" text-anchor="end">4 cm</text><text x="258" y="152">5 cm</text></g><text x="160" y="199" font-size="11" fill="var(--muted)" text-anchor="middle">(tidak dilukis mengikut skala)</text></svg>',
+    s: "Seekor semut berada di bucu A sebuah kotak tertutup berbentuk kuboid berukuran 12 cm × 5 cm × 4 cm. Semut itu mahu ke bucu G yang bertentangan dengan merayap di atas <b>permukaan</b> kotak sahaja. Berapakah jarak terpendek yang mungkin?",
+    en: "An ant is at corner A of a closed cuboid box measuring 12 cm × 5 cm × 4 cm. It wants to reach the opposite corner G by crawling only on the surface of the box. What is the shortest possible distance?",
+    p: ['15.00 cm', '16.76 cm', '17.46 cm', '21.00 cm'], a: 0, topik: 'Geometri & Pengukuran', aras: 'sukar',
+    hurai: "Bentangkan dua muka yang dilalui semut menjadi satu segi empat tepat; laluan terpendek ialah garis lurus (hipotenus). Tiga cara bentangan: √(12² + (5 + 4)²) = √225 = 15; √(5² + (12 + 4)²) = √281 ≈ 16.76; √(4² + (12 + 5)²) = √305 ≈ 17.46. Terpendek = <b>15.00 cm</b>. (16.76 cm dan 17.46 cm ialah bentangan lain yang lebih panjang; 21.00 cm = 12 + 5 + 4, merayap di sepanjang tepi kotak. Pepenjuru ruang √185 ≈ 13.60 cm menembusi bahagian dalam kotak, jadi tidak dibenarkan.)"
   }
   ]
 });

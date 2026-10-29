@@ -1,6 +1,6 @@
 (function () { const B = {}; const UKKM_PART = (n, b) => { B[b.id] = b; };
 UKKM_PART(8, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
-  arahan: 'Jawab semua 20 soalan. 18 soalan objektif (pilih A, B, C atau D) dan 2 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
+  arahan: 'Jawab semua 30 soalan. 27 soalan objektif (pilih A, B, C atau D) dan 3 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
   soalan: [
   { // 1 Pola — mudah
     s: "Dalam jujukan berikut, setiap sebutan ialah separuh daripada sebutan sebelumnya.<br><b>768, 384, 192, 96, …</b><br>Berapakah sebutan ke-8?",
@@ -33,44 +33,63 @@ UKKM_PART(8, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     p: ['16', '20', '24', '28'], a: 1, topik: 'Data & Statistik', aras: 'mudah',
     hurai: "3 Cekal = 6 × 8 = 48 botol. 3 Bestari = 3 × 8 + 4 = 28 botol. Beza = 48 − 28 = <b>20</b>. (24 mengabaikan simbol separuh; 16 mengira simbol separuh sebagai penuh; 28 ialah jumlah 3 Bestari.)"
   },
-  { // 6 Geometri — sederhana
+  { // 6 Kadar — mudah
+    s: "Kepala pancuran mandian lama di rumah Lina mengalirkan air pada kadar 9 liter seminit. Kepala pancuran baharu yang jimat air hanya mengalirkan 6 liter seminit. Ahli keluarga Lina mandi selama 40 minit sehari secara keseluruhan. Berapakah isi padu air yang dapat dijimatkan dalam masa 30 hari selepas kepala pancuran itu ditukar?",
+    en: "The old shower head in Lina's house flows at 9 litres per minute. The new water-saving shower head flows at only 6 litres per minute. Lina's family showers for 40 minutes a day in total. How much water is saved in 30 days after the shower head is changed?",
+    p: ['3 600 liter', '7 200 liter', '10 800 liter', '18 000 liter'], a: 0, topik: 'Nisbah, Kadar & Laju', aras: 'mudah',
+    hurai: "Air dijimatkan = 9 − 6 = 3 liter seminit. Sehari: 3 × 40 = 120 liter. Dalam 30 hari: 120 × 30 = <b>3 600 liter</b>. (7 200 liter ialah penggunaan pancuran baharu; 10 800 liter ialah penggunaan pancuran lama; 18 000 liter menambah kedua-dua kadar.)"
+  },
+  { // 7 Data — mudah
+    rajah: '<svg viewBox="0 0 330 240" style="max-width:100%;width:340px" role="img" aria-label="Carta palang berganda bilangan murid lelaki dan perempuan: 3 Amanah lelaki 17 perempuan 19; 3 Bestari lelaki 21 perempuan 13; 3 Cekal lelaki 14 perempuan 22; 3 Dedikasi lelaki 11 perempuan 20"><g font-size="12" fill="currentColor"><text x="4" y="22">Bilangan murid</text><text x="166" y="232">Kelas</text></g><g stroke="var(--muted)" stroke-width="1"><line x1="50" y1="190" x2="320" y2="190"/><line x1="50" y1="40" x2="50" y2="190"/><g stroke-dasharray="2 4"><line x1="46" y1="160" x2="320" y2="160"/><line x1="46" y1="130" x2="320" y2="130"/><line x1="46" y1="100" x2="320" y2="100"/><line x1="46" y1="70" x2="320" y2="70"/><line x1="46" y1="40" x2="320" y2="40"/></g></g><g font-size="12" fill="currentColor" text-anchor="end"><text x="42" y="194">0</text><text x="42" y="164">5</text><text x="42" y="134">10</text><text x="42" y="104">15</text><text x="42" y="74">20</text><text x="42" y="44">25</text></g><rect x="62" y="88" width="22" height="102" fill="var(--c)"/><rect x="84" y="76" width="22" height="114" fill="var(--c)" fill-opacity=".35" stroke="var(--c)" stroke-width="1"/><rect x="128" y="64" width="22" height="126" fill="var(--c)"/><rect x="150" y="112" width="22" height="78" fill="var(--c)" fill-opacity=".35" stroke="var(--c)" stroke-width="1"/><rect x="194" y="106" width="22" height="84" fill="var(--c)"/><rect x="216" y="58" width="22" height="132" fill="var(--c)" fill-opacity=".35" stroke="var(--c)" stroke-width="1"/><rect x="260" y="124" width="22" height="66" fill="var(--c)"/><rect x="282" y="70" width="22" height="120" fill="var(--c)" fill-opacity=".35" stroke="var(--c)" stroke-width="1"/><g font-size="11" fill="currentColor" text-anchor="middle"><text x="73" y="84">17</text><text x="95" y="72">19</text><text x="139" y="60">21</text><text x="161" y="108">13</text><text x="205" y="102">14</text><text x="227" y="54">22</text><text x="271" y="120">11</text><text x="293" y="66">20</text></g><g font-size="11" fill="currentColor" text-anchor="middle"><text x="84" y="206">3 Amanah</text><text x="150" y="206">3 Bestari</text><text x="216" y="206">3 Cekal</text><text x="282" y="206">3 Dedikasi</text></g><g font-size="11" fill="currentColor"><rect x="200" y="8" width="12" height="12" fill="var(--c)"/><text x="216" y="18">Lelaki</text><rect x="262" y="8" width="12" height="12" fill="var(--c)" fill-opacity=".35" stroke="var(--c)" stroke-width="1"/><text x="278" y="18">Perempuan</text></g></svg>',
+    s: "Carta palang berganda menunjukkan bilangan murid lelaki dan perempuan dalam empat kelas Tingkatan 3. Berapakah lebih banyak murid perempuan berbanding murid lelaki bagi keempat-empat kelas itu?",
+    en: "The dual bar chart shows the number of boys and girls in four Form 3 classes. How many more girls than boys are there in the four classes altogether?",
+    p: ['11', '19', '27', '137'], a: 0, topik: 'Data & Statistik', aras: 'mudah',
+    hurai: "Jumlah murid perempuan = 19 + 13 + 22 + 20 = 74. Jumlah murid lelaki = 17 + 21 + 14 + 11 = 63. Beza = 74 − 63 = <b>11</b>. (19 = 2 + 8 + 9, mengabaikan 3 Bestari yang lebih ramai murid lelaki; 27 = 2 + 8 + 8 + 9, menambah beza 3 Bestari sedangkan ia patut ditolak; 137 ialah jumlah semua murid.)"
+  },
+  { // 8 Geometri — mudah
+    s: "Jarum minit sebuah jam dinding panjangnya 7 cm. Berapakah jarak yang dilalui oleh hujung jarum minit itu dalam masa 45 minit? (Guna π = 22/7)",
+    en: "The minute hand of a wall clock is 7 cm long. How far does the tip of the minute hand travel in 45 minutes? (Use π = 22/7)",
+    p: ['33 cm', '44 cm', '66 cm', '115.5 cm'], a: 0, topik: 'Geometri & Pengukuran', aras: 'mudah',
+    hurai: "Dalam 60 minit, hujung jarum melalui satu lilitan penuh: 2 × 22/7 × 7 = 44 cm. Dalam 45 minit: 45/60 × 44 = <b>33 cm</b>. (44 cm ialah satu pusingan penuh; 66 cm mengambil 14 cm sebagai jejari; 115.5 ialah luas sektor, ½ × 22/7 × 7² × ¾ = 115.5 cm², bukan panjang lengkok.)"
+  },
+  { // 9 Geometri — sederhana
     rajah: '<svg viewBox="0 0 300 185" style="max-width:100%;width:320px" role="img" aria-label="Trapezium bersudut tegak ABCD: AB 10 cm, DC 16 cm, BC 10 cm, AD tegak"><path d="M30 30H180L270 150H30Z" fill="none" stroke="var(--c)" stroke-width="3"/><path d="M30 42h12v-12M30 138h12v12" fill="none" stroke="currentColor"/><g font-size="13" fill="currentColor"><text x="22" y="24">A</text><text x="182" y="24">B</text><text x="274" y="160">C</text><text x="16" y="164">D</text><text x="92" y="22">10 cm</text><text x="130" y="170">16 cm</text><text x="232" y="86">10 cm</text></g></svg>',
     s: "Rajah menunjukkan trapezium ABCD dengan AB selari dengan DC dan AD berserenjang dengan kedua-duanya. AB = 10 cm, DC = 16 cm dan BC = 10 cm. Berapakah luas trapezium itu?",
     en: "The diagram shows trapezium ABCD with AB parallel to DC and AD perpendicular to both. AB = 10 cm, DC = 16 cm, BC = 10 cm. What is the area of the trapezium?",
     p: ['104 cm²', '128 cm²', '130 cm²', '208 cm²'], a: 0, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Beza sisi selari = 16 − 10 = 6 cm. Tinggi AD = √(10² − 6²) = √64 = 8 cm. Luas = ½ × (10 + 16) × 8 = <b>104 cm²</b>. (130 cm² menggunakan sisi condong 10 cm sebagai tinggi; 208 cm² lupa ½; 128 cm² = 16 × 8.)"
   },
-  { // 7 Logik — sederhana
+  { // 10 Logik — sederhana
     s: "Jam dinding Pak Leman berjalan perlahan: bagi setiap 1 jam waktu sebenar, jarum jam itu hanya bergerak 55 minit. Dia menetapkan jam itu tepat pada pukul 7:00 pagi. Apabila jam itu menunjukkan pukul 6:00 petang pada hari yang sama, pukul berapakah waktu sebenar?",
     en: "Pak Leman's wall clock runs slow: for every 1 real hour it moves only 55 minutes. He sets it correctly at 7:00 a.m. When the clock shows 6:00 p.m. the same day, what is the real time?",
     p: ['5:05 petang', '6:00 petang', '6:55 petang', '7:00 petang'], a: 3, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Jam itu bergerak 11 jam = 660 minit. Setiap 55 minit pada jam = 60 minit sebenar, jadi masa sebenar = 660 ÷ 55 × 60 = 720 minit = 12 jam. 7:00 pagi + 12 jam = <b>7:00 petang</b>. (6:55 petang menambah 11 × 5 = 55 minit — ralat kerana jam lambat 5 minit bagi setiap jam <i>sebenar</i>, bukan setiap jam pada jam itu; 5:05 petang menolak pula.)"
   },
-  { // 8 Pola — sederhana
+  { // 11 Pola — sederhana
     s: "Pecahan <sup>5</sup>⁄<sub>7</sub> ditulis sebagai perpuluhan: 0.714285714285… Apakah digit ke-100 selepas titik perpuluhan?",
     en: "5/7 as a decimal is 0.714285714285… What is the 100th digit after the decimal point?",
     p: ['2', '4', '5', '8'], a: 0, topik: 'Pola & Jujukan', aras: 'sederhana',
     hurai: "Digit berulang dalam kitaran 6: 7, 1, 4, 2, 8, 5. 100 ÷ 6 = 16 baki 4, jadi digit ke-100 sama dengan digit ke-4 dalam kitaran = <b>2</b>. (4 dan 8 ialah digit ke-3 dan ke-5, ralat tersasar satu; 5 menganggap digit ke-100 menamatkan kitaran.)"
   },
-  { // 9 Persamaan linear — sederhana
+  { // 12 Persamaan linear — sederhana
     s: "Tambang bas ekspres ialah RM 45 bagi seorang dewasa dan RM 28 bagi seorang kanak-kanak. Satu kumpulan 14 orang membayar RM 528 kesemuanya. Berapakah bilangan orang dewasa dalam kumpulan itu?",
     en: "An express bus fare is RM 45 per adult and RM 28 per child. A group of 14 people paid RM 528 in total. How many adults are in the group?",
     p: ['6', '7', '8', '11'], a: 2, topik: 'Persamaan Linear', aras: 'sederhana',
     hurai: "Dewasa = d, kanak-kanak = 14 − d. 45d + 28(14 − d) = 528 → 17d + 392 = 528 → 17d = 136 → d = <b>8</b>. Semak: 8 × 45 + 6 × 28 = 360 + 168 = 528. (6 ialah bilangan kanak-kanak; 11 ≈ 528 ÷ 45; 7 = 14 ÷ 2.)"
   },
-  { // 10 Peratus — sederhana
+  { // 13 Peratus — sederhana
     s: "Harga asal sebuah pembersih udara ialah RM 480. Kedai menaikkan harganya sebanyak 25%. Sebulan kemudian, kedai itu memberi diskaun 20% daripada harga baharu. Berapakah harga akhir pembersih udara itu?",
     en: "An air purifier costs RM 480. The shop raises the price by 25%, then a month later gives a 20% discount on the new price. What is the final price?",
     p: ['RM 600', 'RM 504', 'RM 480', 'RM 456'], a: 2, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
     hurai: "Harga baharu = 480 × 1.25 = RM 600. Selepas diskaun = 600 × 0.80 = <b>RM 480</b> — sama dengan harga asal kerana 1.25 × 0.80 = 1. (RM 504 menganggap perubahan bersih +5% (25% − 20%); RM 456 menganggap −5%; RM 600 lupa diskaun.)"
   },
-  { // 11 Nisbah — sederhana
+  { // 14 Nisbah — sederhana
     s: "Konkrit dibancuh dengan nisbah isi padu simen : pasir : batu baur = 1 : 2 : 4. Seorang pekerja mempunyai 0.5 m³ simen, 1.2 m³ pasir dan 2.2 m³ batu baur. Berapakah isi padu maksimum bancuhan (jumlah ketiga-tiga bahan) yang boleh dihasilkan mengikut nisbah itu?",
     en: "Concrete is mixed in the volume ratio cement : sand : gravel = 1 : 2 : 4. A worker has 0.5 m³ cement, 1.2 m³ sand and 2.2 m³ gravel. What is the maximum total volume of mix he can make in this ratio?",
     p: ['3.5 m³', '3.85 m³', '3.9 m³', '4.2 m³'], a: 0, topik: 'Nisbah, Kadar & Laju', aras: 'sederhana',
     hurai: "Nilai 1 bahagian yang dibenarkan: simen 0.5 ÷ 1 = 0.5; pasir 1.2 ÷ 2 = 0.6; batu baur 2.2 ÷ 4 = 0.55. Bahan yang paling menghadkan ialah simen (0.5). Jumlah = 7 bahagian × 0.5 = <b>3.5 m³</b>. (3.85 dan 4.2 menggunakan had batu baur atau pasir; 3.9 menjumlahkan semua bahan tanpa ikut nisbah.)"
   },
-  { // 12 Data — sederhana (ISI)
+  { // 15 Data — sederhana (ISI)
     jenis: 'isi',
     rajah: '<table><tr><th>Bilangan adik-beradik</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><th>Bilangan murid</th><td>4</td><td>5</td><td>8</td><td>6</td><td>5</td><td>2</td></tr></table>',
     s: "Jadual kekerapan menunjukkan bilangan adik-beradik bagi setiap murid dalam sebuah kelas. Hitung min bilangan adik-beradik.",
@@ -78,57 +97,102 @@ UKKM_PART(8, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     a: 2.3, tol: 0.01, topik: 'Data & Statistik', aras: 'sederhana',
     hurai: "Jumlah murid = 4 + 5 + 8 + 6 + 5 + 2 = 30. Jumlah (nilai × kekerapan) = 0 + 5 + 16 + 18 + 20 + 10 = 69. Min = 69 ÷ 30 = <b>2.3</b>. (Ralat biasa: membahagi dengan 6 lajur atau mencari min kekerapan sahaja.)"
   },
-  { // 13 Geometri — sederhana
+  { // 16 Geometri — sederhana
     rajah: '<svg viewBox="0 0 240 240" style="max-width:100%;width:260px" role="img" aria-label="Satah Cartes dengan titik C(1, 2) dan P(4, 1)"><g stroke="var(--muted)" stroke-width="1" opacity=".6"><path d="M60 30V210M90 30V210M120 30V210M150 30V210M180 30V210M210 30V210M30 180H210M30 150H210M30 120H210M30 90H210M30 60H210M30 30H210"/></g><g stroke="currentColor" stroke-width="1.5"><path d="M30 215V25M25 210H215"/></g><g font-size="12" fill="currentColor" text-anchor="middle"><text x="30" y="226">0</text><text x="60" y="226">1</text><text x="90" y="226">2</text><text x="120" y="226">3</text><text x="150" y="226">4</text><text x="180" y="226">5</text><text x="210" y="226">6</text><text x="18" y="184">1</text><text x="18" y="154">2</text><text x="18" y="124">3</text><text x="18" y="94">4</text><text x="18" y="64">5</text><text x="18" y="34">6</text><text x="222" y="214">x</text><text x="30" y="18">y</text></g><circle cx="60" cy="150" r="5" fill="var(--c)"/><circle cx="150" cy="180" r="5" fill="var(--c)"/><g font-size="13" fill="currentColor" font-weight="700"><text x="66" y="144">C</text><text x="156" y="174">P</text></g></svg>',
     s: "Titik P(4, 1) diputarkan 90° <b>lawan arah jam</b> pada pusat C(1, 2). Apakah koordinat imej P?",
     en: "Point P(4, 1) is rotated 90° anticlockwise about centre C(1, 2). What are the coordinates of the image of P?",
     p: ['(−1, 4)', '(0, −1)', '(1, 3)', '(2, 5)'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Dari C ke P: 3 unit ke kanan, 1 unit ke bawah. Putaran 90° lawan arah jam menukar \"3 kanan, 1 bawah\" kepada \"1 kanan, 3 atas\". Imej = (1 + 1, 2 + 3) = <b>(2, 5)</b>. ((−1, 4) ialah putaran pada asalan O; (0, −1) ialah putaran ikut arah jam; (1, 3) lupa menambah semula koordinat C.)"
   },
-  { // 14 Logik — sederhana
+  { // 17 Logik — sederhana
     s: "Dalam satu kejohanan bola tampar, 8 pasukan bermain dalam satu kumpulan dan setiap pasukan bertemu setiap pasukan lain <b>tepat sekali</b>. Empat pasukan teratas kemudian mara ke separuh akhir dan pemenangnya bertemu di perlawanan akhir. Berapakah jumlah perlawanan dalam kejohanan itu?",
     en: "In a volleyball tournament, 8 teams play in one group and each team meets every other team exactly once. The top four go to the semi-finals and the winners meet in the final. How many matches are played in total?",
     p: ['59', '35', '31', '28'], a: 2, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Peringkat kumpulan: setiap pasukan main 7 kali, 8 × 7 = 56, tetapi setiap perlawanan dikira dua kali → 56 ÷ 2 = 28. Separuh akhir 2 + akhir 1 = 3. Jumlah = <b>31</b>. (59 = 56 + 3, lupa bahagi dua; 28 lupa peringkat kalah mati; 35 = 28 + 7.)"
   },
-  { // 15 Pola — sukar
+  { // 18 Pola — sederhana
+    s: "Sebutan pertama suatu jujukan ialah 5. Setiap sebutan seterusnya diperoleh dengan mengkuasaduakan sebutan sebelumnya, kemudian menjumlahkan digit hasilnya. Contohnya, 5² = 25 dan 2 + 5 = 7, jadi sebutan kedua ialah 7. Apakah sebutan ke-102?",
+    en: "The first term of a sequence is 5. Each next term is found by squaring the previous term, then adding the digits of the result. For example, 5² = 25 and 2 + 5 = 7, so the second term is 7. What is the 102nd term?",
+    p: ['7', '13', '16', '256'], a: 2, topik: 'Pola & Jujukan', aras: 'sederhana',
+    hurai: "7² = 49 → 4 + 9 = 13; 13² = 169 → 1 + 6 + 9 = 16; 16² = 256 → 2 + 5 + 6 = 13; … Jujukan: 5, 7, 13, 16, 13, 16, … Mulai sebutan ke-3, 13 dan 16 berulang: sebutan ganjil = 13, sebutan genap = 16. 102 ialah nombor genap → <b>16</b>. (13 tersilap padanan ganjil/genap; 7 menganggap empat sebutan pertama 5, 7, 13, 16 berulang, 102 = 4 × 25 + 2; 256 = 16², terlupa menjumlahkan digit.)"
+  },
+  { // 19 Peratus — sederhana
+    s: "Dalam satu peperiksaan percubaan, 80% daripada calon lulus Matematik. Daripada calon yang lulus, 30% mendapat gred A. Seramai 54 orang calon mendapat gred A. Berapakah bilangan calon yang <b>gagal</b>?",
+    en: "In a trial exam, 80% of the candidates passed Mathematics. Of those who passed, 30% got grade A. 54 candidates got grade A. How many candidates failed?",
+    p: ['36', '45', '180', '225'], a: 1, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
+    hurai: "30% daripada calon lulus = 54 → calon lulus = 54 ÷ 0.3 = 180. 80% daripada semua calon = 180 → jumlah calon = 180 ÷ 0.8 = 225. Gagal = 225 − 180 = <b>45</b> (iaitu 20% × 225). (36 = 20% × 180, mengambil 20% daripada calon yang lulus; 180 ialah bilangan calon yang lulus; 225 ialah jumlah calon.)"
+  },
+  { // 20 Data — sederhana
+    rajah: '<table><tr><th>Masa (minit)</th><th>Bilangan murid</th></tr><tr><td>1 – 10</td><td>6</td></tr><tr><td>11 – 20</td><td>9</td></tr><tr><td>21 – 30</td><td>14</td></tr><tr><td>31 – 40</td><td>13</td></tr><tr><td>41 – 50</td><td>8</td></tr></table>',
+    s: "Jadual kekerapan menunjukkan masa (dalam minit, nombor bulat) yang diluangkan oleh 50 orang murid untuk membaca pada suatu hari. Berapakah peratus murid yang membaca <b>lebih daripada 20 minit</b>?",
+    en: "The frequency table shows the time (in whole minutes) that 50 pupils spent reading on one day. What percentage of the pupils read for more than 20 minutes?",
+    p: ['28%', '42%', '58%', '70%'], a: 3, topik: 'Data & Statistik', aras: 'sederhana',
+    hurai: "Lebih daripada 20 minit bermaksud kelas 21 – 30, 31 – 40 dan 41 – 50: 14 + 13 + 8 = 35 orang. Peratus = 35/50 × 100% = <b>70%</b>. (Semak: 6 + 9 = 15 orang membaca 20 minit atau kurang, dan 15 + 35 = 50.) (58% = 29/50, iaitu 6 + 9 + 14, murid yang membaca 30 minit atau kurang; 42% = (13 + 8)/50, iaitu lebih daripada 30 minit sahaja; 28% = 14/50, kelas 21 – 30 sahaja.)"
+  },
+  { // 21 Logik — sederhana
+    rajah: '<table><tr><th>Tugas</th><th>Masa (minit)</th><th>Boleh bermula selepas</th></tr><tr><td style="text-align:left">P: Mengambil bahan dari stor</td><td>20</td><td>–</td></tr><tr><td style="text-align:left">Q: Menyiang ayam</td><td>15</td><td>P siap</td></tr><tr><td style="text-align:left">R: Membasuh beras</td><td>10</td><td>–</td></tr><tr><td style="text-align:left">S: Memasak nasi (guna dapur)</td><td>30</td><td>R siap</td></tr><tr><td style="text-align:left">T: Memasak kari ayam (guna dapur)</td><td>35</td><td>Q siap</td></tr><tr><td style="text-align:left">U: Menghidang makanan</td><td>10</td><td>S dan T siap</td></tr></table>',
+    s: "Sekumpulan pengakap menyediakan makan tengah hari di tapak perkhemahan. Jadual menunjukkan enam tugas yang perlu dilakukan. Ahli kumpulan cukup ramai, jadi tugas yang berlainan boleh dibuat serentak oleh orang yang berlainan. Namun, hanya ada <b>sebuah dapur gas satu tungku</b>, jadi tugas S dan T tidak boleh dibuat pada masa yang sama. Berapakah masa minimum untuk menyiapkan semua tugas?",
+    en: "A group of scouts prepares lunch at a campsite. The table shows six tasks. There are enough members for different tasks to be done at the same time by different people. However, there is only one single-burner gas stove, so tasks S and T cannot be done at the same time. What is the minimum time to complete all the tasks?",
+    p: ['75 minit', '80 minit', '85 minit', '110 minit'], a: 2, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "T hanya boleh bermula pada minit ke-35 (selepas P dan Q), manakala S boleh bermula pada minit ke-10 (selepas R). Jika S dimasak dahulu (minit 10 – 40), T bermula sebaik dapur kosong (minit 40 – 75) dan U dibuat pada minit 75 – 85. Jika T dimasak dahulu (minit 35 – 70), S hanya tamat pada minit ke-100 dan U tamat pada minit ke-110. Masa minimum = <b>85 minit</b>. (80 minit mengabaikan had dapur: 20 + 15 + 35 + 10; 110 minit memasak T dahulu; 75 minit terlupa tugas U.)"
+  },
+  { // 22 Pola — sukar
     rajah: '<svg viewBox="0 0 260 100" style="max-width:100%;width:300px" role="img" aria-label="Pola jubin kelabu mengelilingi jubin putih"><g stroke="currentColor"><rect x="10" y="20" width="48" height="48" fill="var(--muted)"/><rect x="26" y="36" width="16" height="16" fill="var(--card)"/><path d="M26 20v48M42 20v48M10 36h48M10 52h48" fill="none"/><rect x="80" y="20" width="64" height="48" fill="var(--muted)"/><rect x="96" y="36" width="32" height="16" fill="var(--card)"/><path d="M96 20v48M112 20v48M128 20v48M80 36h64M80 52h64" fill="none"/><rect x="170" y="20" width="80" height="48" fill="var(--muted)"/><rect x="186" y="36" width="48" height="16" fill="var(--card)"/><path d="M186 20v48M202 20v48M218 20v48M234 20v48M170 36h80M170 52h80" fill="none"/></g><g font-size="12" fill="currentColor"><text x="12" y="88">Rajah 1</text><text x="90" y="88">Rajah 2</text><text x="188" y="88">Rajah 3</text></g></svg>',
     s: "Dalam pola di atas, satu baris jubin putih dikelilingi oleh jubin kelabu. Satu rajah dalam pola yang sama menggunakan <b>150 jubin kesemuanya</b>. Berapakah bilangan jubin kelabu dalam rajah itu?",
     en: "In the pattern, a row of white tiles is surrounded by grey tiles. One figure in the same pattern uses 150 tiles altogether. How many grey tiles does it have?",
     p: ['102', '100', '96', '48'], a: 0, topik: 'Pola & Jujukan', aras: 'sukar',
     hurai: "Rajah ke-n: n jubin putih, segi empat tepat 3 × (n + 2). Jumlah jubin = 3(n + 2) = 3n + 6; kelabu = 3n + 6 − n = 2n + 6. 3n + 6 = 150 → n = 48. Kelabu = 2(48) + 6 = <b>102</b>. (48 ialah bilangan jubin putih; 96 = 2n, lupa 6 jubin di hujung; 100 = ⅔ × 150.)"
   },
-  { // 16 Persamaan linear — sukar
+  { // 23 Persamaan linear — sukar
     s: "Di pasar tani, 3 biji mangga dan 4 biji epal berharga RM 13.20, manakala 5 biji mangga dan 2 biji epal berharga RM 15.00. Berapakah harga 2 biji mangga dan 3 biji epal?",
     en: "At a farmers' market, 3 mangoes and 4 apples cost RM 13.20, while 5 mangoes and 2 apples cost RM 15.00. What is the price of 2 mangoes and 3 apples?",
     p: ['RM 10.20', 'RM 9.40', 'RM 9.30', 'RM 7.80'], a: 2, topik: 'Persamaan Linear', aras: 'sukar',
     hurai: "3m + 4e = 13.20 … (1); 5m + 2e = 15.00 … (2). (2) × 2: 10m + 4e = 30.00. Tolak (1): 7m = 16.80 → m = 2.40. Daripada (2): 2e = 15 − 12 = 3 → e = 1.50. 2m + 3e = 4.80 + 4.50 = <b>RM 9.30</b>. (RM 10.20 menukar harga mangga dan epal; RM 9.40 = (13.20 + 15.00) ÷ 3, jalan pintas yang salah; RM 7.80 = 2 × (m + e).)"
   },
-  { // 17 Peratus — sukar
+  { // 24 Peratus — sukar
     s: "Harga sejenis saham jatuh 20% pada hari Isnin dan jatuh lagi 10% pada hari Selasa. Berapakah peratus kenaikan yang diperlukan pada hari Rabu supaya harganya kembali sama dengan harga sebelum hari Isnin?",
     en: "A share price falls 20% on Monday and a further 10% on Tuesday. What percentage increase is needed on Wednesday to return to the price before Monday?",
     p: ['28.0%', '30.0%', '36.1%', '38.9%'], a: 3, topik: 'Peratus & Matematik Pengguna', aras: 'sukar',
     hurai: "Harga selepas dua hari = 0.8 × 0.9 = 0.72 daripada asal. Kenaikan diperlukan = (1 − 0.72) ÷ 0.72 = 0.28 ÷ 0.72 ≈ <b>38.9%</b>. (28% ialah peratus penurunan, bukan kenaikan; 30% = 20% + 10%; 36.1% = 25% + 11.1%, menjumlahkan kenaikan untuk setiap hari secara berasingan.)"
   },
-  { // 18 Kadar & zon masa — sukar (ISI)
+  { // 25 Kadar & zon masa — sukar (ISI)
     jenis: 'isi',
     s: "Sebuah pesawat berlepas dari Kuala Lumpur pada pukul 9:00 pagi waktu Malaysia dan mendarat di London pada pukul 3:30 petang waktu London pada hari yang sama. Waktu London ialah 7 jam di belakang waktu Malaysia. Jarak penerbangan ialah 10 800 km. Hitung laju purata pesawat itu dalam km/j.",
     en: "A plane leaves Kuala Lumpur at 9:00 a.m. Malaysian time and lands in London at 3:30 p.m. London time the same day. London time is 7 hours behind Malaysian time. The flight distance is 10 800 km. Find the average speed in km/h.",
     a: 800, unit: 'km/j', topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
     hurai: "9:00 pagi waktu Malaysia = 2:00 pagi waktu London. Masa penerbangan = 2:00 pagi hingga 3:30 petang = 13.5 jam. Laju = 10 800 ÷ 13.5 = <b>800 km/j</b>. (Jika zon masa diabaikan, masa disangka 6.5 jam dan laju ≈ 1 662 km/j — salah.)"
   },
-  { // 19 Data — sukar
+  { // 26 Data — sukar
     s: "Markah ujian lapan murid ialah:<br><b>56, 72, 48, 65, 80, 59, 72, 61</b><br>Dua murid lagi mengambil ujian itu dan memperoleh 70 dan 52. Apakah kesan kepada <b>median</b> markah?",
     en: "Eight pupils scored 56, 72, 48, 65, 80, 59, 72, 61. Two more pupils score 70 and 52. What happens to the median mark?",
     p: ['Berkurang 3', 'Berkurang 2', 'Berkurang 0.625', 'Tidak berubah'], a: 3, topik: 'Data & Statistik', aras: 'sukar',
     hurai: "Susun 8 markah: 48, 56, 59, 61, 65, 72, 72, 80 → median = (61 + 65) ÷ 2 = 63. Susun 10 markah: 48, 52, 56, 59, 61, 65, 70, 72, 72, 80 → median = (61 + 65) ÷ 2 = 63. Median <b>tidak berubah</b> (satu markah baharu di bawah 61, satu di atas 65). (Berkurang 3 datang daripada tidak menyusun data; berkurang 2 mengambil nilai ke-5 sahaja sebagai median; 0.625 ialah perubahan min, bukan median.)"
   },
-  { // 20 Geometri — sukar
+  { // 27 Geometri — sukar
     rajah: '<svg viewBox="0 0 250 170" style="max-width:100%;width:290px" role="img" aria-label="Bulatan pusat O, tangen PT menyentuh bulatan di T, garis PO memotong bulatan di Q"><circle cx="90" cy="100" r="50" fill="none" stroke="var(--c)" stroke-width="2.5"/><g stroke="currentColor" stroke-width="2" fill="none"><path d="M90 100L109.2 53.8L220 100Z"/><path d="M106.2 61.2L113.5 64.3L116.6 56.9"/></g><circle cx="90" cy="100" r="3" fill="currentColor"/><circle cx="140" cy="100" r="3" fill="currentColor"/><g font-size="13" fill="currentColor"><text x="78" y="116">O</text><text x="104" y="46">T</text><text x="224" y="106">P</text><text x="140" y="116">Q</text><text x="74" y="76">5 cm</text><text x="162" y="68">12 cm</text></g></svg>',
     s: "Dalam rajah, PT ialah tangen kepada bulatan berpusat O di titik T. Jejari bulatan ialah 5 cm dan PT = 12 cm. Garis lurus PO memotong bulatan di Q. Berapakah panjang PQ?",
     en: "In the diagram, PT is a tangent to the circle with centre O at point T. The radius is 5 cm and PT = 12 cm. Line PO cuts the circle at Q. What is the length of PQ?",
     p: ['13 cm', '10.9 cm', '8 cm', '7 cm'], a: 2, topik: 'Geometri & Pengukuran', aras: 'sukar',
     hurai: "Tangen berserenjang dengan jejari, jadi ∠OTP = 90°. OP = √(5² + 12²) = √169 = 13 cm. PQ = OP − OQ = 13 − 5 = <b>8 cm</b>. (13 cm ialah OP; 10.9 cm = √(12² − 5²), tersilap memilih hipotenus; 7 cm = 12 − 5.)"
+  },
+  { // 28 Persamaan linear — sukar
+    s: "Sebuah nombor dua digit adalah 4 kali hasil tambah digitnya. Jika 18 ditambah kepada nombor itu, hasilnya ialah 6 kali hasil tambah digitnya. Apakah nombor itu?",
+    en: "A two-digit number is 4 times the sum of its digits. If 18 is added to the number, the result is 6 times the sum of its digits. What is the number?",
+    p: ['9', '36', '54', '63'], a: 1, topik: 'Persamaan Linear', aras: 'sukar',
+    hurai: "Katakan hasil tambah digit = s. Nombor = 4s dan nombor + 18 = 6s. Maka 4s + 18 = 6s → 2s = 18 → s = 9, jadi nombor = 4 × 9 = <b>36</b>. Semak: 3 + 6 = 9; 36 = 4 × 9; 36 + 18 = 54 = 6 × 9. (9 ialah hasil tambah digit, bukan nombor itu; 54 = 36 + 18, iaitu nombor selepas ditambah 18; 63 menukar kedudukan digit, tetapi 63 ≠ 4 × 9.)"
+  },
+  { // 29 Kadar — sukar (ISI)
+    jenis: 'isi',
+    s: "Nisbah bilangan setem dalam album A kepada album B ialah 5 : 3. Mei Ling memindahkan sebilangan setem dari album A ke album B, lalu nisbah A : B menjadi 3 : 5. Kemudian, dia memindahkan 12 keping setem dari album B kembali ke album A, dan kini kedua-dua album mempunyai bilangan setem yang sama. Berapakah bilangan setem yang dipindahkan pada kali <b>pertama</b>?",
+    en: "The ratio of the number of stamps in album A to album B is 5 : 3. Mei Ling moves some stamps from album A to album B, and the ratio A : B becomes 3 : 5. Then she moves 12 stamps from album B back to album A, and now both albums have the same number of stamps. How many stamps were moved the first time?",
+    a: 24, unit: 'keping', topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
+    hurai: "Jumlah setem, T, tidak berubah. Selepas pindahan pertama, B = 5/8 T; selepas 12 keping dipindahkan keluar, B = 1/2 T. Jadi 5/8 T − 1/2 T = 12 → 1/8 T = 12 → T = 96. Asal: A = 60, B = 36. Selepas pindahan pertama: A = 36, B = 60. Setem yang dipindahkan = 60 − 36 = <b>24</b> keping. (Ralat biasa: menjawab 96, iaitu jumlah setem, atau 12, iaitu pindahan kedua.)"
+  },
+  { // 30 Geometri — sukar
+    s: "Titik A(2, 5) dipantulkan pada garis y = x untuk menghasilkan imej A′. Kemudian, A′ diputarkan 180° pada asalan O untuk menghasilkan imej A″. Berapakah luas segi tiga AA′A″?",
+    en: "Point A(2, 5) is reflected in the line y = x to give the image A′. Then A′ is rotated 180° about the origin O to give the image A″. What is the area of triangle AA′A″?",
+    p: ['6 unit²', '15 unit²', '20 unit²', '21 unit²'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sukar',
+    hurai: "Pantulan pada y = x menukar kedudukan koordinat: A′ = (5, 2). Putaran 180° pada O menukar tanda kedua-dua koordinat: A″ = (−5, −2). Kecerunan AA′ = (2 − 5)/(5 − 2) = −1 dan kecerunan AA″ = (−2 − 5)/(−5 − 2) = 1, jadi ∠A = 90°. AA′ = √(3² + 3²) = 3√2 dan AA″ = √(7² + 7²) = 7√2. Luas = ½ × 3√2 × 7√2 = ½ × 42 = <b>21 unit²</b>. (Semak dengan segi empat tepat yang melingkungi: 10 × 7 − 4.5 − 20 − 24.5 = 21.) (20 unit² memantulkan A pada paksi-y, bukan garis y = x; 6 unit² memutarkan A′ 90° lawan arah jam, bukan 180°; 15 unit² menganggap putaran 180° hanya menukar tanda koordinat x, iaitu A″ = (−5, 2).)"
   }
   ]
 });

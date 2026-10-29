@@ -1,6 +1,6 @@
 (function () { const B = {}; const UKKM_PART = (n, b) => { B[b.id] = b; };
 UKKM_PART(6, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
-  arahan: 'Jawab semua 20 soalan. 18 soalan objektif (pilih A, B, C atau D) dan 2 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
+  arahan: 'Jawab semua 30 soalan. 27 soalan objektif (pilih A, B, C atau D) dan 3 soalan isian (taip jawapan nombor). Kalkulator saintifik dibenarkan; gunakan kertas conteng.',
   soalan: [
   { // 1 Pola — mudah
     s: "Apakah nombor seterusnya dalam jujukan berikut?<br><b>2, 5, 7, 12, 19, 31, …</b>",
@@ -33,19 +33,38 @@ UKKM_PART(6, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     p: ['RM 40.00', 'RM 75.00', 'RM 100.00', 'RM 175.00'], a: 2, topik: 'Data & Statistik', aras: 'mudah',
     hurai: "Tertinggi Khamis = 70, terendah Rabu = 30. Beza = 40 bungkus × RM 2.50 = <b>RM 100</b>. (RM 40 ialah beza bungkus, bukan ringgit; RM 75 = (60 − 30) × 2.50, tersalah pilih Selasa sebagai tertinggi; RM 175 = 70 × 2.50 ialah hasil Khamis sahaja.)"
   },
-  { // 6 Luas permukaan — sederhana
+  { // 6 Kadar — mudah
+    s: "Kereta P menggunakan 20 liter petrol untuk bergerak sejauh 300 km, manakala kereta Q menggunakan 15 liter untuk 270 km. Kedua-dua kereta melakukan perjalanan sejauh 450 km. Berapakah liter petrol <b>lebih</b> yang digunakan oleh kereta P berbanding kereta Q?",
+    en: "Car P uses 20 litres of petrol to travel 300 km, while car Q uses 15 litres for 270 km. Both cars travel 450 km. How many more litres of petrol does car P use than car Q?",
+    p: ['3 liter', '5 liter', '25 liter', '30 liter'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'mudah',
+    hurai: "Kadar P = 300 ÷ 20 = 15 km/liter; kadar Q = 270 ÷ 15 = 18 km/liter. Untuk 450 km: P guna 450 ÷ 15 = 30 liter; Q guna 450 ÷ 18 = 25 liter. Beza = 30 − 25 = <b>5 liter</b>. (3 liter ialah beza kadar 18 − 15 km/liter, bukan beza petrol; 25 liter dan 30 liter ialah penggunaan setiap kereta sahaja.)"
+  },
+  { // 7 Data — mudah
+    s: "Pak Hassan menimbang 9 biji durian. Jisimnya, dalam kg, adalah seperti berikut:<br><b>2.4, 3.1, 1.8, 2.9, 3.6, 2.2, 2.7, 3.3, 1.4</b><br>Berapakah median jisim durian itu?",
+    en: "Pak Hassan weighs 9 durians. Their masses in kg are 2.4, 3.1, 1.8, 2.9, 3.6, 2.2, 2.7, 3.3, 1.4. What is the median mass?",
+    p: ['2.2 kg', '2.6 kg', '2.7 kg', '3.6 kg'], a: 2, topik: 'Data & Statistik', aras: 'mudah',
+    hurai: "Susun menaik: 1.4, 1.8, 2.2, 2.4, <b>2.7</b>, 2.9, 3.1, 3.3, 3.6. Bilangan data ganjil (9), jadi median ialah nilai ke-5 = <b>2.7 kg</b>. (2.2 kg ialah julat, 3.6 − 1.4; 2.6 kg ialah min, 23.4 ÷ 9; 3.6 kg ialah nilai ke-5 dalam senarai asal yang belum disusun.)"
+  },
+  { // 8 Geometri — mudah
+    rajah: '<svg viewBox="0 0 190 180" style="max-width:100%;width:220px" role="img" aria-label="Bentangan sebuah pepejal: lima segi empat tepat bersambung dalam satu baris, dengan satu pentagon sekata pada sisi atas dan satu pentagon sekata pada sisi bawah segi empat tepat yang tengah"><g fill="var(--c)" fill-opacity="0.15" stroke="var(--c)" stroke-width="2"><rect x="20" y="70" width="30" height="50"/><rect x="50" y="70" width="30" height="50"/><rect x="80" y="70" width="30" height="50"/><rect x="110" y="70" width="30" height="50"/><rect x="140" y="70" width="30" height="50"/><path d="M110 70 L80 70 L70.7 41.5 L95 23.8 L119.3 41.5 Z"/><path d="M80 120 L110 120 L119.3 148.5 L95 166.2 L70.7 148.5 Z"/></g></svg>',
+    s: "Rajah menunjukkan bentangan sebuah pepejal yang terdiri daripada lima segi empat tepat dan dua pentagon sekata. Apabila bentangan itu dilipat, berapakah bilangan <b>tepi</b> pepejal yang terbentuk?",
+    en: "The diagram shows the net of a solid made of five rectangles and two regular pentagons. When the net is folded, how many edges does the solid have?",
+    p: ['7', '10', '15', '24'], a: 2, topik: 'Geometri & Pengukuran', aras: 'mudah',
+    hurai: "Pepejal itu ialah prisma pentagon. Setiap pentagon mempunyai 5 tepi (5 + 5 = 10), ditambah 5 tepi sisi yang menyambungkan kedua-dua pentagon: 10 + 5 = <b>15</b> tepi (semak rumus Euler: M + B − T = 7 + 10 − 15 = 2). (7 ialah bilangan muka; 10 ialah bilangan bucu; 24 ialah bilangan ruas garis yang dilukis pada bentangan — apabila dilipat, beberapa sisi bercantum menjadi satu tepi.)"
+  },
+  { // 9 Luas permukaan — sederhana
     s: "Sebuah kotak tanpa penutup berbentuk kuboid berukuran 30 cm panjang, 20 cm lebar dan 12 cm tinggi diperbuat daripada kadbod. Berapakah luas kadbod yang digunakan (abaikan pertindihan)?",
     en: "An open box (no lid) shaped like a cuboid, 30 cm long, 20 cm wide and 12 cm high, is made of cardboard. What area of cardboard is used (ignore overlaps)?",
     p: ['1200 cm²', '1800 cm²', '2400 cm²', '7200 cm²'], a: 1, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Tapak = 30 × 20 = 600. Dua sisi panjang = 2 × 30 × 12 = 720. Dua sisi lebar = 2 × 20 × 12 = 480. Jumlah = <b>1800 cm²</b> (tiada penutup). (2400 cm² ialah kotak bertutup; 1200 cm² hanya sisi tegak; 7200 ialah isi padu dalam cm³.)"
   },
-  { // 7 Logik — sederhana
+  { // 10 Logik — sederhana
     s: "Lima ceramah, P, Q, R, S dan T, diadakan dari hari Isnin hingga Jumaat, satu ceramah sehari.<br>• Ceramah T diadakan pada hari Rabu.<br>• Ceramah Q diadakan sehari selepas ceramah P.<br>• Ceramah S diadakan lebih awal daripada ceramah P.<br>• Ceramah R tidak diadakan pada hari Isnin.<br>Pada hari apakah ceramah S diadakan?",
     en: "Five talks P, Q, R, S, T are held Monday to Friday, one per day. T is on Wednesday. Q is the day after P. S is earlier than P. R is not on Monday. On which day is S held?",
     p: ['Isnin', 'Selasa', 'Khamis', 'Jumaat'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "P dan Q mesti dua hari berturutan tanpa Rabu: (Isnin, Selasa) atau (Khamis, Jumaat). S mesti sebelum P, jadi P bukan Isnin → P Khamis, Q Jumaat. Isnin dan Selasa tinggal untuk R dan S; R bukan Isnin → R Selasa, S <b>Isnin</b>."
   },
-  { // 8 Pola — sederhana (ISI)
+  { // 11 Pola — sederhana (ISI)
     jenis: 'isi',
     rajah: '<svg viewBox="0 0 220 100" style="max-width:100%;width:260px" role="img" aria-label="Tangga daripada blok: 1 anak tangga 1 blok, 2 anak tangga 3 blok, 3 anak tangga 6 blok"><g fill="var(--c)" fill-opacity=".35" stroke="currentColor" stroke-width="1.5"><rect x="15" y="62" width="16" height="16"/><rect x="65" y="62" width="16" height="16"/><rect x="81" y="62" width="16" height="16"/><rect x="81" y="46" width="16" height="16"/><rect x="135" y="62" width="16" height="16"/><rect x="151" y="62" width="16" height="16"/><rect x="167" y="62" width="16" height="16"/><rect x="151" y="46" width="16" height="16"/><rect x="167" y="46" width="16" height="16"/><rect x="167" y="30" width="16" height="16"/></g><g font-size="12" fill="currentColor"><text x="4" y="96">Rajah 1</text><text x="58" y="96">Rajah 2</text><text x="138" y="96">Rajah 3</text></g></svg>',
     s: "Sebuah tangga dibina daripada blok segi empat sama seperti dalam rajah. Tangga dengan 1 anak tangga memerlukan 1 blok, 2 anak tangga memerlukan 3 blok dan 3 anak tangga memerlukan 6 blok. Berapakah bilangan blok yang diperlukan untuk tangga dengan <b>20</b> anak tangga?",
@@ -53,82 +72,126 @@ UKKM_PART(6, { id: 'mat', nama: 'Matematik', ikon: '🧮', minit: 30,
     a: 210, unit: 'blok', topik: 'Pola & Jujukan', aras: 'sederhana',
     hurai: "Bilangan blok = 1 + 2 + 3 + … + 20. Pasangkan sebutan: (1 + 20) + (2 + 19) + … = 10 pasangan × 21 = <b>210</b> blok. (Rumus n(n + 1) ÷ 2 = 20 × 21 ÷ 2.)"
   },
-  { // 9 Persamaan linear — sederhana
+  { // 12 Persamaan linear — sederhana
     s: "Sebuah kedai sewa mempunyai 36 buah basikal dan basikal roda tiga, dengan jumlah 87 roda. Sewa sejam ialah RM 5 bagi basikal dan RM 8 bagi basikal roda tiga. Berapakah jumlah sewa sejam jika <b>semua</b> disewa serentak?",
     en: "A rental shop has 36 bicycles and tricycles with 87 wheels in total. Hourly rent is RM 5 per bicycle and RM 8 per tricycle. What is the total hourly rent if all are rented at once?",
     p: ['RM 225', 'RM 234', 'RM 243', 'RM 288'], a: 0, topik: 'Persamaan Linear', aras: 'sederhana',
     hurai: "Basikal b, roda tiga t: b + t = 36, 2b + 3t = 87. Tolak 2 × (persamaan pertama): t = 87 − 72 = 15, b = 21. Sewa = 21 × 5 + 15 × 8 = 105 + 120 = <b>RM 225</b>. (RM 243 menukar bilangan basikal dan roda tiga; RM 234 menganggap 18 setiap jenis; RM 288 = 36 × 8.)"
   },
-  { // 10 Susut nilai — sederhana
+  { // 13 Susut nilai — sederhana
     s: "Sebuah van berharga RM 60 000. Nilainya menyusut 15% setiap tahun berdasarkan nilai pada awal tahun itu. Berapakah nilai van itu selepas 3 tahun?",
     en: "A van costs RM 60 000. Its value falls by 15% each year, based on its value at the start of that year. What is its value after 3 years?",
     p: ['RM 51 000.00', 'RM 36 847.50', 'RM 33 000.00', 'RM 23 152.50'], a: 1, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
     hurai: "Nilai = 60 000 × 0.85³ = 60 000 × 0.614125 = <b>RM 36 847.50</b>. (RM 33 000 = 60 000 × (1 − 0.45), menolak 15% daripada harga asal setiap tahun; RM 51 000 ialah nilai selepas 1 tahun; RM 23 152.50 ialah jumlah susut nilai, bukan nilai van.)"
   },
-  { // 11 Nisbah gear — sederhana
+  { // 14 Nisbah gear — sederhana
     s: "Gear A (48 gigi) berputar 25 putaran seminit dan memacu gear B (16 gigi). Gear C (20 gigi) dipasang pada paksi yang sama dengan gear B, jadi berputar sama laju dengan B. Gear C memacu gear D (50 gigi). Berapakah bilangan putaran seminit gear D?",
     en: "Gear A (48 teeth) turns at 25 rpm and drives gear B (16 teeth). Gear C (20 teeth) is on the same axle as B, so it turns at the same speed. C drives gear D (50 teeth). How many revolutions per minute does D make?",
     p: ['25', '30', '75', '187.5'], a: 1, topik: 'Nisbah, Kadar & Laju', aras: 'sederhana',
     hurai: "Gigi yang bertemu per minit adalah sama: B = 25 × 48 ÷ 16 = 75 put/min. C = 75 put/min. D = 75 × 20 ÷ 50 = <b>30</b> put/min. (75 ialah laju B/C; 187.5 = 75 × 50 ÷ 20, nisbah terbalik; 25 menganggap laju tidak berubah.)"
   },
-  { // 12 Data — sederhana
+  { // 15 Data — sederhana
     rajah: '<table><tr><th>Saiz kasut</th><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr><tr><th>Bilangan murid</th><td>2</td><td>4</td><td>7</td><td>9</td><td>14</td></tr></table>',
     s: "Jadual kekerapan menunjukkan saiz kasut sekumpulan murid. Berapakah <b>median</b> saiz kasut?",
     en: "The frequency table shows the shoe sizes of a group of pupils. What is the median shoe size?",
     p: ['6', '6.81', '7', '8'], a: 2, topik: 'Data & Statistik', aras: 'sederhana',
     hurai: "Jumlah murid = 36. Median = purata nilai ke-18 dan ke-19. Kekerapan longgokan: 2, 6, 13, 22 → nilai ke-14 hingga ke-22 ialah saiz 7. Median = <b>7</b>. (8 ialah mod; 6.81 ialah min = 245 ÷ 36; 6 ialah saiz di tengah jadual, bukan median data.)"
   },
-  { // 13 Koordinat — sederhana
+  { // 16 Koordinat — sederhana
     s: "M(1, 4) ialah titik tengah bagi garis lurus PQ. Diberi P(−3, 7), berapakah panjang PQ dalam unit?",
     en: "M(1, 4) is the midpoint of line segment PQ. Given P(−3, 7), what is the length of PQ in units?",
     p: ['5', '6', '8', '10'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sederhana',
     hurai: "Q = (2 × 1 − (−3), 2 × 4 − 7) = (5, 1). PQ = √((5 − (−3))² + (1 − 7)²) = √(64 + 36) = <b>10</b>. (5 ialah PM, separuh sahaja; 8 dan 6 ialah beza mengufuk dan menegak sahaja.)"
   },
-  { // 14 Logik pembilangan — sederhana
+  { // 17 Logik pembilangan — sederhana
     s: "Nombor tiga digit dibentuk menggunakan digit 0, 2, 5, 7 dan 9 <b>tanpa ulangan</b>. Berapakah bilangan nombor tiga digit <b>genap</b> yang dapat dibentuk?",
     en: "Three-digit numbers are formed from the digits 0, 2, 5, 7, 9 without repetition. How many even three-digit numbers can be formed?",
     p: ['12', '18', '21', '24'], a: 2, topik: 'Penaakulan Logik', aras: 'sederhana',
     hurai: "Digit akhir mesti 0 atau 2. Berakhir 0: ratus 4 pilihan, puluh 3 pilihan → 12. Berakhir 2: ratus tidak boleh 0 → 3 pilihan (5, 7, 9), puluh 3 pilihan (termasuk 0) → 9. Jumlah = <b>21</b>. (24 = 2 × 4 × 3 membenarkan 0 di depan; 12 hanya kes berakhir 0; 18 menganggap kedua-dua kes seperti kes berakhir 2.)"
   },
-  { // 15 Pola — sukar
+  { // 18 Pola — sederhana
+    s: "Pada pukul 8:00 pagi, sedikit bakteria dimasukkan ke dalam sebuah piring kultur. Bilangan bakteria itu menjadi <b>dua kali ganda</b> setiap 20 minit, dan piring itu penuh dengan bakteria tepat pada pukul 12:00 tengah hari. Pada pukul berapakah piring itu <sup>1</sup>⁄<sub>8</sub> penuh?",
+    en: "At 8:00 a.m. a few bacteria are placed in a culture dish. The number of bacteria doubles every 20 minutes, and the dish is exactly full at 12:00 noon. At what time was the dish 1/8 full?",
+    p: ['8:30 pagi', '11:00 pagi', '11:20 pagi', '11:40 pagi'], a: 1, topik: 'Pola & Jujukan', aras: 'sederhana',
+    hurai: "Kira ke belakang dari 12:00 tengah hari (penuh): 20 minit sebelumnya separuh penuh (11:40), 40 minit sebelumnya ¼ penuh (11:20), 60 minit sebelumnya ⅛ penuh, iaitu <b>11:00 pagi</b>. (8:30 pagi menganggap pertumbuhan linear: ⅛ × 4 jam = 30 minit selepas 8:00; 11:20 pagi ialah masa piring ¼ penuh; 11:40 pagi ialah masa piring separuh penuh.)"
+  },
+  { // 19 Peratus — sederhana
+    s: "Puan Kavitha berbelanja RM 248.60 di sebuah pasar raya dan membayar dengan e-dompet.<br>• E-dompet memberi pulangan tunai 3% daripada jumlah belanja, tetapi <b>maksimum RM 5</b>.<br>• Kad ahli memberi 2 mata bagi setiap RM 1 <b>penuh</b> yang dibelanjakan. Setiap 200 mata boleh ditebus dengan baucar RM 2; mata yang kurang daripada 200 tidak boleh ditebus.<br>Berapakah jumlah penjimatan Puan Kavitha (pulangan tunai + nilai baucar yang boleh ditebus)?",
+    en: "Mrs Kavitha spends RM 248.60 at a supermarket and pays by e-wallet. The e-wallet gives 3% cashback, capped at RM 5. Her member card gives 2 points per full RM 1 spent; every 200 points can be redeemed for an RM 2 voucher, and fewer than 200 points cannot be redeemed. What is her total saving (cashback + value of vouchers she can redeem)?",
+    p: ['RM 9.00', 'RM 9.96', 'RM 11.46', 'RM 12.42'], a: 0, topik: 'Peratus & Matematik Pengguna', aras: 'sederhana',
+    hurai: "Pulangan tunai: 3% × 248.60 = RM 7.46, melebihi had, jadi hanya RM 5.00. Mata: RM 248 penuh × 2 = 496 mata → 2 baucar (400 mata) = RM 4.00; baki 96 mata tidak boleh ditebus. Jumlah = 5.00 + 4.00 = <b>RM 9.00</b>. (RM 9.96 menganggap semua 496 mata bernilai RM 4.96; RM 11.46 lupa had RM 5, 7.46 + 4.00; RM 12.42 melakukan kedua-dua kesilapan, 7.46 + 4.96.)"
+  },
+  { // 20 Data — sederhana
+    s: "Dua biji dadu adil dilambung serentak dan nombor yang muncul pada kedua-dua dadu itu didarabkan. Apakah kebarangkalian hasil darabnya ialah nombor <b>ganjil</b>?",
+    en: "Two fair dice are thrown together and the two numbers shown are multiplied. What is the probability that the product is an odd number?",
+    p: ['1/4', '2/7', '1/2', '3/4'], a: 0, topik: 'Data & Statistik', aras: 'sederhana',
+    hurai: "Hasil darab ganjil hanya jika <b>kedua-dua</b> nombor ganjil (1, 3 atau 5). Bilangan kesudahan = 3 × 3 = 9 daripada 6 × 6 = 36. Kebarangkalian = 9/36 = <b>1/4</b>. (2/7 = 6/21, mengira pasangan tanpa susunan sehingga (1, 3) dan (3, 1) dianggap sama — kesudahan itu tidak sama kemungkinan; 1/2 menganggap ganjil dan genap sama kemungkinan; 3/4 ialah kebarangkalian hasil darab genap.)"
+  },
+  { // 21 Logik — sederhana
+    s: "Lima keluarga, iaitu keluarga Daud, Kumar, Rahman, Tan dan Wong, masing-masing tinggal di tingkat yang berbeza di sebuah blok rumah pangsa lima tingkat (tingkat 1 paling bawah, tingkat 5 paling atas).<br>• Keluarga Tan tinggal dua tingkat di atas keluarga Rahman.<br>• Keluarga Wong tinggal di tingkat yang lebih tinggi daripada keluarga Tan.<br>• Keluarga Daud tidak tinggal di tingkat yang bersebelahan (betul-betul di atas atau di bawah) dengan keluarga Rahman.<br>• Keluarga Daud tidak tinggal di tingkat paling atas.<br>Keluarga manakah yang tinggal di tingkat 4?",
+    en: "Five families, Daud, Kumar, Rahman, Tan and Wong, each live on a different floor of a five-storey block of flats (floor 1 lowest, floor 5 highest). The Tans live two floors above the Rahmans. The Wongs live higher than the Tans. The Dauds do not live on a floor next to (directly above or below) the Rahmans. The Dauds do not live on the top floor. Which family lives on floor 4?",
+    p: ['Daud', 'Kumar', 'Tan', 'Wong'], a: 0, topik: 'Penaakulan Logik', aras: 'sederhana',
+    hurai: "Rahman–Tan boleh di tingkat (1, 3), (2, 4) atau (3, 5). (3, 5) mustahil kerana Wong mesti di atas Tan. Jika (2, 4), Wong di tingkat 5 dan Daud tinggal di tingkat 1 atau 3 — kedua-duanya bersebelahan dengan Rahman, jadi mustahil. Maka Rahman tingkat 1, Tan tingkat 3. Daud bukan tingkat 2 (bersebelahan Rahman) dan bukan tingkat 5, jadi Daud di tingkat 4, Wong tingkat 5, Kumar tingkat 2. Jawapan: <b>Daud</b>. (Wong di tingkat 4 hanya mungkin jika Daud di tingkat paling atas, yang dilarang; Tan di tingkat 4 membawa kepada percanggahan di atas; Kumar tinggal di tingkat 2.)"
+  },
+  { // 22 Pola — sukar
     rajah: '<svg viewBox="0 0 190 140" style="max-width:100%;width:220px" role="img" aria-label="Grid segi empat sama 4 baris dan 5 lajur"><g stroke="var(--c)" stroke-width="2" fill="none"><rect x="20" y="10" width="150" height="120"/><line x1="50" y1="10" x2="50" y2="130"/><line x1="80" y1="10" x2="80" y2="130"/><line x1="110" y1="10" x2="110" y2="130"/><line x1="140" y1="10" x2="140" y2="130"/><line x1="20" y1="40" x2="170" y2="40"/><line x1="20" y1="70" x2="170" y2="70"/><line x1="20" y1="100" x2="170" y2="100"/></g></svg>',
     s: "Rajah menunjukkan grid segi empat sama dengan 4 baris dan 5 lajur. Berapakah jumlah <b>semua</b> segi empat sama (pelbagai saiz) yang terdapat dalam grid itu?",
     en: "The diagram shows a square grid of 4 rows and 5 columns. How many squares of all sizes are there in the grid?",
     p: ['40', '38', '32', '20'], a: 0, topik: 'Pola & Jujukan', aras: 'sukar',
     hurai: "1×1: 4 × 5 = 20. 2×2: 3 × 4 = 12. 3×3: 2 × 3 = 6. 4×4: 1 × 2 = 2. Jumlah = <b>40</b>. (20 hanya petak kecil; 32 terhenti pada 2×2; 38 terlupa dua segi empat sama 4×4.)"
   },
-  { // 16 Persamaan / ketaksamaan — sukar
+  { // 23 Persamaan / ketaksamaan — sukar
     s: "Purata markah lima ujian pertama Iqbal ialah 72. Ujian keenam diberi pemberat <b>dua kali</b> ganda (dikira seperti dua ujian). Iqbal mahu purata berwajaran semua ujian sekurang-kurangnya 75. Jika markah ialah nombor bulat, berapakah markah <b>minimum</b> yang perlu diperoleh dalam ujian keenam?",
     en: "Iqbal's mean for his first five tests is 72. The sixth test counts double (like two tests). He wants a weighted mean of at least 75. If marks are whole numbers, what is the minimum mark he needs in the sixth test?",
     p: ['75', '78', '82', '83'], a: 3, topik: 'Persamaan Linear', aras: 'sukar',
     hurai: "Jumlah berwajaran = 5 × 72 + 2x, dibahagi 7 pemberat. (360 + 2x) ÷ 7 ≥ 75 → 2x ≥ 165 → x ≥ 82.5, maka markah bulat minimum = <b>83</b>. (82 dibundarkan ke bawah, tidak cukup; 78 = 75 + 3 menampung kekurangan secara salah; 75 ialah sasaran purata, bukan markah diperlukan.)"
   },
-  { // 17 Simpanan — sukar (ISI)
+  { // 24 Simpanan — sukar (ISI)
     jenis: 'isi',
     s: "Puan Mei menyimpan RM 3 000 dalam akaun simpanan tetap dengan kadar faedah 3.5% setahun, <b>dikompaun setiap 6 bulan</b>. Berapakah jumlah <b>faedah</b> yang diperoleh selepas 2 tahun? (Jawab dalam RM, betul kepada 2 tempat perpuluhan.)",
     en: "Mrs Mei saves RM 3 000 in a fixed deposit at 3.5% per annum, compounded every 6 months. How much interest does she earn after 2 years? (Answer in RM, 2 decimal places.)",
     a: 215.58, tol: 0.01, unit: 'RM', topik: 'Peratus & Matematik Pengguna', aras: 'sukar',
     hurai: "Kadar setiap 6 bulan = 3.5% ÷ 2 = 1.75%; bilangan tempoh = 2 × 2 = 4. Nilai = 3000 × 1.0175⁴ = RM 3 215.58. Faedah = 3215.58 − 3000 = <b>RM 215.58</b>. (Ralat biasa: kompaun tahunan → RM 213.67; faedah mudah → RM 210.00.)"
   },
-  { // 18 Kadar & bentuk piawai — sukar
+  { // 25 Kadar & bentuk piawai — sukar
     s: "Sebatang pili air yang bocor menitiskan setitis air setiap 2 saat. Isi padu setitis air ialah 0.05 ml. Berapakah isi padu air yang terbuang dalam setahun (365 hari)? Beri jawapan dalam bentuk piawai.",
     en: "A leaking tap drips one drop every 2 seconds. Each drop is 0.05 ml. How much water is wasted in a year (365 days)? Give the answer in standard form.",
     p: ['7.884 × 10³ L', '1.577 × 10³ L', '7.884 × 10² L', '7.884 × 10¹ L'], a: 2, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
     hurai: "Saat setahun = 365 × 24 × 3600 = 31 536 000. Titisan = 31 536 000 ÷ 2 = 15 768 000. Isi padu = 15 768 000 × 0.05 = 788 400 ml = 788.4 L = <b>7.884 × 10² L</b>. (1.577 × 10³ L lupa bahagi 2; 7.884 × 10³ dan 7.884 × 10¹ salah menukar ml kepada liter — 1 L = 1000 ml.)"
   },
-  { // 19 Set / gambar rajah Venn — sukar
+  { // 26 Set / gambar rajah Venn — sukar
     rajah: '<table><tr><th>Kelab</th><th>Bilangan murid</th></tr><tr><td>Sains (S)</td><td>17</td></tr><tr><td>Matematik (M)</td><td>14</td></tr><tr><td>Robotik (R)</td><td>12</td></tr><tr><td>S dan M</td><td>6</td></tr><tr><td>S dan R</td><td>5</td></tr><tr><td>M dan R</td><td>4</td></tr><tr><td>Ketiga-tiga kelab</td><td>2</td></tr></table>',
     s: "Bagi sekumpulan 34 orang murid, maklumat keahlian mereka dalam tiga kelab ditunjukkan dalam jadual (ada murid yang tidak menyertai mana-mana kelab ini). (Contohnya, \"S dan M\" termasuk murid yang menyertai ketiga-tiga kelab.) Berapakah bilangan murid yang menyertai <b>tepat satu</b> kelab sahaja?",
     en: "For a group of 34 pupils, their membership of three clubs is shown in the table (some pupils join none of these clubs). (For example, 'S and M' includes pupils in all three clubs.) How many pupils join exactly one club?",
     p: ['13', '19', '28', '30'], a: 1, topik: 'Data & Statistik', aras: 'sukar',
     hurai: "Lukis gambar rajah Venn dari tengah: ketiga-tiga = 2. S∩M sahaja = 6 − 2 = 4; S∩R sahaja = 5 − 2 = 3; M∩R sahaja = 4 − 2 = 2. S sahaja = 17 − 4 − 3 − 2 = 8; M sahaja = 14 − 4 − 2 − 2 = 6; R sahaja = 12 − 3 − 2 − 2 = 5. Tepat satu = 8 + 6 + 5 = <b>19</b>. (13 = (17−6−5) + (14−6−4) + (12−5−4), menolak bahagian ketiga-tiga dua kali; 30 ialah murid yang menyertai sekurang-kurangnya satu kelab; 28 = 17 + 14 + 12 − 6 − 5 − 4, lupa menambah semula 2.)"
   },
-  { // 20 Lokus — sukar
+  { // 27 Lokus — sukar
     rajah: '<svg viewBox="0 0 250 230" style="max-width:100%;width:280px" role="img" aria-label="Satah Cartes dengan titik A(2, 1), B(2, 7) dan P(5, 0)"><g stroke="var(--muted)" stroke-width="0.6"><path d="M30 24V200M52 24V200M74 24V200M96 24V200M118 24V200M140 24V200M162 24V200M184 24V200M206 24V200M228 24V200"/><path d="M30 200H228M30 178H228M30 156H228M30 134H228M30 112H228M30 90H228M30 68H228M30 46H228M30 24H228"/></g><g stroke="currentColor" stroke-width="1.6"><line x1="30" y1="200" x2="236" y2="200"/><line x1="30" y1="200" x2="30" y2="16"/></g><g font-size="12" fill="currentColor" text-anchor="middle"><text x="30" y="216">0</text><text x="74" y="216">2</text><text x="118" y="216">4</text><text x="162" y="216">6</text><text x="206" y="216">8</text><text x="242" y="204">x</text><text x="20" y="160">2</text><text x="20" y="116">4</text><text x="20" y="72">6</text><text x="20" y="28">8</text><text x="30" y="12">y</text></g><g fill="var(--c)"><circle cx="74" cy="178" r="4"/><circle cx="74" cy="46" r="4"/><circle cx="140" cy="200" r="4"/></g><g font-size="13" font-weight="700" fill="currentColor"><text x="80" y="174">A</text><text x="80" y="42">B</text><text x="145" y="194">P</text></g></svg>',
     s: "Rajah menunjukkan titik A(2, 1), B(2, 7) dan P(5, 0). Titik X bergerak dengan keadaan X sentiasa <b>sama jarak dari A dan B</b>, dan X juga berjarak <b>5 unit dari P</b>. Apakah koordinat semua kedudukan X yang mungkin?",
     en: "The diagram shows A(2, 1), B(2, 7) and P(5, 0). Point X is always equidistant from A and B, and X is also 5 units from P. What are all possible positions of X?",
     p: ['(5, 4) sahaja', '(2, 4) sahaja', '(5, 5) dan (5, −5)', '(2, 4) dan (8, 4)'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sukar',
     hurai: "Lokus sama jarak dari A dan B ialah pembahagi dua sama serenjang AB, iaitu garis y = 4. Lokus 5 unit dari P ialah bulatan berpusat P berjejari 5. Pada y = 4: jarak tegak dari P = 4, jadi jarak mengufuk = √(5² − 4²) = 3 → x = 5 − 3 = 2 atau 5 + 3 = 8. X = <b>(2, 4) dan (8, 4)</b>. ((5, 4) hanya 4 unit dari P; (2, 4) sahaja terlepas satu titik persilangan; (5, ±5) mengabaikan syarat sama jarak dari A dan B.)"
+  },
+  { // 28 Persamaan linear — sukar (ISI)
+    jenis: 'isi',
+    s: "Di gerai Mak Cik Kiah:<br>• Rizal membayar RM 6.50 untuk sebungkus nasi lemak dan segelas teh tarik.<br>• Siva membayar RM 4.30 untuk segelas teh tarik dan sekeping roti canai.<br>• Mei Ling membayar RM 6.20 untuk sebungkus nasi lemak dan sekeping roti canai.<br>Berapakah harga bagi sebungkus nasi lemak, <b>dua</b> gelas teh tarik dan <b>dua</b> keping roti canai? (Jawab dalam RM.)",
+    en: "At Mak Cik Kiah's stall, Rizal pays RM 6.50 for a packet of nasi lemak and a glass of teh tarik; Siva pays RM 4.30 for a glass of teh tarik and a roti canai; Mei Ling pays RM 6.20 for a packet of nasi lemak and a roti canai. What is the price of one nasi lemak, two teh tarik and two roti canai? (Answer in RM.)",
+    a: 12.8, unit: 'RM', tol: 0.01, topik: 'Persamaan Linear', aras: 'sukar',
+    hurai: "Tambah ketiga-tiga bayaran: 2(nasi lemak + teh tarik + roti canai) = 6.50 + 4.30 + 6.20 = RM 17.00, jadi satu set = RM 8.50. Nasi lemak = 8.50 − 4.30 = RM 4.20; teh tarik = 8.50 − 6.20 = RM 2.30; roti canai = 8.50 − 6.50 = RM 2.00. Jumlah = 4.20 + 2(2.30) + 2(2.00) = <b>RM 12.80</b>. (Ralat biasa: lupa membahagi RM 17.00 dengan 2.)"
+  },
+  { // 29 Kadar — sukar
+    s: "Sebuah litar kart berbentuk gelung tertutup sepanjang 1.2 km. Kart Amir (laju seragam 60 km/j) dan kart Boon (laju seragam 36 km/j) bermula serentak dari garisan permulaan yang sama dan bergerak dalam arah yang <b>sama</b>. Selepas berapa lamakah Amir memintas Boon buat kali pertama, iaitu mendahului Boon tepat satu pusingan penuh?",
+    en: "A go-kart circuit is a closed loop 1.2 km long. Amir's kart (steady 60 km/h) and Boon's kart (steady 36 km/h) start together from the same start line and move in the same direction. After how long does Amir first overtake Boon, that is, get exactly one full lap ahead of Boon?",
+    p: ['45 saat', '1 minit 12 saat', '2 minit', '3 minit'], a: 3, topik: 'Nisbah, Kadar & Laju', aras: 'sukar',
+    hurai: "Amir memintas Boon apabila dia telah bergerak satu pusingan (1.2 km) lebih jauh daripada Boon. Laju relatif = 60 − 36 = 24 km/j. Masa = 1.2 ÷ 24 = 0.05 jam = <b>3 minit</b> (semak: Amir 3 km = 2.5 pusingan, Boon 1.8 km = 1.5 pusingan). (45 saat = 1.2 ÷ 96 jam, menambah laju seolah-olah bertentangan arah; 1 minit 12 saat ialah masa satu pusingan Amir; 2 minit ialah masa satu pusingan Boon.)"
+  },
+  { // 30 Geometri — sukar
+    rajah: '<svg viewBox="0 0 260 150" style="max-width:100%;width:280px" role="img" aria-label="Sfera berjejari 6 cm; kon kecil berjejari 2 cm dan tinggi 3 cm"><circle cx="70" cy="72" r="60" fill="var(--c)" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/><ellipse cx="70" cy="72" rx="60" ry="14" fill="none" stroke="var(--muted)" stroke-dasharray="3 3"/><line x1="70" y1="72" x2="130" y2="72" stroke="var(--c)" stroke-width="2"/><circle cx="70" cy="72" r="2.5" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="2"><path d="M180 120 L200 60 L220 120"/><ellipse cx="200" cy="120" rx="20" ry="5"/></g><g stroke="var(--muted)" stroke-dasharray="3 3"><line x1="200" y1="60" x2="200" y2="120"/><line x1="200" y1="120" x2="220" y2="120"/></g><g font-size="12" fill="currentColor"><text x="100" y="69" text-anchor="middle">6 cm</text><text x="215" y="94">3 cm</text><text x="210" y="138" text-anchor="middle">2 cm</text><text x="70" y="146" text-anchor="middle">Sfera</text><text x="200" y="50" text-anchor="middle">Kon</text></g></svg>',
+    s: "Sebiji bola plastisin berbentuk sfera berjejari 6 cm dibentuk semula menjadi beberapa kon kecil yang sama saiz. Setiap kon berjejari 2 cm dan tingginya 3 cm. Jika tiada plastisin yang terbuang, berapakah bilangan kon yang dapat dibentuk?",
+    en: "A sphere of plasticine with radius 6 cm is remoulded into identical small cones, each with radius 2 cm and height 3 cm. If no plasticine is wasted, how many cones can be made?",
+    p: ['24', '27', '54', '72'], a: 3, topik: 'Geometri & Pengukuran', aras: 'sukar',
+    hurai: "Isi padu sfera = <sup>4</sup>⁄<sub>3</sub> × π × 6³ = 288π cm³. Isi padu satu kon = <sup>1</sup>⁄<sub>3</sub> × π × 2² × 3 = 4π cm³. Bilangan kon = 288π ÷ 4π = <b>72</b>. (24 = 288π ÷ 12π, lupa faktor ⅓ bagi kon; 27 = (6 ÷ 2)³, menganggap kon kecil sebagai sfera kecil berjejari 2 cm; 54 = 216π ÷ 4π, lupa faktor <sup>4</sup>⁄<sub>3</sub> bagi sfera.)"
   }
   ]
 });
